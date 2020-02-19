@@ -91,9 +91,9 @@ def metabolic_energy_mass_added_pareto(configuration,unassisted_metabolic,m_wais
     - default values for center of masses have been selected according to the desgin of exoskeletons
     - leg inertia were selected according to the inertia reported by reference paper
     """
-    # initial setups
-    Hip_weights = [70,60,50,40,30]
-    Knee_weights = [70,60,50,40,30]
+    # initialization
+    Hip_weights = [70,60,50,40,30]    # Hip Weight may need to be changed according to pareto simulations
+    Knee_weights = [70,60,50,40,30]   # Knee Weight may need to be changed according to pareto simulations
     Metabolic_Change_Hip = np.zeros(len(Hip_weights)*len(Knee_weights))
     Metabolic_Change_Thigh = np.zeros(len(Hip_weights)*len(Knee_weights))
     Metabolic_Change_Shank = np.zeros(len(Hip_weights)*len(Knee_weights))
@@ -149,8 +149,8 @@ def metabolic_energy_mass_added_pareto(configuration,unassisted_metabolic,m_wais
     else:
         return Metabolic_Change_Hip,Metabolic_Change_Thigh,Metabolic_Change_Shank,AddMass_MetabolicChange,Inertia_Shank_Metabolic,Inertia_Thigh,Inertia_Shank
 #####################################################################################
-def pareto_data_extraction(Configuration,optimal_force,musclemoment=False,calculatenergy=True,subject_mass=112.4317):
-    """This function designed to get the configuration and optimal force that has been used to perform
+def pareto_data_extraction(SubjectNo,TrialNo,subject_mass,Configuration,gl,calculatenergy=True):
+    """This function is designed to get the configuration and optimal force that has been used to perform
     simulations and reporting most of the needed data. This function calculates the following data:
     
     - Torque profiles of actuators
@@ -159,16 +159,16 @@ def pareto_data_extraction(Configuration,optimal_force,musclemoment=False,calcul
     - Instantenous metabolic power of simulated subjects
     - The energy consumption of assistive actuators(optional)
     - Metabolic energy consumption(optional)
-    - Muscles Moment (optional)
     
-    * This function is specificed for the test on a subject but can be generalized
-    * It is specifically designed for determined pareto weights but can be generalized
+    ###########################################################################################
+    * This function has been generalized for a subject to be utilized in another function
     """
-    # Main Code
+    # Configurations of Pareto Simulations
+    optimal_force = 1000
     hip_list = [70/1000,60/1000,50/1000,40/1000,30/1000]
     knee_list = [70/1000,60/1000,50/1000,40/1000,30/1000]
+    # Initialization
     gait_cycle = np.linspace(0,100,1000)
-    general_path = 'F:/HMI/Exoskeleton/OpenSim/LoadedWalking_Test/Main_Test/Results'
     KneeActuatorEnergy_Data = np.zeros(len(hip_list)*len(knee_list))
     HipActuatorEnergy_Data = np.zeros(len(hip_list)*len(knee_list))
     MetabolicEnergy_Data = np.zeros(len(hip_list)*len(knee_list))
@@ -180,50 +180,21 @@ def pareto_data_extraction(Configuration,optimal_force,musclemoment=False,calcul
     HipMuscleMoment_Data = np.zeros([1000,len(hip_list)*len(knee_list)])
     KneeMuscleMoment_Data = np.zeros([1000,len(hip_list)*len(knee_list)])
     c = 0
+    # Following part extracts the data for a subject
     for hip_max_control in hip_list:
         for knee_max_control in knee_list:
             # Directory of each .sto files
-            actuator_torque_data_dir= general_path + '/{}/H{}K{}/loadedwalking_subject05_noload_free_trial02_cmc_Actuation_force.sto'\
-            .format(Configuration,int(hip_max_control*optimal_force),int(knee_max_control*optimal_force))
-            actuator_power_data_dir = general_path + '/{}/H{}K{}/loadedwalking_subject05_noload_free_trial02_cmc_Actuation_power.sto'\
-            .format(Configuration,int(hip_max_control*optimal_force),int(knee_max_control*optimal_force))
-            metabolic_power_data_dir = general_path + '/{}/H{}K{}/loadedwalking_subject05_noload_free_trial02_cmc_ProbeReporter_probes.sto'\
-            .format(Configuration,int(hip_max_control*optimal_force),int(knee_max_control*optimal_force))
+            actuator_torque_data_dir= '../subject{}/noloaded/Subject{}_NoLoaded_Dataset/{}/H{}K{}/loadedwalking_subject{}_noload_free_trial{}_cmc_Actuation_force.sto'\
+            .format(SubjectNo,SubjectNo,Configuration,int(hip_max_control*optimal_force),int(knee_max_control*optimal_force),SubjectNo,TrialNo)
+            actuator_power_data_dir= '../subject{}/noloaded/Subject{}_NoLoaded_Dataset/{}/H{}K{}/loadedwalking_subject{}_noload_free_trial{}_cmc_Actuation_power.sto'\
+            .format(SubjectNo,SubjectNo,Configuration,int(hip_max_control*optimal_force),int(knee_max_control*optimal_force),SubjectNo,TrialNo)
+            metabolic_power_data_dir = '../subject{}/noloaded/Subject{}_NoLoaded_Dataset/{}/H{}K{}/loadedwalking_subject{}_noload_free_trial{}_cmc_ProbeReporter_probes.sto'\
+            .format(SubjectNo,SubjectNo,Configuration,int(hip_max_control*optimal_force),int(knee_max_control*optimal_force),SubjectNo,TrialNo)
             # Sto to Numpy
             actuator_torque_data = dataman.storage2numpy(actuator_torque_data_dir)
             actuator_power_data = dataman.storage2numpy(actuator_power_data_dir)
             metabolic_power_data = dataman.storage2numpy(metabolic_power_data_dir)
             time = actuator_power_data['time']
-            # Gait Cycle Data
-            gl = dataman.GaitLandmarks(
-                    primary_leg='right',
-                    cycle_start=0.462,
-                    cycle_end=1.614,
-                    left_strike=1.048,
-                    left_toeoff=1.764,
-                    right_strike=0.462,
-                    right_toeoff=1.179)
-            if musclemoment == True:
-                    # Directory for muscles moment
-                    hip_musclesmoment_data_dir = general_path + '/{}/H{}K{}/{}_Hip_{}_Knee_{}_MuscleAnalysis_Moment_hip_flexion_r.sto'\
-                    .format(Configuration,int(hip_max_control*optimal_force),int(knee_max_control*optimal_force),Configuration,int(hip_max_control*optimal_force),int(knee_max_control*optimal_force))
-                    knee_musclesmoment_data_dir = general_path + '/{}/H{}K{}/{}_Hip_{}_Knee_{}_MuscleAnalysis_Moment_knee_angle_r.sto'\
-                    .format(Configuration,int(hip_max_control*optimal_force),int(knee_max_control*optimal_force),Configuration,int(hip_max_control*optimal_force),int(knee_max_control*optimal_force))
-                    hip_musclesmoment_data_l_dir = general_path + '/{}/H{}K{}/{}_Hip_{}_Knee_{}_MuscleAnalysis_Moment_hip_flexion_l.sto'\
-                    .format(Configuration,int(hip_max_control*optimal_force),int(knee_max_control*optimal_force),Configuration,int(hip_max_control*optimal_force),int(knee_max_control*optimal_force))
-                    knee_musclesmoment_data_l_dir = general_path + '/{}/H{}K{}/{}_Hip_{}_Knee_{}_MuscleAnalysis_Moment_knee_angle_l.sto'\
-                    .format(Configuration,int(hip_max_control*optimal_force),int(knee_max_control*optimal_force),Configuration,int(hip_max_control*optimal_force),int(knee_max_control*optimal_force))
-                    # Sto to Numpy
-                    hip_musclesmoment_data = dataman.storage2numpy(hip_musclesmoment_data_dir)
-                    knee_musclesmoment_data = dataman.storage2numpy(knee_musclesmoment_data_dir)
-                    hip_musclesmoment_data_l = dataman.storage2numpy(hip_musclesmoment_data_l_dir)
-                    knee_musclesmoment_data_l = dataman.storage2numpy(knee_musclesmoment_data_l_dir)
-                    hip_musclesmoment_data = musclemoment_calc(hip_musclesmoment_data,gl,side='right')
-                    knee_musclesmoment_data = musclemoment_calc(knee_musclesmoment_data,gl,side='right')
-                    hip_musclesmoment_data_l = musclemoment_calc(hip_musclesmoment_data_l,gl,side='left')
-                    knee_musclesmoment_data_l = musclemoment_calc(knee_musclesmoment_data_l,gl,side='left')
-                    HipMuscleMoment_Data[:,c] = nanmean([hip_musclesmoment_data,hip_musclesmoment_data_l])
-                    KneeMuscleMoment_Data[:,c] = nanmean([knee_musclesmoment_data,knee_musclesmoment_data_l])
             # time and gl class and reading specific columns of data
             knee_actuator_torque = actuator_torque_data['Knee_Right_Actuator']
             hip_actuator_torque = actuator_torque_data['Hip_Right_Actuator']
@@ -237,9 +208,9 @@ def pareto_data_extraction(Configuration,optimal_force,musclemoment=False,calcul
             total_metabolic_power = metabolic_power_data['metabolic_power_TOTAL']
             # Calculate Metabolic energy and the energy consumption of actuators
             if calculatenergy == True:
-                hip_actuator_energy = pp.avg_over_gait_cycle(time, np.abs(hip_actuator_power),cycle_duration=1.614 - 0.462, cycle_start=0.462)
-                knee_actuator_energy = pp.avg_over_gait_cycle(time, np.abs(knee_actuator_power),cycle_duration=1.614 - 0.462, cycle_start=0.462)
-                metabolic_energy = pp.avg_over_gait_cycle(metabolic_power_data['time'], total_metabolic_power,cycle_duration=1.614 - 0.462, cycle_start=0.462)
+                hip_actuator_energy = pp.avg_over_gait_cycle(time, np.abs(hip_actuator_power),cycle_duration=gl.cycle_end-gl.cycle_start, cycle_start=gl.cycle_start)
+                knee_actuator_energy = pp.avg_over_gait_cycle(time, np.abs(knee_actuator_power),cycle_duration=gl.cycle_end-gl.cycle_start, cycle_start=gl.cycle_start)
+                metabolic_energy = pp.avg_over_gait_cycle(metabolic_power_data['time'], total_metabolic_power,cycle_duration=gl.cycle_end-gl.cycle_start, cycle_start=gl.cycle_start)
                 HipActuatorEnergy_Data[c] = hip_actuator_energy/subject_mass
                 KneeActuatorEnergy_Data[c] = knee_actuator_energy/subject_mass
                 MetabolicEnergy_Data[c] = metabolic_energy/subject_mass
@@ -252,7 +223,7 @@ def pareto_data_extraction(Configuration,optimal_force,musclemoment=False,calcul
             gpc_l, hip_actuator_torque_l = pp.data_by_pgc(time,hip_actuator_torque_l,gl,side='left')
             gpc_l, knee_actuator_power_l = pp.data_by_pgc(time,knee_actuator_power_l,gl,side='left')
             gpc_l, hip_actuator_power_l = pp.data_by_pgc(time,hip_actuator_power_l,gl,side='left')
-            gpc1, total_metabolic_power = pp.data_by_pgc(metabolic_power_data['time'],total_metabolic_power,gl,side='right')
+            gpc_metabolic, total_metabolic_power = pp.data_by_pgc(metabolic_power_data['time'],total_metabolic_power,gl,side='right')
             # Interpreting the shifted and normalized data to a single pgc
             knee_actuator_torque = np.interp(gait_cycle,gpc,knee_actuator_torque)
             hip_actuator_torque = np.interp(gait_cycle,gpc,hip_actuator_torque)
@@ -262,7 +233,7 @@ def pareto_data_extraction(Configuration,optimal_force,musclemoment=False,calcul
             hip_actuator_torque_l = np.interp(gait_cycle,gpc_l,hip_actuator_torque_l)
             knee_actuator_power_l = np.interp(gait_cycle,gpc_l,knee_actuator_power_l)
             hip_actuator_power_l = np.interp(gait_cycle,gpc_l,hip_actuator_power_l)
-            total_metabolic_power = np.interp(gait_cycle,gpc1,total_metabolic_power)
+            total_metabolic_power = np.interp(gait_cycle,gpc_metabolic,total_metabolic_power)
             # Storing the processed data into specificed numpy ndarrays
             HipActuator_Torque_Data[:,c] = nanmean([hip_actuator_torque,hip_actuator_torque_l],axis=0)
             KneeActuator_Torque_Data[:,c] = nanmean([knee_actuator_torque,knee_actuator_torque_l],axis=0)
@@ -270,11 +241,7 @@ def pareto_data_extraction(Configuration,optimal_force,musclemoment=False,calcul
             KneeActuator_Power_Data[:,c] = nanmean([knee_actuator_power,knee_actuator_power_l],axis=0)
             MetabolicCost_Data[:,c] = total_metabolic_power
             c+=1
-    if musclemoment == True:
-        return HipActuator_Torque_Data,KneeActuator_Torque_Data,HipActuator_Power_Data,KneeActuator_Power_Data,\
-               MetabolicCost_Data,HipMuscleMoment_Data,KneeMuscleMoment_Data,HipActuatorEnergy_Data,KneeActuatorEnergy_Data,MetabolicEnergy_Data
-    else:
-        return HipActuator_Torque_Data,KneeActuator_Torque_Data,HipActuator_Power_Data,KneeActuator_Power_Data,\
+    return HipActuator_Torque_Data,KneeActuator_Torque_Data,HipActuator_Power_Data,KneeActuator_Power_Data,\
                MetabolicCost_Data,HipActuatorEnergy_Data,KneeActuatorEnergy_Data,MetabolicEnergy_Data
 def instantenous_metabolic(Configuration,gl):
     hip_list = [70/1000,60/1000,50/1000,40/1000,30/1000]
