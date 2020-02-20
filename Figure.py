@@ -15,11 +15,17 @@ from tabulate import tabulate
 from numpy import nanmean, nanstd
 from perimysium import postprocessing as pp
 from perimysium import dataman
+
 #################################################################
-# Metabolic Energy Reduction/ Muscles Moment calculation/ Adding mass metabolic cost change/
-# Adding mass Metabolic cost (loaded subjects metabolic cost)/ Metabolic energy calculations in pareto curve
+# Essential functions
 #****************************************************************
-# These functions have been checked and confirmed. There is no need for any major edit on these functions
+def construct_gl(subjectno,trialno,loadcond='noload'):
+    """This function has been designed to construct gl from the dataset"""
+    import Subjects_Dataset
+    if loadcond == 'noload':
+        noload_subjects_cycle_start_time
+#################################################################
+# Metabolic Energy Reduction/ Muscles Moment calculation/ Metabolic energy calculations in pareto curve
 #****************************************************************
 def musclemoment_calc(data,gl,side):
     muscles_name = ['glut_med1_r','glut_med2_r','glut_med3_r','glut_min1_r','glut_min2_r','glut_min3_r','semimem_r',\
@@ -65,6 +71,9 @@ def metabolic_energy_reduction(data,unassist_data):
     for i in range(len(data)):
         reduction[i] = (((unassist_data[i]-data[i])*100)/unassist_data[i])
     return reduction
+#################################################################
+# Adding mass metabolic cost change/Adding mass Metabolic cost (loaded subjects metabolic cost)
+#****************************************************************
 def adding_mass_metabolic_change(m_waist,m_thigh,m_shank,I_thigh,I_shank,unassisted_metabolic,I_leg=2.52):
     """ This function has been written according to R.C. Browning et al. paper which
         is calculating the metabolic cost CHANGE during the walking.
@@ -175,8 +184,6 @@ def metabolic_energy_mass_added_pareto(configuration,unassisted_metabolic,m_wais
 #####################################################################################
 # Functions related to pareto data
 #****************************************************************
-# These functions have been checked and confirmed but not tested yet. There is no need for any major edit on these functions
-#****************************************************************
 def pareto_data_extraction(SubjectNo,TrialNo,subject_mass,Configuration,gl,calculatenergy=True):
     """This function is designed to get the configuration and optimal force that has been used to perform
     simulations and reporting most of the needed data. This function calculates the following data:
@@ -273,7 +280,8 @@ def pareto_data_extraction(SubjectNo,TrialNo,subject_mass,Configuration,gl,calcu
     return HipActuator_Torque_Data,KneeActuator_Torque_Data,HipActuator_Power_Data,KneeActuator_Power_Data,\
                MetabolicCost_Data,HipActuatorEnergy_Data,KneeActuatorEnergy_Data,MetabolicEnergy_Data
 def pareto_data_subjects():
-    
+    """
+    """
 #####################################################################################
 #####################################################################################
 mono_m_waist = 3
