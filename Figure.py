@@ -19,8 +19,9 @@ from perimysium import dataman
 #################################################################
 # Essential functions
 #****************************************************************
-def construct_gl(subjectno,trialno,loadcond='noload'):
-    """This function has been designed to construct gl from the dataset"""
+def construct_gl_mass_trial(subjectno,trialno,loadcond='noload'):
+    """This function has been designed to construct gl from the dataset. It also returns subject mass
+       and trial number to be used on other functions"""
     import Subjects_Dataset as sd
     if loadcond == 'noload':
         data = sd.loaded_dataset["subject{}_noload_trial{}".replace(subjectno,trialno)]
@@ -28,7 +29,8 @@ def construct_gl(subjectno,trialno,loadcond='noload'):
         data = sd.loaded_dataset["subject{}_loaded_trial{}".replace(subjectno,trialno)]
     else:
         raise Exception("load condition is wrong.")
-
+    mass = data["mass"]
+    trial_num = data["trial"]
     gl = dataman.GaitLandmarks( primary_leg = data["primary_legs"],
                                 cycle_start = data["subjects_cycle_start_time"],
                                 cycle_end   = data["subjects_cycle_end_time"],
@@ -36,8 +38,7 @@ def construct_gl(subjectno,trialno,loadcond='noload'):
                                 left_toeoff = data["toeoff_time_left_leg"],
                                 right_strike= data["footstrike_right_leg"],
                                 right_toeoff= data["toeoff_time_right_leg"])
-    return gl   
-                          
+    return gl, mass, trial_num 
 #################################################################
 # Metabolic Energy Reduction/ Muscles Moment calculation/ Metabolic energy calculations in pareto curve
 #****************************************************************
@@ -212,6 +213,7 @@ def pareto_data_extraction(SubjectNo,TrialNo,subject_mass,Configuration,gl,calcu
     ###########################################################################################
     * This function has been generalized for a subject to be utilized in another function.
     * Energy calculations have been normalized with subjects mass.
+    * Some parts of this function can be changed to be used in another simulations.
     """
     # Configurations of Pareto Simulations
     optimal_force = 1000
@@ -293,9 +295,58 @@ def pareto_data_extraction(SubjectNo,TrialNo,subject_mass,Configuration,gl,calcu
             c+=1
     return HipActuator_Torque_Data,KneeActuator_Torque_Data,HipActuator_Power_Data,KneeActuator_Power_Data,\
                MetabolicCost_Data,HipActuatorEnergy_Data,KneeActuatorEnergy_Data,MetabolicEnergy_Data
-def pareto_data_subjects():
+def pareto_data_subjects(configuration):
     """
+    This function has been developed to extract pareto data (written in pareto_data_extraction function)
+    for all the simulated subjects and configurations.
+
+    - Torque profiles of actuators for all the subject
+    - Power Profiles of actuators for all the subject
+    - Speed profiles of actuators for all the subject
+    - Instantenous metabolic power of simulated subjects for all the subject
+    - The energy consumption of assistive actuators for all the subject
+    - Metabolic energy consumption for all the subject
+
+    ###########################################################################################
+    * This function has been generalized for a subject to be utilized in another function.
+    * Energy calculations have been normalized with subjects mass.
+    * Some parts of this function can be changed to be used in another simulations.
     """
+    # Configuration
+    hip_list = [70/1000,60/1000,50/1000,40/1000,30/1000]
+    knee_list = [70/1000,60/1000,50/1000,40/1000,30/1000]
+    subjects = ['05','07','09','10','11','12','14']
+    trails_num = ['01','02','03']
+    # initialization
+    KneeActuatorEnergy_Data = np.zeros(len(subjects)*len(trails_num)*len(hip_list)*len(knee_list))
+    HipActuatorEnergy_Data = np.zeros(len(subjects)*len(trails_num)*len(hip_list)*len(knee_list))
+    MetabolicEnergy_Data = np.zeros(len(subjects)*len(trails_num)*len(hip_list)*len(knee_list))
+    HipActuator_Torque_Data = np.zeros([1000,len(subjects)*len(trails_num)*len(hip_list)*len(knee_list)])
+    KneeActuator_Torque_Data = np.zeros([1000,len(subjects)*len(trails_num)*len(hip_list)*len(knee_list)])
+    HipActuator_Power_Data = np.zeros([1000,len(subjects)*len(trails_num)*len(hip_list)*len(knee_list)])
+    KneeActuator_Power_Data = np.zeros([1000,len(subjects)*len(trails_num)*len(hip_list)*len(knee_list)])
+    MetabolicCost_Data = np.zeros([1000,len(subjects)*len(trails_num)*len(hip_list)*len(knee_list)])
+    HipMuscleMoment_Data = np.zeros([1000,len(subjects)*len(trails_num)*len(hip_list)*len(knee_list)])
+    KneeMuscleMoment_Data = np.zeros([1000,len(subjects)*len(trails_num)*len(hip_list)*len(knee_list)])
+    c = 0
+    for i in subjects:
+        for j in trails_num:
+            gl,subject_mass,trail = construct_gl_mass_trial(subjectno=i,trailno=j)
+            hip_torque,knee_torque,hip_power,knee_power,metabolics,hip_energy,\
+            knee_energy,metabolics_energy = pareto_data_extraction(SubjectNo=i,TrialNo=trail,subject_mass=subject_mass,Configuration=configuration,gl=gl)
+            HipActuator_Torque_Data[:,c:c+len(hip_list)*len(knee_list)]  = hip_torque
+            KneeActuator_Torque_Data[:,c:c+len(hip_list)*len(knee_list)] = knee_torque
+            HipActuator_Power_Data[:,c:c+len(hip_list)*len(knee_list)]   = hip_power
+            KneeActuator_Power_Data[:,c:c+len(hip_list)*len(knee_list)]  = knee_power
+            MetabolicCost_Data[:,c:c+len(hip_list)*len(knee_list)]       = metabolics
+            HipActuatorEnergy_Data[c:c+len(hip_list)*len(knee_list)]     = hip_energy
+            KneeActuatorEnergy_Data[c:c+len(hip_list)*len(knee_list)]    = knee_energy
+            MetabolicEnergy_Data[c:c+len(hip_list)*len(knee_list)]       = metabolics_energy
+            c+=len(hip_list)*len(knee_list)+1
+
+    return HipActuator_Torque_Data,KneeActuator_Torque_Data,HipActuator_Power_Data,KneeActuator_Power_Data,\
+               MetabolicCost_Data,HipActuatorEnergy_Data,KneeActuatorEnergy_Data,MetabolicEnergy_Data
+            
 #####################################################################################
 #####################################################################################
 mono_m_waist = 3
