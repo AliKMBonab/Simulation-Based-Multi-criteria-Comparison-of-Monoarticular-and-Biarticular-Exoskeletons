@@ -21,9 +21,23 @@ from perimysium import dataman
 #****************************************************************
 def construct_gl(subjectno,trialno,loadcond='noload'):
     """This function has been designed to construct gl from the dataset"""
-    import Subjects_Dataset
+    import Subjects_Dataset as sd
     if loadcond == 'noload':
-        noload_subjects_cycle_start_time
+        data = sd.loaded_dataset["subject{}_noload_trial{}".replace(subjectno,trialno)]
+    elif loadcond == 'loaded':
+        data = sd.loaded_dataset["subject{}_loaded_trial{}".replace(subjectno,trialno)]
+    else:
+        raise Exception("load condition is wrong.")
+
+    gl = dataman.GaitLandmarks( primary_leg = data["primary_legs"],
+                                cycle_start = data["subjects_cycle_start_time"],
+                                cycle_end   = data["subjects_cycle_end_time"],
+                                left_strike = data["footstrike_left_leg"],
+                                left_toeoff = data["toeoff_time_left_leg"],
+                                right_strike= data["footstrike_right_leg"],
+                                right_toeoff= data["toeoff_time_right_leg"])
+    return gl   
+                          
 #################################################################
 # Metabolic Energy Reduction/ Muscles Moment calculation/ Metabolic energy calculations in pareto curve
 #****************************************************************

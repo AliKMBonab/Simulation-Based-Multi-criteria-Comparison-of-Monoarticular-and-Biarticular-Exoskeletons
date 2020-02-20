@@ -2,8 +2,9 @@ import numpy as np
 """
 -This is a dataset that has been established to be used in another files to process data.
 """
-# Subject No: 05, Load Condition: Noload 
-subject05_noload_trial01 = {"subjects_cycle_start_time": np.array(0.462),
+noload_dataset = {
+  # Subject No: 05, Load Condition: Noload 
+"subject05_noload_trial01" : {"subjects_cycle_start_time": np.array(0.462),
                              "subjects_cycle_end_time" : np.array(1.614),
                                  "footstrike_right_leg": np.array(0.462),
                                 "toeoff_time_right_leg": np.array(1.179),
@@ -12,9 +13,9 @@ subject05_noload_trial01 = {"subjects_cycle_start_time": np.array(0.462),
                                          "primary_legs": 'right',
                                        "secondary_legs": 'left',
                                                  "mass": np.array(112.43)
-                            }
+                            },
 
-subject05_noload_trial02 = {"subjects_cycle_start_time": np.array(0.416),
+"subject05_noload_trial02" : {"subjects_cycle_start_time": np.array(0.416),
                              "subjects_cycle_end_time" : np.array(1.578),
                                  "footstrike_right_leg": np.array(0.416),
                                 "toeoff_time_right_leg": np.array(1.156),
@@ -23,9 +24,9 @@ subject05_noload_trial02 = {"subjects_cycle_start_time": np.array(0.416),
                                          "primary_legs": 'right',
                                        "secondary_legs": 'left',
                                                  "mass": np.array(112.43)
-                            }
+                            },
 
-subject05_noload_trial03 = {"subjects_cycle_start_time": np.array(0.379),
+"subject05_noload_trial03" : {"subjects_cycle_start_time": np.array(0.379),
                              "subjects_cycle_end_time" : np.array(1.552),
                                  "footstrike_right_leg": np.array(0.379),
                                 "toeoff_time_right_leg": np.array(1.107),
@@ -34,9 +35,9 @@ subject05_noload_trial03 = {"subjects_cycle_start_time": np.array(0.379),
                                          "primary_legs": 'right',
                                        "secondary_legs": 'left',
                                                  "mass": np.array(112.43)
-                            }
+                            },
 # Subject No: 07, Load Condition: Noload
-subject07_noload_trial01 = {"subjects_cycle_start_time": np.array(0.356),
+"subject07_noload_trial01" : {"subjects_cycle_start_time": np.array(0.356),
                              "subjects_cycle_end_time" : np.array(1.512),
                                  "footstrike_right_leg": np.array(1.512),
                                 "toeoff_time_right_leg": np.array(1.071),
@@ -45,9 +46,9 @@ subject07_noload_trial01 = {"subjects_cycle_start_time": np.array(0.356),
                                          "primary_legs": 'right',
                                        "secondary_legs": 'left',
                                                  "mass": np.array(89.23)
-                            }
+                            },
 
-subject07_noload_trial02 = {"subjects_cycle_start_time": np.array(0.377),
+"subject07_noload_trial02" : {"subjects_cycle_start_time": np.array(0.377),
                              "subjects_cycle_end_time" : np.array(1.500),
                                  "footstrike_right_leg": np.array(0.377),
                                 "toeoff_time_right_leg": np.array(1.091),
@@ -56,9 +57,9 @@ subject07_noload_trial02 = {"subjects_cycle_start_time": np.array(0.377),
                                          "primary_legs": 'right',
                                        "secondary_legs": 'left',
                                                  "mass": np.array(89.23)
-                            }
+                            },
 
-subject07_noload_trial03 = {"subjects_cycle_start_time": np.array(0.431),
+"subject07_noload_trial03" : {"subjects_cycle_start_time": np.array(0.431),
                              "subjects_cycle_end_time" : np.array(1.560),
                                  "footstrike_right_leg": np.array(0.431),
                                 "toeoff_time_right_leg": np.array(1.137),
@@ -67,9 +68,9 @@ subject07_noload_trial03 = {"subjects_cycle_start_time": np.array(0.431),
                                          "primary_legs": 'right',
                                        "secondary_legs": 'left',
                                                  "mass": np.array(89.23)
-                            }
+                            },
 # Subject No: 09, Load Condition: Noload
-subject09_noload_trial01 = {"subjects_cycle_start_time": np.array(0.245),
+"subject09_noload_trial01" : {"subjects_cycle_start_time": np.array(0.245),
                              "subjects_cycle_end_time" : np.array(1.471),
                                  "footstrike_right_leg": np.array(1.471),
                                 "toeoff_time_right_leg": np.array(1.033),
@@ -78,9 +79,9 @@ subject09_noload_trial01 = {"subjects_cycle_start_time": np.array(0.245),
                                          "primary_legs": 'right',
                                        "secondary_legs": 'left',
                                                  "mass": np.array(86.90)
-                            }
+                            },
 
-subject09_noload_trial02 = {"subjects_cycle_start_time": np.array(0.302),
+"subject09_noload_trial02" : {"subjects_cycle_start_time": np.array(0.302),
                              "subjects_cycle_end_time" : np.array(1.506),
                                  "footstrike_right_leg": np.array(1.506),
                                 "toeoff_time_right_leg": np.array(1.069),
@@ -89,9 +90,9 @@ subject09_noload_trial02 = {"subjects_cycle_start_time": np.array(0.302),
                                          "primary_legs": 'right',
                                        "secondary_legs": 'left',
                                                  "mass": np.array(86.90)
-                            }
+                            },
 
-subject09_noload_trial03 = {"subjects_cycle_start_time": np.array(0.407),
+"subject09_noload_trial03" : {"subjects_cycle_start_time": np.array(0.407),
                              "subjects_cycle_end_time" : np.array(1.659),
                                  "footstrike_right_leg": np.array(1.659),
                                 "toeoff_time_right_leg": np.array(1.198),
@@ -100,9 +101,9 @@ subject09_noload_trial03 = {"subjects_cycle_start_time": np.array(0.407),
                                          "primary_legs": 'right',
                                        "secondary_legs": 'left',
                                                  "mass": np.array(86.90)
-                            }
+                            },
 # Subject No: 10, Load Condition: Noload
-subject10_noload_trial01 = {"subjects_cycle_start_time": np.array(0.311),
+"subject10_noload_trial01" : {"subjects_cycle_start_time": np.array(0.311),
                              "subjects_cycle_end_time" : np.array(1.385),
                                  "footstrike_right_leg": np.array(0.840),
                                 "toeoff_time_right_leg": np.array(1.521),
@@ -111,9 +112,9 @@ subject10_noload_trial01 = {"subjects_cycle_start_time": np.array(0.311),
                                          "primary_legs": 'left',
                                        "secondary_legs": 'right',
                                                  "mass": np.array(64.03)
-                            }
+                            },
 
-subject10_noload_trial02 = {"subjects_cycle_start_time": np.array(0.606),
+"subject10_noload_trial02" : {"subjects_cycle_start_time": np.array(0.606),
                              "subjects_cycle_end_time" : np.array(1.670),
                                  "footstrike_right_leg": np.array(1.127),
                                 "toeoff_time_right_leg": np.array(1.802),
@@ -122,9 +123,9 @@ subject10_noload_trial02 = {"subjects_cycle_start_time": np.array(0.606),
                                          "primary_legs": 'left',
                                        "secondary_legs": 'right',
                                                  "mass": np.array(64.03)
-                            }
+                            },
 
-subject10_noload_trial03 = {"subjects_cycle_start_time": np.array(0.652),
+"subject10_noload_trial03" : {"subjects_cycle_start_time": np.array(0.652),
                              "subjects_cycle_end_time" : np.array(1.700),
                                  "footstrike_right_leg": np.array(1.175),
                                 "toeoff_time_right_leg": np.array(1.815),
@@ -133,9 +134,9 @@ subject10_noload_trial03 = {"subjects_cycle_start_time": np.array(0.652),
                                          "primary_legs": 'left',
                                        "secondary_legs": 'right',
                                                  "mass": np.array(64.03)
-                            }
+                            },
 # Subject No: 11, Load Condition: Noload
-subject11_noload_trial01 = {"subjects_cycle_start_time": np.array(0.286),
+"subject11_noload_trial01" : {"subjects_cycle_start_time": np.array(0.286),
                              "subjects_cycle_end_time" : np.array(1.429),
                                  "footstrike_right_leg": np.array(1.429),
                                 "toeoff_time_right_leg": np.array(1.028),
@@ -144,9 +145,9 @@ subject11_noload_trial01 = {"subjects_cycle_start_time": np.array(0.286),
                                          "primary_legs": 'right',
                                        "secondary_legs": 'left',
                                                  "mass": np.array(85.06)
-                            }
+                            },
 
-subject11_noload_trial02 = {"subjects_cycle_start_time": np.array(0.517),
+"subject11_noload_trial02" : {"subjects_cycle_start_time": np.array(0.517),
                              "subjects_cycle_end_time" : np.array(1.645),
                                  "footstrike_right_leg": np.array(1.645),
                                 "toeoff_time_right_leg": np.array(1.244),
@@ -155,9 +156,9 @@ subject11_noload_trial02 = {"subjects_cycle_start_time": np.array(0.517),
                                          "primary_legs": 'right',
                                        "secondary_legs": 'left',
                                                  "mass": np.array(85.06)
-                            }
+                            },
 
-subject11_noload_trial03 = {"subjects_cycle_start_time": np.array(0.511),
+"subject11_noload_trial03" : {"subjects_cycle_start_time": np.array(0.511),
                              "subjects_cycle_end_time" : np.array(1.639),
                                  "footstrike_right_leg": np.array(1.639),
                                 "toeoff_time_right_leg": np.array(1.249),
@@ -166,9 +167,9 @@ subject11_noload_trial03 = {"subjects_cycle_start_time": np.array(0.511),
                                          "primary_legs": 'right',
                                        "secondary_legs": 'left',
                                                  "mass": np.array(85.06)
-                            }
+                            },
 # Subject No: 12, Load Condition: Noload
-subject12_noload_trial01 = {"subjects_cycle_start_time": np.array(0.248),
+"subject12_noload_trial01" : {"subjects_cycle_start_time": np.array(0.248),
                              "subjects_cycle_end_time" : np.array(1.402),
                                  "footstrike_right_leg": np.array(1.402),
                                 "toeoff_time_right_leg": np.array(0.951),
@@ -177,9 +178,9 @@ subject12_noload_trial01 = {"subjects_cycle_start_time": np.array(0.248),
                                          "primary_legs": 'right',
                                        "secondary_legs": 'left',
                                                  "mass": np.array(67.14)
-                            }
+                            },
 
-subject12_noload_trial02 = {"subjects_cycle_start_time": np.array(0.273),
+"subject12_noload_trial02" : {"subjects_cycle_start_time": np.array(0.273),
                              "subjects_cycle_end_time" : np.array(1.416),
                                  "footstrike_right_leg": np.array(0.273),
                                 "toeoff_time_right_leg": np.array(0.981),
@@ -188,9 +189,9 @@ subject12_noload_trial02 = {"subjects_cycle_start_time": np.array(0.273),
                                          "primary_legs": 'right',
                                        "secondary_legs": 'left',
                                                  "mass": np.array(67.14)
-                            }
+                            },
 
-subject12_noload_trial03 = {"subjects_cycle_start_time": np.array(0.551),
+"subject12_noload_trial03" : {"subjects_cycle_start_time": np.array(0.551),
                              "subjects_cycle_end_time" : np.array(1.707),
                                  "footstrike_right_leg": np.array(0.551),
                                 "toeoff_time_right_leg": np.array(1.255),
@@ -199,9 +200,9 @@ subject12_noload_trial03 = {"subjects_cycle_start_time": np.array(0.551),
                                          "primary_legs": 'right',
                                        "secondary_legs": 'left',
                                                  "mass": np.array(67.14)
-                            }
+                            },
 # Subject No: 14, Load Condition: Noload
-subject14_noload_trial01 = {"subjects_cycle_start_time": np.array(0.630),
+"subject14_noload_trial01" : {"subjects_cycle_start_time": np.array(0.630),
                              "subjects_cycle_end_time" : np.array(1.707),
                                  "footstrike_right_leg": np.array(0.630),
                                 "toeoff_time_right_leg": np.array(1.286),
@@ -210,9 +211,9 @@ subject14_noload_trial01 = {"subjects_cycle_start_time": np.array(0.630),
                                          "primary_legs": 'right',
                                        "secondary_legs": 'left',
                                                  "mass": np.array(83.79)
-                            }
+                            },
 
-subject14_noload_trial02 = {"subjects_cycle_start_time": np.array(0.444),
+"subject14_noload_trial02" : {"subjects_cycle_start_time": np.array(0.444),
                              "subjects_cycle_end_time" : np.array(1.526),
                                  "footstrike_right_leg": np.array(0.444),
                                 "toeoff_time_right_leg": np.array(1.105),
@@ -221,9 +222,9 @@ subject14_noload_trial02 = {"subjects_cycle_start_time": np.array(0.444),
                                          "primary_legs": 'right',
                                        "secondary_legs": 'left',
                                                  "mass": np.array(83.79)
-                            }
+                            },
 
-subject14_noload_trial03 = {"subjects_cycle_start_time": np.array(0.474),
+"subject14_noload_trial03" : {"subjects_cycle_start_time": np.array(0.474),
                              "subjects_cycle_end_time" : np.array(1.571),
                                  "footstrike_right_leg": np.array(0.474),
                                 "toeoff_time_right_leg": np.array(1.142),
@@ -232,10 +233,11 @@ subject14_noload_trial03 = {"subjects_cycle_start_time": np.array(0.474),
                                          "primary_legs": 'right',
                                        "secondary_legs": 'left',
                                                  "mass": np.array(83.79)
-                            }
+                            }}
 ############################################################################
+loaded_dataset = {
 # Subject No: 05, Load Condition: Loaded
-subject05_loaded_trial01 = {"subjects_cycle_start_time": np.array(0.277),
+"subject05_loaded_trial01" : {"subjects_cycle_start_time": np.array(0.277),
                              "subjects_cycle_end_time" : np.array(1.475),
                                  "footstrike_right_leg": np.array(1.475),
                                 "toeoff_time_right_leg": np.array(1.089),
@@ -244,9 +246,9 @@ subject05_loaded_trial01 = {"subjects_cycle_start_time": np.array(0.277),
                                          "primary_legs": 'right',
                                        "secondary_legs": 'left',
                                                  "mass": np.array(149.86)
-                            }
+                            },
 
-subject05_loaded_trial02 = {"subjects_cycle_start_time": np.array(0.250),
+"subject05_loaded_trial02" : {"subjects_cycle_start_time": np.array(0.250),
                              "subjects_cycle_end_time" : np.array(1.427),
                                  "footstrike_right_leg": np.array(1.427),
                                 "toeoff_time_right_leg": np.array(1.015),
@@ -255,9 +257,9 @@ subject05_loaded_trial02 = {"subjects_cycle_start_time": np.array(0.250),
                                          "primary_legs": 'right',
                                        "secondary_legs": 'left',
                                                  "mass": np.array(149.86)
-                            }
+                            },
 
-subject05_loaded_trial03 = {"subjects_cycle_start_time": np.array(0.408),
+"subject05_loaded_trial03" : {"subjects_cycle_start_time": np.array(0.408),
                              "subjects_cycle_end_time" : np.array(1.520),
                                  "footstrike_right_leg": np.array(1.520),
                                 "toeoff_time_right_leg": np.array(1.133),
@@ -266,9 +268,9 @@ subject05_loaded_trial03 = {"subjects_cycle_start_time": np.array(0.408),
                                          "primary_legs": 'right',
                                        "secondary_legs": 'left',
                                                  "mass": np.array(149.86)
-                            }
+                            },
 # Subject No: 07, Load Condition: Loaded
-subject07_loaded_trial01 = {"subjects_cycle_start_time": np.array(0.307),
+"subject07_loaded_trial01" : {"subjects_cycle_start_time": np.array(0.307),
                              "subjects_cycle_end_time" : np.array(1.595),
                                  "footstrike_right_leg": np.array(1.595),
                                 "toeoff_time_right_leg": np.array(1.135),
@@ -277,9 +279,9 @@ subject07_loaded_trial01 = {"subjects_cycle_start_time": np.array(0.307),
                                          "primary_legs": 'right',
                                        "secondary_legs": 'left',
                                                  "mass": np.array(126.94)
-                            }
+                            },
 
-subject07_loaded_trial02 = {"subjects_cycle_start_time": np.array(0.277),
+"subject07_loaded_trial02" : {"subjects_cycle_start_time": np.array(0.277),
                              "subjects_cycle_end_time" : np.array(1.560),
                                  "footstrike_right_leg": np.array(1.560),
                                 "toeoff_time_right_leg": np.array(1.108),
@@ -288,9 +290,9 @@ subject07_loaded_trial02 = {"subjects_cycle_start_time": np.array(0.277),
                                          "primary_legs": 'right',
                                        "secondary_legs": 'left',
                                                  "mass": np.array(126.94)
-                            }
+                            },
 
-subject07_loaded_trial03 = {"subjects_cycle_start_time": np.array(0.288),
+"subject07_loaded_trial03" : {"subjects_cycle_start_time": np.array(0.288),
                              "subjects_cycle_end_time" : np.array(1.528),
                                  "footstrike_right_leg": np.array(1.528),
                                 "toeoff_time_right_leg": np.array(1.087),
@@ -299,9 +301,9 @@ subject07_loaded_trial03 = {"subjects_cycle_start_time": np.array(0.288),
                                          "primary_legs": 'right',
                                        "secondary_legs": 'left',
                                                  "mass": np.array(126.94)
-                            }
+                            },
 # Subject No: 09, Load Condition: Loaded
-subject09_loaded_trial01 = {"subjects_cycle_start_time": np.array(0.199),
+"subject09_loaded_trial01" : {"subjects_cycle_start_time": np.array(0.199),
                              "subjects_cycle_end_time" : np.array(1.562),
                                  "footstrike_right_leg": np.array(1.562),
                                 "toeoff_time_right_leg": np.array(1.111),
@@ -310,9 +312,9 @@ subject09_loaded_trial01 = {"subjects_cycle_start_time": np.array(0.199),
                                          "primary_legs": 'right',
                                        "secondary_legs": 'left',
                                                  "mass": np.array(125.09)
-                            }
+                            },
 
-subject09_loaded_trial02 = {"subjects_cycle_start_time": np.array(0.233),
+"subject09_loaded_trial02" : {"subjects_cycle_start_time": np.array(0.233),
                              "subjects_cycle_end_time" : np.array(1.541),
                                  "footstrike_right_leg": np.array(1.541),
                                 "toeoff_time_right_leg": np.array(1.111),
@@ -321,9 +323,9 @@ subject09_loaded_trial02 = {"subjects_cycle_start_time": np.array(0.233),
                                          "primary_legs": 'right',
                                        "secondary_legs": 'left',
                                                  "mass": np.array(125.09)
-                            }
+                            },
 
-subject09_loaded_trial03 = {"subjects_cycle_start_time": np.array(0.367),
+"subject09_loaded_trial03" : {"subjects_cycle_start_time": np.array(0.367),
                              "subjects_cycle_end_time" : np.array(1.669),
                                  "footstrike_right_leg": np.array(1.669),
                                 "toeoff_time_right_leg": np.array(1.222),
@@ -332,9 +334,9 @@ subject09_loaded_trial03 = {"subjects_cycle_start_time": np.array(0.367),
                                          "primary_legs": 'right',
                                        "secondary_legs": 'left',
                                                  "mass": np.array(125.09)
-                            }
+                            },
 # Subject No: 10, Load Condition: Loaded
-subject10_loaded_trial01 = {"subjects_cycle_start_time": np.array(1.056),
+"subject10_loaded_trial01" : {"subjects_cycle_start_time": np.array(1.056),
                              "subjects_cycle_end_time" : np.array(2.103),
                                  "footstrike_right_leg": np.array(0.909),
                                 "toeoff_time_right_leg": np.array(1.569),
@@ -343,9 +345,9 @@ subject10_loaded_trial01 = {"subjects_cycle_start_time": np.array(1.056),
                                          "primary_legs": 'left',
                                        "secondary_legs": 'right',
                                                  "mass": np.array(102.03)
-                            }
+                            },
 
-subject10_loaded_trial02 = {"subjects_cycle_start_time": np.array(1.254),
+"subject10_loaded_trial02" : {"subjects_cycle_start_time": np.array(1.254),
                              "subjects_cycle_end_time" : np.array(2.315),
                                  "footstrike_right_leg": np.array(1.625),
                                 "toeoff_time_right_leg": np.array(1.254),
@@ -354,9 +356,9 @@ subject10_loaded_trial02 = {"subjects_cycle_start_time": np.array(1.254),
                                          "primary_legs": 'right',
                                        "secondary_legs": 'left',
                                                  "mass": np.array(102.03)
-                            }
+                            },
 
-subject10_loaded_trial03 = {"subjects_cycle_start_time": np.array(0.952),
+"subject10_loaded_trial03" : {"subjects_cycle_start_time": np.array(0.952),
                              "subjects_cycle_end_time" : np.array(2.002),
                                  "footstrike_right_leg": np.array(1.329),
                                 "toeoff_time_right_leg": np.array(0.952),
@@ -365,9 +367,9 @@ subject10_loaded_trial03 = {"subjects_cycle_start_time": np.array(0.952),
                                          "primary_legs": 'right',
                                        "secondary_legs": 'left',
                                                  "mass": np.array(102.03)
-                            }
+                            },
 # Subject No: 11, Load Condition: Loaded
-subject11_loaded_trial01 = {"subjects_cycle_start_time": np.array(0.191),
+"subject11_loaded_trial01" : {"subjects_cycle_start_time": np.array(0.191),
                              "subjects_cycle_end_time" : np.array(1.315),
                                  "footstrike_right_leg": np.array(1.315),
                                 "toeoff_time_right_leg": np.array(0.938),
@@ -376,9 +378,9 @@ subject11_loaded_trial01 = {"subjects_cycle_start_time": np.array(0.191),
                                          "primary_legs": 'right',
                                        "secondary_legs": 'left',
                                                  "mass": np.array(122.81)
-                            }
+                            },
 
-subject11_loaded_trial02 = {"subjects_cycle_start_time": np.array(0.470),
+"subject11_loaded_trial02" : {"subjects_cycle_start_time": np.array(0.470),
                              "subjects_cycle_end_time" : np.array(1.607),
                                  "footstrike_right_leg": np.array(1.607),
                                 "toeoff_time_right_leg": np.array(1.232),
@@ -387,9 +389,9 @@ subject11_loaded_trial02 = {"subjects_cycle_start_time": np.array(0.470),
                                          "primary_legs": 'right',
                                        "secondary_legs": 'left',
                                                  "mass": np.array(122.81)
-                            }
+                            },
 
-subject11_loaded_trial03 = {"subjects_cycle_start_time": np.array(0.365),
+"subject11_loaded_trial03" : {"subjects_cycle_start_time": np.array(0.365),
                              "subjects_cycle_end_time" : np.array(1.516),
                                  "footstrike_right_leg": np.array(1.516),
                                 "toeoff_time_right_leg": np.array(1.148),
@@ -398,9 +400,9 @@ subject11_loaded_trial03 = {"subjects_cycle_start_time": np.array(0.365),
                                          "primary_legs": 'right',
                                        "secondary_legs": 'left',
                                                  "mass": np.array(122.81)
-                            }
+                            },
 # Subject No: 12, Load Condition: Loaded
-subject12_loaded_trial01 = {"subjects_cycle_start_time": np.array(0.230),
+"subject12_loaded_trial01" : {"subjects_cycle_start_time": np.array(0.230),
                              "subjects_cycle_end_time" : np.array(1.510),
                                  "footstrike_right_leg": np.array(1.510),
                                 "toeoff_time_right_leg": np.array(1.047),
@@ -409,9 +411,9 @@ subject12_loaded_trial01 = {"subjects_cycle_start_time": np.array(0.230),
                                          "primary_legs": 'right',
                                        "secondary_legs": 'left',
                                                  "mass": np.array(105.23)
-                            }
+                            },
 
-subject12_loaded_trial02 = {"subjects_cycle_start_time": np.array(0.130),
+"subject12_loaded_trial02" : {"subjects_cycle_start_time": np.array(0.130),
                              "subjects_cycle_end_time" : np.array(1.438),
                                  "footstrike_right_leg": np.array(1.438),
                                 "toeoff_time_right_leg": np.array(0.973),
@@ -420,9 +422,9 @@ subject12_loaded_trial02 = {"subjects_cycle_start_time": np.array(0.130),
                                          "primary_legs": 'right',
                                        "secondary_legs": 'left',
                                                  "mass": np.array(105.23)
-                            }
+                            },
 
-subject12_loaded_trial03 = {"subjects_cycle_start_time": np.array(0.365),
+"subject12_loaded_trial03" : {"subjects_cycle_start_time": np.array(0.365),
                              "subjects_cycle_end_time" : np.array(1.683),
                                  "footstrike_right_leg": np.array(1.683),
                                 "toeoff_time_right_leg": np.array(1.212),
@@ -431,9 +433,9 @@ subject12_loaded_trial03 = {"subjects_cycle_start_time": np.array(0.365),
                                          "primary_legs": 'right',
                                        "secondary_legs": 'left',
                                                  "mass": np.array(105.23)
-                            }
+                            },
 # Subject No: 14, Load Condition: Loaded
-subject14_loaded_trial01 = {"subjects_cycle_start_time": np.array(0.271),
+"subject14_loaded_trial01" : {"subjects_cycle_start_time": np.array(0.271),
                              "subjects_cycle_end_time" : np.array(1.422),
                                  "footstrike_right_leg": np.array(0.849),
                                 "toeoff_time_right_leg": np.array(1.579),
@@ -442,9 +444,9 @@ subject14_loaded_trial01 = {"subjects_cycle_start_time": np.array(0.271),
                                          "primary_legs": 'left',
                                        "secondary_legs": 'right',
                                                  "mass": np.array(122.52)
-                            }
+                            },
 
-subject14_loaded_trial02 = {"subjects_cycle_start_time": np.array(0.581),
+"subject14_loaded_trial02" : {"subjects_cycle_start_time": np.array(0.581),
                              "subjects_cycle_end_time" : np.array(1.691),
                                  "footstrike_right_leg": np.array(1.123),
                                 "toeoff_time_right_leg": np.array(1.853),
@@ -453,9 +455,9 @@ subject14_loaded_trial02 = {"subjects_cycle_start_time": np.array(0.581),
                                          "primary_legs": 'left',
                                        "secondary_legs": 'right',
                                                  "mass": np.array(122.52)
-                            }
+                            },
 
-subject14_loaded_trial03 = {"subjects_cycle_start_time": np.array(0.581),
+"subject14_loaded_trial03" : {"subjects_cycle_start_time": np.array(0.581),
                              "subjects_cycle_end_time" : np.array(1.772),
                                  "footstrike_right_leg": np.array(1.185),
                                 "toeoff_time_right_leg": np.array(1.931),
@@ -464,4 +466,4 @@ subject14_loaded_trial03 = {"subjects_cycle_start_time": np.array(0.581),
                                          "primary_legs": 'left',
                                        "secondary_legs": 'right',
                                                  "mass": np.array(122.52)
-                            }
+                            }}
