@@ -36,6 +36,30 @@ def musclemoment_calc(data,gl,side):
     gpc, musclemoment = pp.data_by_pgc(time,musclemoment,gl,side)
     musclemoment = np.interp(gait_cycle,gpc,musclemoment)
     return musclemoment
+def metabolic_power_energy(SubjectNo,TrialNo,subject_mass,Directory,gl):
+    """This function has been developed, seperated from the 'pareto_data_extraction' function, 
+       to calculate the metabolic power and energy for cases in which we do not have pareto simulations.
+       This will be mostly used for simulation of Unassisted subjects.
+
+    ###########################################################################################
+    * This function has been generalized for a subject to be utilized in another function.
+    * Energy calculations have been normalized with subjects mass.
+    """
+    gait_cycle = np.linspace(0,100,1000)
+    # Directory of each .sto files
+    metabolic_power_data_dir = '../subject{}/noloaded/Subject{}_NoLoaded_Dataset/{}/loadedwalking_subject{}_noload_free_trial{}_cmc_Actuation_force.sto'\
+                                .format(SubjectNo,SubjectNo,Directory,SubjectNo,TrialNo)
+    # Sto to Numpy
+    metabolic_power_data = dataman.storage2numpy(metabolic_power_data_dir)
+    time = metabolic_power_data['time']
+    gait_cycle = np.linspace(time[0],time[-1],1000)
+    basal = metabolic_power_data['metabolic_power_BASAL']
+    total = metabolic_power_data['metabolic_power_TOTAL']
+    main_metabolics = basal + total
+    metabolic_cost = np.interp(gait_cycle,time,main_metabolics)
+    metabolic_energy = pp.avg_over_gait_cycle(metabolic_power_data['time'], main_metabolics,cycle_duration=gl.cycle_end-gl.cycle_start, cycle_start=gl.cycle_start)
+    MetabolicEnergy_Data = metabolic_energy/subject_mass
+    return metabolic_cost
 def metabolic_energy_reduction(data,unassist_data):
     reduction = np.zeros(len(data))
     for i in range(len(data)):
@@ -149,6 +173,10 @@ def metabolic_energy_mass_added_pareto(configuration,unassisted_metabolic,m_wais
     else:
         return Metabolic_Change_Hip,Metabolic_Change_Thigh,Metabolic_Change_Shank,AddMass_MetabolicChange,Inertia_Shank_Metabolic,Inertia_Thigh,Inertia_Shank
 #####################################################################################
+# Functions related to pareto data
+#****************************************************************
+# These functions have been checked and confirmed but not tested yet. There is no need for any major edit on these functions
+#****************************************************************
 def pareto_data_extraction(SubjectNo,TrialNo,subject_mass,Configuration,gl,calculatenergy=True):
     """This function is designed to get the configuration and optimal force that has been used to perform
     simulations and reporting most of the needed data. This function calculates the following data:
@@ -244,31 +272,8 @@ def pareto_data_extraction(SubjectNo,TrialNo,subject_mass,Configuration,gl,calcu
             c+=1
     return HipActuator_Torque_Data,KneeActuator_Torque_Data,HipActuator_Power_Data,KneeActuator_Power_Data,\
                MetabolicCost_Data,HipActuatorEnergy_Data,KneeActuatorEnergy_Data,MetabolicEnergy_Data
-def metabolic_power_energy(SubjectNo,TrialNo,subject_mass,Directory,gl):
-    """This function has been developed, seperated from the 'pareto_data_extraction' function, 
-       to calculate the metabolic power and energy for cases in which we do not have pareto simulations.
-       This will be mostly used for simulation of Unassisted subjects.
-
-    ###########################################################################################
-    * This function has been generalized for a subject to be utilized in another function.
-    * Energy calculations have been normalized with subjects mass.
-    """
-    gait_cycle = np.linspace(0,100,1000)
-    # Directory of each .sto files
-    metabolic_power_data_dir = '../subject{}/noloaded/Subject{}_NoLoaded_Dataset/{}/loadedwalking_subject{}_noload_free_trial{}_cmc_Actuation_force.sto'\
-                                .format(SubjectNo,SubjectNo,Directory,SubjectNo,TrialNo)
-    # Sto to Numpy
-    metabolic_power_data = dataman.storage2numpy(metabolic_power_data_dir)
-    time = metabolic_power_data['time']
-    gait_cycle = np.linspace(time[0],time[-1],1000)
-    basal = metabolic_power_data['metabolic_power_BASAL']
-    total = metabolic_power_data['metabolic_power_TOTAL']
-    main_metabolics = basal + total
-    metabolic_cost = np.interp(gait_cycle,time,main_metabolics)
-    metabolic_energy = pp.avg_over_gait_cycle(metabolic_power_data['time'], main_metabolics,cycle_duration=gl.cycle_end-gl.cycle_start, cycle_start=gl.cycle_start)
-    MetabolicEnergy_Data = metabolic_energy/subject_mass
-    return metabolic_cost
-
+def pareto_data_subjects():
+    
 #####################################################################################
 #####################################################################################
 mono_m_waist = 3
