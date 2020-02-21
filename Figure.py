@@ -42,22 +42,34 @@ def construct_gl_mass_trial(subjectno,trialno,loadcond='noload'):
 #################################################################
 # Metabolic Energy Reduction/ Muscles Moment calculation/ Metabolic energy calculations in pareto curve
 #****************************************************************
-def musclemoment_calc(data,gl,side):
-    muscles_name = ['glut_med1_r','glut_med2_r','glut_med3_r','glut_min1_r','glut_min2_r','glut_min3_r','semimem_r',\
-                    'semiten_r','bifemlh_r','bifemsh_r','sar_r','add_long_r','add_brev_r','add_mag1_r','add_mag2_r',\
-                    'add_mag3_r','tfl_r','pect_r','grac_r','glut_max1_r','glut_max2_r','glut_max3_r','iliacus_r',\
-                    'psoas_r','quad_fem_r','gem_r','peri_r','rect_fem_r','vas_med_r','vas_int_r','vas_lat_r','med_gas_r',\
-                    'lat_gas_r','soleus_r','tib_post_r','flex_dig_r','flex_hal_r','tib_ant_r','per_brev_r','per_long_r',\
-                    'per_tert_r','ext_dig_r','ext_hal_r']
+def group_muscles_activation(Directory,gl,SubjectNo,TrialNo):
+    metabolic_power_data_dir = '../subject{}/noloaded/Subject{}_NoLoaded_Dataset/{}/loadedwalking_subject{}_noload_free_trial{}_cmc_states.sto'\
+                                .format(SubjectNo,SubjectNo,Directory,SubjectNo,TrialNo)
+    
+def musclemoment_calc(data_r,data_l,gl):
+    """This function returns muscles moment by getting their numpy file for left and right sides.
+    """
+    muscles_name = ['add_brev','add_long','add_mag3','add_mag4','add_mag2','add_mag1','bifemlh','bifemsh','ext_dig',\
+                    'ext_hal','flex_dig','flex_hal','lat_gas','med_gas','glut_max1','glut_max2','glut_max3','glut_med1',\
+                    'glut_med2','glut_med3','glut_min1','glut_min2','glut_min3','grac','iliacus','per_brev','per_long',\
+                    'peri','psoas','rect_fem','sar','semimem','semiten','soleus','tfl','tib_ant','tib_post','vas_int',\
+                    'vas_lat','vas_med']
     gait_cycle = np.linspace(0,100,1000)
-    time = data['time']
-    musclemoment = np.zeros([data.shape[0]])
+    time_r = data_r['time']
+    time_l = data_l['time']
+    musclemoment_r = np.zeros([data_r.shape[0]])
+    musclemoment_l = np.zeros([data_l.shape[0]])
     for i in range(len(muscles_name)):
-        musclemoment += data[muscles_name[i]]
-    gpc, musclemoment = pp.data_by_pgc(time,musclemoment,gl,side)
-    musclemoment = np.interp(gait_cycle,gpc,musclemoment)
+        musclemoment_r += data_r[muscles_name[i]+'_r']
+        musclemoment_l += data_l[muscles_name[i]+'_l']
+    gpc = np.linspace(0,100,1000)
+    gpc_r,shifted_data_r = pp.data_by_pgc(time_r,musclemoment_r,gl,side='right')
+    gpc_l,shifted_data_l = pp.data_by_pgc(time_l,musclemoment_l,gl,side='left')
+    main_data_r = np.interp(gpc,gpc_r,shifted_data_r)
+    main_data_l = np.interp(gpc,gpc_l,shifted_data_l)
+    musclemoment = nanmean([main_data_r,main_data_l],axis=0)
     return musclemoment
-def metabolic_power_energy(SubjectNo,TrialNo,subject_mass,Directory,gl):
+def metabolic_power_energy(Directory,gl,SubjectNo,TrialNo,subject_mass):
     """This function has been developed, seperated from the 'pareto_data_extraction' function, 
        to calculate the metabolic power and energy for cases in which we do not have pareto simulations.
        This will be mostly used for simulation of Unassisted subjects.
@@ -346,7 +358,12 @@ def pareto_data_subjects(configuration):
 
     return HipActuator_Torque_Data,KneeActuator_Torque_Data,HipActuator_Power_Data,KneeActuator_Power_Data,\
                MetabolicCost_Data,HipActuatorEnergy_Data,KneeActuatorEnergy_Data,MetabolicEnergy_Data
-            
+#####################################################################################
+# Functions related to data extraction which will be used for extracting RRA data, Unassisted subjects
+# data and finally data for the specific weights. This data extraction functions include muscles moment,
+# muscles activation, and other needed data.
+#****************************************************************
+def specific_weight_data_extraction():
 #####################################################################################
 #####################################################################################
 mono_m_waist = 3
