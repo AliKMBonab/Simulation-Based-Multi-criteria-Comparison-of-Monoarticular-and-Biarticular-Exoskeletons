@@ -39,12 +39,23 @@ def construct_gl_mass_trial(subjectno,trialno,loadcond='noload'):
                                 right_strike= data["footstrike_right_leg"],
                                 right_toeoff= data["toeoff_time_right_leg"])
     return gl, mass, trial_num 
-#################################################################
+################################################################# 
 # Metabolic Energy Reduction/ Muscles Moment calculation/ Metabolic energy calculations in pareto curve
 #****************************************************************
-def group_muscles_activation(Directory,gl,SubjectNo,TrialNo):
-    metabolic_power_data_dir = '../subject{}/noloaded/Subject{}_NoLoaded_Dataset/{}/loadedwalking_subject{}_noload_free_trial{}_cmc_states.sto'\
-                                .format(SubjectNo,SubjectNo,Directory,SubjectNo,TrialNo)
+def group_muscles_activation(Directory,gl,SubjectNo,TrialNo,loadcond='noload'):
+    """This function returns """
+    # The name of muscles contributing on hip flexion and extension
+    hip_muscles_name = ['add_brev','add_long','add_mag3','add_mag2','add_mag1','bifemlh',\
+                        'glut_max1','glut_max2','glut_max3','glut_med1','glut_min1','glut_min3',\
+                        'grac','iliacus','psoas','rect_fem','sar','semimem','semiten','tfl']
+    # The name of muscles contributing on knee flexion and extension
+    knee_muscles_name = ['bifemlh','bifemsh','ext_dig','lat_gas','med_gas','grac',\
+                         'rect_fem','sar','semimem','semiten','vas_int','vas_lat','vas_med']
+    # The name of nine representitive muscles on lower extermity
+    nine_rep_muscles_name = ['bifemsh','glut_max1','psoas','lat_gas','rect_fem','semimem','soleus','tib_ant','vas_lat']
+    # Establishing directory
+    metabolic_power_data_dir = '../subject{}/noloaded/Subject{}_NoLoaded_Dataset/{}/loadedwalking_subject{}_{}_free_trial{}_cmc_states.sto'\
+                                .format(SubjectNo,SubjectNo,Directory,SubjectNo,loadcond,TrialNo)
     
 def musclemoment_calc(data_r,data_l,gl):
     """This function returns muscles moment by getting their numpy file for left and right sides.
@@ -69,7 +80,7 @@ def musclemoment_calc(data_r,data_l,gl):
     main_data_l = np.interp(gpc,gpc_l,shifted_data_l)
     musclemoment = nanmean([main_data_r,main_data_l],axis=0)
     return musclemoment
-def metabolic_power_energy(Directory,gl,SubjectNo,TrialNo,subject_mass):
+def metabolic_power_energy(Directory,gl,SubjectNo,TrialNo,subject_mass,loadcond='noload'):
     """This function has been developed, seperated from the 'pareto_data_extraction' function, 
        to calculate the metabolic power and energy for cases in which we do not have pareto simulations.
        This will be mostly used for simulation of Unassisted subjects.
@@ -80,8 +91,8 @@ def metabolic_power_energy(Directory,gl,SubjectNo,TrialNo,subject_mass):
     """
     gait_cycle = np.linspace(0,100,1000)
     # Directory of each .sto files
-    metabolic_power_data_dir = '../subject{}/noloaded/Subject{}_NoLoaded_Dataset/{}/loadedwalking_subject{}_noload_free_trial{}_cmc_Actuation_force.sto'\
-                                .format(SubjectNo,SubjectNo,Directory,SubjectNo,TrialNo)
+    metabolic_power_data_dir = '../subject{}/noloaded/Subject{}_NoLoaded_Dataset/{}/loadedwalking_subject{}_{}_free_trial{}_cmc_Actuation_force.sto'\
+                                .format(SubjectNo,SubjectNo,Directory,SubjectNo,loadcond,TrialNo)
     # Sto to Numpy
     metabolic_power_data = dataman.storage2numpy(metabolic_power_data_dir)
     time = metabolic_power_data['time']
@@ -211,7 +222,7 @@ def metabolic_energy_mass_added_pareto(configuration,unassisted_metabolic,m_wais
 #####################################################################################
 # Functions related to pareto data
 #****************************************************************
-def pareto_data_extraction(SubjectNo,TrialNo,subject_mass,Configuration,gl,calculatenergy=True):
+def pareto_data_extraction(SubjectNo,TrialNo,subject_mass,Configuration,gl,loadcond='noload',calculatenergy=True):
     """This function is designed to get the configuration and optimal force that has been used to perform
     simulations and reporting most of the needed data. This function calculates the following data:
     
@@ -248,12 +259,12 @@ def pareto_data_extraction(SubjectNo,TrialNo,subject_mass,Configuration,gl,calcu
     for hip_max_control in hip_list:
         for knee_max_control in knee_list:
             # Directory of each .sto files
-            actuator_torque_data_dir= '../subject{}/noloaded/Subject{}_NoLoaded_Dataset/{}/H{}K{}/loadedwalking_subject{}_noload_free_trial{}_cmc_Actuation_force.sto'\
-            .format(SubjectNo,SubjectNo,Configuration,int(hip_max_control*optimal_force),int(knee_max_control*optimal_force),SubjectNo,TrialNo)
-            actuator_power_data_dir= '../subject{}/noloaded/Subject{}_NoLoaded_Dataset/{}/H{}K{}/loadedwalking_subject{}_noload_free_trial{}_cmc_Actuation_power.sto'\
-            .format(SubjectNo,SubjectNo,Configuration,int(hip_max_control*optimal_force),int(knee_max_control*optimal_force),SubjectNo,TrialNo)
-            metabolic_power_data_dir = '../subject{}/noloaded/Subject{}_NoLoaded_Dataset/{}/H{}K{}/loadedwalking_subject{}_noload_free_trial{}_cmc_ProbeReporter_probes.sto'\
-            .format(SubjectNo,SubjectNo,Configuration,int(hip_max_control*optimal_force),int(knee_max_control*optimal_force),SubjectNo,TrialNo)
+            actuator_torque_data_dir= '../subject{}/noloaded/Subject{}_NoLoaded_Dataset/{}/H{}K{}/loadedwalking_subject{}_{}_free_trial{}_cmc_Actuation_force.sto'\
+            .format(SubjectNo,SubjectNo,Configuration,int(hip_max_control*optimal_force),int(knee_max_control*optimal_force),SubjectNo,loadcond,TrialNo)
+            actuator_power_data_dir= '../subject{}/noloaded/Subject{}_NoLoaded_Dataset/{}/H{}K{}/loadedwalking_subject{}_{}_free_trial{}_cmc_Actuation_power.sto'\
+            .format(SubjectNo,SubjectNo,Configuration,int(hip_max_control*optimal_force),int(knee_max_control*optimal_force),SubjectNo,loadcond,TrialNo)
+            metabolic_power_data_dir = '../subject{}/noloaded/Subject{}_NoLoaded_Dataset/{}/H{}K{}/loadedwalking_subject{}_{}_free_trial{}_cmc_ProbeReporter_probes.sto'\
+            .format(SubjectNo,SubjectNo,Configuration,int(hip_max_control*optimal_force),int(knee_max_control*optimal_force),SubjectNo,loadcond,TrialNo)
             # Sto to Numpy
             actuator_torque_data = dataman.storage2numpy(actuator_torque_data_dir)
             actuator_power_data = dataman.storage2numpy(actuator_power_data_dir)
