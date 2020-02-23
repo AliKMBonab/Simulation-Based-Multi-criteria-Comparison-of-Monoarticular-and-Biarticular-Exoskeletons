@@ -185,7 +185,7 @@ def adding_mass_metabolic(m_waist,m_thigh,m_shank,I_thigh,I_shank,I_leg=2.52):
     I_shank_ratio = (I_leg + I_shank)/I_leg
     inertia_metabolic_shank = (0.63749 + (0.40916*I_shank_ratio))
     return  mass_metabolic_waist,mass_metabolic_thigh,mass_metabolic_shank,inertia_metabolic_thigh,inertia_metabolic_shank
-def metabolic_energy_mass_added_pareto(configuration,unassisted_metabolic,m_waist,m_thigh,m_shank,motor_max_torque=2,motor_inertia=0.000506,thigh_com=0.23,shank_com=0.18,leg_inertia=2.52,calc_metabolic_cost=True):
+def metabolic_energy_mass_added_pareto(configuration,unassisted_metabolic,InertialProp_Dic,calc_metabolic_cost=True):
     """This function calculates the following data in a performed pareto simulations:
     - waist metabolic change
     - waist metabolic (optional)
@@ -199,8 +199,18 @@ def metabolic_energy_mass_added_pareto(configuration,unassisted_metabolic,m_wais
     - default values for actuator have been selected from Maxon Motor EC90 250W
     - default values for center of masses have been selected according to the desgin of exoskeletons
     - leg inertia were selected according to the inertia reported by reference paper
+    #=======================================================================================
+    * Default: motor_max_torque=2, motor_inertia=0.000506, thigh_com=0.23, shank_com=0.18, leg_inertia=2.52
     """
     # initialization
+    m_waist = InertialProp_Dic["m_waist"]
+    m_thigh = InertialProp_Dic["m_thigh"]
+    m_shank = InertialProp_Dic["m_shank"]
+    motor_max_torque = InertialProp_Dic["motor_max_torque"]
+    motor_inertia = InertialProp_Dic["motor_inertia"]
+    thigh_com =  InertialProp_Dic["thigh_com"]
+    shank_com =  InertialProp_Dic["shank_com"]
+    leg_inertia = InertialProp_Dic["leg_inertia"]
     Hip_weights = [70,60,50,40,30]    # Hip Weight may need to be changed according to pareto simulations
     Knee_weights = [70,60,50,40,30]   # Knee Weight may need to be changed according to pareto simulations
     Metabolic_Change_Hip = np.zeros(len(Hip_weights)*len(Knee_weights))
@@ -214,9 +224,6 @@ def metabolic_energy_mass_added_pareto(configuration,unassisted_metabolic,m_wais
     Inertia_Shank_Metabolic = np.zeros(len(Hip_weights)*len(Knee_weights))
     Inertia_Thigh = np.zeros(len(Hip_weights)*len(Knee_weights))
     Inertia_Shank = np.zeros(len(Hip_weights)*len(Knee_weights))
-    # Due to higher weight of monoarticular in thigh we need to modify the thigh center of mass
-    if configuration == 'monoarticular':
-        thigh_com = 0.23 + 0.07
     # the masse added two sides
     m_waist = 2*m_waist
     m_thigh = 2*m_thigh
