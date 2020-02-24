@@ -39,10 +39,48 @@ def construct_gl_mass_trial(subjectno,trialno,loadcond='noload'):
                                 right_strike= data["footstrike_right_leg"],
                                 right_toeoff= data["toeoff_time_right_leg"])
     return gl, mass, trial_num 
+def data_extraction(Subject_Dic):
+    """This function has been developed to extract and modify data.
+    """
+    # Reading Required Data
+    directory = Subject_Dic["Directory"]
+    right_param = Subject_Dic["Right_Parameter"]
+    left_param = Subject_Dic["Left_Parameter"]
+    gl = Subject_Dic["gl"]
+    gait_cycle = np.linspace(0,100,1000)
+    numpy_data = dataman.storage2numpy(directory)
+    time = numpy_data['time']
+    right_data = numpy_data[right_param]
+    left_data = numpy_data[left_param]
+    gpc_r, shifted_right_data = pp.data_by_pgc(time,right_data,gl,side='right')
+    gpc_l, shidted_left_data  = pp.data_by_pgc(time,left_data,gl,side='left')
+    interperted_right_data = np.interp(gait_cycle,gpc_r,shifted_right_data)
+    interperted_left_data  = np.interp(gait_cycle,gpc_l,shifted_left_data)
+    final_data = nanmean([interperted_right_data,interperted_left_data],axis=0)
+    return final_data
+def actuators_normal_energy_calc(Subject_Dic,isabs=True):
+    """This function developed to calculate the consumed energy by actuators"""
+    directory = Subject_Dic["Directory"]
+    right_param = Subject_Dic["Right_Parameter"]
+    left_param = Subject_Dic["Left_Parameter"]
+    gl = Subject_Dic["gl"]
+    subject_mass = Subject_Dic["Subject_Mass"]
+    numpy_data = dataman.storage2numpy(directory)
+    time = numpy_data['time']
+    right_data = numpy_data[right_param]
+    left_data = numpy_data[left_param]
+    if isabs == True:
+        energy = pp.avg_over_gait_cycle(time, np.abs(right_data),cycle_duration=gl.cycle_end-gl.cycle_start, cycle_start=gl.cycle_start)
+               + pp.avg_over_gait_cycle(time, np.abs(left_data),cycle_duration=gl.cycle_end-gl.cycle_start, cycle_start=gl.cycle_start)
+    else:
+        energy = pp.avg_over_gait_cycle(time, right_data,cycle_duration=gl.cycle_end-gl.cycle_start, cycle_start=gl.cycle_start)
+               + pp.avg_over_gait_cycle(time,left_data,cycle_duration=gl.cycle_end-gl.cycle_start, cycle_start=gl.cycle_start) 
+    normalized_energy = energy/subject_mass
+    return normalized_energy
 ################################################################# 
 # Metabolic Energy Reduction/ Muscles Moment calculation/ Metabolic energy calculations in pareto curve
 #****************************************************************
-def musclemoment_calc(data_r,data_l,gl):
+def musclemoment_calc(Subject_Dic):
     """This function returns muscles moment by getting their numpy file for left and right sides.
     """
     muscles_name = ['add_brev','add_long','add_mag3','add_mag4','add_mag2','add_mag1','bifemlh','bifemsh','ext_dig',\
@@ -51,6 +89,11 @@ def musclemoment_calc(data_r,data_l,gl):
                     'peri','psoas','rect_fem','sar','semimem','semiten','soleus','tfl','tib_ant','tib_post','vas_int',\
                     'vas_lat','vas_med']
     gait_cycle = np.linspace(0,100,1000)
+    right_directory = Subject_Dic["Right_Directory"]
+    left_directory = Subject_Dic["Left_Directory"]
+    gl = Subject_Dic["gl"]
+    data_r = dataman.storage2numpy(right_directory)
+    data_l = dataman.storage2numpy(left_directory)
     time_r = data_r['time']
     time_l = data_l['time']
     musclemoment_r = np.zeros([data_r.shape[0]])
@@ -65,7 +108,7 @@ def musclemoment_calc(data_r,data_l,gl):
     main_data_l = np.interp(gpc,gpc_l,shifted_data_l)
     musclemoment = nanmean([main_data_r,main_data_l],axis=0)
     return musclemoment
-def metabolic_power_energy(Subject_Dic,loadcond='noload'):
+def metabolic_normal_energy(Subject_Dic):
     """This function has been developed, seperated from the 'pareto_data_extraction' function, 
        to calculate the metabolic power and energy for cases in which we do not have pareto simulations.
        This will be mostly used for simulation of Unassisted subjects.
@@ -74,15 +117,10 @@ def metabolic_power_energy(Subject_Dic,loadcond='noload'):
     * This function has been generalized for a subject to be utilized in another function.
     * Energy calculations have been normalized with subjects mass.
     """
-    Directory = Subject_Dic["Directory"]
-    SubjectNo = Subject_Dic["SubjectNo"]
-    TrialNo = Subject_Dic["TrialNo"]
+    metabolic_power_data_dir = Subject_Dic["Directory"]
     gl = Subject_Dic["gl"]
     subject_mass = Subject_Dic["subject_mass"]
     gait_cycle = np.linspace(0,100,1000)
-    # Directory of each .sto files
-    metabolic_power_data_dir = '../subject{}/noloaded/Subject{}_NoLoaded_Dataset/{}/loadedwalking_subject{}_{}_free_trial{}_cmc_Actuation_force.sto'\
-                                .format(SubjectNo,SubjectNo,Directory,SubjectNo,loadcond,TrialNo)
     # Sto to Numpy
     metabolic_power_data = dataman.storage2numpy(metabolic_power_data_dir)
     time = metabolic_power_data['time']
@@ -93,7 +131,7 @@ def metabolic_power_energy(Subject_Dic,loadcond='noload'):
     metabolic_cost = np.interp(gait_cycle,time,main_metabolics)
     metabolic_energy = pp.avg_over_gait_cycle(metabolic_power_data['time'], main_metabolics,cycle_duration=gl.cycle_end-gl.cycle_start, cycle_start=gl.cycle_start)
     MetabolicEnergy_Data = metabolic_energy/subject_mass
-    return metabolic_cost
+    return metabolic_energy
 def metabolic_energy_reduction(data,unassist_data):
     reduction = np.zeros(len(data))
     for i in range(len(data)):
@@ -273,8 +311,6 @@ def pareto_data_extraction(Subject_Dic,loadcond='noload',calculatenergy=True):
     
     - Torque profiles of actuators
     - Power Profiles of actuators
-    - Speed profiles of actuators
-    - Instantenous metabolic power of simulated subjects
     - The energy consumption of assistive actuators(optional)
     - Metabolic energy consumption(optional)
 
@@ -282,6 +318,8 @@ def pareto_data_extraction(Subject_Dic,loadcond='noload',calculatenergy=True):
     * This function has been generalized for a subject to be utilized in another function.
     * Energy calculations have been normalized with subjects mass.
     * Some parts of this function can be changed to be used in another simulations.
+    * Performed simulations have labeling issue (trial02 for all subjects), therefore trial has
+      been modified without loosing generality of function.
     """
     # Configurations of Pareto Simulations
     Directory = Subject_Dic["Directory"]
@@ -301,9 +339,6 @@ def pareto_data_extraction(Subject_Dic,loadcond='noload',calculatenergy=True):
     KneeActuator_Torque_Data = np.zeros([1000,len(hip_list)*len(knee_list)])
     HipActuator_Power_Data = np.zeros([1000,len(hip_list)*len(knee_list)])
     KneeActuator_Power_Data = np.zeros([1000,len(hip_list)*len(knee_list)])
-    MetabolicCost_Data = np.zeros([1000,len(hip_list)*len(knee_list)])
-    HipMuscleMoment_Data = np.zeros([1000,len(hip_list)*len(knee_list)])
-    KneeMuscleMoment_Data = np.zeros([1000,len(hip_list)*len(knee_list)])
     c = 0
     # Following part extracts the data for a subject
     for hip_max_control in hip_list:
@@ -315,59 +350,56 @@ def pareto_data_extraction(Subject_Dic,loadcond='noload',calculatenergy=True):
             .format(SubjectNo,Directory,int(hip_max_control*optimal_force),int(knee_max_control*optimal_force),SubjectNo,loadcond,TrialNo)
             metabolic_power_data_dir = '../subject{}/{}/H{}K{}/loadedwalking_subject{}_{}_free_trial{}_cmc_ProbeReporter_probes.sto'\
             .format(SubjectNo,Directory,int(hip_max_control*optimal_force),int(knee_max_control*optimal_force),SubjectNo,loadcond,TrialNo)
-            # Sto to Numpy
-            actuator_torque_data = dataman.storage2numpy(actuator_torque_data_dir)
-            actuator_power_data = dataman.storage2numpy(actuator_power_data_dir)
-            metabolic_power_data = dataman.storage2numpy(metabolic_power_data_dir)
-            time = actuator_power_data['time']
-            # time and gl class and reading specific columns of data
-            knee_actuator_torque = actuator_torque_data['Knee_Right_Actuator']
-            hip_actuator_torque = actuator_torque_data['Hip_Right_Actuator']
-            knee_actuator_power = actuator_power_data['Knee_Right_Actuator']
-            hip_actuator_power = actuator_power_data['Hip_Right_Actuator']
-            knee_actuator_torque_l = actuator_torque_data['Knee_Left_Actuator']
-            hip_actuator_torque_l = actuator_torque_data['Hip_Left_Actuator']
-            knee_actuator_power_l = actuator_power_data['Knee_Left_Actuator']
-            hip_actuator_power_l = actuator_power_data['Hip_Left_Actuator']
-            # metabolic cost
-            total_metabolic_power = metabolic_power_data['metabolic_power_TOTAL'] + metabolic_power_data['metabolic_power_BASAL']
-            # Calculate Metabolic energy and the energy consumption of actuators
-            if calculatenergy == True:
-                hip_actuator_energy = pp.avg_over_gait_cycle(time, np.abs(hip_actuator_power),cycle_duration=gl.cycle_end-gl.cycle_start, cycle_start=gl.cycle_start)
-                knee_actuator_energy = pp.avg_over_gait_cycle(time, np.abs(knee_actuator_power),cycle_duration=gl.cycle_end-gl.cycle_start, cycle_start=gl.cycle_start)
-                metabolic_energy = pp.avg_over_gait_cycle(metabolic_power_data['time'], total_metabolic_power,cycle_duration=gl.cycle_end-gl.cycle_start, cycle_start=gl.cycle_start)
-                HipActuatorEnergy_Data[c] = hip_actuator_energy/subject_mass
-                KneeActuatorEnergy_Data[c] = knee_actuator_energy/subject_mass
-                MetabolicEnergy_Data[c] = metabolic_energy/subject_mass
-            # Shifting raw data to a gait cylce normarlized to pgc
-            gpc, knee_actuator_torque = pp.data_by_pgc(time,knee_actuator_torque,gl,side='right')
-            gpc, hip_actuator_torque = pp.data_by_pgc(time,hip_actuator_torque,gl,side='right')
-            gpc, knee_actuator_power = pp.data_by_pgc(time,knee_actuator_power,gl,side='right')
-            gpc, hip_actuator_power = pp.data_by_pgc(time,hip_actuator_power,gl,side='right')
-            gpc_l, knee_actuator_torque_l = pp.data_by_pgc(time,knee_actuator_torque_l,gl,side='left')
-            gpc_l, hip_actuator_torque_l = pp.data_by_pgc(time,hip_actuator_torque_l,gl,side='left')
-            gpc_l, knee_actuator_power_l = pp.data_by_pgc(time,knee_actuator_power_l,gl,side='left')
-            gpc_l, hip_actuator_power_l = pp.data_by_pgc(time,hip_actuator_power_l,gl,side='left')
-            gpc_metabolic, total_metabolic_power = pp.data_by_pgc(metabolic_power_data['time'],total_metabolic_power,gl,side='right')
-            # Interpreting the shifted and normalized data to a single pgc
-            knee_actuator_torque = np.interp(gait_cycle,gpc,knee_actuator_torque)
-            hip_actuator_torque = np.interp(gait_cycle,gpc,hip_actuator_torque)
-            knee_actuator_power = np.interp(gait_cycle,gpc,knee_actuator_power)
-            hip_actuator_power = np.interp(gait_cycle,gpc,hip_actuator_power)
-            knee_actuator_torque_l = np.interp(gait_cycle,gpc_l,knee_actuator_torque_l)
-            hip_actuator_torque_l = np.interp(gait_cycle,gpc_l,hip_actuator_torque_l)
-            knee_actuator_power_l = np.interp(gait_cycle,gpc_l,knee_actuator_power_l)
-            hip_actuator_power_l = np.interp(gait_cycle,gpc_l,hip_actuator_power_l)
-            total_metabolic_power = np.interp(gait_cycle,gpc_metabolic,total_metabolic_power)
+            data_extraction_dic = {"Directory":actuator_torque_data_dir,
+                                 "Right_Parameter":'Hip_Right_Actuator',
+                                  "Left_Parameter":'Hip_Left_Actuator',
+                                              "gl": gl}
+            hip_actuator_torque = data_extraction(Subject_Dic=data_extraction_dic)
+            data_extraction_dic = {"Directory":actuator_torque_data_dir,
+                                 "Right_Parameter":'Knee_Right_Actuator',
+                                  "Left_Parameter":'Knee_Left_Actuator',
+                                              "gl": gl}
+            knee_actuator_torque = data_extraction(Subject_Dic=data_extraction_dic)
+            data_extraction_dic = {"Directory":actuator_power_data_dir,
+                                 "Right_Parameter":'Hip_Right_Actuator',
+                                  "Left_Parameter":'Hip_Left_Actuator',
+                                              "gl": gl}
+            hip_actuator_power = data_extraction(Subject_Dic=data_extraction_dic)
+            data_extraction_dic = {"Directory":actuator_power_data_dir,
+                                 "Right_Parameter":'Knee_Right_Actuator',
+                                  "Left_Parameter":'Knee_Left_Actuator',
+                                              "gl": gl}
+            knee_actuator_power = data_extraction(Subject_Dic=data_extraction_dic)
+            
             # Storing the processed data into specificed numpy ndarrays
-            HipActuator_Torque_Data[:,c] = nanmean([hip_actuator_torque,hip_actuator_torque_l],axis=0)
-            KneeActuator_Torque_Data[:,c] = nanmean([knee_actuator_torque,knee_actuator_torque_l],axis=0)
-            HipActuator_Power_Data[:,c] = nanmean([hip_actuator_power,hip_actuator_power_l],axis=0)
-            KneeActuator_Power_Data[:,c] = nanmean([knee_actuator_power,knee_actuator_power_l],axis=0)
-            MetabolicCost_Data[:,c] = total_metabolic_power
+            HipActuator_Torque_Data[:,c]  = hip_actuator_torque
+            KneeActuator_Torque_Data[:,c] = knee_actuator_torque
+            HipActuator_Power_Data[:,c]   = hip_actuator_power
+            KneeActuator_Power_Data[:,c]  = knee_actuator_power
+            # Energy calculations
+            if calculatenergy == True:
+                energy_dic = {"Directory":actuator_power_data_dir,
+                        "Right_Parameter":'Hip_Right_Actuator',
+                         "Left_Parameter":'Hip_Left_Actuator',
+                                     "gl": gl,
+                           "Subject_Mass": subject_mass}
+                hip_actuator_energy = actuators_normal_energy_calc(Subject_Dic=energy_dic)
+                energy_dic = {"Directory":actuator_power_data_dir,
+                        "Right_Parameter":'Knee_Right_Actuator',
+                         "Left_Parameter":'Knee_Left_Actuator',
+                                     "gl": gl,
+                           "Subject_Mass": subject_mass}
+                knee_actuator_energy = actuators_normal_energy_calc(Subject_Dic=energy_dic)
+                energy_dic = {"Directory":metabolic_power_data_dir,
+                                     "gl": gl,
+                           "Subject_Mass": subject_mass}
+                metabolic_energy = metabolic_normal_energy(energy_dic)
+                HipActuatorEnergy_Data[c]  = hip_actuator_energy
+                KneeActuatorEnergy_Data[c] = knee_actuator_energy
+                MetabolicEnergy_Data[c] = metabolic_energy
             c+=1
     return HipActuator_Torque_Data,KneeActuator_Torque_Data,HipActuator_Power_Data,KneeActuator_Power_Data,\
-               MetabolicCost_Data,HipActuatorEnergy_Data,KneeActuatorEnergy_Data,MetabolicEnergy_Data
+           HipActuatorEnergy_Data,KneeActuatorEnergy_Data,MetabolicEnergy_Data
 def pareto_data_subjects(configuration,loadcond='noload'):
     """
     This function has been developed to extract pareto data (written in pareto_data_extraction function)
@@ -384,6 +416,8 @@ def pareto_data_subjects(configuration,loadcond='noload'):
     * This function has been generalized for a subject to be utilized in another function.
     * Energy calculations have been normalized with subjects mass.
     * Some parts of this function can be changed to be used in another simulations.
+    * Performed simulations have labeling issue (trial02 for all subjects), therefore trial has
+      been modified without loosing generality of function.
     """
     # Configuration
     hip_list = [70/1000,60/1000,50/1000,40/1000,30/1000]
@@ -398,9 +432,6 @@ def pareto_data_subjects(configuration,loadcond='noload'):
     KneeActuator_Torque_Data = np.zeros([1000,len(subjects)*len(trails_num)*len(hip_list)*len(knee_list)])
     HipActuator_Power_Data = np.zeros([1000,len(subjects)*len(trails_num)*len(hip_list)*len(knee_list)])
     KneeActuator_Power_Data = np.zeros([1000,len(subjects)*len(trails_num)*len(hip_list)*len(knee_list)])
-    MetabolicCost_Data = np.zeros([1000,len(subjects)*len(trails_num)*len(hip_list)*len(knee_list)])
-    HipMuscleMoment_Data = np.zeros([1000,len(subjects)*len(trails_num)*len(hip_list)*len(knee_list)])
-    KneeMuscleMoment_Data = np.zeros([1000,len(subjects)*len(trails_num)*len(hip_list)*len(knee_list)])
     c = 0
     for i in subjects:
         for j in trails_num:
@@ -415,21 +446,20 @@ def pareto_data_subjects(configuration,loadcond='noload'):
                                     "TrialNo": '02',
                                          "gl": gl,
                                "subject_mass":subject_mass}
-            hip_torque,knee_torque,hip_power,knee_power,metabolics,hip_energy,\
+            hip_torque,knee_torque,hip_power,knee_power,hip_energy,\
             knee_energy,metabolics_energy = pareto_data_extraction(Subject_Dictionary,loadcond=loadcond)
             # saving data into initialized variables
             HipActuator_Torque_Data[:,c:c+len(hip_list)*len(knee_list)]  = hip_torque
             KneeActuator_Torque_Data[:,c:c+len(hip_list)*len(knee_list)] = knee_torque
             HipActuator_Power_Data[:,c:c+len(hip_list)*len(knee_list)]   = hip_power
             KneeActuator_Power_Data[:,c:c+len(hip_list)*len(knee_list)]  = knee_power
-            MetabolicCost_Data[:,c:c+len(hip_list)*len(knee_list)]       = metabolics
             HipActuatorEnergy_Data[c:c+len(hip_list)*len(knee_list)]     = hip_energy
             KneeActuatorEnergy_Data[c:c+len(hip_list)*len(knee_list)]    = knee_energy
             MetabolicEnergy_Data[c:c+len(hip_list)*len(knee_list)]       = metabolics_energy
             c+=len(hip_list)*len(knee_list)+1
 
     return HipActuator_Torque_Data,KneeActuator_Torque_Data,HipActuator_Power_Data,KneeActuator_Power_Data,\
-               MetabolicCost_Data,HipActuatorEnergy_Data,KneeActuatorEnergy_Data,MetabolicEnergy_Data
+           HipActuatorEnergy_Data,KneeActuatorEnergy_Data,MetabolicEnergy_Data
 #####################################################################################
 # Functions related to data extraction which will be used for extracting RRA data, Unassisted subjects
 # data and finally data for the specific weights. This data extraction functions include muscles moment,
@@ -450,6 +480,8 @@ def specific_weight_data_extraction(Subject_Dic,Hip_Weight,Knee_Weight,loadcond=
     * This function has been generalized for a subject to be utilized in another function.
     * Energy calculations have been normalized with subjects mass.
     * Some parts of this function can be changed to be used in another simulations.
+    * Performed simulations have labeling issue (trial02 for all subjects), therefore trial has
+      been modified without loosing generality of function.
     """
     # Initialization
     Directory = Subject_Dic["Directory"]
@@ -467,76 +499,61 @@ def specific_weight_data_extraction(Subject_Dic,Hip_Weight,Knee_Weight,loadcond=
     .format(SubjectNo,Directory,Hip_Weight,Knee_Weight,SubjectNo,loadcond,TrialNo)
     metabolic_power_data_dir = '../subject{}/{}/H{}K{}/loadedwalking_subject{}_{}_free_trial{}_cmc_ProbeReporter_probes.sto'\
     .format(SubjectNo,Directory,Hip_Weight,Knee_Weight,SubjectNo,loadcond,TrialNo)
-    # Sto to Numpy
-    actuator_torque_data = dataman.storage2numpy(actuator_torque_data_dir)
-    actuator_power_data = dataman.storage2numpy(actuator_power_data_dir)
-    actuator_speed_data = dataman.storage2numpy(actuator_speed_data_dir)
-    metabolic_power_data = dataman.storage2numpy(metabolic_power_data_dir)
-
-    time = actuator_power_data['time']
-    # time and gl class and reading specific columns of data
-    knee_actuator_torque = actuator_torque_data['Knee_Right_Actuator']
-    hip_actuator_torque = actuator_torque_data['Hip_Right_Actuator']
-    knee_actuator_power = actuator_power_data['Knee_Right_Actuator']
-    hip_actuator_power = actuator_power_data['Hip_Right_Actuator']
-    knee_actuator_speed = actuator_speed_data['Knee_Right_Actuator']
-    hip_actuator_speed = actuator_speed_data['Hip_Right_Actuator']
-    knee_actuator_torque_l = actuator_torque_data['Knee_Left_Actuator']
-    hip_actuator_torque_l = actuator_torque_data['Hip_Left_Actuator']
-    knee_actuator_power_l = actuator_power_data['Knee_Left_Actuator']
-    hip_actuator_power_l = actuator_power_data['Hip_Left_Actuator']
-    knee_actuator_speed_l = actuator_speed_data['Knee_Left_Actuator']
-    hip_actuator_speed_l = actuator_speed_data['Hip_Left_Actuator']
-    
-    # metabolic cost
-    total_metabolic_power = metabolic_power_data['metabolic_power_TOTAL'] + metabolic_power_data['metabolic_power_BASAL']
-    # Calculate Metabolic energy and the energy consumption of actuators
+    data_extraction_dic = {"Directory":actuator_torque_data_dir,
+                                 "Right_Parameter":'Hip_Right_Actuator',
+                                  "Left_Parameter":'Hip_Left_Actuator',
+                                              "gl": gl}
+    hip_actuator_torque = data_extraction(Subject_Dic=data_extraction_dic)
+    data_extraction_dic = {"Directory":actuator_torque_data_dir,
+                                 "Right_Parameter":'Knee_Right_Actuator',
+                                  "Left_Parameter":'Knee_Left_Actuator',
+                                              "gl": gl}
+    knee_actuator_torque = data_extraction(Subject_Dic=data_extraction_dic)
+    data_extraction_dic = {"Directory":actuator_power_data_dir,
+                                 "Right_Parameter":'Hip_Right_Actuator',
+                                  "Left_Parameter":'Hip_Left_Actuator',
+                                              "gl": gl}
+    hip_actuator_power = data_extraction(Subject_Dic=data_extraction_dic)
+    data_extraction_dic = {"Directory":actuator_power_data_dir,
+                                 "Right_Parameter":'Knee_Right_Actuator',
+                                  "Left_Parameter":'Knee_Left_Actuator',
+                                              "gl": gl}
+    knee_actuator_power = data_extraction(Subject_Dic=data_extraction_dic)
+    data_extraction_dic = {"Directory":actuator_speed_data_dir,
+                                 "Right_Parameter":'Hip_Right_Actuator',
+                                  "Left_Parameter":'Hip_Left_Actuator',
+                                              "gl": gl}
+    hip_actuator_speed = data_extraction(Subject_Dic=data_extraction_dic)
+    data_extraction_dic = {"Directory":actuator_speed_data_dir,
+                                 "Right_Parameter":'Knee_Right_Actuator',
+                                  "Left_Parameter":'Knee_Left_Actuator',
+                                              "gl": gl}
+    knee_actuator_speed = data_extraction(Subject_Dic=data_extraction_dic)
     if calculatenergy == True:
-        hip_actuator_energy = pp.avg_over_gait_cycle(time, np.abs(hip_actuator_power),cycle_duration=gl.cycle_end-gl.cycle_start, cycle_start=gl.cycle_start)
-        knee_actuator_energy = pp.avg_over_gait_cycle(time, np.abs(knee_actuator_power),cycle_duration=gl.cycle_end-gl.cycle_start, cycle_start=gl.cycle_start)
-        metabolic_energy = pp.avg_over_gait_cycle(metabolic_power_data['time'], total_metabolic_power,cycle_duration=gl.cycle_end-gl.cycle_start, cycle_start=gl.cycle_start)
-        HipActuatorEnergy_Data = hip_actuator_energy/subject_mass
-        KneeActuatorEnergy_Data = knee_actuator_energy/subject_mass
-        MetabolicEnergy_Data = metabolic_energy/subject_mass
-    # Shifting raw data to a gait cylce normarlized to pgc
-    gpc, knee_actuator_torque = pp.data_by_pgc(time,knee_actuator_torque,gl,side='right')
-    gpc, hip_actuator_torque = pp.data_by_pgc(time,hip_actuator_torque,gl,side='right')
-    gpc, knee_actuator_power = pp.data_by_pgc(time,knee_actuator_power,gl,side='right')
-    gpc, hip_actuator_power = pp.data_by_pgc(time,hip_actuator_power,gl,side='right')
-    gpc, knee_actuator_speed = pp.data_by_pgc(time,knee_actuator_speed,gl,side='right')
-    gpc, hip_actuator_speed = pp.data_by_pgc(time,hip_actuator_speed,gl,side='right')
-    gpc_l, knee_actuator_torque_l = pp.data_by_pgc(time,knee_actuator_torque_l,gl,side='left')
-    gpc_l, hip_actuator_torque_l = pp.data_by_pgc(time,hip_actuator_torque_l,gl,side='left')
-    gpc_l, knee_actuator_power_l = pp.data_by_pgc(time,knee_actuator_power_l,gl,side='left')
-    gpc_l, hip_actuator_power_l = pp.data_by_pgc(time,hip_actuator_power_l,gl,side='left')
-    gpc_l, knee_actuator_speed_l = pp.data_by_pgc(time,knee_actuator_speed_l,gl,side='left')
-    gpc_l, hip_actuator_speed_l = pp.data_by_pgc(time,hip_actuator_speed_l,gl,side='left')
-    gpc_metabolic, total_metabolic_power = pp.data_by_pgc(metabolic_power_data['time'],total_metabolic_power,gl,side='right')
-    # Interpreting the shifted and normalized data to a single pgc
-    knee_actuator_torque = np.interp(gait_cycle,gpc,knee_actuator_torque)
-    hip_actuator_torque = np.interp(gait_cycle,gpc,hip_actuator_torque)
-    knee_actuator_power = np.interp(gait_cycle,gpc,knee_actuator_power)
-    hip_actuator_power = np.interp(gait_cycle,gpc,hip_actuator_power)
-    knee_actuator_speed = np.interp(gait_cycle,gpc,knee_actuator_speed)
-    hip_actuator_speed = np.interp(gait_cycle,gpc,hip_actuator_speed)
-    knee_actuator_torque_l = np.interp(gait_cycle,gpc_l,knee_actuator_torque_l)
-    hip_actuator_torque_l = np.interp(gait_cycle,gpc_l,hip_actuator_torque_l)
-    knee_actuator_power_l = np.interp(gait_cycle,gpc_l,knee_actuator_power_l)
-    hip_actuator_power_l = np.interp(gait_cycle,gpc_l,hip_actuator_power_l)
-    knee_actuator_speed_l = np.interp(gait_cycle,gpc_l,knee_actuator_speed_l)
-    hip_actuator_speed_l = np.interp(gait_cycle,gpc_l,hip_actuator_speed_l)
-    total_metabolic_power = np.interp(gait_cycle,gpc_metabolic,total_metabolic_power)
-    # Storing the processed data into specificed numpy ndarrays
-    HipActuator_Torque_Data = nanmean([hip_actuator_torque,hip_actuator_torque_l],axis=0)
-    KneeActuator_Torque_Data = nanmean([knee_actuator_torque,knee_actuator_torque_l],axis=0)
-    HipActuator_Power_Data = nanmean([hip_actuator_power,hip_actuator_power_l],axis=0)
-    KneeActuator_Power_Data = nanmean([knee_actuator_power,knee_actuator_power_l],axis=0)
-    HipActuator_Speed_Data = nanmean([hip_actuator_speed,hip_actuator_speed_l],axis=0)
-    KneeActuator_Speed_Data = nanmean([knee_actuator_speed,knee_actuator_speed_l],axis=0)
-    MetabolicCost_Data = total_metabolic_power
-    return HipActuator_Torque_Data,KneeActuator_Torque_Data,HipActuator_Power_Data,KneeActuator_Power_Data,\
-               MetabolicCost_Data,HipActuatorEnergy_Data,KneeActuatorEnergy_Data,MetabolicEnergy_Data
+                energy_dic = {"Directory":actuator_power_data_dir,
+                        "Right_Parameter":'Hip_Right_Actuator',
+                         "Left_Parameter":'Hip_Left_Actuator',
+                                     "gl": gl,
+                           "Subject_Mass": subject_mass}
+                hip_actuator_energy = actuators_normal_energy_calc(Subject_Dic=energy_dic)
+                energy_dic = {"Directory":actuator_power_data_dir,
+                        "Right_Parameter":'Knee_Right_Actuator',
+                         "Left_Parameter":'Knee_Left_Actuator',
+                                     "gl": gl,
+                           "Subject_Mass": subject_mass}
+                knee_actuator_energy = actuators_normal_energy_calc(Subject_Dic=energy_dic)
+                energy_dic = {"Directory":metabolic_power_data_dir,
+                                     "gl": gl,
+                           "Subject_Mass": subject_mass}
+                metabolic_energy = metabolic_normal_energy(energy_dic)
+    
+    return hip_actuator_torque,knee_actuator_torque,hip_actuator_power,knee_actuator_power,\
+           hip_actuator_speed,knee_actuator_speed,hip_actuator_energy,knee_actuator_energy,metabolic_energy
 def specific_weight_data_subjects(configuration,HipWeight,KneeWeight,loadcond='noload',musclesmoment=True,musclesactivation=True):
+    """This function generalize the specific_weight_data_extraction for all subjects and additionally it provides muscles activation
+    and muscles generated moment.
+    -Default setting for muscle activation is nine representitive muscles of the lower extermity. It can be changed to knee/hip/both.
+     """
     subjects = ['05','07','09','10','11','12','14']
     trails_num = ['01']
     whichgroup='nine'
@@ -549,7 +566,6 @@ def specific_weight_data_subjects(configuration,HipWeight,KneeWeight,loadcond='n
     KneeActuator_Torque_Data = np.zeros([1000,len(subjects)*len(trails_num)])
     HipActuator_Power_Data = np.zeros([1000,len(subjects)*len(trails_num)])
     KneeActuator_Power_Data = np.zeros([1000,len(subjects)*len(trails_num)])
-    MetabolicCost_Data = np.zeros([1000,len(subjects)*len(trails_num)])
     HipMuscleMoment_Data = np.zeros([1000,len(subjects)*len(trails_num)])
     KneeMuscleMoment_Data = np.zeros([1000,len(subjects)*len(trails_num)])
     MuscleActivation_Data = np.zeros([1000,len(subjects)*len(trails_num)*musclesgroup])
@@ -568,14 +584,13 @@ def specific_weight_data_subjects(configuration,HipWeight,KneeWeight,loadcond='n
                                     "TrialNo": trial,
                                          "gl": gl,
                                "subject_mass":subject_mass}
-            hip_torque,knee_torque,hip_power,knee_power,metabolics,hip_energy,\
+            hip_torque,knee_torque,hip_power,knee_power,hip_energy,\
             knee_energy,metabolics_energy = specific_weight_data_extraction(Subject_Dictionary,Hip_Weight=HipWeight,Knee_weight=KneeWeight,loadcond=loadcond)
             # saving data into initialized variables
             HipActuator_Torque_Data[:,c:c+1]  = hip_torque
             KneeActuator_Torque_Data[:,c:c+1] = knee_torque
             HipActuator_Power_Data[:,c:c+1]   = hip_power
             KneeActuator_Power_Data[:,c:c+1]  = knee_power
-            MetabolicCost_Data[:,c:c+1]       = metabolics
             HipActuatorEnergy_Data[c:c+1]     = hip_energy
             KneeActuatorEnergy_Data[c:c+1]    = knee_energy
             MetabolicEnergy_Data[c:c+1]       = metabolics_energy
@@ -592,19 +607,16 @@ def specific_weight_data_subjects(configuration,HipWeight,KneeWeight,loadcond='n
                                         .format(i,files_dir,HipWeight,KneeWeight,i,loadcond,'02')
                 knee_l_musclesmoment_dir = '../subject{}/{}/H{}K{}/loadedwalking_subject{}_loaded_free_trial{}_cmc_MuscleAnalysis_Moment_knee_angle_l.sto'\
                                         .format(i,files_dir,HipWeight,KneeWeight,i,loadcond,'02')
-                hip_r_musclesmoment_data = dataman.storage2numpy(hip_r_musclesmoment_dir)
-                hip_l_musclesmoment_data = dataman.storage2numpy(hip_l_musclesmoment_dir)
-                knee_r_musclesmoment_data = dataman.storage2numpy(knee_r_musclesmoment_dir)
-                knee_l_musclesmoment_data = dataman.storage2numpy(knee_l_musclesmoment_dir)
-                hip_muscle_moment = musclemoment_calc(hip_r_musclesmoment_data,hip_l_musclesmoment_data,gl)
-                knee_muscle_moment = musclemoment_calc(knee_r_musclesmoment_data,knee_l_musclesmoment_data,gl)
+                musclemoment_dic = {"Right_Directory":hip_r_musclesmoment_dir,"Left_Directory":hip_l_musclesmoment_dir,"gl":gl}
+                hip_muscle_moment = musclemoment_calc(Subject_Dic=musclemoment_dic)
+                musclemoment_dic = {"Right_Directory":knee_r_musclesmoment_dir,"Left_Directory":knee_l_musclesmoment_dir,"gl":gl}
+                knee_muscle_moment = musclemoment_calc(Subject_Dic=musclemoment_dic)
                 HipMuscleMoment_Data[:,c:c+1] = hip_muscle_moment
-                KneeMuscleMoment_Data[:,c:c+1] = hip_muscle_moment
+                KneeMuscleMoment_Data[:,c:c+1] = knee_muscle_moment
             c+=1
     return HipActuator_Torque_Data,KneeActuator_Torque_Data,HipActuator_Power_Data,KneeActuator_Power_Data,\
-               MetabolicCost_Data,HipActuatorEnergy_Data,KneeActuatorEnergy_Data,MetabolicEnergy_Data,MuscleActivation_Data
-def specific_data_extraction(Subject_Dic):
-    
+           HipActuatorEnergy_Data,KneeActuatorEnergy_Data,MetabolicEnergy_Data,MuscleActivation_Data
+
 #####################################################################################
 #####################################################################################
 mono_m_waist = 3
