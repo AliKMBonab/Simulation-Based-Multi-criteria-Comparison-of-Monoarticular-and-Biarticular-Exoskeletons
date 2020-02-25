@@ -596,9 +596,9 @@ def specific_weight_data_subjects(configuration,HipWeight,KneeWeight,loadcond='n
             KneeActuator_Power_Data[:,c:c+1]  = knee_power
             HipActuator_Speed_Data[:,c:c+1]   = hip_speed
             KneeActuator_Speed_Data[:,c:c+1]  = knee_speed
-            HipActuatorEnergy_Data[c:c+1]     = hip_energy
-            KneeActuatorEnergy_Data[c:c+1]    = knee_energy
-            MetabolicEnergy_Data[c:c+1]       = metabolics_energy
+            HipActuatorEnergy_Data[c]     = hip_energy
+            KneeActuatorEnergy_Data[c]    = knee_energy
+            MetabolicEnergy_Data[c]       = metabolics_energy
             if musclesactivation == True:
                 muscles_activation = group_muscles_activation(Subject_Dictionary,whichgroup=whichgroup,loadcond=loadcond)
                 MuscleActivation_Data[c_m:c_m+musclesgroup] = muscles_activation
@@ -621,7 +621,7 @@ def specific_weight_data_subjects(configuration,HipWeight,KneeWeight,loadcond='n
             c+=1
     return HipActuator_Torque_Data,KneeActuator_Torque_Data,HipActuator_Power_Data,KneeActuator_Power_Data,\
            HipActuator_Speed_Data,KneeActuator_Speed_Data,HipActuatorEnergy_Data,KneeActuatorEnergy_Data,\
-           MetabolicEnergy_Data,MuscleActivation_Data
+           MetabolicEnergy_Data,MuscleActivation_Data,HipMuscleMoment_Data,KneeMuscleMoment_Data
 def rra_data_extraction(Subject_Dic,loadcond='noload'):
     """ This function is designed to get the configuration and optimal force that has been used to perform
         simulations and reporting most of the needed data. This function calculates the following data:
@@ -634,8 +634,6 @@ def rra_data_extraction(Subject_Dic,loadcond='noload'):
     * This function has been generalized for a subject to be utilized in another function.
     * Energy calculations have been normalized with subjects mass.
     * Some parts of this function can be changed to be used in another simulations.
-    * Performed simulations have labeling issue (trial02 for all subjects), therefore trial has
-      been modified without loosing generality of function.
     """
     # Initialization
     Directory = Subject_Dic["Directory"]
@@ -727,35 +725,31 @@ def rra_data_subjects(configuration,loadcond='noload'):
             c+=1
     return HipActuator_Torque_Data,KneeActuator_Torque_Data,HipActuator_Power_Data,KneeActuator_Power_Data,\
            HipActuator_Speed_Data,KneeActuator_Speed_Data
-def unassist_idealdevice_data_extraction(Subject_Dic,Hip_Weight,Knee_Weight,loadcond='noload',calculatenergy=True):
+def idealdevice_data_extraction(Subject_Dic,loadcond='noload',calculatenergy=True):
     """ This function is designed to get the configuration and optimal force that has been used to perform
         simulations and reporting most of the needed data. This function calculates the following data:
     
     - Torque profiles of actuators
     - Power Profiles of actuators
     - Speed profiles of actuators
-    - Instantenous metabolic power of simulated subjects
     - The energy consumption of assistive actuators(optional)
-    - Metabolic energy consumption(optional)
-
+    
     ###########################################################################################
     * This function has been generalized for a subject to be utilized in another function.
     * Energy calculations have been normalized with subjects mass.
     * Some parts of this function can be changed to be used in another simulations.
-    * Performed simulations have labeling issue (trial02 for all subjects), therefore trial has
-      been modified without loosing generality of function.
     """
     # Initialization
     Directory = Subject_Dic["Directory"]
     SubjectNo = Subject_Dic["SubjectNo"]
-    TrialNo = '02'
+    TrialNo = Subject_Dic["TrialNo"]
     gl = Subject_Dic["gl"]
     subject_mass = Subject_Dic["subject_mass"]
     gait_cycle = np.linspace(0,100,1000)
     # Directory of each .sto files
-    actuator_torque_data_dir= '../subject{}/{}/H{}K{}/loadedwalking_subject{}_{}_free_trial{}_cmc_Actuation_force.sto'\
-    .format(SubjectNo,Directory,Hip_Weight,Knee_Weight,SubjectNo,loadcond,TrialNo)
-    actuator_power_data_dir= '../subject{}/{}/H{}K{}/loadedwalking_subject{}_{}_free_trial{}_cmc_Actuation_power.sto'\
+    actuator_torque_data_dir= '../subject{}/{}/loadedwalking_subject{}_{}_free_trial{}_cmc_Actuation_force.sto'\
+    .format(SubjectNo,Directory,SubjectNo,loadcond,TrialNo)
+    actuator_power_data_dir= '../subject{}/{}/loadedwalking_subject{}_{}_free_trial{}_cmc_Actuation_power.sto'\
     .format(SubjectNo,Directory,Hip_Weight,Knee_Weight,SubjectNo,loadcond,TrialNo)
     actuator_speed_data_dir= '../subject{}/{}/H{}K{}/loadedwalking_subject{}_{}_free_trial{}_cmc_Actuation_speed.sto'\
     .format(SubjectNo,Directory,Hip_Weight,Knee_Weight,SubjectNo,loadcond,TrialNo)
@@ -804,20 +798,21 @@ def unassist_idealdevice_data_extraction(Subject_Dic,Hip_Weight,Knee_Weight,load
                                      "gl": gl,
                            "Subject_Mass": subject_mass}
                 knee_actuator_energy = actuators_normal_energy_calc(Subject_Dic=energy_dic)
-                energy_dic = {"Directory":metabolic_power_data_dir,
-                                     "gl": gl,
-                           "Subject_Mass": subject_mass}
-                metabolic_energy = metabolic_normal_energy(energy_dic)
-    
+
     return hip_actuator_torque,knee_actuator_torque,hip_actuator_power,knee_actuator_power,\
-           hip_actuator_speed,knee_actuator_speed,hip_actuator_energy,knee_actuator_energy,metabolic_energy
-def unassist_idealdevice_data_subjects(configuration,HipWeight,KneeWeight,loadcond='noload',musclesmoment=True,musclesactivation=True):
+           hip_actuator_speed,knee_actuator_speed,hip_actuator_energy,knee_actuator_energy
+def unassist_idealdevice_data_subjects(configuration,loadcond='noload',metabolicrate=True,musclesmoment=True,musclesactivation=True):
     """This function generalize the specific_weight_data_extraction for all subjects and additionally it provides muscles activation
     and muscles generated moment.
     -Default setting for muscle activation is nine representitive muscles of the lower extermity. It can be changed to knee/hip/both.
+    -Configuration can be: -Biarticular/Ideal -Monoarticular/Ideal -UnAssist
      """
+    config_list = ['Biarticular/Ideal','Monoarticular/Ideal','UnAssist']
+    if configuration not in config_list:
+        raise Exception('Configuration is not valid for this function.')
+
     subjects = ['05','07','09','10','11','12','14']
-    trails_num = ['01']
+    trails_num = ['01','02','03']
     whichgroup='nine'
     musclesgroup = 9
     # initialization
@@ -848,43 +843,53 @@ def unassist_idealdevice_data_subjects(configuration,HipWeight,KneeWeight,loadco
                                     "TrialNo": trial,
                                          "gl": gl,
                                "subject_mass":subject_mass}
-            hip_torque,knee_torque,hip_power,knee_power,hip_speed,\
-            knee_speed,hip_energy,knee_energy,metabolics_energy = \
-            specific_weight_data_extraction(Subject_Dictionary,Hip_Weight=HipWeight,Knee_weight=KneeWeight,loadcond=loadcond)
-            # saving data into initialized variables
-            HipActuator_Torque_Data[:,c:c+1]  = hip_torque
-            KneeActuator_Torque_Data[:,c:c+1] = knee_torque
-            HipActuator_Power_Data[:,c:c+1]   = hip_power
-            KneeActuator_Power_Data[:,c:c+1]  = knee_power
-            HipActuator_Speed_Data[:,c:c+1]   = hip_speed
-            KneeActuator_Speed_Data[:,c:c+1]  = knee_speed
-            HipActuatorEnergy_Data[c:c+1]     = hip_energy
-            KneeActuatorEnergy_Data[c:c+1]    = knee_energy
-            MetabolicEnergy_Data[c:c+1]       = metabolics_energy
+            if configuration !='UnAssist':
+                hip_torque,knee_torque,hip_power,knee_power,hip_speed,\
+                knee_speed,hip_energy,knee_energy = \
+                idealdevice_data_extraction(Subject_Dictionary,loadcond=loadcond)
+                # saving data into initialized variables
+                HipActuator_Torque_Data[:,c:c+1]  = hip_torque
+                KneeActuator_Torque_Data[:,c:c+1] = knee_torque
+                HipActuator_Power_Data[:,c:c+1]   = hip_power
+                KneeActuator_Power_Data[:,c:c+1]  = knee_power
+                HipActuator_Speed_Data[:,c:c+1]   = hip_speed
+                KneeActuator_Speed_Data[:,c:c+1]  = knee_speed
+                HipActuatorEnergy_Data[c]     = hip_energy
+                KneeActuatorEnergy_Data[c]    = knee_energy
             if musclesactivation == True:
                 muscles_activation = group_muscles_activation(Subject_Dictionary,whichgroup=whichgroup,loadcond=loadcond)
                 MuscleActivation_Data[c_m:c_m+musclesgroup] = muscles_activation
                 c_m=musclesgroup+1
             if musclesmoment == True:
-                hip_r_musclesmoment_dir = '../subject{}/{}/H{}K{}/loadedwalking_subject{}_loaded_free_trial{}_cmc_MuscleAnalysis_Moment_hip_flexion_r.sto'\
-                                        .format(i,files_dir,HipWeight,KneeWeight,i,loadcond,'02')
-                hip_l_musclesmoment_dir = '../subject{}/{}/H{}K{}/loadedwalking_subject{}_loaded_free_trial{}_cmc_MuscleAnalysis_Moment_hip_flexion_l.sto'\
-                                        .format(i,files_dir,HipWeight,KneeWeight,i,loadcond,'02')
-                knee_r_musclesmoment_dir = '../subject{}/{}/H{}K{}/loadedwalking_subject{}_loaded_free_trial{}_cmc_MuscleAnalysis_Moment_knee_angle_r.sto'\
-                                        .format(i,files_dir,HipWeight,KneeWeight,i,loadcond,'02')
-                knee_l_musclesmoment_dir = '../subject{}/{}/H{}K{}/loadedwalking_subject{}_loaded_free_trial{}_cmc_MuscleAnalysis_Moment_knee_angle_l.sto'\
-                                        .format(i,files_dir,HipWeight,KneeWeight,i,loadcond,'02')
+                hip_r_musclesmoment_dir = '../subject{}/{}/loadedwalking_subject{}_loaded_free_trial{}_cmc_MuscleAnalysis_Moment_hip_flexion_r.sto'\
+                                        .format(i,files_dir,i,loadcond,trial)
+                hip_l_musclesmoment_dir = '../subject{}/{}/loadedwalking_subject{}_loaded_free_trial{}_cmc_MuscleAnalysis_Moment_hip_flexion_l.sto'\
+                                        .format(i,files_dir,i,loadcond,trial)
+                knee_r_musclesmoment_dir = '../subject{}/{}/loadedwalking_subject{}_loaded_free_trial{}_cmc_MuscleAnalysis_Moment_knee_angle_r.sto'\
+                                        .format(i,files_dir,i,loadcond,trial)
+                knee_l_musclesmoment_dir = '../subject{}/{}/loadedwalking_subject{}_loaded_free_trial{}_cmc_MuscleAnalysis_Moment_knee_angle_l.sto'\
+                                        .format(i,files_dir,i,loadcond,trial)
                 musclemoment_dic = {"Right_Directory":hip_r_musclesmoment_dir,"Left_Directory":hip_l_musclesmoment_dir,"gl":gl}
                 hip_muscle_moment = musclemoment_calc(Subject_Dic=musclemoment_dic)
                 musclemoment_dic = {"Right_Directory":knee_r_musclesmoment_dir,"Left_Directory":knee_l_musclesmoment_dir,"gl":gl}
                 knee_muscle_moment = musclemoment_calc(Subject_Dic=musclemoment_dic)
                 HipMuscleMoment_Data[:,c:c+1] = hip_muscle_moment
                 KneeMuscleMoment_Data[:,c:c+1] = knee_muscle_moment
+            if metabolicrate == True:
+                metabolic_power_data_dir = '../subject{}/{}/H{}K{}/loadedwalking_subject{}_{}_free_trial{}_cmc_ProbeReporter_probes.sto'\
+                                            .format(i,files_dir,Hip_Weight,Knee_Weight,SubjectNo,loadcond,TrialNo)
+                energy_dic = {"Directory":metabolic_power_data_dir,
+                                     "gl": gl,
+                           "Subject_Mass": subject_mass}
+                metabolic_energy = metabolic_normal_energy(energy_dic)
+                MetabolicEnergy_Data[c] = metabolic_energy
             c+=1
-    return HipActuator_Torque_Data,KneeActuator_Torque_Data,HipActuator_Power_Data,KneeActuator_Power_Data,\
-           HipActuator_Speed_Data,KneeActuator_Speed_Data,HipActuatorEnergy_Data,KneeActuatorEnergy_Data,\
-           MetabolicEnergy_Data,MuscleActivation_Data
-
+    if configuration != 'UnAssist':
+        return HipActuator_Torque_Data,KneeActuator_Torque_Data,HipActuator_Power_Data,KneeActuator_Power_Data,\
+            HipActuator_Speed_Data,KneeActuator_Speed_Data,HipActuatorEnergy_Data,KneeActuatorEnergy_Data,\
+            MetabolicEnergy_Data,MuscleActivation_Data,HipMuscleMoment_Data,KneeMuscleMoment_Data
+    else:
+        return MetabolicEnergy_Data,MuscleActivation_Data,HipMuscleMoment_Data,KneeMuscleMoment_Data
 #####################################################################################
 #####################################################################################
 mono_m_waist = 3
