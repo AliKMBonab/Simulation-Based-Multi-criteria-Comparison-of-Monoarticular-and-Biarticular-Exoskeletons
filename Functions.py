@@ -223,7 +223,7 @@ def adding_mass_metabolic(m_waist,m_thigh,m_shank,I_thigh,I_shank,I_leg=2.52):
     I_shank_ratio = (I_leg + I_shank)/I_leg
     inertia_metabolic_shank = (0.63749 + (0.40916*I_shank_ratio))
     return  mass_metabolic_waist,mass_metabolic_thigh,mass_metabolic_shank,inertia_metabolic_thigh,inertia_metabolic_shank
-def metabolic_energy_mass_added_pareto(configuration,unassisted_metabolic,InertialProp_Dic,calc_metabolic_cost=True):
+def metabolic_energy_mass_added_pareto(unassisted_metabolic,InertialProp_Dic,calc_metabolic_cost=True):
     """This function calculates the following data in a performed pareto simulations:
     - waist metabolic change
     - waist metabolic (optional)
