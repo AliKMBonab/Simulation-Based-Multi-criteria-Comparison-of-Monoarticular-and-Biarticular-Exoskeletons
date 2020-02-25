@@ -418,6 +418,10 @@ def pareto_data_subjects(configuration,loadcond='noload'):
     * Some parts of this function can be changed to be used in another simulations.
     * Performed simulations have labeling issue (trial02 for all subjects), therefore trial has
       been modified without loosing generality of function.
+
+    ###########################################################################################
+      The function returns: HipActuator_Torque_Data,KneeActuator_Torque_Data,HipActuator_Power_Data,
+      KneeActuator_Power_Data,HipActuatorEnergy_Data,KneeActuatorEnergy_Data,MetabolicEnergy_Data
     """
     # Configuration
     hip_list = [70/1000,60/1000,50/1000,40/1000,30/1000]
@@ -439,8 +443,10 @@ def pareto_data_subjects(configuration,loadcond='noload'):
             gl,subject_mass,trial = construct_gl_mass_trial(subjectno=i,trailno=j,loadcond=loadcond)
             if loadcond == 'noload':
                 files_dir = 'noloaded/Subject{}_NoLoaded_Dataset/{}'.format(i,configuration)
-            else:
+            elif loadcond == 'loaded'
                 files_dir = 'loaded/Subject{}_Loaded_Dataset/{}'.format(i,configuration)
+            else:
+                raise Exception('Invalid load condition!')
             Subject_Dictionary = {"Directory": files_dir,
                                   "SubjectNo": i,
                                     "TrialNo": '02',
@@ -892,28 +898,3 @@ def unassist_idealdevice_data_subjects(configuration,loadcond='noload',metabolic
         return MetabolicEnergy_Data,MuscleActivation_Data,HipMuscleMoment_Data,KneeMuscleMoment_Data
 #####################################################################################
 #####################################################################################
-mono_m_waist = 3
-mono_m_thigh = 3
-mono_m_shank = 0.9 
-Mono_Metabolic_Change_Hip,Mono_Metabolic_Change_Thigh,Mono_Metabolic_Change_Shank,Mono_AddMass_MetabolicChange,\
-Mono_Hip_Metabolic,Mono_Thigh_Metabolic,Mono_Shank_Metabolic,Mono_Inertia_Thigh_Metabolic,Mono_Inertia_Shank_Metabolic,\
-Mono_Inertia_Thigh,Mono_Inertia_Shank= metabolic_energy_mass_added_pareto('monoarticular',unassisted_meabolic_energy,mono_m_waist,mono_m_thigh,mono_m_shank)
-bi_m_waist = 6
-bi_m_thigh = 1
-bi_m_shank = 0.9
-Bi_Metabolic_Change_Hip,Bi_Metabolic_Change_Thigh,Bi_Metabolic_Change_Shank,Bi_AddMass_MetabolicChange,\
-Bi_Hip_Metabolic,Bi_Thigh_Metabolic,Bi_Shank_Metabolic,Bi_Inertia_Thigh_Metabolic,Bi_Inertia_Shank_Metabolic,\
-Bi_Inertia_Thigh,Bi_Inertia_Shank= metabolic_energy_mass_added_pareto('biarticular',unassisted_meabolic_energy,bi_m_waist,bi_m_thigh,bi_m_shank)
-Hip_weights = [70,60,50,40,30]
-Knee_weights = [70,60,50,40,30]
-#####################################################################################
-#####################################################################################
-labels = []
-Hip_weights = [70,60,50,40,30]
-Knee_weights = [70,60,50,40,30]
-for i in range(len(Hip_weights)):
-    for j in range(len(Knee_weights)):
-        labels.append('H{}K{}'.format(Hip_weights[i],Knee_weights[j]))
-#####################################################################################
-#####################################################################################
-general_path = 'F:/HMI/Exoskeleton/OpenSim/LoadedWalking_Test/Main_Test/Results/'
