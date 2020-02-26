@@ -10,7 +10,6 @@ import matplotlib.pyplot as plt
 import pylab as pl
 from scipy.signal import butter, filtfilt
 import importlib
-import pandas as pd
 from tabulate import tabulate
 from numpy import nanmean, nanstd
 from perimysium import postprocessing as pp
@@ -24,9 +23,9 @@ def construct_gl_mass_trial(subjectno,trialno,loadcond='noload'):
        and trial number to be used on other functions"""
     import Subjects_Dataset as sd
     if loadcond == 'noload':
-        data = sd.loaded_dataset["subject{}_noload_trial{}".replace(subjectno,trialno)]
+        data = sd.noload_dataset["subject{}_noload_trial{}".format(subjectno,trialno)]
     elif loadcond == 'loaded':
-        data = sd.loaded_dataset["subject{}_loaded_trial{}".replace(subjectno,trialno)]
+        data = sd.loaded_dataset["subject{}_loaded_trial{}".format(subjectno,trialno)]
     else:
         raise Exception("load condition is wrong.")
     mass = data["mass"]
@@ -52,8 +51,14 @@ def data_extraction(Subject_Dic):
     time = numpy_data['time']
     right_data = numpy_data[right_param]
     left_data = numpy_data[left_param]
-    gpc_r, shifted_right_data = pp.data_by_pgc(time,right_data,gl,side='right')
-    gpc_l, shidted_left_data  = pp.data_by_pgc(time,left_data,gl,side='left')
+    if gl.primary_leg == 'right':
+        gpc_r, shifted_right_data = pp.data_by_pgc(time,right_data,gl,side='right')
+        gpc_l, shifted_left_data  = pp.data_by_pgc(time,left_data,gl,side='left')
+    elif gl.primary_leg == 'left':
+        gpc_r, shifted_right_data = pp.data_by_pgc(time,right_data,gl,side='left')
+        gpc_l, shifted_left_data  = pp.data_by_pgc(time,left_data,gl,side='right')
+    else:
+        raise Exception('Primary leg (right/left) is not correct!!')
     interperted_right_data = np.interp(gait_cycle,gpc_r,shifted_right_data)
     interperted_left_data  = np.interp(gait_cycle,gpc_l,shifted_left_data)
     final_data = nanmean([interperted_right_data,interperted_left_data],axis=0)
@@ -70,10 +75,10 @@ def actuators_normal_energy_calc(Subject_Dic,isabs=True):
     right_data = numpy_data[right_param]
     left_data = numpy_data[left_param]
     if isabs == True:
-        energy = pp.avg_over_gait_cycle(time, np.abs(right_data),cycle_duration=gl.cycle_end-gl.cycle_start, cycle_start=gl.cycle_start)
+        energy = pp.avg_over_gait_cycle(time, np.abs(right_data),cycle_duration=gl.cycle_end-gl.cycle_start, cycle_start=gl.cycle_start)\
                + pp.avg_over_gait_cycle(time, np.abs(left_data),cycle_duration=gl.cycle_end-gl.cycle_start, cycle_start=gl.cycle_start)
     else:
-        energy = pp.avg_over_gait_cycle(time, right_data,cycle_duration=gl.cycle_end-gl.cycle_start, cycle_start=gl.cycle_start)
+        energy = pp.avg_over_gait_cycle(time, right_data,cycle_duration=gl.cycle_end-gl.cycle_start, cycle_start=gl.cycle_start)\
                + pp.avg_over_gait_cycle(time,left_data,cycle_duration=gl.cycle_end-gl.cycle_start, cycle_start=gl.cycle_start) 
     normalized_energy = energy/subject_mass
     return normalized_energy
@@ -119,7 +124,7 @@ def metabolic_normal_energy(Subject_Dic):
     """
     metabolic_power_data_dir = Subject_Dic["Directory"]
     gl = Subject_Dic["gl"]
-    subject_mass = Subject_Dic["subject_mass"]
+    subject_mass = Subject_Dic["Subject_Mass"]
     gait_cycle = np.linspace(0,100,1000)
     # Sto to Numpy
     metabolic_power_data = dataman.storage2numpy(metabolic_power_data_dir)
@@ -130,8 +135,8 @@ def metabolic_normal_energy(Subject_Dic):
     main_metabolics = basal + total
     metabolic_cost = np.interp(gait_cycle,time,main_metabolics)
     metabolic_energy = pp.avg_over_gait_cycle(metabolic_power_data['time'], main_metabolics,cycle_duration=gl.cycle_end-gl.cycle_start, cycle_start=gl.cycle_start)
-    MetabolicEnergy_Data = metabolic_energy/subject_mass
-    return metabolic_energy
+    normalized_metabolic_energy = metabolic_energy/subject_mass
+    return normalized_metabolic_energy
 def metabolic_energy_reduction(data,unassist_data):
     reduction = np.zeros(len(data))
     for i in range(len(data)):
@@ -324,9 +329,9 @@ def pareto_data_extraction(Subject_Dic,loadcond='noload',calculatenergy=True):
     # Configurations of Pareto Simulations
     Directory = Subject_Dic["Directory"]
     SubjectNo = Subject_Dic["SubjectNo"]
-    TrialNo = '02'
+    TrialNo = Subject_Dic["TrialNo"]
     gl = Subject_Dic["gl"]
-    subject_mass = Subject_Dic["subject_mass"]
+    subject_mass = Subject_Dic["Subject_Mass"]
     optimal_force = 1000
     hip_list = [70/1000,60/1000,50/1000,40/1000,30/1000]
     knee_list = [70/1000,60/1000,50/1000,40/1000,30/1000]
@@ -440,10 +445,10 @@ def pareto_data_subjects(configuration,loadcond='noload'):
     for i in subjects:
         for j in trails_num:
             # subject/trial/directory construction
-            gl,subject_mass,trial = construct_gl_mass_trial(subjectno=i,trailno=j,loadcond=loadcond)
+            gl,subject_mass,trial = construct_gl_mass_trial(subjectno=i,trialno=j,loadcond=loadcond)
             if loadcond == 'noload':
                 files_dir = 'noloaded/Subject{}_NoLoaded_Dataset/{}'.format(i,configuration)
-            elif loadcond == 'loaded'
+            elif loadcond == 'loaded':
                 files_dir = 'loaded/Subject{}_Loaded_Dataset/{}'.format(i,configuration)
             else:
                 raise Exception('Invalid load condition!')
@@ -451,7 +456,7 @@ def pareto_data_subjects(configuration,loadcond='noload'):
                                   "SubjectNo": i,
                                     "TrialNo": '02',
                                          "gl": gl,
-                               "subject_mass":subject_mass}
+                               "Subject_Mass":subject_mass}
             hip_torque,knee_torque,hip_power,knee_power,hip_energy,\
             knee_energy,metabolics_energy = pareto_data_extraction(Subject_Dictionary,loadcond=loadcond)
             # saving data into initialized variables
@@ -462,7 +467,7 @@ def pareto_data_subjects(configuration,loadcond='noload'):
             HipActuatorEnergy_Data[c:c+len(hip_list)*len(knee_list)]     = hip_energy
             KneeActuatorEnergy_Data[c:c+len(hip_list)*len(knee_list)]    = knee_energy
             MetabolicEnergy_Data[c:c+len(hip_list)*len(knee_list)]       = metabolics_energy
-            c+=len(hip_list)*len(knee_list)+1
+            c+=len(hip_list)*len(knee_list)
 
     return HipActuator_Torque_Data,KneeActuator_Torque_Data,HipActuator_Power_Data,KneeActuator_Power_Data,\
            HipActuatorEnergy_Data,KneeActuatorEnergy_Data,MetabolicEnergy_Data
@@ -583,7 +588,7 @@ def specific_weight_data_subjects(configuration,HipWeight,KneeWeight,loadcond='n
         for j in trails_num:
             # subject/trial/directory construction
             gl,subject_mass,trial = construct_gl_mass_trial(subjectno=i,trailno=j,loadcond=loadcond)
-            if loadcond = 'noload':
+            if loadcond == 'noload':
                 files_dir = 'noloaded/Subject{}_NoLoaded_Dataset/{}'.format(i,configuration)
             else:
                 files_dir = 'noloaded/Subject{}_Loaded_Dataset/{}'.format(i,configuration)
@@ -709,14 +714,14 @@ def rra_data_subjects(configuration,loadcond='noload'):
         for j in trials_num:
             # subject/trial/directory construction
             gl,subject_mass,trial = construct_gl_mass_trial(subjectno=i,trailno=j,loadcond=loadcond)
-            if loadcond = 'noload':
+            if loadcond == 'noload':
                 files_dir = 'noloaded/RRA'
             else:
                 files_dir = 'noloaded/RRA'
             Subject_Dictionary = {"Directory": files_dir,
                                   "SubjectNo": i,
                                     "TrialNo": trial,
-                                    "CycleNo": trials_num
+                                    "CycleNo": trials_num,
                                          "gl": gl,
                                "subject_mass":subject_mass}
             hip_torque,knee_torque,hip_power,knee_power,hip_speed,knee_speed\
@@ -840,7 +845,7 @@ def unassist_idealdevice_data_subjects(configuration,loadcond='noload',metabolic
         for j in trails_num:
             # subject/trial/directory construction
             gl,subject_mass,trial = construct_gl_mass_trial(subjectno=i,trailno=j,loadcond=loadcond)
-            if loadcond = 'noload':
+            if loadcond == 'noload':
                 files_dir = 'noloaded/Subject{}_NoLoaded_Dataset/{}'.format(i,configuration)
             else:
                 files_dir = 'noloaded/Subject{}_Loaded_Dataset/{}'.format(i,configuration)
@@ -898,3 +903,4 @@ def unassist_idealdevice_data_subjects(configuration,loadcond='noload',metabolic
         return MetabolicEnergy_Data,MuscleActivation_Data,HipMuscleMoment_Data,KneeMuscleMoment_Data
 #####################################################################################
 #####################################################################################
+
