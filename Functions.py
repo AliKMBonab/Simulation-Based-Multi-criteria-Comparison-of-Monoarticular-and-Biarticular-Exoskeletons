@@ -615,13 +615,14 @@ def specific_weight_data_subjects(configuration,HipWeight,KneeWeight,loadcond='n
                 MuscleActivation_Data[c_m:c_m+musclesgroup] = muscles_activation
                 c_m=musclesgroup+1
             if musclesmoment == True:
-                hip_r_musclesmoment_dir = '../subject{}/{}/H{}K{}/loadedwalking_subject{}_loaded_free_trial{}_cmc_MuscleAnalysis_Moment_hip_flexion_r.sto'\
+                
+                hip_r_musclesmoment_dir = '../subject{}/{}/H{}K{}/loadedwalking_subject{}_{}_free_trial{}_cmc_MuscleAnalysis_Moment_hip_flexion_r.sto'\
                                         .format(i,files_dir,HipWeight,KneeWeight,i,loadcond,'02')
-                hip_l_musclesmoment_dir = '../subject{}/{}/H{}K{}/loadedwalking_subject{}_loaded_free_trial{}_cmc_MuscleAnalysis_Moment_hip_flexion_l.sto'\
+                hip_l_musclesmoment_dir = '../subject{}/{}/H{}K{}/loadedwalking_subject{}_{}_free_trial{}_cmc_MuscleAnalysis_Moment_hip_flexion_l.sto'\
                                         .format(i,files_dir,HipWeight,KneeWeight,i,loadcond,'02')
-                knee_r_musclesmoment_dir = '../subject{}/{}/H{}K{}/loadedwalking_subject{}_loaded_free_trial{}_cmc_MuscleAnalysis_Moment_knee_angle_r.sto'\
+                knee_r_musclesmoment_dir = '../subject{}/{}/H{}K{}/loadedwalking_subject{}_{}_free_trial{}_cmc_MuscleAnalysis_Moment_knee_angle_r.sto'\
                                         .format(i,files_dir,HipWeight,KneeWeight,i,loadcond,'02')
-                knee_l_musclesmoment_dir = '../subject{}/{}/H{}K{}/loadedwalking_subject{}_loaded_free_trial{}_cmc_MuscleAnalysis_Moment_knee_angle_l.sto'\
+                knee_l_musclesmoment_dir = '../subject{}/{}/H{}K{}/loadedwalking_subject{}_{}_free_trial{}_cmc_MuscleAnalysis_Moment_knee_angle_l.sto'\
                                         .format(i,files_dir,HipWeight,KneeWeight,i,loadcond,'02')
                 musclemoment_dic = {"Right_Directory":hip_r_musclesmoment_dir,"Left_Directory":hip_l_musclesmoment_dir,"gl":gl}
                 hip_muscle_moment = musclemoment_calc(Subject_Dic=musclemoment_dic)
@@ -872,13 +873,13 @@ def unassist_idealdevice_data_subjects(configuration,loadcond='noload',metabolic
                 MuscleActivation_Data[c_m:c_m+musclesgroup] = muscles_activation
                 c_m=musclesgroup+1
             if musclesmoment == True:
-                hip_r_musclesmoment_dir = '../subject{}/{}/loadedwalking_subject{}_loaded_free_trial{}_cmc_MuscleAnalysis_Moment_hip_flexion_r.sto'\
+                hip_r_musclesmoment_dir = '../subject{}/{}/loadedwalking_subject{}_{}_free_trial{}_cmc_MuscleAnalysis_Moment_hip_flexion_r.sto'\
                                         .format(i,files_dir,i,loadcond,trial)
-                hip_l_musclesmoment_dir = '../subject{}/{}/loadedwalking_subject{}_loaded_free_trial{}_cmc_MuscleAnalysis_Moment_hip_flexion_l.sto'\
+                hip_l_musclesmoment_dir = '../subject{}/{}/loadedwalking_subject{}_{}_free_trial{}_cmc_MuscleAnalysis_Moment_hip_flexion_l.sto'\
                                         .format(i,files_dir,i,loadcond,trial)
-                knee_r_musclesmoment_dir = '../subject{}/{}/loadedwalking_subject{}_loaded_free_trial{}_cmc_MuscleAnalysis_Moment_knee_angle_r.sto'\
+                knee_r_musclesmoment_dir = '../subject{}/{}/loadedwalking_subject{}_{}_free_trial{}_cmc_MuscleAnalysis_Moment_knee_angle_r.sto'\
                                         .format(i,files_dir,i,loadcond,trial)
-                knee_l_musclesmoment_dir = '../subject{}/{}/loadedwalking_subject{}_loaded_free_trial{}_cmc_MuscleAnalysis_Moment_knee_angle_l.sto'\
+                knee_l_musclesmoment_dir = '../subject{}/{}/loadedwalking_subject{}_{}_free_trial{}_cmc_MuscleAnalysis_Moment_knee_angle_l.sto'\
                                         .format(i,files_dir,i,loadcond,trial)
                 musclemoment_dic = {"Right_Directory":hip_r_musclesmoment_dir,"Left_Directory":hip_l_musclesmoment_dir,"gl":gl}
                 hip_muscle_moment = musclemoment_calc(Subject_Dic=musclemoment_dic)
