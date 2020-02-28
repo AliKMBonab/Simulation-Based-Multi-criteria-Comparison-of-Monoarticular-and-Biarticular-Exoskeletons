@@ -10,7 +10,6 @@ import matplotlib.pyplot as plt
 import pylab as pl
 from scipy.signal import butter, filtfilt
 import importlib
-import pandas as pd
 from tabulate import tabulate
 from numpy import nanmean, nanstd
 from perimysium import postprocessing as pp
@@ -19,38 +18,102 @@ import Functions as fcns
 #####################################################################################
 #####################################################################################
 """Section 01:
-                As the first step of processing data, we need to extract unassised subjects
-                and ideal exoskeletons simulations data and confirm modeling and simulations"""
+                As the first step of processing data, we need to extract rra simulations
+                data and confirm data modification
+"""
+joints  = ['hip','knee','hip','knee','hip','knee']
+suffixes = ['torque','torque','power','power','speed','speed']
+loads = ['noload','loaded']
+#***************************
+print('Starting to extract files.\n\n')
+print('Section 01:\t extracting RRA related files: Torque, Power, Speed.\n')
+#***************************
+if os.path.exists('./Data/rra/noload_hipjoint_torque.csv') == True and os.path.exists('./Data/rra/loaded_hipjoint_torque.csv') == True:
+    print('rra files already exist.\n\n')
+else:
+    print('rra files do not exist. extracting the file.\n')
+    for load_type in loads:
+        out=fcns.rra_data_subjects(loadcond=load_type)
+        for i in range(len(out)):
+            np.savetxt('./Data/rra/{}_{}joint_{}.csv'.format(load_type,joints[i],suffixes[i]), out[i], fmt='%s', delimiter=',')
+print('\n\n rra files have been extracted.')
 
 #####################################################################################
 #####################################################################################
 """Section 02:
+                As the first step of processing data, we need to extract unassised subjects
+                and ideal exoskeletons simulations data and confirm modeling and simulations
+"""
+loads = ['noload','loaded']
+middle = ['metabolics','ninemuscles','hip','knee']
+suffixes = ['energy','activation','musclesmoment','musclesmoment']
+#***************************
+print('Section 02:\t extracting UnAssist Subjects related files: Metabolic Energy, Muscles Activation, Hip and Knee Muscles Moment.\n')
+#***************************
+if os.path.exists('./Data/unassist/noload_ninemuscles_activation.csv') == True and os.path.exists('./Data/unassist/loaded_ninemuscles_activation.csv') == True:
+    print('unassist files already exist.\n\n')
+else:
+    print('unassist files do not exist. extracting the file.\n')
+    for load_type in loads:
+        out = fcns.unassist_idealdevice_data_subjects(configuration='UnAssist',loadcond=load_type)
+        for i in range(len(out)):
+            np.savetxt('./Data/unassist/{}_{}_{}.csv'.format(load_type,middle[i],suffixes[i]), out[i], fmt='%s', delimiter=',')
+#####################################################################################
+#####################################################################################
+"""Section 03:
+                As the first step of processing data, we need to extract unassised subjects
+                and ideal exoskeletons simulations data and confirm modeling and simulations
+"""
+loads = ['noload','load']
+configs = ['Monoarticular/Ideal','Biarticular/Ideal']
+config_names = ['monoarticular','biarticular']
+middle =['hipactuator','kneeactuator','hipactuator','kneeactuator',\
+         'hipactuator','kneeactuator','hipactuator','kneeactuator',\
+         'hipactuator','kneeactuator','ninemuscles','metabolics',\
+         'hip','knee']
+suffixes = ['torque','torque','power','power','speed','speed',\
+            'energy','energy','regenrative_energy','regenrative_energy',\
+            'activation','energy','musclesmoment','musclesmoment']
+#***************************
+print('Section 03:\t extracting Ideal exoskeletons related files: Actuators Data, Muscles Activation, Muscles Moment, Metabolic Energy.\n')
+#***************************
+if  os.path.exists('./Data/ideal/monoarticular_ideal_noload_hipactuator_torque.csv') == True and os.path.exists('./Data/ideal/monoarticular_ideal_loaded_hipactuator_torque.csv') == True\
+and os.path.exists('./Data/ideal/biarticular_ideal_noload_hipactuator_torque.csv') == True and os.path.exists('./Data/ideal/biarticular_ideal_loaded_hipactuator_torque.csv') == True:
+
+    print('ideal biarticular/monoarticular loaded/noload files already exist.\n\n')
+else:
+    print('ideal biarticular/monoarticular loaded/noload files do not exist. extracting the file.\n')
+    for load_type in loads:
+        for i in range(2):
+            out= fcns.unassist_idealdevice_data_subjects(configuration=configs[i],loadcond= load_type,regenergy=True)
+            for k in range(len(out)):
+                np.savetxt('./Data/ideal/{}_ideal_{}_{}_{}.csv'.format(config_names[i],load_type,middle[k],suffixes[k]), out[k], fmt='%s', delimiter=',')
+#####################################################################################
+#####################################################################################
+"""Section 04:
                 This section has been dedicated to extracting pareto simulations data for
                 loaded and noload walking. The main extracted data are actuators energy,
                 metabolic energy, torque profile, power profile.
 """
-# Biarticular/Noload
-biarticular_noload_hipactuator_torque,biarticular_noload_kneeactuator_torque,\
-biarticular_noload_hipactuator_power,biarticular_noload_kneeactuator_power,\
-biarticular_noload_hipactuator_energy,biarticular_noload_kneeactuator_energy,\
-biarticular_noload_metabolicenergy =fcns.pareto_data_subjects(configuration='Biarticular',loadcond='noload')
-
-# Monoarticular/Noload
-monoarticular_noload_hipactuator_torque,monoarticular_noload_kneeactuator_torque,\
-monoarticular_noload_hipactuator_power,monoarticular_noload_kneeactuator_power,\
-monoarticular_noload_hipactuator_energy,monoarticular_noload_kneeactuator_energy,\
-monoarticular_noload_metabolicenergy =fcns.pareto_data_subjects(configuration='Monoarticular',loadcond='noload')
-
-# Biarticular/Loaded
-biarticular_loaded_hipactuator_torque,biarticular_loaded_kneeactuator_torque,\
-biarticular_loaded_hipactuator_power,biarticular_loaded_kneeactuator_power,\
-biarticular_loaded_hipactuator_energy,biarticular_loaded_kneeactuator_energy,\
-biarticular_loaded_metabolicenergy =fcns.pareto_data_subjects(configuration='Biarticular',loadcond='loaded')
-
-# Monoarticular/Loaded
-monoarticular_loaded_hipactuator_torque,monoarticular_loaded_kneeactuator_torque,\
-monoarticular_loaded_hipactuator_power,monoarticular_loaded_kneeactuator_power,\
-monoarticular_loaded_hipactuator_energy,monoarticular_loaded_kneeactuator_energy,\
-monoarticular_loaded_metabolicenergy =fcns.pareto_data_subjects(configuration='Monoarticular',loadcond='loaded')
+loads = ['noload','load']
+configs = ['Monoarticular','Biarticular']
+config_names = ['monoarticular','biarticular']
+middle =['hipactuator','kneeactuator','hipactuator','kneeactuator',\
+         'hipactuator','kneeactuator','metabolics','unsimulated']
+suffixes = ['torque','torque','power','power',\
+            'energy','energy','energy','unsimulated']
+#***************************
+print('Section 04:\t extracting Pareto exoskeletons related files: Actuators Data, Muscles Activation, Muscles Moment, Metabolic Energy.\n')
+#***************************
+if  os.path.exists('./Data/pareto/monoarticular_pareto_noload_hipactuator_torque.csv') == True and os.path.exists('./Data/pareto/monoarticular_pareto_loaded_hipactuator_torque.csv') == True\
+and os.path.exists('./Data/pareto/biarticular_pareto_noload_hipactuator_torque.csv') == True and os.path.exists('./Data/pareto/biarticular_pareto_loaded_hipactuator_torque.csv') == True:
+    print('pareto biarticular/monoarticular loaded/noload files already exist.\n\n')
+else:
+    print('pareto biarticular/monoarticular loaded/noload files do not exist. extracting the file.\n')
+    for load_type in loads:
+        for i in range(2):
+            out= fcns.pareto_data_subjects(configuration=configs[i],loadcond= load_type)
+            for k in range(len(out)):
+                np.savetxt('./Data/pareto/{}_pareto_{}_{}_{}.csv'.format(config_names[i],load_type,middle[k],suffixes[k]), out[k], fmt='%s', delimiter=',')
 
 #####################################################################################
