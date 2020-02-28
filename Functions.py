@@ -976,4 +976,4 @@ def unassist_idealdevice_data_subjects(configuration,loadcond='noload',metabolic
         return MetabolicEnergy_Data,MuscleActivation_Data,HipMuscleMoment_Data,KneeMuscleMoment_Data
 #####################################################################################
 #####################################################################################
-
+# TODO reserve/residual forces and pErr control.
