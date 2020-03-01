@@ -28,14 +28,14 @@ loads = ['noload','loaded']
 print('Starting to extract files.\n\n')
 print('Section 01:\t extracting RRA related files: Torque, Power, Speed.\n')
 #***************************
-if os.path.exists('./Data/rra/noload_hipjoint_torque.csv') == True and os.path.exists('./Data/rra/loaded_hipjoint_torque.csv') == True:
+if os.path.exists('./Data/RRA/noload_hipjoint_torque.csv') == True and os.path.exists('./Data/RRA/loaded_hipjoint_torque.csv') == True:
     print('rra files already exist.\n\n')
 else:
     print('rra files do not exist. extracting the file.\n')
     for load_type in loads:
         out=fcns.rra_data_subjects(loadcond=load_type)
         for i in range(len(out)):
-            np.savetxt('./Data/rra/{}_{}joint_{}.csv'.format(load_type,joints[i],suffixes[i]), out[i], fmt='%s', delimiter=',')
+            np.savetxt('./Data/RRA/{}_{}joint_{}.csv'.format(load_type,joints[i],suffixes[i]), out[i], fmt='%s', delimiter=',')
 print('\n\n rra files have been extracted.')
 
 #####################################################################################
@@ -50,21 +50,21 @@ suffixes = ['energy','activation','musclesmoment','musclesmoment']
 #***************************
 print('Section 02:\t extracting UnAssist Subjects related files: Metabolic Energy, Muscles Activation, Hip and Knee Muscles Moment.\n')
 #***************************
-if os.path.exists('./Data/unassist/noload_ninemuscles_activation.csv') == True and os.path.exists('./Data/unassist/loaded_ninemuscles_activation.csv') == True:
+if os.path.exists('./Data/Unassist/noload_ninemuscles_activation.csv') == True and os.path.exists('./Data/Unassist/loaded_ninemuscles_activation.csv') == True:
     print('unassist files already exist.\n\n')
 else:
     print('unassist files do not exist. extracting the file.\n')
     for load_type in loads:
         out = fcns.unassist_idealdevice_data_subjects(configuration='UnAssist',loadcond=load_type)
         for i in range(len(out)):
-            np.savetxt('./Data/unassist/{}_{}_{}.csv'.format(load_type,middle[i],suffixes[i]), out[i], fmt='%s', delimiter=',')
+            np.savetxt('./Data/Unassist/{}_{}_{}.csv'.format(load_type,middle[i],suffixes[i]), out[i], fmt='%s', delimiter=',')
 #####################################################################################
 #####################################################################################
 """Section 03:
                 As the first step of processing data, we need to extract unassised subjects
                 and ideal exoskeletons simulations data and confirm modeling and simulations
 """
-loads = ['noload','load']
+loads = ['noload','loaded']
 configs = ['Monoarticular/Ideal','Biarticular/Ideal']
 config_names = ['monoarticular','biarticular']
 middle =['hipactuator','kneeactuator','hipactuator','kneeactuator',\
@@ -77,8 +77,8 @@ suffixes = ['torque','torque','power','power','speed','speed',\
 #***************************
 print('Section 03:\t extracting Ideal exoskeletons related files: Actuators Data, Muscles Activation, Muscles Moment, Metabolic Energy.\n')
 #***************************
-if  os.path.exists('./Data/ideal/monoarticular_ideal_noload_hipactuator_torque.csv') == True and os.path.exists('./Data/ideal/monoarticular_ideal_loaded_hipactuator_torque.csv') == True\
-and os.path.exists('./Data/ideal/biarticular_ideal_noload_hipactuator_torque.csv') == True and os.path.exists('./Data/ideal/biarticular_ideal_loaded_hipactuator_torque.csv') == True:
+if  os.path.exists('./Data/Ideal/monoarticular_ideal_noload_hipactuator_torque.csv') == True and os.path.exists('./Data/Ideal/monoarticular_ideal_loaded_hipactuator_torque.csv') == True\
+and os.path.exists('./Data/Ideal/biarticular_ideal_noload_hipactuator_torque.csv') == True and os.path.exists('./Data/Ideal/biarticular_ideal_loaded_hipactuator_torque.csv') == True:
 
     print('ideal biarticular/monoarticular loaded/noload files already exist.\n\n')
 else:
@@ -87,7 +87,7 @@ else:
         for i in range(2):
             out= fcns.unassist_idealdevice_data_subjects(configuration=configs[i],loadcond= load_type,regenergy=True)
             for k in range(len(out)):
-                np.savetxt('./Data/ideal/{}_ideal_{}_{}_{}.csv'.format(config_names[i],load_type,middle[k],suffixes[k]), out[k], fmt='%s', delimiter=',')
+                np.savetxt('./Data/Ideal/{}_ideal_{}_{}_{}.csv'.format(config_names[i],load_type,middle[k],suffixes[k]), out[k], fmt='%s', delimiter=',')
 #####################################################################################
 #####################################################################################
 """Section 04:
@@ -105,8 +105,8 @@ suffixes = ['torque','torque','power','power',\
 #***************************
 print('Section 04:\t extracting Pareto exoskeletons related files: Actuators Data, Muscles Activation, Muscles Moment, Metabolic Energy.\n')
 #***************************
-if  os.path.exists('./Data/pareto/monoarticular_pareto_noload_hipactuator_torque.csv') == True and os.path.exists('./Data/pareto/monoarticular_pareto_loaded_hipactuator_torque.csv') == True\
-and os.path.exists('./Data/pareto/biarticular_pareto_noload_hipactuator_torque.csv') == True and os.path.exists('./Data/pareto/biarticular_pareto_loaded_hipactuator_torque.csv') == True:
+if  os.path.exists('./Data/Pareto/monoarticular_pareto_noload_hipactuator_torque.csv') == True and os.path.exists('./Data/Pareto/monoarticular_pareto_load_hipactuator_torque.csv') == True\
+and os.path.exists('./Data/Pareto/biarticular_pareto_noload_hipactuator_torque.csv') == True and os.path.exists('./Data/Pareto/biarticular_pareto_load_hipactuator_torque.csv') == True:
     print('pareto biarticular/monoarticular loaded/noload files already exist.\n\n')
 else:
     print('pareto biarticular/monoarticular loaded/noload files do not exist. extracting the file.\n')
@@ -114,6 +114,6 @@ else:
         for i in range(2):
             out= fcns.pareto_data_subjects(configuration=configs[i],loadcond= load_type)
             for k in range(len(out)):
-                np.savetxt('./Data/pareto/{}_pareto_{}_{}_{}.csv'.format(config_names[i],load_type,middle[k],suffixes[k]), out[k], fmt='%s', delimiter=',')
+                np.savetxt('./Data/Pareto/{}_pareto_{}_{}_{}.csv'.format(config_names[i],load_type,middle[k],suffixes[k]), out[k], fmt='%s', delimiter=',')
 
 #####################################################################################

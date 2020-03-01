@@ -18,6 +18,17 @@ from perimysium import dataman
 import pathlib
 #######################################################################
 #######################################################################
+def normalize_direction_data(data,gl,direction=False):
+    c=0
+    norm_data = np.zeros([data.shape[0],data.shape[1]])
+    for key in gl.keys():
+        if direction== True:
+            norm_data[:,c] = (-1*data[:,c])/gl[key][1]
+        else:
+            norm_data[:,c] = (data[:,c])/gl[key][1]
+        c+=1
+    return norm_data
+
 def toeoff_pgc(gl, side):
     if side == 'right':
         toeoff = gl.right_toeoff
@@ -56,6 +67,7 @@ def construct_gl_mass_side(subjectno,trialno,loadcond):
 def mean_std_over_subjects(data):
     mean = np.nanmean(data,axis=1)
     std = np.nanstd(data,axis=1)
+    return mean,std
 
 def toe_off_avg_std(gl_noload,gl_loaded):
     '''This function returns the mean toe off percentage for loaded and noloaded subjects
@@ -76,3 +88,38 @@ def toe_off_avg_std(gl_noload,gl_loaded):
         loaded_toe_off[c1] =toeoff_pgc(gl=gl_loaded[key][0],side= gl_loaded[key][2])
         c1+=1
     return np.mean(noload_toe_off),np.std(noload_toe_off),np.mean(loaded_toe_off),np.std(loaded_toe_off)
+
+def smooth(a,WSZ):
+    """
+    a: NumPy 1-D array containing the data to be smoothed
+    WSZ: smoothing window size needs, which must be odd number,
+    as in the original MATLAB implementation.
+    """
+    out0 = np.convolve(a,np.ones(WSZ,dtype=int),'valid')/WSZ    
+    r = np.arange(1,WSZ-1,2)
+    start = np.cumsum(a[:WSZ-1])[::2]/r
+    stop = (np.cumsum(a[:-WSZ:-1])[::2]/r)[::-1]
+    return np.concatenate((  start , out0, stop  ))
+
+def no_top_right(ax):
+    ax.spines["right"].set_visible(False)
+    ax.spines["top"].set_visible(False)
+    ax.yaxis.set_ticks_position('left')
+    ax.xaxis.set_ticks_position('bottom')
+
+def plot_shaded_avg(plot_dic,toeoff_color='xkcd:medium grey',toeoff_alpha=1.0,
+    lw=2.0,ls='-',alpha=0.5,fill_std=True,fill_lw=0,*args, **kwargs):
+
+    pgc = plot_dic['pgc']
+    avg = plot_dic['avg']
+    std= plot_dic['std']
+    label = plot_dic['label']
+    avg_toeoff = plot_dic['avg_toeoff']
+    #axes setting
+    plt.xticks([0,20,40,60,80,100])
+    plt.xlim([0,100])
+    # plot
+    plt.axvline(avg_toeoff, lw=lw, color=toeoff_color, zorder=0, alpha=toeoff_alpha) #vertical line
+    plt.axhline(0, lw=lw, color='grey', zorder=0, alpha=0.75) # horizontal line
+    plt.fill_between(pgc, avg + std, avg - std, alpha=alpha,linewidth=fill_lw, *args, **kwargs) # shaded std
+    return plt.plot(pgc, avg, *args, lw=lw, ls=ls, label=label, **kwargs) # mean
