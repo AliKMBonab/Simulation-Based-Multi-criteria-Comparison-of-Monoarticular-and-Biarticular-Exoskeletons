@@ -55,8 +55,8 @@ def data_extraction(Subject_Dic):
         gpc_r, shifted_right_data = pp.data_by_pgc(time,right_data,gl,side='right')
         gpc_l, shifted_left_data  = pp.data_by_pgc(time,left_data,gl,side='left')
     elif gl.primary_leg == 'left':
-        gpc_r, shifted_right_data = pp.data_by_pgc(time,right_data,gl,side='left')
-        gpc_l, shifted_left_data  = pp.data_by_pgc(time,left_data,gl,side='right')
+        gpc_r, shifted_right_data = pp.data_by_pgc(time,left_data,gl,side='left')
+        gpc_l, shifted_left_data  = pp.data_by_pgc(time,right_data,gl,side='right')
     else:
         raise Exception('Primary leg (right/left) is not correct!!')
     interperted_right_data = np.interp(gait_cycle,gpc_r,shifted_right_data)
