@@ -59,7 +59,7 @@ knee_noload_plot_dic = {'pgc':gait_cycle,'avg':utils.smooth(mean_norm_noload_kne
 
 
 # hip joint moment figure
-fig, ax = plt.subplots(num='Hip Joint Moment')
+fig, ax = plt.subplots(num='Hip Joint Moment',figsize=(6.4, 4.8))
 utils.plot_shaded_avg(plot_dic=hip_loaded_plot_dic,color='k')
 utils.plot_shaded_avg(plot_dic=hip_noload_plot_dic,toeoff_color='xkcd:shamrock green',color='xkcd:irish green')
 plt.legend(loc='best',frameon=False)
@@ -72,7 +72,7 @@ fig.tight_layout(h_pad=-4.0, w_pad=-4.0)
 fig.savefig('./Figures/HipJointMoment.pdf',orientation='landscape',bbox_inches='tight')
 
 # knee joint moment figure
-fig, ax = plt.subplots(num='Knee Joint Moment')
+fig, ax = plt.subplots(num='Knee Joint Moment',figsize=(6.4, 4.8))
 utils.plot_shaded_avg(plot_dic=knee_loaded_plot_dic,color='k')
 utils.plot_shaded_avg(plot_dic=knee_noload_plot_dic,toeoff_color='xkcd:shamrock green',color='xkcd:irish green')
 plt.legend(loc='best',frameon=False)
