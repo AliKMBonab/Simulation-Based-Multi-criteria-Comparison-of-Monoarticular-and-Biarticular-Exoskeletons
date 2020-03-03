@@ -69,7 +69,6 @@ def actuators_normal_energy_calc(Subject_Dic,isabs=True,regen=False):
     right_param = Subject_Dic["Right_Parameter"]
     left_param = Subject_Dic["Left_Parameter"]
     gl = Subject_Dic["gl"]
-    subject_mass = Subject_Dic["Subject_Mass"]
     numpy_data = dataman.storage2numpy(directory)
     time = numpy_data['time']
     right_data = numpy_data[right_param]
@@ -80,15 +79,13 @@ def actuators_normal_energy_calc(Subject_Dic,isabs=True,regen=False):
     else:
         energy = pp.avg_over_gait_cycle(time, right_data,cycle_duration=gl.cycle_end-gl.cycle_start)\
                + pp.avg_over_gait_cycle(time,left_data,cycle_duration=gl.cycle_end-gl.cycle_start) 
-    normalized_energy = energy/subject_mass
     if regen == True:
         regen_energy = pp.avg_over_gait_cycle(time, np.abs(np.minimum(np.zeros(right_data.shape[0]),right_data)),cycle_duration=gl.cycle_end-gl.cycle_start)\
                      + pp.avg_over_gait_cycle(time,np.abs(np.minimum(np.zeros(left_data.shape[0]),left_data)),cycle_duration=gl.cycle_end-gl.cycle_start)
-        normalized_regen_energy = regen_energy/subject_mass
     if regen == True:
-        return normalized_energy, normalized_regen_energy
+        return energy,regen_energy
     else:
-        return normalized_energy
+        return energy
 ################################################################# 
 # Metabolic Energy Reduction/ Muscles Moment calculation/ Metabolic energy calculations in pareto curve
 #****************************************************************
@@ -146,7 +143,7 @@ def metabolic_normal_energy(Subject_Dic):
     main_metabolics = basal + total
     metabolic_cost = np.interp(gait_cycle,time,main_metabolics)
     metabolic_energy = pp.avg_over_gait_cycle(metabolic_power_data['time'], main_metabolics,cycle_duration=gl.cycle_end-gl.cycle_start)
-    normalized_metabolic_energy = metabolic_energy/subject_mass
+    normalized_metabolic_energy = metabolic_energy
     return normalized_metabolic_energy
 def metabolic_energy_reduction(data,unassist_data):
     reduction = np.zeros(len(data))
