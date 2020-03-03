@@ -21,8 +21,8 @@ import Functions as fcns
                 As the first step of processing data, we need to extract rra simulations
                 data and confirm data modification
 """
-joints  = ['hip','knee','hip','knee','hip','knee']
-suffixes = ['torque','torque','power','power','speed','speed']
+joints  = ['hip','knee','hip','knee','hip','knee','hip','knee']
+suffixes = ['torque','torque','power','power','speed','speed','kinematics','kinematics']
 loads = ['noload','loaded']
 #***************************
 print('Starting to extract files.\n\n')
