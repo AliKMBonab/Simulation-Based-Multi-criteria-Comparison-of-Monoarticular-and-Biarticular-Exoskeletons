@@ -18,7 +18,7 @@ from perimysium import dataman
 import pathlib
 #######################################################################
 #######################################################################
-def normalize_direction_data(data,gl,direction=False):
+def normalize_direction_data(data, gl, normalize=True, direction=False):
     c=0
     norm_data = np.zeros([data.shape[0],data.shape[1]])
     for key in gl.keys():
@@ -27,7 +27,14 @@ def normalize_direction_data(data,gl,direction=False):
         else:
             norm_data[:,c] = (data[:,c])/gl[key][1]
         c+=1
-    return norm_data
+    if normalize == False:
+        if direction== True:
+            reverse_data = -1*data
+        else:
+            reverse_data = data
+        return reverse_data
+    else:
+        return norm_data
 
 def toeoff_pgc(gl, side):
     if side == 'right':
@@ -108,7 +115,7 @@ def no_top_right(ax):
     ax.xaxis.set_ticks_position('bottom')
 
 def plot_shaded_avg(plot_dic,toeoff_color='xkcd:medium grey',toeoff_alpha=1.0,
-    lw=2.0,ls='-',alpha=0.5,fill_std=True,fill_lw=0,*args, **kwargs):
+    lw=2.0,ls='-',alpha=0.35,fill_std=True,fill_lw=0,*args, **kwargs):
 
     pgc = plot_dic['pgc']
     avg = plot_dic['avg']
