@@ -88,6 +88,8 @@ noload_kneejoint_kinematics = utils.normalize_direction_data(jointkinematics_dat
 mean_loaded_kneejoint_kinematics,std_loaded_kneejoint_kinematics = utils.mean_std_over_subjects(loaded_kneejoint_kinematics)
 mean_noload_kneejoint_kinematics,std_noload_kneejoint_kinematics = utils.mean_std_over_subjects(noload_kneejoint_kinematics)
 #####################################################################################
+plt.plot(noload_kneejoint_speed)
+plt.show()
 # Plots
 # hip joint moment plot dictionaries
 hip_moment_loaded_plot_dic = {'pgc':gait_cycle,'avg':utils.smooth(mean_norm_loaded_hipjoint_moment,3),'label':'Loaded',

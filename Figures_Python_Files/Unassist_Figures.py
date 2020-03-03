@@ -43,8 +43,6 @@ normal_noload_hipmuscles_moment = utils.normalize_direction_data(musclesmoment_d
 mean_norm_loaded_hipmuscles_moment,std_norm_loaded_hipmuscles_moment = utils.mean_std_over_subjects(normal_loaded_hipmuscles_moment)
 mean_norm_noload_hipmuscles_moment,std_norm_noload_hipmuscles_moment = utils.mean_std_over_subjects(normal_noload_hipmuscles_moment)
 
-plt.plot(normal_loaded_hipmuscles_moment)
-plt.show()
 #####################################################################################
 # Plots
 # hip joint moment plot dictionaries

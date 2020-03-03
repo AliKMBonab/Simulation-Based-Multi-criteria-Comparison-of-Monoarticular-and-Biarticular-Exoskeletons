@@ -51,16 +51,10 @@ def data_extraction(Subject_Dic):
     time = numpy_data['time']
     right_data = numpy_data[right_param]
     left_data = numpy_data[left_param]
-    if gl.primary_leg == 'right':
-        gpc_r, shifted_right_data = pp.data_by_pgc(time,right_data,gl,side='right')
-        gpc_l, shifted_left_data  = pp.data_by_pgc(time,left_data,gl,side='left')
-    elif gl.primary_leg == 'left':
-        gpc_r, shifted_right_data = pp.data_by_pgc(time,left_data,gl,side='left')
-        gpc_l, shifted_left_data  = pp.data_by_pgc(time,right_data,gl,side='right')
-    else:
-        raise Exception('Primary leg (right/left) is not correct!!')
-    interperted_right_data = np.interp(gait_cycle,gpc_r,shifted_right_data)
-    interperted_left_data  = np.interp(gait_cycle,gpc_l,shifted_left_data)
+    gpc_r, shifted_right_data = pp.data_by_pgc(time,right_data,gl,side='right')
+    gpc_l, shifted_left_data  = pp.data_by_pgc(time,left_data,gl,side='left')
+    interperted_right_data = np.interp(gait_cycle,gpc_r,shifted_right_data, left=np.nan, right=np.nan)
+    interperted_left_data  = np.interp(gait_cycle,gpc_l,shifted_left_data, left=np.nan, right=np.nan)
     final_data = nanmean([interperted_right_data,interperted_left_data],axis=0)
     return final_data
 def actuators_energy_calc(Subject_Dic,isabs=True,regen=False):
@@ -114,14 +108,10 @@ def musclemoment_calc(Subject_Dic):
         musclemoment_r += data_r[muscles_name[i]+'_l']
         musclemoment_l += data_l[muscles_name[i]+'_r']
     gpc = np.linspace(0,100,1000)
-    if gl.primary_leg == 'left':
-        gpc_r,shifted_data_r = pp.data_by_pgc(time_r,musclemoment_r,gl,side='right')
-        gpc_l,shifted_data_l = pp.data_by_pgc(time_l,musclemoment_l,gl,side='left')
-    else:
-        gpc_r,shifted_data_r = pp.data_by_pgc(time_r,musclemoment_r,gl,side='right')
-        gpc_l,shifted_data_l = pp.data_by_pgc(time_l,musclemoment_l,gl,side='left')
-    main_data_r = np.interp(gpc,gpc_r,shifted_data_r)
-    main_data_l = np.interp(gpc,gpc_l,shifted_data_l)
+    gpc_r,shifted_data_r = pp.data_by_pgc(time_r,musclemoment_r,gl,side='right')
+    gpc_l,shifted_data_l = pp.data_by_pgc(time_l,musclemoment_l,gl,side='left')
+    main_data_r = np.interp(gpc,gpc_r,shifted_data_r, left=np.nan, right=np.nan)
+    main_data_l = np.interp(gpc,gpc_l,shifted_data_l, left=np.nan, right=np.nan)
     musclemoment = nanmean([main_data_r,main_data_l],axis=0)
     return musclemoment
 def metabolic_energy_fcn(Subject_Dic):
@@ -194,14 +184,10 @@ def group_muscles_activation(Subject_Dic,whichgroup='nine',loadcond='noload'):
     for muscle in muscles_name:
         muscle_r_activation = data[muscle+'_r'+'activation']
         muscle_l_activation = data[muscle+'_l'+'activation']
-        if gl.primary_leg == 'left':
-            gpc_r, shifted_muscle_r_activation = pp.data_by_pgc(time,muscle_r_activation,gl,side='left')
-            gpc_l, shifted_muscle_l_activation = pp.data_by_pgc(time,muscle_l_activation,gl,side='right')
-        else:
-            gpc_r, shifted_muscle_r_activation = pp.data_by_pgc(time,muscle_r_activation,gl,side='right')
-            gpc_l, shifted_muscle_l_activation = pp.data_by_pgc(time,muscle_l_activation,gl,side='left')
-        muscle_r_activation = np.interp(gait_cycle,gpc_r,shifted_muscle_r_activation)
-        muscle_l_activation = np.interp(gait_cycle,gpc_l,shifted_muscle_l_activation)
+        gpc_r, shifted_muscle_r_activation = pp.data_by_pgc(time,muscle_r_activation,gl,side='right')
+        gpc_l, shifted_muscle_l_activation = pp.data_by_pgc(time,muscle_l_activation,gl,side='left')
+        muscle_r_activation = np.interp(gait_cycle,gpc_r,shifted_muscle_r_activation, left=np.nan, right=np.nan)
+        muscle_l_activation = np.interp(gait_cycle,gpc_l,shifted_muscle_l_activation, left=np.nan, right=np.nan)
         muscles_activation[:,c]=nanmean([muscle_r_activation,muscle_l_activation],axis=0)
         c=+1
     return muscles_activation
