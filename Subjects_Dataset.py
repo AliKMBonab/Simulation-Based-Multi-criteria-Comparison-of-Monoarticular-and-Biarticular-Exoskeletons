@@ -32,7 +32,7 @@ noload_dataset = {
                              "subjects_cycle_end_time" : np.array(1.552),
                                  "footstrike_right_leg": np.array(0.379),
                                 "toeoff_time_right_leg": np.array(1.107),
-                                  "footstrike_left_leg": np.array(1.969),
+                                  "footstrike_left_leg": np.array(0.969),
                                  "toeoff_time_left_leg": np.array(1.702),
                                          "primary_legs": 'right',
                                        "secondary_legs": 'left',
