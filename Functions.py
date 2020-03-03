@@ -110,10 +110,13 @@ def musclemoment_calc(Subject_Dic):
     for i in range(len(muscles_name)):
         musclemoment_r += data_r[muscles_name[i]+'_r']
         musclemoment_l += data_l[muscles_name[i]+'_l']
+    for i in range(len(muscles_name)):
+        musclemoment_r += data_r[muscles_name[i]+'_l']
+        musclemoment_l += data_l[muscles_name[i]+'_r']
     gpc = np.linspace(0,100,1000)
     if gl.primary_leg == 'left':
-        gpc_r,shifted_data_r = pp.data_by_pgc(time_r,musclemoment_r,gl,side='left')
-        gpc_l,shifted_data_l = pp.data_by_pgc(time_l,musclemoment_l,gl,side='right')
+        gpc_r,shifted_data_r = pp.data_by_pgc(time_r,musclemoment_r,gl,side='right')
+        gpc_l,shifted_data_l = pp.data_by_pgc(time_l,musclemoment_l,gl,side='left')
     else:
         gpc_r,shifted_data_r = pp.data_by_pgc(time_r,musclemoment_r,gl,side='right')
         gpc_l,shifted_data_l = pp.data_by_pgc(time_l,musclemoment_l,gl,side='left')
@@ -121,7 +124,7 @@ def musclemoment_calc(Subject_Dic):
     main_data_l = np.interp(gpc,gpc_l,shifted_data_l)
     musclemoment = nanmean([main_data_r,main_data_l],axis=0)
     return musclemoment
-def metabolic_energy(Subject_Dic):
+def metabolic_energy_fcn(Subject_Dic):
     """This function has been developed, seperated from the 'pareto_data_extraction' function, 
        to calculate the metabolic power and energy for cases in which we do not have pareto simulations.
        This will be mostly used for simulation of Unassisted subjects.
@@ -143,8 +146,7 @@ def metabolic_energy(Subject_Dic):
     main_metabolics = basal + total
     metabolic_cost = np.interp(gait_cycle,time,main_metabolics)
     metabolic_energy = pp.avg_over_gait_cycle(metabolic_power_data['time'], main_metabolics,cycle_duration=gl.cycle_end-gl.cycle_start)
-    normalized_metabolic_energy = metabolic_energy
-    return normalized_metabolic_energy
+    return metabolic_energy
 def metabolic_energy_reduction(data,unassist_data):
     reduction = np.zeros(len(data))
     for i in range(len(data)):
@@ -426,7 +428,7 @@ def pareto_data_extraction(Subject_Dic,loadcond='noload',calculatenergy=True):
                     energy_dic = {"Directory":metabolic_power_data_dir,
                                         "gl": gl,
                             "Subject_Mass": subject_mass}
-                    metabolic_energy = metabolic_energy(energy_dic)
+                    metabolic_energy = metabolic_energy_fcn(energy_dic)
                     HipActuatorEnergy_Data[c]  = hip_actuator_energy
                     KneeActuatorEnergy_Data[c] = knee_actuator_energy
                     MetabolicEnergy_Data[c] = metabolic_energy
@@ -592,7 +594,7 @@ def specific_weight_data_extraction(Subject_Dic,Hip_Weight,Knee_Weight,loadcond=
                 energy_dic = {"Directory":metabolic_power_data_dir,
                                      "gl": gl,
                            "Subject_Mass": subject_mass}
-                metabolic_energy = metabolic_energy(energy_dic)
+                metabolic_energy = metabolic_energy_fcn(energy_dic)
     if regen_energy == True:
         return hip_actuator_torque,knee_actuator_torque,hip_actuator_power,knee_actuator_power,\
             hip_actuator_speed,knee_actuator_speed,hip_actuator_energy,knee_actuator_energy,metabolic_energy,hip_actuator_regen_energy,knee_actuator_regen_energy
@@ -978,7 +980,7 @@ def unassist_idealdevice_data_subjects(configuration,loadcond='noload',metabolic
                 energy_dic = {"Directory":metabolic_power_data_dir,
                                      "gl": gl,
                            "Subject_Mass": subject_mass}
-                metabolic_energy = metabolic_energy(energy_dic)
+                metabolic_energy = metabolic_energy_fcn(energy_dic)
                 MetabolicEnergy_Data[c] = metabolic_energy
             c+=1
     if configuration != 'UnAssist':

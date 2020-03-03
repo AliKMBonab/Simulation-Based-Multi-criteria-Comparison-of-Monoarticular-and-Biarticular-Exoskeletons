@@ -36,6 +36,21 @@ def normalize_direction_data(data, gl, normalize=True, direction=False):
     else:
         return norm_data
 
+
+def cmc_revise_data(data, gl):
+    c=0
+    modified_data = np.zeros([data.shape[0],data.shape[1]])
+    for key in gl.keys():
+        if gl[key][2] == 'left':
+            modified_data[:,c] = -1*data[:,c]
+        elif gl[key][2] == 'right':
+            modified_data[:,c] = data[:,c]
+        else:
+            raise Exception('primary leg does not match!')
+        c+=1
+    return modified_data
+
+
 def toeoff_pgc(gl, side):
     if side == 'right':
         toeoff = gl.right_toeoff
