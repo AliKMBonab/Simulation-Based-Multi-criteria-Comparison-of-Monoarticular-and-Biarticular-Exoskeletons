@@ -189,7 +189,7 @@ def group_muscles_activation(Subject_Dic,whichgroup='nine',loadcond='noload'):
         muscle_r_activation = np.interp(gait_cycle,gpc_r,shifted_muscle_r_activation, left=np.nan, right=np.nan)
         muscle_l_activation = np.interp(gait_cycle,gpc_l,shifted_muscle_l_activation, left=np.nan, right=np.nan)
         muscles_activation[:,c]=nanmean([muscle_r_activation,muscle_l_activation],axis=0)
-        c=+1
+        c+=1
     return muscles_activation
 #################################################################
 # Adding mass metabolic cost change/Adding mass Metabolic cost (loaded subjects metabolic cost)

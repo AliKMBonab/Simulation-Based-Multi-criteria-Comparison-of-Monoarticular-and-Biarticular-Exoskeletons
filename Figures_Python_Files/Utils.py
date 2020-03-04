@@ -91,6 +91,15 @@ def mean_std_over_subjects(data):
     std = np.nanstd(data,axis=1)
     return mean,std
 
+def mean_std_muscles_subjects(data,muscles_num=9):
+    mean_data = np.zeros((data.shape[0],muscles_num))
+    std_data  = np.zeros((data.shape[0],muscles_num))
+    for i in range(muscles_num):
+        cols = np.arange(i,data.shape[1],muscles_num)
+        mean_data[:,i] = np.nanmean(data[:,cols],axis=1)
+        std_data [:,i] = np.nanstd (data[:,cols],axis=1)
+    return mean_data,std_data
+
 def toe_off_avg_std(gl_noload,gl_loaded):
     '''This function returns the mean toe off percentage for loaded and noloaded subjects
         parameters:
@@ -145,3 +154,43 @@ def plot_shaded_avg(plot_dic,toeoff_color='xkcd:medium grey',toeoff_alpha=1.0,
     plt.axhline(0, lw=lw, color='grey', zorder=0, alpha=0.75) # horizontal line
     plt.fill_between(pgc, avg + std, avg - std, alpha=alpha,linewidth=fill_lw, *args, **kwargs) # shaded std
     return plt.plot(pgc, avg, *args, lw=lw, ls=ls, label=label, **kwargs) # mean
+
+def plot_muscles_avg(plot_dic,toeoff_color='xkcd:medium grey',
+                     toeoff_alpha=1.0,row_num=3,col_num=3,
+                     lw=2.0,ls='-',alpha=0.2,fill_lw=0,
+                     is_std = False,is_smooth=True,WS=3,fill_std=True,*args, **kwargs):
+
+    pgc = plot_dic['pgc']
+    avg = plot_dic['avg']
+    std= plot_dic['std']
+    avg_toeoff = plot_dic['avg_toeoff']
+    muscle_group = plot_dic['muscle_group']
+    import Muscles_Group as mgn
+    muscles_name = mgn.muscle_group_name[muscle_group]
+    #axes setting
+    plt.xticks([0,20,40,60,80,100])
+    plt.xlim([0,100])
+    # smoothing data
+    smooth_avg = np.zeros((avg.shape[0],avg.shape[1]))
+    smooth_std = np.zeros((std.shape[0],std.shape[1]))
+    if is_smooth == True:
+        for i in range(len(muscles_name)):
+            smooth_avg[:,i] = smooth(avg[:,i],WSZ=WS)
+            smooth_std[:,i] = smooth(std[:,i],WSZ=WS)
+    else:
+        pass
+    avg = smooth_avg
+    std = smooth_std
+    # plots
+    for i in range(len(muscles_name)):
+        plt.tight_layout()
+        ax = plt.subplot(row_num,col_num,i+1)
+        no_top_right(ax)
+        plt.title(muscles_name[i])
+        plt.yticks((0,0.2,0.4,0.6,0.8,1))
+        ax.axvline(avg_toeoff, lw=lw, color=toeoff_color, zorder=0, alpha=toeoff_alpha) #vertical line
+        if is_std == True:
+            ax.fill_between(pgc, avg[:,i] + std[:,i], avg[:,i] - std[:,i], alpha=alpha,linewidth=fill_lw, *args, **kwargs) # shaded std
+        else:
+            pass
+        ax.plot(pgc, avg[:,i], *args, lw=lw, ls=ls, label=muscles_name[i], **kwargs) # mean
