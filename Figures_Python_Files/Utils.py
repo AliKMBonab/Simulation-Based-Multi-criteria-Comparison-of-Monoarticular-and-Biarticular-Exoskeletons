@@ -32,6 +32,16 @@ def listToString(s):
     # return string   
     return str1  
 
+def csv2numpy(datname):
+    f = open(datname, 'r')
+    line = f.readline()
+    column_name = line.split(',')
+    column_name.pop()
+    f.close()
+    data = np.genfromtxt(datname,delimiter= ',', names=column_name,skip_header=1)
+    return data
+
+    
 def vec2mat(Data,matrix_cols=0,num_matrix=0): 
     datanp = np.zeros((1000,len(Data)+num_matrix*matrix_cols-num_matrix))
     c=0
