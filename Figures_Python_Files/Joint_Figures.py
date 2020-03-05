@@ -58,13 +58,13 @@ normal_noload_kneejoint_moment = utils.normalize_direction_data(jointmoment_data
 mean_norm_loaded_kneejoint_moment,std_norm_loaded_kneejoint_moment = utils.mean_std_over_subjects(normal_loaded_kneejoint_moment)
 mean_norm_noload_kneejoint_moment,std_norm_noload_kneejoint_moment = utils.mean_std_over_subjects(normal_noload_kneejoint_moment)
 # hip joint power
-normal_loaded_hipjoint_power = utils.normalize_direction_data(jointpower_dataset['loaded_hipjoint_power'],gl_noload,direction=True)
-normal_noload_hipjoint_power = utils.normalize_direction_data(jointpower_dataset['noload_hipjoint_power'],gl_noload,direction=True)
+normal_loaded_hipjoint_power = utils.normalize_direction_data(jointpower_dataset['loaded_hipjoint_power'],gl_noload,direction=False)
+normal_noload_hipjoint_power = utils.normalize_direction_data(jointpower_dataset['noload_hipjoint_power'],gl_noload,direction=False)
 mean_norm_loaded_hipjoint_power,std_norm_loaded_hipjoint_power = utils.mean_std_over_subjects(normal_loaded_hipjoint_power)
 mean_norm_noload_hipjoint_power,std_norm_noload_hipjoint_power = utils.mean_std_over_subjects(normal_noload_hipjoint_power)
 # knee joint power
-normal_loaded_kneejoint_power = utils.normalize_direction_data(jointpower_dataset['loaded_kneejoint_power'],gl_noload,direction=True)
-normal_noload_kneejoint_power = utils.normalize_direction_data(jointpower_dataset['noload_kneejoint_power'],gl_noload,direction=True)
+normal_loaded_kneejoint_power = utils.normalize_direction_data(jointpower_dataset['loaded_kneejoint_power'],gl_noload,direction=False)
+normal_noload_kneejoint_power = utils.normalize_direction_data(jointpower_dataset['noload_kneejoint_power'],gl_noload,direction=False)
 mean_norm_loaded_kneejoint_power,std_norm_loaded_kneejoint_power = utils.mean_std_over_subjects(normal_loaded_kneejoint_power)
 mean_norm_noload_kneejoint_power,std_norm_noload_kneejoint_power = utils.mean_std_over_subjects(normal_noload_kneejoint_power)
 # hip joint speed
@@ -88,7 +88,24 @@ noload_kneejoint_kinematics = utils.normalize_direction_data(jointkinematics_dat
 mean_loaded_kneejoint_kinematics,std_loaded_kneejoint_kinematics = utils.mean_std_over_subjects(loaded_kneejoint_kinematics)
 mean_noload_kneejoint_kinematics,std_noload_kneejoint_kinematics = utils.mean_std_over_subjects(noload_kneejoint_kinematics)
 #####################################################################################
-
+# Write final data to csv file.
+# TODO: optimize data saving method.
+# Headers
+Headers = ['mean_norm_loaded_hipjoint_moment','std_norm_loaded_hipjoint_moment','mean_norm_loaded_kneejoint_moment','std_norm_loaded_kneejoint_moment',\
+           'mean_norm_loaded_hipjoint_power','std_norm_loaded_hipjoint_power','mean_norm_loaded_kneejoint_power','std_norm_loaded_kneejoint_power',\
+            'mean_loaded_hipjoint_speed','std_loaded_hipjoint_speed','mean_loaded_kneejoint_speed','std_loaded_kneejoint_speed',\
+            'mean_loaded_hipjoint_kinematics','std_loaded_hipjoint_kinematics','mean_loaded_kneejoint_kinematics','std_loaded_kneejoint_kinematics']
+# Dataset
+Data =[mean_norm_loaded_hipjoint_moment,std_norm_loaded_hipjoint_moment,mean_norm_loaded_kneejoint_moment,std_norm_loaded_kneejoint_moment,\
+            mean_norm_loaded_hipjoint_power,std_norm_loaded_hipjoint_power,mean_norm_loaded_kneejoint_power,std_norm_loaded_kneejoint_power,\
+            mean_loaded_hipjoint_speed,std_loaded_hipjoint_speed,mean_loaded_kneejoint_speed,std_loaded_kneejoint_speed,\
+            mean_loaded_hipjoint_kinematics,std_loaded_hipjoint_kinematics,mean_loaded_kneejoint_kinematics,std_loaded_kneejoint_kinematics]
+# List of numpy vectors to a numpy ndarray and save to csv file
+Data = utils.vec2mat(Data)
+with open(r'.\Data\RRA\rra_final_data.csv', 'wb') as f:
+  f.write(bytes(utils.listToString(Headers)+'\n','UTF-8'))
+  np.savetxt(f, Data, fmt='%s', delimiter=",")
+#####################################################################################
 # Plots
 # hip joint moment plot dictionaries
 hip_moment_loaded_plot_dic = {'pgc':gait_cycle,'avg':utils.smooth(mean_norm_loaded_hipjoint_moment,3),'label':'Loaded',

@@ -57,6 +57,29 @@ mean_norm_loaded_muscles_activation,std_norm_loaded_muscles_activation = utils.m
 mean_norm_noload_muscles_activation,std_norm_noload_muscles_activation = utils.mean_std_muscles_subjects(normal_noload_muscles_activation)
 
 #####################################################################################
+# Write final data to csv file.
+# TODO: optimize data saving method.
+# Headers
+Headers = ['mean_norm_loaded_hipmuscles_moment','std_norm_loaded_hipmuscles_moment','mean_norm_noload_hipmuscles_moment','std_norm_noload_hipmuscles_moment',\
+       'mean_norm_loaded_kneemuscles_moment','std_norm_loaded_kneemuscles_moment','mean_norm_noload_kneemuscles_moment','std_norm_noload_kneemuscles_moment']
+mean_norm_loaded_muscles_activation_header = utils.muscles_header('mean_norm_loaded_muscles_activation')
+mean_norm_noload_muscles_activation_header = utils.muscles_header('mean_norm_noload_muscles_activation')
+std_norm_loaded_muscles_activation_header = utils.muscles_header('std_norm_loaded_muscles_activation')
+std_norm_noload_muscles_activation_header = utils.muscles_header('std_norm_noload_muscles_activation')
+Headers.extend(mean_norm_loaded_muscles_activation_header)
+Headers.extend(std_norm_loaded_muscles_activation_header)
+Headers.extend(mean_norm_noload_muscles_activation_header)
+Headers.extend(std_norm_noload_muscles_activation_header)
+# Dataset
+Data =[mean_norm_loaded_hipmuscles_moment,std_norm_loaded_hipmuscles_moment,mean_norm_noload_hipmuscles_moment,std_norm_noload_hipmuscles_moment,\
+       mean_norm_loaded_kneemuscles_moment,std_norm_loaded_kneemuscles_moment,mean_norm_noload_kneemuscles_moment,std_norm_noload_kneemuscles_moment,\
+       mean_norm_loaded_muscles_activation,std_norm_loaded_muscles_activation,mean_norm_noload_muscles_activation,std_norm_noload_muscles_activation]
+# List of numpy vectors to a numpy ndarray and save to csv file
+Data = utils.vec2mat(Data,matrix_cols=9,num_matrix=4)
+with open(r'.\Data\Unassist\unassist_final_data.csv', 'wb') as f:
+  f.write(bytes(utils.listToString(Headers)+'\n','UTF-8'))
+  np.savetxt(f, Data, fmt='%s', delimiter=",")
+#####################################################################################
 # Plots
 # hip joint moment plot dictionaries
 hip_moment_loaded_plot_dic = {'pgc':gait_cycle,'avg':utils.smooth(mean_norm_loaded_hipmuscles_moment,3),'label':'Loaded',
@@ -70,9 +93,9 @@ knee_moment_noload_plot_dic = {'pgc':gait_cycle,'avg':utils.smooth(mean_norm_nol
                         'std':utils.smooth(std_norm_noload_kneemuscles_moment,3),'avg_toeoff':noload_mean_toe_off}
 # muscles moment plot dictionaries
 muscles_activation_loaded_plot_dic = {'pgc':gait_cycle,'avg':mean_norm_loaded_muscles_activation,'muscle_group': 'nine_muscles',
-                                      'std':std_norm_loaded_muscles_activation,'avg_toeoff':loaded_mean_toe_off}
+                                      'label':'loaded','std':std_norm_loaded_muscles_activation,'avg_toeoff':loaded_mean_toe_off}
 muscles_activation_noload_plot_dic = {'pgc':gait_cycle,'avg':mean_norm_noload_muscles_activation,'muscle_group': 'nine_muscles',
-                                      'std':std_norm_noload_muscles_activation,'avg_toeoff':noload_mean_toe_off}
+                                      'label':'noload','std':std_norm_noload_muscles_activation,'avg_toeoff':noload_mean_toe_off}
 
 #*****************************
 
@@ -103,9 +126,10 @@ fig.tight_layout(h_pad=-4.0, w_pad=-4.0)
 fig.savefig('./Figures/Unassist/KneeMusclesMoment.pdf',orientation='landscape',bbox_inches='tight')
 
 # muscles activation figure
-fig, ax = plt.subplots(num='Muscles Activation',figsize=(7.4, 5.8))
+fig, ax = plt.subplots(num='Muscles Activation',figsize=(8.4, 6.8))
 utils.plot_muscles_avg(plot_dic=muscles_activation_loaded_plot_dic,color='k',is_std=True)
 utils.plot_muscles_avg(plot_dic=muscles_activation_noload_plot_dic,toeoff_color='xkcd:shamrock green',color='xkcd:irish green',is_std=True)
+plt.legend(loc='best',frameon=False)
 plt.show()
-fig.tight_layout(h_pad=-4.0, w_pad=-4.0)
+fig.tight_layout()
 fig.savefig('./Figures/Unassist/NineMusclesActivation.pdf',orientation='landscape',bbox_inches='tight')
