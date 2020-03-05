@@ -18,6 +18,61 @@ from perimysium import dataman
 import pathlib
 #######################################################################
 #######################################################################
+def listToString(s):
+    """fmt = ",".join(["%s"] + ["%s"] * (Hip_JointMoment.shape[1]-1))
+    numpy.savetxt, at least as of numpy 1.6.2, writes bytes
+    to file, which doesn't work with a file open in text mode.  To
+    work around this deficiency, open the file in binary mode, and
+    write out the header as bytes."""
+    # initialize an empty string 
+    str1 = ""  
+    # traverse in the string   
+    for ele in s:  
+        str1 += (ele + ",")    
+    # return string   
+    return str1  
+
+def vec2mat(Data,matrix_cols=0,num_matrix=0): 
+    datanp = np.zeros((1000,len(Data)+num_matrix*matrix_cols-num_matrix))
+    c=0
+    for i in range(len(Data)):
+        if Data[i].size > 1000 :
+            datanp[:,c:c+matrix_cols]=Data[i]
+            c+=matrix_cols
+        else:
+            datanp[:,c]=Data[i]
+            c+=1
+    return datanp
+
+
+def muscles_header(prefix,whichgroup='nine'):
+    if whichgroup == 'hip':
+        # The name of muscles contributing on hip flexion and extension
+        muscles_name = ['add_brev','add_long','add_mag3','add_mag2','add_mag1','bifemlh',\
+                            'glut_max1','glut_max2','glut_max3','glut_med1','glut_min1','glut_min3',\
+                            'grac','iliacus','psoas','rect_fem','sar','semimem','semiten','tfl']
+    elif whichgroup == 'knee':
+        # The name of muscles contributing on knee flexion and extension
+        muscles_name = ['bifemlh','bifemsh','ext_dig','lat_gas','med_gas','grac',\
+                            'rect_fem','sar','semimem','semiten','vas_int','vas_lat','vas_med']
+    elif whichgroup == 'nine':
+        # The name of nine representitive muscles on lower extermity
+        muscles_name = ['bifemsh','glut_max1','psoas','lat_gas','rect_fem','semimem','soleus','tib_ant','vas_lat']
+    elif whichgroup == 'both':
+         # The name of muscles contributing on knee and hip flexion and extension
+        muscles_name = ['add_brev','add_long','add_mag3','add_mag2','add_mag1','bifemlh',\
+                            'glut_max1','glut_max2','glut_max3','glut_med1','glut_min1','glut_min3',\
+                            'grac','iliacus','psoas','rect_fem','sar','semimem','semiten','tfl','bifemlh',\
+                            'bifemsh','ext_dig','lat_gas','med_gas','grac','rect_fem','sar','semimem',\
+                            'semiten','vas_int','vas_lat','vas_med']
+    else:
+        raise Exception('group is not in the list')
+    header = []
+    for musc_name in muscles_name:
+        header.append(prefix+'_'+musc_name)
+    return header
+
+
 def normalize_direction_data(data, gl, normalize=True, direction=False):
     c=0
     norm_data = np.zeros([data.shape[0],data.shape[1]])
@@ -163,13 +218,11 @@ def plot_muscles_avg(plot_dic,toeoff_color='xkcd:medium grey',
     pgc = plot_dic['pgc']
     avg = plot_dic['avg']
     std= plot_dic['std']
+    label = plot_dic['label']
     avg_toeoff = plot_dic['avg_toeoff']
     muscle_group = plot_dic['muscle_group']
     import Muscles_Group as mgn
     muscles_name = mgn.muscle_group_name[muscle_group]
-    #axes setting
-    plt.xticks([0,20,40,60,80,100])
-    plt.xlim([0,100])
     # smoothing data
     smooth_avg = np.zeros((avg.shape[0],avg.shape[1]))
     smooth_std = np.zeros((std.shape[0],std.shape[1]))
@@ -183,14 +236,16 @@ def plot_muscles_avg(plot_dic,toeoff_color='xkcd:medium grey',
     std = smooth_std
     # plots
     for i in range(len(muscles_name)):
-        plt.tight_layout()
         ax = plt.subplot(row_num,col_num,i+1)
         no_top_right(ax)
+        plt.tight_layout()
         plt.title(muscles_name[i])
+        plt.xticks([0,20,40,60,80,100])
+        plt.xlim([0,100])
         plt.yticks((0,0.2,0.4,0.6,0.8,1))
         ax.axvline(avg_toeoff, lw=lw, color=toeoff_color, zorder=0, alpha=toeoff_alpha) #vertical line
         if is_std == True:
             ax.fill_between(pgc, avg[:,i] + std[:,i], avg[:,i] - std[:,i], alpha=alpha,linewidth=fill_lw, *args, **kwargs) # shaded std
         else:
             pass
-        ax.plot(pgc, avg[:,i], *args, lw=lw, ls=ls, label=muscles_name[i], **kwargs) # mean
+        ax.plot(pgc, avg[:,i], *args, lw=lw, ls=ls,label=label,**kwargs) # mean
