@@ -38,6 +38,8 @@ def construct_gl_mass_trial(subjectno,trialno,loadcond='noload'):
                                 right_strike= data["footstrike_right_leg"],
                                 right_toeoff= data["toeoff_time_right_leg"])
     return gl, mass, trial_num 
+
+
 def data_extraction(Subject_Dic):
     """This function has been developed to extract and modify data.
     """
@@ -57,11 +59,14 @@ def data_extraction(Subject_Dic):
     interperted_left_data  = np.interp(gait_cycle,gpc_l,shifted_left_data, left=np.nan, right=np.nan)
     final_data = nanmean([interperted_right_data,interperted_left_data],axis=0)
     return final_data
+
+
 def actuators_energy_calc(Subject_Dic,isabs=True,regen=False):
     """This function developed to calculate the consumed energy by actuators"""
     directory = Subject_Dic["Directory"]
     right_param = Subject_Dic["Right_Parameter"]
     left_param = Subject_Dic["Left_Parameter"]
+    subject_mass = Subject_Dic["Subject_Mass"]
     gl = Subject_Dic["gl"]
     numpy_data = dataman.storage2numpy(directory)
     time = numpy_data['time']
@@ -77,9 +82,9 @@ def actuators_energy_calc(Subject_Dic,isabs=True,regen=False):
         regen_energy = pp.avg_over_gait_cycle(time, np.abs(np.minimum(np.zeros(right_data.shape[0]),right_data)),cycle_duration=gl.cycle_end-gl.cycle_start)\
                      + pp.avg_over_gait_cycle(time,np.abs(np.minimum(np.zeros(left_data.shape[0]),left_data)),cycle_duration=gl.cycle_end-gl.cycle_start)
     if regen == True:
-        return energy,regen_energy
+        return energy/subject_mass,regen_energy/subject_mass
     else:
-        return energy
+        return energy/subject_mass
 ################################################################# 
 # Metabolic Energy Reduction/ Muscles Moment calculation/ Metabolic energy calculations in pareto curve
 #****************************************************************
@@ -114,6 +119,8 @@ def musclemoment_calc(Subject_Dic):
     main_data_l = np.interp(gpc,gpc_l,shifted_data_l, left=np.nan, right=np.nan)
     musclemoment = nanmean([main_data_r,main_data_l],axis=0)
     return musclemoment
+
+
 def metabolic_energy_fcn(Subject_Dic):
     """This function has been developed, seperated from the 'pareto_data_extraction' function, 
        to calculate the metabolic power and energy for cases in which we do not have pareto simulations.
@@ -136,12 +143,16 @@ def metabolic_energy_fcn(Subject_Dic):
     main_metabolics = basal + total
     metabolic_cost = np.interp(gait_cycle,time,main_metabolics)
     metabolic_energy = pp.avg_over_gait_cycle(metabolic_power_data['time'], main_metabolics,cycle_duration=gl.cycle_end-gl.cycle_start)
-    return metabolic_energy
+    return metabolic_energy/subject_mass
+
+
 def metabolic_energy_reduction(data,unassist_data):
     reduction = np.zeros(len(data))
     for i in range(len(data)):
         reduction[i] = (((unassist_data[i]-data[i])*100)/unassist_data[i])
     return reduction
+
+
 def group_muscles_activation(Subject_Dic,whichgroup='nine',loadcond='noload'):
     """This function returns the activation of the set of muscles that will be determined by user.
        The user can select "hip, knee, and nine" which are standing for set of hip and knee muscles and 
@@ -214,6 +225,8 @@ def adding_mass_metabolic_change(m_waist,m_thigh,m_shank,I_thigh,I_shank,unassis
     delta_metabolic_total = delta_metabolic_shank + delta_metabolic_thigh + mass_metabolic_waist
     
     return  mass_metabolic_waist,delta_metabolic_thigh,delta_metabolic_shank,delta_metabolic_total
+
+
 def adding_mass_metabolic(m_waist,m_thigh,m_shank,I_thigh,I_shank,I_leg=2.52):
     """ This function has been written according to R.C. Browning et al. paper which
         is calculating the metabolic cost during the walking. 
@@ -229,6 +242,8 @@ def adding_mass_metabolic(m_waist,m_thigh,m_shank,I_thigh,I_shank,I_leg=2.52):
     I_shank_ratio = (I_leg + I_shank)/I_leg
     inertia_metabolic_shank = (0.63749 + (0.40916*I_shank_ratio))
     return  mass_metabolic_waist,mass_metabolic_thigh,mass_metabolic_shank,inertia_metabolic_thigh,inertia_metabolic_shank
+
+
 def metabolic_energy_mass_added_pareto(unassisted_metabolic,InertialProp_Dic,calc_metabolic_cost=True):
     """This function calculates the following data in a performed pareto simulations:
     - waist metabolic change
@@ -421,6 +436,8 @@ def pareto_data_extraction(Subject_Dic,loadcond='noload',calculatenergy=True):
                 c+=1
     return HipActuator_Torque_Data,KneeActuator_Torque_Data,HipActuator_Power_Data,KneeActuator_Power_Data,\
            HipActuatorEnergy_Data,KneeActuatorEnergy_Data,MetabolicEnergy_Data,unsimulated
+
+
 def pareto_data_subjects(configuration,loadcond='noload'):
     """
     This function has been developed to extract pareto data (written in pareto_data_extraction function)
@@ -462,7 +479,8 @@ def pareto_data_subjects(configuration,loadcond='noload'):
     for i in subjects:
         for j in trials_num:
             # subject/trial/directory construction
-            gl,subject_mass,trial = construct_gl_mass_trial(subjectno=i,trialno=j,loadcond=loadcond)
+            gl,_,trial = construct_gl_mass_trial(subjectno=i,trialno=j,loadcond=loadcond)
+            _,subject_mass,_ = construct_gl_mass_trial(subjectno=i,trialno=j,loadcond='noload')
             if loadcond == 'noload':
                 files_dir = 'noloaded/Subject{}_NoLoaded_Dataset/{}'.format(i,configuration)
             elif loadcond == 'load':
@@ -587,6 +605,8 @@ def specific_weight_data_extraction(Subject_Dic,Hip_Weight,Knee_Weight,loadcond=
     else:
         return hip_actuator_torque,knee_actuator_torque,hip_actuator_power,knee_actuator_power,\
             hip_actuator_speed,knee_actuator_speed,hip_actuator_energy,knee_actuator_energy,metabolic_energy
+
+
 def specific_weight_data_subjects(configuration,HipWeight,KneeWeight,loadcond='noload',musclesmoment=True,musclesactivation=True,regenergy=False):
     """This function generalize the specific_weight_data_extraction for all subjects and additionally it provides muscles activation
     and muscles generated moment.
@@ -616,7 +636,8 @@ def specific_weight_data_subjects(configuration,HipWeight,KneeWeight,loadcond='n
     for i in subjects:
         for j in trials_num:
             # subject/trial/directory construction
-            gl,subject_mass,trial = construct_gl_mass_trial(subjectno=i,trialno=j,loadcond=loadcond)
+            gl,_,trial = construct_gl_mass_trial(subjectno=i,trialno=j,loadcond=loadcond)
+            _,subject_mass,_ = = construct_gl_mass_trial(subjectno=i,trialno=j,loadcond='noload')
             if loadcond == 'noload':
                 files_dir = 'noloaded/Subject{}_NoLoaded_Dataset/{}'.format(i,configuration)
             else:
@@ -670,6 +691,8 @@ def specific_weight_data_subjects(configuration,HipWeight,KneeWeight,loadcond='n
     return HipActuator_Torque_Data,KneeActuator_Torque_Data,HipActuator_Power_Data,KneeActuator_Power_Data,\
            HipActuator_Speed_Data,KneeActuator_Speed_Data,HipActuatorEnergy_Data,KneeActuatorEnergy_Data,\
            MetabolicEnergy_Data,MuscleActivation_Data,HipMuscleMoment_Data,KneeMuscleMoment_Data,Regen_HipActuatorEnergy_Data,Regen_KneeActuatorEnergy_Data
+
+
 def rra_data_extraction(Subject_Dic,loadcond='noload'):
     """ This function is designed to get the configuration and optimal force that has been used to perform
         simulations and reporting most of the needed data. This function calculates the following data:
@@ -743,6 +766,8 @@ def rra_data_extraction(Subject_Dic,loadcond='noload'):
     
     return hip_joint_torque,knee_joint_torque,hip_joint_power,knee_joint_power,\
            hip_joint_speed,knee_joint_speed,hip_joint_kinematics,knee_joint_kinematics
+
+
 def rra_data_subjects(loadcond='noload'):
     """This function generalize the rra_data_extraction for all subjects.
     -Default setting for muscle activation is nine representitive muscles of the lower extermity. It can be changed to knee/hip/both.
@@ -790,6 +815,8 @@ def rra_data_subjects(loadcond='noload'):
             c+=1
     return HipJoint_Torque_Data,KneeJoint_Torque_Data,HipJoint_Power_Data,KneeJoint_Power_Data,\
            HipJoint_Speed_Data,KneeJoint_Speed_Data,HipJoint_Kinematics_Data,KneeJoint_Kinematics_Data
+
+
 def idealdevice_data_extraction(Subject_Dic,loadcond='noload',calculatenergy=True,regen_energy=False):
     """ This function is designed to get the configuration and optimal force that has been used to perform
         simulations and reporting most of the needed data. This function calculates the following data:
@@ -876,6 +903,8 @@ def idealdevice_data_extraction(Subject_Dic,loadcond='noload',calculatenergy=Tru
     else:
         return hip_actuator_torque,knee_actuator_torque,hip_actuator_power,knee_actuator_power,\
             hip_actuator_speed,knee_actuator_speed,hip_actuator_energy,knee_actuator_energy,hip_actuator_regen_energy,knee_actuator_regen_energy
+
+
 def unassist_idealdevice_data_subjects(configuration,loadcond='noload',metabolicrate=True,musclesmoment=True,musclesactivation=True,regenergy=False):
     """This function generalize the specific_weight_data_extraction for all subjects and additionally it provides muscles activation
     and muscles generated moment.
@@ -910,7 +939,8 @@ def unassist_idealdevice_data_subjects(configuration,loadcond='noload',metabolic
     for i in subjects:
         for j in trials_num:
             # subject/trial/directory construction
-            gl,subject_mass,trial = construct_gl_mass_trial(subjectno=i,trialno=j,loadcond=loadcond)
+            gl,_,trial = construct_gl_mass_trial(subjectno=i,trialno=j,loadcond=loadcond)
+            _,subject_mass,_ = construct_gl_mass_trial(subjectno=i,trialno=j,loadcond='noload')
             if loadcond == 'noload':
                 files_dir = 'noloaded/Subject{}_NoLoaded_Dataset/{}'.format(i,configuration)
             else:
