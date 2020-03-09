@@ -243,11 +243,18 @@ def plot_shaded_avg(plot_dic,toeoff_color='xkcd:medium grey',toeoff_alpha=1.0,
     std= plot_dic['std']
     label = plot_dic['label']
     avg_toeoff = plot_dic['avg_toeoff']
+    
     #axes setting
     plt.xticks([0,20,40,60,80,100])
     plt.xlim([0,100])
     # plot
-    plt.axvline(avg_toeoff, lw=lw, color=toeoff_color, zorder=0, alpha=toeoff_alpha) #vertical line
+    if 'load' in plot_dic:
+        load = plot_dic['load']
+        if load == 'noload':
+            plt.axvline(avg_toeoff, lw=lw, color='xkcd:shamrock green', zorder=0, alpha=toeoff_alpha) #vertical line
+    else:
+        plt.axvline(avg_toeoff, lw=lw, color=toeoff_color, zorder=0, alpha=toeoff_alpha) #vertical line
+
     plt.axhline(0, lw=lw, color='grey', zorder=0, alpha=0.75) # horizontal line
     plt.fill_between(pgc, avg + std, avg - std, alpha=alpha,linewidth=fill_lw, *args, **kwargs) # shaded std
     return plt.plot(pgc, avg, *args, lw=lw, ls=ls, label=label, **kwargs) # mean
@@ -293,7 +300,7 @@ def plot_muscles_avg(plot_dic,toeoff_color='xkcd:medium grey',
             pass
         ax.plot(pgc, avg[:,i], *args, lw=lw, ls=ls,label=label,**kwargs) # mean
 
-def plot_joint_muscle_exo (nrows,ncols,plot_dic,color_dic,ylabel,legend_loc=[0,1],thirdplot=True):
+def plot_joint_muscle_exo (nrows,ncols,plot_dic,color_dic,ylabel,legend_loc=[0,1],thirdplot=True,y_ticks = [-2,-1,0,1,2]):
     '''Note: please note that since it is in the for loop, if some data is
     needed to plot several times it should be repeated in the lists.  '''
 
@@ -303,7 +310,6 @@ def plot_joint_muscle_exo (nrows,ncols,plot_dic,color_dic,ylabel,legend_loc=[0,1
     color_1_list = color_dic['color_1_list']
     color_2_list = color_dic['color_2_list']
     plot_titles = plot_dic['plot_titles']
-    hip_y_ticks = [-2,-1,0,1,2]
     if thirdplot == True:
         color_3_list = color_dic['color_3_list']
         plot_3_list = plot_dic['plot_3_list']
@@ -314,7 +320,7 @@ def plot_joint_muscle_exo (nrows,ncols,plot_dic,color_dic,ylabel,legend_loc=[0,1
         plot_shaded_avg(plot_dic=plot_2_list[i],color=color_2_list[i])
         if thirdplot == True:
             plot_shaded_avg(plot_dic=plot_3_list[i],color=color_3_list[i])
-        plt.yticks(hip_y_ticks)
+        plt.yticks(y_ticks)
         plt.title(plot_titles[i])
         no_top_right(ax)
         if i in legend_loc:
