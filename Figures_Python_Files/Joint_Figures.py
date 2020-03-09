@@ -94,12 +94,20 @@ mean_noload_kneejoint_kinematics,std_noload_kneejoint_kinematics = utils.mean_st
 Headers = ['mean_norm_loaded_hipjoint_moment','std_norm_loaded_hipjoint_moment','mean_norm_loaded_kneejoint_moment','std_norm_loaded_kneejoint_moment',\
            'mean_norm_loaded_hipjoint_power','std_norm_loaded_hipjoint_power','mean_norm_loaded_kneejoint_power','std_norm_loaded_kneejoint_power',\
             'mean_loaded_hipjoint_speed','std_loaded_hipjoint_speed','mean_loaded_kneejoint_speed','std_loaded_kneejoint_speed',\
-            'mean_loaded_hipjoint_kinematics','std_loaded_hipjoint_kinematics','mean_loaded_kneejoint_kinematics','std_loaded_kneejoint_kinematics']
+            'mean_loaded_hipjoint_kinematics','std_loaded_hipjoint_kinematics','mean_loaded_kneejoint_kinematics','std_loaded_kneejoint_kinematics',\
+            'mean_norm_noload_hipjoint_moment','std_norm_noload_hipjoint_moment','mean_norm_noload_kneejoint_moment','std_norm_noload_kneejoint_moment',\
+           'mean_norm_noload_hipjoint_power','std_norm_noload_hipjoint_power','mean_norm_noload_kneejoint_power','std_norm_noload_kneejoint_power',\
+            'mean_noload_hipjoint_speed','std_noload_hipjoint_speed','mean_noload_kneejoint_speed','std_noload_kneejoint_speed',\
+            'mean_noload_hipjoint_kinematics','std_noload_hipjoint_kinematics','mean_noload_kneejoint_kinematics','std_noload_kneejoint_kinematics']
 # Dataset
 Data =[mean_norm_loaded_hipjoint_moment,std_norm_loaded_hipjoint_moment,mean_norm_loaded_kneejoint_moment,std_norm_loaded_kneejoint_moment,\
             mean_norm_loaded_hipjoint_power,std_norm_loaded_hipjoint_power,mean_norm_loaded_kneejoint_power,std_norm_loaded_kneejoint_power,\
             mean_loaded_hipjoint_speed,std_loaded_hipjoint_speed,mean_loaded_kneejoint_speed,std_loaded_kneejoint_speed,\
-            mean_loaded_hipjoint_kinematics,std_loaded_hipjoint_kinematics,mean_loaded_kneejoint_kinematics,std_loaded_kneejoint_kinematics]
+            mean_loaded_hipjoint_kinematics,std_loaded_hipjoint_kinematics,mean_loaded_kneejoint_kinematics,std_loaded_kneejoint_kinematics,\
+            mean_norm_noload_hipjoint_moment,std_norm_noload_hipjoint_moment,mean_norm_noload_kneejoint_moment,std_norm_noload_kneejoint_moment,\
+            mean_norm_noload_hipjoint_power,std_norm_noload_hipjoint_power,mean_norm_noload_kneejoint_power,std_norm_noload_kneejoint_power,\
+            mean_noload_hipjoint_speed,std_noload_hipjoint_speed,mean_noload_kneejoint_speed,std_noload_kneejoint_speed,\
+            mean_noload_hipjoint_kinematics,std_noload_hipjoint_kinematics,mean_noload_kneejoint_kinematics,std_noload_kneejoint_kinematics]
 # List of numpy vectors to a numpy ndarray and save to csv file
 Data = utils.vec2mat(Data)
 with open(r'.\Data\RRA\rra_final_data.csv', 'wb') as f:

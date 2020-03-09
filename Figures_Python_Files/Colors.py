@@ -1,0 +1,11 @@
+colors = {  'moon yellow':[1.00,0.75,0.11],
+              'cyan blue':[0.00,0.26,0.64],
+        'french sky blue':[0.47,0.69,1.00],
+            'cosmic pink':[0.48,0.21,0.40],
+             'blush pink':[0.87,0.36,0.51],
+            'crimson red':[0.86,0.08,0.24],
+             'pine green':[0.00,0.47,0.43],
+            'french rose':[0.96,0.29,0.54],
+           'olympic blue':[0.00,0.55,0.80],
+            'dark purple':[0.24,0.04,0.50],
+        'lavender purple':[0.65,0.44,0.99]}
