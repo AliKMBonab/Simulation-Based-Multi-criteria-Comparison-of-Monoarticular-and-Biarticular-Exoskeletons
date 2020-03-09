@@ -637,7 +637,7 @@ def specific_weight_data_subjects(configuration,HipWeight,KneeWeight,loadcond='n
         for j in trials_num:
             # subject/trial/directory construction
             gl,_,trial = construct_gl_mass_trial(subjectno=i,trialno=j,loadcond=loadcond)
-            _,subject_mass,_ = = construct_gl_mass_trial(subjectno=i,trialno=j,loadcond='noload')
+            _,subject_mass,_ = construct_gl_mass_trial(subjectno=i,trialno=j,loadcond='noload')
             if loadcond == 'noload':
                 files_dir = 'noloaded/Subject{}_NoLoaded_Dataset/{}'.format(i,configuration)
             else:

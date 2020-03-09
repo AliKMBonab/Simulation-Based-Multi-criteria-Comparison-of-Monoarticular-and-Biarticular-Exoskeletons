@@ -18,6 +18,8 @@ from perimysium import dataman
 import pathlib
 #######################################################################
 #######################################################################
+# Data saving and reading related functions
+
 def listToString(s):
     """fmt = ",".join(["%s"] + ["%s"] * (Hip_JointMoment.shape[1]-1))
     numpy.savetxt, at least as of numpy 1.6.2, writes bytes
@@ -33,16 +35,29 @@ def listToString(s):
     return str1  
 
 def csv2numpy(datname):
+    """it performs storage2numpy task for csv files with headers."""
     f = open(datname, 'r')
+    # read the headers
     line = f.readline()
+    # making list of headers seperated by ','
     column_name = line.split(',')
+    # eleminating last column name which is '\n'
     column_name.pop()
     f.close()
     data = np.genfromtxt(datname,delimiter= ',', names=column_name,skip_header=1)
     return data
 
-    
-def vec2mat(Data,matrix_cols=0,num_matrix=0): 
+def recover_muscledata(data,prefix,whichgroup='nine'):
+    headers = muscles_header(prefix,whichgroup=whichgroup)
+    recovered_data = np.zeros((data.shape[0],len(headers)))
+    c=0
+    for header in headers:
+        recovered_data[:,c] = data[header]
+        c+=1
+    return recovered_data
+
+def vec2mat(Data,matrix_cols=0,num_matrix=0):
+    """This function concatenates vectors to establish matrix""" 
     datanp = np.zeros((1000,len(Data)+num_matrix*matrix_cols-num_matrix))
     c=0
     for i in range(len(Data)):
@@ -56,6 +71,7 @@ def vec2mat(Data,matrix_cols=0,num_matrix=0):
 
 
 def muscles_header(prefix,whichgroup='nine'):
+    """This function has been established to generate headers for muscles related files."""
     if whichgroup == 'hip':
         # The name of muscles contributing on hip flexion and extension
         muscles_name = ['add_brev','add_long','add_mag3','add_mag2','add_mag1','bifemlh',\
@@ -82,6 +98,8 @@ def muscles_header(prefix,whichgroup='nine'):
         header.append(prefix+'_'+musc_name)
     return header
 
+######################################################################
+# Data processing related functions
 
 def normalize_direction_data(data, gl, normalize=True, direction=False):
     c=0
@@ -130,6 +148,7 @@ def toeoff_pgc(gl, side):
         toeoff -= cycle_duration
     return pp.percent_duration_single(toeoff,strike,strike + cycle_duration)
 
+
 def construct_gl_mass_side(subjectno,trialno,loadcond):
     """This function has been designed to construct gl from the dataset. It also returns subject mass
        and trial number to be used on other functions"""
@@ -151,10 +170,12 @@ def construct_gl_mass_side(subjectno,trialno,loadcond):
                                 right_toeoff= data['toeoff_time_right_leg'])
     return gl,mass,side
 
+
 def mean_std_over_subjects(data):
     mean = np.nanmean(data,axis=1)
     std = np.nanstd(data,axis=1)
     return mean,std
+
 
 def mean_std_muscles_subjects(data,muscles_num=9):
     mean_data = np.zeros((data.shape[0],muscles_num))
@@ -164,6 +185,7 @@ def mean_std_muscles_subjects(data,muscles_num=9):
         mean_data[:,i] = np.nanmean(data[:,cols],axis=1)
         std_data [:,i] = np.nanstd (data[:,cols],axis=1)
     return mean_data,std_data
+
 
 def toe_off_avg_std(gl_noload,gl_loaded):
     '''This function returns the mean toe off percentage for loaded and noloaded subjects
@@ -197,11 +219,21 @@ def smooth(a,WSZ):
     stop = (np.cumsum(a[:-WSZ:-1])[::2]/r)[::-1]
     return np.concatenate((  start , out0, stop  ))
 
+def reduction_calc(data1,data2):
+    """ Please assign data according to the formula: (data1-data2)100/data1."""
+    reduction = np.zeros(len(data2))
+    for i in range(len(data1)):
+        reduction[i] = (((data1[i]-data2[i])*100)/data1[i])
+    return reduction
+######################################################################
+# Plot related functions
 def no_top_right(ax):
+    """box off equivalent in python"""
     ax.spines["right"].set_visible(False)
     ax.spines["top"].set_visible(False)
     ax.yaxis.set_ticks_position('left')
     ax.xaxis.set_ticks_position('bottom')
+
 
 def plot_shaded_avg(plot_dic,toeoff_color='xkcd:medium grey',toeoff_alpha=1.0,
     lw=2.0,ls='-',alpha=0.35,fill_std=True,fill_lw=0,*args, **kwargs):
@@ -219,6 +251,7 @@ def plot_shaded_avg(plot_dic,toeoff_color='xkcd:medium grey',toeoff_alpha=1.0,
     plt.axhline(0, lw=lw, color='grey', zorder=0, alpha=0.75) # horizontal line
     plt.fill_between(pgc, avg + std, avg - std, alpha=alpha,linewidth=fill_lw, *args, **kwargs) # shaded std
     return plt.plot(pgc, avg, *args, lw=lw, ls=ls, label=label, **kwargs) # mean
+
 
 def plot_muscles_avg(plot_dic,toeoff_color='xkcd:medium grey',
                      toeoff_alpha=1.0,row_num=3,col_num=3,
@@ -259,3 +292,35 @@ def plot_muscles_avg(plot_dic,toeoff_color='xkcd:medium grey',
         else:
             pass
         ax.plot(pgc, avg[:,i], *args, lw=lw, ls=ls,label=label,**kwargs) # mean
+
+def plot_joint_muscle_exo (nrows,ncols,plot_dic,color_dic,ylabel,legend_loc=[0,1],thirdplot=True):
+    '''Note: please note that since it is in the for loop, if some data is
+    needed to plot several times it should be repeated in the lists.  '''
+
+    # reading data
+    plot_1_list = plot_dic['plot_1_list']
+    plot_2_list = plot_dic['plot_2_list']
+    color_1_list = color_dic['color_1_list']
+    color_2_list = color_dic['color_2_list']
+    plot_titles = plot_dic['plot_titles']
+    hip_y_ticks = [-2,-1,0,1,2]
+    if thirdplot == True:
+        color_3_list = color_dic['color_3_list']
+        plot_3_list = plot_dic['plot_3_list']
+    #plot
+    for i in range(nrows*ncols):
+        ax = plt.subplot(nrows,ncols,i+1)
+        plot_shaded_avg(plot_dic=plot_1_list[i],color=color_1_list[i])
+        plot_shaded_avg(plot_dic=plot_2_list[i],color=color_2_list[i])
+        if thirdplot == True:
+            plot_shaded_avg(plot_dic=plot_3_list[i],color=color_3_list[i])
+        plt.yticks(hip_y_ticks)
+        plt.title(plot_titles[i])
+        no_top_right(ax)
+        if i in legend_loc:
+            plt.legend(loc='upper right',frameon=False)
+        if i in range((nrows*ncols)-nrows,(nrows*ncols)):
+            plt.xlabel('gait cycle (%)')
+        if i not in np.arange(1,nrows*ncols,ncols):
+            plt.ylabel(ylabel)
+        

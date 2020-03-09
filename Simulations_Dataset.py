@@ -69,11 +69,11 @@ configs = ['Monoarticular/Ideal','Biarticular/Ideal']
 config_names = ['monoarticular','biarticular']
 middle =['hipactuator','kneeactuator','hipactuator','kneeactuator',\
          'hipactuator','kneeactuator','hipactuator','kneeactuator',\
-         'hipactuator','kneeactuator','ninemuscles','metabolics',\
+         'hipactuator','kneeactuator','metabolics','ninemuscles',\
          'hip','knee']
 suffixes = ['torque','torque','power','power','speed','speed',\
             'energy','energy','regenrative_energy','regenrative_energy',\
-            'activation','energy','musclesmoment','musclesmoment']
+            'energy','activation','musclesmoment','musclesmoment']
 #***************************
 print('Section 03:\t extracting Ideal exoskeletons related files: Actuators Data, Muscles Activation, Muscles Moment, Metabolic Energy.\n')
 #***************************
