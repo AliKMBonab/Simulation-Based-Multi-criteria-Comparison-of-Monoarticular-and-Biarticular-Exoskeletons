@@ -8,4 +8,7 @@ colors = {  'moon yellow':[1.00,0.75,0.11],
             'french rose':[0.96,0.29,0.54],
            'olympic blue':[0.00,0.55,0.80],
             'dark purple':[0.24,0.04,0.50],
-        'lavender purple':[0.65,0.44,0.99]}
+        'lavender purple':[0.65,0.44,0.99],
+           'manatee grey':[0.57,0.58,0.59],
+      'dark spring green':[0.00,0.52,0.21],
+           'magenta pink':[0.69,0.01,0.38]}
