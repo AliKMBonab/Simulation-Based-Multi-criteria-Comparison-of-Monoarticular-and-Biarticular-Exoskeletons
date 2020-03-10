@@ -69,7 +69,6 @@ def vec2mat(Data,matrix_cols=0,num_matrix=0):
             c+=1
     return datanp
 
-
 def muscles_header(prefix,whichgroup='nine'):
     """This function has been established to generate headers for muscles related files."""
     if whichgroup == 'hip':
@@ -119,7 +118,6 @@ def normalize_direction_data(data, gl, normalize=True, direction=False):
     else:
         return norm_data
 
-
 def cmc_revise_data(data, gl):
     c=0
     modified_data = np.zeros([data.shape[0],data.shape[1]])
@@ -132,7 +130,6 @@ def cmc_revise_data(data, gl):
             raise Exception('primary leg does not match!')
         c+=1
     return modified_data
-
 
 def toeoff_pgc(gl, side):
     if side == 'right':
@@ -147,7 +144,6 @@ def toeoff_pgc(gl, side):
     while toeoff > strike + cycle_duration:
         toeoff -= cycle_duration
     return pp.percent_duration_single(toeoff,strike,strike + cycle_duration)
-
 
 def construct_gl_mass_side(subjectno,trialno,loadcond):
     """This function has been designed to construct gl from the dataset. It also returns subject mass
@@ -170,12 +166,10 @@ def construct_gl_mass_side(subjectno,trialno,loadcond):
                                 right_toeoff= data['toeoff_time_right_leg'])
     return gl,mass,side
 
-
-def mean_std_over_subjects(data):
-    mean = np.nanmean(data,axis=1)
-    std = np.nanstd(data,axis=1)
+def mean_std_over_subjects(data,ax=1):
+    mean = np.nanmean(data,axis=ax)
+    std = np.nanstd(data,axis=ax)
     return mean,std
-
 
 def mean_std_muscles_subjects(data,muscles_num=9):
     mean_data = np.zeros((data.shape[0],muscles_num))
@@ -185,7 +179,6 @@ def mean_std_muscles_subjects(data,muscles_num=9):
         mean_data[:,i] = np.nanmean(data[:,cols],axis=1)
         std_data [:,i] = np.nanstd (data[:,cols],axis=1)
     return mean_data,std_data
-
 
 def toe_off_avg_std(gl_noload,gl_loaded):
     '''This function returns the mean toe off percentage for loaded and noloaded subjects
@@ -227,13 +220,46 @@ def reduction_calc(data1,data2):
     return reduction
 ######################################################################
 # Plot related functions
+def autolabel(rects):
+    """Attach a text label above each bar in *rects*, displaying its height."""
+    for rect in rects:
+        height = rect.get_height()
+        ax.annotate('{}'.format(height),
+                    xy=(rect.get_x() + rect.get_width() / 2, height),
+                    xytext=(0, 3),  # 3 points vertical offset
+                    textcoords="offset points",
+                    ha='center', va='bottom')
+
+def beautiful_boxplot(bp):
+    ## change outline color, fill color and linewidth of the boxes
+    for box in bp['boxes']:
+        # change outline color
+        box.set( color='#00008b', linewidth=1)
+        # change fill color
+        box.set( facecolor = '#ffffff' )
+
+    ## change color and linewidth of the whiskers
+    for whisker in bp['whiskers']:
+        whisker.set(color='#000000', linestyle='--', linewidth=1)
+
+    ## change color and linewidth of the caps
+    for cap in bp['caps']:
+        cap.set(color='#000000', linewidth=1)
+
+    ## change color and linewidth of the medians
+    for median in bp['medians']:
+        median.set(color='#ff0000', linewidth=1)
+
+    ## change the style of fliers and their fill
+    for flier in bp['fliers']:
+        flier.set(marker='o', color='#000000', alpha=0.5)
+
 def no_top_right(ax):
     """box off equivalent in python"""
     ax.spines["right"].set_visible(False)
     ax.spines["top"].set_visible(False)
     ax.yaxis.set_ticks_position('left')
     ax.xaxis.set_ticks_position('bottom')
-
 
 def plot_shaded_avg(plot_dic,toeoff_color='xkcd:medium grey',toeoff_alpha=1.0,
     lw=2.0,ls='-',alpha=0.35,fill_std=True,fill_lw=0,*args, **kwargs):
@@ -258,7 +284,6 @@ def plot_shaded_avg(plot_dic,toeoff_color='xkcd:medium grey',toeoff_alpha=1.0,
     plt.axhline(0, lw=lw, color='grey', zorder=0, alpha=0.75) # horizontal line
     plt.fill_between(pgc, avg + std, avg - std, alpha=alpha,linewidth=fill_lw, *args, **kwargs) # shaded std
     return plt.plot(pgc, avg, *args, lw=lw, ls=ls, label=label, **kwargs) # mean
-
 
 def plot_muscles_avg(plot_dic,toeoff_color='xkcd:medium grey',
                      toeoff_alpha=1.0,row_num=3,col_num=3,
