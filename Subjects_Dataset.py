@@ -366,11 +366,11 @@ loaded_dataset = {
                                                 "trial": '08'
                             },
 # Subject No: 10, Load Condition: Loaded
-"subject10_loaded_trial01" : {"subjects_cycle_start_time": np.array(1.056),
-                             "subjects_cycle_end_time" : np.array(2.103),
+"subject10_loaded_trial01" : {"subjects_cycle_start_time": np.array(0.385), # 1.056
+                             "subjects_cycle_end_time" : np.array(1.431), # 2.103
                                  "footstrike_right_leg": np.array(0.909),
                                 "toeoff_time_right_leg": np.array(1.569),
-                                  "footstrike_left_leg": np.array(1.431),
+                                  "footstrike_left_leg": np.array(0.385), # 1.431
                                  "toeoff_time_left_leg": np.array(1.056),
                                          "primary_legs": 'left',
                                        "secondary_legs": 'right',
@@ -378,9 +378,9 @@ loaded_dataset = {
                                                 "trial": '03'
                             },
 
-"subject10_loaded_trial02" : {"subjects_cycle_start_time": np.array(1.254),
-                             "subjects_cycle_end_time" : np.array(2.315),
-                                 "footstrike_right_leg": np.array(1.625),
+"subject10_loaded_trial02" : {"subjects_cycle_start_time": np.array(0.567), # 1.254
+                             "subjects_cycle_end_time" : np.array(1.625), # 2.315
+                                 "footstrike_right_leg": np.array(0.567), # 1.625
                                 "toeoff_time_right_leg": np.array(1.254),
                                   "footstrike_left_leg": np.array(1.097),
                                  "toeoff_time_left_leg": np.array(1.777),
@@ -390,10 +390,10 @@ loaded_dataset = {
                                                 "trial": '04'
                             },
 
-"subject10_loaded_trial03" : {"subjects_cycle_start_time": np.array(0.952),
-                             "subjects_cycle_end_time" : np.array(2.002),
-                                 "footstrike_right_leg": np.array(1.329),
-                                "toeoff_time_right_leg": np.array(0.952),
+"subject10_loaded_trial03" : {"subjects_cycle_start_time": np.array(0.275), # 0.952
+                             "subjects_cycle_end_time" : np.array(1.329), # 2.002
+                                 "footstrike_right_leg": np.array(0.275), # 1.329
+                                "toeoff_time_right_leg": np.array(0.952), 
                                   "footstrike_left_leg": np.array(0.798),
                                  "toeoff_time_left_leg": np.array(1.480),
                                          "primary_legs": 'right',

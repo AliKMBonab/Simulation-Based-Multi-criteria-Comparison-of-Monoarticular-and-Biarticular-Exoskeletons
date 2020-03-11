@@ -49,8 +49,8 @@ gl_loaded = {'loaded_subject{}_trial{}'.format(i,j): utils.construct_gl_mass_sid
 #####################################################################################
 # Processing Data
 # toe-off
-# metabolics cost reduction percents
 noload_mean_toe_off,_,loaded_mean_toe_off,_ = utils.toe_off_avg_std(gl_noload,gl_loaded)
+# metabolics cost reduction percents
 bi_loaded_metabolics_percent = utils.pareto_metabolics_reduction(assisted_energy_dataset['biarticular_pareto_load_metabolics_energy'],unassisted_energy_dataset['loaded_metabolics_energy'])
 bi_noload_metabolics_percent = utils.pareto_metabolics_reduction(assisted_energy_dataset['biarticular_pareto_noload_metabolics_energy'],unassisted_energy_dataset['noload_metabolics_energy'])
 mono_loaded_metabolics_percent = utils.pareto_metabolics_reduction(assisted_energy_dataset['monoarticular_pareto_load_metabolics_energy'],unassisted_energy_dataset['loaded_metabolics_energy'])
@@ -66,15 +66,23 @@ mean_bi_noload_metabolics, std_bi_noload_metabolics = utils.pareto_avg_std_energ
 mean_mono_loaded_metabolics, std_mono_loaded_metabolics = utils.pareto_avg_std_energy(assisted_energy_dataset['monoarticular_pareto_load_metabolics_energy'],reshape=True)
 mean_mono_noload_metabolics, std_mono_noload_metabolics = utils.pareto_avg_std_energy(assisted_energy_dataset['monoarticular_pareto_noload_metabolics_energy'],reshape=True)
 # mean & std actuators energy
+# loaded bi
 mean_bi_loaded_hip_energy, std_bi_loaded_hip_energy = utils.pareto_avg_std_energy(assisted_energy_dataset['biarticular_pareto_load_hipactuator_energy'],reshape=True)
 mean_bi_loaded_knee_energy, std_bi_loaded_knee_energy = utils.pareto_avg_std_energy(assisted_energy_dataset['biarticular_pareto_load_kneeactuator_energy'],reshape=True)
+mean_bi_loaded_energy, std_bi_loaded_energy = utils.pareto_avg_std_energy(assisted_energy_dataset['biarticular_pareto_load_kneeactuator_energy']+assisted_energy_dataset['biarticular_pareto_load_hipactuator_energy'],reshape=True)
+# noload bi
 mean_bi_noload_hip_energy, std_bi_noload_hip_energy = utils.pareto_avg_std_energy(assisted_energy_dataset['biarticular_pareto_noload_hipactuator_energy'],reshape=True)
 mean_bi_noload_knee_energy, std_bi_noload_knee_energy = utils.pareto_avg_std_energy(assisted_energy_dataset['biarticular_pareto_noload_kneeactuator_energy'],reshape=True)
+mean_bi_noload_energy, std_bi_noload_energy = utils.pareto_avg_std_energy(assisted_energy_dataset['biarticular_pareto_noload_kneeactuator_energy']+assisted_energy_dataset['biarticular_pareto_noload_hipactuator_energy'],reshape=True)
+# loaded mono
 mean_mono_loaded_hip_energy, std_mono_loaded_hip_energy = utils.pareto_avg_std_energy(assisted_energy_dataset['monoarticular_pareto_load_hipactuator_energy'],reshape=True)
 mean_mono_loaded_knee_energy, std_mono_loaded_knee_energy = utils.pareto_avg_std_energy(assisted_energy_dataset['monoarticular_pareto_load_kneeactuator_energy'],reshape=True)
+mean_mono_loaded_energy, std_mono_loaded_energy = utils.pareto_avg_std_energy(assisted_energy_dataset['monoarticular_pareto_load_kneeactuator_energy']+assisted_energy_dataset['monoarticular_pareto_load_hipactuator_energy'],reshape=True)
+# noload mono
 mean_mono_noload_hip_energy, std_mono_noload_hip_energy = utils.pareto_avg_std_energy(assisted_energy_dataset['monoarticular_pareto_noload_hipactuator_energy'],reshape=True)
 mean_mono_noload_knee_energy, std_mono_noload_knee_energy = utils.pareto_avg_std_energy(assisted_energy_dataset['monoarticular_pareto_noload_kneeactuator_energy'],reshape=True)
-#actuators energy
+mean_mono_noload_energy, std_mono_noload_energy = utils.pareto_avg_std_energy(assisted_energy_dataset['monoarticular_pareto_noload_kneeactuator_energy']+assisted_energy_dataset['monoarticular_pareto_noload_hipactuator_energy'],reshape=True)
+# actuators energy
 bi_loaded_hip_energy= np.reshape(assisted_energy_dataset['biarticular_pareto_load_hipactuator_energy'],(25,7),order='F')
 bi_loaded_knee_energy= np.reshape(assisted_energy_dataset['biarticular_pareto_load_kneeactuator_energy'],(25,7),order='F')
 bi_noload_hip_energy= np.reshape(assisted_energy_dataset['biarticular_pareto_noload_hipactuator_energy'],(25,7),order='F')
@@ -83,3 +91,141 @@ mono_loaded_hip_energy= np.reshape(assisted_energy_dataset['monoarticular_pareto
 mono_loaded_knee_energy= np.reshape(assisted_energy_dataset['monoarticular_pareto_load_kneeactuator_energy'],(25,7),order='F')
 mono_noload_hip_energy= np.reshape(assisted_energy_dataset['monoarticular_pareto_noload_hipactuator_energy'],(25,7),order='F')
 mono_noload_knee_energy= np.reshape(assisted_energy_dataset['monoarticular_pareto_noload_kneeactuator_energy'],(25,7),order='F')
+# actuators power profiles
+mean_bi_loaded_hip_power, std_bi_loaded_hip_power = utils.pareto_profiles_avg_std(exo_power_dataset['biarticular_pareto_load_hipactuator_power'],gl_noload,change_direction=True)
+mean_bi_loaded_knee_power, std_bi_loaded_knee_power = utils.pareto_profiles_avg_std(exo_power_dataset['biarticular_pareto_load_kneeactuator_power'],gl_noload,change_direction=True)
+mean_bi_noload_hip_power, std_bi_noload_hip_power = utils.pareto_profiles_avg_std(exo_power_dataset['biarticular_pareto_noload_hipactuator_power'],gl_noload,change_direction=True)
+mean_bi_noload_knee_power, std_bi_noload_knee_power = utils.pareto_profiles_avg_std(exo_power_dataset['biarticular_pareto_noload_kneeactuator_power'],gl_noload,change_direction=True)
+mean_mono_loaded_hip_power, std_mono_loaded_hip_power = utils.pareto_profiles_avg_std(exo_power_dataset['monoarticular_pareto_load_hipactuator_power'],gl_noload,change_direction=True)
+mean_mono_loaded_knee_power, std_mono_loaded_knee_power = utils.pareto_profiles_avg_std(exo_power_dataset['monoarticular_pareto_load_kneeactuator_power'],gl_noload,change_direction=True)
+mean_mono_noload_hip_power, std_mono_noload_hip_power = utils.pareto_profiles_avg_std(exo_power_dataset['monoarticular_pareto_noload_hipactuator_power'],gl_noload,change_direction=True)
+mean_mono_noload_knee_power, std_mono_noload_knee_power = utils.pareto_profiles_avg_std(exo_power_dataset['monoarticular_pareto_noload_kneeactuator_power'],gl_noload,change_direction=True)
+# actuators torque profiles
+mean_bi_loaded_hip_torque, std_bi_loaded_hip_torque = utils.pareto_profiles_avg_std(exo_torque_dataset['biarticular_pareto_load_hipactuator_torque'],gl_noload,change_direction=True)
+mean_bi_loaded_knee_torque, std_bi_loaded_knee_torque = utils.pareto_profiles_avg_std(exo_torque_dataset['biarticular_pareto_load_kneeactuator_torque'],gl_noload,change_direction=True)
+mean_bi_noload_hip_torque, std_bi_noload_hip_torque = utils.pareto_profiles_avg_std(exo_torque_dataset['biarticular_pareto_noload_hipactuator_torque'],gl_noload,change_direction=True)
+mean_bi_noload_knee_torque, std_bi_noload_knee_torque = utils.pareto_profiles_avg_std(exo_torque_dataset['biarticular_pareto_noload_kneeactuator_torque'],gl_noload,change_direction=True)
+mean_mono_loaded_hip_torque, std_mono_loaded_hip_torque = utils.pareto_profiles_avg_std(exo_torque_dataset['monoarticular_pareto_load_hipactuator_torque'],gl_noload,change_direction=True)
+mean_mono_loaded_knee_torque, std_mono_loaded_knee_torque = utils.pareto_profiles_avg_std(exo_torque_dataset['monoarticular_pareto_load_kneeactuator_torque'],gl_noload,change_direction=True)
+mean_mono_noload_hip_torque, std_mono_noload_hip_torque = utils.pareto_profiles_avg_std(exo_torque_dataset['monoarticular_pareto_noload_hipactuator_torque'],gl_noload,change_direction=True)
+mean_mono_noload_knee_torque, std_mono_noload_knee_torque = utils.pareto_profiles_avg_std(exo_torque_dataset['monoarticular_pareto_noload_kneeactuator_torque'],gl_noload,change_direction=True)
+#####################################################################################
+# plots
+# average pareto curve: loaded mono vs biarticular
+
+plot_dic = {'x1_data':mean_bi_loaded_metabolics_percent,'x1err_data':std_bi_loaded_metabolics_percent,
+          'x2_data':mean_mono_loaded_metabolics_percent,'x2err_data':std_mono_loaded_metabolics_percent,
+          'y1_data':mean_bi_loaded_energy,'y1err_data':std_bi_loaded_energy,
+          'y2_data':mean_mono_loaded_energy,'y2err_data':std_mono_loaded_energy,
+          'color_1':mycolors['crimson red'],'color_2':mycolors['dark purple']
+          }
+fig = plt.figure(num='Pareto Curve: loaded mono vs bi',figsize=(6.4, 4.8))
+utils.plot_pareto_avg_curve (plot_dic,loadcond='loaded')
+plt.xlabel('Metabolic Cost Reduction (%)')
+plt.ylabel('Exoskeleton Energy Consumption (W/kg)')
+ax = plt.gca()
+utils.no_top_right(ax)
+plt.legend(loc='best',frameon=False)
+fig.tight_layout()
+fig.savefig('./Figures/Pareto/Pareto_Load_BiVsMono.pdf',orientation='landscape',bbox_inches='tight')
+plt.show()
+
+fig = plt.figure(num='Pareto Curve: loaded mono vs bi',figsize=(6.4, 4.8))
+utils.plot_pareto_avg_curve (plot_dic,loadcond='loaded' ,label_on=False ,errbar_on=False)
+plt.xlabel('Metabolic Cost Reduction (%)')
+plt.ylabel('Exoskeleton Energy Consumption (W/kg)')
+ax = plt.gca()
+utils.no_top_right(ax)
+plt.legend(loc='best',frameon=False)
+fig.tight_layout()
+fig.savefig('./Figures/Pareto/Pareto_Load_BiVsMono_NoErrNoLabel.pdf',orientation='landscape',bbox_inches='tight')
+plt.show()
+# average pareto curve: noload mono vs biarticular
+
+plot_dic = {'x1_data':mean_bi_noload_metabolics_percent,'x1err_data':std_bi_noload_metabolics_percent,
+          'x2_data':mean_mono_noload_metabolics_percent,'x2err_data':std_mono_noload_metabolics_percent,
+          'y1_data':mean_bi_noload_energy,'y1err_data':std_bi_noload_energy,
+          'y2_data':mean_mono_noload_energy,'y2err_data':std_mono_noload_energy,
+          'color_1':mycolors['magenta pink'],'color_2':mycolors['lavender purple']
+          }
+fig = plt.figure(num='Pareto Curve: noload mono vs bi',figsize=(6.4, 4.8))
+utils.plot_pareto_avg_curve (plot_dic,loadcond='loaded')
+plt.xlabel('Metabolic Cost Reduction (%)')
+plt.ylabel('Exoskeleton Energy Consumption (W/kg)')
+ax = plt.gca()
+utils.no_top_right(ax)
+plt.legend(loc='best',frameon=False)
+fig.tight_layout()
+fig.savefig('./Figures/Pareto/Pareto_Noload_BiVsMono.pdf',orientation='landscape',bbox_inches='tight')
+plt.show()
+
+fig = plt.figure(num='Pareto Curve: noload mono vs bi',figsize=(6.4, 4.8))
+utils.plot_pareto_avg_curve (plot_dic,loadcond='loaded',label_on=False ,errbar_on=False)
+plt.xlabel('Metabolic Cost Reduction (%)')
+plt.ylabel('Exoskeleton Energy Consumption (W/kg)')
+ax = plt.gca()
+utils.no_top_right(ax)
+plt.legend(loc='best',frameon=False)
+fig.tight_layout()
+fig.savefig('./Figures/Pareto/Pareto_Noload_BiVsMono_NoErrNoLabel.pdf',orientation='landscape',bbox_inches='tight')
+plt.show()
+
+# average pareto curve: biarticular noload vs loaded
+
+plot_dic = {'x1_data':mean_bi_loaded_metabolics_percent,'x1err_data':std_bi_loaded_metabolics_percent,
+          'x2_data':mean_bi_noload_metabolics_percent,'x2err_data':std_bi_noload_metabolics_percent,
+          'y1_data':mean_bi_loaded_energy,'y1err_data':std_bi_loaded_energy,
+          'y2_data':mean_bi_noload_energy,'y2err_data':std_bi_noload_energy,
+          'color_1':mycolors['crimson red'],'color_2':mycolors['olympic blue']
+          }
+fig = plt.figure(num='Pareto Curve: biarticular loaded vs noload',figsize=(6.4, 4.8))
+utils.plot_pareto_avg_curve (plot_dic,loadcond='loaded')
+plt.xlabel('Metabolic Cost Reduction (%)')
+plt.ylabel('Exoskeleton Energy Consumption (W/kg)')
+ax = plt.gca()
+utils.no_top_right(ax)
+plt.legend(loc='best',frameon=False)
+fig.tight_layout()
+fig.savefig('./Figures/Pareto/Pareto_Biarticular_LoadedvsNoload.pdf',orientation='landscape',bbox_inches='tight')
+plt.show()
+
+fig = plt.figure(num='Pareto Curve: biarticular loaded vs noload',figsize=(6.4, 4.8))
+utils.plot_pareto_avg_curve (plot_dic,loadcond='loaded',label_on=False ,errbar_on=False)
+plt.xlabel('Metabolic Cost Reduction (%)')
+plt.ylabel('Exoskeleton Energy Consumption (W/kg)')
+ax = plt.gca()
+utils.no_top_right(ax)
+plt.legend(loc='best',frameon=False)
+fig.tight_layout()
+fig.savefig('./Figures/Pareto/Pareto_Biarticular_LoadedvsNoload_NoErrNoLabel.pdf',orientation='landscape',bbox_inches='tight')
+plt.show()
+
+# average pareto curve: monoarticular noload vs loaded
+
+plot_dic = {'x1_data':mean_mono_loaded_metabolics_percent,'x1err_data':std_mono_loaded_metabolics_percent,
+          'x2_data':mean_mono_noload_metabolics_percent,'x2err_data':std_mono_noload_metabolics_percent,
+          'y1_data':mean_mono_loaded_energy,'y1err_data':std_mono_loaded_energy,
+          'y2_data':mean_mono_noload_energy,'y2err_data':std_mono_noload_energy,
+          'color_1':mycolors['crimson red'],'color_2':mycolors['olympic blue']
+          }
+fig = plt.figure(num='Pareto Curve: monoarticular loaded vs noload',figsize=(6.4, 4.8))
+utils.plot_pareto_avg_curve (plot_dic,loadcond='loaded')
+plt.xlabel('Metabolic Cost Reduction (%)')
+plt.ylabel('Exoskeleton Energy Consumption (W/kg)')
+ax = plt.gca()
+utils.no_top_right(ax)
+plt.legend(loc='best',frameon=False)
+fig.tight_layout()
+fig.savefig('./Figures/Pareto/Pareto_Monoarticular_LoadedvsNoload.pdf',orientation='landscape',bbox_inches='tight')
+plt.show()
+
+fig = plt.figure(num='Pareto Curve: monoarticular loaded vs noload',figsize=(6.4, 4.8))
+utils.plot_pareto_avg_curve (plot_dic,loadcond='loaded',label_on=False ,errbar_on=False)
+plt.xlabel('Metabolic Cost Reduction (%)')
+plt.ylabel('Exoskeleton Energy Consumption (W/kg)')
+ax = plt.gca()
+utils.no_top_right(ax)
+plt.legend(loc='best',frameon=False)
+fig.tight_layout()
+fig.savefig('./Figures/Pareto/Pareto_Monoarticular_LoadedvsNoload_NoErrNoLabel.pdf',orientation='landscape',bbox_inches='tight')
+plt.show()

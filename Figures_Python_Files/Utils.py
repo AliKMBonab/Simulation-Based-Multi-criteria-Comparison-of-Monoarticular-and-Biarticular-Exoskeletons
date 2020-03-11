@@ -487,18 +487,18 @@ def pareto_avg_std_energy(data,simulation_num=25,subject_num=7,reshape=True):
     std = np.std(reshaped_data,axis=1)
     return avg,std
 
-def pareto_profiles_avg_std(data,gl,load,simulation_num=25,subject_num=7,change_direction=True):
-    avg = np.zeros((data.shape[0],data.shape[1]))
-    std = np.zeros((data.shape[0],data.shape[1]))
+def pareto_profiles_avg_std(data,gl,simulation_num=25,subject_num=7,change_direction=True):
+    avg = np.zeros((data.shape[0],simulation_num))
+    std = np.zeros((data.shape[0],simulation_num))
     normal_data = np.zeros((data.shape[0],data.shape[1]))
     c = 0
     subjects = ['05','07','09','10','11','12','14']
     for i in range(subject_num):
         selected_data = data[:,c:c+simulation_num]
         if change_direction == True:
-            normal_selected_data = np.true_divide(-1*selected_data,gl['{}_subject{}_trial01'.format(load,subjects[i])][1])
+            normal_selected_data = np.true_divide(-1*selected_data,gl['{}_subject{}_trial01'.format('noload',subjects[i])][1])
         else:
-            normal_selected_data = np.true_divide(selected_data,gl['{}_subject{}_trial01'.format(load,subjects[i])][1])
+            normal_selected_data = np.true_divide(selected_data,gl['{}_subject{}_trial01'.format('noload',subjects[i])][1])
         normal_data[:,c:c+simulation_num] = normal_selected_data
         c+=simulation_num
     c = 0
@@ -526,7 +526,7 @@ def label_datapoints(x,y,labels,xytext=(0,0),ha='right',fontsize=10, *args, **kw
         plt.annotate(labels[c], (x,y),textcoords="offset points",xytext=xytext,ha=ha,fontsize=fontsize)
         c+=1
 
-def plot_pareto_avg_curve (plot_dic,loadcond,legend_loc=0,labels=None,*args, **kwargs):
+def plot_pareto_avg_curve (plot_dic,loadcond,legend_loc=0,labels=None,label_on=True,errbar_on=True,*args, **kwargs):
     x1_data = plot_dic['x1_data']
     x2_data = plot_dic['x2_data']
     y1_data = plot_dic['y1_data']
@@ -549,13 +549,16 @@ def plot_pareto_avg_curve (plot_dic,loadcond,legend_loc=0,labels=None,*args, **k
         legend_2 = plot_dic['legend_2']
     # main plot
     plt.scatter(x1_data,y1_data,marker="o",color=color_1,label=legend_1,*args, **kwargs)
-    plt.errorbar(x1_data,y1_data,xerr=x1err_data,yerr=y1err_data,fmt=None,ecolor=color_1,alpha=0.35)
-    label_datapoints(x1_data,y1_data,labels,*args, **kwargs)
     plt.scatter(x2_data,y2_data,marker="v",color=color_2,label=legend_2,*args, **kwargs)
-    plt.errorbar(x2_data,y2_data,xerr=x2err_data,yerr=y2err_data,fmt=None,ecolor=color_2,alpha=0.35)
-    label_datapoints(x2_data,y2_data,labels,*args, **kwargs)
+    if errbar_on == True:
+        plt.errorbar(x1_data,y1_data,xerr=x1err_data,yerr=y1err_data,fmt='o',ecolor=color_1,alpha=0.15)
+        plt.errorbar(x2_data,y2_data,xerr=x2err_data,yerr=y2err_data,fmt='v',ecolor=color_2,alpha=0.15)
+    if label_on == True:
+        label_datapoints(x1_data,y1_data,labels,*args, **kwargs)
+        label_datapoints(x2_data,y2_data,labels,ha='left',*args, **kwargs)
+    
 
-def plot_pareto_curve_subjects (nrows,ncols,nplot,plot_dic,loadcond,legend_loc=0,labels=None,*args, **kwargs):
+def plot_pareto_curve_subjects (nrows,ncols,nplot,plot_dic,loadcond,legend_loc=0,labels=None,label_on=True,*args, **kwargs):
     x1_data = plot_dic['x1_data']
     x2_data = plot_dic['x2_data']
     y1_data = plot_dic['y1_data']
@@ -584,9 +587,10 @@ def plot_pareto_curve_subjects (nrows,ncols,nplot,plot_dic,loadcond,legend_loc=0
     for i in range(nplot):
         ax = plt.subplot(nrows,ncols,i+1)
         plt.scatter(x1_data[:,i],y1_data[:,i],marker="o",color=color_1,label=legend_1,*args, **kwargs)
-        label_datapoints(x1_data[:,i],y1_data[:,i],labels,*args, **kwargs)
         plt.scatter(x2_data[:,i],y2_data[:,i],marker="v",color=color_2,label=legend_2,*args, **kwargs)
-        label_datapoints(x2_data[:,i],y2_data[:,i],labels,*args, **kwargs)
+        if label_on == True:
+            label_datapoints(x1_data[:,i],y1_data[:,i],labels,*args, **kwargs)
+            label_datapoints(x2_data[:,i],y2_data[:,i],labels,ha='left',*args, **kwargs)
         plt.title(plot_titles[i])
         no_top_right(ax)
         if i in legend_loc:
