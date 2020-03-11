@@ -218,18 +218,129 @@ def reduction_calc(data1,data2):
     for i in range(len(data1)):
         reduction[i] = (((data1[i]-data2[i])*100)/data1[i])
     return reduction
+
+######################################################################
+# Mass and inertia effect functions
+
+def adding_mass_metabolic_change(m_waist,m_thigh,m_shank,I_thigh,I_shank,unassisted_metabolic,I_leg=2.52):
+    """ This function has been written according to R.C. Browning et al. paper which
+        is calculating the metabolic cost CHANGE during the walking.
+    """
+    # Waist
+    mass_metabolic_waist = 0.045*m_waist
+    # Thigh
+    mass_metabolic_thigh = 0.075*m_thigh
+    I_thigh_ratio = (I_leg + I_thigh)/I_leg
+    inertia_metabolic_thigh = ((-0.74 + (1.81*I_thigh_ratio))*unassisted_metabolic)-unassisted_metabolic
+    delta_metabolic_thigh = mass_metabolic_thigh + inertia_metabolic_thigh
+    # Shank
+    mass_metabolic_shank = 0.076*m_shank
+    I_shank_ratio = (I_leg + I_shank)/I_leg
+    inertia_metabolic_shank = ((0.63749 + (0.40916*I_shank_ratio))*unassisted_metabolic)-unassisted_metabolic
+    delta_metabolic_shank = mass_metabolic_shank + inertia_metabolic_shank
+    # Total
+    delta_metabolic_total = delta_metabolic_shank + delta_metabolic_thigh + mass_metabolic_waist
+    
+    return  mass_metabolic_waist,delta_metabolic_thigh,delta_metabolic_shank,delta_metabolic_total
+
+def adding_mass_metabolic(m_waist,m_thigh,m_shank,I_thigh,I_shank,I_leg=2.52):
+    """ This function has been written according to R.C. Browning et al. paper which
+        is calculating the metabolic cost during the walking. 
+    """
+    # Waist
+    mass_metabolic_waist = 2.36+0.045*m_waist
+    # Thigh
+    mass_metabolic_thigh = 2.38+0.075*m_thigh
+    I_thigh_ratio = (I_leg + I_thigh)/I_leg
+    inertia_metabolic_thigh = (-0.74 + (1.81*I_thigh_ratio))
+    # Shank
+    mass_metabolic_shank = 2.34+0.076*m_shank
+    I_shank_ratio = (I_leg + I_shank)/I_leg
+    inertia_metabolic_shank = (0.63749 + (0.40916*I_shank_ratio))
+    return  mass_metabolic_waist,mass_metabolic_thigh,mass_metabolic_shank,inertia_metabolic_thigh,inertia_metabolic_shank
+
+def metabolic_energy_mass_added_pareto(unassisted_metabolic,InertialProp_Dic,calc_metabolic_cost=True):
+    """This function calculates the following data in a performed pareto simulations:
+    - waist metabolic change
+    - waist metabolic (optional)
+    - thigh metabolic change
+    - thigh metabolic (optional)
+    - shank metabolic change
+    - shank metabolic (optional)
+    - the change of inertia in thigh in different maximum required torque (optional)
+    - the change of inertia in shank in different maximum required torque (optional)
+    #=======================================================================================
+    - default values for actuator have been selected from Maxon Motor EC90 250W
+    - default values for center of masses have been selected according to the desgin of exoskeletons
+    - leg inertia were selected according to the inertia reported by reference paper
+    #=======================================================================================
+    * Default: motor_max_torque=2, motor_inertia=0.000506, thigh_com=0.23, shank_com=0.18, leg_inertia=2.52
+    """
+    # initialization
+    m_waist = InertialProp_Dic["m_waist"]
+    m_thigh = InertialProp_Dic["m_thigh"]
+    m_shank = InertialProp_Dic["m_shank"]
+    motor_max_torque = InertialProp_Dic["motor_max_torque"]
+    motor_inertia = InertialProp_Dic["motor_inertia"]
+    thigh_com =  InertialProp_Dic["thigh_com"]
+    shank_com =  InertialProp_Dic["shank_com"]
+    leg_inertia = InertialProp_Dic["leg_inertia"]
+    Hip_weights = [70,60,50,40,30]    # Hip Weight may need to be changed according to pareto simulations
+    Knee_weights = [70,60,50,40,30]   # Knee Weight may need to be changed according to pareto simulations
+    Metabolic_Change_Hip = np.zeros(len(Hip_weights)*len(Knee_weights))
+    Metabolic_Change_Thigh = np.zeros(len(Hip_weights)*len(Knee_weights))
+    Metabolic_Change_Shank = np.zeros(len(Hip_weights)*len(Knee_weights))
+    Total_AddMass_MetabolicChange =  np.zeros(len(Hip_weights)*len(Knee_weights))
+    Waist_Metabolic = np.zeros(len(Hip_weights)*len(Knee_weights))
+    Thigh_Metabolic = np.zeros(len(Hip_weights)*len(Knee_weights))
+    Shank_Metabolic = np.zeros(len(Hip_weights)*len(Knee_weights))
+    Inertia_Thigh_Metabolic = np.zeros(len(Hip_weights)*len(Knee_weights))
+    Inertia_Shank_Metabolic = np.zeros(len(Hip_weights)*len(Knee_weights))
+    Inertia_Thigh = np.zeros(len(Hip_weights)*len(Knee_weights))
+    Inertia_Shank = np.zeros(len(Hip_weights)*len(Knee_weights))
+    # the masse added two sides
+    m_waist = 2*m_waist
+    m_thigh = 2*m_thigh
+    m_shank = 2*m_shank
+    # The metabolic cost change due to adding mass calculation
+    c = 0
+    for i in range(len(Hip_weights)):
+        for j in range(len(Knee_weights)):
+            # Gear Ratio max_needed_torque/motor_max_torque
+            Hip_ratio = Hip_weights[i]/motor_max_torque
+            Knee_ratio = Knee_weights[j]/motor_max_torque
+            # I = motor_inertia*(ratio^2) + segment_mass*(segment_com^2)
+            I_thigh = motor_inertia*(Hip_ratio**2)+ ((thigh_com**2)*m_thigh)
+            I_shank =motor_inertia*(Knee_ratio**2) + ((shank_com**2)*m_shank)
+            # loaded leg to unloaded leg inertia ratio
+            Inertia_Shank[c] = (I_shank + leg_inertia)/leg_inertia
+            Inertia_Thigh[c] = (I_thigh + leg_inertia)/leg_inertia
+            # Metabolic change calculation in another function
+            metabolic_waist,metabolic_thigh,metabolic_shank,AddMass_MetabolicChange \
+                = adding_mass_metabolic_change(m_waist,m_thigh,m_shank,I_thigh,I_shank,unassisted_metabolic=unassisted_metabolic)
+            # Storing the data into numpy arrays
+            Metabolic_Change_Hip[c] = metabolic_waist
+            Metabolic_Change_Thigh[c] = metabolic_thigh
+            Metabolic_Change_Shank[c] = metabolic_shank
+            Total_AddMass_MetabolicChange[c] =  AddMass_MetabolicChange
+            # Metabolic cost calculation in another function
+            if calc_metabolic_cost == True :
+                mass_metabolic_waist,mass_metabolic_thigh,mass_metabolic_shank,\
+                inertia_metabolic_thigh,inertia_metabolic_shank = adding_mass_metabolic(m_waist,m_thigh,m_shank,I_thigh,I_shank)
+                Waist_Metabolic[c] = mass_metabolic_waist
+                Thigh_Metabolic[c] = mass_metabolic_thigh
+                Shank_Metabolic[c] = mass_metabolic_shank
+                Inertia_Thigh_Metabolic[c] = inertia_metabolic_thigh
+                Inertia_Shank_Metabolic[c] = inertia_metabolic_shank
+            c+=1
+    if calc_metabolic_cost == True :
+        return Metabolic_Change_Hip,Metabolic_Change_Thigh,Metabolic_Change_Shank,Total_AddMass_MetabolicChange,\
+               Waist_Metabolic,Thigh_Metabolic,Shank_Metabolic,Inertia_Thigh_Metabolic,Inertia_Shank_Metabolic,Inertia_Thigh,Inertia_Shank
+    else:
+        return Metabolic_Change_Hip,Metabolic_Change_Thigh,Metabolic_Change_Shank,AddMass_MetabolicChange,Inertia_Shank_Metabolic,Inertia_Thigh,Inertia_Shank
+
 ######################################################################
 # Plot related functions
-def autolabel(rects):
-    """Attach a text label above each bar in *rects*, displaying its height."""
-    for rect in rects:
-        height = rect.get_height()
-        ax.annotate('{}'.format(height),
-                    xy=(rect.get_x() + rect.get_width() / 2, height),
-                    xytext=(0, 3),  # 3 points vertical offset
-                    textcoords="offset points",
-                    ha='center', va='bottom')
-
 def beautiful_boxplot(bp):
     ## change outline color, fill color and linewidth of the boxes
     for box in bp['boxes']:
@@ -354,4 +465,133 @@ def plot_joint_muscle_exo (nrows,ncols,plot_dic,color_dic,ylabel,legend_loc=[0,1
             plt.xlabel('gait cycle (%)')
         if i not in np.arange(1,nrows*ncols,ncols):
             plt.ylabel(ylabel)
-        
+
+######################################################################
+######################################################################
+# Data Processing related functions for Pareto Simulations
+def pareto_metabolics_reduction(assist_data,unassist_data,simulation_num=25,subject_num=7):
+    reshaped_assisted_data = np.reshape(assist_data,(simulation_num,subject_num),order='F')
+    reduction = np.zeros((simulation_num,subject_num))
+    c=0
+    for i in np.arange(0,21,3):
+        reduction[:,c] = np.true_divide((np.ones(25)*unassist_data[i] - reshaped_assisted_data[:,c])*100,np.ones(25)*unassist_data[i])
+        c+=1
+    return reduction
+    
+def pareto_avg_std_energy(data,simulation_num=25,subject_num=7,reshape=True):
+    if reshape == True:
+        reshaped_data = np.reshape(data,(simulation_num,subject_num),order='F')
+    else:
+        reshaped_data = data
+    avg = np.mean(reshaped_data,axis=1)
+    std = np.std(reshaped_data,axis=1)
+    return avg,std
+
+def pareto_profiles_avg_std(data,gl,load,simulation_num=25,subject_num=7,change_direction=True):
+    avg = np.zeros((data.shape[0],data.shape[1]))
+    std = np.zeros((data.shape[0],data.shape[1]))
+    normal_data = np.zeros((data.shape[0],data.shape[1]))
+    c = 0
+    subjects = ['05','07','09','10','11','12','14']
+    for i in range(subject_num):
+        selected_data = data[:,c:c+simulation_num]
+        if change_direction == True:
+            normal_selected_data = np.true_divide(-1*selected_data,gl['{}_subject{}_trial01'.format(load,subjects[i])][1])
+        else:
+            normal_selected_data = np.true_divide(selected_data,gl['{}_subject{}_trial01'.format(load,subjects[i])][1])
+        normal_data[:,c:c+simulation_num] = normal_selected_data
+        c+=simulation_num
+    c = 0
+    for i in range(simulation_num):
+        cols = np.arange(i,(simulation_num*subject_num-simulation_num)+i,simulation_num)
+        selected_data = normal_data[:,cols]
+        avg[:,c] = np.nanmean(selected_data,axis=1)
+        std[:,c] = np.nanstd(selected_data,axis=1)
+        c+=1
+    return avg,std
+
+######################################################################
+# Plot related functions for Pareto Simulations
+
+def gen_paretocurve_label(H= [70,60,50,40,30],K= [70,60,50,40,30]):
+    labels = []
+    for i in H:
+        for j in K:
+            labels.append('H{}K{}'.format(i,j))
+    return labels
+
+def label_datapoints(x,y,labels,xytext=(0,0),ha='right',fontsize=10, *args, **kwargs):
+    c = 0
+    for x,y in zip(x,y):
+        plt.annotate(labels[c], (x,y),textcoords="offset points",xytext=xytext,ha=ha,fontsize=fontsize)
+        c+=1
+
+def plot_pareto_avg_curve (plot_dic,loadcond,legend_loc=0,labels=None,*args, **kwargs):
+    x1_data = plot_dic['x1_data']
+    x2_data = plot_dic['x2_data']
+    y1_data = plot_dic['y1_data']
+    y2_data = plot_dic['y2_data']
+    x1err_data = plot_dic['x1err_data']
+    x2err_data = plot_dic['x2err_data']
+    y1err_data = plot_dic['y1err_data']
+    y2err_data = plot_dic['y2err_data']
+    color_1 = plot_dic['color_1']
+    color_2 = plot_dic['color_2']
+    # handle labels
+    if labels == None:
+        labels = gen_paretocurve_label()
+    # handle legends
+    if 'legend_1' and 'legend_2' not in plot_dic:
+        legend_1 = 'biarticular,{}'.format(loadcond)
+        legend_2 = 'monoaricular,{}'.format(loadcond)
+    else:
+        legend_1 = plot_dic['legend_1']
+        legend_2 = plot_dic['legend_2']
+    # main plot
+    plt.scatter(x1_data,y1_data,marker="o",color=color_1,label=legend_1,*args, **kwargs)
+    plt.errorbar(x1_data,y1_data,xerr=x1err_data,yerr=y1err_data,fmt=None,ecolor=color_1,alpha=0.35)
+    label_datapoints(x1_data,y1_data,labels,*args, **kwargs)
+    plt.scatter(x2_data,y2_data,marker="v",color=color_2,label=legend_2,*args, **kwargs)
+    plt.errorbar(x2_data,y2_data,xerr=x2err_data,yerr=y2err_data,fmt=None,ecolor=color_2,alpha=0.35)
+    label_datapoints(x2_data,y2_data,labels,*args, **kwargs)
+
+def plot_pareto_curve_subjects (nrows,ncols,nplot,plot_dic,loadcond,legend_loc=0,labels=None,*args, **kwargs):
+    x1_data = plot_dic['x1_data']
+    x2_data = plot_dic['x2_data']
+    y1_data = plot_dic['y1_data']
+    y2_data = plot_dic['y2_data']
+    color_1 = plot_dic['color_1']
+    color_2 = plot_dic['color_2']
+    ylabel = plot_dic ['ylabel']
+    xlabel = plot_dic ['xlabel']
+    # handle labels
+    if labels == None:
+        labels = gen_paretocurve_label()
+    # handle titles
+    if 'plot_titles' not in plot_dic:
+        subjects = ['05','07','09','10','11','12','14']
+        plot_titles = ['subject{},{}'.format(i,loadcond) for i in subjects]
+    else:
+        plot_titles = plot_dic['plot_titles']
+    # handle legends
+    if 'legend_1' and 'legend_2' not in plot_dic:
+        legend_1 = 'biarticular,{}'.format(loadcond)
+        legend_2 = 'monoaricular,{}'.format(loadcond)
+    else:
+        legend_1 = plot_dic['legend_1']
+        legend_2 = plot_dic['legend_2']
+    # main plots
+    for i in range(nplot):
+        ax = plt.subplot(nrows,ncols,i+1)
+        plt.scatter(x1_data[:,i],y1_data[:,i],marker="o",color=color_1,label=legend_1,*args, **kwargs)
+        label_datapoints(x1_data[:,i],y1_data[:,i],labels,*args, **kwargs)
+        plt.scatter(x2_data[:,i],y2_data[:,i],marker="v",color=color_2,label=legend_2,*args, **kwargs)
+        label_datapoints(x2_data[:,i],y2_data[:,i],labels,*args, **kwargs)
+        plt.title(plot_titles[i])
+        no_top_right(ax)
+        if i in legend_loc:
+            plt.legend(loc='best',frameon=False)
+        if i in range((nrows*ncols)-nrows,(nrows*ncols)):
+            plt.xlabel(xlabel)
+        if i not in np.arange(1,nrows*ncols,ncols):
+            plt.ylabel(ylabel)
