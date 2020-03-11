@@ -73,14 +73,14 @@ def actuators_energy_calc(Subject_Dic,isabs=True,regen=False):
     right_data = numpy_data[right_param]
     left_data = numpy_data[left_param]
     if isabs == True:
-        energy = pp.avg_over_gait_cycle(time, np.abs(right_data),cycle_duration=gl.cycle_end-gl.cycle_start)\
-               + pp.avg_over_gait_cycle(time, np.abs(left_data),cycle_duration=gl.cycle_end-gl.cycle_start)
+        energy = pp.avg_over_gait_cycle(time, np.abs(right_data),cycle_duration=gl.cycle_end-gl.cycle_start,cycle_start=gl.cycle_start)
+               #+ pp.avg_over_gait_cycle(time, np.abs(left_data),cycle_duration=gl.cycle_end-gl.cycle_start)
     else:
-        energy = pp.avg_over_gait_cycle(time, right_data,cycle_duration=gl.cycle_end-gl.cycle_start)\
-               + pp.avg_over_gait_cycle(time,left_data,cycle_duration=gl.cycle_end-gl.cycle_start) 
+        energy = pp.avg_over_gait_cycle(time, right_data,cycle_duration=gl.cycle_end-gl.cycle_start,cycle_start=gl.cycle_start)\
+               #+ pp.avg_over_gait_cycle(time,left_data,cycle_duration=gl.cycle_end-gl.cycle_start) 
     if regen == True:
-        regen_energy = pp.avg_over_gait_cycle(time, np.abs(np.minimum(np.zeros(right_data.shape[0]),right_data)),cycle_duration=gl.cycle_end-gl.cycle_start)\
-                     + pp.avg_over_gait_cycle(time,np.abs(np.minimum(np.zeros(left_data.shape[0]),left_data)),cycle_duration=gl.cycle_end-gl.cycle_start)
+        regen_energy = pp.avg_over_gait_cycle(time, np.abs(np.minimum(np.zeros(right_data.shape[0]),right_data)),cycle_duration=gl.cycle_end-gl.cycle_start,cycle_start=gl.cycle_start)
+                     #+ pp.avg_over_gait_cycle(time,np.abs(np.minimum(np.zeros(left_data.shape[0]),left_data)),cycle_duration=gl.cycle_end-gl.cycle_start)
     if regen == True:
         return energy/subject_mass,regen_energy/subject_mass
     else:
@@ -142,7 +142,7 @@ def metabolic_energy_fcn(Subject_Dic):
     total = metabolic_power_data['metabolic_power_TOTAL']
     main_metabolics = basal + total
     metabolic_cost = np.interp(gait_cycle,time,main_metabolics)
-    metabolic_energy = pp.avg_over_gait_cycle(metabolic_power_data['time'], main_metabolics,cycle_duration=gl.cycle_end-gl.cycle_start)
+    metabolic_energy = pp.avg_over_gait_cycle(metabolic_power_data['time'], main_metabolics,cycle_duration=gl.cycle_end-gl.cycle_start,cycle_start=gl.cycle_start)
     return metabolic_energy/subject_mass
 
 

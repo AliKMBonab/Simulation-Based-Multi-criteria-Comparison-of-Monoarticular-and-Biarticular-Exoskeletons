@@ -79,13 +79,13 @@ muscles_activation_noload_plot_dic = {'pgc':gait_cycle,'avg':mean_unassist_noloa
                                       'label':'noload, unassist','std':std_unassist_noload_muscles_activation,'avg_toeoff':noload_mean_toe_off}
 
 muscles_activation_biarticular_loaded_plot_dic = {'pgc':gait_cycle,'avg':mean_bi_loaded_muscles_activation,'muscle_group': 'nine_muscles',
-                                                'label':'loaded, unassist','std':std_bi_loaded_muscles_activation,'avg_toeoff':loaded_mean_toe_off}
+                                                'label':'loaded, biarticular','std':std_bi_loaded_muscles_activation,'avg_toeoff':loaded_mean_toe_off}
 muscles_activation_biarticular_noload_plot_dic = {'pgc':gait_cycle,'avg':mean_bi_noload_muscles_activation,'muscle_group': 'nine_muscles',
-                                                  'label':'noload, unassist','std':std_bi_noload_muscles_activation,'avg_toeoff':noload_mean_toe_off}
+                                                  'label':'noload, biarticular','std':std_bi_noload_muscles_activation,'avg_toeoff':noload_mean_toe_off}
 muscles_activation_monoarticular_loaded_plot_dic = {'pgc':gait_cycle,'avg':mean_mono_loaded_muscles_activation,'muscle_group': 'nine_muscles',
-                                                'label':'loaded, unassist','std':std_mono_loaded_muscles_activation,'avg_toeoff':loaded_mean_toe_off}
+                                                'label':'loaded, monoarticular','std':std_mono_loaded_muscles_activation,'avg_toeoff':loaded_mean_toe_off}
 muscles_activation_monoarticular_noload_plot_dic = {'pgc':gait_cycle,'avg':mean_mono_noload_muscles_activation,'muscle_group': 'nine_muscles',
-                                                  'label':'noload, unassist','std':std_mono_noload_muscles_activation,'avg_toeoff':noload_mean_toe_off}
+                                                  'label':'noload, monoarticular','std':std_mono_noload_muscles_activation,'avg_toeoff':noload_mean_toe_off}
 
 # muscles activation figure
 # biarticular
