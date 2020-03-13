@@ -55,6 +55,7 @@ bi_loaded_metabolics_percent = utils.pareto_metabolics_reduction(assisted_energy
 bi_noload_metabolics_percent = utils.pareto_metabolics_reduction(assisted_energy_dataset['biarticular_pareto_noload_metabolics_energy'],unassisted_energy_dataset['noload_metabolics_energy'])
 mono_loaded_metabolics_percent = utils.pareto_metabolics_reduction(assisted_energy_dataset['monoarticular_pareto_load_metabolics_energy'],unassisted_energy_dataset['loaded_metabolics_energy'])
 mono_noload_metabolics_percent = utils.pareto_metabolics_reduction(assisted_energy_dataset['monoarticular_pareto_noload_metabolics_energy'],unassisted_energy_dataset['noload_metabolics_energy'])
+
 # actuators energy
 bi_loaded_hip_energy= np.reshape(assisted_energy_dataset['biarticular_pareto_load_hipactuator_energy'],(25,7),order='F')
 bi_loaded_knee_energy= np.reshape(assisted_energy_dataset['biarticular_pareto_load_kneeactuator_energy'],(25,7),order='F')
@@ -89,15 +90,24 @@ mean_mono_loaded_knee_torque, std_mono_loaded_knee_torque = utils.pareto_profile
 mean_mono_noload_hip_torque, std_mono_noload_hip_torque = utils.pareto_profiles_avg_std(exo_torque_dataset['monoarticular_pareto_noload_hipactuator_torque'],gl_noload,change_direction=False)
 mean_mono_noload_knee_torque, std_mono_noload_knee_torque = utils.pareto_profiles_avg_std(exo_torque_dataset['monoarticular_pareto_noload_kneeactuator_torque'],gl_noload,change_direction=True)
 
-# actuators energy
-proc_bi_loaded_hip_energy= np.reshape(assisted_energy_dataset['biarticular_pareto_load_hipactuator_energy'],(25,7),order='F')
-proc_bi_loaded_knee_energy= np.reshape(assisted_energy_dataset['biarticular_pareto_load_kneeactuator_energy'],(25,7),order='F')
-proc_bi_noload_hip_energy= np.reshape(assisted_energy_dataset['biarticular_pareto_noload_hipactuator_energy'],(25,7),order='F')
-proc_bi_noload_knee_energy= np.reshape(assisted_energy_dataset['biarticular_pareto_noload_kneeactuator_energy'],(25,7),order='F')
-proc_mono_loaded_hip_energy= np.reshape(assisted_energy_dataset['monoarticular_pareto_load_hipactuator_energy'],(25,7),order='F')
-proc_mono_loaded_knee_energy= np.reshape(assisted_energy_dataset['monoarticular_pareto_load_kneeactuator_energy'],(25,7),order='F')
-proc_mono_noload_hip_energy= np.reshape(assisted_energy_dataset['monoarticular_pareto_noload_hipactuator_energy'],(25,7),order='F')
-proc_mono_noload_knee_energy= np.reshape(assisted_energy_dataset['monoarticular_pareto_noload_kneeactuator_energy'],(25,7),order='F')
+# actuators energy from processed mean data
+proc_bi_loaded_hip_energy= np.reshape(assisted_energy_dataset['biarticular_pareto_load_processed_hipactuator_energy'],(25,7),order='F')
+proc_bi_loaded_knee_energy= np.reshape(assisted_energy_dataset['biarticular_pareto_load_processed_kneeactuator_energy'],(25,7),order='F')
+proc_bi_loaded_energy = proc_bi_loaded_hip_energy + proc_bi_loaded_knee_energy
+proc_bi_noload_hip_energy= np.reshape(assisted_energy_dataset['biarticular_pareto_noload_processed_hipactuator_energy'],(25,7),order='F')
+proc_bi_noload_knee_energy= np.reshape(assisted_energy_dataset['biarticular_pareto_noload_processed_kneeactuator_energy'],(25,7),order='F')
+proc_bi_noload_energy = proc_bi_noload_hip_energy + proc_bi_noload_knee_energy
+proc_mono_loaded_hip_energy= np.reshape(assisted_energy_dataset['monoarticular_pareto_load_processed_hipactuator_energy'],(25,7),order='F')
+proc_mono_loaded_knee_energy= np.reshape(assisted_energy_dataset['monoarticular_pareto_load_processed_kneeactuator_energy'],(25,7),order='F')
+proc_mono_loaded_energy = proc_mono_loaded_hip_energy + proc_mono_loaded_knee_energy
+proc_mono_noload_hip_energy= np.reshape(assisted_energy_dataset['monoarticular_pareto_noload_processed_hipactuator_energy'],(25,7),order='F')
+proc_mono_noload_knee_energy= np.reshape(assisted_energy_dataset['monoarticular_pareto_noload_processed_kneeactuator_energy'],(25,7),order='F')
+proc_mono_noload_energy = proc_mono_noload_hip_energy + proc_mono_noload_knee_energy
+# metabolics cost reduction percents
+proc_bi_loaded_metabolics_percent = utils.pareto_metabolics_reduction(assisted_energy_dataset['biarticular_pareto_load_processed_metabolics_energy'],unassisted_energy_dataset['loaded_metabolics_processed_energy'])
+proc_bi_noload_metabolics_percent = utils.pareto_metabolics_reduction(assisted_energy_dataset['biarticular_pareto_noload_processed_metabolics_energy'],unassisted_energy_dataset['noload_metabolics_processed_energy'])
+proc_mono_loaded_metabolics_percent = utils.pareto_metabolics_reduction(assisted_energy_dataset['monoarticular_pareto_load_processed_metabolics_energy'],unassisted_energy_dataset['loaded_metabolics_processed_energy'])
+proc_mono_noload_metabolics_percent = utils.pareto_metabolics_reduction(assisted_energy_dataset['monoarticular_pareto_noload_processed_metabolics_energy'],unassisted_energy_dataset['noload_metabolics_processed_energy'])
 
 #####################################################################################
 # plots
@@ -109,7 +119,7 @@ plot_dic = {'x1_data':bi_loaded_metabolics_percent,'x2_data':mono_loaded_metabol
           'ylabel':'Energy Consumption (W/kg)','xlabel':'Metabolic Reduction (%)'
           }
 fig = plt.figure(num='Pareto Curve: loaded mono vs bi',figsize=(10.4, 8.8))
-utils.plot_pareto_curve_subjects (nrows=3,ncols=3,nplot=7,plot_dic=plot_dic,loadcond='loaded',label_on=False)
+utils.plot_pareto_curve_subjects (nrows=3,ncols=3,nplot=7,plot_dic=plot_dic,loadcond='loaded')
 fig.tight_layout()
 fig.savefig('./Figures/Pareto/Pareto_Load_Subjects_BiVsMono.pdf',orientation='landscape',bbox_inches='tight')
 plt.show()
@@ -122,11 +132,37 @@ plot_dic = {'x1_data':bi_noload_metabolics_percent,'x2_data':mono_noload_metabol
           'ylabel':'Energy Consumption (W/kg)','xlabel':'Metabolic Reduction (%)'
           }
 fig = plt.figure(num='Pareto Curve: noload mono vs bi',figsize=(10.4, 8.8))
-utils.plot_pareto_curve_subjects (nrows=3,ncols=3,nplot=7,plot_dic=plot_dic,loadcond='noload',label_on=False)
+utils.plot_pareto_curve_subjects (nrows=3,ncols=3,nplot=7,plot_dic=plot_dic,loadcond='noload')
 fig.tight_layout()
 fig.savefig('./Figures/Pareto/Pareto_Noload_Subjects_BiVsMono.pdf',orientation='landscape',bbox_inches='tight')
 plt.show()
+# subjects pareto curve: loaded mono vs biarticular
 
+plot_dic = {'x1_data':bi_loaded_metabolics_percent,'x2_data':mono_loaded_metabolics_percent,
+          'y1_data':proc_bi_loaded_energy,'y2_data':proc_mono_loaded_energy,
+          'color_1':mycolors['crimson red'],'color_2':mycolors['dark purple'],
+          'ylabel':'Energy Consumption (W/kg)','xlabel':'Metabolic Reduction (%)'
+          }
+fig = plt.figure(num='Pareto Curve: loaded mono vs bi - Processed',figsize=(10.4, 8.8))
+utils.plot_pareto_curve_subjects (nrows=3,ncols=3,nplot=7,plot_dic=plot_dic,loadcond='loaded')
+fig.tight_layout()
+fig.savefig('./Figures/Pareto/Pareto_Load_Subjects_BiVsMono_Processed.pdf',orientation='landscape',bbox_inches='tight')
+plt.show()
+
+# subjects pareto curve: noload mono vs biarticular
+
+plot_dic = {'x1_data':bi_noload_metabolics_percent,'x2_data':mono_noload_metabolics_percent,
+          'y1_data':proc_bi_noload_energy,'y2_data':proc_mono_noload_energy,
+          'color_1':mycolors['crimson red'],'color_2':mycolors['dark purple'],
+          'ylabel':'Energy Consumption (W/kg)','xlabel':'Metabolic Reduction (%)'
+          }
+fig = plt.figure(num='Pareto Curve: noload mono vs bi - Processed',figsize=(10.4, 8.8))
+utils.plot_pareto_curve_subjects (nrows=3,ncols=3,nplot=7,plot_dic=plot_dic,loadcond='noload')
+fig.tight_layout()
+fig.savefig('./Figures/Pareto/Pareto_Noload_Subjects_BiVsMono_Processed.pdf',orientation='landscape',bbox_inches='tight')
+plt.show()
+
+#####################################################################################
 # hip loaded power profiles
 
 plot_dic = {'avg_1':mean_bi_loaded_hip_power,'std_1':std_bi_loaded_hip_power,

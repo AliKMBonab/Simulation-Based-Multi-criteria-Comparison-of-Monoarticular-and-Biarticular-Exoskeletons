@@ -10,6 +10,7 @@ import matplotlib
 import matplotlib.pyplot as plt
 import pylab as pl
 from scipy.signal import butter, filtfilt
+from scipy import integrate
 import importlib
 from tabulate import tabulate
 from numpy import nanmean, nanstd
@@ -469,6 +470,16 @@ def plot_joint_muscle_exo (nrows,ncols,plot_dic,color_dic,ylabel,legend_loc=[0,1
 ######################################################################
 ######################################################################
 # Data Processing related functions for Pareto Simulations
+def pareto_from_mean_power(power_mean,power_std):
+    if power_mean.shape[0] != power_std.shape[0]:
+        raise Exception('input dataset do not match!')
+    mean_energy = np.zeros(power_mean.shape[1])
+    std_energy  = np.zeros( power_std.shape[1])
+    gcp = np.linspace(0,100,power_mean.shape[0])
+    for i in range(power_mean.shape[1]):
+        mean_energy[i] = integrate.simps(np.abs(power_mean[:,i]),gcp)
+        std_energy[i]  = np.abs(integrate.simps(np.abs(power_mean[:,i]+power_std[:,i]),gcp) - integrate.simps(np.abs(power_mean[:,i]),gcp))
+    return mean_energy, std_energy
 def pareto_metabolics_reduction(assist_data,unassist_data,simulation_num=25,subject_num=7):
     reshaped_assisted_data = np.reshape(assist_data,(simulation_num,subject_num),order='F')
     reduction = np.zeros((simulation_num,subject_num))
@@ -544,7 +555,7 @@ def plot_pareto_avg_curve (plot_dic,loadcond,legend_loc=0,labels=None,label_on=T
     color_2 = plot_dic['color_2']
     # handle labels
     if labels == None:
-        labels = gen_paretocurve_label()
+        labels = np.arange(1,26,1)
     # handle legends
     if 'legend_1' and 'legend_2' not in plot_dic:
         legend_1 = 'biarticular,{}'.format(loadcond)
@@ -573,7 +584,7 @@ def plot_pareto_curve_subjects (nrows,ncols,nplot,plot_dic,loadcond,legend_loc=[
     xlabel = plot_dic ['xlabel']
     # handle labels
     if labels == None:
-        labels = gen_paretocurve_label()
+        labels = labels = np.arange(1,26,1)
     # handle titles
     if 'plot_titles' not in plot_dic:
         subjects = ['05','07','09','10','11','12','14']
