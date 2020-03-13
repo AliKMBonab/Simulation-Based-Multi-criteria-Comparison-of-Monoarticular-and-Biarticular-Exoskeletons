@@ -234,13 +234,14 @@ def actuator_energy_proc_power(Subject_Dic,isabs=True,regen=False):
                                                  "gl": Subject_Dic["gl"]}
     power_data = data_extraction(Subject_Dic=data_extraction_dic)
     gl = Subject_Dic["gl"]
+    gait_cycle = np.linspace(0,100,1000)
     gcp = np.linspace(gl.cycle_start,gl.cycle_end,1000)
     subject_mass = Subject_Dic["Subject_Mass"]
     zeros = np.zeros(1000)
     positive_power_data = np.maximum(zeros,power_data)
     negative_power_data = np.minimum(zeros,power_data)
-    positive_energy = integrate.simps(positive_power_data[~np.isnan(positive_power_data)],gcp[~np.isnan(positive_power_data)])
-    negative_energy = np.abs(integrate.simps(negative_power_data[~np.isnan(negative_power_data)],gcp[~np.isnan(negative_power_data)]))
+    positive_energy = integrate.simps(positive_power_data[~np.isnan(positive_power_data)],gait_cycle[~np.isnan(positive_power_data)])
+    negative_energy = np.abs(integrate.simps(negative_power_data[~np.isnan(negative_power_data)],gait_cycle[~np.isnan(negative_power_data)]))
     if isabs == True:
         total_energy = positive_energy + negative_energy
     else:
@@ -279,7 +280,7 @@ def metabolic_energy_instant_power(Subject_Dic):
     interp_metabolics_r = np.interp(gait_cycle,gpc_r,shifted_metabolics_r, left=np.nan, right=np.nan)
     interp_metabolics_l = np.interp(gait_cycle,gpc_l,shifted_metabolics_l, left=np.nan, right=np.nan)
     metabolics = nanmean([interp_metabolics_r,interp_metabolics_l],axis=0) + basal
-    normal_metabolics_energy = integrate.simps(metabolics[~np.isnan(metabolics)],gcp[~np.isnan(metabolics)])/subject_mass
+    normal_metabolics_energy = integrate.simps(metabolics[~np.isnan(metabolics)],gait_cycle[~np.isnan(metabolics)])/subject_mass
     return metabolics, normal_metabolics_energy
     
 #################################################################
