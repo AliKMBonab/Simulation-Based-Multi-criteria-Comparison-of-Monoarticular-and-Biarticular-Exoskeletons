@@ -503,13 +503,18 @@ def pareto_profiles_avg_std(data,gl,simulation_num=25,subject_num=7,change_direc
         c+=simulation_num
     c = 0
     for i in range(simulation_num):
-        cols = np.arange(i,(simulation_num*subject_num-simulation_num)+i,simulation_num)
+        cols = np.arange(i,(simulation_num*subject_num-simulation_num)+1+i,simulation_num)
         selected_data = normal_data[:,cols]
         avg[:,c] = np.nanmean(selected_data,axis=1)
         std[:,c] = np.nanstd(selected_data,axis=1)
         c+=1
     return avg,std
 
+def energy_processed_power(data,gl,simulation_num=25,subject_num=7):
+    c = 0
+    for i in range(simulation_num):
+        cols = np.arange(i,(simulation_num*subject_num-simulation_num)+i,simulation_num)
+        selected_data = data[:,cols]
 ######################################################################
 # Plot related functions for Pareto Simulations
 
@@ -557,8 +562,7 @@ def plot_pareto_avg_curve (plot_dic,loadcond,legend_loc=0,labels=None,label_on=T
         label_datapoints(x1_data,y1_data,labels,*args, **kwargs)
         label_datapoints(x2_data,y2_data,labels,ha='left',*args, **kwargs)
     
-
-def plot_pareto_curve_subjects (nrows,ncols,nplot,plot_dic,loadcond,legend_loc=0,labels=None,label_on=True,*args, **kwargs):
+def plot_pareto_curve_subjects (nrows,ncols,nplot,plot_dic,loadcond,legend_loc=[0],labels=None,label_on=True,*args, **kwargs):
     x1_data = plot_dic['x1_data']
     x2_data = plot_dic['x2_data']
     y1_data = plot_dic['y1_data']
@@ -597,5 +601,56 @@ def plot_pareto_curve_subjects (nrows,ncols,nplot,plot_dic,loadcond,legend_loc=0
             plt.legend(loc='best',frameon=False)
         if i in range((nrows*ncols)-nrows,(nrows*ncols)):
             plt.xlabel(xlabel)
-        if i not in np.arange(1,nrows*ncols,ncols):
+        if i in np.arange(0,nrows*ncols,ncols):
+            plt.ylabel(ylabel)
+        plt.tight_layout()
+
+def plot_pareto_shaded_avg(plot_dic,loadcond,toeoff_color='xkcd:medium grey',toeoff_alpha=1.0,
+    lw=2.0,ls='-',alpha=0.35,fill_std=True,plot_toeoff=True,plot_joint=True,fill_lw=0,
+    nrows=5,ncols=5,nplots=25,legend_loc=[0],*args, **kwargs):
+
+    pgc = np.linspace(0,100,1000)
+    joint_avg = plot_dic['joint_avg']
+    joint_std = plot_dic['joint_std']
+    avg_1 = plot_dic['avg_1']
+    std_1 = plot_dic['std_1']
+    avg_2 = plot_dic['avg_2']
+    std_2 = plot_dic['std_2']
+    color_1 = plot_dic['color_1']
+    color_2 = plot_dic['color_2']
+    ylabel = plot_dic['ylabel']
+    plot_titles = gen_paretocurve_label()
+    if 'legend_1' and 'legend_2' not in plot_dic:
+        legend_1 = 'biarticular,{}'.format(loadcond)
+        legend_2 = 'monoaricular,{}'.format(loadcond)
+    else:
+        legend_1 = plot_dic['legend_1']
+        legend_2 = plot_dic['legend_2']
+    #axes setting
+    plt.xticks([0,20,40,60,80,100])
+    plt.xlim([0,100])
+    # plot
+    for i in range (nplots):
+        plt.subplot(nrows,ncols,i+1)
+        plt.axhline(0, lw=lw, color='grey', zorder=0, alpha=0.75) # horizontal line
+        #  joint shaded std and mean
+        if plot_joint == True:
+            plt.fill_between(pgc, joint_avg + joint_std, joint_avg - joint_std,color='k', alpha=0.20,linewidth=fill_lw, *args, **kwargs) 
+            plt.plot(pgc, joint_avg, *args, lw=lw, ls=ls, label='joint',color='k', **kwargs)
+        if plot_toeoff == True:
+            avg_toeoff = plot_dic['avg_toeoff']
+            plt.axvline(avg_toeoff, lw=lw, color=toeoff_color, zorder=0, alpha=toeoff_alpha) #vertical line
+        # pareto shaded std and mean
+        plt.fill_between(pgc, avg_1[:,i] + std_1[:,i], avg_1[:,i] - std_1[:,i], color=color_1, alpha=alpha,linewidth=fill_lw, *args, **kwargs) # shaded std
+        plt.plot(pgc, avg_1[:,i], *args, lw=lw, ls=ls, label=legend_1,color=color_1, **kwargs) # mean
+        plt.fill_between(pgc, avg_2[:,i] + std_2[:,i], avg_2[:,i] - std_2[:,i], color=color_2, alpha=alpha,linewidth=fill_lw, *args, **kwargs) # shaded std
+        plt.plot(pgc, avg_2[:,i], *args, lw=lw, ls=ls, label=legend_2,color=color_2, **kwargs) # mean
+        plt.title(plot_titles[i])
+        ax = plt.gca()
+        no_top_right(ax)
+        if i in legend_loc:
+            plt.legend(loc='best',frameon=False)
+        if i in range((nrows*ncols)-nrows,(nrows*ncols)):
+            plt.xlabel('gait cycle (%)')
+        if i in np.arange(0,nrows*ncols,ncols):
             plt.ylabel(ylabel)

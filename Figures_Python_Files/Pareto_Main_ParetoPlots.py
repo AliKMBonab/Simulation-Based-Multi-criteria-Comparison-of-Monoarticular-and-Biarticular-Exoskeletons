@@ -119,7 +119,7 @@ plot_dic = {'x1_data':mean_bi_loaded_metabolics_percent,'x1err_data':std_bi_load
           'y2_data':mean_mono_loaded_energy,'y2err_data':std_mono_loaded_energy,
           'color_1':mycolors['crimson red'],'color_2':mycolors['dark purple']
           }
-fig = plt.figure(num='Pareto Curve: loaded mono vs bi',figsize=(6.4, 4.8))
+fig = plt.figure(num='Pareto Curve: loaded mono vs bi',figsize=(10.4, 8.8))
 utils.plot_pareto_avg_curve (plot_dic,loadcond='loaded')
 plt.xlabel('Metabolic Cost Reduction (%)')
 plt.ylabel('Exoskeleton Energy Consumption (W/kg)')
@@ -130,7 +130,7 @@ fig.tight_layout()
 fig.savefig('./Figures/Pareto/Pareto_Load_BiVsMono.pdf',orientation='landscape',bbox_inches='tight')
 plt.show()
 
-fig = plt.figure(num='Pareto Curve: loaded mono vs bi',figsize=(6.4, 4.8))
+fig = plt.figure(num='Pareto Curve: loaded mono vs bi',figsize=(10.4, 8.8))
 utils.plot_pareto_avg_curve (plot_dic,loadcond='loaded' ,label_on=False ,errbar_on=False)
 plt.xlabel('Metabolic Cost Reduction (%)')
 plt.ylabel('Exoskeleton Energy Consumption (W/kg)')
@@ -148,7 +148,7 @@ plot_dic = {'x1_data':mean_bi_noload_metabolics_percent,'x1err_data':std_bi_nolo
           'y2_data':mean_mono_noload_energy,'y2err_data':std_mono_noload_energy,
           'color_1':mycolors['magenta pink'],'color_2':mycolors['lavender purple']
           }
-fig = plt.figure(num='Pareto Curve: noload mono vs bi',figsize=(6.4, 4.8))
+fig = plt.figure(num='Pareto Curve: noload mono vs bi',figsize=(10.4, 8.8))
 utils.plot_pareto_avg_curve (plot_dic,loadcond='loaded')
 plt.xlabel('Metabolic Cost Reduction (%)')
 plt.ylabel('Exoskeleton Energy Consumption (W/kg)')
@@ -159,7 +159,7 @@ fig.tight_layout()
 fig.savefig('./Figures/Pareto/Pareto_Noload_BiVsMono.pdf',orientation='landscape',bbox_inches='tight')
 plt.show()
 
-fig = plt.figure(num='Pareto Curve: noload mono vs bi',figsize=(6.4, 4.8))
+fig = plt.figure(num='Pareto Curve: noload mono vs bi',figsize=(10.4, 8.8))
 utils.plot_pareto_avg_curve (plot_dic,loadcond='loaded',label_on=False ,errbar_on=False)
 plt.xlabel('Metabolic Cost Reduction (%)')
 plt.ylabel('Exoskeleton Energy Consumption (W/kg)')
@@ -176,9 +176,10 @@ plot_dic = {'x1_data':mean_bi_loaded_metabolics_percent,'x1err_data':std_bi_load
           'x2_data':mean_bi_noload_metabolics_percent,'x2err_data':std_bi_noload_metabolics_percent,
           'y1_data':mean_bi_loaded_energy,'y1err_data':std_bi_loaded_energy,
           'y2_data':mean_bi_noload_energy,'y2err_data':std_bi_noload_energy,
-          'color_1':mycolors['crimson red'],'color_2':mycolors['olympic blue']
+          'color_1':mycolors['crimson red'],'color_2':mycolors['olympic blue'],
+          'legend_1':'loaded biarticular','legend_2':'noload biarticular'
           }
-fig = plt.figure(num='Pareto Curve: biarticular loaded vs noload',figsize=(6.4, 4.8))
+fig = plt.figure(num='Pareto Curve: biarticular loaded vs noload',figsize=(10.4, 8.8))
 utils.plot_pareto_avg_curve (plot_dic,loadcond='loaded')
 plt.xlabel('Metabolic Cost Reduction (%)')
 plt.ylabel('Exoskeleton Energy Consumption (W/kg)')
@@ -189,7 +190,7 @@ fig.tight_layout()
 fig.savefig('./Figures/Pareto/Pareto_Biarticular_LoadedvsNoload.pdf',orientation='landscape',bbox_inches='tight')
 plt.show()
 
-fig = plt.figure(num='Pareto Curve: biarticular loaded vs noload',figsize=(6.4, 4.8))
+fig = plt.figure(num='Pareto Curve: biarticular loaded vs noload',figsize=(10.4, 8.8))
 utils.plot_pareto_avg_curve (plot_dic,loadcond='loaded',label_on=False ,errbar_on=False)
 plt.xlabel('Metabolic Cost Reduction (%)')
 plt.ylabel('Exoskeleton Energy Consumption (W/kg)')
@@ -206,9 +207,10 @@ plot_dic = {'x1_data':mean_mono_loaded_metabolics_percent,'x1err_data':std_mono_
           'x2_data':mean_mono_noload_metabolics_percent,'x2err_data':std_mono_noload_metabolics_percent,
           'y1_data':mean_mono_loaded_energy,'y1err_data':std_mono_loaded_energy,
           'y2_data':mean_mono_noload_energy,'y2err_data':std_mono_noload_energy,
-          'color_1':mycolors['crimson red'],'color_2':mycolors['olympic blue']
+          'color_1':mycolors['crimson red'],'color_2':mycolors['olympic blue'],
+          'legend_1':'loaded monoarticular','legend_2':'noload monoarticular'
           }
-fig = plt.figure(num='Pareto Curve: monoarticular loaded vs noload',figsize=(6.4, 4.8))
+fig = plt.figure(num='Pareto Curve: monoarticular loaded vs noload',figsize=(10.4, 8.8))
 utils.plot_pareto_avg_curve (plot_dic,loadcond='loaded')
 plt.xlabel('Metabolic Cost Reduction (%)')
 plt.ylabel('Exoskeleton Energy Consumption (W/kg)')
@@ -219,7 +221,7 @@ fig.tight_layout()
 fig.savefig('./Figures/Pareto/Pareto_Monoarticular_LoadedvsNoload.pdf',orientation='landscape',bbox_inches='tight')
 plt.show()
 
-fig = plt.figure(num='Pareto Curve: monoarticular loaded vs noload',figsize=(6.4, 4.8))
+fig = plt.figure(num='Pareto Curve: monoarticular loaded vs noload',figsize=(10.4, 8.8))
 utils.plot_pareto_avg_curve (plot_dic,loadcond='loaded',label_on=False ,errbar_on=False)
 plt.xlabel('Metabolic Cost Reduction (%)')
 plt.ylabel('Exoskeleton Energy Consumption (W/kg)')
