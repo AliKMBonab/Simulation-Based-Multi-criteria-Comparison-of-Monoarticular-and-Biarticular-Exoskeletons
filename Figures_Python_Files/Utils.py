@@ -342,6 +342,7 @@ def metabolic_energy_mass_added_pareto(unassisted_metabolic,InertialProp_Dic,cal
 
 ######################################################################
 # Plot related functions
+
 def beautiful_boxplot(bp):
     ## change outline color, fill color and linewidth of the boxes
     for box in bp['boxes']:
@@ -470,6 +471,7 @@ def plot_joint_muscle_exo (nrows,ncols,plot_dic,color_dic,ylabel,legend_loc=[0,1
 ######################################################################
 ######################################################################
 # Data Processing related functions for Pareto Simulations
+
 def pareto_from_mean_power(power_mean,power_std):
     if power_mean.shape[0] != power_std.shape[0]:
         raise Exception('input dataset do not match!')
@@ -480,6 +482,7 @@ def pareto_from_mean_power(power_mean,power_std):
         mean_energy[i] = integrate.simps(np.abs(power_mean[:,i]),gcp)
         std_energy[i]  = np.abs(integrate.simps(np.abs(power_mean[:,i]+power_std[:,i]),gcp) - integrate.simps(np.abs(power_mean[:,i]),gcp))
     return mean_energy, std_energy
+
 def pareto_metabolics_reduction(assist_data,unassist_data,simulation_num=25,subject_num=7):
     reshaped_assisted_data = np.reshape(assist_data,(simulation_num,subject_num),order='F')
     reduction = np.zeros((simulation_num,subject_num))
@@ -619,18 +622,34 @@ def plot_pareto_curve_subjects (nrows,ncols,nplot,plot_dic,loadcond,legend_loc=[
 def plot_pareto_shaded_avg(plot_dic,loadcond,toeoff_color='xkcd:medium grey',toeoff_alpha=1.0,
     lw=2.0,ls='-',alpha=0.35,fill_std=True,plot_toeoff=True,plot_joint=True,fill_lw=0,
     nrows=5,ncols=5,nplots=25,legend_loc=[0],*args, **kwargs):
+    '''This function has been designed to plot all the required plots and gives an enough freedom to
+    the user to properly adjust the figures according to their needs.\n\n
 
+    plot_pareto_shaded_avg(plot_dic,loadcond,toeoff_color='xkcd:medium grey',toeoff_alpha=1.0,
+    lw=2.0,ls='-',alpha=0.35,fill_std=True,plot_toeoff=True,plot_joint=True,fill_lw=0,
+    nrows=5,ncols=5,nplots=25,legend_loc=[0],*args, **kwargs)
+    '''
     pgc = np.linspace(0,100,1000)
-    joint_avg = plot_dic['joint_avg']
-    joint_std = plot_dic['joint_std']
     avg_1 = plot_dic['avg_1']
-    std_1 = plot_dic['std_1']
     avg_2 = plot_dic['avg_2']
-    std_2 = plot_dic['std_2']
     color_1 = plot_dic['color_1']
     color_2 = plot_dic['color_2']
     ylabel = plot_dic['ylabel']
-    plot_titles = gen_paretocurve_label()
+    # check if joint profile is requested
+    if plot_joint == True:
+        joint_avg = plot_dic['joint_avg']
+        if fill_std == True:
+            joint_std = plot_dic['joint_std']
+    # check if shaded std is requested
+    if fill_std == True:
+        std_1 = plot_dic['std_1']
+        std_2 = plot_dic['std_2']
+    # check if titles are provided otherwise generate it
+    if 'plot_title' not in plot_dic:
+        plot_titles = gen_paretocurve_label()
+    else:
+        plot_titles = plot_dic['plot_titles']
+    # check if legends are provided otherwise generate it
     if 'legend_1' and 'legend_2' not in plot_dic:
         legend_1 = 'biarticular,{}'.format(loadcond)
         legend_2 = 'monoaricular,{}'.format(loadcond)
@@ -646,16 +665,19 @@ def plot_pareto_shaded_avg(plot_dic,loadcond,toeoff_color='xkcd:medium grey',toe
         plt.axhline(0, lw=lw, color='grey', zorder=0, alpha=0.75) # horizontal line
         #  joint shaded std and mean
         if plot_joint == True:
-            plt.fill_between(pgc, joint_avg + joint_std, joint_avg - joint_std,color='k', alpha=0.20,linewidth=fill_lw, *args, **kwargs) 
+            if fill_std == True:
+                plt.fill_between(pgc, joint_avg + joint_std, joint_avg - joint_std,color='k', alpha=0.20,linewidth=fill_lw, *args, **kwargs) 
             plt.plot(pgc, joint_avg, *args, lw=lw, ls=ls, label='joint',color='k', **kwargs)
+        # toe off plot
         if plot_toeoff == True:
             avg_toeoff = plot_dic['avg_toeoff']
             plt.axvline(avg_toeoff, lw=lw, color=toeoff_color, zorder=0, alpha=toeoff_alpha) #vertical line
         # pareto shaded std and mean
-        plt.fill_between(pgc, avg_1[:,i] + std_1[:,i], avg_1[:,i] - std_1[:,i], color=color_1, alpha=alpha,linewidth=fill_lw, *args, **kwargs) # shaded std
         plt.plot(pgc, avg_1[:,i], *args, lw=lw, ls=ls, label=legend_1,color=color_1, **kwargs) # mean
-        plt.fill_between(pgc, avg_2[:,i] + std_2[:,i], avg_2[:,i] - std_2[:,i], color=color_2, alpha=alpha,linewidth=fill_lw, *args, **kwargs) # shaded std
         plt.plot(pgc, avg_2[:,i], *args, lw=lw, ls=ls, label=legend_2,color=color_2, **kwargs) # mean
+        if fill_std == True:
+            plt.fill_between(pgc, avg_1[:,i] + std_1[:,i], avg_1[:,i] - std_1[:,i], color=color_1, alpha=alpha,linewidth=fill_lw, *args, **kwargs) # shaded std
+            plt.fill_between(pgc, avg_2[:,i] + std_2[:,i], avg_2[:,i] - std_2[:,i], color=color_2, alpha=alpha,linewidth=fill_lw, *args, **kwargs) # shaded std
         plt.title(plot_titles[i])
         ax = plt.gca()
         no_top_right(ax)
@@ -665,3 +687,15 @@ def plot_pareto_shaded_avg(plot_dic,loadcond,toeoff_color='xkcd:medium grey',toe
             plt.xlabel('gait cycle (%)')
         if i in np.arange(0,nrows*ncols,ncols):
             plt.ylabel(ylabel)
+
+def plot_pareto_bar_plot(plot_dic,loadcond,within_between):
+    # handle labels
+    if labels == None:
+        labels = np.arange(1,26,1)
+    # handle legends
+    if 'legend_1' and 'legend_2' not in plot_dic:
+        legend_1 = 'biarticular,{}'.format(loadcond)
+        legend_2 = 'monoaricular,{}'.format(loadcond)
+    else:
+        legend_1 = plot_dic['legend_1']
+        legend_2 = plot_dic['legend_2']
