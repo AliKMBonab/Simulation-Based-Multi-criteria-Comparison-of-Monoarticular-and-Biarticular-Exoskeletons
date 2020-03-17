@@ -50,6 +50,10 @@ exo_torque_dataset = {pathlib.PurePath(f[1]).stem: np.loadtxt(f[1], delimiter=',
 directory = 'D:/Ali.K.M.Bonab/Walking_Mass_Inertia_Effect/Data/Data/Pareto/*_power.csv'
 files = enumerate(glob.iglob(directory), 1)
 exo_power_dataset = {pathlib.PurePath(f[1]).stem: np.loadtxt(f[1], delimiter=',') for f in files}
+# pareto exo energy dataset
+directory = 'D:/Ali.K.M.Bonab/Walking_Mass_Inertia_Effect/Data/Data/Pareto/*_energy.csv'
+files = enumerate(glob.iglob(directory), 1)
+assisted_energy_dataset = {pathlib.PurePath(f[1]).stem: np.loadtxt(f[1], delimiter=',') for f in files}
 # joint moment dataset
 directory = 'D:\Ali.K.M.Bonab\Walking_Mass_Inertia_Effect\Data\Data\RRA\*_torque.csv'
 files = enumerate(glob.iglob(directory), 1)
@@ -99,10 +103,16 @@ mono_loaded_energy = mono_loaded_hip_energy + mono_loaded_knee_energy
 mono_noload_hip_energy= np.reshape(assisted_energy_dataset['monoarticular_pareto_noload_hipactuator_energy'],(25,7),order='F')
 mono_noload_knee_energy= np.reshape(assisted_energy_dataset['monoarticular_pareto_noload_kneeactuator_energy'],(25,7),order='F')
 mono_noload_energy = mono_noload_hip_energy + mono_noload_knee_energy
+bi_loaded_metabolics_energy = np.reshape(assisted_energy_dataset['biarticular_pareto_load_metabolics_energy'],(25,7),order='F')
+mono_loaded_metabolics_energy = np.reshape(assisted_energy_dataset['monoarticular_pareto_load_metabolics_energy'],(25,7),order='F')
+bi_noload_metabolics_energy = np.reshape(assisted_energy_dataset['biarticular_pareto_noload_metabolics_energy'],(25,7),order='F')
+mono_noload_metabolics_energy = np.reshape(assisted_energy_dataset['monoarticular_pareto_noload_metabolics_energy'],(25,7),order='F')
 
 #####################################################################################
 # plots
+print('\n')
 a = input('subject 05 loaded/noload hip/knee POWER comparison between monoarticular and biarticular (N, Y) :')
+print('\n')
 if a.lower() == 'y':
   # subject 05 loaded hip power comparison between monoarticular and biarticular
   plot_dic = {'avg_1':exo_power_dataset['biarticular_pareto_load_hipactuator_power'][:,0:25],
@@ -158,6 +168,7 @@ if a.lower() == 'y':
 
 #####################################################################################
 a = input('subject 05 loaded/noload hip/knee TORQUE comparison between monoarticular and biarticular (N, Y) :')
+print('\n')
 if a.lower() == 'y':
   # subject 05 loaded hip comparison between monoarticular and biarticular
   plot_dic = {'avg_1':exo_torque_dataset['biarticular_pareto_load_hipactuator_torque'][:,0:25],
@@ -214,6 +225,7 @@ if a.lower() == 'y':
 #####################################################################################
 
 a = input('subject 05 loaded/noload hip/knee METABOLIC POWER comparison between monoarticular and biarticular (N, Y) :')
+print('\n')
 if a.lower() == 'y':
   # subject 05 loaded metabolic power comparison between monoarticular and biarticular
   plot_dic = {'avg_1':exo_power_dataset['biarticular_pareto_load_metabolics_power'][:,0:25],
@@ -239,4 +251,125 @@ if a.lower() == 'y':
   fig.savefig('./Figures/Tests/Test_Subject05_Noload_MetabolicPower.pdf',orientation='landscape',bbox_inches='tight')
   plt.show()
 
+#####################################################################################
+a = input('Hip/Knee Actuators and Metabolics Energy Subject Comparisons (N, Y):')
+print('\n')
+if a.lower() == 'y':
+  # loaded hip actuator energy
+  plot_dic = {'data_1':bi_loaded_hip_energy,'data_2':mono_loaded_hip_energy, 'ylabel':'Energy (W/Kg)',
+              'color_1':mycolors['crimson red'], 'color_2':mycolors['dark purple']}
+
+  fig = plt.figure(num='Test: Loaded: Hip Energy',figsize=(12.4, 10.8))
+  utils.plot_pareto_comparison(plot_dic,loadcond='loaded',compare='subjects')
+  fig.tight_layout()
+  fig.savefig('./Figures/Tests/Test_Loaded_Hip_EnergyBarPlot_Subject.pdf',orientation='landscape',bbox_inches='tight')
+  plt.show()
+  # noload hip actuator energy
+  plot_dic = {'data_1':bi_noload_hip_energy,'data_2':mono_noload_hip_energy, 'ylabel':'Energy (W/Kg)',
+              'color_1':mycolors['crimson red'], 'color_2':mycolors['dark purple']}
+
+  fig = plt.figure(num='Test: Noloaded: Hip Energy',figsize=(12.4, 10.8))
+  utils.plot_pareto_comparison(plot_dic,loadcond='noload',compare='subjects')
+  fig.tight_layout()
+  fig.savefig('./Figures/Tests/Test_Noloaded_Hip_EnergyBarPlot_Subject.pdf',orientation='landscape',bbox_inches='tight')
+  plt.show()
+  # loaded knee actuator energy
+  plot_dic = {'data_1':bi_loaded_knee_energy,'data_2':mono_loaded_knee_energy, 'ylabel':'Energy (W/Kg)',
+              'color_1':mycolors['crimson red'], 'color_2':mycolors['dark purple']}
+
+  fig = plt.figure(num='Test: Loaded: Knee Energy',figsize=(12.4, 10.8))
+  utils.plot_pareto_comparison(plot_dic,loadcond='loaded',compare='subjects')
+  fig.tight_layout()
+  fig.savefig('./Figures/Tests/Test_Loaded_Knee_EnergyBarPlot_Subject.pdf',orientation='landscape',bbox_inches='tight')
+  plt.show()
+  # noload knee actuator energy
+  plot_dic = {'data_1':bi_noload_knee_energy,'data_2':mono_noload_knee_energy, 'ylabel':'Energy (W/Kg)',
+              'color_1':mycolors['crimson red'], 'color_2':mycolors['dark purple']}
+
+  fig = plt.figure(num='Test: Noloaded: Knee Energy',figsize=(12.4, 10.8))
+  utils.plot_pareto_comparison(plot_dic,loadcond='noload',compare='subjects')
+  fig.tight_layout()
+  fig.savefig('./Figures/Tests/Test_Noloaded_Knee_EnergyBarPlot_Subject.pdf',orientation='landscape',bbox_inches='tight')
+  plt.show()
+
+  # loaded metabolics energy
+  plot_dic = {'data_1':bi_loaded_metabolics_energy,'data_2':mono_loaded_metabolics_energy, 'ylabel':'Energy (W/Kg)',
+              'color_1':mycolors['crimson red'], 'color_2':mycolors['dark purple']}
+
+  fig = plt.figure(num='Test: Loaded: Metabolic Energy',figsize=(12.4, 10.8)) 
+  utils.plot_pareto_comparison(plot_dic,loadcond='loaded',compare='subjects')
+  fig.tight_layout()
+  fig.savefig('./Figures/Tests/Test_Loaded_Metabolic_energy_Subject.pdf',orientation='landscape',bbox_inches='tight')
+  plt.show()
+
+  # loaded metabolics energy
+  plot_dic = {'data_1':bi_noload_metabolics_energy,'data_2':mono_noload_metabolics_energy, 'ylabel':'Energy (W/Kg)',
+              'color_1':mycolors['crimson red'], 'color_2':mycolors['dark purple']}
+
+  fig = plt.figure(num='Test: Noloaded: Metabolic Energy',figsize=(12.4, 10.8))
+  utils.plot_pareto_comparison(plot_dic,loadcond='noload',compare='subjects')
+  fig.tight_layout()
+  fig.savefig('./Figures/Tests/Test_Noloaded_Metabolic_energy_Subject.pdf',orientation='landscape',bbox_inches='tight')
+  plt.show()
   
+#####################################################################################
+a = input('Hip/Knee Actuators and Metabolics Energy Weight Comparisons (N, Y):')
+print('\n')
+if a.lower() == 'y':
+  # loaded hip actuator energy
+  plot_dic = {'data_1':bi_loaded_hip_energy,'data_2':mono_loaded_hip_energy, 'ylabel':'Energy (W/Kg)',
+              'color_1':mycolors['crimson red'], 'color_2':mycolors['dark purple']}
+
+  fig = plt.figure(num='Test: Loaded: Hip Energy',figsize=(12.4, 10.8))
+  utils.plot_pareto_comparison(plot_dic,loadcond='loaded',compare='weights')
+  fig.tight_layout()
+  fig.savefig('./Figures/Tests/Test_Loaded_Hip_EnergyBarPlot_Weights.pdf',orientation='landscape',bbox_inches='tight')
+  plt.show()
+  # noload hip actuator energy
+  plot_dic = {'data_1':bi_noload_hip_energy,'data_2':mono_noload_hip_energy, 'ylabel':'Energy (W/Kg)',
+              'color_1':mycolors['crimson red'], 'color_2':mycolors['dark purple']}
+
+  fig = plt.figure(num='Test: Noloaded: Hip Energy',figsize=(12.4, 10.8))
+  utils.plot_pareto_comparison(plot_dic,loadcond='noload',compare='weights')
+  fig.tight_layout()
+  fig.savefig('./Figures/Tests/Test_Noloaded_Hip_EnergyBarPlot_Weights.pdf',orientation='landscape',bbox_inches='tight')
+  plt.show()
+  # loaded knee actuator energy
+  plot_dic = {'data_1':bi_loaded_knee_energy,'data_2':mono_loaded_knee_energy, 'ylabel':'Energy (W/Kg)',
+              'color_1':mycolors['crimson red'], 'color_2':mycolors['dark purple']}
+
+  fig = plt.figure(num='Test: Loaded: Knee Energy',figsize=(12.4, 10.8))
+  utils.plot_pareto_comparison(plot_dic,loadcond='loaded',compare='weights')
+  fig.tight_layout()
+  fig.savefig('./Figures/Tests/Test_Loaded_Knee_EnergyBarPlot_Weights.pdf',orientation='landscape',bbox_inches='tight')
+  plt.show()
+  # noload knee actuator energy
+  plot_dic = {'data_1':bi_noload_knee_energy,'data_2':mono_noload_knee_energy, 'ylabel':'Energy (W/Kg)',
+              'color_1':mycolors['crimson red'], 'color_2':mycolors['dark purple']}
+
+  fig = plt.figure(num='Test: Noloaded: Knee Energy',figsize=(12.4, 10.8))
+  utils.plot_pareto_comparison(plot_dic,loadcond='noload',compare='weights')
+  fig.tight_layout()
+  fig.savefig('./Figures/Tests/Test_Noloaded_Knee_EnergyBarPlot_Weights.pdf',orientation='landscape',bbox_inches='tight')
+  plt.show()
+
+  # loaded metabolics energy
+  plot_dic = {'data_1':bi_loaded_metabolics_energy,'data_2':mono_loaded_metabolics_energy, 'ylabel':'Energy (W/Kg)',
+              'color_1':mycolors['crimson red'], 'color_2':mycolors['dark purple']}
+
+  fig = plt.figure(num='Test: Loaded: Metabolic Energy',figsize=(12.4, 10.8)) 
+  utils.plot_pareto_comparison(plot_dic,loadcond='loaded',compare='weights')
+  fig.tight_layout()
+  fig.savefig('./Figures/Tests/Test_Loaded_Metabolic_energy_Weights.pdf',orientation='landscape',bbox_inches='tight')
+  plt.show()
+
+  # loaded metabolics energy
+  plot_dic = {'data_1':bi_noload_metabolics_energy,'data_2':mono_noload_metabolics_energy, 'ylabel':'Energy (W/Kg)',
+              'color_1':mycolors['crimson red'], 'color_2':mycolors['dark purple']}
+
+  fig = plt.figure(num='Test: Noloaded: Metabolic Energy',figsize=(12.4, 10.8))
+  utils.plot_pareto_comparison(plot_dic,loadcond='noload',compare='weights')
+  fig.tight_layout()
+  fig.savefig('./Figures/Tests/Test_Noloaded_Metabolic_energy_Weights.pdf',orientation='landscape',bbox_inches='tight')
+  plt.show()
+
