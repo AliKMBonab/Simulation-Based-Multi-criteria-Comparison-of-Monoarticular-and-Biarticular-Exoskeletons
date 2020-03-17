@@ -342,6 +342,20 @@ def metabolic_energy_mass_added_pareto(unassisted_metabolic,InertialProp_Dic,cal
 
 ######################################################################
 # Plot related functions
+def autolabel(rects,text=None,label_value=True):
+    """Attach a text label above each bar"""
+    if text == None:
+        subs = ['05','07','09','10','11','12','14']
+        text = ['S{}'.format(i) for i in subs ]
+    for rect in rects:
+        height = round(rect.get_height(),2)
+        if label_value == True:
+            text = height
+        plt.annotate('{}'.format(text),
+                    xy=(rect.get_x() + rect.get_width() / 2, height),
+                    xytext=(0, 3),  # 3 points vertical offset
+                    textcoords="offset points",
+                    ha='center', va='bottom')
 
 def beautiful_boxplot(bp):
     ## change outline color, fill color and linewidth of the boxes
@@ -688,7 +702,33 @@ def plot_pareto_shaded_avg(plot_dic,loadcond,toeoff_color='xkcd:medium grey',toe
         if i in np.arange(0,nrows*ncols,ncols):
             plt.ylabel(ylabel)
 
-def plot_pareto_bar_plot(plot_dic,loadcond,within_between):
+def plot_pareto_comparison(plot_dic,loadcond,compare,labels=None,legend_loc=[0],width=0.25,*args, **kwargs):
+    '''
+    compare = (subjects,weights)
+        -subjects comparison will compare the subjects weights
+        -weights comparison will compare the same weights for all subjects
+    '''
+    ylabel = plot_dic['ylabel']
+    subjects = ['05','07','09','10','11','12','14']
+    # handle comparison cases
+    if compare.lower() == 'weights':
+        data_1 = plot_dic['data_1']
+        data_2 = plot_dic['data_2']
+        color_1 = plot_dic['color_1']
+        color_2 = plot_dic['color_2']
+        nrows = 5
+        ncols = 5
+        nplot = 25
+    elif compare.lower() == 'subjects':
+        data_1 = plot_dic['data_1']
+        data_2 = plot_dic['data_2']
+        color_1 = plot_dic['color_1']
+        color_2 = plot_dic['color_2']
+        nrows = 3
+        ncols = 3
+        nplot = 7
+    else:
+        raise   Exception('comparison case is not valid.')
     # handle labels
     if labels == None:
         labels = np.arange(1,26,1)
@@ -699,3 +739,38 @@ def plot_pareto_bar_plot(plot_dic,loadcond,within_between):
     else:
         legend_1 = plot_dic['legend_1']
         legend_2 = plot_dic['legend_2']
+    # handle titles
+    if 'plot_titles' not in plot_dic:
+        if compare == 'subjects':
+            plot_titles = ['subject{},{}'.format(i,loadcond) for i in subjects]
+        else:
+            plot_titles = gen_paretocurve_label()
+    else:
+        plot_titles = plot_dic['plot_titles']
+    # x data for different scenarios
+    if compare.lower() == 'weights':
+        x_data = np.arange(1,8,1)
+    else: 
+        x_data = np.arange(1,len(labels)+1,1)
+    # main plots
+    for i in range(nplot):
+        ax = plt.subplot(nrows,ncols,i+1)
+        if compare.lower() == 'weights':
+            rect1 = ax.bar(x_data-width/2, data_1[i,:], color=color_1, label=legend_1, width=width, *args, **kwargs)
+            rect2 = ax.bar(x_data+width/2, data_2[i,:], color=color_2, label=legend_2, width=width, *args, **kwargs)
+        else: 
+            rect1 = ax.bar(x_data-width/2, data_1[:,i], color=color_1, label=legend_1, width=width, *args, **kwargs)
+            rect2 = ax.bar(x_data+width/2, data_2[:,i], color=color_2, label=legend_2, width=width, *args, **kwargs)
+        ax.set_title(plot_titles[i])
+        no_top_right(ax)
+        if i in legend_loc:
+            ax.legend(loc='best',frameon=False)
+        if i in range((nrows*ncols)-nrows,(nrows*ncols)):
+            ax.set_xticks(x_data)
+            if compare.lower() == 'weights':
+                ax.set_xticklabels(subjects)
+            else:
+                ax.set_xticklabels(labels)
+        if i in np.arange(0,nrows*ncols,ncols):
+            ax.set_ylabel(ylabel)
+        plt.tight_layout()
