@@ -41,7 +41,11 @@ fig.savefig('./Figures/Labeling_Table.pdf',orientation='landscape',bbox_inches='
 plt.show()
 #####################################################################################
 # Reading CSV files into a dictionary and constructing gls
-unassist_dataset = utils.csv2numpy('D:/Ali.K.M.Bonab/Walking_Mass_Inertia_Effect/Data/Data/Unassist/unassist_final_data.csv') 
+unassist_dataset = utils.csv2numpy('D:/Ali.K.M.Bonab/Walking_Mass_Inertia_Effect/Data/Data/Unassist/unassist_final_data.csv')
+# unassist energy dataset
+directory = 'D:/Ali.K.M.Bonab/Walking_Mass_Inertia_Effect/Data/Data/Unassist/*_energy.csv'
+files = enumerate(glob.iglob(directory), 1)
+unassisted_energy_dataset = {pathlib.PurePath(f[1]).stem: np.loadtxt(f[1], delimiter=',') for f in files}
 # pareto exo torque dataset
 directory = 'D:/Ali.K.M.Bonab/Walking_Mass_Inertia_Effect/Data/Data/Pareto/*_torque.csv'
 files = enumerate(glob.iglob(directory), 1)
@@ -90,7 +94,6 @@ noload_kneejoint_power = utils.normalize_direction_data(jointpower_dataset['nolo
 mean_loaded_kneejoint_power,std_loaded_kneejoint_power = utils.mean_std_over_subjects(loaded_kneejoint_power)
 mean_noload_kneejoint_power,std_noload_kneejoint_power = utils.mean_std_over_subjects(noload_kneejoint_power)
 # actuators energy
-# actuators energy
 bi_loaded_hip_energy= np.reshape(assisted_energy_dataset['biarticular_pareto_load_hipactuator_energy'],(25,7),order='F')
 bi_loaded_knee_energy= np.reshape(assisted_energy_dataset['biarticular_pareto_load_kneeactuator_energy'],(25,7),order='F')
 bi_loaded_energy = bi_loaded_hip_energy + bi_loaded_knee_energy
@@ -107,6 +110,11 @@ bi_loaded_metabolics_energy = np.reshape(assisted_energy_dataset['biarticular_pa
 mono_loaded_metabolics_energy = np.reshape(assisted_energy_dataset['monoarticular_pareto_load_metabolics_energy'],(25,7),order='F')
 bi_noload_metabolics_energy = np.reshape(assisted_energy_dataset['biarticular_pareto_noload_metabolics_energy'],(25,7),order='F')
 mono_noload_metabolics_energy = np.reshape(assisted_energy_dataset['monoarticular_pareto_noload_metabolics_energy'],(25,7),order='F')
+# metabolics cost reduction percents
+bi_loaded_metabolics_percent = utils.pareto_metabolics_reduction(assisted_energy_dataset['biarticular_pareto_load_metabolics_energy'],unassisted_energy_dataset['loaded_metabolics_energy'])
+bi_noload_metabolics_percent = utils.pareto_metabolics_reduction(assisted_energy_dataset['biarticular_pareto_noload_metabolics_energy'],unassisted_energy_dataset['noload_metabolics_energy'])
+mono_loaded_metabolics_percent = utils.pareto_metabolics_reduction(assisted_energy_dataset['monoarticular_pareto_load_metabolics_energy'],unassisted_energy_dataset['loaded_metabolics_energy'])
+mono_noload_metabolics_percent = utils.pareto_metabolics_reduction(assisted_energy_dataset['monoarticular_pareto_noload_metabolics_energy'],unassisted_energy_dataset['noload_metabolics_energy'])
 
 #####################################################################################
 # plots
@@ -293,7 +301,7 @@ if a.lower() == 'y':
   plt.show()
 
   # loaded metabolics energy
-  plot_dic = {'data_1':bi_loaded_metabolics_energy,'data_2':mono_loaded_metabolics_energy, 'ylabel':'Energy (W/Kg)',
+  plot_dic = {'data_1':bi_loaded_metabolics_percent,'data_2':mono_loaded_metabolics_percent, 'ylabel':'Energy (%)',
               'color_1':mycolors['crimson red'], 'color_2':mycolors['dark purple']}
 
   fig = plt.figure(num='Test: Loaded: Metabolic Energy',figsize=(12.4, 10.8)) 
@@ -302,8 +310,8 @@ if a.lower() == 'y':
   fig.savefig('./Figures/Tests/Test_Loaded_Metabolic_energy_Subject.pdf',orientation='landscape',bbox_inches='tight')
   plt.show()
 
-  # loaded metabolics energy
-  plot_dic = {'data_1':bi_noload_metabolics_energy,'data_2':mono_noload_metabolics_energy, 'ylabel':'Energy (W/Kg)',
+  # noload metabolics energy
+  plot_dic = {'data_1':bi_noload_metabolics_percent,'data_2':mono_noload_metabolics_percent, 'ylabel':'Energy (%)',
               'color_1':mycolors['crimson red'], 'color_2':mycolors['dark purple']}
 
   fig = plt.figure(num='Test: Noloaded: Metabolic Energy',figsize=(12.4, 10.8))
@@ -354,7 +362,7 @@ if a.lower() == 'y':
   plt.show()
 
   # loaded metabolics energy
-  plot_dic = {'data_1':bi_loaded_metabolics_energy,'data_2':mono_loaded_metabolics_energy, 'ylabel':'Energy (W/Kg)',
+  plot_dic = {'data_1':bi_loaded_metabolics_percent,'data_2':mono_loaded_metabolics_percent, 'ylabel':'Energy (%)',
               'color_1':mycolors['crimson red'], 'color_2':mycolors['dark purple']}
 
   fig = plt.figure(num='Test: Loaded: Metabolic Energy',figsize=(12.4, 10.8)) 
@@ -363,8 +371,8 @@ if a.lower() == 'y':
   fig.savefig('./Figures/Tests/Test_Loaded_Metabolic_energy_Weights.pdf',orientation='landscape',bbox_inches='tight')
   plt.show()
 
-  # loaded metabolics energy
-  plot_dic = {'data_1':bi_noload_metabolics_energy,'data_2':mono_noload_metabolics_energy, 'ylabel':'Energy (W/Kg)',
+  # noload metabolics energy
+  plot_dic = {'data_1':bi_noload_metabolics_percent,'data_2':mono_noload_metabolics_percent, 'ylabel':'Energy (%)',
               'color_1':mycolors['crimson red'], 'color_2':mycolors['dark purple']}
 
   fig = plt.figure(num='Test: Noloaded: Metabolic Energy',figsize=(12.4, 10.8))
@@ -373,3 +381,279 @@ if a.lower() == 'y':
   fig.savefig('./Figures/Tests/Test_Noloaded_Metabolic_energy_Weights.pdf',orientation='landscape',bbox_inches='tight')
   plt.show()
 
+#####################################################################################
+# plots
+print('\n')
+a = input('biarticular loaded/noload hip/knee POWER comparison between subject 05 vs 07 (N, Y) :')
+print('\n')
+if a.lower() == 'y':
+  # loaded hip power comparison between subject 05 and subject 07
+  plot_dic = {'avg_1':exo_power_dataset['biarticular_pareto_load_hipactuator_power'][:,0:25],
+              'avg_2':exo_power_dataset['biarticular_pareto_load_hipactuator_power'][:,25:50],
+          'joint_avg':mean_loaded_hipjoint_power,'joint_std':std_loaded_hipjoint_power,
+          'color_1':mycolors['crimson red'], 'color_2':mycolors['dark spring green'],
+      'avg_toeoff':loaded_mean_toe_off,'ylabel':'power (W)','legend_1': 'subject 05','legend_2': 'subject 07'}
+
+  fig = plt.figure(num='Test:Loaded: Hip actuator power : sub 05 vs 07',figsize=(12.4, 10.8))
+  utils.plot_pareto_shaded_avg(plot_dic,loadcond='loaded',fill_std=False)
+  fig.tight_layout()
+  fig.savefig('./Figures/Tests/Test_Loaded_Bi_HipPower_Sub05vs07.pdf',orientation='landscape',bbox_inches='tight')
+  plt.show()
+  # noload hip power comparison between subject 05 and subject 07
+  plot_dic = {'avg_1':exo_power_dataset['biarticular_pareto_noload_hipactuator_power'][:,0:25],
+              'avg_2':exo_power_dataset['biarticular_pareto_noload_hipactuator_power'][:,25:50],
+          'joint_avg':mean_noload_hipjoint_power,'joint_std':std_noload_hipjoint_power,
+          'color_1':mycolors['crimson red'], 'color_2':mycolors['dark spring green'],
+      'avg_toeoff':noload_mean_toe_off,'ylabel':'power (W)','legend_1': 'subject 05','legend_2': 'subject 07'}
+
+  fig = plt.figure(num='Test: Noload: Hip actuator power : sub 05 vs 07',figsize=(12.4, 10.8))
+  utils.plot_pareto_shaded_avg(plot_dic,loadcond='noload',fill_std=False)
+  fig.tight_layout()
+  fig.savefig('./Figures/Tests/Test_Noload_Bi_HipPower_Sub05vs07.pdf',orientation='landscape',bbox_inches='tight')
+  plt.show()
+  # loaded knee power comparison between subject 05 and subject 07
+  plot_dic = {'avg_1':exo_power_dataset['biarticular_pareto_load_kneeactuator_power'][:,0:25],
+              'avg_2':exo_power_dataset['biarticular_pareto_load_kneeactuator_power'][:,25:50],
+          'joint_avg':mean_loaded_kneejoint_power,'joint_std':std_loaded_kneejoint_power,
+          'color_1':mycolors['crimson red'], 'color_2':mycolors['dark spring green'],
+      'avg_toeoff':loaded_mean_toe_off,'ylabel':'power (W)','legend_1': 'subject 05','legend_2': 'subject 07'}
+
+  fig = plt.figure(num='Test:Loaded: Knee actuator power : sub 05 vs 07',figsize=(12.4, 10.8))
+  utils.plot_pareto_shaded_avg(plot_dic,loadcond='loaded',fill_std=False)
+  fig.tight_layout()
+  fig.savefig('./Figures/Tests/Test_Loaded_Bi_KneePower_Sub05vs07.pdf',orientation='landscape',bbox_inches='tight')
+  plt.show()
+  # noload knee power comparison between subject 05 and subject 07
+  plot_dic = {'avg_1':exo_power_dataset['biarticular_pareto_noload_kneeactuator_power'][:,0:25],
+              'avg_2':exo_power_dataset['biarticular_pareto_noload_kneeactuator_power'][:,25:50],
+          'joint_avg':mean_noload_kneejoint_power,'joint_std':std_noload_kneejoint_power,
+          'color_1':mycolors['crimson red'], 'color_2':mycolors['dark spring green'],
+      'avg_toeoff':noload_mean_toe_off,'ylabel':'power (W)','legend_1': 'subject 05','legend_2': 'subject 07'}
+
+  fig = plt.figure(num='Test: Noload: Knee actuator power : sub 05 vs 07',figsize=(12.4, 10.8))
+  utils.plot_pareto_shaded_avg(plot_dic,loadcond='noload',fill_std=False)
+  fig.tight_layout()
+  fig.savefig('./Figures/Tests/Test_Noload_Bi_KneePower_Sub05vs07.pdf',orientation='landscape',bbox_inches='tight')
+  plt.show()
+  
+#####################################################################################
+# plots
+print('\n')
+a = input(' monoarticular loaded/noload hip/knee POWER comparison between subject 05 vs 07 (N, Y) :')
+print('\n')
+if a.lower() == 'y':
+  # loaded hip power comparison between subject 05 and subject 07
+  plot_dic = {'avg_1':exo_power_dataset['monoarticular_pareto_load_hipactuator_power'][:,0:25],
+              'avg_2':exo_power_dataset['monoarticular_pareto_load_hipactuator_power'][:,25:50],
+          'joint_avg':mean_loaded_hipjoint_power,'joint_std':std_loaded_hipjoint_power,
+          'color_1':mycolors['crimson red'], 'color_2':mycolors['dark spring green'],
+      'avg_toeoff':loaded_mean_toe_off,'ylabel':'power (W)','legend_1': 'subject 05','legend_2': 'subject 07'}
+
+  fig = plt.figure(num='Test:Loaded: Hip actuator power : sub 05 vs 07',figsize=(12.4, 10.8))
+  utils.plot_pareto_shaded_avg(plot_dic,loadcond='loaded',fill_std=False)
+  fig.tight_layout()
+  fig.savefig('./Figures/Tests/Test_Loaded_Mono_HipPower_Sub05vs07.pdf',orientation='landscape',bbox_inches='tight')
+  plt.show()
+  # noload hip power comparison between subject 05 and subject 07
+  plot_dic = {'avg_1':exo_power_dataset['monoarticular_pareto_noload_hipactuator_power'][:,0:25],
+              'avg_2':exo_power_dataset['monoarticular_pareto_noload_hipactuator_power'][:,25:50],
+          'joint_avg':mean_noload_hipjoint_power,'joint_std':std_noload_hipjoint_power,
+          'color_1':mycolors['crimson red'], 'color_2':mycolors['dark spring green'],
+      'avg_toeoff':noload_mean_toe_off,'ylabel':'power (W)','legend_1': 'subject 05','legend_2': 'subject 07'}
+
+  fig = plt.figure(num='Test: Noload: Hip actuator power : sub 05 vs 07',figsize=(12.4, 10.8))
+  utils.plot_pareto_shaded_avg(plot_dic,loadcond='noload',fill_std=False)
+  fig.tight_layout()
+  fig.savefig('./Figures/Tests/Test_Noload_Mono_HipPower_Sub05vs07.pdf',orientation='landscape',bbox_inches='tight')
+  plt.show()
+  # loaded knee power comparison between subject 05 and subject 07
+  plot_dic = {'avg_1':exo_power_dataset['monoarticular_pareto_load_kneeactuator_power'][:,0:25],
+              'avg_2':exo_power_dataset['monoarticular_pareto_load_kneeactuator_power'][:,25:50],
+          'joint_avg':mean_loaded_kneejoint_power,'joint_std':std_loaded_kneejoint_power,
+          'color_1':mycolors['crimson red'], 'color_2':mycolors['dark spring green'],
+      'avg_toeoff':loaded_mean_toe_off,'ylabel':'power (W)','legend_1': 'subject 05','legend_2': 'subject 07'}
+
+  fig = plt.figure(num='Test:Loaded: Knee actuator power : sub 05 vs 07',figsize=(12.4, 10.8))
+  utils.plot_pareto_shaded_avg(plot_dic,loadcond='loaded',fill_std=False)
+  fig.tight_layout()
+  fig.savefig('./Figures/Tests/Test_Loaded_Mono_KneePower_Sub05vs07.pdf',orientation='landscape',bbox_inches='tight')
+  plt.show()
+  # noload knee power comparison between subject 05 and subject 07
+  plot_dic = {'avg_1':exo_power_dataset['monoarticular_pareto_noload_kneeactuator_power'][:,0:25],
+              'avg_2':exo_power_dataset['monoarticular_pareto_noload_kneeactuator_power'][:,25:50],
+          'joint_avg':mean_noload_kneejoint_power,'joint_std':std_noload_kneejoint_power,
+          'color_1':mycolors['crimson red'], 'color_2':mycolors['dark spring green'],
+      'avg_toeoff':noload_mean_toe_off,'ylabel':'power (W)','legend_1': 'subject 05','legend_2': 'subject 07'}
+
+  fig = plt.figure(num='Test: Noload: Knee actuator power : sub 05 vs 07',figsize=(12.4, 10.8))
+  utils.plot_pareto_shaded_avg(plot_dic,loadcond='noload',fill_std=False)
+  fig.tight_layout()
+  fig.savefig('./Figures/Tests/Test_Noload_Mono_KneePower_Sub05vs07.pdf',orientation='landscape',bbox_inches='tight')
+  plt.show()
+  
+#####################################################################################
+# plots
+print('\n')
+a = input('biarticular loaded/noload hip/knee TORQUE comparison between subject 05 vs 07 (N, Y) :')
+print('\n')
+if a.lower() == 'y':
+  # loaded hip  torque comparison between subject 05 and subject 07
+  plot_dic = {'avg_1':exo_torque_dataset['biarticular_pareto_load_hipactuator_torque'][:,0:25],
+              'avg_2':exo_torque_dataset['biarticular_pareto_load_hipactuator_torque'][:,25:50],
+          'joint_avg':mean_loaded_hipjoint_moment,'joint_std':std_loaded_hipjoint_moment,
+          'color_1':mycolors['crimson red'], 'color_2':mycolors['dark spring green'],
+      'avg_toeoff':loaded_mean_toe_off,'ylabel':'torque (N-m)','legend_1': 'subject 05','legend_2': 'subject 07'}
+
+  fig = plt.figure(num='Test:Loaded: Hip actuator torque : sub 05 vs 07',figsize=(12.4, 10.8))
+  utils.plot_pareto_shaded_avg(plot_dic,loadcond='loaded',fill_std=False)
+  fig.tight_layout()
+  fig.savefig('./Figures/Tests/Test_Loaded_Bi_HipTorque_Sub05vs07.pdf',orientation='landscape',bbox_inches='tight')
+  plt.show()
+  # noload hip torque comparison between subject 05 and subject 07
+  plot_dic = {'avg_1':exo_torque_dataset['biarticular_pareto_noload_hipactuator_torque'][:,0:25],
+              'avg_2':exo_torque_dataset['biarticular_pareto_noload_hipactuator_torque'][:,25:50],
+          'joint_avg':mean_noload_hipjoint_moment,'joint_std':std_noload_hipjoint_moment,
+          'color_1':mycolors['crimson red'], 'color_2':mycolors['dark spring green'],
+      'avg_toeoff':noload_mean_toe_off,'ylabel':'torque (N-m)','legend_1': 'subject 05','legend_2': 'subject 07'}
+
+  fig = plt.figure(num='Test: Noload: Hip actuator torque : sub 05 vs 07',figsize=(12.4, 10.8))
+  utils.plot_pareto_shaded_avg(plot_dic,loadcond='noload',fill_std=False)
+  fig.tight_layout()
+  fig.savefig('./Figures/Tests/Test_Noload_Bi_HipTorque_Sub05vs07.pdf',orientation='landscape',bbox_inches='tight')
+  plt.show()
+  # loaded knee torque comparison between subject 05 and subject 07
+  plot_dic = {'avg_1':exo_torque_dataset['biarticular_pareto_load_kneeactuator_torque'][:,0:25],
+              'avg_2':exo_torque_dataset['biarticular_pareto_load_kneeactuator_torque'][:,25:50],
+          'joint_avg':mean_loaded_kneejoint_moment,'joint_std':std_loaded_kneejoint_moment,
+          'color_1':mycolors['crimson red'], 'color_2':mycolors['dark spring green'],
+      'avg_toeoff':loaded_mean_toe_off,'ylabel':'torque (N-m)','legend_1': 'subject 05','legend_2': 'subject 07'}
+
+  fig = plt.figure(num='Test:Loaded: Knee actuator torque : sub 05 vs 07',figsize=(12.4, 10.8))
+  utils.plot_pareto_shaded_avg(plot_dic,loadcond='loaded',fill_std=False)
+  fig.tight_layout()
+  fig.savefig('./Figures/Tests/Test_Loaded_Bi_KneeTorque_Sub05vs07.pdf',orientation='landscape',bbox_inches='tight')
+  plt.show()
+  # noload knee torque comparison between subject 05 and subject 07
+  plot_dic = {'avg_1':exo_torque_dataset['biarticular_pareto_noload_kneeactuator_torque'][:,0:25],
+              'avg_2':exo_torque_dataset['biarticular_pareto_noload_kneeactuator_torque'][:,25:50],
+          'joint_avg':mean_noload_kneejoint_moment,'joint_std':std_noload_kneejoint_moment,
+          'color_1':mycolors['crimson red'], 'color_2':mycolors['dark spring green'],
+      'avg_toeoff':noload_mean_toe_off,'ylabel':'torque (N-m)','legend_1': 'subject 05','legend_2': 'subject 07'}
+
+  fig = plt.figure(num='Test: Noload: Knee actuator torque : sub 05 vs 07',figsize=(12.4, 10.8))
+  utils.plot_pareto_shaded_avg(plot_dic,loadcond='noload',fill_std=False)
+  fig.tight_layout()
+  fig.savefig('./Figures/Tests/Test_Noload_Bi_KneeTorque_Sub05vs07.pdf',orientation='landscape',bbox_inches='tight')
+  plt.show()
+  
+#####################################################################################
+# plots
+print('\n')
+a = input(' monoarticular loaded/noload hip/knee TORQUE comparison between subject 05 vs 07 (N, Y) :')
+print('\n')
+if a.lower() == 'y':
+  # loaded hip torque comparison between subject 05 and subject 07
+  plot_dic = {'avg_1':exo_torque_dataset['monoarticular_pareto_load_hipactuator_torque'][:,0:25],
+              'avg_2':exo_torque_dataset['monoarticular_pareto_load_hipactuator_torque'][:,25:50],
+          'joint_avg':mean_loaded_hipjoint_moment,'joint_std':std_loaded_hipjoint_moment,
+          'color_1':mycolors['crimson red'], 'color_2':mycolors['dark spring green'],
+      'avg_toeoff':loaded_mean_toe_off,'ylabel':'torque (N-m)','legend_1': 'subject 05','legend_2': 'subject 07'}
+
+  fig = plt.figure(num='Test:Loaded: Hip actuator torque : sub 05 vs 07',figsize=(12.4, 10.8))
+  utils.plot_pareto_shaded_avg(plot_dic,loadcond='loaded',fill_std=False)
+  fig.tight_layout()
+  fig.savefig('./Figures/Tests/Test_Loaded_Mono_HipTorque_Sub05vs07.pdf',orientation='landscape',bbox_inches='tight')
+  plt.show()
+  # noload hip torque comparison between subject 05 and subject 07
+  plot_dic = {'avg_1':exo_torque_dataset['monoarticular_pareto_noload_hipactuator_torque'][:,0:25],
+              'avg_2':exo_torque_dataset['monoarticular_pareto_noload_hipactuator_torque'][:,25:50],
+          'joint_avg':mean_noload_hipjoint_moment,'joint_std':std_noload_hipjoint_moment,
+          'color_1':mycolors['crimson red'], 'color_2':mycolors['dark spring green'],
+      'avg_toeoff':noload_mean_toe_off,'ylabel':'torque (N-m)','legend_1': 'subject 05','legend_2': 'subject 07'}
+
+  fig = plt.figure(num='Test: Noload: Hip actuator torque : sub 05 vs 07',figsize=(12.4, 10.8))
+  utils.plot_pareto_shaded_avg(plot_dic,loadcond='noload',fill_std=False)
+  fig.tight_layout()
+  fig.savefig('./Figures/Tests/Test_Noload_Mono_HipTorque_Sub05vs07.pdf',orientation='landscape',bbox_inches='tight')
+  plt.show()
+  # loaded knee torque comparison between subject 05 and subject 07
+  plot_dic = {'avg_1':exo_torque_dataset['monoarticular_pareto_load_kneeactuator_torque'][:,0:25],
+              'avg_2':exo_torque_dataset['monoarticular_pareto_load_kneeactuator_torque'][:,25:50],
+          'joint_avg':mean_loaded_kneejoint_moment,'joint_std':std_loaded_kneejoint_moment,
+          'color_1':mycolors['crimson red'], 'color_2':mycolors['dark spring green'],
+      'avg_toeoff':loaded_mean_toe_off,'ylabel':'torque (N-m)','legend_1': 'subject 05','legend_2': 'subject 07'}
+
+  fig = plt.figure(num='Test:Loaded: Knee actuator torque : sub 05 vs 07',figsize=(12.4, 10.8))
+  utils.plot_pareto_shaded_avg(plot_dic,loadcond='loaded',fill_std=False)
+  fig.tight_layout()
+  fig.savefig('./Figures/Tests/Test_Loaded_Mono_KneeTorque_Sub05vs07.pdf',orientation='landscape',bbox_inches='tight')
+  plt.show()
+  # noload knee torque comparison between subject 05 and subject 07
+  plot_dic = {'avg_1':exo_torque_dataset['monoarticular_pareto_noload_kneeactuator_torque'][:,0:25],
+              'avg_2':exo_torque_dataset['monoarticular_pareto_noload_kneeactuator_torque'][:,25:50],
+          'joint_avg':mean_noload_kneejoint_moment,'joint_std':std_noload_kneejoint_moment,
+          'color_1':mycolors['crimson red'], 'color_2':mycolors['dark spring green'],
+      'avg_toeoff':noload_mean_toe_off,'ylabel':'torque (N-m)','legend_1': 'subject 05','legend_2': 'subject 07'}
+
+  fig = plt.figure(num='Test: Noload: Knee actuator torque : sub 05 vs 07',figsize=(12.4, 10.8))
+  utils.plot_pareto_shaded_avg(plot_dic,loadcond='noload',fill_std=False)
+  fig.tight_layout()
+  fig.savefig('./Figures/Tests/Test_Noload_Mono_KneeTorque_Sub05vs07.pdf',orientation='landscape',bbox_inches='tight')
+  plt.show()
+
+#####################################################################################
+# plots
+a = input('Biarticular loaded/noload METABOLIC POWERcomparison between subject 05 vs 07 (N, Y) :')
+print('\n')
+if a.lower() == 'y':
+  # subject 05 loaded metabolic power comparison between monoarticular and biarticular
+  plot_dic = {'avg_1':exo_power_dataset['biarticular_pareto_load_metabolics_power'][:,0:25],
+              'avg_2':exo_power_dataset['biarticular_pareto_load_metabolics_power'][:,25:50],
+              'color_1':mycolors['crimson red'],'color_2':mycolors['dark spring green'],
+              'avg_toeoff':loaded_mean_toe_off,'ylabel':'metabolic power (W)','legend_1': 'subject 05','legend_2': 'subject 07'}
+
+  fig = plt.figure(num='Test: Loaded: Metabolic Power',figsize=(12.4, 10.8))
+  utils.plot_pareto_shaded_avg(plot_dic, loadcond='loaded', fill_std=False, plot_joint=False)
+  fig.tight_layout()
+  fig.savefig('./Figures/Tests/Test_Loaded_Bi_MetabolicPower_Sub05vs07.pdf',orientation='landscape',bbox_inches='tight')
+  plt.show()
+
+  # subject 05 noload hip torque comparison between monoarticular and biarticular
+  plot_dic = {'avg_1':exo_power_dataset['biarticular_pareto_noload_metabolics_power'][:,0:25],
+              'avg_2':exo_power_dataset['biarticular_pareto_noload_metabolics_power'][:,25:50],
+              'color_1':mycolors['crimson red'],'color_2':mycolors['dark spring green'],
+              'avg_toeoff':noload_mean_toe_off,'ylabel':'metabolic power (W)','legend_1': 'subject 05','legend_2': 'subject 07'}
+
+  fig = plt.figure(num='Test: Noloaded: Metabolic Power',figsize=(12.4, 10.8))
+  utils.plot_pareto_shaded_avg(plot_dic, loadcond='noload',fill_std=False, plot_joint=False)
+  fig.tight_layout()
+  fig.savefig('./Figures/Tests/Test_Noload_Bi_MetabolicPower_Sub05vs07.pdf',orientation='landscape',bbox_inches='tight')
+  plt.show()
+#####################################################################################
+# plots
+a = input('Monoarticular loaded/noload METABOLIC POWERcomparison between subject 05 vs 07 (N, Y) :')
+print('\n')
+if a.lower() == 'y':
+  # subject 05 loaded metabolic power comparison
+  plot_dic = {'avg_1':exo_power_dataset['monoarticular_pareto_load_metabolics_power'][:,0:25],
+              'avg_2':exo_power_dataset['monoarticular_pareto_load_metabolics_power'][:,25:50],
+              'color_1':mycolors['crimson red'],'color_2':mycolors['dark spring green'],
+              'avg_toeoff':loaded_mean_toe_off,'ylabel':'metabolic power (W)','legend_1': 'subject 05','legend_2': 'subject 07'}
+
+  fig = plt.figure(num='Test: Loaded: Metabolic Power',figsize=(12.4, 10.8))
+  utils.plot_pareto_shaded_avg(plot_dic, loadcond='loaded', fill_std=False, plot_joint=False)
+  fig.tight_layout()
+  fig.savefig('./Figures/Tests/Test_Loaded_Mono_MetabolicPower_Sub05vs07.pdf',orientation='landscape',bbox_inches='tight')
+  plt.show()
+
+  # subject 05 noload hip torque comparison
+  plot_dic = {'avg_1':exo_power_dataset['monoarticular_pareto_noload_metabolics_power'][:,0:25],
+              'avg_2':exo_power_dataset['monoarticular_pareto_noload_metabolics_power'][:,25:50],
+              'color_1':mycolors['crimson red'],'color_2':mycolors['dark spring green'],
+              'avg_toeoff':noload_mean_toe_off,'ylabel':'metabolic power (W)','legend_1': 'subject 05','legend_2': 'subject 07'}
+
+  fig = plt.figure(num='Test: Noloaded: Metabolic Power',figsize=(12.4, 10.8))
+  utils.plot_pareto_shaded_avg(plot_dic, loadcond='noload',fill_std=False, plot_joint=False)
+  fig.tight_layout()
+  fig.savefig('./Figures/Tests/Test_Noload_Mono_MetabolicPower_Sub05vs07.pdf',orientation='landscape',bbox_inches='tight')
+  plt.show()
