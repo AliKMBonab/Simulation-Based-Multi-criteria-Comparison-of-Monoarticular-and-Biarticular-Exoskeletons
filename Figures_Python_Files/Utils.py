@@ -17,6 +17,8 @@ from numpy import nanmean, nanstd
 from perimysium import postprocessing as pp
 from perimysium import dataman
 import pathlib
+import matlab.engine
+eng = matlab.engine.start_matlab()
 #######################################################################
 #######################################################################
 # Data saving and reading related functions
@@ -485,6 +487,13 @@ def plot_joint_muscle_exo (nrows,ncols,plot_dic,color_dic,ylabel,legend_loc=[0,1
 ######################################################################
 ######################################################################
 # Data Processing related functions for Pareto Simulations
+def pareto_filtering(actuators_energy,metabolics_energy,forsubjects=True):
+    subjects = ['05','07','09','10','11','12','14']
+    pareto_front_dataset = {}
+        if forsubjects == True:
+            for i in range(7):
+                data = np.column_stack(metabolics_energy[:,i],actuators_energy[:,i])
+                paretofront,_ = eng.ParetoFront(data)
 
 def pareto_from_mean_power(power_mean,power_std):
     if power_mean.shape[0] != power_std.shape[0]:
@@ -497,51 +506,78 @@ def pareto_from_mean_power(power_mean,power_std):
         std_energy[i]  = np.abs(integrate.simps(np.abs(power_mean[:,i]+power_std[:,i]),gcp) - integrate.simps(np.abs(power_mean[:,i]),gcp))
     return mean_energy, std_energy
 
-def pareto_metabolics_reduction(assist_data,unassist_data,simulation_num=25,subject_num=7):
-    reshaped_assisted_data = np.reshape(assist_data,(simulation_num,subject_num),order='F')
-    reduction = np.zeros((simulation_num,subject_num))
+def pareto_metabolics_reduction(assist_data,unassist_data,simulation_num=25,subject_num=7,trial_num=3):
+    reshaped_assisted_data = np.reshape(assist_data,(simulation_num,subject_num*trial_num),order='F')
+    reduction = np.zeros((simulation_num,subject_num*trial_num))
     c=0
-    for i in np.arange(0,21,3):
+    if trial_num == 1:
+        step = 3
+    elif trial_num == 2:
+        step = 2
+    elif trial_num == 3:
+        step = 3
+    else:
+        raise Exception('check trial number')
+    for i in np.arange(0,21,step=step):
         reduction[:,c] = np.true_divide((np.ones(25)*unassist_data[i] - reshaped_assisted_data[:,c])*100,np.ones(25)*unassist_data[i])
         c+=1
     return reduction
     
-def pareto_avg_std_energy(data,simulation_num=25,subject_num=7,reshape=True):
+def pareto_avg_std_energy(data,simulation_num=25,subject_num=7,trial_num=3,reshape=True):
     if reshape == True:
-        reshaped_data = np.reshape(data,(simulation_num,subject_num),order='F')
+        reshaped_data = np.reshape(data,(simulation_num,subject_num*trial_num),order='F')
     else:
         reshaped_data = data
-    avg = np.mean(reshaped_data,axis=1)
-    std = np.std(reshaped_data,axis=1)
+    avg = np.nanmean(reshaped_data,axis=1)
+    std = np.nanstd(reshaped_data,axis=1)
     return avg,std
 
-def pareto_profiles_avg_std(data,gl,simulation_num=25,subject_num=7,change_direction=True):
-    avg = np.zeros((data.shape[0],simulation_num))
-    std = np.zeros((data.shape[0],simulation_num))
+def pareto_avg_std_within_subjects(data,simulation_num=25,subject_num=7,trial_num=3,reshape=True):
+    if reshape == True:
+        reshaped_data = np.reshape(data,(simulation_num,subject_num*trial_num),order='F')
+    else:
+        reshaped_data = data
+    # reserving variables
+    avg = np.zeros((reshaped_data.shape[0],reshaped_data.shape[1]))
+    std = np.zeros((reshaped_data.shape[0],reshaped_data.shape[1]))
+    # avg std for subjects
+    c=0
+    for i in range(subject_num):
+        avg[:,i] = np.nanmean(reshaped_data[:,c:c+trial_num],axis=1)
+        std[:,i] = np.nanstd(reshaped_data[:,c:c+trial_num],axis=1)
+        c+=trial_num
+    return avg,std
+
+def pareto_profiles_avg_std(data,gl,simulation_num=25,subject_num=7,trial_num = 3,change_direction=True):
+    avg = np.zeros((data.shape[0],simulation_num*trial_num))
+    std = np.zeros((data.shape[0],simulation_num*trial_num))
     normal_data = np.zeros((data.shape[0],data.shape[1]))
     c = 0
     subjects = ['05','07','09','10','11','12','14']
+    trial = ['01','02','03']
     for i in range(subject_num):
-        selected_data = data[:,c:c+simulation_num]
-        if change_direction == True:
-            normal_selected_data = np.true_divide(-1*selected_data,gl['{}_subject{}_trial01'.format('noload',subjects[i])][1])
-        else:
-            normal_selected_data = np.true_divide(selected_data,gl['{}_subject{}_trial01'.format('noload',subjects[i])][1])
-        normal_data[:,c:c+simulation_num] = normal_selected_data
-        c+=simulation_num
+        for j in range(trial_num):
+            selected_data = data[:,c:c+simulation_num]
+            if change_direction == True:
+                normal_selected_data = np.true_divide(-1*selected_data,gl['{}_subject{}_trial{}'.format('noload',subjects[i],trial[j])][1])
+            else:
+                normal_selected_data = np.true_divide(selected_data,gl['{}_subject{}_trial{}'.format('noload',subjects[i],trial[j])][1])
+            normal_data[:,c:c+simulation_num] = normal_selected_data
+            c+=simulation_num
     c = 0
     for i in range(simulation_num):
-        cols = np.arange(i,(simulation_num*subject_num-simulation_num)+1+i,simulation_num)
-        selected_data = normal_data[:,cols]
-        avg[:,c] = np.nanmean(selected_data,axis=1)
-        std[:,c] = np.nanstd(selected_data,axis=1)
-        c+=1
+        for j in range(trial_num):
+            cols = np.arange(i,((simulation_num*subject_num*trial_num)-(simulation_num) )+1+i,simulation_num)
+            selected_data = normal_data[:,cols]
+            avg[:,c] = np.nanmean(selected_data,axis=1)
+            std[:,c] = np.nanstd(selected_data,axis=1)
+            c+=1
     return avg,std
 
-def energy_processed_power(data,gl,simulation_num=25,subject_num=7):
+def energy_processed_power(data,gl,simulation_num=25,subject_num=7,trial_num=3):
     c = 0
     for i in range(simulation_num):
-        cols = np.arange(i,(simulation_num*subject_num-simulation_num)+i,simulation_num)
+        cols = np.arange(i,((simulation_num*subject_num*trial_num)-simulation_num)+i,simulation_num)
         selected_data = data[:,cols]
 ######################################################################
 # Plot related functions for Pareto Simulations
@@ -560,6 +596,7 @@ def label_datapoints(x,y,labels,xytext=(0,0),ha='right',fontsize=10, *args, **kw
         c+=1
 
 def plot_pareto_avg_curve (plot_dic,loadcond,legend_loc=0,labels=None,label_on=True,errbar_on=True,*args, **kwargs):
+    '''plotting avg and std subplots for combinations of weights'''
     x1_data = plot_dic['x1_data']
     x2_data = plot_dic['x2_data']
     y1_data = plot_dic['y1_data']

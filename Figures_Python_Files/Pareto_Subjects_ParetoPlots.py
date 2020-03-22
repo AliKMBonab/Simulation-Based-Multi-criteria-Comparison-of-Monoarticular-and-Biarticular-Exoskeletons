@@ -18,6 +18,7 @@ from perimysium import dataman
 import pathlib
 import seaborn as sns
 import Utils as utils
+import matlab.engine
 from Colors import colors as mycolors
 #####################################################################################
 subjects = ['05','07','09','10','11','12','14']
@@ -57,17 +58,17 @@ mono_loaded_metabolics_percent = utils.pareto_metabolics_reduction(assisted_ener
 mono_noload_metabolics_percent = utils.pareto_metabolics_reduction(assisted_energy_dataset['monoarticular_pareto_noload_metabolics_energy'],unassisted_energy_dataset['noload_metabolics_energy'])
 
 # actuators energy
-bi_loaded_hip_energy= np.reshape(assisted_energy_dataset['biarticular_pareto_load_hipactuator_energy'],(25,7),order='F')
-bi_loaded_knee_energy= np.reshape(assisted_energy_dataset['biarticular_pareto_load_kneeactuator_energy'],(25,7),order='F')
+bi_loaded_hip_energy= np.reshape(assisted_energy_dataset['biarticular_pareto_load_hipactuator_energy'],(25,21),order='F')
+bi_loaded_knee_energy= np.reshape(assisted_energy_dataset['biarticular_pareto_load_kneeactuator_energy'],(25,21),order='F')
 bi_loaded_energy = bi_loaded_hip_energy + bi_loaded_knee_energy
-bi_noload_hip_energy= np.reshape(assisted_energy_dataset['biarticular_pareto_noload_hipactuator_energy'],(25,7),order='F')
-bi_noload_knee_energy= np.reshape(assisted_energy_dataset['biarticular_pareto_noload_kneeactuator_energy'],(25,7),order='F')
+bi_noload_hip_energy= np.reshape(assisted_energy_dataset['biarticular_pareto_noload_hipactuator_energy'],(25,21),order='F')
+bi_noload_knee_energy= np.reshape(assisted_energy_dataset['biarticular_pareto_noload_kneeactuator_energy'],(25,21),order='F')
 bi_noload_energy = bi_noload_hip_energy + bi_noload_knee_energy
-mono_loaded_hip_energy= np.reshape(assisted_energy_dataset['monoarticular_pareto_load_hipactuator_energy'],(25,7),order='F')
-mono_loaded_knee_energy= np.reshape(assisted_energy_dataset['monoarticular_pareto_load_kneeactuator_energy'],(25,7),order='F')
+mono_loaded_hip_energy= np.reshape(assisted_energy_dataset['monoarticular_pareto_load_hipactuator_energy'],(25,21),order='F')
+mono_loaded_knee_energy= np.reshape(assisted_energy_dataset['monoarticular_pareto_load_kneeactuator_energy'],(25,21),order='F')
 mono_loaded_energy = mono_loaded_hip_energy + mono_loaded_knee_energy
-mono_noload_hip_energy= np.reshape(assisted_energy_dataset['monoarticular_pareto_noload_hipactuator_energy'],(25,7),order='F')
-mono_noload_knee_energy= np.reshape(assisted_energy_dataset['monoarticular_pareto_noload_kneeactuator_energy'],(25,7),order='F')
+mono_noload_hip_energy= np.reshape(assisted_energy_dataset['monoarticular_pareto_noload_hipactuator_energy'],(25,21),order='F')
+mono_noload_knee_energy= np.reshape(assisted_energy_dataset['monoarticular_pareto_noload_kneeactuator_energy'],(25,21),order='F')
 mono_noload_energy = mono_noload_hip_energy + mono_noload_knee_energy
 
 # actuators power profiles
@@ -91,17 +92,17 @@ mean_mono_noload_hip_torque, std_mono_noload_hip_torque = utils.pareto_profiles_
 mean_mono_noload_knee_torque, std_mono_noload_knee_torque = utils.pareto_profiles_avg_std(exo_torque_dataset['monoarticular_pareto_noload_kneeactuator_torque'],gl_noload,change_direction=True)
 
 # actuators energy from processed mean data
-proc_bi_loaded_hip_energy= np.reshape(assisted_energy_dataset['biarticular_pareto_load_processed_hipactuator_energy'],(25,7),order='F')
-proc_bi_loaded_knee_energy= np.reshape(assisted_energy_dataset['biarticular_pareto_load_processed_kneeactuator_energy'],(25,7),order='F')
+proc_bi_loaded_hip_energy= np.reshape(assisted_energy_dataset['biarticular_pareto_load_processed_hipactuator_energy'],(25,21),order='F')
+proc_bi_loaded_knee_energy= np.reshape(assisted_energy_dataset['biarticular_pareto_load_processed_kneeactuator_energy'],(25,21),order='F')
 proc_bi_loaded_energy = proc_bi_loaded_hip_energy + proc_bi_loaded_knee_energy
-proc_bi_noload_hip_energy= np.reshape(assisted_energy_dataset['biarticular_pareto_noload_processed_hipactuator_energy'],(25,7),order='F')
-proc_bi_noload_knee_energy= np.reshape(assisted_energy_dataset['biarticular_pareto_noload_processed_kneeactuator_energy'],(25,7),order='F')
+proc_bi_noload_hip_energy= np.reshape(assisted_energy_dataset['biarticular_pareto_noload_processed_hipactuator_energy'],(25,21),order='F')
+proc_bi_noload_knee_energy= np.reshape(assisted_energy_dataset['biarticular_pareto_noload_processed_kneeactuator_energy'],(25,21),order='F')
 proc_bi_noload_energy = proc_bi_noload_hip_energy + proc_bi_noload_knee_energy
-proc_mono_loaded_hip_energy= np.reshape(assisted_energy_dataset['monoarticular_pareto_load_processed_hipactuator_energy'],(25,7),order='F')
-proc_mono_loaded_knee_energy= np.reshape(assisted_energy_dataset['monoarticular_pareto_load_processed_kneeactuator_energy'],(25,7),order='F')
+proc_mono_loaded_hip_energy= np.reshape(assisted_energy_dataset['monoarticular_pareto_load_processed_hipactuator_energy'],(25,21),order='F')
+proc_mono_loaded_knee_energy= np.reshape(assisted_energy_dataset['monoarticular_pareto_load_processed_kneeactuator_energy'],(25,21),order='F')
 proc_mono_loaded_energy = proc_mono_loaded_hip_energy + proc_mono_loaded_knee_energy
-proc_mono_noload_hip_energy= np.reshape(assisted_energy_dataset['monoarticular_pareto_noload_processed_hipactuator_energy'],(25,7),order='F')
-proc_mono_noload_knee_energy= np.reshape(assisted_energy_dataset['monoarticular_pareto_noload_processed_kneeactuator_energy'],(25,7),order='F')
+proc_mono_noload_hip_energy= np.reshape(assisted_energy_dataset['monoarticular_pareto_noload_processed_hipactuator_energy'],(25,21),order='F')
+proc_mono_noload_knee_energy= np.reshape(assisted_energy_dataset['monoarticular_pareto_noload_processed_kneeactuator_energy'],(25,21),order='F')
 proc_mono_noload_energy = proc_mono_noload_hip_energy + proc_mono_noload_knee_energy
 # metabolics cost reduction percents
 proc_bi_loaded_metabolics_percent = utils.pareto_metabolics_reduction(assisted_energy_dataset['biarticular_pareto_load_processed_metabolics_energy'],unassisted_energy_dataset['loaded_metabolics_processed_energy'])

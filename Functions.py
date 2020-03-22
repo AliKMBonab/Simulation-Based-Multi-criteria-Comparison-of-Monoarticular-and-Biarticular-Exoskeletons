@@ -429,10 +429,10 @@ def pareto_data_extraction(Subject_Dic,loadcond='noload',calculatenergy=True):
     TrialNo = Subject_Dic["TrialNo"]
     gl = Subject_Dic["gl"]
     subject_mass = Subject_Dic["Subject_Mass"]
-    if Directory == 'noloaded/Subject10_NoLoaded_Dataset/Monoarticular':
+    if 'noloaded/Subject10_NoLoaded_Dataset/Monoarticular' in Directory :
         print('trial number has been changed to get match with simulation files in subject 10 noloaded')
         TrialNo = '01'
-    elif Directory == 'noloaded/Subject12_NoLoaded_Dataset/Monoarticular' or  Directory == 'noloaded/Subject12_NoLoaded_Dataset/Biarticular':
+    elif 'noloaded/Subject12_NoLoaded_Dataset' in Directory :
         print('trial number has been changed to get match with simulation files in subject 12 noloaded')
         TrialNo = '05'
     optimal_force = 1000
@@ -466,9 +466,21 @@ def pareto_data_extraction(Subject_Dic,loadcond='noload',calculatenergy=True):
             
             if os.path.exists(actuator_torque_data_dir) == False or os.path.exists(actuator_power_data_dir) == False or os.path.exists(metabolic_power_data_dir) == False:
                 
-                print('***Subject{} : H{}K{} has not been simulated***'.format(SubjectNo,int(hip_max_control*optimal_force),int(knee_max_control*optimal_force)))
-                unsimulated.append('Subject{}_H{}K{}'.format(SubjectNo,int(hip_max_control*optimal_force),int(knee_max_control*optimal_force)))
-            
+                print('***Subject{}, {}, : H{}K{} has not been simulated***'.format(SubjectNo,Directory,int(hip_max_control*optimal_force),int(knee_max_control*optimal_force)))
+                unsimulated.append('Subject{}_{}_H{}K{}'.format(SubjectNo,Directory,int(hip_max_control*optimal_force),int(knee_max_control*optimal_force)))
+                hip_actuator_torque = np.ones(1000)*(np.nan)
+                knee_actuator_torque = np.ones(1000)*(np.nan)
+                hip_actuator_power = np.ones(1000)*(np.nan)
+                knee_actuator_power = np.ones(1000)*(np.nan)
+                metabolic_power = np.ones(1000)*(np.nan)
+                if calculatenergy == True:
+                    HipActuatorEnergy_Data[c]  = np.nan
+                    KneeActuatorEnergy_Data[c] = np.nan
+                    MetabolicEnergy_Data[c] = np.nan
+                    HipActuatorEnergy_FromPower_Data[c]  = np.nan
+                    KneeActuatorEnergy_FromPower_Data[c] = np.nan
+                    MetabolicEnergy_FromPower_Data[c] = np.nan
+                    Metabolics_Power_Data[:,c] = np.ones(1000)*(np.nan)
             else:
             
                 data_extraction_dic = {"Directory":actuator_torque_data_dir,
@@ -491,12 +503,6 @@ def pareto_data_extraction(Subject_Dic,loadcond='noload',calculatenergy=True):
                                     "Left_Parameter":'Knee_Left_Actuator',
                                                 "gl": gl}
                 knee_actuator_power = data_extraction(Subject_Dic=data_extraction_dic)
-                
-                # Storing the processed data into specificed numpy ndarrays
-                HipActuator_Torque_Data[:,c]  = hip_actuator_torque
-                KneeActuator_Torque_Data[:,c] = knee_actuator_torque
-                HipActuator_Power_Data[:,c]   = hip_actuator_power
-                KneeActuator_Power_Data[:,c]  = knee_actuator_power
                 # Energy calculations
                 if calculatenergy == True:
                     energy_dic = {"Directory":actuator_power_data_dir,
@@ -531,6 +537,7 @@ def pareto_data_extraction(Subject_Dic,loadcond='noload',calculatenergy=True):
                                         "gl": gl,
                             "Subject_Mass": subject_mass}
                     metabolic_power,metabolic_energy_from_power = metabolic_energy_instant_power(energy_dic)
+                    # storing data into variables
                     HipActuatorEnergy_Data[c]  = hip_actuator_energy
                     KneeActuatorEnergy_Data[c] = knee_actuator_energy
                     MetabolicEnergy_Data[c] = metabolic_energy
@@ -538,7 +545,13 @@ def pareto_data_extraction(Subject_Dic,loadcond='noload',calculatenergy=True):
                     KneeActuatorEnergy_FromPower_Data[c] = knee_actuator_energy_from_power
                     MetabolicEnergy_FromPower_Data[c] = metabolic_energy_from_power
                     Metabolics_Power_Data[:,c] = metabolic_power
-                c+=1
+            # Storing the processed data into specificed numpy ndarrays
+            HipActuator_Torque_Data[:,c]  = hip_actuator_torque
+            KneeActuator_Torque_Data[:,c] = knee_actuator_torque
+            HipActuator_Power_Data[:,c]   = hip_actuator_power
+            KneeActuator_Power_Data[:,c]  = knee_actuator_power
+            # update counter
+            c+=1
     return HipActuator_Torque_Data,KneeActuator_Torque_Data,HipActuator_Power_Data,KneeActuator_Power_Data,\
            HipActuatorEnergy_Data,KneeActuatorEnergy_Data,MetabolicEnergy_Data,\
            HipActuatorEnergy_FromPower_Data,KneeActuatorEnergy_FromPower_Data,MetabolicEnergy_FromPower_Data,\
@@ -572,7 +585,7 @@ def pareto_data_subjects(configuration,loadcond='noload'):
     hip_list = [70/1000,60/1000,50/1000,40/1000,30/1000]
     knee_list = [70/1000,60/1000,50/1000,40/1000,30/1000]
     subjects = ['05','07','09','10','11','12','14']
-    trials_num = ['01']
+    trials_num = ['01','02','03']
     # initialization
     unsimulated = []
     KneeActuatorEnergy_Data = np.zeros(len(subjects)*len(trials_num)*len(hip_list)*len(knee_list))
@@ -594,9 +607,9 @@ def pareto_data_subjects(configuration,loadcond='noload'):
             gl,_,trial = construct_gl_mass_trial(subjectno=i,trialno=j,loadcond=loadcond)
             _,subject_mass,_ = construct_gl_mass_trial(subjectno=i,trialno=j,loadcond='noload')
             if loadcond == 'noload':
-                files_dir = 'noloaded/Subject{}_NoLoaded_Dataset/{}'.format(i,configuration)
+                files_dir = 'noloaded/Subject{}_NoLoaded_Dataset/{}/Trial{}'.format(i,configuration,j)
             elif loadcond == 'load':
-                files_dir = 'loaded/Subject{}_Loaded_Dataset/{}'.format(i,configuration)
+                files_dir = 'loaded/Subject{}_Loaded_Dataset/{}/Trial{}'.format(i,configuration,j)
             else:
                 raise Exception('Invalid load condition!')
             Subject_Dictionary = {"Directory": files_dir,
