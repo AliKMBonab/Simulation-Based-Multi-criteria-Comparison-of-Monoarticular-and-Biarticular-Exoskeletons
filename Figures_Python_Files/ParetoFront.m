@@ -1,4 +1,4 @@
-function [ p, idxs] = ParetoFront( p )
+function [ p, idxs] = ParetoFront( r,q )
 % Filters a set of points P according to Pareto dominance, i.e., points
 % that are dominated (both weakly and strongly) are filtered.
 %
@@ -16,6 +16,7 @@ function [ p, idxs] = ParetoFront( p )
 %     f = [1 1 1; 2 0 1]
 %     idxs = [1; 2]
 
+p = [r,q];
 [i, dim] = size(p);
 idxs = [1 : i]';
 while i >= 1

@@ -487,13 +487,74 @@ def plot_joint_muscle_exo (nrows,ncols,plot_dic,color_dic,ylabel,legend_loc=[0,1
 ######################################################################
 ######################################################################
 # Data Processing related functions for Pareto Simulations
-def pareto_filtering(actuators_energy,metabolics_energy,forsubjects=True):
+def outliers_modified_z_score(ys,threshold = 3):
+    '''
+    The Z-score, or standard score, is a way of describing a data point
+    in terms of its relationship to the mean and standard deviation of
+    a group of points. Taking a Z-score is simply mapping the data onto
+    a distribution whose mean is defined as 0 and whose standard deviation
+    is defined as 1. Another drawback of the Z-score method is that it behaves
+    strangely in small datasets – in fact, the Z-score method will never detect
+    an outlier if the dataset has fewer than 12 items in it. This motivated the
+     development of a modified Z-score method, which does not suffer from the same limitation.
+     http://colingorrie.github.io/outlier-detection.html
+
+    '''
+    median_y = np.nanmedian(ys)
+    median_absolute_deviation_y = np.nanmedian([np.abs(y - median_y) for y in ys])
+    modified_z_scores = [0.6745 * (y - median_y) / median_absolute_deviation_y
+                         for y in ys]
+    return np.where(np.abs(modified_z_scores) > threshold,True,False)
+
+def outliers_iqr(ys):
+    '''
+    The interquartile range, which gives this method of outlier detection its name,
+    is the range between the first and the third quartiles (the edges of the box).
+    Tukey considered any data point that fell outside of either 1.5 times the IQR
+    below the first – or 1.5 times the IQR above the third – quartile to be “outside” or “far out”.
+    http://colingorrie.github.io/outlier-detection.html
+    '''
+    quartile_1, quartile_3 = np.nanpercentile(ys, [25, 75])
+    iqr = quartile_3 - quartile_1
+    lower_bound = quartile_1 - (iqr * 1.5)
+    upper_bound = quartile_3 + (iqr * 1.5)
+    idx = np.where((ys > upper_bound) | (ys < lower_bound),True,False)
+    return idx
+
+def filter_outliers(data,method='iqr',thershold=None,sim_num=25,sub_num=7,trial_num=3):
+    '''
+    energy data are supposed to be modified before using this filter.\n
+    Methods: 'iqr': interquartile range (default), 'z-score': modified z-score
+    '''
+    if data.shape[1] != sub_num*trial_num:
+        raise Exception('data shape does not match.')
+    filtered_data = np.empty((sim_num,sub_num*trial_num))
+    filtered_data[:] = np.nan
+    for i in range(sim_num):
+        same_weights_data = data[i,:]
+        if method == 'iqr':
+            idx = outliers_iqr(same_weights_data)
+        elif method == 'z-score':
+            idx = outliers_modified_z_score(same_weights_data)
+        else:
+            raise Exception('invalid method')
+        same_weights_data[idx] = np.nan
+        filtered_data[i,:] = np.transpose(same_weights_data)
+    return filtered_data
+
+# TODO: fix pareto_filtering to use matlab function using python
+# def pareto_filtering(actuators_energy,metabolics_energy,forsubjects=False):
     subjects = ['05','07','09','10','11','12','14']
     pareto_front_dataset = {}
-        if forsubjects == True:
-            for i in range(7):
-                data = np.column_stack(metabolics_energy[:,i],actuators_energy[:,i])
-                paretofront,_ = eng.ParetoFront(data)
+    if forsubjects == True:
+        for i in range(7):
+            data = np.column_stack(metabolics_energy[:,i],actuators_energy[:,i])
+            paretofront,idx = eng.ParetoFront(data)
+            pareto_front_dataset = {'subject{}'.format(subjects[i]):paretofront}
+        return pareto_front_dataset
+    else:
+        paretofront,_ = eng.ParetoFront(data)
+        return paretofront
 
 def pareto_from_mean_power(power_mean,power_std):
     if power_mean.shape[0] != power_std.shape[0]:
@@ -515,7 +576,7 @@ def pareto_metabolics_reduction(assist_data,unassist_data,simulation_num=25,subj
     elif trial_num == 2:
         step = 2
     elif trial_num == 3:
-        step = 3
+        step = 1
     else:
         raise Exception('check trial number')
     for i in np.arange(0,21,step=step):
@@ -523,11 +584,13 @@ def pareto_metabolics_reduction(assist_data,unassist_data,simulation_num=25,subj
         c+=1
     return reduction
     
-def pareto_avg_std_energy(data,simulation_num=25,subject_num=7,trial_num=3,reshape=True):
+def pareto_avg_std_energy(data,simulation_num=25,subject_num=7,trial_num=3,reshape=True,filter_data = True,*args,**kwargs):
     if reshape == True:
         reshaped_data = np.reshape(data,(simulation_num,subject_num*trial_num),order='F')
     else:
         reshaped_data = data
+    if filter_data == True:
+        filtered_reshaped_data = filter_outliers(reshaped_data,*args,**kwargs)
     avg = np.nanmean(reshaped_data,axis=1)
     std = np.nanstd(reshaped_data,axis=1)
     return avg,std
@@ -582,7 +645,7 @@ def energy_processed_power(data,gl,simulation_num=25,subject_num=7,trial_num=3):
 ######################################################################
 # Plot related functions for Pareto Simulations
 
-def gen_paretocurve_label(H= [70,60,50,40,30],K= [70,60,50,40,30]):
+def gen_paretocurve_label(H = [70,60,50,40,30], K = [70,60,50,40,30]):
     labels = []
     for i in H:
         for j in K:
@@ -761,9 +824,9 @@ def plot_pareto_comparison(plot_dic,loadcond,compare,labels=None,legend_loc=[0],
         data_2 = plot_dic['data_2']
         color_1 = plot_dic['color_1']
         color_2 = plot_dic['color_2']
-        nrows = 3
+        nrows = 7
         ncols = 3
-        nplot = 7
+        nplot = 21
     else:
         raise   Exception('comparison case is not valid.')
     # handle labels
