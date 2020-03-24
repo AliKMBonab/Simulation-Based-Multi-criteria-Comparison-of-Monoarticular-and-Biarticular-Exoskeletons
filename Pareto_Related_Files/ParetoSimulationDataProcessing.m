@@ -24,25 +24,21 @@ monoarticular_loaded_knee_energy = csvread(strcat(path,'Data\Pareto\monoarticula
 monoarticular_loaded_exo_energy = monoarticular_loaded_hip_energy + monoarticular_loaded_knee_energy;
 monoarticular_loaded_metabolic_energy = csvread(strcat(path,'Data\Pareto\monoarticular_pareto_load_metabolics_energy.csv'));
 % unassist metabolic
-unassisted_noload_metabolic_energy = csvread(strcat(path,'Data\Unassist\noload_metabolics_energy.csv'));
-unassisted_loaded_metabolic_energy = csvread(strcat(path,'Data\Unassist\loaded_metabolics_energy.csv'));
-idx = [1;4;7;10;13;16;19];
+unassist_noload_metabolic_energy = csvread(strcat(path,'Data\Unassist\noload_metabolics_energy.csv'));
+unassist_loaded_metabolic_energy = csvread(strcat(path,'Data\Unassist\loaded_metabolics_energy.csv'));
 %% Post Processing 
 % noload/biarticular
-bi_noload_exo_energy = reshape(biarticular_noload_exo_energy,[25,7]);
-bi_noload_metabolic_energy = reshape(biarticular_noload_metabolic_energy,[25,7]);
+bi_noload_exo_energy = reshape(biarticular_noload_exo_energy,[25,21]);
+bi_noload_metabolic_energy = reshape(biarticular_noload_metabolic_energy,[25,21]);
 % noload/monoarticular
-mono_noload_exo_energy = reshape(monoarticular_loaded_exo_energy,[25,7]);
-mono_noload_metabolic_energy = reshape(monoarticular_noload_metabolic_energy,[25,7]);
+mono_noload_exo_energy = reshape(monoarticular_loaded_exo_energy,[25,21]);
+mono_noload_metabolic_energy = reshape(monoarticular_noload_metabolic_energy,[25,21]);
 % loaded/biarticular
-bi_loaded_exo_energy = reshape(biarticular_loaded_exo_energy,[25,7]);
-bi_loaded_metabolic_energy = reshape(biarticular_loaded_metabolic_energy,[25,7]);
+bi_loaded_exo_energy = reshape(biarticular_loaded_exo_energy,[25,21]);
+bi_loaded_metabolic_energy = reshape(biarticular_loaded_metabolic_energy,[25,21]);
 % loaded/monoarticular
-mono_loaded_exo_energy = reshape(monoarticular_loaded_exo_energy,[25,7]);
-mono_loaded_metabolic_energy = reshape(monoarticular_loaded_metabolic_energy,[25,7]);
-% unassist
-unassist_noload_metabolic_energy = unassisted_noload_metabolic_energy(idx);
-unassist_loaded_metabolic_energy = unassisted_loaded_metabolic_energy(idx);
+mono_loaded_exo_energy = reshape(monoarticular_loaded_exo_energy,[25,21]);
+mono_loaded_metabolic_energy = reshape(monoarticular_loaded_metabolic_energy,[25,21]);
 
 %% Pareto Filtering
 for i = 1:1:7
