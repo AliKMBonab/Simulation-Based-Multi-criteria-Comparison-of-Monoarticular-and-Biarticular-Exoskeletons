@@ -337,13 +337,50 @@ def metabolic_energy_mass_added_pareto(unassisted_metabolic,InertialProp_Dic,cal
                 Inertia_Shank_Metabolic[c] = inertia_metabolic_shank
             c+=1
     if calc_metabolic_cost == True :
-        return Metabolic_Change_Hip,Metabolic_Change_Thigh,Metabolic_Change_Shank,Total_AddMass_MetabolicChange,\
-               Waist_Metabolic,Thigh_Metabolic,Shank_Metabolic,Inertia_Thigh_Metabolic,Inertia_Shank_Metabolic,Inertia_Thigh,Inertia_Shank
+        return Metabolic_Change_Hip,Metabolic_Change_Thigh,Metabolic_Change_Shank,Total_AddMass_MetabolicChange,Inertia_Thigh,Inertia_Shank,\
+               Waist_Metabolic,Thigh_Metabolic,Shank_Metabolic,Inertia_Thigh_Metabolic,Inertia_Shank_Metabolic
     else:
-        return Metabolic_Change_Hip,Metabolic_Change_Thigh,Metabolic_Change_Shank,AddMass_MetabolicChange,Inertia_Shank_Metabolic,Inertia_Thigh,Inertia_Shank
+        return Metabolic_Change_Hip,Metabolic_Change_Thigh,Metabolic_Change_Shank,AddMass_MetabolicChange,Inertia_Thigh,Inertia_Shank
+
+def addingmass_metabolics_pareto(unassisted_metabolic, assisted_metabolics, InertialProp_Dic, subject_num = 7, trial_num = 3, calc_metabolic_cost=True):
+    Metabolic_Change_Hip = np.zeros((len(Hip_weights)*len(Knee_weights),subject_num*trial_num))
+    Metabolic_Change_Thigh = np.zeros((len(Hip_weights)*len(Knee_weights),subject_num*trial_num))
+    Metabolic_Change_Shank = np.zeros((len(Hip_weights)*len(Knee_weights),subject_num*trial_num))
+    Total_AddMass_MetabolicChange =  np.zeros((len(Hip_weights)*len(Knee_weights),subject_num*trial_num))
+    Waist_Metabolic = np.zeros((len(Hip_weights)*len(Knee_weights),subject_num*trial_num))
+    Thigh_Metabolic = np.zeros((len(Hip_weights)*len(Knee_weights),subject_num*trial_num))
+    Shank_Metabolic = np.zeros((len(Hip_weights)*len(Knee_weights),subject_num*trial_num))
+    Inertia_Thigh_Metabolic = np.zeros((len(Hip_weights)*len(Knee_weights),subject_num*trial_num))
+    Inertia_Shank_Metabolic = np.zeros((len(Hip_weights)*len(Knee_weights),subject_num*trial_num))
+    Inertia_Thigh = np.zeros((len(Hip_weights)*len(Knee_weights),subject_num*trial_num))
+    Inertia_Shank = np.zeros((len(Hip_weights)*len(Knee_weights),subject_num*trial_num))
+    c = 0
+    for i in range(subject_num):
+        for j in range(trial_num):
+            out = metabolic_energy_mass_added_pareto(unassisted_metabolic[c],InertialProp_Dic,calc_metabolic_cost=calc_metabolic_cost)
+            Metabolic_Change_Hip[:,c] = out[1]
+            Metabolic_Change_Thigh[:,c] = out[2]
+            Metabolic_Change_Shank[:,c] = out[3]
+            Total_AddMass_MetabolicChange[:,c] =  out[4]
+            Inertia_Thigh[:,c] = out[5]
+            Inertia_Shank[:,c] = out[6]
+            if calc_metabolic_cost == True :
+                Waist_Metabolic[:,c] = out[7]
+                Thigh_Metabolic[:,c] = out[8]
+                Shank_Metabolic[:,c] = out[9]
+                Inertia_Thigh_Metabolic[:,c] = out[10]
+                Inertia_Shank_Metabolic[:,c] = out[11]
+            c+=1
+    Metabolics_Added_Mass = assisted_metabolics + Total_AddMass_MetabolicChange
+        if calc_metabolic_cost == True :
+            return Metabolics_Added_Mass,Metabolic_Change_Hip,Metabolic_Change_Thigh,Metabolic_Change_Shank,Total_AddMass_MetabolicChange,Inertia_Thigh,Inertia_Shank,\
+               Waist_Metabolic,Thigh_Metabolic,Shank_Metabolic,Inertia_Thigh_Metabolic,Inertia_Shank_Metabolic
+    else:
+        return Metabolics_Added_Mass,Metabolic_Change_Hip,Metabolic_Change_Thigh,Metabolic_Change_Shank,AddMass_MetabolicChange,Inertia_Thigh,Inertia_Shank
 
 ######################################################################
 # Plot related functions
+
 def autolabel(rects,text=None,label_value=True):
     """Attach a text label above each bar"""
     if text == None:
@@ -487,6 +524,30 @@ def plot_joint_muscle_exo (nrows,ncols,plot_dic,color_dic,ylabel,legend_loc=[0,1
 ######################################################################
 ######################################################################
 # Data Processing related functions for Pareto Simulations
+def delete_subject_data(data,subject,profile_energy='profile',is_reshaped=False):
+    if profile_energy not in ['profile','energy']:
+        raise Exception('profile_energy: invalid condition')
+    if all(elem in ['05','07','09','10','11','12','14'] for elem in subject) == False:
+        raise Exception('subject: invalid subject number')
+    if is_reshaped == False:
+        sub_dic = {'05':np.s_[0:74:1],'07':np.s_[75:149:1],'09':np.s_[150:224:1],\
+                '10':np.s_[225:299:1],'11':np.s_[300:374:1],'12':np.s_[375:449:1],\
+                '09':np.s_[450:524:1]}
+    else:
+        sub_dic = {'05':np.s_[0:2:1],'07':np.s_[3:5:1],'09':np.s_[6:8:1],\
+                '10':np.s_[9:11:1],'11':np.s_[12:14:1],'12':np.s_[15:17:1],\
+                '09':np.s_[18:20:1]}
+    for i in subject:
+        if profile_energy == 'profile':
+            modified_data = np.delete(data,sub_dic[i],axis=1)
+        else:
+            if is_reshaped == False:
+                modified_data = np.delete(data,sub_dic[i],axis=0)
+            else:
+                modified_data = np.delete(data,sub_dic[i],axis=1)
+        data = modified_data
+    return modified_data
+ 
 def outliers_modified_z_score(ys,threshold = 3):
     '''
     The Z-score, or standard score, is a way of describing a data point
@@ -584,25 +645,29 @@ def pareto_metabolics_reduction(assist_data,unassist_data,simulation_num=25,subj
         c+=1
     return reduction
     
-def pareto_avg_std_energy(data,simulation_num=25,subject_num=7,trial_num=3,reshape=True,filter_data = True,*args,**kwargs):
+def pareto_avg_std_energy(data,simulation_num=25,subject_num=7,trial_num=3,reshape=True,filter_data = True,delete_subject=None,*args,**kwargs):
     if reshape == True:
         reshaped_data = np.reshape(data,(simulation_num,subject_num*trial_num),order='F')
     else:
         reshaped_data = data
     if filter_data == True:
-        filtered_reshaped_data = filter_outliers(reshaped_data,*args,**kwargs)
+        reshaped_data = filter_outliers(reshaped_data,*args,**kwargs)
+    if delete_subject != None:
+        reshaped_data = delete_subject_data(reshaped_data,delete_subject,profile_energy='energy',is_reshaped=True)
     avg = np.nanmean(reshaped_data,axis=1)
     std = np.nanstd(reshaped_data,axis=1)
     return avg,std
 
-def pareto_avg_std_within_subjects(data,simulation_num=25,subject_num=7,trial_num=3,reshape=True):
+def pareto_avg_std_within_subjects(data,simulation_num=25,subject_num=7,trial_num=3,reshape=True,delete_subject=None):
     if reshape == True:
         reshaped_data = np.reshape(data,(simulation_num,subject_num*trial_num),order='F')
     else:
         reshaped_data = data
+    if delete_subject != None:
+        reshaped_data = delete_subject_data(reshaped_data,delete_subject,profile_energy='profile')
     # reserving variables
-    avg = np.zeros((reshaped_data.shape[0],reshaped_data.shape[1]))
-    std = np.zeros((reshaped_data.shape[0],reshaped_data.shape[1]))
+    avg = np.zeros((reshaped_data.shape[0],reshaped_data.shape[1]/trial_num))
+    std = np.zeros((reshaped_data.shape[0],reshaped_data.shape[1]/trial_num))
     # avg std for subjects
     c=0
     for i in range(subject_num):
@@ -611,13 +676,15 @@ def pareto_avg_std_within_subjects(data,simulation_num=25,subject_num=7,trial_nu
         c+=trial_num
     return avg,std
 
-def pareto_profiles_avg_std(data,gl,simulation_num=25,subject_num=7,trial_num = 3,change_direction=True):
-    avg = np.zeros((data.shape[0],simulation_num*trial_num))
-    std = np.zeros((data.shape[0],simulation_num*trial_num))
+def pareto_profiles_avg_std(data,gl,simulation_num=25,subject_num=7,trial_num = 3,change_direction=True,delete_subject=None):
+    avg = np.zeros((data.shape[0],simulation_num))
+    std = np.zeros((data.shape[0],simulation_num))
     normal_data = np.zeros((data.shape[0],data.shape[1]))
     c = 0
     subjects = ['05','07','09','10','11','12','14']
     trial = ['01','02','03']
+    if delete_subject != None:
+        data = delete_subject_data(data,delete_subject,profile_energy='profile')
     for i in range(subject_num):
         for j in range(trial_num):
             selected_data = data[:,c:c+simulation_num]
@@ -629,12 +696,11 @@ def pareto_profiles_avg_std(data,gl,simulation_num=25,subject_num=7,trial_num = 
             c+=simulation_num
     c = 0
     for i in range(simulation_num):
-        for j in range(trial_num):
-            cols = np.arange(i,((simulation_num*subject_num*trial_num)-(simulation_num) )+1+i,simulation_num)
-            selected_data = normal_data[:,cols]
-            avg[:,c] = np.nanmean(selected_data,axis=1)
-            std[:,c] = np.nanstd(selected_data,axis=1)
-            c+=1
+        cols = np.arange(i,((simulation_num*subject_num*trial_num)-(simulation_num) )+1+i,simulation_num)
+        selected_data = normal_data[:,cols]
+        avg[:,c] = np.nanmean(selected_data,axis=1)
+        std[:,c] = np.nanstd(selected_data,axis=1)
+        c+=1
     return avg,std
 
 def energy_processed_power(data,gl,simulation_num=25,subject_num=7,trial_num=3):
@@ -642,6 +708,7 @@ def energy_processed_power(data,gl,simulation_num=25,subject_num=7,trial_num=3):
     for i in range(simulation_num):
         cols = np.arange(i,((simulation_num*subject_num*trial_num)-simulation_num)+i,simulation_num)
         selected_data = data[:,cols]
+
 ######################################################################
 # Plot related functions for Pareto Simulations
 
@@ -705,7 +772,8 @@ def plot_pareto_curve_subjects (nrows,ncols,nplot,plot_dic,loadcond,legend_loc=[
     # handle titles
     if 'plot_titles' not in plot_dic:
         subjects = ['05','07','09','10','11','12','14']
-        plot_titles = ['subject{},{}'.format(i,loadcond) for i in subjects]
+        trials = ['01','02','03']
+        plot_titles = ['subject{}trial{},{}'.format(i,j,loadcond) for i in subjects for j in trials]
     else:
         plot_titles = plot_dic['plot_titles']
     # handle legends

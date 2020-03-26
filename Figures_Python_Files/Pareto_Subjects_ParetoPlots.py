@@ -119,10 +119,10 @@ plot_dic = {'x1_data':bi_loaded_metabolics_percent,'x2_data':mono_loaded_metabol
           'color_1':mycolors['crimson red'],'color_2':mycolors['dark purple'],
           'ylabel':'Energy Consumption (W/kg)','xlabel':'Metabolic Reduction (%)'
           }
-fig = plt.figure(num='Pareto Curve: loaded mono vs bi',figsize=(10.4, 8.8))
-utils.plot_pareto_curve_subjects (nrows=3,ncols=3,nplot=7,plot_dic=plot_dic,loadcond='loaded')
+fig = plt.figure(num='Pareto Curve: loaded mono vs bi',figsize=(10.4, 18.8))
+utils.plot_pareto_curve_subjects (nrows=7,ncols=3,nplot=21,plot_dic=plot_dic,loadcond='loaded')
 fig.tight_layout()
-fig.savefig('./Figures/Pareto/Pareto_Load_Subjects_BiVsMono.pdf',orientation='landscape',bbox_inches='tight')
+fig.savefig('./Figures/Pareto/Subjects_Pareto/Pareto_Load_Subjects_BiVsMono.pdf',orientation='landscape',bbox_inches='tight')
 plt.show()
 
 # subjects pareto curve: noload mono vs biarticular
@@ -132,10 +132,10 @@ plot_dic = {'x1_data':bi_noload_metabolics_percent,'x2_data':mono_noload_metabol
           'color_1':mycolors['crimson red'],'color_2':mycolors['dark purple'],
           'ylabel':'Energy Consumption (W/kg)','xlabel':'Metabolic Reduction (%)'
           }
-fig = plt.figure(num='Pareto Curve: noload mono vs bi',figsize=(10.4, 8.8))
-utils.plot_pareto_curve_subjects (nrows=3,ncols=3,nplot=7,plot_dic=plot_dic,loadcond='noload')
+fig = plt.figure(num='Pareto Curve: noload mono vs bi',figsize=(10.4, 18.8))
+utils.plot_pareto_curve_subjects (nrows=7,ncols=3,nplot=21,plot_dic=plot_dic,loadcond='noload')
 fig.tight_layout()
-fig.savefig('./Figures/Pareto/Pareto_Noload_Subjects_BiVsMono.pdf',orientation='landscape',bbox_inches='tight')
+fig.savefig('./Figures/Pareto/Subjects_Pareto/Pareto_Noload_Subjects_BiVsMono.pdf',orientation='landscape',bbox_inches='tight')
 plt.show()
 # subjects pareto curve: loaded mono vs biarticular
 
@@ -144,10 +144,10 @@ plot_dic = {'x1_data':bi_loaded_metabolics_percent,'x2_data':mono_loaded_metabol
           'color_1':mycolors['crimson red'],'color_2':mycolors['dark purple'],
           'ylabel':'Energy Consumption (W/kg)','xlabel':'Metabolic Reduction (%)'
           }
-fig = plt.figure(num='Pareto Curve: loaded mono vs bi - Processed',figsize=(10.4, 8.8))
-utils.plot_pareto_curve_subjects (nrows=3,ncols=3,nplot=7,plot_dic=plot_dic,loadcond='loaded')
+fig = plt.figure(num='Pareto Curve: loaded mono vs bi - Processed',figsize=(10.4, 18.8))
+utils.plot_pareto_curve_subjects (nrows=7,ncols=3,nplot=21,plot_dic=plot_dic,loadcond='loaded')
 fig.tight_layout()
-fig.savefig('./Figures/Pareto/Pareto_Load_Subjects_BiVsMono_Processed.pdf',orientation='landscape',bbox_inches='tight')
+fig.savefig('./Figures/Pareto/Subjects_Pareto/Pareto_Load_Subjects_BiVsMono_Processed.pdf',orientation='landscape',bbox_inches='tight')
 plt.show()
 
 # subjects pareto curve: noload mono vs biarticular
@@ -157,10 +157,10 @@ plot_dic = {'x1_data':bi_noload_metabolics_percent,'x2_data':mono_noload_metabol
           'color_1':mycolors['crimson red'],'color_2':mycolors['dark purple'],
           'ylabel':'Energy Consumption (W/kg)','xlabel':'Metabolic Reduction (%)'
           }
-fig = plt.figure(num='Pareto Curve: noload mono vs bi - Processed',figsize=(10.4, 8.8))
-utils.plot_pareto_curve_subjects (nrows=3,ncols=3,nplot=7,plot_dic=plot_dic,loadcond='noload')
+fig = plt.figure(num='Pareto Curve: noload mono vs bi - Processed',figsize=(10.4, 18.8))
+utils.plot_pareto_curve_subjects (nrows=7,ncols=3,nplot=21,plot_dic=plot_dic,loadcond='noload')
 fig.tight_layout()
-fig.savefig('./Figures/Pareto/Pareto_Noload_Subjects_BiVsMono_Processed.pdf',orientation='landscape',bbox_inches='tight')
+fig.savefig('./Figures/Pareto/Subjects_Pareto/Pareto_Noload_Subjects_BiVsMono_Processed.pdf',orientation='landscape',bbox_inches='tight')
 plt.show()
 
 #####################################################################################
@@ -175,7 +175,7 @@ plot_dic = {'avg_1':mean_bi_loaded_hip_power,'std_1':std_bi_loaded_hip_power,
 fig = plt.figure(num='Pareto hip power: loaded mono vs bi',figsize=(12.4, 10.8))
 utils.plot_pareto_shaded_avg(plot_dic,loadcond='loaded')
 fig.tight_layout()
-fig.savefig('./Figures/Pareto/Pareto_loaded_hippower_bivsmono.pdf',orientation='landscape',bbox_inches='tight')
+fig.savefig('./Figures/Pareto/Subjects_Pareto/Pareto_loaded_hippower_bivsmono.pdf',orientation='landscape',bbox_inches='tight')
 plt.show()
 
 # hip noload power profiles
@@ -189,7 +189,7 @@ plot_dic = {'avg_1':mean_bi_noload_hip_power,'std_1':std_bi_noload_hip_power,
 fig = plt.figure(num='Pareto hip power: noload mono vs bi',figsize=(12.4, 10.8))
 utils.plot_pareto_shaded_avg(plot_dic,loadcond='loaded')
 fig.tight_layout()
-fig.savefig('./Figures/Pareto/Pareto_noload_hippower_bivsmono.pdf',orientation='landscape',bbox_inches='tight')
+fig.savefig('./Figures/Pareto/Subjects_Pareto/Pareto_noload_hippower_bivsmono.pdf',orientation='landscape',bbox_inches='tight')
 plt.show()
 
 # knee loaded power profiles
@@ -203,7 +203,7 @@ plot_dic = {'avg_1':mean_bi_loaded_knee_power,'std_1':std_bi_loaded_knee_power,
 fig = plt.figure(num='Pareto knee power: noload mono vs bi',figsize=(12.4, 10.8))
 utils.plot_pareto_shaded_avg(plot_dic,loadcond='loaded')
 fig.tight_layout()
-fig.savefig('./Figures/Pareto/Pareto_loaded_kneepower_bivsmono.pdf',orientation='landscape',bbox_inches='tight')
+fig.savefig('./Figures/Pareto/Subjects_Pareto/Pareto_loaded_kneepower_bivsmono.pdf',orientation='landscape',bbox_inches='tight')
 plt.show()
 
 # knee noload power profiles
@@ -217,7 +217,7 @@ plot_dic = {'avg_1':mean_bi_noload_knee_power,'std_1':std_bi_noload_knee_power,
 fig = plt.figure(num='Pareto knee torque: loaded mono vs bi',figsize=(12.4, 10.8))
 utils.plot_pareto_shaded_avg(plot_dic,loadcond='loaded')
 fig.tight_layout()
-fig.savefig('./Figures/Pareto/Pareto_noload_kneepower_bivsmono.pdf',orientation='landscape',bbox_inches='tight')
+fig.savefig('./Figures/Pareto/Subjects_Pareto/Pareto_noload_kneepower_bivsmono.pdf',orientation='landscape',bbox_inches='tight')
 plt.show()
 
 # hip loaded torque profiles
@@ -231,7 +231,7 @@ plot_dic = {'avg_1':mean_bi_loaded_hip_torque,'std_1':std_bi_loaded_hip_torque,
 fig = plt.figure(num='Pareto hip torque: loaded mono vs bi',figsize=(12.4, 10.8))
 utils.plot_pareto_shaded_avg(plot_dic,loadcond='loaded')
 fig.tight_layout()
-fig.savefig('./Figures/Pareto/Pareto_loaded_hiptorque_bivsmono.pdf',orientation='landscape',bbox_inches='tight')
+fig.savefig('./Figures/Pareto/Subjects_Pareto/Pareto_loaded_hiptorque_bivsmono.pdf',orientation='landscape',bbox_inches='tight')
 plt.show()
 
 # hip noload torque profiles
@@ -245,7 +245,7 @@ plot_dic = {'avg_1':mean_bi_noload_hip_torque,'std_1':std_bi_noload_hip_torque,
 fig = plt.figure(num='Pareto hip torque: loaded mono vs bi',figsize=(12.4, 10.8))
 utils.plot_pareto_shaded_avg(plot_dic,loadcond='loaded')
 fig.tight_layout()
-fig.savefig('./Figures/Pareto/Pareto_noload_hiptorque_bivsmono.pdf',orientation='landscape',bbox_inches='tight')
+fig.savefig('./Figures/Pareto/Subjects_Pareto/Pareto_noload_hiptorque_bivsmono.pdf',orientation='landscape',bbox_inches='tight')
 plt.show()
 
 # knee loaded torque profiles
@@ -259,7 +259,7 @@ plot_dic = {'avg_1':mean_bi_loaded_knee_torque,'std_1':std_bi_loaded_knee_torque
 fig = plt.figure(num='Pareto knee torque: loaded mono vs bi',figsize=(12.4, 10.8))
 utils.plot_pareto_shaded_avg(plot_dic,loadcond='loaded')
 fig.tight_layout()
-fig.savefig('./Figures/Pareto/Pareto_loaded_kneetorque_bivsmono.pdf',orientation='landscape',bbox_inches='tight')
+fig.savefig('./Figures/Pareto/Subjects_Pareto/Pareto_loaded_kneetorque_bivsmono.pdf',orientation='landscape',bbox_inches='tight')
 plt.show()
 
 # knee noload torque profiles
@@ -273,5 +273,5 @@ plot_dic = {'avg_1':mean_bi_noload_knee_torque,'std_1':std_bi_noload_knee_torque
 fig = plt.figure(num='Pareto knee torque: loaded mono vs bi',figsize=(12.4, 10.8))
 utils.plot_pareto_shaded_avg(plot_dic,loadcond='loaded')
 fig.tight_layout()
-fig.savefig('./Figures/Pareto/Pareto_noload_kneetorque_bivsmono.pdf',orientation='landscape',bbox_inches='tight')
+fig.savefig('./Figures/Pareto/Subjects_Pareto/Pareto_noload_kneetorque_bivsmono.pdf',orientation='landscape',bbox_inches='tight')
 plt.show()
