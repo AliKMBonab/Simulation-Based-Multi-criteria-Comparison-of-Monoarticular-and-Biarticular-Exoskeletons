@@ -20,6 +20,7 @@ function [ p, idxs] = ParetoFront( p )
 idxs = [1 : i]';
 while i >= 1
     old_size = size(p,1);
+    a = bsxfun( @le, p(i,:), p );
     indices = sum( bsxfun( @le, p(i,:), p ), 2 ) == dim;
     indices(i) = false;
     p(indices,:) = [];
