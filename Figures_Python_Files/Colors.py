@@ -11,4 +11,7 @@ colors = {  'moon yellow':[1.00,0.75,0.11],
         'lavender purple':[0.65,0.44,0.99],
            'manatee grey':[0.57,0.58,0.59],
       'dark spring green':[0.00,0.52,0.21],
-           'magenta pink':[0.69,0.01,0.38]}
+           'magenta pink':[0.69,0.01,0.38],
+           'magenta pink':[0.69,0.01,0.38],
+             'royal blue':[0.06,0.11,0.42],
+           'burgundy red':[0.55,0.00,0.12]}
