@@ -343,6 +343,8 @@ def metabolic_energy_mass_added_pareto(unassisted_metabolic,InertialProp_Dic,cal
         return Metabolic_Change_Hip,Metabolic_Change_Thigh,Metabolic_Change_Shank,AddMass_MetabolicChange,Inertia_Thigh,Inertia_Shank
 
 def addingmass_metabolics_pareto(unassisted_metabolic, assisted_metabolics, InertialProp_Dic, subject_num = 7, trial_num = 3, calc_metabolic_cost=True):
+    Hip_weights = [70,60,50,40,30]    # Hip Weight may need to be changed according to pareto simulations
+    Knee_weights = [70,60,50,40,30]   # Knee Weight may need to be changed according to pareto simulations
     Metabolic_Change_Hip = np.zeros((len(Hip_weights)*len(Knee_weights),subject_num*trial_num))
     Metabolic_Change_Thigh = np.zeros((len(Hip_weights)*len(Knee_weights),subject_num*trial_num))
     Metabolic_Change_Shank = np.zeros((len(Hip_weights)*len(Knee_weights),subject_num*trial_num))
@@ -358,25 +360,41 @@ def addingmass_metabolics_pareto(unassisted_metabolic, assisted_metabolics, Iner
     for i in range(subject_num):
         for j in range(trial_num):
             out = metabolic_energy_mass_added_pareto(unassisted_metabolic[c],InertialProp_Dic,calc_metabolic_cost=calc_metabolic_cost)
-            Metabolic_Change_Hip[:,c] = out[1]
-            Metabolic_Change_Thigh[:,c] = out[2]
-            Metabolic_Change_Shank[:,c] = out[3]
-            Total_AddMass_MetabolicChange[:,c] =  out[4]
-            Inertia_Thigh[:,c] = out[5]
-            Inertia_Shank[:,c] = out[6]
+            Metabolic_Change_Hip[:,c] = out[0]
+            Metabolic_Change_Thigh[:,c] = out[1]
+            Metabolic_Change_Shank[:,c] = out[2]
+            Total_AddMass_MetabolicChange[:,c] =  out[3]
+            Inertia_Thigh[:,c] = out[4]
+            Inertia_Shank[:,c] = out[5]
             if calc_metabolic_cost == True :
-                Waist_Metabolic[:,c] = out[7]
-                Thigh_Metabolic[:,c] = out[8]
-                Shank_Metabolic[:,c] = out[9]
-                Inertia_Thigh_Metabolic[:,c] = out[10]
-                Inertia_Shank_Metabolic[:,c] = out[11]
+                Waist_Metabolic[:,c] = out[6]
+                Thigh_Metabolic[:,c] = out[7]
+                Shank_Metabolic[:,c] = out[8]
+                Inertia_Thigh_Metabolic[:,c] = out[9]
+                Inertia_Shank_Metabolic[:,c] = out[10]
             c+=1
     Metabolics_Added_Mass = assisted_metabolics + Total_AddMass_MetabolicChange
-        if calc_metabolic_cost == True :
-            return Metabolics_Added_Mass,Metabolic_Change_Hip,Metabolic_Change_Thigh,Metabolic_Change_Shank,Total_AddMass_MetabolicChange,Inertia_Thigh,Inertia_Shank,\
+    if calc_metabolic_cost == True :
+        return Metabolics_Added_Mass,Metabolic_Change_Hip,Metabolic_Change_Thigh,Metabolic_Change_Shank,Total_AddMass_MetabolicChange,Inertia_Thigh,Inertia_Shank,\
                Waist_Metabolic,Thigh_Metabolic,Shank_Metabolic,Inertia_Thigh_Metabolic,Inertia_Shank_Metabolic
     else:
         return Metabolics_Added_Mass,Metabolic_Change_Hip,Metabolic_Change_Thigh,Metabolic_Change_Shank,AddMass_MetabolicChange,Inertia_Thigh,Inertia_Shank
+
+def addingmass_metabolics_reduction(assist_data,unassist_data,subject_num=7,trial_num=3):
+    reduction = np.zeros((25,21))
+    c=0
+    if trial_num == 1:
+        step = 3
+    elif trial_num == 2:
+        step = 2
+    elif trial_num == 3:
+        step = 1
+    else:
+        raise Exception('check trial number')
+    for i in np.arange(0,21,step=step):
+        reduction[:,c] = np.true_divide((unassist_data[:,c] - assist_data[:,c])*100,unassist_data[:,c])
+        c+=1
+    return reduction
 
 ######################################################################
 # Plot related functions
@@ -587,12 +605,13 @@ def filter_outliers(data,method='iqr',thershold=None,sim_num=25,sub_num=7,trial_
     energy data are supposed to be modified before using this filter.\n
     Methods: 'iqr': interquartile range (default), 'z-score': modified z-score
     '''
-    if data.shape[1] != sub_num*trial_num:
+    copy_data = data.copy()
+    if copy_data.shape[1] != sub_num*trial_num:
         raise Exception('data shape does not match.')
     filtered_data = np.empty((sim_num,sub_num*trial_num))
     filtered_data[:] = np.nan
     for i in range(sim_num):
-        same_weights_data = data[i,:]
+        same_weights_data = copy_data[i,:]
         if method == 'iqr':
             idx = outliers_iqr(same_weights_data)
         elif method == 'z-score':
@@ -628,8 +647,11 @@ def pareto_from_mean_power(power_mean,power_std):
         std_energy[i]  = np.abs(integrate.simps(np.abs(power_mean[:,i]+power_std[:,i]),gcp) - integrate.simps(np.abs(power_mean[:,i]),gcp))
     return mean_energy, std_energy
 
-def pareto_metabolics_reduction(assist_data,unassist_data,simulation_num=25,subject_num=7,trial_num=3):
-    reshaped_assisted_data = np.reshape(assist_data,(simulation_num,subject_num*trial_num),order='F')
+def pareto_metabolics_reduction(assist_data,unassist_data,simulation_num=25,subject_num=7,trial_num=3,reshape_data=True):
+    if reshape_data == True:
+        reshaped_assisted_data = np.reshape(assist_data,(simulation_num,subject_num*trial_num),order='F')
+    else:
+        reshaped_assisted_data = assist_data
     reduction = np.zeros((simulation_num,subject_num*trial_num))
     c=0
     if trial_num == 1:
