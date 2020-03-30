@@ -443,6 +443,8 @@ def pareto_data_extraction(Subject_Dic,loadcond='noload',calculatenergy=True):
     unsimulated = []
     KneeActuatorEnergy_Data = np.zeros(len(hip_list)*len(knee_list))
     HipActuatorEnergy_Data = np.zeros(len(hip_list)*len(knee_list))
+    Regen_KneeActuatorEnergy_Data = np.zeros(len(hip_list)*len(knee_list))
+    Regen_HipActuatorEnergy_Data = np.zeros(len(hip_list)*len(knee_list))
     MetabolicEnergy_Data = np.zeros(len(hip_list)*len(knee_list))
     KneeActuatorEnergy_FromPower_Data = np.zeros(len(hip_list)*len(knee_list))
     HipActuatorEnergy_FromPower_Data = np.zeros(len(hip_list)*len(knee_list))
@@ -476,6 +478,8 @@ def pareto_data_extraction(Subject_Dic,loadcond='noload',calculatenergy=True):
                 if calculatenergy == True:
                     HipActuatorEnergy_Data[c]  = np.nan
                     KneeActuatorEnergy_Data[c] = np.nan
+                    Regen_HipActuatorEnergy_Data[c]  = np.nan
+                    Regen_KneeActuatorEnergy_Data[c] = np.nan
                     MetabolicEnergy_Data[c] = np.nan
                     HipActuatorEnergy_FromPower_Data[c]  = np.nan
                     KneeActuatorEnergy_FromPower_Data[c] = np.nan
@@ -510,13 +514,13 @@ def pareto_data_extraction(Subject_Dic,loadcond='noload',calculatenergy=True):
                             "Left_Parameter":'Hip_Left_Actuator',
                                         "gl": gl,
                             "Subject_Mass": subject_mass}
-                    hip_actuator_energy = actuators_energy_calc(Subject_Dic=energy_dic)
+                    hip_actuator_energy = actuators_energy_calc(Subject_Dic=energy_dic,regen=True)
                     energy_dic = {"Directory":actuator_power_data_dir,
                             "Right_Parameter":'Knee_Right_Actuator',
                             "Left_Parameter":'Knee_Left_Actuator',
                                         "gl": gl,
                             "Subject_Mass": subject_mass}
-                    knee_actuator_energy = actuators_energy_calc(Subject_Dic=energy_dic)
+                    knee_actuator_energy = actuators_energy_calc(Subject_Dic=energy_dic,regen=True)
                     energy_dic = {"Directory":metabolic_power_data_dir,
                                         "gl": gl,
                             "Subject_Mass": subject_mass}
@@ -538,8 +542,10 @@ def pareto_data_extraction(Subject_Dic,loadcond='noload',calculatenergy=True):
                             "Subject_Mass": subject_mass}
                     metabolic_power,metabolic_energy_from_power = metabolic_energy_instant_power(energy_dic)
                     # storing data into variables
-                    HipActuatorEnergy_Data[c]  = hip_actuator_energy
-                    KneeActuatorEnergy_Data[c] = knee_actuator_energy
+                    HipActuatorEnergy_Data[c]  = hip_actuator_energy[0]
+                    KneeActuatorEnergy_Data[c] = knee_actuator_energy[0]
+                    Regen_HipActuatorEnergy_Data[c]  = hip_actuator_energy[1]
+                    Regen_KneeActuatorEnergy_Data[c] = knee_actuator_energy[1]
                     MetabolicEnergy_Data[c] = metabolic_energy
                     HipActuatorEnergy_FromPower_Data[c]  = hip_actuator_energy_from_power
                     KneeActuatorEnergy_FromPower_Data[c] = knee_actuator_energy_from_power
@@ -555,7 +561,7 @@ def pareto_data_extraction(Subject_Dic,loadcond='noload',calculatenergy=True):
     return HipActuator_Torque_Data,KneeActuator_Torque_Data,HipActuator_Power_Data,KneeActuator_Power_Data,\
            HipActuatorEnergy_Data,KneeActuatorEnergy_Data,MetabolicEnergy_Data,\
            HipActuatorEnergy_FromPower_Data,KneeActuatorEnergy_FromPower_Data,MetabolicEnergy_FromPower_Data,\
-           Metabolics_Power_Data,unsimulated
+           Metabolics_Power_Data,unsimulated,Regen_HipActuatorEnergy_Data,Regen_KneeActuatorEnergy_Data
 
 
 def pareto_data_subjects(configuration,loadcond='noload'):
@@ -590,6 +596,8 @@ def pareto_data_subjects(configuration,loadcond='noload'):
     unsimulated = []
     KneeActuatorEnergy_Data = np.zeros(len(subjects)*len(trials_num)*len(hip_list)*len(knee_list))
     HipActuatorEnergy_Data = np.zeros(len(subjects)*len(trials_num)*len(hip_list)*len(knee_list))
+    Regen_KneeActuatorEnergy_Data = np.zeros(len(subjects)*len(trials_num)*len(hip_list)*len(knee_list))
+    Regen_HipActuatorEnergy_Data = np.zeros(len(subjects)*len(trials_num)*len(hip_list)*len(knee_list))
     MetabolicEnergy_Data = np.zeros(len(subjects)*len(trials_num)*len(hip_list)*len(knee_list))
     KneeActuatorEnergy_fromPower_Data = np.zeros(len(subjects)*len(trials_num)*len(hip_list)*len(knee_list))
     HipActuatorEnergy_fromPower_Data = np.zeros(len(subjects)*len(trials_num)*len(hip_list)*len(knee_list))
@@ -620,7 +628,7 @@ def pareto_data_subjects(configuration,loadcond='noload'):
             
             hip_torque,knee_torque,hip_power,knee_power,hip_energy,\
             knee_energy,metabolics_energy,hip_energy_frompower,knee_energy_frompower,\
-            metabolics_energy_frompower,metabolic_power,unsuccessful = \
+            metabolics_energy_frompower,metabolic_power,unsuccessful,regen_hip_energy,regen_knee_energy = \
             pareto_data_extraction(Subject_Dictionary,loadcond=loadcond)
             # saving data into initialized variables
             unsimulated.append(unsuccessful)
@@ -630,6 +638,8 @@ def pareto_data_subjects(configuration,loadcond='noload'):
             KneeActuator_Power_Data[:,c:c+len(hip_list)*len(knee_list)]  = knee_power
             HipActuatorEnergy_Data[c:c+len(hip_list)*len(knee_list)]     = hip_energy
             KneeActuatorEnergy_Data[c:c+len(hip_list)*len(knee_list)]    = knee_energy
+            Regen_HipActuatorEnergy_Data[c:c+len(hip_list)*len(knee_list)]     = regen_hip_energy
+            Regen_KneeActuatorEnergy_Data[c:c+len(hip_list)*len(knee_list)]    = regen_knee_energy
             MetabolicEnergy_Data[c:c+len(hip_list)*len(knee_list)]       = metabolics_energy
             Metabolic_Power_Data [:,c:c+len(hip_list)*len(knee_list)]      = metabolic_power
             HipActuatorEnergy_fromPower_Data[c:c+len(hip_list)*len(knee_list)]     = hip_energy
@@ -639,7 +649,7 @@ def pareto_data_subjects(configuration,loadcond='noload'):
     return HipActuator_Torque_Data,KneeActuator_Torque_Data,HipActuator_Power_Data,KneeActuator_Power_Data,\
             HipActuatorEnergy_Data,KneeActuatorEnergy_Data,MetabolicEnergy_Data,\
             HipActuatorEnergy_fromPower_Data,KneeActuatorEnergy_fromPower_Data,MetabolicEnergy_fromPower_Data,\
-            Metabolic_Power_Data,unsimulated
+            Metabolic_Power_Data,Regen_HipActuatorEnergy_Data,Regen_KneeActuatorEnergy_Data,unsimulated
 #####################################################################################
 # Functions related to data extraction which will be used for extracting RRA data, Unassisted subjects
 # data and finally data for the specific weights. This data extraction functions include muscles moment,

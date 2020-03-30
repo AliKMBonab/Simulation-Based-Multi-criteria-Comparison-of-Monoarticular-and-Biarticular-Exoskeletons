@@ -14,4 +14,5 @@ colors = {  'moon yellow':[1.00,0.75,0.11],
            'magenta pink':[0.69,0.01,0.38],
            'magenta pink':[0.69,0.01,0.38],
              'royal blue':[0.06,0.11,0.42],
-           'burgundy red':[0.55,0.00,0.12]}
+           'burgundy red':[0.55,0.00,0.12],
+                   'gold':[0.97,0.65,0.01]}

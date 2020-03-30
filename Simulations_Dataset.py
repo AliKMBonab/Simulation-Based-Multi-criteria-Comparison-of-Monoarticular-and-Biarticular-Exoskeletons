@@ -103,10 +103,12 @@ configs = ['Monoarticular','Biarticular']
 config_names = ['monoarticular','biarticular']
 middle =['hipactuator','kneeactuator','hipactuator','kneeactuator',\
          'hipactuator','kneeactuator','metabolics',\
-         'processed_hipactuator','processed_kneeactuator','processed_metabolics','metabolics','unsimulated']
+         'processed_hipactuator','processed_kneeactuator',\
+         'processed_metabolics','metabolics','hipregenrative','kneeregenrative','unsimulated']
 suffixes = ['torque','torque','power','power',\
             'energy','energy','energy',\
-            'energy','energy','energy','power','unsimulated']
+            'energy','energy','energy','power',\
+            'energy','energy','unsimulated']
 #***************************
 print('Section 04:\t extracting Pareto exoskeletons related files: Actuators Data, Muscles Activation, Muscles Moment, Metabolic Energy.\n')
 #***************************
