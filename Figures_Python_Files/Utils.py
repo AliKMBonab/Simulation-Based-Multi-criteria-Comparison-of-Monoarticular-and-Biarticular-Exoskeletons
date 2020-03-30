@@ -17,12 +17,11 @@ from numpy import nanmean, nanstd
 from perimysium import postprocessing as pp
 from perimysium import dataman
 import pathlib
-import matlab.engine
-eng = matlab.engine.start_matlab()
 #######################################################################
 #######################################################################
 # Data saving and reading related functions
-
+def bsxfun(fun,A,B):
+    print('test')    
 def listToString(s):
     """fmt = ",".join(["%s"] + ["%s"] * (Hip_JointMoment.shape[1]-1))
     numpy.savetxt, at least as of numpy 1.6.2, writes bytes
@@ -542,6 +541,7 @@ def plot_joint_muscle_exo (nrows,ncols,plot_dic,color_dic,ylabel,legend_loc=[0,1
 ######################################################################
 ######################################################################
 # Data Processing related functions for Pareto Simulations
+
 def delete_subject_data(data,subject,profile_energy='profile',is_reshaped=False):
     if profile_energy not in ['profile','energy']:
         raise Exception('profile_energy: invalid condition')
@@ -622,20 +622,6 @@ def filter_outliers(data,method='iqr',thershold=None,sim_num=25,sub_num=7,trial_
         filtered_data[i,:] = np.transpose(same_weights_data)
     return filtered_data
 
-# TODO: fix pareto_filtering to use matlab function using python
-# def pareto_filtering(actuators_energy,metabolics_energy,forsubjects=False):
-    subjects = ['05','07','09','10','11','12','14']
-    pareto_front_dataset = {}
-    if forsubjects == True:
-        for i in range(7):
-            data = np.column_stack(metabolics_energy[:,i],actuators_energy[:,i])
-            paretofront,idx = eng.ParetoFront(data)
-            pareto_front_dataset = {'subject{}'.format(subjects[i]):paretofront}
-        return pareto_front_dataset
-    else:
-        paretofront,_ = eng.ParetoFront(data)
-        return paretofront
-
 def pareto_from_mean_power(power_mean,power_std):
     if power_mean.shape[0] != power_std.shape[0]:
         raise Exception('input dataset do not match!')
@@ -673,11 +659,11 @@ def pareto_avg_std_energy(data,simulation_num=25,subject_num=7,trial_num=3,resha
     else:
         reshaped_data = data
     if filter_data == True:
-        reshaped_data = filter_outliers(reshaped_data,*args,**kwargs)
+        final_data = filter_outliers(reshaped_data,*args,**kwargs)
     if delete_subject != None:
-        reshaped_data = delete_subject_data(reshaped_data,delete_subject,profile_energy='energy',is_reshaped=True)
-    avg = np.nanmean(reshaped_data,axis=1)
-    std = np.nanstd(reshaped_data,axis=1)
+        final_data = delete_subject_data(reshaped_data,delete_subject,profile_energy='energy',is_reshaped=True)
+    avg = np.nanmean(final_data,axis=1)
+    std = np.nanstd(final_data,axis=1)
     return avg,std
 
 def pareto_avg_std_within_subjects(data,simulation_num=25,subject_num=7,trial_num=3,reshape=True,delete_subject=None):
@@ -790,7 +776,7 @@ def plot_pareto_curve_subjects (nrows,ncols,nplot,plot_dic,loadcond,legend_loc=[
     xlabel = plot_dic ['xlabel']
     # handle labels
     if labels == None:
-        labels = labels = np.arange(1,26,1)
+        labels = np.arange(1,26,1)
     # handle titles
     if 'plot_titles' not in plot_dic:
         subjects = ['05','07','09','10','11','12','14']
