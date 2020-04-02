@@ -21,6 +21,7 @@ idxs = [1 : i]';
 while i >= 1
     old_size = size(p,1);
     a = bsxfun( @le, p(i,:), p );
+    x = sum( bsxfun( @le, p(i,:), p ), 2 );
     indices = sum( bsxfun( @le, p(i,:), p ), 2 ) == dim;
     indices(i) = false;
     p(indices,:) = [];

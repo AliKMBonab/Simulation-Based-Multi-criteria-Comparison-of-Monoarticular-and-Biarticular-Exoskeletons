@@ -20,8 +20,55 @@ import pathlib
 #######################################################################
 #######################################################################
 # Data saving and reading related functions
-def bsxfun(fun,A,B):
-    print('test')    
+def bsxfun(A,B,fun,dtype=int):
+    '''bsxfun implemented from matlab bsxfun,\n
+    functions:\n
+        -ge: A greater than or equal B \n
+        -le: A less than or equal B \n
+        -gt: A greater than B \n
+        -lt: A less than B \n
+    '''
+    if A.ndim == 1 and B.ndim == 1 :
+        C = np.zeros((A.shape[0],B.shape[0]))
+        for i in range(B.shape[0]):
+            if fun == 'ge':
+                C[:,i] = np.greater_equal(A,B[i],dtype=dtype)
+            elif fun == 'gt':
+                C[:,i] = np.greater(A,B[i],dtype=dtype)
+            elif fun == 'le':
+                C[:,i] = np.less_equal(A,B[i],dtype=dtype)
+            elif fun == 'lt':
+                C[:,i] = np.less(A,B[i],dtype=dtype)
+            else:
+                raise Exception('function is not defined')
+    if A.ndim == 1 and B.ndim != 1:
+        C = np.zeros((B.shape[0],A.shape[0]))
+        for i in range(B.shape[0]):
+            if fun == 'ge':
+                C[i,:] = np.greater_equal(A,B[i,:],dtype=dtype)
+            elif fun == 'gt':
+                C[i,:] = np.greater(A,B[i,:],dtype=dtype)
+            elif fun == 'le':
+                C[i,:] = np.less_equal(A,B[i,:],dtype=dtype)
+            elif fun == 'lt':
+                C[i,:] = np.less(A,B[i,:],dtype=dtype)
+            else:
+                raise Exception('function is not defined')
+    elif A.ndim == 2:
+        C = np.zeros((A.shape[0],B.shape[0]))
+        for i in range(A.shape[0]):
+            if fun == 'ge':
+                C[i,:] = np.greater_equal(A[i,:],B,dtype=dtype)
+            elif fun == 'gt':
+                C[i,:] = np.greater(A[i,:],B,dtype=dtype)
+            elif fun == 'le':
+                C[i,:] = np.less_equal(A[i,:],B,dtype=dtype)
+            elif fun == 'lt':
+                C[i,:] = np.less(A[i,:],B,dtype=dtype)
+            else:
+                raise Exception('function is not defined')
+    return C
+   
 def listToString(s):
     """fmt = ",".join(["%s"] + ["%s"] * (Hip_JointMoment.shape[1]-1))
     numpy.savetxt, at least as of numpy 1.6.2, writes bytes
@@ -542,6 +589,39 @@ def plot_joint_muscle_exo (nrows,ncols,plot_dic,color_dic,ylabel,legend_loc=[0,1
 ######################################################################
 # Data Processing related functions for Pareto Simulations
 
+def paretofront(P):
+    '''
+     Filters a set of points P according to Pareto dominance, i.e., points
+     that are dominated (both weakly and strongly) are filtered.
+    
+     Inputs: 
+     - P    : N-by-D matrix, where N is the number of points and D is the 
+              number of elements (objectives) of each point.
+    
+     Outputs:
+     - P    : Pareto-filtered P
+     - idxs : indices of the non-dominated solutions
+    
+    Example:\n
+    p = [1 1 1; 2 0 1; 2 -1 1; 1, 1, 0];
+     [f, idxs] = paretoFront(p)
+         f = [1 1 1; 2 0 1]
+         idxs = [1; 2]
+    '''
+    dim = P.shape[1]
+    i   = P.shape[0]-1
+    idxs= np.arange(0,i+1,1)
+    while i >= 1:
+        old_size = P.shape[0]
+        a = bsxfun(P[i,:],P, fun='le')
+        x = np.sum( bsxfun(P[i,:],P, fun='le'), axis=1,dtype=int)
+        indices = np.not_equal(np.sum( bsxfun(P[i,:], P, fun='le'), axis=1,dtype=int),dim,dtype=int)
+        indices[i] = True
+        P = P[indices,:]
+        idxs = idxs[indices]
+        i = i - 1 - (old_size - P.shape[0]) + np.sum(indices[i:-1]);
+    return P,idxs
+
 def delete_subject_data(data,subject,profile_energy='profile',is_reshaped=False):
     if profile_energy not in ['profile','energy']:
         raise Exception('profile_energy: invalid condition')
@@ -886,6 +966,7 @@ def plot_pareto_comparison(plot_dic,loadcond,compare,labels=None,legend_loc=[0],
     '''
     ylabel = plot_dic['ylabel']
     subjects = ['05','07','09','10','11','12','14']
+    trial = ['01','02','03']
     # handle comparison cases
     if compare.lower() == 'weights':
         data_1 = plot_dic['data_1']
@@ -918,14 +999,14 @@ def plot_pareto_comparison(plot_dic,loadcond,compare,labels=None,legend_loc=[0],
     # handle titles
     if 'plot_titles' not in plot_dic:
         if compare == 'subjects':
-            plot_titles = ['subject{},{}'.format(i,loadcond) for i in subjects]
+            plot_titles = ['subject{}trial{},{}'.format(i,j,loadcond) for i in subjects for j in trial]
         else:
             plot_titles = gen_paretocurve_label()
     else:
         plot_titles = plot_dic['plot_titles']
     # x data for different scenarios
     if compare.lower() == 'weights':
-        x_data = np.arange(1,8,1)
+        x_data = np.arange(1,22,1)
     else: 
         x_data = np.arange(1,len(labels)+1,1)
     # main plots
@@ -941,12 +1022,6 @@ def plot_pareto_comparison(plot_dic,loadcond,compare,labels=None,legend_loc=[0],
         no_top_right(ax)
         if i in legend_loc:
             ax.legend(loc='best',frameon=False)
-        if i in range((nrows*ncols)-nrows,(nrows*ncols)):
-            ax.set_xticks(x_data)
-            if compare.lower() == 'weights':
-                ax.set_xticklabels(subjects)
-            else:
-                ax.set_xticklabels(labels)
         if i in np.arange(0,nrows*ncols,ncols):
             ax.set_ylabel(ylabel)
         plt.tight_layout()

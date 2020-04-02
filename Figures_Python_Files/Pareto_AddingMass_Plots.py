@@ -114,7 +114,7 @@ mono_noload_metabolics_addedmass_percent = utils.addingmass_metabolics_reduction
 # mean & std metabolics cost reduction percents after adding mass
 mean_bi_noload_metabolics_addedmass_percent, std_bi_noload_metabolics_addedmass_percent = utils.pareto_avg_std_energy(bi_noload_metabolics_addedmass_percent,reshape=False)
 mean_mono_noload_metabolics_addedmass_percent, std_mono_noload_metabolics_addedmass_percent = utils.pareto_avg_std_energy(mono_noload_metabolics_addedmass_percent,reshape=False)
-'''
+
 #####################################################################################
 # plots
 
@@ -334,7 +334,7 @@ plt.legend(loc='best',frameon=False)
 fig.tight_layout()
 fig.savefig('./Figures/Pareto/Adding_Mass_Pareto/Pareto_Noload_Mono_NonGenVsGen.pdf',orientation='landscape',bbox_inches='tight')
 plt.show()
-'''
+
 #####################################################################################
 # All average paretos
 
