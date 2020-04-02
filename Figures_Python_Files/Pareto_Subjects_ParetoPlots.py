@@ -119,7 +119,7 @@ plot_dic = {'x1_data':bi_loaded_metabolics_percent,'x2_data':mono_loaded_metabol
           'color_1':mycolors['crimson red'],'color_2':mycolors['dark purple'],
           'ylabel':'Energy Consumption (W/kg)','xlabel':'Metabolic Reduction (%)'
           }
-fig = plt.figure(num='Pareto Curve: loaded mono vs bi',figsize=(10.4, 18.8))
+fig = plt.figure(num='Pareto Curve: loaded mono vs bi',figsize=(12.4, 18.8))
 utils.plot_pareto_curve_subjects (nrows=7,ncols=3,nplot=21,plot_dic=plot_dic,loadcond='loaded')
 fig.tight_layout()
 fig.savefig('./Figures/Pareto/Subjects_Pareto/Pareto_Load_Subjects_BiVsMono.pdf',orientation='landscape',bbox_inches='tight')
@@ -132,7 +132,7 @@ plot_dic = {'x1_data':bi_noload_metabolics_percent,'x2_data':mono_noload_metabol
           'color_1':mycolors['crimson red'],'color_2':mycolors['dark purple'],
           'ylabel':'Energy Consumption (W/kg)','xlabel':'Metabolic Reduction (%)'
           }
-fig = plt.figure(num='Pareto Curve: noload mono vs bi',figsize=(10.4, 18.8))
+fig = plt.figure(num='Pareto Curve: noload mono vs bi',figsize=(12.4, 18.8))
 utils.plot_pareto_curve_subjects (nrows=7,ncols=3,nplot=21,plot_dic=plot_dic,loadcond='noload')
 fig.tight_layout()
 fig.savefig('./Figures/Pareto/Subjects_Pareto/Pareto_Noload_Subjects_BiVsMono.pdf',orientation='landscape',bbox_inches='tight')
@@ -144,7 +144,7 @@ plot_dic = {'x1_data':bi_loaded_metabolics_percent,'x2_data':mono_loaded_metabol
           'color_1':mycolors['crimson red'],'color_2':mycolors['dark purple'],
           'ylabel':'Energy Consumption (W/kg)','xlabel':'Metabolic Reduction (%)'
           }
-fig = plt.figure(num='Pareto Curve: loaded mono vs bi - Processed',figsize=(10.4, 18.8))
+fig = plt.figure(num='Pareto Curve: loaded mono vs bi - Processed',figsize=(12.4, 18.8))
 utils.plot_pareto_curve_subjects (nrows=7,ncols=3,nplot=21,plot_dic=plot_dic,loadcond='loaded')
 fig.tight_layout()
 fig.savefig('./Figures/Pareto/Subjects_Pareto/Pareto_Load_Subjects_BiVsMono_Processed.pdf',orientation='landscape',bbox_inches='tight')
@@ -157,7 +157,7 @@ plot_dic = {'x1_data':bi_noload_metabolics_percent,'x2_data':mono_noload_metabol
           'color_1':mycolors['crimson red'],'color_2':mycolors['dark purple'],
           'ylabel':'Energy Consumption (W/kg)','xlabel':'Metabolic Reduction (%)'
           }
-fig = plt.figure(num='Pareto Curve: noload mono vs bi - Processed',figsize=(10.4, 18.8))
+fig = plt.figure(num='Pareto Curve: noload mono vs bi - Processed',figsize=(12.4, 18.8))
 utils.plot_pareto_curve_subjects (nrows=7,ncols=3,nplot=21,plot_dic=plot_dic,loadcond='noload')
 fig.tight_layout()
 fig.savefig('./Figures/Pareto/Subjects_Pareto/Pareto_Noload_Subjects_BiVsMono_Processed.pdf',orientation='landscape',bbox_inches='tight')
