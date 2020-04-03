@@ -64,28 +64,28 @@ def bsxfun(A,B,fun,dtype=int):
                 raise Exception('function is not defined')
     return C
 
-def paretofront(P):
+def paretofront_v2(P):
     '''
      Filters a set of points P according to Pareto dominance, i.e., points
-     that are dominated (both weakly and strongly) are filtered.
+     that are dominated (both weakly and strongly) are filtered.\n
+
+     Note**: this version inserts numpy.nan to the non dominant solutions instead
+     of eliminating them to pervent jagged arrays.
     
      Inputs: 
      - P    : N-by-D matrix, where N is the number of points and D is the 
               number of elements (objectives) of each point.
     
      Outputs:
-     - P    : Pareto-filtered P
-     - idxs : indices of the non-dominated solutions
-    
-    Example:\n
-    p = [1 1 1; 2 0 1; 2 -1 1; 1, 1, 0];
-     [f, idxs] = paretoFront(p)
-         f = [1 1 1; 2 0 1]
-         idxs = [1; 2]
+     - P_copy   : Pareto-filtered P, dtype: float64.
     '''
+    if P.ndim == 1:
+        P = P[:,None]
+    P_copy = P.astype('float64')
     dim = P.shape[1]
     i   = P.shape[0]-1
-    idxs= np.arange(0,i+1,1)
+    idxs = np.arange(0,i+1,1)
+    index = np.arange(0,i+1,1)
     while i >= 1:
         old_size = P.shape[0]
         a = bsxfun(P[i,:],P, fun='le')
@@ -95,16 +95,26 @@ def paretofront(P):
         P = P[indices,:]
         idxs = idxs[indices]
         i = i - 1 - (old_size - P.shape[0]) + np.sum(indices[i:-1]);
-    return P,idxs
+    for i in index:
+        if i not in idxs:
+            P_copy[i,:] = np.nan
+    return P_copy
 
-A = np.array([8,17,20,24])
-B = np.array([0,10,21])
+def manual_paretofront(data_1,data_2,indices):
+    data = np.column_stack((data_1,data_2))
+    for i,j in enumerate(indices):
+        indices[i]=j-1
+    if data.dtype != 'float64':
+        data = data.astype('float64')
+    data[~indices,:] = np.nan
+    return data
+            
+
+A = np.linspace(0,100,num=50)
+B = np.linspace(100,0,num=50)
+indices = np.array([1,50])
 p = np.array(([1, 1, 1], [2, 0, 1], [2, -1, 1], [1, 1, 0]))
-p1 = np.array([1, 1, 1])
-c = bsxfun(A,B,fun='gt')
-d = bsxfun(p1,p,fun='le')
-P,idxs = paretofront(p)
-print('p')
-print(P)
-print('idxs')
-print(idxs)
+print('##############################\n')
+data = manual_paretofront(A,B,indices)
+print('##############################\n')
+print(Index)
