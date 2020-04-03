@@ -113,7 +113,7 @@ plot_dic = {'x1_data':mean_bi_noload_metabolics_percent,'x1err_data':std_bi_nolo
           'color_1':mycolors['magenta pink'],'color_2':mycolors['lavender purple']
           }
 fig = plt.figure(num='Pareto Curve: noload mono vs bi',figsize=(10.4, 8.8))
-utils.plot_pareto_avg_curve (plot_dic,loadcond='loaded')
+utils.plot_pareto_avg_curve (plot_dic,loadcond='noload')
 plt.xlabel('Metabolic Cost Reduction (%)')
 plt.ylabel('Exoskeleton Energy Consumption (W/kg)')
 ax = plt.gca()

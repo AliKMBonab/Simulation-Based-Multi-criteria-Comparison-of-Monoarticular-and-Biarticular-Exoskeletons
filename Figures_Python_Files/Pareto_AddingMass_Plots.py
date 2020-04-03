@@ -347,7 +347,7 @@ color_1 = mycolors['magenta pink']
 color_2 = mycolors['lavender purple']
 plot_titles = ['noload, ideal','noload, exo mass','noload, exo mass + renegeration']
 
-fig = plt.figure(num='Pareto Curve: noload mono vs bi',figsize=(10.4, 18.8))
+fig = plt.figure(num='Pareto Curve: noload mono vs bi',figsize=(16.4, 10.8))
 nplot=3
 ncols=3
 nrows=1
