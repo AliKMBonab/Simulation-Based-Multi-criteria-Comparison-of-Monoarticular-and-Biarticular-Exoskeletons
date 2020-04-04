@@ -643,6 +643,7 @@ def paretofront_v2(P):
     i   = P.shape[0]-1
     index = np.arange(0,i+1,1)
     selected_index = np.arange(0,i+1,1)
+    out_index = np.ones(i+1,dtype=bool)
     if P.dtype != 'float64':
         P_copy = P.astype('float64')
     else:
@@ -650,8 +651,8 @@ def paretofront_v2(P):
     while i >= 0:
         old_size = P.shape[0]
         idxs = np.ones(old_size)
-        a = bsxfun(P[i,:],P, fun='le')
-        x = np.sum( bsxfun(P[i,:],P, fun='le'), axis=1,dtype=int)
+        a = bsxfun(P[i,:],P, fun='lt')
+        x = np.sum( bsxfun(P[i,:],P, fun='lt'), axis=1,dtype=int)
         indices = np.not_equal(np.sum( bsxfun(P[i,:], P, fun='le'), axis=1,dtype=int),dim,dtype=int)
         indices[i] = True
         P = P[indices,:]
@@ -663,7 +664,8 @@ def paretofront_v2(P):
     for i in index:
         if i not in selected_index:
             P_copy[i,:] = np.nan
-    return P_copy,idxs
+            out_index[i] = False
+    return P_copy,out_index
 
 def manual_paretofront(data_1,data_2,indices):
     '''
@@ -689,14 +691,19 @@ def paretofront_subjects(data_1,data_2,unassist_data,calc_percent=True):
     '''
     out_data_1 = np.zeros((25,21))
     out_data_2 = np.zeros((25,21))
+    reduction  = np.zeros((25,21))
     for i in range(21):
         in_data = np.column_stack((data_1[:,i],data_2[:,i]))
         out_data,idx = paretofront_v2(in_data)
         out_data_1[:,i] = out_data[:,0]
         out_data_2[:,i] = out_data[:,1]
+        if calc_percent == True:
+            reduction_subj = np.zeros(25)
+            for j in range(25):
+                r = (((unassist_data[i]-out_data_1[j,i])*100)/unassist_data[i])
+                reduction_subj[j] = r
+            reduction[:,i] = reduction_subj
     if calc_percent == True:
-        unassist_data = unassist_data[idx]
-        reduction = reduction_calc(unassist_data,out_data_1)
         return reduction,out_data_2
     else:
         return out_data_1,out_data_2
@@ -938,7 +945,9 @@ def plot_pareto_avg_curve (plot_dic,loadcond,legend_loc=0,label_on=True,errbar_o
         plt.plot(x1_data[~np.isnan(x1_data)],y1_data[~np.isnan(y1_data)],ls='-',lw=1,color=color_1)
         plt.plot(x2_data[~np.isnan(x2_data)],y2_data[~np.isnan(y2_data)],ls='-',lw=1,color=color_2)       
     
-def plot_pareto_curve_subjects (nrows,ncols,nplot,plot_dic,loadcond,legend_loc=[0],labels=None,label_on=True,*args, **kwargs):
+def plot_pareto_curve_subjects (nrows,ncols,nplot,plot_dic,loadcond,\
+                                line=False,legend_loc=[0],labels=None,\
+                                label_on=True,alpha=1,*args, **kwargs):
     x1_data = plot_dic['x1_data']
     x2_data = plot_dic['x2_data']
     y1_data = plot_dic['y1_data']
@@ -967,11 +976,14 @@ def plot_pareto_curve_subjects (nrows,ncols,nplot,plot_dic,loadcond,legend_loc=[
     # main plots
     for i in range(nplot):
         ax = plt.subplot(nrows,ncols,i+1)
-        plt.scatter(x1_data[:,i],y1_data[:,i],marker="o",color=color_1,label=legend_1,*args, **kwargs)
-        plt.scatter(x2_data[:,i],y2_data[:,i],marker="v",color=color_2,label=legend_2,*args, **kwargs)
+        plt.scatter(x1_data[:,i],y1_data[:,i],marker="o",color=color_1,label=legend_1,alpha=1,*args, **kwargs)
+        plt.scatter(x2_data[:,i],y2_data[:,i],marker="v",color=color_2,label=legend_2,alpha=1,*args, **kwargs)
         if label_on == True:
             label_datapoints(x1_data[:,i],y1_data[:,i],labels,*args, **kwargs)
             label_datapoints(x2_data[:,i],y2_data[:,i],labels,ha='left',*args, **kwargs)
+        if line == True:
+            plt.plot(x1_data[~np.isnan(x1_data)],y1_data[~np.isnan(y1_data)],ls='-',lw=1,color=color_1)
+            plt.plot(x2_data[~np.isnan(x2_data)],y2_data[~np.isnan(y2_data)],ls='-',lw=1,color=color_2)       
         plt.title(plot_titles[i])
         no_top_right(ax)
         if i in legend_loc:
