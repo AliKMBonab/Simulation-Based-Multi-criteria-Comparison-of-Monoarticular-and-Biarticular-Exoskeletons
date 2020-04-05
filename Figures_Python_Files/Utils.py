@@ -685,7 +685,7 @@ def manual_paretofront(data_1,data_2,indices):
             data[i,:] = np.nan
     return data
 
-def paretofront_subjects(data_1,data_2,unassist_data,calc_percent=True):
+def paretofront_subjects(data_1,data_2,unassist_data=None,calc_percent=True,adding_mass_case=False):
     '''
     data_1 assumed to be metabolic energy
     '''
@@ -698,11 +698,14 @@ def paretofront_subjects(data_1,data_2,unassist_data,calc_percent=True):
         out_data_1[:,i] = out_data[:,0]
         out_data_2[:,i] = out_data[:,1]
         if calc_percent == True:
-            reduction_subj = np.zeros(25)
-            for j in range(25):
-                r = (((unassist_data[i]-out_data_1[j,i])*100)/unassist_data[i])
-                reduction_subj[j] = r
-            reduction[:,i] = reduction_subj
+            if adding_mass_case == False:
+                reduction_subj = np.zeros(25)
+                for j in range(25):
+                    r = (((unassist_data[i]-out_data_1[j,i])*100)/unassist_data[i])
+                    reduction_subj[j] = r
+                reduction[:,i] = reduction_subj
+    if adding_mass_case == True:
+        reduction = addingmass_metabolics_reduction(out_data_1,unassist_data)
     if calc_percent == True:
         return reduction,out_data_2
     else:
