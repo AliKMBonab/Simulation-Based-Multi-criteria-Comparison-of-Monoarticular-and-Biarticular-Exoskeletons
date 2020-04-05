@@ -119,6 +119,22 @@ mean_mono_noload_metabolics_addedmass_percent, std_mono_noload_metabolics_addedm
 
 #####################################################################################
 # Pareto filtering
+unassist_noload_metabolics = unassisted_energy_dataset['noload_metabolics_energy']
+bi_noload_metabolics_percent_Paretofront,\
+bi_noload_energy_Paretofront = utils.paretofront_subjects(bi_noload_metabolics,bi_noload_energy,unassist_noload_metabolics)
+mono_noload_metabolics_percent_Paretofront,\
+mono_noload_energy_Paretofront = utils.paretofront_subjects(mono_noload_metabolics,mono_noload_energy,unassist_noload_metabolics)
+#added mass
+bi_noload_metabolics_addedmass_percent_Paretofront,\
+bi_noload_energy_addedmass_Paretofront = utils.paretofront_subjects(biarticular_out[0],bi_noload_energy,noload_metabolics_energy_biarticular_mass_added,adding_mass_case=True)
+mono_noload_metabolics_addedmass_percent_Paretofront,\
+mono_noload_energy_addedmass_Paretofront = utils.paretofront_subjects(monoarticular_out[0],mono_noload_energy,noload_metabolics_energy_monoarticular_mass_added,adding_mass_case=True)
+# regenerated
+bi_noload_metabolics_addedmass_regen_percent_Paretofront,\
+bi_noload_energy_regen_Paretofront = utils.paretofront_subjects(biarticular_out[0],bi_noload_regen_energy,noload_metabolics_energy_biarticular_mass_added,adding_mass_case=True)
+mono_noload_metabolics_addedmass_regen_percent_Paretofront,\
+mono_noload_energy_regen_Paretofront = utils.paretofront_subjects(monoarticular_out[0],mono_noload_regen_energy,noload_metabolics_energy_monoarticular_mass_added,adding_mass_case=True)
+
 # noload biarticular
 bi_noload_indices = np.array([25,24,20,19,18,14,13,12,11,6,1])
 mean_bi_noload_paretofront = utils.manual_paretofront(mean_bi_noload_metabolics_percent,mean_bi_noload_energy,bi_noload_indices)
@@ -139,268 +155,197 @@ mono_noload_indices = np.array([25,24,20,15,19,14,13,12,11])
 mean_mono_noload_addedmass_paretofront = utils.manual_paretofront(mean_mono_noload_metabolics_addedmass_percent,mean_mono_noload_energy,mono_noload_indices)
 std_mono_noload_addedmass_paretofront = utils.manual_paretofront(std_mono_noload_metabolics_addedmass_percent,std_mono_noload_energy,mono_noload_indices)
 
-# noload biarticular with regeneration
-bi_noload_indices = np.array([25,24,20,19,18,14,13,12,11,6,1])
-mean_bi_noload_regen_paretofront = utils.manual_paretofront(mean_bi_noload_metabolics_percent,mean_bi_noload_regen_energy,bi_noload_indices)
-std_bi_noload_regen_paretofront = utils.manual_paretofront(std_bi_noload_metabolics_percent,std_bi_noload_regen_energy,bi_noload_indices)
+# noload biarticular added mass with regeneration
+bi_noload_indices = np.array([24,22,20,19,18,17,13,12,11])
+mean_bi_noload_regen_paretofront = utils.manual_paretofront(mean_bi_noload_metabolics_addedmass_percent,mean_bi_noload_regen_energy,bi_noload_indices)
+std_bi_noload_regen_paretofront = utils.manual_paretofront(std_bi_noload_metabolics_addedmass_percent,std_bi_noload_regen_energy,bi_noload_indices)
 
-# noload monoarticular with regeneration
-mono_noload_indices = np.array([25,20,15,14,13,8,7,6,2,1])
-mean_mono_noload_regen_paretofront = utils.manual_paretofront(mean_mono_noload_metabolics_percent,mean_mono_noload_regen_energy,mono_noload_indices)
-std_mono_noload_regen_paretofront = utils.manual_paretofront(std_mono_noload_metabolics_percent,std_mono_noload_regen_energy,mono_noload_indices)
-
-#####################################################################################
-# plots
-
-# subjects pareto curve: noload mono vs biarticular
-
-plot_dic = {'x1_data':bi_noload_metabolics_percent,'x2_data':mono_noload_metabolics_percent,
-          'y1_data':bi_noload_energy,'y2_data':mono_noload_energy,
-          'color_1':mycolors['magenta pink'],'color_2':mycolors['lavender purple'],
-          'ylabel':'Energy Consumption (W/kg)','xlabel':'Metabolic Reduction (%)'
-          }
-fig = plt.figure(num='Pareto Curve: noload mono vs bi',figsize=(10.4, 18.8))
-utils.plot_pareto_curve_subjects (nrows=7,ncols=3,nplot=21,plot_dic=plot_dic,loadcond='noload')
-fig.tight_layout()
-fig.savefig('./Figures/Pareto/Adding_Mass_Pareto/Pareto_Noload_Subjects_BiVsMono_NoMass.pdf',orientation='landscape',bbox_inches='tight')
-plt.show()
-
-# average pareto curve: noload mono vs biarticular
-
-plot_dic = {'x1_data':mean_bi_noload_metabolics_percent,'x1err_data':std_bi_noload_metabolics_percent,
-          'x2_data':mean_mono_noload_metabolics_percent,'x2err_data':std_mono_noload_metabolics_percent,
-          'y1_data':mean_bi_noload_energy,'y1err_data':std_bi_noload_energy,
-          'y2_data':mean_mono_noload_energy,'y2err_data':std_mono_noload_energy,
-          'color_1':mycolors['magenta pink'],'color_2':mycolors['lavender purple']
-          }
-fig = plt.figure(num='Pareto Curve: noload mono vs bi',figsize=(10.4, 8.8))
-utils.plot_pareto_avg_curve (plot_dic,loadcond='noload')
-plt.xlabel('Metabolic Cost Reduction (%)')
-plt.ylabel('Exoskeleton Energy Consumption (W/kg)')
-ax = plt.gca()
-utils.no_top_right(ax)
-plt.legend(loc='best',frameon=False)
-fig.tight_layout()
-fig.savefig('./Figures/Pareto/Adding_Mass_Pareto/Pareto_Noload_BiVsMono_NoMass.pdf',orientation='landscape',bbox_inches='tight')
-plt.show()
+# noload monoarticular added mass with regeneration
+mono_noload_indices = np.array([25,24,20,15,14,13,12,11])
+mean_mono_noload_regen_paretofront = utils.manual_paretofront(mean_mono_noload_metabolics_addedmass_percent,mean_mono_noload_regen_energy,mono_noload_indices)
+std_mono_noload_regen_paretofront = utils.manual_paretofront(std_mono_noload_metabolics_addedmass_percent,std_mono_noload_regen_energy,mono_noload_indices)
 
 #####################################################################################
 # plots with masses
 
-# subjects pareto curve: noload mono vs biarticular mass added
+# subjects pareto front: noload mono vs biarticular mass added
 
-plot_dic = {'x1_data':bi_noload_metabolics_addedmass_percent,'x2_data':mono_noload_metabolics_addedmass_percent,
-          'y1_data':bi_noload_energy,'y2_data':mono_noload_energy,
+plot_dic = {'x1_data':bi_noload_metabolics_addedmass_percent_Paretofront,'x2_data':mono_noload_metabolics_addedmass_percent_Paretofront,
+          'y1_data':bi_noload_energy_addedmass_Paretofront,'y2_data':mono_noload_energy_addedmass_Paretofront,
           'color_1':mycolors['burgundy red'],'color_2':mycolors['royal blue'],
           'ylabel':'Energy Consumption (W/kg)','xlabel':'Metabolic Reduction (%)'
           }
-fig = plt.figure(num='Pareto Curve: noload mono vs bi',figsize=(10.4, 18.8))
+fig = plt.figure(num='Pareto Front: noload mono vs bi',figsize=(10.4, 18.8))
 utils.plot_pareto_curve_subjects (nrows=7,ncols=3,nplot=21,plot_dic=plot_dic,loadcond='noload')
 fig.tight_layout()
-fig.savefig('./Figures/Pareto/Adding_Mass_Pareto/Pareto_Noload_Subjects_BiVsMono_MassAdded.pdf',orientation='landscape',bbox_inches='tight')
+fig.savefig('./Figures/Paretofront/Adding_Mass_Pareto/Pareto_Noload_Subjects_BiVsMono_MassAdded.pdf',orientation='landscape',bbox_inches='tight')
 plt.show()
 
-# subjects pareto curve: biarticular mass added vs biarticular noload
+# subjects pareto front: biarticular mass added vs biarticular noload
 
-plot_dic = {'x1_data':bi_noload_metabolics_addedmass_percent,'x2_data':bi_noload_metabolics_percent,
-          'y1_data':bi_noload_energy,'y2_data':bi_noload_energy,
+plot_dic = {'x1_data':bi_noload_metabolics_addedmass_percent_Paretofront,'x2_data':bi_noload_metabolics_percent_Paretofront,
+          'y1_data':bi_noload_energy_addedmass_Paretofront,'y2_data':bi_noload_energy_Paretofront,
           'color_1':mycolors['burgundy red'],'color_2':mycolors['gold'],
           'ylabel':'Energy Consumption (W/kg)','xlabel':'Metabolic Reduction (%)',
           'legend_1': 'bi non-ideal','legend_2': 'bi ideal'}
-fig = plt.figure(num='Pareto Curve: noload bi non-ideal vs ideal',figsize=(10.4, 18.8))
+fig = plt.figure(num='Pareto Front: noload bi non-ideal vs ideal',figsize=(10.4, 18.8))
 utils.plot_pareto_curve_subjects (nrows=7,ncols=3,nplot=21,plot_dic=plot_dic,loadcond='noload')
 fig.tight_layout()
-fig.savefig('./Figures/Pareto/Adding_Mass_Pareto/Pareto_Noload_Subjects_Bi_MassAddedVSIdeal.pdf',orientation='landscape',bbox_inches='tight')
+fig.savefig('./Figures/Paretofront/Adding_Mass_Pareto/Pareto_Noload_Subjects_Bi_MassAddedVSIdeal.pdf',orientation='landscape',bbox_inches='tight')
 plt.show()
 
-# subjects pareto curve: monoarticular mass added vs monoarticular noload
+# subjects pareto front: monoarticular mass added vs monoarticular noload
 
-plot_dic = {'x1_data':mono_noload_metabolics_addedmass_percent,'x2_data':mono_noload_metabolics_percent,
-          'y1_data':mono_noload_energy,'y2_data':mono_noload_energy,
+plot_dic = {'x1_data':mono_noload_metabolics_addedmass_percent_Paretofront,'x2_data':mono_noload_metabolics_percent_Paretofront,
+          'y1_data':mono_noload_energy_addedmass_Paretofront,'y2_data':mono_noload_energy_Paretofront,
           'color_1':mycolors['royal blue'],'color_2':mycolors['lavender purple'],
           'ylabel':'Energy Consumption (W/kg)','xlabel':'Metabolic Reduction (%)',
           'legend_1': 'mono non-ideal','legend_2': 'mono ideal'}
-fig = plt.figure(num='Pareto Curve: noload mono  non-ideal vs ideal',figsize=(10.4, 18.8))
+fig = plt.figure(num='Pareto Front: noload mono  non-ideal vs ideal',figsize=(10.4, 18.8))
 utils.plot_pareto_curve_subjects (nrows=7,ncols=3,nplot=21,plot_dic=plot_dic,loadcond='noload')
 fig.tight_layout()
-fig.savefig('./Figures/Pareto/Adding_Mass_Pareto/Pareto_Noload_Subjects_Mono_MassAddedVSIdeal.pdf',orientation='landscape',bbox_inches='tight')
+fig.savefig('./Figures/Paretofront/Adding_Mass_Pareto/Pareto_Noload_Subjects_Mono_MassAddedVSIdeal.pdf',orientation='landscape',bbox_inches='tight')
 plt.show()
 
-# average pareto curve: noload mono vs biarticular mass added
+# average pareto front: noload mono vs biarticular mass added
 
-plot_dic = {'x1_data':mean_bi_noload_metabolics_addedmass_percent,'x1err_data':std_bi_noload_metabolics_addedmass_percent,
-          'x2_data':mean_mono_noload_metabolics_addedmass_percent,'x2err_data':std_mono_noload_metabolics_addedmass_percent,
-          'y1_data':mean_bi_noload_energy,'y1err_data':std_bi_noload_energy,
-          'y2_data':mean_mono_noload_energy,'y2err_data':std_mono_noload_energy,
+plot_dic = {'x1_data':mean_bi_noload_addedmass_paretofront[:,0],'x1err_data':std_bi_noload_addedmass_paretofront[:,0],
+          'x2_data':mean_mono_noload_addedmass_paretofront[:,0],'x2err_data':std_mono_noload_addedmass_paretofront[:,0],
+          'y1_data':mean_bi_noload_addedmass_paretofront[:,1],'y1err_data':std_bi_noload_addedmass_paretofront[:,1],
+          'y2_data':mean_mono_noload_addedmass_paretofront[:,1],'y2err_data':std_mono_noload_addedmass_paretofront[:,1],
           'color_1':mycolors['burgundy red'],'color_2':mycolors['royal blue']
           }
-fig = plt.figure(num='Pareto Curve: noload mono vs bi',figsize=(10.4, 8.8))
-utils.plot_pareto_avg_curve (plot_dic,loadcond='noload')
+fig = plt.figure(num='Pareto Front: noload mono vs bi',figsize=(10.4, 8.8))
+utils.plot_pareto_avg_curve (plot_dic,loadcond='noload',line=True)
 plt.xlabel('Metabolic Cost Reduction (%)')
 plt.ylabel('Exoskeleton Energy Consumption (W/kg)')
 ax = plt.gca()
 utils.no_top_right(ax)
 plt.legend(loc='best',frameon=False)
 fig.tight_layout()
-fig.savefig('./Figures/Pareto/Adding_Mass_Pareto/Pareto_Noload_BiVsMono_MassAdded.pdf',orientation='landscape',bbox_inches='tight')
+fig.savefig('./Figures/Paretofront/Adding_Mass_Pareto/Pareto_Noload_BiVsMono_MassAdded.pdf',orientation='landscape',bbox_inches='tight')
 plt.show()
 
 # average pareto curve: biarticular ideal vs mass added
 
-plot_dic = {'x1_data':mean_bi_noload_metabolics_addedmass_percent,'x1err_data':std_bi_noload_metabolics_addedmass_percent,
-          'x2_data':mean_bi_noload_metabolics_percent,'x2err_data':std_bi_noload_metabolics_percent,
-          'y1_data':mean_bi_noload_energy,'y1err_data':std_bi_noload_energy,
-          'y2_data':mean_bi_noload_energy,'y2err_data':std_bi_noload_energy,
+plot_dic = {'x1_data':mean_bi_noload_addedmass_paretofront[:,0],'x1err_data':std_bi_noload_addedmass_paretofront[:,0],
+          'x2_data':mean_bi_noload_paretofront[:,0],'x2err_data':std_bi_noload_paretofront[:,0],
+          'y1_data':mean_bi_noload_addedmass_paretofront[:,1],'y1err_data':std_bi_noload_addedmass_paretofront[:,1],
+          'y2_data':mean_bi_noload_paretofront[:,1],'y2err_data':std_bi_noload_paretofront[:,1],
           'color_1':mycolors['burgundy red'],'color_2':mycolors['gold'],
           'legend_1': 'bi non-ideal','legend_2': 'bi ideal'}
 
-fig = plt.figure(num='Pareto Curve: noload bi non-ideal vs ideal',figsize=(10.4, 8.8))
-utils.plot_pareto_avg_curve (plot_dic,loadcond='noload')
+fig = plt.figure(num='Pareto Front: noload bi non-ideal vs ideal',figsize=(10.4, 8.8))
+utils.plot_pareto_avg_curve (plot_dic,loadcond='noload',line=True)
 plt.xlabel('Metabolic Cost Reduction (%)')
 plt.ylabel('Exoskeleton Energy Consumption (W/kg)')
 ax = plt.gca()
 utils.no_top_right(ax)
 plt.legend(loc='best',frameon=False)
 fig.tight_layout()
-fig.savefig('./Figures/Pareto/Adding_Mass_Pareto/Pareto_Noload_Bi_NonidealVsIdeal.pdf',orientation='landscape',bbox_inches='tight')
+fig.savefig('./Figures/Paretofront/Adding_Mass_Pareto/Pareto_Noload_Bi_NonidealVsIdeal.pdf',orientation='landscape',bbox_inches='tight')
 plt.show()
 
-# average pareto curve: monoarticular ideal vs mass added
+# average pareto front: monoarticular ideal vs mass added
 
-plot_dic = {'x1_data':mean_mono_noload_metabolics_addedmass_percent,'x1err_data':std_mono_noload_metabolics_addedmass_percent,
-          'x2_data':mean_mono_noload_metabolics_percent,'x2err_data':std_mono_noload_metabolics_percent,
-          'y1_data':mean_mono_noload_energy,'y1err_data':std_mono_noload_energy,
-          'y2_data':mean_mono_noload_energy,'y2err_data':std_mono_noload_energy,
+plot_dic = {'x1_data':mean_mono_noload_addedmass_paretofront[:,0],'x1err_data':std_mono_noload_addedmass_paretofront[:,0],
+          'x2_data':mean_mono_noload_paretofront[:,0],'x2err_data':std_mono_noload_paretofront[:,0],
+          'y1_data':mean_mono_noload_addedmass_paretofront[:,1],'y1err_data':std_mono_noload_addedmass_paretofront[:,1],
+          'y2_data':mean_mono_noload_paretofront[:,1],'y2err_data':std_mono_noload_paretofront[:,1],
           'color_1':mycolors['royal blue'],'color_2':mycolors['lavender purple'],
           'legend_1': 'mono non-ideal','legend_2': 'mono ideal'}
         
-fig = plt.figure(num='Pareto Curve: noload mono non-ideal vs ideal',figsize=(10.4, 8.8))
-utils.plot_pareto_avg_curve (plot_dic,loadcond='noload')
+fig = plt.figure(num='Pareto Front: noload mono non-ideal vs ideal',figsize=(10.4, 8.8))
+utils.plot_pareto_avg_curve (plot_dic,loadcond='noload',line=True)
 plt.xlabel('Metabolic Cost Reduction (%)')
 plt.ylabel('Exoskeleton Energy Consumption (W/kg)')
 ax = plt.gca()
 utils.no_top_right(ax)
 plt.legend(loc='best',frameon=False)
 fig.tight_layout()
-fig.savefig('./Figures/Pareto/Adding_Mass_Pareto/Pareto_Noload_Mono_NonidealVsIdeal.pdf',orientation='landscape',bbox_inches='tight')
+fig.savefig('./Figures/Paretofront/Adding_Mass_Pareto/Pareto_Noload_Mono_NonidealVsIdeal.pdf',orientation='landscape',bbox_inches='tight')
 plt.show()
 
 #####################################################################################
 # plots with regenration and mass
 
-# subjects pareto curve: noload mono vs biarticular mass added
+# subjects pareto front: noload mono vs biarticular mass added
 
-plot_dic = {'x1_data':bi_noload_metabolics_addedmass_percent,'x2_data':mono_noload_metabolics_addedmass_percent,
-          'y1_data':bi_noload_regen_energy,'y2_data':mono_noload_regen_energy,
+plot_dic = {'x1_data':bi_noload_metabolics_addedmass_regen_percent_Paretofront,'x2_data':mono_noload_metabolics_addedmass_regen_percent_Paretofront,
+          'y1_data':bi_noload_energy_regen_Paretofront,'y2_data':mono_noload_energy_regen_Paretofront,
           'color_1':mycolors['burgundy red'],'color_2':mycolors['royal blue'],
           'ylabel':'Energy Consumption (W/kg)','xlabel':'Metabolic Reduction (%)',
           'legend_1':'bi-regenerated','legend_2':'mono-regenerated'
           }
-fig = plt.figure(num='Pareto Curve: noload mono vs bi',figsize=(10.4, 18.8))
+fig = plt.figure(num='Pareto Front: noload mono vs bi',figsize=(10.4, 18.8))
 utils.plot_pareto_curve_subjects (nrows=7,ncols=3,nplot=21,plot_dic=plot_dic,loadcond='noload')
 fig.tight_layout()
-fig.savefig('./Figures/Pareto/Adding_Mass_Pareto/Pareto_Noload_Subjects_BiVsMono_MassAdded_Regenerated.pdf',orientation='landscape',bbox_inches='tight')
+fig.savefig('./Figures/Paretofront/Adding_Mass_Pareto/Pareto_Noload_Subjects_BiVsMono_MassAdded_Regenerated.pdf',orientation='landscape',bbox_inches='tight')
 plt.show()
 
-# subjects pareto curve: biarticular mass added vs biarticular noload
+# subjects pareto front: biarticular mass added vs biarticular noload
 
-plot_dic = {'x1_data':bi_noload_metabolics_addedmass_percent,'x2_data':bi_noload_metabolics_addedmass_percent,
-          'y1_data':bi_noload_regen_energy,'y2_data':bi_noload_energy,
+plot_dic = {'x1_data':bi_noload_metabolics_addedmass_percent_Paretofront,'x2_data':bi_noload_metabolics_addedmass_percent_Paretofront,
+          'y1_data':bi_noload_energy_regen_Paretofront,'y2_data':bi_noload_energy_Paretofront,
           'color_1':mycolors['burgundy red'],'color_2':mycolors['gold'],
           'ylabel':'Energy Consumption (W/kg)','xlabel':'Metabolic Reduction (%)',
           'legend_1': 'bi regenerated','legend_2': 'bi non-regenerated'}
-fig = plt.figure(num='Pareto Curve: noload bi regenerated vs no regeneration',figsize=(10.4, 18.8))
+fig = plt.figure(num='Pareto Front: noload bi regenerated vs no regeneration',figsize=(10.4, 18.8))
 utils.plot_pareto_curve_subjects (nrows=7,ncols=3,nplot=21,plot_dic=plot_dic,loadcond='noload')
 fig.tight_layout()
-fig.savefig('./Figures/Pareto/Adding_Mass_Pareto/Pareto_Noload_Subjects_Bi_GenVSNoGen.pdf',orientation='landscape',bbox_inches='tight')
+fig.savefig('./Figures/Paretofront/Adding_Mass_Pareto/Pareto_Noload_Subjects_Bi_GenVSNoGen.pdf',orientation='landscape',bbox_inches='tight')
 plt.show()
 
-# subjects pareto curve: monoarticular mass added vs monoarticular noload
+# subjects pareto front: monoarticular mass added vs monoarticular noload
 
-plot_dic = {'x1_data':mono_noload_metabolics_addedmass_percent,'x2_data':mono_noload_metabolics_addedmass_percent,
-          'y1_data':mono_noload_regen_energy,'y2_data':mono_noload_energy,
+plot_dic = {'x1_data':mono_noload_metabolics_addedmass_percent_Paretofront,'x2_data':mono_noload_metabolics_addedmass_percent_Paretofront,
+          'y1_data':mono_noload_energy_regen_Paretofront,'y2_data':mono_noload_energy_Paretofront,
           'color_1':mycolors['royal blue'],'color_2':mycolors['lavender purple'],
           'ylabel':'Energy Consumption (W/kg)','xlabel':'Metabolic Reduction (%)',
           'legend_1': 'mono non-regenerated','legend_2': 'mono regenerated'}
-fig = plt.figure(num='Pareto Curve: noload mono  non-ideal vs ideal',figsize=(10.4, 18.8))
+fig = plt.figure(num='Pareto Front: noload mono  non-ideal vs ideal',figsize=(10.4, 18.8))
 utils.plot_pareto_curve_subjects (nrows=7,ncols=3,nplot=21,plot_dic=plot_dic,loadcond='noload')
 fig.tight_layout()
-fig.savefig('./Figures/Pareto/Adding_Mass_Pareto/Pareto_Noload_Subjects_Mono_GenVsNonGen.pdf',orientation='landscape',bbox_inches='tight')
+fig.savefig('./Figures/Paretofront/Adding_Mass_Pareto/Pareto_Noload_Subjects_Mono_GenVsNonGen.pdf',orientation='landscape',bbox_inches='tight')
 plt.show()
 
 
 # average pareto curve: biarticular ideal vs mass added
 
-plot_dic = {'x1_data':mean_bi_noload_metabolics_addedmass_percent,'x1err_data':std_bi_noload_metabolics_addedmass_percent,
-          'x2_data':mean_bi_noload_metabolics_addedmass_percent,'x2err_data':std_bi_noload_metabolics_addedmass_percent,
-          'y1_data':mean_bi_noload_energy,'y1err_data':std_bi_noload_energy,
-          'y2_data':mean_bi_noload_regen_energy,'y2err_data':std_bi_noload_regen_energy,
+plot_dic = {'x1_data':mean_bi_noload_regen_paretofront[:,0],'x1err_data':std_bi_noload_regen_paretofront[:,0],
+          'x2_data':mean_bi_noload_addedmass_paretofront[:,0],'x2err_data':std_bi_noload_addedmass_paretofront[:,0],
+          'y1_data':mean_bi_noload_regen_paretofront[:,1],'y1err_data':std_bi_noload_regen_paretofront[:,1],
+          'y2_data':mean_bi_noload_addedmass_paretofront[:,1],'y2err_data':std_bi_noload_addedmass_paretofront[:,1],
           'color_1':mycolors['burgundy red'],'color_2':mycolors['gold'],
-          'legend_1': 'bi no-regenrated','legend_2': 'bi regenrated'}
+          'legend_2': 'bi no-regenrated','legend_1': 'bi regenrated'}
 
 fig = plt.figure(num='Pareto Curve: noload bi non-regenerated vs regenerated',figsize=(10.4, 8.8))
-utils.plot_pareto_avg_curve (plot_dic,loadcond='noload')
+utils.plot_pareto_avg_curve (plot_dic,loadcond='noload',line=True)
 plt.xlabel('Metabolic Cost Reduction (%)')
 plt.ylabel('Exoskeleton Energy Consumption (W/kg)')
 ax = plt.gca()
 utils.no_top_right(ax)
 plt.legend(loc='best',frameon=False)
 fig.tight_layout()
-fig.savefig('./Figures/Pareto/Adding_Mass_Pareto/Pareto_Noload_Bi_NoGenVsGen.pdf',orientation='landscape',bbox_inches='tight')
+fig.savefig('./Figures/Paretofront/Adding_Mass_Pareto/Pareto_Noload_Bi_NoGenVsGen.pdf',orientation='landscape',bbox_inches='tight')
 plt.show()
 
 # average pareto curve: monoarticular ideal vs mass added
 
-plot_dic = {'x1_data':mean_mono_noload_metabolics_addedmass_percent,'x1err_data':std_mono_noload_metabolics_addedmass_percent,
-          'x2_data':mean_mono_noload_metabolics_addedmass_percent,'x2err_data':std_mono_noload_metabolics_addedmass_percent,
-          'y1_data':mean_mono_noload_energy,'y1err_data':std_mono_noload_energy,
-          'y2_data':mean_mono_noload_regen_energy,'y2err_data':std_mono_noload_regen_energy,
+plot_dic = {'x1_data':mean_mono_noload_regen_paretofront[:,0],'x1err_data':std_mono_noload_regen_paretofront[:,0],
+          'x2_data':mean_mono_noload_addedmass_paretofront[:,0],'x2err_data':std_mono_noload_addedmass_paretofront[:,0],
+          'y1_data':mean_mono_noload_regen_paretofront[:,1],'y1err_data':std_mono_noload_regen_paretofront[:,1],
+          'y2_data':mean_mono_noload_addedmass_paretofront[:,1],'y2err_data':std_mono_noload_addedmass_paretofront[:,1],
           'color_1':mycolors['royal blue'],'color_2':mycolors['lavender purple'],
-          'legend_1': 'mono non-regenerated','legend_2': 'mono regenerated'}
+          'legend_2': 'mono non-regenerated','legend_1': 'mono regenerated'}
         
 fig = plt.figure(num='Pareto Curve: noload mono non-regenerated vs regenerated',figsize=(10.4, 8.8))
-utils.plot_pareto_avg_curve (plot_dic,loadcond='noload')
+utils.plot_pareto_avg_curve (plot_dic,loadcond='noload',line=True)
 plt.xlabel('Metabolic Cost Reduction (%)')
 plt.ylabel('Exoskeleton Energy Consumption (W/kg)')
 ax = plt.gca()
 utils.no_top_right(ax)
 plt.legend(loc='best',frameon=False)
 fig.tight_layout()
-fig.savefig('./Figures/Pareto/Adding_Mass_Pareto/Pareto_Noload_Mono_NonGenVsGen.pdf',orientation='landscape',bbox_inches='tight')
-plt.show()
-
-#####################################################################################
-# All average paretos
-
-
-x1_data = np.reshape(np.concatenate((mean_bi_noload_metabolics_percent,mean_bi_noload_metabolics_addedmass_percent,mean_bi_noload_metabolics_addedmass_percent),axis=0),(25,3),order='F')
-x2_data = np.reshape(np.concatenate((mean_mono_noload_metabolics_percent,mean_mono_noload_metabolics_addedmass_percent,mean_mono_noload_metabolics_addedmass_percent),axis=0),(25,3),order='F')
-y1_data = np.reshape(np.concatenate((mean_bi_noload_energy,mean_bi_noload_energy,mean_bi_noload_regen_energy),axis=0),(25,3),order='F')
-y2_data = np.reshape(np.concatenate((mean_mono_noload_energy,mean_mono_noload_energy,mean_mono_noload_regen_energy),axis=0),(25,3),order='F')
-color_1 = mycolors['magenta pink']
-color_2 = mycolors['lavender purple']
-plot_titles = ['noload, ideal','noload, exo mass','noload, exo mass + renegeration']
-
-fig = plt.figure(num='Pareto Curve: noload mono vs bi',figsize=(16.4, 10.8))
-nplot=3
-ncols=3
-nrows=1
-labels = np.arange(1,26,1)
-for i in range(nplot):
-    plt.subplot(nrows,ncols,i+1)
-    plt.scatter(x1_data[:,i],y1_data[:,i],marker="o",color=color_1,label='biarticular')
-    plt.scatter(x2_data[:,i],y2_data[:,i],marker="v",color=color_2,label='monoarticular')
-    utils.label_datapoints(x1_data[:,i],y1_data[:,i],labels)
-    utils.label_datapoints(x2_data[:,i],y2_data[:,i],labels,ha='left')
-    plt.title(plot_titles[i])
-    ax = plt.gca()
-    plt.tight_layout()
-    utils.no_top_right(ax)
-    plt.legend(loc='best',frameon=False)
-    plt.xlabel('Metabolic Reduction (%)')
-    plt.ylabel('Energy Consumption (W/kg)')
-    plt.xlim((8,20))
-    plt.ylim((0.4,1.5))
-fig.tight_layout()
-fig.savefig('./Figures/Pareto/Adding_Mass_Pareto/Avg_Paretos.pdf',orientation='landscape',bbox_inches='tight')
+fig.savefig('./Figures/Paretofront/Adding_Mass_Pareto/Pareto_Noload_Mono_NonGenVsGen.pdf',orientation='landscape',bbox_inches='tight')
 plt.show()
