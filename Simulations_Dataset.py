@@ -140,8 +140,8 @@ suffixes = ['torque','torque','power','power',\
             'speed','speed','energy','energy',\
             'energy','activation','moment','moment',\
             'regenerative_energy','regenerative_energy']
-HWs = {'mono_load':[30,70],'bi_load':[30,50,40,40],'mono_noload':[30,40,50],'bi_noload':[40,50,30]}
-KWs = {'mono_load':[30,50],'bi_load':[60,60,60,40],'mono_noload':[30,30,50],'bi_noload':[30,40,30]}
+HWs = {'mono_load':[70,30,70],'bi_load':[30,50,40,40],'mono_noload':[30,40,50],'bi_noload':[40,50,30]}
+KWs = {'mono_load':[30,30,50],'bi_load':[60,60,60,40],'mono_noload':[30,30,50],'bi_noload':[30,40,30]}
 labeling = ['mono','bi']
 #***************************
 print('Section 04:\t extracting Specific Weights of Pareto exoskeletons related files: Actuators Data, Muscles Activation, Muscles Moment, Metabolic Energy.\n')
