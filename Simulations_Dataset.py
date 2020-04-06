@@ -125,3 +125,35 @@ else:
                 np.savetxt('./Data/Pareto/{}_pareto_{}_{}_{}.csv'.format(config_names[i],load_type,middle[k],suffixes[k]), out[k], fmt='%s', delimiter=',')
 
 #####################################################################################
+#####################################################################################
+"""Section 05:
+                specific weights dataset
+"""
+loads = ['noload','load']
+configs = ['Monoarticular','Biarticular']
+config_names = ['monoarticular','biarticular']
+middle =['hipactuator','kneeactuator','hipactuator','kneeactuator',\
+         'hipactuator','kneeactuator','hipactuator','kneeactuator',\
+         'metabolics','ninemuscles','hipmuscles','kneemuscles',\
+         'hipactuator','kneeactuator']
+suffixes = ['torque','torque','power','power',\
+            'speed','speed','energy','energy',\
+            'energy','activation','moment','moment',\
+            'regenerative_energy','regenerative_energy']
+HWs = {'mono_load':[30,70],'bi_load':[30,50,40,40],'mono_noload':[30,40,50],'bi_noload':[40,50,30]}
+KWs = {'mono_load':[30,50],'bi_load':[60,60,60,40],'mono_noload':[30,30,50],'bi_noload':[30,40,30]}
+labeling = ['mono','bi']
+#***************************
+print('Section 04:\t extracting Specific Weights of Pareto exoskeletons related files: Actuators Data, Muscles Activation, Muscles Moment, Metabolic Energy.\n')
+#***************************
+y = input('Specific weights data extraction? (y,n):  ')
+if  y.lower() == 'y':
+    print('specific weights biarticular/monoarticular loaded/noload files are getting extracted the file.\n')
+    for load_type in loads:
+        for i in range(2):
+            HW = HWs['{}_{}'.format(labeling[i],load_type)]
+            KW = KWs['{}_{}'.format(labeling[i],load_type)]
+            for j in range(len(HW)):
+                out= fcns.specific_weight_data_subjects(configuration=configs[i],HipWeight=HW[j],KneeWeight=KW[j],loadcond=load_type,regenergy=True)
+                for k in range(len(out)):
+                    np.savetxt('./Data/Specific_Weights/{}_hip{}knee{}_{}_{}_{}.csv'.format(config_names[i],HW[j],KW[j],load_type,middle[k],suffixes[k]), out[k], fmt='%s', delimiter=',')
