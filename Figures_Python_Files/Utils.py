@@ -653,7 +653,7 @@ def paretofront_v2(P):
         idxs = np.ones(old_size)
         a = bsxfun(P[i,:],P, fun='lt')
         x = np.sum( bsxfun(P[i,:],P, fun='lt'), axis=1,dtype=int)
-        indices = np.not_equal(np.sum( bsxfun(P[i,:], P, fun='le'), axis=1,dtype=int),dim,dtype=int)
+        indices = np.not_equal(np.sum( bsxfun(P[i,:], P, fun='lt'), axis=1,dtype=int),dim,dtype=int)
         indices[i] = True
         P = P[indices,:]
         idxs[indices] = 0
