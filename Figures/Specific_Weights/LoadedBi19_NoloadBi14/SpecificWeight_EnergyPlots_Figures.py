@@ -64,7 +64,7 @@ mean_loaded_bi_energy,std_loaded_bi_energy = utils.mean_std_over_subjects(assist
 names = ['unassist, noload','unassist, loaded','bi, noload','bi, loaded']
 data = [mean_noload_unassist_energy,mean_loaded_unassist_energy,mean_noload_bi_energy,mean_loaded_bi_energy]
 err = [std_noload_unassist_energy,std_loaded_unassist_energy,std_noload_bi_energy,std_loaded_bi_energy]
-fig, ax = plt.subplots(figsize=(12.4, 5.4))
+fig, ax = plt.subplots(figsize=(6.4, 4.8))
 barplot = ax.bar(names, data, yerr=err, align='center',color=mycolors['manatee grey'],width=0.35, ecolor='black', capsize=10)
 barplot[0].set_color(mycolors['dark spring green'])
 barplot[2].set_color(mycolors['magenta pink'])
@@ -82,7 +82,7 @@ fig.savefig('./Figures/Specific_Weights/LoadedBi19_NoloadBi14/Metabolics_Energy_
 names = ['bi, loaded','bi, noload']
 data = [mean_loaded_bi_metabolics,mean_noload_bi_metabolics]
 err = [std_loaded_bi_metabolics,std_noload_bi_metabolics]
-fig, ax = plt.subplots(figsize=(12.4, 5.4))
+fig, ax = plt.subplots(figsize=(6.4, 4.8))
 barplot = ax.bar(names, data, yerr=err, align='center',color=mycolors['manatee grey'],width=0.35, ecolor='black', capsize=10)
 barplot[0].set_color(mycolors['crimson red'])
 barplot[1].set_color(mycolors['magenta pink'])
@@ -100,7 +100,7 @@ names = ['unassist, loaded','bi, loaded','unassist, noload','bi, noload']
 x = np.arange(1,len(names)+1,1)
 data = [unassisted_energy_dataset['loaded_metabolics_energy'],assisted_energy_dataset['biarticular_hip40knee40_load_metabolics_energy'][~np.isnan(assisted_energy_dataset['biarticular_hip40knee40_load_metabolics_energy'])],\
         unassisted_energy_dataset['noload_metabolics_energy'],assisted_energy_dataset['biarticular_hip50knee40_noload_metabolics_energy']]
-fig, ax = plt.subplots(figsize=(12.4, 9.8))
+fig, ax = plt.subplots(figsize=(6.4, 4.8))
 bp = ax.boxplot(data, patch_artist=True)
 utils.beautiful_boxplot(bp)
 ax.set_ylabel('Metabolic Rate (W/Kg)')
@@ -118,7 +118,7 @@ names = ['bi hip, loaded','bi knee, loaded','bi hip, noload','bi knee, noload',]
 x = np.arange(1,len(names)+1,1)
 data = [assisted_energy_dataset['biarticular_hip40knee40_load_hipactuator_energy'][~np.isnan(assisted_energy_dataset['biarticular_hip40knee40_load_hipactuator_energy'])],assisted_energy_dataset['biarticular_hip40knee40_load_kneeactuator_energy'][~np.isnan(assisted_energy_dataset['biarticular_hip40knee40_load_kneeactuator_energy'])],\
         assisted_energy_dataset['biarticular_hip50knee40_noload_hipactuator_energy'],assisted_energy_dataset['biarticular_hip50knee40_noload_kneeactuator_energy']]
-fig, ax = plt.subplots(figsize=(12.4, 9.8))
+fig, ax = plt.subplots(figsize=(6.4, 4.8))
 bp = ax.boxplot(data, patch_artist=True)
 utils.beautiful_boxplot(bp)
 ax.set_ylabel('Actuator Energy Rate (W/Kg)')
