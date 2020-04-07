@@ -53,64 +53,64 @@ noload_mean_toe_off,_,loaded_mean_toe_off,_ = utils.toe_off_avg_std(gl_noload,gl
 # exoskeleton torque profiles
 # biarticular
 # hip
-bi_loaded_hip_torque = utils.normalize_direction_data(exo_torque_dataset['biarticular_hip30knee60_load_hipactuator_torque'],gl_noload,direction=False)
+bi_loaded_hip_torque = utils.normalize_direction_data(exo_torque_dataset['biarticular_hip50knee60_load_hipactuator_torque'],gl_noload,direction=False)
 mean_bi_loaded_hip_torque,std_bi_loaded_hip_torque = utils.mean_std_over_subjects(bi_loaded_hip_torque)
 # knee
-bi_loaded_knee_torque = utils.normalize_direction_data(exo_torque_dataset['biarticular_hip30knee60_load_kneeactuator_torque'],gl_noload,direction=True)
+bi_loaded_knee_torque = utils.normalize_direction_data(exo_torque_dataset['biarticular_hip50knee60_load_kneeactuator_torque'],gl_noload,direction=True)
 mean_bi_loaded_knee_torque,std_bi_loaded_knee_torque = utils.mean_std_over_subjects(bi_loaded_knee_torque)
 # monoarticular
 # hip
-mono_loaded_hip_torque = utils.normalize_direction_data(exo_torque_dataset['monoarticular_hip30knee30_load_hipactuator_torque'],gl_noload,direction=False)
+mono_loaded_hip_torque = utils.normalize_direction_data(exo_torque_dataset['monoarticular_hip70knee50_load_hipactuator_torque'],gl_noload,direction=False)
 mean_mono_loaded_hip_torque,std_mono_loaded_hip_torque = utils.mean_std_over_subjects(mono_loaded_hip_torque)
 # knee
-mono_loaded_knee_torque = utils.normalize_direction_data(exo_torque_dataset['monoarticular_hip30knee30_load_kneeactuator_torque'],gl_noload,direction=True)
+mono_loaded_knee_torque = utils.normalize_direction_data(exo_torque_dataset['monoarticular_hip70knee50_load_kneeactuator_torque'],gl_noload,direction=True)
 mean_mono_loaded_knee_torque,std_mono_loaded_knee_torque = utils.mean_std_over_subjects(mono_loaded_knee_torque)
 #******************************
 # exoskeleton power profiles
 # biarticular
 # hip
-bi_loaded_hip_power = utils.normalize_direction_data(exo_power_dataset['biarticular_hip30knee60_load_hipactuator_power'],gl_noload,direction=False)
+bi_loaded_hip_power = utils.normalize_direction_data(exo_power_dataset['biarticular_hip50knee60_load_hipactuator_power'],gl_noload,direction=False)
 mean_bi_loaded_hip_power,std_bi_loaded_hip_power = utils.mean_std_over_subjects(bi_loaded_hip_power)
 # knee
-bi_loaded_knee_power = utils.normalize_direction_data(exo_power_dataset['biarticular_hip30knee60_load_kneeactuator_power'],gl_noload,direction=False)
+bi_loaded_knee_power = utils.normalize_direction_data(exo_power_dataset['biarticular_hip50knee60_load_kneeactuator_power'],gl_noload,direction=False)
 mean_bi_loaded_knee_power,std_bi_loaded_knee_power = utils.mean_std_over_subjects(bi_loaded_knee_power)
 # monoarticular
 # hip
-mono_loaded_hip_power = utils.normalize_direction_data(exo_power_dataset['monoarticular_hip30knee30_load_hipactuator_power'],gl_noload,direction=False)
+mono_loaded_hip_power = utils.normalize_direction_data(exo_power_dataset['monoarticular_hip70knee50_load_hipactuator_power'],gl_noload,direction=False)
 mean_mono_loaded_hip_power,std_mono_loaded_hip_power = utils.mean_std_over_subjects(mono_loaded_hip_power)
 # knee
-mono_loaded_knee_power = utils.normalize_direction_data(exo_power_dataset['monoarticular_hip30knee30_load_kneeactuator_power'],gl_noload,direction=False)
+mono_loaded_knee_power = utils.normalize_direction_data(exo_power_dataset['monoarticular_hip70knee50_load_kneeactuator_power'],gl_noload,direction=False)
 mean_mono_loaded_knee_power,std_mono_loaded_knee_power = utils.mean_std_over_subjects(mono_loaded_knee_power)
 #******************************
 # exoskeleton speed profiles
 # biarticular
 # hip
-bi_loaded_hip_speed = utils.normalize_direction_data(exo_speed_dataset['biarticular_hip30knee60_load_hipactuator_speed'],gl_noload,direction=False,normalize=False)
+bi_loaded_hip_speed = utils.normalize_direction_data(exo_speed_dataset['biarticular_hip50knee60_load_hipactuator_speed'],gl_noload,direction=False,normalize=False)
 mean_bi_loaded_hip_speed,std_bi_loaded_hip_speed = utils.mean_std_over_subjects(bi_loaded_hip_speed)
 # knee
-bi_loaded_knee_speed = utils.normalize_direction_data(exo_speed_dataset['biarticular_hip30knee60_load_kneeactuator_speed'],gl_noload,direction=True,normalize=False)
+bi_loaded_knee_speed = utils.normalize_direction_data(exo_speed_dataset['biarticular_hip50knee60_load_kneeactuator_speed'],gl_noload,direction=True,normalize=False)
 mean_bi_loaded_knee_speed,std_bi_loaded_knee_speed = utils.mean_std_over_subjects(bi_loaded_knee_speed)
 # monoarticular
 # hip
-mono_loaded_hip_speed = utils.normalize_direction_data(exo_speed_dataset['monoarticular_hip30knee30_load_hipactuator_speed'],gl_noload,direction=False,normalize=False)
+mono_loaded_hip_speed = utils.normalize_direction_data(exo_speed_dataset['monoarticular_hip70knee50_load_hipactuator_speed'],gl_noload,direction=False,normalize=False)
 mean_mono_loaded_hip_speed,std_mono_loaded_hip_speed = utils.mean_std_over_subjects(mono_loaded_hip_speed)
 # knee
-mono_loaded_knee_speed = utils.normalize_direction_data(exo_speed_dataset['monoarticular_hip30knee30_load_kneeactuator_speed'],gl_noload,direction=True,normalize=False)
+mono_loaded_knee_speed = utils.normalize_direction_data(exo_speed_dataset['monoarticular_hip70knee50_load_kneeactuator_speed'],gl_noload,direction=True,normalize=False)
 mean_mono_loaded_knee_speed,std_mono_loaded_knee_speed = utils.mean_std_over_subjects(mono_loaded_knee_speed)
 #******************************
 # hip muscles moment
 # biarticular
-bi_loaded_hipmuscles_moment = utils.normalize_direction_data(musclesmoment_dataset['biarticular_hip30knee60_load_hipmuscles_moment'],gl_noload,direction=True)
+bi_loaded_hipmuscles_moment = utils.normalize_direction_data(musclesmoment_dataset['biarticular_hip50knee60_load_hipmuscles_moment'],gl_noload,direction=True)
 mean_bi_loaded_hipmuscles_moment,std_bi_loaded_hipmuscles_moment = utils.mean_std_over_subjects(bi_loaded_hipmuscles_moment)
 # monoarticular
-mono_loaded_hipmuscles_moment = utils.normalize_direction_data(musclesmoment_dataset['monoarticular_hip30knee30_load_hipmuscles_moment'],gl_noload,direction=True)
+mono_loaded_hipmuscles_moment = utils.normalize_direction_data(musclesmoment_dataset['monoarticular_hip70knee50_load_hipmuscles_moment'],gl_noload,direction=True)
 mean_mono_loaded_hipmuscles_moment,std_mono_loaded_hipmuscles_moment = utils.mean_std_over_subjects(mono_loaded_hipmuscles_moment)
 # knee muscles moment
 # biarticular
-bi_loaded_kneemuscles_moment = utils.normalize_direction_data(musclesmoment_dataset['biarticular_hip30knee60_load_kneemuscles_moment'],gl_noload,direction=True)
+bi_loaded_kneemuscles_moment = utils.normalize_direction_data(musclesmoment_dataset['biarticular_hip50knee60_load_kneemuscles_moment'],gl_noload,direction=True)
 mean_bi_loaded_kneemuscles_moment,std_bi_loaded_kneemuscles_moment = utils.mean_std_over_subjects(bi_loaded_kneemuscles_moment)
 # monoarticular
-mono_loaded_kneemuscles_moment = utils.normalize_direction_data(musclesmoment_dataset['monoarticular_hip30knee30_load_kneemuscles_moment'],gl_noload,direction=True)
+mono_loaded_kneemuscles_moment = utils.normalize_direction_data(musclesmoment_dataset['monoarticular_hip70knee50_load_kneemuscles_moment'],gl_noload,direction=True)
 mean_mono_loaded_kneemuscles_moment,std_mono_loaded_kneemuscles_moment = utils.mean_std_over_subjects(mono_loaded_kneemuscles_moment)
 
 #####################################################################################
@@ -206,7 +206,7 @@ plot_dic={
 fig = plt.figure(num='Loaded Hip Torque',figsize=(9.4, 6.8))
 utils.plot_joint_muscle_exo(nrows=2,ncols=1,plot_dic=plot_dic,color_dic=monovsbi_color_dic,ylabel='hip flexion/extension (N-m/kg)')
 fig.tight_layout()
-fig.savefig('./Figures/Specific_Weights/LoadedMono25_LoadedBi22/Exoskeletons_Hip_Torque.pdf',orientation='landscape',bbox_inches='tight')
+fig.savefig('./Figures/Specific_Weights/LoadedMono03_LoadedBi12/Exoskeletons_Hip_Torque.pdf',orientation='landscape',bbox_inches='tight')
 plt.show()
 
 # ***************************
@@ -223,7 +223,7 @@ fig = plt.figure(num='Loaded Knee Torque',figsize=(9.4, 6.8))
 utils.plot_joint_muscle_exo(nrows=2,ncols=1,plot_dic=plot_dic,color_dic=monovsbi_color_dic,ylabel='knee flexion/extension (N-m/kg)')
 fig.tight_layout()
 plt.show()
-fig.savefig('./Figures/Specific_Weights/LoadedMono25_LoadedBi22/Exoskeletons_Knee_Torque.pdf',orientation='landscape',bbox_inches='tight')
+fig.savefig('./Figures/Specific_Weights/LoadedMono03_LoadedBi12/Exoskeletons_Knee_Torque.pdf',orientation='landscape',bbox_inches='tight')
 
 #******************************************************************************************************************************
 # hip joint power figure
@@ -238,7 +238,7 @@ fig = plt.figure(num='Loaded Hip Power',figsize=(9.4, 6.8))
 utils.plot_joint_muscle_exo(nrows=2,ncols=1,plot_dic=plot_dic,color_dic=monovsbi_color_dic,\
                             thirdplot=False,ylabel='hip flexion/extension (W/kg)',y_ticks=np.arange(-4,5,2))
 fig.tight_layout()
-fig.savefig('./Figures/Specific_Weights/LoadedMono25_LoadedBi22/Exoskeletons_Hip_Power.pdf',orientation='landscape',bbox_inches='tight')
+fig.savefig('./Figures/Specific_Weights/LoadedMono03_LoadedBi12/Exoskeletons_Hip_Power.pdf',orientation='landscape',bbox_inches='tight')
 plt.show()
 
 # ***************************
@@ -255,7 +255,7 @@ utils.plot_joint_muscle_exo(nrows=2,ncols=1,plot_dic=plot_dic,color_dic=monovsbi
                             thirdplot=False,ylabel='knee flexion/extension (W/kg)',y_ticks=np.arange(-4,6,2))
 fig.tight_layout()
 plt.show()
-fig.savefig('./Figures/Specific_Weights/LoadedMono25_LoadedBi22/Exoskeletons_Knee_Power.pdf',orientation='landscape',bbox_inches='tight')
+fig.savefig('./Figures/Specific_Weights/LoadedMono03_LoadedBi12/Exoskeletons_Knee_Power.pdf',orientation='landscape',bbox_inches='tight')
 
 #******************************************************************************************************************************
 # hip joint speed figure
@@ -270,7 +270,7 @@ fig = plt.figure(num='Loaded Hip Speed',figsize=(9.4, 6.8))
 utils.plot_joint_muscle_exo(nrows=2,ncols=1,plot_dic=plot_dic,color_dic=monovsbi_color_dic,\
                             thirdplot=False,ylabel='hip flexion/extension (rad/s)',y_ticks=np.arange(-6,4,2))
 fig.tight_layout()
-fig.savefig('./Figures/Specific_Weights/LoadedMono25_LoadedBi22/Exoskeletons_Hip_Speed.pdf',orientation='landscape',bbox_inches='tight')
+fig.savefig('./Figures/Specific_Weights/LoadedMono03_LoadedBi12/Exoskeletons_Hip_Speed.pdf',orientation='landscape',bbox_inches='tight')
 plt.show()
 
 # ***************************
@@ -287,4 +287,4 @@ utils.plot_joint_muscle_exo(nrows=2,ncols=1,plot_dic=plot_dic,color_dic=monovsbi
                             thirdplot=False,ylabel='knee flexion/extension (rad/s)',y_ticks=np.arange(-6,11,3))
 fig.tight_layout()
 plt.show()
-fig.savefig('./Figures/Specific_Weights/LoadedMono25_LoadedBi22/Exoskeletons_Knee_Speed.pdf',orientation='landscape',bbox_inches='tight')
+fig.savefig('./Figures/Specific_Weights/LoadedMono03_LoadedBi12/Exoskeletons_Knee_Speed.pdf',orientation='landscape',bbox_inches='tight')

@@ -64,7 +64,7 @@ mean_loaded_mono_energy,std_loaded_mono_energy = utils.mean_std_over_subjects(as
 names = ['unassist, noload','unassist, loaded','mono, noload','mono, loaded']
 data = [mean_noload_unassist_energy,mean_loaded_unassist_energy,mean_noload_mono_energy,mean_loaded_mono_energy]
 err = [std_noload_unassist_energy,std_loaded_unassist_energy,std_noload_mono_energy,std_loaded_mono_energy]
-fig, ax = plt.subplots(figsize=(12.4, 5.4))
+fig, ax = plt.subplots(figsize=(6.4, 4.8))
 barplot = ax.bar(names, data, yerr=err, align='center',color=mycolors['manatee grey'],width=0.35, ecolor='black', capsize=10)
 barplot[0].set_color(mycolors['dark spring green'])
 barplot[2].set_color(mycolors['olympic blue'])
@@ -82,7 +82,7 @@ fig.savefig('./Figures/Specific_Weights/LoadedMono05_NoloadMono25/Metabolics_Ene
 names = ['mono, loaded','mono, noload']
 data = [mean_loaded_mono_metabolics,mean_noload_mono_metabolics]
 err = [std_loaded_mono_metabolics,std_noload_mono_metabolics]
-fig, ax = plt.subplots(figsize=(12.4, 5.4))
+fig, ax = plt.subplots(figsize=(6.4, 4.8))
 barplot = ax.bar(names, data, yerr=err, align='center',color=mycolors['manatee grey'],width=0.35, ecolor='black', capsize=10)
 barplot[0].set_color(mycolors['dark purple'])
 barplot[1].set_color(mycolors['olympic blue'])
@@ -100,7 +100,7 @@ names = ['unassist, loaded','mono, loaded','unassist, noload','mono, noload']
 x = np.arange(1,len(names)+1,1)
 data = [unassisted_energy_dataset['loaded_metabolics_energy'],assisted_energy_dataset['monoarticular_hip70knee30_load_metabolics_energy'][~np.isnan(assisted_energy_dataset['monoarticular_hip70knee30_load_metabolics_energy'])],\
         unassisted_energy_dataset['noload_metabolics_energy'],assisted_energy_dataset['monoarticular_hip30knee30_noload_metabolics_energy']]
-fig, ax = plt.subplots(figsize=(12.4, 9.8))
+fig, ax = plt.subplots(figsize=(6.4, 4.8))
 bp = ax.boxplot(data, patch_artist=True)
 utils.beautiful_boxplot(bp)
 ax.set_ylabel('Metabolic Rate (W/Kg)')
@@ -118,7 +118,7 @@ names = ['mono hip, loaded','mono knee, loaded','mono hip, noload','mono knee, n
 x = np.arange(1,len(names)+1,1)
 data = [assisted_energy_dataset['monoarticular_hip70knee30_load_hipactuator_energy'][~np.isnan(assisted_energy_dataset['monoarticular_hip70knee30_load_hipactuator_energy'])],assisted_energy_dataset['monoarticular_hip70knee30_load_kneeactuator_energy'][~np.isnan(assisted_energy_dataset['monoarticular_hip70knee30_load_kneeactuator_energy'])],\
         assisted_energy_dataset['monoarticular_hip30knee30_noload_hipactuator_energy'],assisted_energy_dataset['monoarticular_hip30knee30_noload_kneeactuator_energy']]
-fig, ax = plt.subplots(figsize=(12.4, 9.8))
+fig, ax = plt.subplots(figsize=(6.4, 4.8))
 bp = ax.boxplot(data, patch_artist=True)
 utils.beautiful_boxplot(bp)
 ax.set_ylabel('Actuator Energy Rate (W/Kg)')
