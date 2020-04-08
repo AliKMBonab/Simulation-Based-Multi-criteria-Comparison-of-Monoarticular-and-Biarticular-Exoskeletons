@@ -1,5 +1,5 @@
 clear
 clc
-p = [1 1 1; 2 0 1; 2 -1 1; 1, 1, 0];
-x =  bsxfun( @le, p(1,:), p );
-[f, idxs] = ParetoFront(p)
+sample  = csvread('D:\Ali.K.M.Bonab\Walking_Mass_Inertia_Effect\Data\Pareto_Related_Files\sample_data.csv');
+
+[f, idxs] = ParetoFront(sample)

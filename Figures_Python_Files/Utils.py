@@ -20,7 +20,7 @@ import pathlib
 #######################################################################
 #######################################################################
 # Data saving and reading related functions
-def bsxfun(A,B,fun,dtype=int):
+def bsxfun(A,B,fun,dtype=float):
     '''bsxfun implemented from matlab bsxfun,\n
     functions:\n
         -ge: A greater than or equal B \n
@@ -29,7 +29,7 @@ def bsxfun(A,B,fun,dtype=int):
         -lt: A less than B \n
     '''
     if A.ndim == 1 and B.ndim == 1 :
-        C = np.zeros((A.shape[0],B.shape[0]))
+        C = np.zeros((A.shape[0],B.shape[0]),dtype=dtype)
         for i in range(B.shape[0]):
             if fun == 'ge':
                 C[:,i] = np.greater_equal(A,B[i],dtype=dtype)
@@ -42,7 +42,7 @@ def bsxfun(A,B,fun,dtype=int):
             else:
                 raise Exception('function is not defined')
     if A.ndim == 1 and B.ndim != 1:
-        C = np.zeros((B.shape[0],A.shape[0]))
+        C = np.zeros((B.shape[0],A.shape[0]),dtype=dtype)
         for i in range(B.shape[0]):
             if fun == 'ge':
                 C[i,:] = np.greater_equal(A,B[i,:],dtype=dtype)
@@ -55,7 +55,7 @@ def bsxfun(A,B,fun,dtype=int):
             else:
                 raise Exception('function is not defined')
     elif A.ndim == 2:
-        C = np.zeros((A.shape[0],B.shape[0]))
+        C = np.zeros((A.shape[0],B.shape[0]),dtype=dtype)
         for i in range(A.shape[0]):
             if fun == 'ge':
                 C[i,:] = np.greater_equal(A[i,:],B,dtype=dtype)
@@ -622,6 +622,95 @@ def paretofront(P):
         i = i - 1 - (old_size - P.shape[0]) + np.sum(indices[i:-1]);
     return P,idxs
 
+def paretofront_v2(P):
+    '''
+     Filters a set of points P according to Pareto dominance, i.e., points
+     that are dominated (both weakly and strongly) are filtered.\n
+
+     Note**: this version inserts numpy.nan to the non dominant solutions instead
+     of eliminating them to pervent jagged arrays.
+    
+     Inputs: 
+     - P    : N-by-D matrix, where N is the number of points and D is the 
+              number of elements (objectives) of each point.
+    
+     Outputs:
+     - P_copy   : Pareto-filtered P, dtype: float64.
+    '''
+    if P.ndim == 1:
+        P = P[:,None]
+    dim = P.shape[1]
+    i   = P.shape[0]-1
+    index = np.arange(0,i+1,1)
+    selected_index = np.arange(0,i+1,1)
+    out_index = np.ones(i+1,dtype=bool)
+    if P.dtype != 'float64':
+        P_copy = P.astype('float64')
+    else:
+        P_copy = np.copy(P)
+    while i >= 0:
+        old_size = P.shape[0]
+        idxs = np.ones(old_size)
+        a = bsxfun(P[i,:],P, fun='lt')
+        x = np.sum( bsxfun(P[i,:],P, fun='lt'), axis=1,dtype=int)
+        indices = np.not_equal(np.sum( bsxfun(P[i,:], P, fun='lt'), axis=1,dtype=int),dim,dtype=int)
+        indices[i] = True
+        P = P[indices,:]
+        idxs[indices] = 0
+        selected_index = selected_index[indices]
+        y = np.sum(idxs[i:-1])
+        z = P.shape[0]
+        i = i - 1 - (old_size - P.shape[0]) + np.sum(idxs[i:-1],dtype=int)
+    for i in index:
+        if i not in selected_index:
+            P_copy[i,:] = np.nan
+            out_index[i] = False
+    return P_copy,out_index
+
+def manual_paretofront(data_1,data_2,indices):
+    '''
+    - indices are from 1 not 0 to avoid confusion.
+    - indices should be started from last to first and then
+      algorithm will flip them automatically.
+    '''
+    indices = indices.copy()
+    indices = np.flip(indices,axis=0)
+    data = np.column_stack((data_1,data_2))
+    for i,j in enumerate(indices):
+        indices[i]=j-1
+    if data.dtype != 'float64':
+        data = data.astype('float64')
+    for i in range(data.shape[0]):
+        if i not in indices:
+            data[i,:] = np.nan
+    return data
+
+def paretofront_subjects(data_1,data_2,unassist_data=None,calc_percent=True,adding_mass_case=False):
+    '''
+    data_1 assumed to be metabolic energy
+    '''
+    out_data_1 = np.zeros((25,21))
+    out_data_2 = np.zeros((25,21))
+    reduction  = np.zeros((25,21))
+    for i in range(21):
+        in_data = np.column_stack((data_1[:,i],data_2[:,i]))
+        out_data,idx = paretofront_v2(in_data)
+        out_data_1[:,i] = out_data[:,0]
+        out_data_2[:,i] = out_data[:,1]
+        if calc_percent == True:
+            if adding_mass_case == False:
+                reduction_subj = np.zeros(25)
+                for j in range(25):
+                    r = (((unassist_data[i]-out_data_1[j,i])*100)/unassist_data[i])
+                    reduction_subj[j] = r
+                reduction[:,i] = reduction_subj
+    if adding_mass_case == True:
+        reduction = addingmass_metabolics_reduction(out_data_1,unassist_data)
+    if calc_percent == True:
+        return reduction,out_data_2
+    else:
+        return out_data_1,out_data_2
+
 def delete_subject_data(data,subject,profile_energy='profile',is_reshaped=False):
     if profile_energy not in ['profile','energy']:
         raise Exception('profile_energy: invalid condition')
@@ -813,8 +902,15 @@ def label_datapoints(x,y,labels,xytext=(0,0),ha='right',fontsize=10, *args, **kw
         plt.annotate(labels[c], (x,y),textcoords="offset points",xytext=xytext,ha=ha,fontsize=fontsize)
         c+=1
 
-def plot_pareto_avg_curve (plot_dic,loadcond,legend_loc=0,labels=None,label_on=True,errbar_on=True,*args, **kwargs):
-    '''plotting avg and std subplots for combinations of weights'''
+def plot_pareto_avg_curve (plot_dic,loadcond,legend_loc=0,label_on=True,errbar_on=True,line=False,*args, **kwargs):
+    '''plotting avg and std subplots for combinations of weights.\n
+    -labels: needs to be provided by user otherwise data will be labeled from 1 to 25 automatically.
+             labeling is True (i.e. label_on=True) by default.\n
+    -legends: needs to be provided by user otherwise datasets will have biarticular and monoarticular legend.\n
+    -errorbar: it plots the standard deviation and it is True by default.\n
+    -line: it plots line (linear interpolation) among data by filtering its nan values.
+
+    '''
     x1_data = plot_dic['x1_data']
     x2_data = plot_dic['x2_data']
     y1_data = plot_dic['y1_data']
@@ -826,8 +922,12 @@ def plot_pareto_avg_curve (plot_dic,loadcond,legend_loc=0,labels=None,label_on=T
     color_1 = plot_dic['color_1']
     color_2 = plot_dic['color_2']
     # handle labels
-    if labels == None:
-        labels = np.arange(1,26,1)
+    if 'label_1' and 'label_2' not in plot_dic:
+        label_1 = np.arange(1,26,1)
+        label_2 = np.arange(1,26,1)
+    else:
+        label_1 = plot_dic['label_1']
+        label_2 = plot_dic['label_2']
     # handle legends
     if 'legend_1' and 'legend_2' not in plot_dic:
         legend_1 = 'biarticular,{}'.format(loadcond)
@@ -842,10 +942,15 @@ def plot_pareto_avg_curve (plot_dic,loadcond,legend_loc=0,labels=None,label_on=T
         plt.errorbar(x1_data,y1_data,xerr=x1err_data,yerr=y1err_data,fmt='o',ecolor=color_1,alpha=0.15)
         plt.errorbar(x2_data,y2_data,xerr=x2err_data,yerr=y2err_data,fmt='v',ecolor=color_2,alpha=0.15)
     if label_on == True:
-        label_datapoints(x1_data,y1_data,labels,*args, **kwargs)
-        label_datapoints(x2_data,y2_data,labels,ha='left',*args, **kwargs)
+        label_datapoints(x1_data,y1_data,label_1,*args, **kwargs)
+        label_datapoints(x2_data,y2_data,label_2,ha='left',*args, **kwargs)
+    if line == True:
+        plt.plot(x1_data[~np.isnan(x1_data)],y1_data[~np.isnan(y1_data)],ls='-',lw=1,color=color_1)
+        plt.plot(x2_data[~np.isnan(x2_data)],y2_data[~np.isnan(y2_data)],ls='-',lw=1,color=color_2)       
     
-def plot_pareto_curve_subjects (nrows,ncols,nplot,plot_dic,loadcond,legend_loc=[0],labels=None,label_on=True,*args, **kwargs):
+def plot_pareto_curve_subjects (nrows,ncols,nplot,plot_dic,loadcond,\
+                                line=False,legend_loc=[0],labels=None,\
+                                label_on=True,alpha=1,*args, **kwargs):
     x1_data = plot_dic['x1_data']
     x2_data = plot_dic['x2_data']
     y1_data = plot_dic['y1_data']
@@ -874,11 +979,14 @@ def plot_pareto_curve_subjects (nrows,ncols,nplot,plot_dic,loadcond,legend_loc=[
     # main plots
     for i in range(nplot):
         ax = plt.subplot(nrows,ncols,i+1)
-        plt.scatter(x1_data[:,i],y1_data[:,i],marker="o",color=color_1,label=legend_1,*args, **kwargs)
-        plt.scatter(x2_data[:,i],y2_data[:,i],marker="v",color=color_2,label=legend_2,*args, **kwargs)
+        plt.scatter(x1_data[:,i],y1_data[:,i],marker="o",color=color_1,label=legend_1,alpha=1,*args, **kwargs)
+        plt.scatter(x2_data[:,i],y2_data[:,i],marker="v",color=color_2,label=legend_2,alpha=1,*args, **kwargs)
         if label_on == True:
             label_datapoints(x1_data[:,i],y1_data[:,i],labels,*args, **kwargs)
             label_datapoints(x2_data[:,i],y2_data[:,i],labels,ha='left',*args, **kwargs)
+        if line == True:
+            plt.plot(x1_data[~np.isnan(x1_data)],y1_data[~np.isnan(y1_data)],ls='-',lw=1,color=color_1)
+            plt.plot(x2_data[~np.isnan(x2_data)],y2_data[~np.isnan(y2_data)],ls='-',lw=1,color=color_2)       
         plt.title(plot_titles[i])
         no_top_right(ax)
         if i in legend_loc:
