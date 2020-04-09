@@ -158,7 +158,7 @@
 % Header and Footer with logo
 \usepackage{lastpage,fancyhdr,graphicx}
 \usepackage{epstopdf}
-\graphicspath{{G:/HMI/Exoskeleton/Paper/Draft_V1/Figures/}}
+\graphicspath{{./Figures/}}
 %\pagestyle{myheadings}
 \pagestyle{fancy}
 \fancyhf{}
@@ -237,19 +237,20 @@ Despite all these remarkable progress that have been made on designing exoskelet
 Simulation-based studies and designing assistive devices can complement the experimental design and analysis to overcome most of the challenges mentioned above. OpenSim is one of the software funded by NIH Roadmap grant U54 GM072970, the NIH research infrastructure grant R24 HD065690, and the DARPA Warrior Web Program and it has been used in movement science related fields\cite{89} and it is getting so attractive for researchers in robotics, biomedical engineering, biophysics, computer science and many other fields \cite{89,103}. Despite all the limitations on musculoskeletal modeling and simulation \cite{92}, OpenSim enables researchers by providing biomechanical models and simulation tools to investigate the human and animals movements \cite{89,103}. OpenSim has been used to design and study the assistive devices \cite{2,93,94,96}. Uchida et al. \cite{2} simulate several combinations of ideal assistive device on subjects running at 2 $m/s$ and 5 $m/s$ speeds and found that activity of muscles can be decreased even in the muscles that do not cross the assisted joints, and it can be increased in some muscles based on assistive device configuration; their simulation results confirmed and proposed clarification on some of the similar phenomena observed in experimental studies. Several ideal assistive devices effect on the metabolic cost of subjects carrying heavy loads has been studied by Dembia et al.\cite{93}, their study like Uchida et al. \cite{2} suggest the effective configurations and joints assist and give a perspective how an assistive device can change muscular activities of subjects carrying loads.\\
 Recently, predictive simulations or simulation-based dynamic optimization approaches are emerging for studying assistive devices which can capture assistive devices effect on the musculoskeletal kinematics and kinetics \cite{112}. This approach has been used by V. Q. Nguyen et al. \cite{124} to study ankle exoskeleton effect on a normal speed walking subject where this approach enables them not only to study the exoskeleton effect on metabolic cost but also to investigate how the exoskeleton affects subject's kinematics and ground reaction forces. A novel active ankle powered prosthesis also was simulated and studied in predictive simulation framework by A. K. Lapre et al. \cite{125}. Predictive simulation has also been employed to simulate knee \cite{126} and ankle prostheses to investigate various control approaches on them\cite{111,127}. Moreover, Passive ankle prosthesis and Ankle-Foot orthosis stiffness has been optimized using this strategy \cite{128,129}.\\
 
-\subsection*{Contributions}
+\subsection*{Contributions*}
+%TODO: The contribution requires major changes.
 In this study, biarticular exoskeleton assisting hip and knee has been proposed and compared to another typical monoarticular exoskeleton. To have a methodical insight into the monoarticular and biarticular devices mechanism difference, dynamics and kinematics in motion and velocity level of each device have been derived.\\
 Since the main objective of an exoskeleton is reducing assisted subject's energy expenditure and by considering all the limitations of experimental based studies discussed earlier, we implement the proposed exoskeletons mechanism in musculoskeletal simulation enabling us to not only study the devices but also analyze the musculoskeletal model of the assisted subjects.\\
 This simulation-based study is conducted with ideal exoskeletons where devices have no mass, inertia, or any limiting factor which is beneficial to get insight into how the proposed device can affect the subjects and what is the maximum performance that we can get from the device. Additionally, since every configuration of the exoskeleton can have completely different inertial properties, using ideal exoskeletons allows us to have a fair comparison between monoarticular and proposed biarticular assistive devices.\\
 Although studying the exoskeletons without any restriction on their performance provides handy erudition about the exoskeletons, it is necessary to analyze and compare them in more moderate performance with some constraints. This study introduced a new method to have a legitimate comparison among different configurations of the exoskeletons by taking advantage of Pareto optimization methods and implementing it in the musculoskeletal framework.\\
 This proposed method can provide average optima points for each configuration of the assistive device based on the optimization defined objectives. In this paper, we introduced metabolic cost reduction and devices energy consumption as two optimization criteria and analyzed the devices in lower performance.\\
 
-The paper is organized as follows: Dynamic Modeling section presents the kinematics and dynamics of the proposed biarticular and the monoarticular exoskeletons mechanism. Musculoskeletal Simulation then addressed the modeling of these assistive devices in OpenSim, simulations procedure, and then Pareto optimization subsection dedicated to explaining the proposed method in detail and its implementation; simulations validation procedure and the results statistical analyses explanation comes after the Pareto optimization simulations subsection. Results and their discussions are provided in the Results and Discussion section mainly separated into two main subsections, including exoskeletons results in maximum and more moderate performances; study limitation and performance metrics are also provided in this section. Finally, this paper is concluded with Conclusions and Future Work section, which also presents future research directions.
+The paper is organized as follows: Kinematic Modeling section presents the kinematics and dynamics of the proposed biarticular and the monoarticular exoskeletons mechanism. Musculoskeletal Simulation then addressed the modeling of these assistive devices in OpenSim, simulations procedure, and then Pareto optimization subsection dedicated to explaining the proposed method in detail and its implementation; simulations validation procedure and the results statistical analyses explanation comes after the Pareto optimization simulations subsection. Results and their discussions are provided in the Results and Discussion section mainly separated into two main subsections, including exoskeletons results in maximum and more moderate performances; study limitation and performance metrics are also provided in this section. Finally, this paper is concluded with Conclusions and Future Work section, which also presents future research directions.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section*{Dynamic Modeling}
-
-The biarticular exoskeleton was designed to assist hip and knee joint. The exoskeleton has been inspired by biarticular muscles and the aim of the design was keeping the weight in proximal joint (Hip) while delivering the required power to distal joint (Knee). Parallelogram mechanism has been purposed to accomplish this goal and take advantage of biarticular muscles biological features in the exoskeleton.  The purposed exoskeleton was shown in figure \ref{Fig_Biarticular_Exo_Mechanism}.
+\section*{Kinematic Modeling}
+% TODO: This section needs to be written more professionally
+The biarticular exoskeleton was designed to assist hip and knee joint. The exoskeleton has been inspired by biarticular muscles and the aim of the design was keeping the weight in proximal joint (Hip) while delivering the required power to distal joint (Knee). The parallelogram mechanism has been purposed to accomplish this goal and take advantage of biarticular muscles biological features in the exoskeleton.  The purposed exoskeleton was shown in figure \ref{Fig_Biarticular_Exo_Mechanism}.
 \begin{figure}[h!]
 	\centering
 	\includegraphics[width=2 in]{Cartoons/Biarticular_Exo_Mechanism.pdf}
@@ -263,7 +264,7 @@ x_{Bi} &= l_ {A}\cos (q_ {A}) + (l_ {E} + l_ {D})\cos (q_ {B})\\
 y_{Bi} &= l_ {A}\sin (q_ {A}) + (l_ {E} + l_ {D})\sin (q_ {B})
 \end{align}
 
-Monoarticular Exoskeleton can be modeled as a two-link manipulator as shown in figure \ref{Fig_Monoarticular_Exo_Mechanism} where each joint is assisted by the directly joint actuator and the forward kinematics of monoarticular exoskeleton is:
+Monoarticular Exoskeleton can be modeled as a two-link serial manipulator as shown in figure \ref{Fig_Monoarticular_Exo_Mechanism} where each joint is assisted by the directly joint actuator and the forward kinematics of monoarticular exoskeleton is:
 \begin{figure}[h!]
 	\centering
 	\includegraphics[width=2 in]{Cartoons/Monoarticular_Exo_Mechanism.pdf}
@@ -299,36 +300,6 @@ l_{A}\cos{q_{A}} + (l_{E} + l_{D})\cos (q_{A} - q_ {B})
 \end{matrix}\right]_{2\times 2}
 \end{aligned}
 \end{equation}
-
-To derive dynamics of the exoskeletons Euler-Lagrangian method was used and equation of motion for the 2 degrees of freedom (DOF) exoskeleton can be expressed according to Eq \eqref{Eqn_Equation_of_Motion}.
-\begin{gather}\label{Eqn_Equation_of_Motion}
-\begin{bmatrix}
-\tau_{1}\\
-\tau_{2}
-\end{bmatrix}
-=
-\begin{bmatrix}
-D_{11}&D_{12}\\
-D_{21}&D_{22}
-\end{bmatrix}
-\begin{bmatrix}
-\ddot{q}_{1}\\
-\ddot{q}_{2}
-\end{bmatrix}
-+
-\begin{bmatrix}
-C_ {11}& C_ {12}\\ C_ {21}& C_ {22}
-\end{bmatrix}
-\begin{bmatrix}
-\dot{q}_{1}\\
-\dot{q}_{2}
-\end{bmatrix}
-+
-\begin{bmatrix}
-G_ {11}\\ G_ {12}
-\end{bmatrix}
-\end{gather}
-Where $D(q)_{2 \times 2}$ is exoskeleton mass matrix, $C(q,\dot{q})_{2 \times 2}$ express Coriolis matrix and $G(q)_{2 \times 1}$ is gravitational forces.\\
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section*{Musculoskeletal Simulation}
@@ -423,10 +394,10 @@ All five configurations of ideal exoskeletons with maximum Optimal Force (i.e. 1
 	\subfloat[Assisted subjects lower extremity muscles average metabolic energy reduction.]{\includegraphics[width=2.5in]{IdealExo_Simulations_General_Figures/AllConfigurationsMetabolicEnergyConsumption.pdf}
 		\label{Fig_Assist_Subjects_Avg_MC_Reduction}}
 	\hfil
-	\subfloat[Single joint assistive devices effect on metabolic energy expenditure of the subjects]{\includegraphics[width=2.5in]{G:/HMI/Exoskeleton/Paper/Draft_V2/Figures/Ideal_Exo_SingleJoint_Figures/SubjectsMetabolicEnergyConsumption.pdf}
+	\subfloat[Single joint assistive devices effect on metabolic energy expenditure of the subjects]{\includegraphics[width=2.5in]{Ideal_Exo_SingleJoint_Figures/SubjectsMetabolicEnergyConsumption.pdf}
 		\label{Fig_SingleJointExo_MetabolicCost_BoxPlot}}
 	\hfil
-	\subfloat[Monoarticular and biarticular assistive devices effect on metabolic energy expenditure of the subjects]{\includegraphics[width=2.5in]{G:/HMI/Exoskeleton/Paper/Draft_V2/Figures/Ideal_Exo_MonovsBi_Figures/SubjectsMetabolicEnergyConsumption.pdf}
+	\subfloat[Monoarticular and biarticular assistive devices effect on metabolic energy expenditure of the subjects]{\includegraphics[width=2.5in]{Ideal_Exo_MonovsBi_Figures/SubjectsMetabolicEnergyConsumption.pdf}
 		\label{Fig_IdealExo_MetabolicCost_BoxPlot}}
 	\caption{Ideal exoskeletons effect on the 7 running subjects energy consumption.}
 	\label{Fig_Exos_MetabolicCost_Effect}
@@ -544,26 +515,26 @@ where T and F represent tibia and femur bodies respectively and all joint, muscl
 
 \begin{figure*}[!h]
 	\centering
-	\subfloat[Biarticular and Monoarticular knee exoskeleons power profiles]{\includegraphics[width=2in]{G:/HMI/Exoskeleton/Paper/Draft_V1/Figures/Ideal_Exo_SingleJoint_Figures/BiandMonoarticularExoskeletonsKneeActuatorPower.pdf}
+	\subfloat[Biarticular and Monoarticular knee exoskeleons power profiles]{\includegraphics[width=2in]{Ideal_Exo_SingleJoint_Figures/BiandMonoarticularExoskeletonsKneeActuatorPower.pdf}
 		\label{Fig_Bi_Mono_KneeExo_Power_Profiles}}
 	\hfil
-	\subfloat[Hip exoskeleons power profiles]{\includegraphics[width=2in]{G:/HMI/Exoskeleton/Paper/Draft_V1/Figures/Ideal_Exo_SingleJoint_Figures/HipExoskeletonsHipActuatorPower.pdf}
+	\subfloat[Hip exoskeleons power profiles]{\includegraphics[width=2in]{Ideal_Exo_SingleJoint_Figures/HipExoskeletonsHipActuatorPower.pdf}
 		\label{Fig_HipExo_Power_Profiles}}
 	\caption{Assistive devices assisting single joint power and speed profiles compared to joints power and speed.}
 	\label{Fig_SingleJointExo_PowerProfiles}
 \end{figure*}
 \begin{figure*}
 	\centering
-	\subfloat[Mono and Biarticular exoskeleons hip actuators power profiles]{\includegraphics[width=2in]{G:/HMI/Exoskeleton/Paper/Draft_V1/Figures/Ideal_Exo_MonovsBi_Figures/ExoskeletonsHipActuatorPower.pdf}
+	\subfloat[Mono and Biarticular exoskeleons hip actuators power profiles]{\includegraphics[width=2in]{Ideal_Exo_MonovsBi_Figures/ExoskeletonsHipActuatorPower.pdf}
 		\label{Fig_MonoVsBi_HipActuator_Power_Profiles}}
 	\hfil
-	\subfloat[Mono and Biarticular exoskeleons knee actuators power profiles]{\includegraphics[width=2in]{G:/HMI/Exoskeleton/Paper/Draft_V1/Figures/Ideal_Exo_MonovsBi_Figures/ExoskeletonsKneeActuatorPower.pdf}
+	\subfloat[Mono and Biarticular exoskeleons knee actuators power profiles]{\includegraphics[width=2in]{Ideal_Exo_MonovsBi_Figures/ExoskeletonsKneeActuatorPower.pdf}
 		\label{Fig_MonoVsBi_KneeActuator_Power_Profiles}}
 	\hfil
-	\subfloat[Mono and Biarticular exoskeleons hip actuators speed profiles]{\includegraphics[width=2in]{G:/HMI/Exoskeleton/Paper/Draft_V1/Figures/Ideal_Exo_MonovsBi_Figures/ExoskeletonsHipActuatorSpeed.pdf}
+	\subfloat[Mono and Biarticular exoskeleons hip actuators speed profiles]{\includegraphics[width=2in]{Ideal_Exo_MonovsBi_Figures/ExoskeletonsHipActuatorSpeed.pdf}
 		\label{Fig_MonoVsBi_HipActuator_Speed_Profiles}}
 	\hfil
-	\subfloat[Mono and Biarticular exoskeleons knee actuators speed profiles]{\includegraphics[width=2in]{G:/HMI/Exoskeleton/Paper/Draft_V1/Figures/Ideal_Exo_MonovsBi_Figures/ExoskeletonsKneeActuatorSpeed.pdf}
+	\subfloat[Mono and Biarticular exoskeleons knee actuators speed profiles]{\includegraphics[width=2in]{Ideal_Exo_MonovsBi_Figures/ExoskeletonsKneeActuatorSpeed.pdf}
 		\label{Fig_MonoVsBi_KneeActuator_Speed_Profiles}}
 	\caption{Monoarticular and biarticular devices power and speed profiles compared to joints power and speed.}
 	\label{Fig_Exo_PowerProfiles}
@@ -580,40 +551,40 @@ Moreover, same as the single joint exoskeletons, the peak power required during 
 Adding an actuator to optimizer would affect the optimization result, and optimizer can find a more economical set of actuation to track the kinematics; therefore, assistive devices affect the subjects muscular activation which is the output of optimizer in CMC algorithm. This effect would not necessarily decrease all muscles activity, and it can be more economical to increase specific muscles activities during some phases of gait to track the kinematics with lower cost (i.e. metabolic power consumption).\\
 \begin{figure}[!h]
 	\centering
-	\subfloat[Lower limb key monoarticular muscles]{\includegraphics[width=1.5in]{G:/HMI/Exoskeleton/Paper/Draft_V1/Figures/Cartoons/Saggital_Leg_Monoarticular_Muscles}
+	\subfloat[Lower limb key monoarticular muscles]{\includegraphics[width=1.5in]{Cartoons/Saggital_Leg_Monoarticular_Muscles}
 		\label{Fig_Leg_Monoarticular_Muscles}}
 	\hfil
-	\subfloat[Lower limb key biarticular muscles]{\includegraphics[width=1.5in]{G:/HMI/Exoskeleton/Paper/Draft_V1/Figures/Cartoons/Saggital_Leg_Biarticular_Muscles}
+	\subfloat[Lower limb key biarticular muscles]{\includegraphics[width=1.5in]{Cartoons/Saggital_Leg_Biarticular_Muscles}
 		\label{Fig_Leg_Biarticular_Muscles}}
 	\hfil
-	\subfloat[Rectus femoris]{\includegraphics[width=1.5in]{G:/HMI/Exoskeleton/Paper/Draft_V1/Figures/Ideal_Exo_SingleJoint_Figures/MusclesActivity/Rectus_femoris_MuscleActivity}
+	\subfloat[Rectus femoris]{\includegraphics[width=1.5in]{Ideal_Exo_SingleJoint_Figures/MusclesActivity/Rectus_femoris_MuscleActivity}
 		\label{Fig_SingleJoint_Rectus_femoris_MuscleActivity}}
 	\hfil
-	\subfloat[Vastus lateralis]{\includegraphics[width=1.5in]{G:/HMI/Exoskeleton/Paper/Draft_V1/Figures/Ideal_Exo_SingleJoint_Figures/MusclesActivity/Vastus_lateralis_MuscleActivity}
+	\subfloat[Vastus lateralis]{\includegraphics[width=1.5in]{Ideal_Exo_SingleJoint_Figures/MusclesActivity/Vastus_lateralis_MuscleActivity}
 		\label{Fig_SingleJoint_Vastus_lateralis_MuscleActivity}}
 	\hfil
-	\subfloat[Psoas]{\includegraphics[width=1.5in]{G:/HMI/Exoskeleton/Paper/Draft_V1/Figures/Ideal_Exo_SingleJoint_Figures/MusclesActivity/Psoas_MuscleActivity}
+	\subfloat[Psoas]{\includegraphics[width=1.5in]{Ideal_Exo_SingleJoint_Figures/MusclesActivity/Psoas_MuscleActivity}
 		\label{Fig_SingleJoint_Psoas_MuscleActivity}}
 	\hfil
-	\subfloat[Iliacus]{\includegraphics[width=1.5in]{G:/HMI/Exoskeleton/Paper/Draft_V1/Figures/Ideal_Exo_SingleJoint_Figures/MusclesActivity/Iliacus_MuscleActivity}
+	\subfloat[Iliacus]{\includegraphics[width=1.5in]{Ideal_Exo_SingleJoint_Figures/MusclesActivity/Iliacus_MuscleActivity}
 		\label{Fig_SingleJoint_Iliacus_MuscleActivity}}
 	\hfil
-	\subfloat[Biceps femoris long head]{\includegraphics[width=1.5in]{G:/HMI/Exoskeleton/Paper/Draft_V1/Figures/Ideal_Exo_SingleJoint_Figures/MusclesActivity/Biceps_femoris_long_head_MuscleActivity}
+	\subfloat[Biceps femoris long head]{\includegraphics[width=1.5in]{Ideal_Exo_SingleJoint_Figures/MusclesActivity/Biceps_femoris_long_head_MuscleActivity}
 		\label{Fig_SingleJoint_Biceps_femoris_long_head_MuscleActivity}}
 	\hfil
-	\subfloat[Biceps femoris short head]{\includegraphics[width=1.5in]{G:/HMI/Exoskeleton/Paper/Draft_V1/Figures/Ideal_Exo_SingleJoint_Figures/MusclesActivity/Biceps_femoris_short_head_MuscleActivity}
+	\subfloat[Biceps femoris short head]{\includegraphics[width=1.5in]{Ideal_Exo_SingleJoint_Figures/MusclesActivity/Biceps_femoris_short_head_MuscleActivity}
 		\label{Fig_SingleJoint_Biceps_femoris_short_head_MuscleActivity}}
 	\hfil
-	\subfloat[Gluteus maximus middle]{\includegraphics[width=1.5in]{G:/HMI/Exoskeleton/Paper/Draft_V1/Figures/Ideal_Exo_SingleJoint_Figures/MusclesActivity/Gluteus_maximus_middle_MuscleActivity}
+	\subfloat[Gluteus maximus middle]{\includegraphics[width=1.5in]{Ideal_Exo_SingleJoint_Figures/MusclesActivity/Gluteus_maximus_middle_MuscleActivity}
 		\label{Fig_SingleJoint_Gluteus_maximus_middle}}
 	\hfil
-	\subfloat[Gastrocnemius medial head ]{\includegraphics[width=1.5in]{G:/HMI/Exoskeleton/Paper/Draft_V1/Figures/Ideal_Exo_SingleJoint_Figures/MusclesActivity/Gastrocnemius_medial_head_MuscleActivity}
+	\subfloat[Gastrocnemius medial head ]{\includegraphics[width=1.5in]{Ideal_Exo_SingleJoint_Figures/MusclesActivity/Gastrocnemius_medial_head_MuscleActivity}
 		\label{Fig_SingleJoint_Gastrocnemius_medial_head_MuscleActivity}}
 	\hfil
-	\subfloat[Semimembranosus]{\includegraphics[width=1.5in]{G:/HMI/Exoskeleton/Paper/Draft_V1/Figures/Ideal_Exo_SingleJoint_Figures/MusclesActivity/Semimembranosus_MuscleActivity}
+	\subfloat[Semimembranosus]{\includegraphics[width=1.5in]{Ideal_Exo_SingleJoint_Figures/MusclesActivity/Semimembranosus_MuscleActivity}
 		\label{Fig_SingleJoint_Semimembranosus_MuscleActivity}}
 	\hfil
-	\subfloat[Semitendinosus]{\includegraphics[width=1.5in]{G:/HMI/Exoskeleton/Paper/Draft_V1/Figures/Ideal_Exo_SingleJoint_Figures/MusclesActivity/Semitendinosus_MuscleActivity}
+	\subfloat[Semitendinosus]{\includegraphics[width=1.5in]{Figures/Ideal_Exo_SingleJoint_Figures/MusclesActivity/Semitendinosus_MuscleActivity}
 		\label{Fig_SingleJoint_Semitendinosus_MuscleActivity}}
 	\caption{Single joint assistive devices effect on the subjects muscles activation. Red, green and blue profiles represent biarticular knee, hip ,and monoarticular knee exoskeletons effect on the specific muscle.}
 	\label{Fig_SingleJointExo_MuscleActivation}
@@ -628,40 +599,40 @@ Biarticular and Monoarticular exoskeletons assisting hip and knee have a quite s
 We would refer the reader to supplementary material for devices effect on all of the muscles activation in all five configurations of the exoskeleton.
 \begin{figure}[!h]
 	\centering
-	\subfloat[Lower limb key monoarticular muscles]{\includegraphics[width=1.5in]{G:/HMI/Exoskeleton/Paper/Draft_V1/Figures/Cartoons/Saggital_Leg_Monoarticular_Muscles}
+	\subfloat[Lower limb key monoarticular muscles]{\includegraphics[width=1.5in]{Cartoons/Saggital_Leg_Monoarticular_Muscles}
 		\label{Fig_Leg_Monoarticular_Muscles_2}}
 	\hfil
-	\subfloat[Lower limb key biarticular muscles]{\includegraphics[width=1.5in]{G:/HMI/Exoskeleton/Paper/Draft_V1/Figures/Cartoons/Saggital_Leg_Biarticular_Muscles}
+	\subfloat[Lower limb key biarticular muscles]{\includegraphics[width=1.5in]{Cartoons/Saggital_Leg_Biarticular_Muscles}
 		\label{Fig_Leg_Biarticular_Muscles_2}}
 	\hfil
-	\subfloat[Rectus femoris]{\includegraphics[width=1.5in]{G:/HMI/Exoskeleton/Paper/Draft_V1/Figures/Ideal_Exo_MonovsBi_Figures/MusclesActivity/Rectus_femoris_Muscle_Activation}
+	\subfloat[Rectus femoris]{\includegraphics[width=1.5in]{Ideal_Exo_MonovsBi_Figures/MusclesActivity/Rectus_femoris_Muscle_Activation}
 		\label{Fig_MonovsBi_Rectus_femoris_MuscleActivity}}
 	\hfil
-	\subfloat[Vastus lateralis]{\includegraphics[width=1.5in]{G:/HMI/Exoskeleton/Paper/Draft_V1/Figures/Ideal_Exo_MonovsBi_Figures/MusclesActivity/Vastus_lateralis_Muscle_Activation}
+	\subfloat[Vastus lateralis]{\includegraphics[width=1.5in]{Ideal_Exo_MonovsBi_Figures/MusclesActivity/Vastus_lateralis_Muscle_Activation}
 		\label{Fig_MonovsBi_Vastus_lateralis_MuscleActivity}}
 	\hfil
-	\subfloat[Psoas]{\includegraphics[width=1.5in]{G:/HMI/Exoskeleton/Paper/Draft_V1/Figures/Ideal_Exo_MonovsBi_Figures/MusclesActivity/Psoas_Muscle_Activation}
+	\subfloat[Psoas]{\includegraphics[width=1.5in]{Ideal_Exo_MonovsBi_Figures/MusclesActivity/Psoas_Muscle_Activation}
 		\label{Fig_MonovsBi_Psoas_MuscleActivity}}
 	\hfil
-	\subfloat[Iliacus]{\includegraphics[width=1.5in]{G:/HMI/Exoskeleton/Paper/Draft_V1/Figures/Ideal_Exo_MonovsBi_Figures/MusclesActivity/Iliacus_Muscle_Activation}
+	\subfloat[Iliacus]{\includegraphics[width=1.5in]{Ideal_Exo_MonovsBi_Figures/MusclesActivity/Iliacus_Muscle_Activation}
 		\label{Fig_MonovsBi_Iliacus_MuscleActivity}}
 	\hfil
-	\subfloat[Biceps femoris long head]{\includegraphics[width=1.5in]{G:/HMI/Exoskeleton/Paper/Draft_V1/Figures/Ideal_Exo_MonovsBi_Figures/MusclesActivity/Biceps_femoris_long_head_Muscle_Activation}
+	\subfloat[Biceps femoris long head]{\includegraphics[width=1.5in]{Ideal_Exo_MonovsBi_Figures/MusclesActivity/Biceps_femoris_long_head_Muscle_Activation}
 		\label{Fig_MonovsBi_Biceps_femoris_long_head_MuscleActivity}}
 	\hfil
-	\subfloat[Biceps femoris short head]{\includegraphics[width=1.5in]{G:/HMI/Exoskeleton/Paper/Draft_V1/Figures/Ideal_Exo_MonovsBi_Figures/MusclesActivity/Biceps_femoris_short_head_Muscle_Activation}
+	\subfloat[Biceps femoris short head]{\includegraphics[width=1.5in]{Ideal_Exo_MonovsBi_Figures/MusclesActivity/Biceps_femoris_short_head_Muscle_Activation}
 		\label{Fig_MonovsBi_Biceps_femoris_short_head_MuscleActivity}}
 	\hfil
-	\subfloat[Gluteus maximus middle]{\includegraphics[width=1.5in]{G:/HMI/Exoskeleton/Paper/Draft_V1/Figures/Ideal_Exo_MonovsBi_Figures/MusclesActivity/Gluteus_maximus_middle_Muscle_Activation}
+	\subfloat[Gluteus maximus middle]{\includegraphics[width=1.5in]{Ideal_Exo_MonovsBi_Figures/MusclesActivity/Gluteus_maximus_middle_Muscle_Activation}
 		\label{Fig_MonovsBi_Gluteus_maximus_middle}}
 	\hfil
-	\subfloat[Gastrocnemius medial head ]{\includegraphics[width=1.5in]{G:/HMI/Exoskeleton/Paper/Draft_V1/Figures/Ideal_Exo_MonovsBi_Figures/MusclesActivity/Gastrocnemius_medial_head_Muscle_Activation}
+	\subfloat[Gastrocnemius medial head ]{\includegraphics[width=1.5in]{Ideal_Exo_MonovsBi_Figures/MusclesActivity/Gastrocnemius_medial_head_Muscle_Activation}
 		\label{Fig_MonovsBi_Gastrocnemius_medial_head_MuscleActivity}}
 	\hfil
-	\subfloat[Semimembranosus]{\includegraphics[width=1.5in]{G:/HMI/Exoskeleton/Paper/Draft_V1/Figures/Ideal_Exo_MonovsBi_Figures/MusclesActivity/Semimembranosus_Muscle_Activation}
+	\subfloat[Semimembranosus]{\includegraphics[width=1.5in]{Ideal_Exo_MonovsBi_Figures/MusclesActivity/Semimembranosus_Muscle_Activation}
 		\label{Fig_MonovsBi_Semimembranosus_MuscleActivity}}
 	\hfil
-	\subfloat[Semitendinosus]{\includegraphics[width=1.5in]{G:/HMI/Exoskeleton/Paper/Draft_V1/Figures/Ideal_Exo_MonovsBi_Figures/MusclesActivity/Semitendinosus_Muscle_Activation}
+	\subfloat[Semitendinosus]{\includegraphics[width=1.5in]{Ideal_Exo_MonovsBi_Figures/MusclesActivity/Semitendinosus_Muscle_Activation}
 		\label{Fig_MonovsBi_Semitendinosus_MuscleActivity}}
 	\caption{Monoarticular and Biarticular hip and knee bilateral exoskeletons effect on the subjects muscles activation. Red and blue profiles represent biarticular and monoarticular exoskeletons effect on the specific muscle.}
 	\label{Fig_MonovsBiExo_MuscleActivation}
@@ -673,7 +644,7 @@ To have more realistic results for the exoskeletons, we derived Pareto-front cur
 \begin{figure*}[!h]
 	\centering
 	\vspace{-1.\baselineskip}    
-	{\includegraphics[width=\columnwidth]{G:/HMI/Exoskeleton/Paper/Draft_V2/Figures/Ideal_Exo_ParetoOpt_Figures/Paretofront.pdf}}
+	{\includegraphics[width=\columnwidth]{Ideal_Exo_ParetoOpt_Figures/Paretofront.pdf}}
 	\caption{Monoarticular and Biarticular hip and knee exoskeletons Pareto-front.}
 	\label{Fig_Paretofront}
 \end{figure*}
@@ -683,13 +654,13 @@ Our aim was to compare these two exoskeletons during lower energy consumption le
 \subsubsection*{Device Performance, Torque and Power}
 \begin{figure*}[h!]
 	\centering
-	\subfloat[Assisted subjects lower extremity muscles average metabolic energy consumption.]{\includegraphics[width=2.5in]{G:/HMI/Exoskeleton/Paper/Draft_V2/Figures/Ideal_Exo_ParetoOpt_Figures/SubjectsMetabolicEnergyConsumption.pdf}
+	\subfloat[Assisted subjects lower extremity muscles average metabolic energy consumption.]{\includegraphics[width=2.5in]{Ideal_Exo_ParetoOpt_Figures/SubjectsMetabolicEnergyConsumption.pdf}
 		\label{Fig_FeasibleExo_MetabolicCost_BoxPlot}}
 	\hfil
-	\subfloat[Ideal biarticular and monoarticular exoskeletons knee actuators energy consumption]{\includegraphics[width=2.5in]{G:/HMI/Exoskeleton/Paper/Draft_V2/Figures/Ideal_Exo_ParetoOpt_Figures/KneeActuatorsEnergyConsumption.pdf}
+	\subfloat[Ideal biarticular and monoarticular exoskeletons knee actuators energy consumption]{\includegraphics[width=2.5in]{Ideal_Exo_ParetoOpt_Figures/KneeActuatorsEnergyConsumption.pdf}
 		\label{Fig__FeasibleExo_KneeActuator_BoxPlot}}
 	\hfil
-	\subfloat[Ideal biarticular and monoarticular exoskeletons hip actuators energy consumption]{\includegraphics[width=2.5in]{G:/HMI/Exoskeleton/Paper/Draft_V2/Figures/Ideal_Exo_ParetoOpt_Figures/HipActuatorsEnergyConsumption.pdf}
+	\subfloat[Ideal biarticular and monoarticular exoskeletons hip actuators energy consumption]{\includegraphics[width=2.5in]{Ideal_Exo_ParetoOpt_Figures/HipActuatorsEnergyConsumption.pdf}
 		\label{Fig_FeasibleExo_HipActuator_BoxPlot}}
 	\caption{Ideal exoskeletons with lower energy consumption effect on the 7 running subjects metabolic and actuators energy expenditures.}
 	\label{Fig_FeasibleExos_MetabolicCost_EnergyConsumption}
@@ -752,10 +723,10 @@ It is noteworthy that the biarticular knee actuator's frame has been transformed
 Most of the muscles are affected by assistive devices similar to the devices with maximum performance, however, unlike the previous case, no muscle was almost disabled which is not surprising due to the assistance level and the actuators torque profiles.\\
 \begin{figure*}[!h]
 	\centering
-	\subfloat[Lower limb key monoarticular muscles]{\includegraphics[width=1.5in]{G:/HMI/Exoskeleton/Paper/Draft_V1/Figures/Cartoons/Saggital_Leg_Monoarticular_Muscles}
+	\subfloat[Lower limb key monoarticular muscles]{\includegraphics[width=1.5in]{Cartoons/Saggital_Leg_Monoarticular_Muscles}
 		\label{Fig_Leg_Monoarticular_Muscles_3}}
 	\hfil
-	\subfloat[Lower limb key biarticular muscles]{\includegraphics[width=1.5in]{G:/HMI/Exoskeleton/Paper/Draft_V1/Figures/Cartoons/Saggital_Leg_Biarticular_Muscles}
+	\subfloat[Lower limb key biarticular muscles]{\includegraphics[width=1.5in]{Cartoons/Saggital_Leg_Biarticular_Muscles}
 		\label{Fig_Leg_Biarticular_Muscles_3}}
 	\hfil
 	\subfloat[Rectus femoris]{\includegraphics[width=1.5in]{Ideal_Exo_ParetoOpt_Figures/MusclesActivity/Rectus_femoris_Muscle_Activation}
