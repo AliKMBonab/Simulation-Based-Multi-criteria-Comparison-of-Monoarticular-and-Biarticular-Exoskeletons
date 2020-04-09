@@ -1,6 +1,8 @@
-This is BibTeX, Version 0.99dThe top-level auxiliary file: Ideal_Exoskeleton_Draft.aux
+This is BibTeX, Version 0.99d (MiKTeX 2.9.7380 64-bit)
+Capacity: max_strings=200000, hash_size=200000, hash_prime=170003
+The top-level auxiliary file: Ideal_Exoskeleton_Draft.aux
 The style file: plos2015.bst
-Illegal, another \bibstyle command---line 430 of file Ideal_Exoskeleton_Draft.aux
+Illegal, another \bibstyle command---line 429 of file Ideal_Exoskeleton_Draft.aux
  : \bibstyle
  :          {plos2015.bst}
 I'm skipping whatever remains of this command
@@ -37,6 +39,10 @@ You're missing a field name---line 1228 of file Bibliography.bib
  : %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 (Error may have been on previous line)
 I'm skipping whatever remains of this entry
+Reallocating 'glb_str_end' (item size: 4) to 20 items.
+Reallocating 'glb_str_ptr' (item size: 4) to 20 items.
+Reallocating 'global_strs' (item size: 1) to 4000000 items.
+Reallocating 'wiz_functions' (item size: 4) to 6000 items.
 Warning--empty year in 7
 Warning--empty year in 10
 Warning--empty year in 5
@@ -47,4 +53,45 @@ Warning--empty chapter in 59
 You can't pop an empty literal stack for entry 69
 while executing---line 1875 of file plos2015.bst
 Warning--empty chapter in 72
+You've used 123 entries,
+            3058 wiz_defined-function locations,
+            1469 strings with 35329 characters,
+and the built_in function-call counts, 222575 in all, are:
+= -- 28956
+> -- 1640
+< -- 14
++ -- 1204
+- -- 410
+* -- 18536
+:= -- 24068
+add.period$ -- 560
+call.type$ -- 123
+change.case$ -- 28
+chr.to.int$ -- 0
+cite$ -- 129
+duplicate$ -- 19855
+empty$ -- 20835
+format.name$ -- 518
+if$ -- 52237
+int.to.chr$ -- 0
+int.to.str$ -- 123
+missing$ -- 1120
+newline$ -- 706
+num.names$ -- 127
+pop$ -- 1734
+preamble$ -- 1
+purify$ -- 0
+quote$ -- 0
+skip$ -- 1927
+stack$ -- 0
+substring$ -- 41943
+swap$ -- 2979
+text.length$ -- 14
+text.prefix$ -- 0
+top$ -- 0
+type$ -- 0
+warning$ -- 6
+while$ -- 1128
+width$ -- 126
+write$ -- 1528
 (There were 9 error messages)
