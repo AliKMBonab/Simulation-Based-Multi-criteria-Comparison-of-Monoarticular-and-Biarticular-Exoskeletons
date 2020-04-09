@@ -685,18 +685,11 @@ Fey NP, Klute GK, Neptune RR.
 \newblock Journal of Biomechanical Engineering. 2012;134(11).
 \newblock doi:{10.1115/1.4007824}.
 
-\bibitem{101}
-Hamner SR, Seth A, Delp SL.
-\newblock Muscle contributions to propulsion and support during running.
-\newblock Journal of Biomechanics. 2010;43(14):2709 -- 2716.
-\newblock doi:{https://doi.org/10.1016/j.jbiomech.2010.06.025}.
-
-\bibitem{102}
-Hamner SR, Delp SL.
-\newblock Muscle contributions to fore-aft and vertical body mass center
-  accelerations over a range of running speeds.
-\newblock Journal of Biomechanics. 2013;46(4):780 -- 787.
-\newblock doi:{https://doi.org/10.1016/j.jbiomech.2012.11.024}.
+\bibitem{130}
+{Rajagopal} A, {Dembia} CL, {DeMers} MS, {Delp} DD, {Hicks} JL, {Delp} SL.
+\newblock Full-Body Musculoskeletal Model for Muscle-Driven Simulation of Human
+  Gait.
+\newblock IEEE Transactions on Biomedical Engineering. 2016;63(10):2068--2079.
 
 \bibitem{104}
 Thelen DG, Anderson FC, Delp SL.
@@ -736,6 +729,12 @@ Das I, Dennis J.
   Surface in Nonlinear Multicriteria Optimization Problems.
 \newblock SIAM Journal on Optimization. 1998;8(3):631--657.
 \newblock doi:{10.1137/S1052623496307510}.
+
+\bibitem{101}
+Hamner SR, Seth A, Delp SL.
+\newblock Muscle contributions to propulsion and support during running.
+\newblock Journal of Biomechanics. 2010;43(14):2709 -- 2716.
+\newblock doi:{https://doi.org/10.1016/j.jbiomech.2010.06.025}.
 
 \bibitem{114}
 Jackson RW, Collins SH.
