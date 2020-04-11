@@ -76,24 +76,25 @@ def actuators_energy_calc(Subject_Dic,isabs=True,regen=False):
     if regen == True:
         if gl.primary_leg == 'left':
             regen_energy = pp.avg_over_gait_cycle(time, np.abs(np.minimum(np.zeros(left_data.shape[0]),left_data)),cycle_duration=gl.cycle_end-gl.cycle_start,cycle_start=gl.cycle_start)\
-                        
+                         + pp.avg_over_gait_cycle(time, np.abs(np.minimum(np.zeros(right_data.shape[0]),right_data)),cycle_duration=gl.cycle_end-gl.cycle_start,cycle_start=gl.cycle_start)
         else:
             regen_energy = pp.avg_over_gait_cycle(time, np.abs(np.minimum(np.zeros(right_data.shape[0]),right_data)),cycle_duration=gl.cycle_end-gl.cycle_start,cycle_start=gl.cycle_start)\
-
+                         + pp.avg_over_gait_cycle(time, np.abs(np.minimum(np.zeros(left_data.shape[0]),left_data)),cycle_duration=gl.cycle_end-gl.cycle_start,cycle_start=gl.cycle_start)
     if isabs == True:
         if gl.primary_leg == 'left':
             energy = pp.avg_over_gait_cycle(time, np.abs(left_data),cycle_duration=gl.cycle_end-gl.cycle_start,cycle_start=gl.cycle_start)\
+                   + pp.avg_over_gait_cycle(time, np.abs(right_data),cycle_duration=gl.cycle_end-gl.cycle_start,cycle_start=gl.cycle_start)
               
         else:
             energy = pp.avg_over_gait_cycle(time, np.abs(right_data),cycle_duration=gl.cycle_end-gl.cycle_start,cycle_start=gl.cycle_start)\
-              
+                   + pp.avg_over_gait_cycle(time, np.abs(left_data),cycle_duration=gl.cycle_end-gl.cycle_start,cycle_start=gl.cycle_start)
     else:
         if gl.primary_leg == 'left':
             energy = pp.avg_over_gait_cycle(time, left_data,cycle_duration=gl.cycle_end-gl.cycle_start,cycle_start=gl.cycle_start)\
-                
+                   + pp.avg_over_gait_cycle(time, right_data,cycle_duration=gl.cycle_end-gl.cycle_start,cycle_start=gl.cycle_start)
         else:
              energy = pp.avg_over_gait_cycle(time, right_data,cycle_duration=gl.cycle_end-gl.cycle_start,cycle_start=gl.cycle_start)\
-                
+                    + pp.avg_over_gait_cycle(time, left_data,cycle_duration=gl.cycle_end-gl.cycle_start,cycle_start=gl.cycle_start)
     if regen == True:
         return energy/subject_mass,regen_energy/subject_mass
     else:
