@@ -50,7 +50,7 @@ loaded_mono_metabolics = utils.reduction_calc(unassisted_energy_dataset['loaded_
 noload_mono_metabolics = utils.reduction_calc(unassisted_energy_dataset['noload_metabolics_energy'],assisted_energy_dataset['monoarticular_ideal_noload_metabolics_energy'])
 bi_loadedvsnoload_metabolics = noload_bi_metabolics - loaded_bi_metabolics
 mono_loadedvsnoload_metabolics = noload_mono_metabolics - loaded_mono_metabolics
-#  Mean/std energy percent
+#  Mean/std metabolic percent
 mean_unassist_loadedvsnoload_metabolics, std_unassist_loadedvsnoload_metabolics = utils.mean_std_over_subjects(unassist_loadedvsnoload_metabolics,ax=0)
 mean_loaded_bi_metabolics, std_loaded_bi_metabolics = utils.mean_std_over_subjects(loaded_bi_metabolics,ax=0)
 mean_noload_bi_metabolics, std_noload_bi_metabolics = utils.mean_std_over_subjects(noload_bi_metabolics,ax=0)
@@ -58,14 +58,44 @@ mean_loaded_mono_metabolics, std_loaded_mono_metabolics = utils.mean_std_over_su
 mean_noload_mono_metabolics, std_noload_mono_metabolics = utils.mean_std_over_subjects(noload_mono_metabolics,ax=0)
 mean_bi_loadedvsnoload_metabolics, std_bi_loadedvsnoload_metabolics = utils.mean_std_over_subjects(bi_loadedvsnoload_metabolics,ax=0)
 mean_mono_loadedvsnoload_metabolics, std_mono_loadedvsnoload_metabolics = utils.mean_std_over_subjects(mono_loadedvsnoload_metabolics,ax=0)
-# Mean/std energy
+# Mean/std metabolic energy
 mean_noload_unassist_energy,std_noload_unassist_energy = utils.mean_std_over_subjects(unassisted_energy_dataset['noload_metabolics_energy'],ax=0)
 mean_loaded_unassist_energy,std_loaded_unassist_energy = utils.mean_std_over_subjects(unassisted_energy_dataset['loaded_metabolics_energy'],ax=0)
 mean_noload_bi_energy,std_noload_bi_energy = utils.mean_std_over_subjects(assisted_energy_dataset['biarticular_ideal_noload_metabolics_energy'],ax=0)
 mean_loaded_bi_energy,std_loaded_bi_energy = utils.mean_std_over_subjects(assisted_energy_dataset['biarticular_ideal_loaded_metabolics_energy'],ax=0)
 mean_noload_mono_energy,std_noload_mono_energy = utils.mean_std_over_subjects(assisted_energy_dataset['monoarticular_ideal_noload_metabolics_energy'],ax=0)
 mean_loaded_mono_energy,std_loaded_mono_energy = utils.mean_std_over_subjects(assisted_energy_dataset['monoarticular_ideal_loaded_metabolics_energy'],ax=0)
+# Mean/std actuators energy
+# noload
+mean_noload_bi_hip_energy,std_noload_bi_hip_energy = utils.mean_std_over_subjects(assisted_energy_dataset['biarticular_ideal_noload_hipactuator_energy'],ax=0)
+mean_noload_bi_knee_energy,std_noload_bi_knee_energy = utils.mean_std_over_subjects(assisted_energy_dataset['biarticular_ideal_noload_kneeactuator_energy'],ax=0)
+mean_noload_mono_hip_energy,std_noload_mono_hip_energy = utils.mean_std_over_subjects(assisted_energy_dataset['monoarticular_ideal_noload_hipactuator_energy'],ax=0)
+mean_noload_mono_knee_energy,std_noload_mono_knee_energy = utils.mean_std_over_subjects(assisted_energy_dataset['monoarticular_ideal_noload_kneeactuator_energy'],ax=0)
+# loaded
+mean_loaded_bi_hip_energy,std_loaded_bi_hip_energy = utils.mean_std_over_subjects(assisted_energy_dataset['biarticular_ideal_loaded_hipactuator_energy'],ax=0)
+mean_loaded_bi_knee_energy,std_loaded_bi_knee_energy = utils.mean_std_over_subjects(assisted_energy_dataset['biarticular_ideal_loaded_kneeactuator_energy'],ax=0)
+mean_loaded_mono_hip_energy,std_loaded_mono_hip_energy = utils.mean_std_over_subjects(assisted_energy_dataset['monoarticular_ideal_loaded_hipactuator_energy'],ax=0)
+mean_loaded_mono_knee_energy,std_loaded_mono_knee_energy = utils.mean_std_over_subjects(assisted_energy_dataset['monoarticular_ideal_loaded_kneeactuator_energy'],ax=0)
 
+#####################################################################################
+cellText = np.array([[mean_noload_bi_hip_energy,mean_noload_bi_knee_energy, mean_noload_bi_energy,mean_noload_bi_metabolics,\
+                     std_noload_bi_hip_energy,std_noload_bi_knee_energy, std_noload_bi_energy,std_noload_bi_metabolics],\
+                    [mean_noload_mono_hip_energy,mean_noload_mono_knee_energy, mean_noload_mono_energy,mean_noload_mono_metabolics,\
+                     std_noload_mono_hip_energy,std_noload_mono_knee_energy, std_noload_mono_energy,std_noload_mono_metabolics],\
+                    [mean_loaded_bi_hip_energy,mean_loaded_bi_knee_energy, mean_loaded_bi_energy,mean_loaded_bi_metabolics,\
+                     std_loaded_bi_hip_energy,std_loaded_bi_knee_energy, std_loaded_bi_energy,std_loaded_bi_metabolics],\
+                    [mean_loaded_mono_hip_energy,mean_loaded_mono_knee_energy, mean_loaded_mono_energy,mean_loaded_mono_metabolics,\
+                     std_loaded_mono_hip_energy,std_loaded_mono_knee_energy, std_loaded_mono_energy,std_loaded_mono_metabolics]])
+columns = ['biarticular, noload','monoarticular, noload','biarticular, loaded','monoarticular, loaded']
+rows = ['mean hip actuator energy (J/kg)','mean knee actuator energy (J/kg)','mean metabolic rate (J/kg)','mean metabolic reduction (%)',\
+           'std hip actuator energy (J/kg)','std knee actuator energy (J/kg)','std metabolic rate (J/kg)','std metabolic reduction (%)']
+fig, ax = plt.subplots(figsize=(12,6))
+table = ax.table(cellText=np.transpose(cellText.round(3)),rowLabels=rows,colLabels=columns,loc='center')
+table.scale(1,2)
+table.set_fontsize(15)
+ax.axis('off')
+fig.savefig('./Figures/Ideal/Energy_Table.pdf',orientation='landscape',bbox_inches='tight')
+plt.show()
 #####################################################################################
 # Plots
 # Biarticular
