@@ -298,3 +298,62 @@ utils.no_top_right(ax[1,1])
 fig.tight_layout()
 plt.show()
 fig.savefig('./Figures/Ideal/Actuator_Energy_BoxPlot.pdf',orientation='landscape',bbox_inches='tight')
+
+
+########################################################################################
+# Paper figure
+plt.rcParams.update({'font.size': 12})
+names = ['unassist, loaded','bi, loaded','unassist, noload','bi, noload']
+x = np.arange(1,len(names)+1,1)
+data = [utils.mean_over_trials(unassisted_energy_dataset['loaded_metabolics_energy'],ax=0),utils.mean_over_trials(unassisted_energy_dataset['noload_metabolics_energy'],ax=0),\
+        utils.mean_over_trials(assisted_energy_dataset['biarticular_ideal_loaded_metabolics_energy'],ax=0),utils.mean_over_trials(assisted_energy_dataset['biarticular_ideal_noload_metabolics_energy'],ax=0)]
+fig, ax = plt.subplots(nrows=2,ncols=2,figsize=(12.4, 10.8))
+bp = ax[0,0].boxplot(data, patch_artist=True)
+utils.beautiful_boxplot(bp)
+ax[0,0].set_ylabel('Metabolic Rate (W/Kg)')
+ax[0,0].set_xticks(x)
+ax[0,0].set_xticklabels(names)
+ax[0,0].set_title('biarticular, metabolic rate')
+utils.no_top_right(ax[0,0])
+
+# Monoarticular metabolics
+names = ['unassist, loaded','mono, loaded','unassist, noload','mono, noload']
+x = np.arange(1,len(names)+1,1)
+data = [utils.mean_over_trials(unassisted_energy_dataset['loaded_metabolics_energy'],ax=0),utils.mean_over_trials(unassisted_energy_dataset['noload_metabolics_energy'],ax=0),\
+        utils.mean_over_trials(assisted_energy_dataset['monoarticular_ideal_loaded_metabolics_energy'],ax=0),utils.mean_over_trials(assisted_energy_dataset['monoarticular_ideal_noload_metabolics_energy'],ax=0)]
+bp = ax[0,1].boxplot(data, patch_artist=True)
+utils.beautiful_boxplot(bp)
+ax[0,1].set_ylabel('Metabolic Rate (W/Kg)')
+ax[0,1].set_xticks(x)
+ax[0,1].set_xticklabels(names)
+ax[0,1].set_title('monoarticular, metabolic rate')
+utils.no_top_right(ax[0,1])
+
+# Biarticular Loaded Vs Noload
+names = ['bi hip, loaded','bi knee, loaded','bi hip, noload','bi knee, noload',]
+x = np.arange(1,len(names)+1,1)
+data = [utils.mean_over_trials(assisted_energy_dataset['biarticular_ideal_loaded_hipactuator_energy'],ax=0),utils.mean_over_trials(assisted_energy_dataset['biarticular_ideal_loaded_kneeactuator_energy'],ax=0),\
+        utils.mean_over_trials(assisted_energy_dataset['biarticular_ideal_noload_hipactuator_energy'],ax=0),utils.mean_over_trials(assisted_energy_dataset['biarticular_ideal_noload_kneeactuator_energy'],ax=0)]
+bp = ax[1,0].boxplot(data, patch_artist=True)
+utils.beautiful_boxplot(bp)
+ax[1,0].set_ylabel('Actuator Energy (J/Kg)')
+ax[1,0].set_xticks(x)
+ax[1,0].set_xticklabels(names)
+ax[1,0].set_title('biarticular, actutors energy')
+utils.no_top_right(ax[1,0])
+
+# Monoarticular Loaded Vs Noload
+names = ['mono hip, loaded','mono knee, loaded','mono hip, noload','mono knee, noload',]
+x = np.arange(1,len(names)+1,1)
+data = [utils.mean_over_trials(assisted_energy_dataset['monoarticular_ideal_loaded_hipactuator_energy'],ax=0),utils.mean_over_trials(assisted_energy_dataset['monoarticular_ideal_loaded_kneeactuator_energy'],ax=0),\
+        utils.mean_over_trials(assisted_energy_dataset['monoarticular_ideal_noload_hipactuator_energy'],ax=0),utils.mean_over_trials(assisted_energy_dataset['monoarticular_ideal_noload_kneeactuator_energy'],ax=0)]
+bp = ax[1,1].boxplot(data, patch_artist=True)
+utils.beautiful_boxplot(bp)
+ax[1,1].set_ylabel('Actuator Energy (J/Kg)')
+ax[1,1].set_xticks(x)
+ax[1,1].set_xticklabels(names)
+ax[1,1].set_title('monoarticular, actuators energy')
+utils.no_top_right(ax[1,1])
+fig.tight_layout(pad=0.4, w_pad=0.5, h_pad=1.0)
+plt.show()
+fig.savefig('./Figures/Ideal/Paper_Figure_Energy_BoxPlot.pdf',orientation='landscape',bbox_inches='tight')
