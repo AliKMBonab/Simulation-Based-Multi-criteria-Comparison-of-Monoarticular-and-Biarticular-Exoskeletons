@@ -215,7 +215,19 @@ def construct_gl_mass_side(subjectno,trialno,loadcond):
                                 right_toeoff= data['toeoff_time_right_leg'])
     return gl,mass,side
 
-def mean_std_over_subjects(data,ax=1):
+def mean_over_trials(data,ax=1):
+    subjects = np.array([0,3,6,9,12,15,18])
+    data_shape = data.shape[0]
+    avg = np.zeros(int(data_shape/3))
+    c = 0
+    for i in subjects:
+        avg[c] = np.nanmean(data[i:i+3])
+        c+=1
+    return avg
+
+def mean_std_over_subjects(data,avg_trials=True,ax=1):
+    if avg_trials == True:
+        data = mean_over_trials(data,ax=ax)
     mean = np.nanmean(data,axis=ax)
     std = np.nanstd(data,axis=ax)
     return mean,std
