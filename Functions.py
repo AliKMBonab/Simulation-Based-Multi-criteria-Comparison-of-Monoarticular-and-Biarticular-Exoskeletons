@@ -76,24 +76,25 @@ def actuators_energy_calc(Subject_Dic,isabs=True,regen=False):
     if regen == True:
         if gl.primary_leg == 'left':
             regen_energy = pp.avg_over_gait_cycle(time, np.abs(np.minimum(np.zeros(left_data.shape[0]),left_data)),cycle_duration=gl.cycle_end-gl.cycle_start,cycle_start=gl.cycle_start)\
-                        
+                         + pp.avg_over_gait_cycle(time, np.abs(np.minimum(np.zeros(right_data.shape[0]),right_data)),cycle_duration=gl.cycle_end-gl.cycle_start,cycle_start=gl.cycle_start)
         else:
             regen_energy = pp.avg_over_gait_cycle(time, np.abs(np.minimum(np.zeros(right_data.shape[0]),right_data)),cycle_duration=gl.cycle_end-gl.cycle_start,cycle_start=gl.cycle_start)\
-
+                         + pp.avg_over_gait_cycle(time, np.abs(np.minimum(np.zeros(left_data.shape[0]),left_data)),cycle_duration=gl.cycle_end-gl.cycle_start,cycle_start=gl.cycle_start)
     if isabs == True:
         if gl.primary_leg == 'left':
             energy = pp.avg_over_gait_cycle(time, np.abs(left_data),cycle_duration=gl.cycle_end-gl.cycle_start,cycle_start=gl.cycle_start)\
+                   + pp.avg_over_gait_cycle(time, np.abs(right_data),cycle_duration=gl.cycle_end-gl.cycle_start,cycle_start=gl.cycle_start)
               
         else:
             energy = pp.avg_over_gait_cycle(time, np.abs(right_data),cycle_duration=gl.cycle_end-gl.cycle_start,cycle_start=gl.cycle_start)\
-              
+                   + pp.avg_over_gait_cycle(time, np.abs(left_data),cycle_duration=gl.cycle_end-gl.cycle_start,cycle_start=gl.cycle_start)
     else:
         if gl.primary_leg == 'left':
             energy = pp.avg_over_gait_cycle(time, left_data,cycle_duration=gl.cycle_end-gl.cycle_start,cycle_start=gl.cycle_start)\
-                
+                   + pp.avg_over_gait_cycle(time, right_data,cycle_duration=gl.cycle_end-gl.cycle_start,cycle_start=gl.cycle_start)
         else:
              energy = pp.avg_over_gait_cycle(time, right_data,cycle_duration=gl.cycle_end-gl.cycle_start,cycle_start=gl.cycle_start)\
-                
+                    + pp.avg_over_gait_cycle(time, left_data,cycle_duration=gl.cycle_end-gl.cycle_start,cycle_start=gl.cycle_start)
     if regen == True:
         return energy/subject_mass,regen_energy/subject_mass
     else:
@@ -167,7 +168,7 @@ def metabolic_energy_reduction(data,unassist_data):
     return reduction
 
 
-def group_muscles_activation(Subject_Dic,whichgroup='nine',loadcond='noload'):
+def group_muscles_activation(Subject_Dic,use_dir=True,whichgroup='nine',loadcond='noload'):
     """This function returns the activation of the set of muscles that will be determined by user.
        The user can select "hip, knee, and nine" which are standing for set of hip and knee muscles and 
        set of nine important muscles in lower exterimity.
@@ -197,10 +198,13 @@ def group_muscles_activation(Subject_Dic,whichgroup='nine',loadcond='noload'):
     Directory = Subject_Dic["Directory"]
     SubjectNo = Subject_Dic["SubjectNo"]
     TrialNo = Subject_Dic["TrialNo"]
-    CycleNo = Subject_Dic["CycleNo"]
     gl = Subject_Dic["gl"]
-    data_dir = '../subject{}/{}/Cycle{}/loadedwalking_subject{}_{}_free_trial{}_cmc_states.sto'\
-                .format(SubjectNo,Directory,CycleNo,SubjectNo,loadcond,TrialNo)
+    if use_dir == True:
+        CycleNo = Subject_Dic["CycleNo"]
+        data_dir = '../subject{}/{}/Cycle{}/loadedwalking_subject{}_{}_free_trial{}_cmc_states.sto'\
+                    .format(SubjectNo,Directory,CycleNo,SubjectNo,loadcond,TrialNo)
+    else:
+        data_dir = Directory
     muscles_activation = np.zeros([1000,len(muscles_name)])
     gait_cycle = np.linspace(0,100,1000)
     data = dataman.storage2numpy(data_dir)
@@ -693,6 +697,12 @@ def specific_weight_data_extraction(Subject_Dic,Hip_Weight,Knee_Weight,loadcond=
     gl = Subject_Dic["gl"]
     subject_mass = Subject_Dic["subject_mass"]
     gait_cycle = np.linspace(0,100,1000)
+    if 'noloaded/Subject10_NoLoaded_Dataset/Monoarticular' in Directory :
+        print('trial number has been changed to get match with simulation files in subject 10 noloaded')
+        TrialNo = '01'
+    elif 'noloaded/Subject12_NoLoaded_Dataset' in Directory :
+        print('trial number has been changed to get match with simulation files in subject 12 noloaded')
+        TrialNo = '05'
     # Directory of each .sto files
     actuator_torque_data_dir= '../subject{}/{}/H{}K{}/loadedwalking_subject{}_{}_free_trial{}_cmc_Actuation_force.sto'\
     .format(SubjectNo,Directory,Hip_Weight,Knee_Weight,SubjectNo,loadcond,TrialNo)
@@ -702,59 +712,74 @@ def specific_weight_data_extraction(Subject_Dic,Hip_Weight,Knee_Weight,loadcond=
     .format(SubjectNo,Directory,Hip_Weight,Knee_Weight,SubjectNo,loadcond,TrialNo)
     metabolic_power_data_dir = '../subject{}/{}/H{}K{}/loadedwalking_subject{}_{}_free_trial{}_cmc_ProbeReporter_probes.sto'\
     .format(SubjectNo,Directory,Hip_Weight,Knee_Weight,SubjectNo,loadcond,TrialNo)
-    data_extraction_dic = {"Directory":actuator_torque_data_dir,
-                                 "Right_Parameter":'Hip_Right_Actuator',
-                                  "Left_Parameter":'Hip_Left_Actuator',
-                                              "gl": gl}
-    hip_actuator_torque = data_extraction(Subject_Dic=data_extraction_dic)
-    data_extraction_dic = {"Directory":actuator_torque_data_dir,
-                                 "Right_Parameter":'Knee_Right_Actuator',
-                                  "Left_Parameter":'Knee_Left_Actuator',
-                                              "gl": gl}
-    knee_actuator_torque = data_extraction(Subject_Dic=data_extraction_dic)
-    data_extraction_dic = {"Directory":actuator_power_data_dir,
-                                 "Right_Parameter":'Hip_Right_Actuator',
-                                  "Left_Parameter":'Hip_Left_Actuator',
-                                              "gl": gl}
-    hip_actuator_power = data_extraction(Subject_Dic=data_extraction_dic)
-    data_extraction_dic = {"Directory":actuator_power_data_dir,
-                                 "Right_Parameter":'Knee_Right_Actuator',
-                                  "Left_Parameter":'Knee_Left_Actuator',
-                                              "gl": gl}
-    knee_actuator_power = data_extraction(Subject_Dic=data_extraction_dic)
-    data_extraction_dic = {"Directory":actuator_speed_data_dir,
-                                 "Right_Parameter":'Hip_Right_Actuator',
-                                  "Left_Parameter":'Hip_Left_Actuator',
-                                              "gl": gl}
-    hip_actuator_speed = data_extraction(Subject_Dic=data_extraction_dic)
-    data_extraction_dic = {"Directory":actuator_speed_data_dir,
-                                 "Right_Parameter":'Knee_Right_Actuator',
-                                  "Left_Parameter":'Knee_Left_Actuator',
-                                              "gl": gl}
-    knee_actuator_speed = data_extraction(Subject_Dic=data_extraction_dic)
-    if calculatenergy == True:
-                energy_dic = {"Directory":actuator_power_data_dir,
-                        "Right_Parameter":'Hip_Right_Actuator',
-                         "Left_Parameter":'Hip_Left_Actuator',
-                                     "gl": gl,
-                           "Subject_Mass": subject_mass}
-                if regen_energy == True:
-                    hip_actuator_energy,hip_actuator_regen_energy = actuators_energy_calc(Subject_Dic=energy_dic,regen=regen_energy)
-                else:
-                    hip_actuator_energy = actuators_energy_calc(Subject_Dic=energy_dic,regen=regen_energy)
-                energy_dic = {"Directory":actuator_power_data_dir,
-                        "Right_Parameter":'Knee_Right_Actuator',
-                         "Left_Parameter":'Knee_Left_Actuator',
-                                     "gl": gl,
-                           "Subject_Mass": subject_mass}
-                if regen_energy == True:
-                    knee_actuator_energy,hip_actuator_regen_energy = actuators_energy_calc(Subject_Dic=energy_dic,regen=regen_energy)
-                else:
-                    knee_actuator_energy = actuators_energy_calc(Subject_Dic=energy_dic,regen=regen_energy)
-                energy_dic = {"Directory":metabolic_power_data_dir,
-                                     "gl": gl,
-                           "Subject_Mass": subject_mass}
-                metabolic_energy = metabolic_energy_fcn(energy_dic)
+    # if files do not exist
+    if os.path.exists(actuator_torque_data_dir) == False or os.path.exists(actuator_power_data_dir) == False or os.path.exists(metabolic_power_data_dir) == False:
+        hip_actuator_torque = np.ones(1000)*(np.nan)
+        knee_actuator_torque = np.ones(1000)*(np.nan)
+        hip_actuator_power = np.ones(1000)*(np.nan)
+        knee_actuator_power = np.ones(1000)*(np.nan)
+        hip_actuator_speed = np.ones(1000)*(np.nan)
+        knee_actuator_speed = np.ones(1000)*(np.nan)
+        if calculatenergy == True:
+            hip_actuator_energy = np.nan
+            hip_actuator_regen_energy = np.nan
+            knee_actuator_energy = np.nan
+            knee_actuator_regen_energy = np.nan
+            metabolic_energy = np.nan
+    else:
+        data_extraction_dic = {"Directory":actuator_torque_data_dir,
+                                    "Right_Parameter":'Hip_Right_Actuator',
+                                    "Left_Parameter":'Hip_Left_Actuator',
+                                                "gl": gl}
+        hip_actuator_torque = data_extraction(Subject_Dic=data_extraction_dic)
+        data_extraction_dic = {"Directory":actuator_torque_data_dir,
+                                    "Right_Parameter":'Knee_Right_Actuator',
+                                    "Left_Parameter":'Knee_Left_Actuator',
+                                                "gl": gl}
+        knee_actuator_torque = data_extraction(Subject_Dic=data_extraction_dic)
+        data_extraction_dic = {"Directory":actuator_power_data_dir,
+                                    "Right_Parameter":'Hip_Right_Actuator',
+                                    "Left_Parameter":'Hip_Left_Actuator',
+                                                "gl": gl}
+        hip_actuator_power = data_extraction(Subject_Dic=data_extraction_dic)
+        data_extraction_dic = {"Directory":actuator_power_data_dir,
+                                    "Right_Parameter":'Knee_Right_Actuator',
+                                    "Left_Parameter":'Knee_Left_Actuator',
+                                                "gl": gl}
+        knee_actuator_power = data_extraction(Subject_Dic=data_extraction_dic)
+        data_extraction_dic = {"Directory":actuator_speed_data_dir,
+                                    "Right_Parameter":'Hip_Right_Actuator',
+                                    "Left_Parameter":'Hip_Left_Actuator',
+                                                "gl": gl}
+        hip_actuator_speed = data_extraction(Subject_Dic=data_extraction_dic)
+        data_extraction_dic = {"Directory":actuator_speed_data_dir,
+                                    "Right_Parameter":'Knee_Right_Actuator',
+                                    "Left_Parameter":'Knee_Left_Actuator',
+                                                "gl": gl}
+        knee_actuator_speed = data_extraction(Subject_Dic=data_extraction_dic)
+        if calculatenergy == True:
+                    energy_dic = {"Directory":actuator_power_data_dir,
+                            "Right_Parameter":'Hip_Right_Actuator',
+                            "Left_Parameter":'Hip_Left_Actuator',
+                                        "gl": gl,
+                            "Subject_Mass": subject_mass}
+                    if regen_energy == True:
+                        hip_actuator_energy,hip_actuator_regen_energy = actuators_energy_calc(Subject_Dic=energy_dic,regen=regen_energy)
+                    else:
+                        hip_actuator_energy = actuators_energy_calc(Subject_Dic=energy_dic,regen=regen_energy)
+                    energy_dic = {"Directory":actuator_power_data_dir,
+                            "Right_Parameter":'Knee_Right_Actuator',
+                            "Left_Parameter":'Knee_Left_Actuator',
+                                        "gl": gl,
+                            "Subject_Mass": subject_mass}
+                    if regen_energy == True:
+                        knee_actuator_energy,knee_actuator_regen_energy = actuators_energy_calc(Subject_Dic=energy_dic,regen=regen_energy)
+                    else:
+                        knee_actuator_energy = actuators_energy_calc(Subject_Dic=energy_dic,regen=regen_energy)
+                    energy_dic = {"Directory":metabolic_power_data_dir,
+                                        "gl": gl,
+                            "Subject_Mass": subject_mass}
+                    metabolic_energy = metabolic_energy_fcn(energy_dic)
     if regen_energy == True:
         return hip_actuator_torque,knee_actuator_torque,hip_actuator_power,knee_actuator_power,\
             hip_actuator_speed,knee_actuator_speed,hip_actuator_energy,knee_actuator_energy,metabolic_energy,hip_actuator_regen_energy,knee_actuator_regen_energy
@@ -769,7 +794,7 @@ def specific_weight_data_subjects(configuration,HipWeight,KneeWeight,loadcond='n
     -Default setting for muscle activation is nine representitive muscles of the lower extermity. It can be changed to knee/hip/both.
      """
     subjects = ['05','07','09','10','11','12','14']
-    trials_num = ['01']
+    trials_num = ['01','02','03']
     whichgroup='nine'
     musclesgroup = 9
     # initialization
@@ -795,9 +820,9 @@ def specific_weight_data_subjects(configuration,HipWeight,KneeWeight,loadcond='n
             gl,_,trial = construct_gl_mass_trial(subjectno=i,trialno=j,loadcond=loadcond)
             _,subject_mass,_ = construct_gl_mass_trial(subjectno=i,trialno=j,loadcond='noload')
             if loadcond == 'noload':
-                files_dir = 'noloaded/Subject{}_NoLoaded_Dataset/{}'.format(i,configuration)
+                files_dir = 'noloaded/Subject{}_NoLoaded_Dataset/{}/Trial{}'.format(i,configuration,j)
             else:
-                files_dir = 'noloaded/Subject{}_Loaded_Dataset/{}'.format(i,configuration)
+                files_dir = 'loaded/Subject{}_Loaded_Dataset/{}/Trial{}'.format(i,configuration,j)
             Subject_Dictionary = {"Directory": files_dir,
                                   "SubjectNo": i,
                                     "TrialNo": trial,
@@ -806,11 +831,11 @@ def specific_weight_data_subjects(configuration,HipWeight,KneeWeight,loadcond='n
             if regenergy == False:
                 hip_torque,knee_torque,hip_power,knee_power,hip_speed,\
                 knee_speed,hip_energy,knee_energy,metabolics_energy = \
-                specific_weight_data_extraction(Subject_Dictionary,Hip_Weight=HipWeight,Knee_weight=KneeWeight,loadcond=loadcond)
+                specific_weight_data_extraction(Subject_Dictionary,Hip_Weight=HipWeight,Knee_Weight=KneeWeight,loadcond=loadcond)
             else:
                 hip_torque,knee_torque,hip_power,knee_power,hip_speed,\
                 knee_speed,hip_energy,knee_energy,metabolics_energy,reg_hip_energy,reg_knee_energy = \
-                specific_weight_data_extraction(Subject_Dictionary,Hip_Weight=HipWeight,Knee_weight=KneeWeight,loadcond=loadcond)
+                specific_weight_data_extraction(Subject_Dictionary,Hip_Weight=HipWeight,Knee_Weight=KneeWeight,loadcond=loadcond,regen_energy=regenergy)
                 Regen_HipActuatorEnergy_Data[c] = reg_hip_energy
                 Regen_KneeActuatorEnergy_Data[c] = reg_knee_energy
             # saving data into initialized variables
@@ -824,25 +849,43 @@ def specific_weight_data_subjects(configuration,HipWeight,KneeWeight,loadcond='n
             KneeActuatorEnergy_Data[c]    = knee_energy
             MetabolicEnergy_Data[c]       = metabolics_energy
             if musclesactivation == True:
-                muscles_activation = group_muscles_activation(Subject_Dictionary,whichgroup=whichgroup,loadcond=loadcond)
-                MuscleActivation_Data[:,c_m:c_m+musclesgroup] = muscles_activation
+                trial_no = '02'
+                if 'noloaded/Subject10_NoLoaded_Dataset/Monoarticular' in files_dir :
+                    trial_no = '01'
+                elif 'noloaded/Subject12_NoLoaded_Dataset' in files_dir :
+                    trial_no = '05'
+                data_dir = '../subject{}/{}/H{}K{}/loadedwalking_subject{}_{}_free_trial{}_cmc_states.sto'\
+                    .format(i,files_dir,HipWeight,KneeWeight,i,loadcond,trial_no)
+                Subject_Dictionary = {"Directory": data_dir,
+                                  "SubjectNo": i,
+                                    "TrialNo": trial,
+                                         "gl": gl,
+                               "subject_mass":subject_mass}
+                if os.path.exists(data_dir) == False:
+                    MuscleActivation_Data[:,c_m:c_m+musclesgroup] = np.nan
+                else:
+                    muscles_activation = group_muscles_activation(Subject_Dictionary,whichgroup=whichgroup,loadcond=loadcond,use_dir=False)
+                    MuscleActivation_Data[:,c_m:c_m+musclesgroup] = muscles_activation
                 c_m+=musclesgroup
             if musclesmoment == True:
-                
-                hip_r_musclesmoment_dir = '../subject{}/{}/H{}K{}/loadedwalking_subject{}_{}_free_trial{}_analyze_MuscleAnalysis_Moment_hip_flexion_r.sto'\
-                                        .format(i,files_dir,HipWeight,KneeWeight,i,loadcond,'02')
-                hip_l_musclesmoment_dir = '../subject{}/{}/H{}K{}/loadedwalking_subject{}_{}_free_trial{}_analyze_MuscleAnalysis_Moment_hip_flexion_l.sto'\
-                                        .format(i,files_dir,HipWeight,KneeWeight,i,loadcond,'02')
-                knee_r_musclesmoment_dir = '../subject{}/{}/H{}K{}/loadedwalking_subject{}_{}_free_trial{}_analyze_MuscleAnalysis_Moment_knee_angle_r.sto'\
-                                        .format(i,files_dir,HipWeight,KneeWeight,i,loadcond,'02')
-                knee_l_musclesmoment_dir = '../subject{}/{}/H{}K{}/loadedwalking_subject{}_{}_free_trial{}_analyze_MuscleAnalysis_Moment_knee_angle_l.sto'\
-                                        .format(i,files_dir,HipWeight,KneeWeight,i,loadcond,'02')
-                musclemoment_dic = {"Right_Directory":hip_r_musclesmoment_dir,"Left_Directory":hip_l_musclesmoment_dir,"gl":gl}
-                hip_muscle_moment = musclemoment_calc(Subject_Dic=musclemoment_dic)
-                musclemoment_dic = {"Right_Directory":knee_r_musclesmoment_dir,"Left_Directory":knee_l_musclesmoment_dir,"gl":gl}
-                knee_muscle_moment = musclemoment_calc(Subject_Dic=musclemoment_dic)
-                HipMuscleMoment_Data[:,c]  = hip_muscle_moment
-                KneeMuscleMoment_Data[:,c] = knee_muscle_moment
+                hip_r_musclesmoment_dir = '../subject{}/{}/H{}K{}/loadedwalking_subject05_adjusted_MuscleAnalysis_Moment_hip_flexion_r.sto'\
+                                        .format(i,files_dir,HipWeight,KneeWeight)
+                hip_l_musclesmoment_dir = '../subject{}/{}/H{}K{}/loadedwalking_subject05_adjusted_MuscleAnalysis_Moment_hip_flexion_l.sto'\
+                                        .format(i,files_dir,HipWeight,KneeWeight)
+                knee_r_musclesmoment_dir = '../subject{}/{}/H{}K{}/loadedwalking_subject05_adjusted_MuscleAnalysis_Moment_knee_angle_r.sto'\
+                                        .format(i,files_dir,HipWeight,KneeWeight)
+                knee_l_musclesmoment_dir = '../subject{}/{}/H{}K{}/loadedwalking_subject05_adjusted_MuscleAnalysis_Moment_knee_angle_l.sto'\
+                                        .format(i,files_dir,HipWeight,KneeWeight)
+                if os.path.exists(hip_r_musclesmoment_dir)==0 or os.path.exists(knee_r_musclesmoment_dir)==0:
+                    HipMuscleMoment_Data[:,c]  = np.nan
+                    KneeMuscleMoment_Data[:,c] = np.nan
+                else:
+                    musclemoment_dic = {"Right_Directory":hip_r_musclesmoment_dir,"Left_Directory":hip_l_musclesmoment_dir,"gl":gl}
+                    hip_muscle_moment = musclemoment_calc(Subject_Dic=musclemoment_dic)
+                    musclemoment_dic = {"Right_Directory":knee_r_musclesmoment_dir,"Left_Directory":knee_l_musclesmoment_dir,"gl":gl}
+                    knee_muscle_moment = musclemoment_calc(Subject_Dic=musclemoment_dic)
+                    HipMuscleMoment_Data[:,c]  = hip_muscle_moment
+                    KneeMuscleMoment_Data[:,c] = knee_muscle_moment
             c+=1
     return HipActuator_Torque_Data,KneeActuator_Torque_Data,HipActuator_Power_Data,KneeActuator_Power_Data,\
            HipActuator_Speed_Data,KneeActuator_Speed_Data,HipActuatorEnergy_Data,KneeActuatorEnergy_Data,\
