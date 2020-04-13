@@ -427,3 +427,100 @@ utils.plot_joint_muscle_exo(nrows=2,ncols=2,plot_dic=plot_dic,color_dic=default_
 fig.tight_layout()
 plt.show()
 fig.savefig('./Figures/Ideal/Exoskeletons_Knee_Speed.pdf',orientation='landscape',bbox_inches='tight')
+
+##################################################################################################
+# Paper figure
+# ***************************
+# moment figure
+# required dictionary
+plot_dic={
+'plot_1_list' : [unassist_loaded_hip_musclesmoment_dic,unassist_noload_hip_musclesmoment_dic,\
+                     unassist_loaded_hip_musclesmoment_dic,unassist_noload_hip_musclesmoment_dic,\
+                unassist_loaded_knee_musclesmoment_dic,unassist_noload_knee_musclesmoment_dic,\
+                     unassist_loaded_knee_musclesmoment_dic,unassist_noload_knee_musclesmoment_dic],
+'plot_3_list' : [bi_loaded_hip_musclesmoment_dic,bi_noload_hip_musclesmoment_dic,\
+                      mono_loaded_hip_musclesmoment_dic,mono_noload_hip_musclesmoment_dic,\
+                bi_loaded_knee_musclesmoment_dic,bi_noload_knee_musclesmoment_dic,\
+                      mono_loaded_knee_musclesmoment_dic,mono_noload_knee_musclesmoment_dic],
+'plot_2_list' : [bi_loaded_hip_torque_dic,bi_loaded_knee_torque_dic,mono_loaded_hip_torque_dic,\
+                 bi_noload_hip_torque_dic,bi_noload_knee_torque_dic,mono_noload_hip_torque_dic,\
+                 mono_loaded_knee_torque_dic,mono_noload_knee_torque_dic],
+'plot_titles' : ['loaded biarticular hip joint','loaded biarticular knee joint','loaded monoarticular hip joint',\
+                 'noload biarticular hip joint','noload biarticular knee joint','noload monoarticular hip joint',\
+                 'loaded monoarticular knee joint','noload monoarticular knee joint']
+}
+default_color_dic = {
+'color_1_list' : ['k','k','k','xkcd:irish green','xkcd:irish green','xkcd:irish green','k','xkcd:irish green'],
+'color_2_list' : [mycolors['cyan blue'],mycolors['cyan blue'],mycolors['cyan blue'],mycolors['olympic blue'],\
+                  mycolors['olympic blue'],mycolors['olympic blue'],mycolors['cyan blue'],mycolors['olympic blue']],
+'color_3_list' : [mycolors['crimson red'],mycolors['crimson red'],mycolors['crimson red'],mycolors['french rose'],\
+                  mycolors['french rose'],mycolors['french rose'],mycolors['crimson red'],mycolors['french rose']]
+}
+# plot
+fig = plt.figure(num='Loaded Hip Torque',figsize=(12.8, 9.6))
+utils.plot_joint_muscle_exo(nrows=3,ncols=3,nplots=8,plot_dic=plot_dic,color_dic=default_color_dic,legend_loc=[0,3],\
+                            subplot_legend=True,fig=fig,ylabel='flexion/extension moment (N-m/kg)')
+fig.tight_layout(h_pad=-1.5, w_pad=-1.5)
+fig.subplots_adjust(top=0.99, bottom=0.075, left=0.100, right=0.975,hspace=0.2,wspace=0.15)
+fig.savefig('./Figures/Ideal/PaperFigure_Exoskeletons_Torque.pdf',orientation='landscape',bbox_inches='tight')
+plt.show()
+
+# ***************************
+# power figure
+# required dictionary
+plot_dic={
+'plot_1_list' : [loaded_hip_power_dic,loaded_knee_power_dic,loaded_hip_power_dic,\
+                 noload_hip_power_dic,noload_knee_power_dic,noload_hip_power_dic,\
+                 loaded_knee_power_dic,noload_knee_power_dic],
+'plot_2_list' : [bi_loaded_hip_power_dic,bi_loaded_knee_power_dic,mono_loaded_hip_power_dic,\
+                 bi_noload_hip_power_dic,bi_noload_knee_power_dic,mono_noload_hip_power_dic,\
+                 mono_loaded_knee_power_dic,mono_noload_knee_power_dic],
+'plot_titles' : ['loaded biarticular hip joint','loaded biarticular knee joint','loaded monoarticular hip joint',\
+                 'noload biarticular hip joint','noload biarticular knee joint','noload monoarticular hip joint',\
+                 'loaded monoarticular knee joint','noload monoarticular knee joint']
+}
+default_color_dic = {
+'color_1_list' : ['k','k','k','xkcd:irish green','xkcd:irish green','xkcd:irish green','k','xkcd:irish green'],
+'color_2_list' : [mycolors['cyan blue'],mycolors['cyan blue'],mycolors['cyan blue'],mycolors['olympic blue'],\
+                  mycolors['olympic blue'],mycolors['olympic blue'],mycolors['cyan blue'],mycolors['olympic blue']],
+'color_3_list' : [mycolors['crimson red'],mycolors['crimson red'],mycolors['crimson red'],mycolors['french rose'],\
+                  mycolors['french rose'],mycolors['french rose'],mycolors['crimson red'],mycolors['french rose']]
+}
+# plot
+fig = plt.figure(num='Loaded Hip Torque',figsize=(12.8, 9.6))
+utils.plot_joint_muscle_exo(nrows=3,ncols=3,nplots=8,plot_dic=plot_dic,color_dic=default_color_dic,legend_loc=[0,3],\
+                            thirdplot=False,subplot_legend=True,fig=fig,ylabel='flexion/extension power (W/kg)')
+fig.tight_layout(h_pad=-1.5, w_pad=-1.5)
+fig.subplots_adjust(top=0.99, bottom=0.075, left=0.100, right=0.975,hspace=0.2,wspace=0.15)
+fig.savefig('./Figures/Ideal/PaperFigure_Exoskeletons_Power.pdf',orientation='landscape',bbox_inches='tight')
+plt.show()
+
+# ***************************
+# speed figure
+# required dictionary
+plot_dic={
+'plot_1_list' : [loaded_hip_speed_dic,loaded_knee_speed_dic,loaded_hip_speed_dic,\
+                 noload_hip_speed_dic,noload_knee_speed_dic,noload_hip_speed_dic,\
+                 loaded_knee_speed_dic,noload_knee_speed_dic],
+'plot_2_list' : [bi_loaded_hip_speed_dic,bi_loaded_knee_speed_dic,mono_loaded_hip_speed_dic,\
+                 bi_noload_hip_speed_dic,bi_noload_knee_speed_dic,mono_noload_hip_speed_dic,\
+                 mono_loaded_knee_speed_dic,mono_noload_knee_speed_dic],
+'plot_titles' : ['loaded biarticular hip joint','loaded biarticular knee joint','loaded monoarticular hip joint',\
+                 'noload biarticular hip joint','noload biarticular knee joint','noload monoarticular hip joint',\
+                 'loaded monoarticular knee joint','noload monoarticular knee joint']
+}
+default_color_dic = {
+'color_1_list' : ['k','k','k','xkcd:irish green','xkcd:irish green','xkcd:irish green','k','xkcd:irish green'],
+'color_2_list' : [mycolors['cyan blue'],mycolors['cyan blue'],mycolors['cyan blue'],mycolors['olympic blue'],\
+                  mycolors['olympic blue'],mycolors['olympic blue'],mycolors['cyan blue'],mycolors['olympic blue']],
+'color_3_list' : [mycolors['crimson red'],mycolors['crimson red'],mycolors['crimson red'],mycolors['french rose'],\
+                  mycolors['french rose'],mycolors['french rose'],mycolors['crimson red'],mycolors['french rose']]
+}
+# plot
+fig = plt.figure(num='Loaded Hip Torque',figsize=(12.8, 9.6))
+utils.plot_joint_muscle_exo(nrows=3,ncols=3,nplots=8,plot_dic=plot_dic,color_dic=default_color_dic,legend_loc=[0,3],\
+                            thirdplot=False,subplot_legend=True,fig=fig,ylabel='flexion/extension speed (rad/s)')
+fig.tight_layout(h_pad=-1.5, w_pad=-1.5)
+fig.subplots_adjust(top=0.99, bottom=0.075, left=0.100, right=0.975,hspace=0.2,wspace=0.15)
+fig.savefig('./Figures/Ideal/PaperFigure_Exoskeletons_Speed.pdf',orientation='landscape',bbox_inches='tight')
+plt.show()
