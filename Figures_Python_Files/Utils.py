@@ -456,6 +456,21 @@ def addingmass_metabolics_reduction(assist_data,unassist_data,subject_num=7,tria
 
 ######################################################################
 # Plot related functions
+def resize(axes):
+    # this assumes a fixed aspect being set for the axes.
+    for ax in axes:
+        if ax.get_aspect() == "auto":
+            return
+        elif ax.get_aspect() == "equal":
+            ax.set_aspect(1)
+    fig = axes[0].figure
+    s = fig.subplotpars
+    n = len(axes)
+    axw = fig.get_size_inches()[0]*(s.right-s.left)/(n+(n-1)*s.wspace)
+    r = lambda ax: np.diff(ax.get_ylim())[0]/np.diff(ax.get_xlim())[0]*ax.get_aspect()
+    a = max([r(ax) for ax in axes])
+    figh = a*axw/(s.top-s.bottom)
+    fig.set_size_inches(fig.get_size_inches()[0],figh)
 
 def autolabel(rects,text=None,label_value=True):
     """Attach a text label above each bar"""
@@ -555,12 +570,17 @@ def plot_muscles_avg(plot_dic,toeoff_color='xkcd:medium grey',
     # plots
     for i in range(len(muscles_name)):
         ax = plt.subplot(row_num,col_num,i+1)
+        plt.tick_params(axis='both',direction='in')
         no_top_right(ax)
         plt.tight_layout()
         plt.title(muscles_name[i])
         plt.xticks([0,20,40,60,80,100])
         plt.xlim([0,100])
-        plt.yticks((0,0.2,0.4,0.6,0.8,1))
+        plt.yticks((0,0.1,0.3,0.5,0.7,0.9))
+        if i in [0,1,2,3,4,5]:
+                labels = [item.get_text() for item in ax.get_xticklabels()]
+                empty_string_labels = ['']*len(labels)
+                ax.set_xticklabels(empty_string_labels)
         ax.axvline(avg_toeoff, lw=lw, color=toeoff_color, zorder=0, alpha=toeoff_alpha) #vertical line
         if is_std == True:
             ax.fill_between(pgc, avg[:,i] + std[:,i], avg[:,i] - std[:,i], alpha=alpha,linewidth=fill_lw, *args, **kwargs) # shaded std
@@ -610,19 +630,37 @@ def plot_joint_muscle_exo (nrows,ncols,plot_dic,color_dic,
             plt.figlegend(handles=handle1,labels=label1, bbox_to_anchor=(pos.x0+0.05, pos.y0-0.05,  pos.width / 1.5, pos.height / 1.5))
             plt.figlegend(handles=handle2,labels=label2, bbox_to_anchor=(pos.x0+0.05, pos.y0+0.05,  pos.width / 1.5, pos.height / 1.5))
         elif i in legend_loc and subplot_legend == False:
-            plt.legend(loc='upper right',frameon=False)
+            plt.legend(loc='best',frameon=False)
         if ncols==2 and i in [2,3]:
             ax.set_xlabel('gait cycle (%)')
         elif ncols==3 and i in [7,6]:
             ax.set_xlabel('gait cycle (%)')
-        if ncols==2 and i in [0,2]:
+        elif ncols==4 and i in [4,5,6,7]:
+            ax.set_xlabel('gait cycle (%)')
+        if ncols==2 and i in [0,1,2,3]:
             ax.set_ylabel(ylabel)
-        elif ncols==3 and i in [0,6]:
+        elif ncols==3 and i in [0,3,6]:
             ax.set_ylabel(ylabel)
-        if ncols==3 and i not in [7,6,5]:
-            labels = [item.get_text() for item in ax.get_xticklabels()]
-            empty_string_labels = ['']*len(labels)
-            ax.set_xticklabels(empty_string_labels)
+        elif ncols==4 and i in [0,4]:
+            ax.set_ylabel(ylabel)
+        if ncols==3 :
+            if i not in [7,6,5]:
+                labels = [item.get_text() for item in ax.get_xticklabels()]
+                empty_string_labels = ['']*len(labels)
+                ax.set_xticklabels(empty_string_labels)
+            if i not in [0,3,6]:
+                labels = [item.get_text() for item in ax.get_yticklabels()]
+                empty_string_labels = ['']*len(labels)
+                ax.set_yticklabels(empty_string_labels)
+        elif ncols==4:
+            if i in [0,1,2,3]:
+                labels = [item.get_text() for item in ax.get_xticklabels()]
+                empty_string_labels = ['']*len(labels)
+                ax.set_xticklabels(empty_string_labels)
+            if i not in [0,4]:
+                labels = [item.get_text() for item in ax.get_yticklabels()]
+                empty_string_labels = ['']*len(labels)
+                ax.set_yticklabels(empty_string_labels)
 
 ######################################################################
 ######################################################################
