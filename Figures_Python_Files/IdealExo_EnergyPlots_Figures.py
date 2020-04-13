@@ -307,7 +307,7 @@ names = ['unassist, loaded','bi, loaded','unassist, noload','bi, noload']
 x = np.arange(1,len(names)+1,1)
 data = [utils.mean_over_trials(unassisted_energy_dataset['loaded_metabolics_energy'],ax=0),utils.mean_over_trials(unassisted_energy_dataset['noload_metabolics_energy'],ax=0),\
         utils.mean_over_trials(assisted_energy_dataset['biarticular_ideal_loaded_metabolics_energy'],ax=0),utils.mean_over_trials(assisted_energy_dataset['biarticular_ideal_noload_metabolics_energy'],ax=0)]
-fig, ax = plt.subplots(nrows=2,ncols=2,figsize=(12.4, 10.8))
+fig, ax = plt.subplots(nrows=2,ncols=2,figsize=(12.8, 9.6))
 bp = ax[0,0].boxplot(data, patch_artist=True)
 utils.beautiful_boxplot(bp)
 ax[0,0].set_ylabel('Metabolic Rate (W/Kg)')
@@ -354,6 +354,7 @@ ax[1,1].set_xticks(x)
 ax[1,1].set_xticklabels(names)
 ax[1,1].set_title('monoarticular, actuators energy')
 utils.no_top_right(ax[1,1])
-fig.tight_layout(pad=0.4, w_pad=0.5, h_pad=1.0)
+fig.tight_layout(h_pad=-1.5, w_pad=-1.5)
+fig.subplots_adjust(top=0.99, bottom=0.075, left=0.100, right=0.975,hspace=0.2,wspace=0.15)
 plt.show()
 fig.savefig('./Figures/Ideal/Paper_Figure_Energy_BoxPlot.pdf',orientation='landscape',bbox_inches='tight')
