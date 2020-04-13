@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.21 (MiKTeX 2.9.7380 64-bit) (preloaded format=pdflatex 2020.4.9)  12 APR 2020 18:19
+This is pdfTeX, Version 3.14159265-2.6-1.40.21 (MiKTeX 2.9.7380 64-bit) (preloaded format=pdflatex 2020.4.9)  13 APR 2020 22:59
 entering extended mode
 **./Ideal_Exoskeleton_Draft.tex
 (Ideal_Exoskeleton_Draft.tex
@@ -781,395 +781,280 @@ Overfull \hbox (16.12613pt too wide) in paragraph at lines 463--472
 
 [13] [14]
 <./Figures/Ideal_Exo_MonovsBi_Figures/Paper_Figure_Energy_BoxPlot.pdf, id=620, 
-1080.95139pt x 572.95287pt>
+1027.63802pt x 596.27063pt>
 File: ./Figures/Ideal_Exo_MonovsBi_Figures/Paper_Figure_Energy_BoxPlot.pdf Grap
 hic file (type pdf)
 <use ./Figures/Ideal_Exo_MonovsBi_Figures/Paper_Figure_Energy_BoxPlot.pdf>
 Package pdftex.def Info: ./Figures/Ideal_Exo_MonovsBi_Figures/Paper_Figure_Ener
 gy_BoxPlot.pdf  used on input line 519.
-(pdftex.def)             Requested size: 378.33865pt x 200.5365pt.
-
-
-LaTeX Warning: `h' float specifier changed to `ht'.
-
-[15]
-
-LaTeX Warning: Reference `Fig_Exo_TorqueProfiles' on page 16 undefined on input
- line 529.
-
-
-LaTeX Warning: Reference `sub@Fig_Bi_Knee_Knee_Muscles_TorqueProfile' on page 1
-6 undefined on input line 529.
-
-
-LaTeX Warning: Reference `Fig_Exo_TorqueProfiles' on page 16 undefined on input
- line 529.
-
-
-LaTeX Warning: Reference `sub@Fig_Bi_Knee_Hip_Muscles_TorqueProfile' on page 16
- undefined on input line 529.
-
-<./Figures/Ideal_Exo_MonovsBi_Figures/Exoskeletons_Hip_Torque.pdf, id=635, 671.
-71986pt x 483.87651pt>
-File: ./Figures/Ideal_Exo_MonovsBi_Figures/Exoskeletons_Hip_Torque.pdf Graphic 
-file (type pdf)
-<use ./Figures/Ideal_Exo_MonovsBi_Figures/Exoskeletons_Hip_Torque.pdf>
-Package pdftex.def Info: ./Figures/Ideal_Exo_MonovsBi_Figures/Exoskeletons_Hip_
-Torque.pdf  used on input line 533.
-(pdftex.def)             Requested size: 268.68318pt x 193.54716pt.
-
-LaTeX Warning: `h' float specifier changed to `ht'.
-
-<./Figures/Ideal_Exo_MonovsBi_Figures/Exoskeletons_Knee_Torque.pdf, id=636, 671
-.71986pt x 483.87651pt>
-File: ./Figures/Ideal_Exo_MonovsBi_Figures/Exoskeletons_Knee_Torque.pdf Graphic
- file (type pdf)
-<use ./Figures/Ideal_Exo_MonovsBi_Figures/Exoskeletons_Knee_Torque.pdf>
-Package pdftex.def Info: ./Figures/Ideal_Exo_MonovsBi_Figures/Exoskeletons_Knee
-_Torque.pdf  used on input line 540.
-(pdftex.def)             Requested size: 268.68318pt x 193.54716pt.
-
-LaTeX Warning: `h' float specifier changed to `ht'.
-
-
-LaTeX Warning: Reference `Fig_Exo_TorqueProfiles' on page 16 undefined on input
- line 545.
-
-
-LaTeX Warning: Reference `sub@Fig_Biarticular_Hip_Muscles_TorqueProfile' on pag
-e 16 undefined on input line 545.
-
-
-LaTeX Warning: Reference `sub@Fig_Monoarticular_Knee_Muscles_TorqueProfile' on 
-page 16 undefined on input line 545.
-
-
-LaTeX Warning: Reference `Table_Torques_Comparison' on page 16 undefined on inp
-ut line 547.
-
-[16 <./Figures/Ideal_Exo_MonovsBi_Figures/Paper_Figure_Energy_BoxPlot.pdf>]
-<./Figures/Ideal_Exo_SingleJoint_Figures/BiandMonoarticularExoskeletonsKneeActu
-atorPower.pdf, id=693, 794.97pt x 614.295pt>
-File: ./Figures/Ideal_Exo_SingleJoint_Figures/BiandMonoarticularExoskeletonsKne
-eActuatorPower.pdf Graphic file (type pdf)
-<use ./Figures/Ideal_Exo_SingleJoint_Figures/BiandMonoarticularExoskeletonsKnee
-ActuatorPower.pdf>
-Package pdftex.def Info: ./Figures/Ideal_Exo_SingleJoint_Figures/BiandMonoartic
-ularExoskeletonsKneeActuatorPower.pdf  used on input line 558.
-(pdftex.def)             Requested size: 144.54pt x 111.68375pt.
-<./Figures/Ideal_Exo_SingleJoint_Figures/HipExoskeletonsHipActuatorPower.pdf, i
-d=694, 794.97pt x 614.295pt>
-File: ./Figures/Ideal_Exo_SingleJoint_Figures/HipExoskeletonsHipActuatorPower.p
-df Graphic file (type pdf)
-<use ./Figures/Ideal_Exo_SingleJoint_Figures/HipExoskeletonsHipActuatorPower.pd
-f>
-Package pdftex.def Info: ./Figures/Ideal_Exo_SingleJoint_Figures/HipExoskeleton
-sHipActuatorPower.pdf  used on input line 561.
-(pdftex.def)             Requested size: 144.54pt x 111.68375pt.
+(pdftex.def)             Requested size: 359.6787pt x 208.69785pt.
 
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
-
-LaTeX Warning: Reference `Table_Exoskeletons_Power_Metabolic' on page 17 undefi
-ned on input line 566.
-
-
-LaTeX Warning: Reference `Table_Exoskeletons_Power_Metabolic' on page 17 undefi
-ned on input line 567.
-
-
-LaTeX Warning: Reference `Fig_Exo_PowerProfiles' on page 17 undefined on input 
-line 567.
-
-
-LaTeX Warning: Reference `sub@Fig_MonoVsBi_KneeActuator_Speed_Profiles' on page
- 17 undefined on input line 567.
-
-
-LaTeX Warning: Reference `Table_Exoskeletons_Power_Metabolic' on page 17 undefi
-ned on input line 571.
-
-
-LaTeX Warning: Reference `Table_Exoskeletons_Power_Metabolic' on page 17 undefi
-ned on input line 571.
-
-[17 <./Figures/Ideal_Exo_MonovsBi_Figures/Exoskeletons_Hip_Torque.pdf>]
-<./Figures/Cartoons/Saggital_Leg_Monoarticular_Muscles.pdf, id=745, 658.46pt x 
+[15]
+<./Figures/Ideal_Exo_MonovsBi_Figures/PaperFigure_Exoskeletons_Speed.pdf, id=63
+6, 885.84859pt x 510.1745pt>
+File: ./Figures/Ideal_Exo_MonovsBi_Figures/PaperFigure_Exoskeletons_Speed.pdf G
+raphic file (type pdf)
+<use ./Figures/Ideal_Exo_MonovsBi_Figures/PaperFigure_Exoskeletons_Speed.pdf>
+Package pdftex.def Info: ./Figures/Ideal_Exo_MonovsBi_Figures/PaperFigure_Exosk
+eletons_Speed.pdf  used on input line 531.
+(pdftex.def)             Requested size: 379.4175pt x 218.50665pt.
+<./Figures/Ideal_Exo_MonovsBi_Figures/PaperFigure_Exoskeletons_Torque.pdf, id=6
+43, 885.84859pt x 697.14003pt>
+File: ./Figures/Ideal_Exo_MonovsBi_Figures/PaperFigure_Exoskeletons_Torque.pdf 
+Graphic file (type pdf)
+<use ./Figures/Ideal_Exo_MonovsBi_Figures/PaperFigure_Exoskeletons_Torque.pdf>
+Package pdftex.def Info: ./Figures/Ideal_Exo_MonovsBi_Figures/PaperFigure_Exosk
+eletons_Torque.pdf  used on input line 540.
+(pdftex.def)             Requested size: 379.4175pt x 298.5836pt.
+ [16 <./Figures/Ideal_Exo_MonovsBi_Figures/Paper_Figure_Energy_BoxPlot.pdf>]
+<./Figures/Ideal_Exo_MonovsBi_Figures/PaperFigure_Exoskeletons_Power.pdf, id=70
+4, 885.84859pt x 510.1745pt>
+File: ./Figures/Ideal_Exo_MonovsBi_Figures/PaperFigure_Exoskeletons_Power.pdf G
+raphic file (type pdf)
+<use ./Figures/Ideal_Exo_MonovsBi_Figures/PaperFigure_Exoskeletons_Power.pdf>
+Package pdftex.def Info: ./Figures/Ideal_Exo_MonovsBi_Figures/PaperFigure_Exosk
+eletons_Power.pdf  used on input line 550.
+(pdftex.def)             Requested size: 379.4175pt x 218.50665pt.
+ [17 <./Figures/Ideal_Exo_MonovsBi_Figures/PaperFigure_Exoskeletons_Speed.pdf>]
+<./Figures/Cartoons/Saggital_Leg_Monoarticular_Muscles.pdf, id=752, 658.46pt x 
 597.50829pt>
 File: ./Figures/Cartoons/Saggital_Leg_Monoarticular_Muscles.pdf Graphic file (t
 ype pdf)
 <use ./Figures/Cartoons/Saggital_Leg_Monoarticular_Muscles.pdf>
 Package pdftex.def Info: ./Figures/Cartoons/Saggital_Leg_Monoarticular_Muscles.
-pdf  used on input line 578.
+pdf  used on input line 563.
 (pdftex.def)             Requested size: 108.405pt x 98.3658pt.
-<./Figures/Cartoons/Saggital_Leg_Biarticular_Muscles.pdf, id=746, 658.46pt x 59
+<./Figures/Cartoons/Saggital_Leg_Biarticular_Muscles.pdf, id=753, 658.46pt x 59
 7.50829pt>
 File: ./Figures/Cartoons/Saggital_Leg_Biarticular_Muscles.pdf Graphic file (typ
 e pdf)
 <use ./Figures/Cartoons/Saggital_Leg_Biarticular_Muscles.pdf>
 Package pdftex.def Info: ./Figures/Cartoons/Saggital_Leg_Biarticular_Muscles.pd
-f  used on input line 581.
+f  used on input line 566.
 (pdftex.def)             Requested size: 108.405pt x 98.3658pt.
 <./Figures/Ideal_Exo_SingleJoint_Figures/MusclesActivity/Rectus_femoris_MuscleA
-ctivity.pdf, id=747, 794.97pt x 614.295pt>
+ctivity.pdf, id=754, 794.97pt x 614.295pt>
 File: ./Figures/Ideal_Exo_SingleJoint_Figures/MusclesActivity/Rectus_femoris_Mu
 scleActivity.pdf Graphic file (type pdf)
 <use ./Figures/Ideal_Exo_SingleJoint_Figures/MusclesActivity/Rectus_femoris_Mus
 cleActivity.pdf>
 Package pdftex.def Info: ./Figures/Ideal_Exo_SingleJoint_Figures/MusclesActivit
-y/Rectus_femoris_MuscleActivity.pdf  used on input line 584.
+y/Rectus_femoris_MuscleActivity.pdf  used on input line 569.
 (pdftex.def)             Requested size: 108.405pt x 83.76047pt.
 <./Figures/Ideal_Exo_SingleJoint_Figures/MusclesActivity/Vastus_lateralis_Muscl
-eActivity.pdf, id=748, 794.97pt x 614.295pt>
+eActivity.pdf, id=755, 794.97pt x 614.295pt>
 File: ./Figures/Ideal_Exo_SingleJoint_Figures/MusclesActivity/Vastus_lateralis_
 MuscleActivity.pdf Graphic file (type pdf)
 <use ./Figures/Ideal_Exo_SingleJoint_Figures/MusclesActivity/Vastus_lateralis_M
 uscleActivity.pdf>
 Package pdftex.def Info: ./Figures/Ideal_Exo_SingleJoint_Figures/MusclesActivit
-y/Vastus_lateralis_MuscleActivity.pdf  used on input line 587.
+y/Vastus_lateralis_MuscleActivity.pdf  used on input line 572.
 (pdftex.def)             Requested size: 108.405pt x 83.76047pt.
 <./Figures/Ideal_Exo_SingleJoint_Figures/MusclesActivity/Psoas_MuscleActivity.p
-df, id=749, 794.97pt x 614.295pt>
+df, id=756, 794.97pt x 614.295pt>
 File: ./Figures/Ideal_Exo_SingleJoint_Figures/MusclesActivity/Psoas_MuscleActiv
 ity.pdf Graphic file (type pdf)
 <use ./Figures/Ideal_Exo_SingleJoint_Figures/MusclesActivity/Psoas_MuscleActivi
 ty.pdf>
 Package pdftex.def Info: ./Figures/Ideal_Exo_SingleJoint_Figures/MusclesActivit
-y/Psoas_MuscleActivity.pdf  used on input line 590.
+y/Psoas_MuscleActivity.pdf  used on input line 575.
 (pdftex.def)             Requested size: 108.405pt x 83.76047pt.
 <./Figures/Ideal_Exo_SingleJoint_Figures/MusclesActivity/Iliacus_MuscleActivity
-.pdf, id=750, 794.97pt x 614.295pt>
+.pdf, id=757, 794.97pt x 614.295pt>
 File: ./Figures/Ideal_Exo_SingleJoint_Figures/MusclesActivity/Iliacus_MuscleAct
 ivity.pdf Graphic file (type pdf)
 <use ./Figures/Ideal_Exo_SingleJoint_Figures/MusclesActivity/Iliacus_MuscleActi
 vity.pdf>
 Package pdftex.def Info: ./Figures/Ideal_Exo_SingleJoint_Figures/MusclesActivit
-y/Iliacus_MuscleActivity.pdf  used on input line 593.
+y/Iliacus_MuscleActivity.pdf  used on input line 578.
 (pdftex.def)             Requested size: 108.405pt x 83.76047pt.
 <./Figures/Ideal_Exo_SingleJoint_Figures/MusclesActivity/Biceps_femoris_long_he
-ad_MuscleActivity.pdf, id=751, 794.97pt x 614.295pt>
+ad_MuscleActivity.pdf, id=758, 794.97pt x 614.295pt>
 File: ./Figures/Ideal_Exo_SingleJoint_Figures/MusclesActivity/Biceps_femoris_lo
 ng_head_MuscleActivity.pdf Graphic file (type pdf)
 <use ./Figures/Ideal_Exo_SingleJoint_Figures/MusclesActivity/Biceps_femoris_lon
 g_head_MuscleActivity.pdf>
 Package pdftex.def Info: ./Figures/Ideal_Exo_SingleJoint_Figures/MusclesActivit
-y/Biceps_femoris_long_head_MuscleActivity.pdf  used on input line 596.
+y/Biceps_femoris_long_head_MuscleActivity.pdf  used on input line 581.
 (pdftex.def)             Requested size: 108.405pt x 83.76047pt.
 <./Figures/Ideal_Exo_SingleJoint_Figures/MusclesActivity/Biceps_femoris_short_h
-ead_MuscleActivity.pdf, id=752, 794.97pt x 614.295pt>
+ead_MuscleActivity.pdf, id=759, 794.97pt x 614.295pt>
 File: ./Figures/Ideal_Exo_SingleJoint_Figures/MusclesActivity/Biceps_femoris_sh
 ort_head_MuscleActivity.pdf Graphic file (type pdf)
 <use ./Figures/Ideal_Exo_SingleJoint_Figures/MusclesActivity/Biceps_femoris_sho
 rt_head_MuscleActivity.pdf>
 Package pdftex.def Info: ./Figures/Ideal_Exo_SingleJoint_Figures/MusclesActivit
-y/Biceps_femoris_short_head_MuscleActivity.pdf  used on input line 599.
+y/Biceps_femoris_short_head_MuscleActivity.pdf  used on input line 584.
 (pdftex.def)             Requested size: 108.405pt x 83.76047pt.
 <./Figures/Ideal_Exo_SingleJoint_Figures/MusclesActivity/Gluteus_maximus_middle
-_MuscleActivity.pdf, id=753, 794.97pt x 614.295pt>
+_MuscleActivity.pdf, id=760, 794.97pt x 614.295pt>
 File: ./Figures/Ideal_Exo_SingleJoint_Figures/MusclesActivity/Gluteus_maximus_m
 iddle_MuscleActivity.pdf Graphic file (type pdf)
 <use ./Figures/Ideal_Exo_SingleJoint_Figures/MusclesActivity/Gluteus_maximus_mi
 ddle_MuscleActivity.pdf>
 Package pdftex.def Info: ./Figures/Ideal_Exo_SingleJoint_Figures/MusclesActivit
-y/Gluteus_maximus_middle_MuscleActivity.pdf  used on input line 602.
+y/Gluteus_maximus_middle_MuscleActivity.pdf  used on input line 587.
 (pdftex.def)             Requested size: 108.405pt x 83.76047pt.
 <./Figures/Ideal_Exo_SingleJoint_Figures/MusclesActivity/Gastrocnemius_medial_h
-ead_MuscleActivity.pdf, id=754, 794.97pt x 614.295pt>
+ead_MuscleActivity.pdf, id=761, 794.97pt x 614.295pt>
 File: ./Figures/Ideal_Exo_SingleJoint_Figures/MusclesActivity/Gastrocnemius_med
 ial_head_MuscleActivity.pdf Graphic file (type pdf)
 <use ./Figures/Ideal_Exo_SingleJoint_Figures/MusclesActivity/Gastrocnemius_medi
 al_head_MuscleActivity.pdf>
 Package pdftex.def Info: ./Figures/Ideal_Exo_SingleJoint_Figures/MusclesActivit
-y/Gastrocnemius_medial_head_MuscleActivity.pdf  used on input line 605.
+y/Gastrocnemius_medial_head_MuscleActivity.pdf  used on input line 590.
 (pdftex.def)             Requested size: 108.405pt x 83.76047pt.
 <./Figures/Ideal_Exo_SingleJoint_Figures/MusclesActivity/Semimembranosus_Muscle
-Activity.pdf, id=755, 794.97pt x 614.295pt>
+Activity.pdf, id=762, 794.97pt x 614.295pt>
 File: ./Figures/Ideal_Exo_SingleJoint_Figures/MusclesActivity/Semimembranosus_M
 uscleActivity.pdf Graphic file (type pdf)
 <use ./Figures/Ideal_Exo_SingleJoint_Figures/MusclesActivity/Semimembranosus_Mu
 scleActivity.pdf>
 Package pdftex.def Info: ./Figures/Ideal_Exo_SingleJoint_Figures/MusclesActivit
-y/Semimembranosus_MuscleActivity.pdf  used on input line 608.
+y/Semimembranosus_MuscleActivity.pdf  used on input line 593.
 (pdftex.def)             Requested size: 108.405pt x 83.76047pt.
 <Figures/Ideal_Exo_SingleJoint_Figures/MusclesActivity/Semitendinosus_MuscleAct
-ivity.pdf, id=756, 794.97pt x 614.295pt>
+ivity.pdf, id=763, 794.97pt x 614.295pt>
 File: Figures/Ideal_Exo_SingleJoint_Figures/MusclesActivity/Semitendinosus_Musc
 leActivity.pdf Graphic file (type pdf)
 <use Figures/Ideal_Exo_SingleJoint_Figures/MusclesActivity/Semitendinosus_Muscl
 eActivity.pdf>
 Package pdftex.def Info: Figures/Ideal_Exo_SingleJoint_Figures/MusclesActivity/
-Semitendinosus_MuscleActivity.pdf  used on input line 611.
+Semitendinosus_MuscleActivity.pdf  used on input line 596.
 (pdftex.def)             Requested size: 108.405pt x 83.76047pt.
 
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
-[18 <./Figures/Ideal_Exo_MonovsBi_Figures/Exoskeletons_Knee_Torque.pdf> <./Figu
-res/Ideal_Exo_SingleJoint_Figures/BiandMonoarticularExoskeletonsKneeActuatorPow
-er.pdf
-
-pdfTeX warning: pdflatex.exe (file ./Figures/Ideal_Exo_SingleJoint_Figures/Bian
-dMonoarticularExoskeletonsKneeActuatorPower.pdf): PDF inclusion: multiple pdfs 
-with page group included in a single page
-> <./Figures/Ideal_Exo_SingleJoint_Figures/HipExoskeletonsHipActuatorPower.pdf>
-] [19 <./Figures/Cartoons/Saggital_Leg_Monoarticular_Muscles.pdf> <./Figures/Ca
-rtoons/Saggital_Leg_Biarticular_Muscles.pdf> <./Figures/Ideal_Exo_SingleJoint_F
-igures/MusclesActivity/Rectus_femoris_MuscleActivity.pdf> <./Figures/Ideal_Exo_
-SingleJoint_Figures/MusclesActivity/Vastus_lateralis_MuscleActivity.pdf> <./Fig
-ures/Ideal_Exo_SingleJoint_Figures/MusclesActivity/Psoas_MuscleActivity.pdf> <.
-/Figures/Ideal_Exo_SingleJoint_Figures/MusclesActivity/Iliacus_MuscleActivity.p
-df> <./Figures/Ideal_Exo_SingleJoint_Figures/MusclesActivity/Biceps_femoris_lon
-g_head_MuscleActivity.pdf> <./Figures/Ideal_Exo_SingleJoint_Figures/MusclesActi
-vity/Biceps_femoris_short_head_MuscleActivity.pdf> <./Figures/Ideal_Exo_SingleJ
-oint_Figures/MusclesActivity/Gluteus_maximus_middle_MuscleActivity.pdf> <./Figu
-res/Ideal_Exo_SingleJoint_Figures/MusclesActivity/Gastrocnemius_medial_head_Mus
-cleActivity.pdf> <./Figures/Ideal_Exo_SingleJoint_Figures/MusclesActivity/Semim
-embranosus_MuscleActivity.pdf> <./Figures/Ideal_Exo_SingleJoint_Figures/Muscles
-Activity/Semitendinosus_MuscleActivity.pdf>]
+[18 <./Figures/Ideal_Exo_MonovsBi_Figures/PaperFigure_Exoskeletons_Torque.pdf>]
 File: ./Figures/Cartoons/Saggital_Leg_Monoarticular_Muscles.pdf Graphic file (t
 ype pdf)
 <use ./Figures/Cartoons/Saggital_Leg_Monoarticular_Muscles.pdf>
 Package pdftex.def Info: ./Figures/Cartoons/Saggital_Leg_Monoarticular_Muscles.
-pdf  used on input line 626.
+pdf  used on input line 611.
 (pdftex.def)             Requested size: 108.405pt x 98.3658pt.
 File: ./Figures/Cartoons/Saggital_Leg_Biarticular_Muscles.pdf Graphic file (typ
 e pdf)
 <use ./Figures/Cartoons/Saggital_Leg_Biarticular_Muscles.pdf>
 Package pdftex.def Info: ./Figures/Cartoons/Saggital_Leg_Biarticular_Muscles.pd
-f  used on input line 629.
+f  used on input line 614.
 (pdftex.def)             Requested size: 108.405pt x 98.3658pt.
 <./Figures/Ideal_Exo_MonovsBi_Figures/MusclesActivity/Rectus_femoris_Muscle_Act
-ivation.pdf, id=940, 794.97pt x 614.295pt>
+ivation.pdf, id=815, 794.97pt x 614.295pt>
 File: ./Figures/Ideal_Exo_MonovsBi_Figures/MusclesActivity/Rectus_femoris_Muscl
 e_Activation.pdf Graphic file (type pdf)
 <use ./Figures/Ideal_Exo_MonovsBi_Figures/MusclesActivity/Rectus_femoris_Muscle
 _Activation.pdf>
 Package pdftex.def Info: ./Figures/Ideal_Exo_MonovsBi_Figures/MusclesActivity/R
-ectus_femoris_Muscle_Activation.pdf  used on input line 632.
+ectus_femoris_Muscle_Activation.pdf  used on input line 617.
 (pdftex.def)             Requested size: 108.405pt x 83.76047pt.
 <./Figures/Ideal_Exo_MonovsBi_Figures/MusclesActivity/Vastus_lateralis_Muscle_A
-ctivation.pdf, id=941, 794.97pt x 614.295pt>
+ctivation.pdf, id=816, 794.97pt x 614.295pt>
 File: ./Figures/Ideal_Exo_MonovsBi_Figures/MusclesActivity/Vastus_lateralis_Mus
 cle_Activation.pdf Graphic file (type pdf)
 <use ./Figures/Ideal_Exo_MonovsBi_Figures/MusclesActivity/Vastus_lateralis_Musc
 le_Activation.pdf>
 Package pdftex.def Info: ./Figures/Ideal_Exo_MonovsBi_Figures/MusclesActivity/V
-astus_lateralis_Muscle_Activation.pdf  used on input line 635.
+astus_lateralis_Muscle_Activation.pdf  used on input line 620.
 (pdftex.def)             Requested size: 108.405pt x 83.76047pt.
 <./Figures/Ideal_Exo_MonovsBi_Figures/MusclesActivity/Psoas_Muscle_Activation.p
-df, id=942, 794.97pt x 614.295pt>
+df, id=817, 794.97pt x 614.295pt>
 File: ./Figures/Ideal_Exo_MonovsBi_Figures/MusclesActivity/Psoas_Muscle_Activat
 ion.pdf Graphic file (type pdf)
 <use ./Figures/Ideal_Exo_MonovsBi_Figures/MusclesActivity/Psoas_Muscle_Activati
 on.pdf>
 Package pdftex.def Info: ./Figures/Ideal_Exo_MonovsBi_Figures/MusclesActivity/P
-soas_Muscle_Activation.pdf  used on input line 638.
+soas_Muscle_Activation.pdf  used on input line 623.
 (pdftex.def)             Requested size: 108.405pt x 83.76047pt.
 <./Figures/Ideal_Exo_MonovsBi_Figures/MusclesActivity/Iliacus_Muscle_Activation
-.pdf, id=943, 794.97pt x 614.295pt>
+.pdf, id=818, 794.97pt x 614.295pt>
 File: ./Figures/Ideal_Exo_MonovsBi_Figures/MusclesActivity/Iliacus_Muscle_Activ
 ation.pdf Graphic file (type pdf)
 <use ./Figures/Ideal_Exo_MonovsBi_Figures/MusclesActivity/Iliacus_Muscle_Activa
 tion.pdf>
 Package pdftex.def Info: ./Figures/Ideal_Exo_MonovsBi_Figures/MusclesActivity/I
-liacus_Muscle_Activation.pdf  used on input line 641.
+liacus_Muscle_Activation.pdf  used on input line 626.
 (pdftex.def)             Requested size: 108.405pt x 83.76047pt.
 <./Figures/Ideal_Exo_MonovsBi_Figures/MusclesActivity/Biceps_femoris_long_head_
-Muscle_Activation.pdf, id=944, 794.97pt x 614.295pt>
+Muscle_Activation.pdf, id=819, 794.97pt x 614.295pt>
 File: ./Figures/Ideal_Exo_MonovsBi_Figures/MusclesActivity/Biceps_femoris_long_
 head_Muscle_Activation.pdf Graphic file (type pdf)
 <use ./Figures/Ideal_Exo_MonovsBi_Figures/MusclesActivity/Biceps_femoris_long_h
 ead_Muscle_Activation.pdf>
 Package pdftex.def Info: ./Figures/Ideal_Exo_MonovsBi_Figures/MusclesActivity/B
-iceps_femoris_long_head_Muscle_Activation.pdf  used on input line 644.
+iceps_femoris_long_head_Muscle_Activation.pdf  used on input line 629.
 (pdftex.def)             Requested size: 108.405pt x 83.76047pt.
 <./Figures/Ideal_Exo_MonovsBi_Figures/MusclesActivity/Biceps_femoris_short_head
-_Muscle_Activation.pdf, id=945, 794.97pt x 614.295pt>
+_Muscle_Activation.pdf, id=820, 794.97pt x 614.295pt>
 File: ./Figures/Ideal_Exo_MonovsBi_Figures/MusclesActivity/Biceps_femoris_short
 _head_Muscle_Activation.pdf Graphic file (type pdf)
 <use ./Figures/Ideal_Exo_MonovsBi_Figures/MusclesActivity/Biceps_femoris_short_
 head_Muscle_Activation.pdf>
 Package pdftex.def Info: ./Figures/Ideal_Exo_MonovsBi_Figures/MusclesActivity/B
-iceps_femoris_short_head_Muscle_Activation.pdf  used on input line 647.
+iceps_femoris_short_head_Muscle_Activation.pdf  used on input line 632.
 (pdftex.def)             Requested size: 108.405pt x 83.76047pt.
 <./Figures/Ideal_Exo_MonovsBi_Figures/MusclesActivity/Gluteus_maximus_middle_Mu
-scle_Activation.pdf, id=946, 794.97pt x 614.295pt>
+scle_Activation.pdf, id=821, 794.97pt x 614.295pt>
 File: ./Figures/Ideal_Exo_MonovsBi_Figures/MusclesActivity/Gluteus_maximus_midd
 le_Muscle_Activation.pdf Graphic file (type pdf)
 <use ./Figures/Ideal_Exo_MonovsBi_Figures/MusclesActivity/Gluteus_maximus_middl
 e_Muscle_Activation.pdf>
 Package pdftex.def Info: ./Figures/Ideal_Exo_MonovsBi_Figures/MusclesActivity/G
-luteus_maximus_middle_Muscle_Activation.pdf  used on input line 650.
+luteus_maximus_middle_Muscle_Activation.pdf  used on input line 635.
 (pdftex.def)             Requested size: 108.405pt x 83.76047pt.
 <./Figures/Ideal_Exo_MonovsBi_Figures/MusclesActivity/Gastrocnemius_medial_head
-_Muscle_Activation.pdf, id=947, 794.97pt x 614.295pt>
+_Muscle_Activation.pdf, id=822, 794.97pt x 614.295pt>
 File: ./Figures/Ideal_Exo_MonovsBi_Figures/MusclesActivity/Gastrocnemius_medial
 _head_Muscle_Activation.pdf Graphic file (type pdf)
 <use ./Figures/Ideal_Exo_MonovsBi_Figures/MusclesActivity/Gastrocnemius_medial_
 head_Muscle_Activation.pdf>
 Package pdftex.def Info: ./Figures/Ideal_Exo_MonovsBi_Figures/MusclesActivity/G
-astrocnemius_medial_head_Muscle_Activation.pdf  used on input line 653.
+astrocnemius_medial_head_Muscle_Activation.pdf  used on input line 638.
 (pdftex.def)             Requested size: 108.405pt x 83.76047pt.
 <./Figures/Ideal_Exo_MonovsBi_Figures/MusclesActivity/Semimembranosus_Muscle_Ac
-tivation.pdf, id=948, 794.97pt x 614.295pt>
+tivation.pdf, id=823, 794.97pt x 614.295pt>
 File: ./Figures/Ideal_Exo_MonovsBi_Figures/MusclesActivity/Semimembranosus_Musc
 le_Activation.pdf Graphic file (type pdf)
 <use ./Figures/Ideal_Exo_MonovsBi_Figures/MusclesActivity/Semimembranosus_Muscl
 e_Activation.pdf>
 Package pdftex.def Info: ./Figures/Ideal_Exo_MonovsBi_Figures/MusclesActivity/S
-emimembranosus_Muscle_Activation.pdf  used on input line 656.
+emimembranosus_Muscle_Activation.pdf  used on input line 641.
 (pdftex.def)             Requested size: 108.405pt x 83.76047pt.
 <./Figures/Ideal_Exo_MonovsBi_Figures/MusclesActivity/Semitendinosus_Muscle_Act
-ivation.pdf, id=949, 794.97pt x 614.295pt>
+ivation.pdf, id=824, 794.97pt x 614.295pt>
 File: ./Figures/Ideal_Exo_MonovsBi_Figures/MusclesActivity/Semitendinosus_Muscl
 e_Activation.pdf Graphic file (type pdf)
 <use ./Figures/Ideal_Exo_MonovsBi_Figures/MusclesActivity/Semitendinosus_Muscle
 _Activation.pdf>
 Package pdftex.def Info: ./Figures/Ideal_Exo_MonovsBi_Figures/MusclesActivity/S
-emitendinosus_Muscle_Activation.pdf  used on input line 659.
+emitendinosus_Muscle_Activation.pdf  used on input line 644.
 (pdftex.def)             Requested size: 108.405pt x 83.76047pt.
-
-
-LaTeX Warning: `!h' float specifier changed to `!ht'.
-
-<./Figures/Ideal_Exo_ParetoOpt_Figures/Paretofront.pdf, id=950, 794.97pt x 614.
+[19 <./Figures/Ideal_Exo_MonovsBi_Figures/PaperFigure_Exoskeletons_Power.pdf>]
+[20 <./Figures/Cartoons/Saggital_Leg_Monoarticular_Muscles.pdf> <./Figures/Cart
+oons/Saggital_Leg_Biarticular_Muscles.pdf> <./Figures/Ideal_Exo_SingleJoint_Fig
+ures/MusclesActivity/Rectus_femoris_MuscleActivity.pdf> <./Figures/Ideal_Exo_Si
+ngleJoint_Figures/MusclesActivity/Vastus_lateralis_MuscleActivity.pdf> <./Figur
+es/Ideal_Exo_SingleJoint_Figures/MusclesActivity/Psoas_MuscleActivity.pdf> <./F
+igures/Ideal_Exo_SingleJoint_Figures/MusclesActivity/Iliacus_MuscleActivity.pdf
+> <./Figures/Ideal_Exo_SingleJoint_Figures/MusclesActivity/Biceps_femoris_long_
+head_MuscleActivity.pdf> <./Figures/Ideal_Exo_SingleJoint_Figures/MusclesActivi
+ty/Biceps_femoris_short_head_MuscleActivity.pdf> <./Figures/Ideal_Exo_SingleJoi
+nt_Figures/MusclesActivity/Gluteus_maximus_middle_MuscleActivity.pdf> <./Figure
+s/Ideal_Exo_SingleJoint_Figures/MusclesActivity/Gastrocnemius_medial_head_Muscl
+eActivity.pdf> <./Figures/Ideal_Exo_SingleJoint_Figures/MusclesActivity/Semimem
+branosus_MuscleActivity.pdf> <./Figures/Ideal_Exo_SingleJoint_Figures/MusclesAc
+tivity/Semitendinosus_MuscleActivity.pdf>]
+<./Figures/Ideal_Exo_ParetoOpt_Figures/Paretofront.pdf, id=968, 794.97pt x 614.
 295pt>
 File: ./Figures/Ideal_Exo_ParetoOpt_Figures/Paretofront.pdf Graphic file (type 
 pdf)
 <use ./Figures/Ideal_Exo_ParetoOpt_Figures/Paretofront.pdf>
 Package pdftex.def Info: ./Figures/Ideal_Exo_ParetoOpt_Figures/Paretofront.pdf 
- used on input line 670.
+ used on input line 655.
 (pdftex.def)             Requested size: 379.4175pt x 293.18977pt.
-
-LaTeX Warning: `!h' float specifier changed to `!ht'.
-
-[20]
-<./Figures/Ideal_Exo_ParetoOpt_Figures/SubjectsMetabolicEnergyConsumption.pdf, 
-id=961, 794.97pt x 614.295pt>
-File: ./Figures/Ideal_Exo_ParetoOpt_Figures/SubjectsMetabolicEnergyConsumption.
-pdf Graphic file (type pdf)
-<use ./Figures/Ideal_Exo_ParetoOpt_Figures/SubjectsMetabolicEnergyConsumption.p
-df>
-Package pdftex.def Info: ./Figures/Ideal_Exo_ParetoOpt_Figures/SubjectsMetaboli
-cEnergyConsumption.pdf  used on input line 681.
-(pdftex.def)             Requested size: 180.67499pt x 139.60704pt.
-<./Figures/Ideal_Exo_ParetoOpt_Figures/KneeActuatorsEnergyConsumption.pdf, id=9
-62, 794.97pt x 614.295pt>
-File: ./Figures/Ideal_Exo_ParetoOpt_Figures/KneeActuatorsEnergyConsumption.pdf 
-Graphic file (type pdf)
-<use ./Figures/Ideal_Exo_ParetoOpt_Figures/KneeActuatorsEnergyConsumption.pdf>
-Package pdftex.def Info: ./Figures/Ideal_Exo_ParetoOpt_Figures/KneeActuatorsEne
-rgyConsumption.pdf  used on input line 684.
-(pdftex.def)             Requested size: 180.67499pt x 139.60704pt.
-<./Figures/Ideal_Exo_ParetoOpt_Figures/HipActuatorsEnergyConsumption.pdf, id=96
-3, 794.97pt x 614.295pt>
-File: ./Figures/Ideal_Exo_ParetoOpt_Figures/HipActuatorsEnergyConsumption.pdf G
-raphic file (type pdf)
-<use ./Figures/Ideal_Exo_ParetoOpt_Figures/HipActuatorsEnergyConsumption.pdf>
-Package pdftex.def Info: ./Figures/Ideal_Exo_ParetoOpt_Figures/HipActuatorsEner
-gyConsumption.pdf  used on input line 687.
-(pdftex.def)             Requested size: 180.67499pt x 139.60704pt.
  [21 <./Figures/Ideal_Exo_MonovsBi_Figures/MusclesActivity/Rectus_femoris_Muscl
 e_Activation.pdf> <./Figures/Ideal_Exo_MonovsBi_Figures/MusclesActivity/Vastus_
 lateralis_Muscle_Activation.pdf> <./Figures/Ideal_Exo_MonovsBi_Figures/MusclesA
@@ -1183,188 +1068,217 @@ tivity/Gastrocnemius_medial_head_Muscle_Activation.pdf> <./Figures/Ideal_Exo_Mo
 novsBi_Figures/MusclesActivity/Semimembranosus_Muscle_Activation.pdf> <./Figure
 s/Ideal_Exo_MonovsBi_Figures/MusclesActivity/Semitendinosus_Muscle_Activation.p
 df>]
-
-LaTeX Warning: `!h' float specifier changed to `!ht'.
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 696--711
+<./Figures/Ideal_Exo_ParetoOpt_Figures/SubjectsMetabolicEnergyConsumption.pdf, 
+id=1020, 794.97pt x 614.295pt>
+File: ./Figures/Ideal_Exo_ParetoOpt_Figures/SubjectsMetabolicEnergyConsumption.
+pdf Graphic file (type pdf)
+<use ./Figures/Ideal_Exo_ParetoOpt_Figures/SubjectsMetabolicEnergyConsumption.p
+df>
+Package pdftex.def Info: ./Figures/Ideal_Exo_ParetoOpt_Figures/SubjectsMetaboli
+cEnergyConsumption.pdf  used on input line 666.
+(pdftex.def)             Requested size: 180.67499pt x 139.60704pt.
+<./Figures/Ideal_Exo_ParetoOpt_Figures/KneeActuatorsEnergyConsumption.pdf, id=1
+021, 794.97pt x 614.295pt>
+File: ./Figures/Ideal_Exo_ParetoOpt_Figures/KneeActuatorsEnergyConsumption.pdf 
+Graphic file (type pdf)
+<use ./Figures/Ideal_Exo_ParetoOpt_Figures/KneeActuatorsEnergyConsumption.pdf>
+Package pdftex.def Info: ./Figures/Ideal_Exo_ParetoOpt_Figures/KneeActuatorsEne
+rgyConsumption.pdf  used on input line 669.
+(pdftex.def)             Requested size: 180.67499pt x 139.60704pt.
+<./Figures/Ideal_Exo_ParetoOpt_Figures/HipActuatorsEnergyConsumption.pdf, id=10
+22, 794.97pt x 614.295pt>
+File: ./Figures/Ideal_Exo_ParetoOpt_Figures/HipActuatorsEnergyConsumption.pdf G
+raphic file (type pdf)
+<use ./Figures/Ideal_Exo_ParetoOpt_Figures/HipActuatorsEnergyConsumption.pdf>
+Package pdftex.def Info: ./Figures/Ideal_Exo_ParetoOpt_Figures/HipActuatorsEner
+gyConsumption.pdf  used on input line 672.
+(pdftex.def)             Requested size: 180.67499pt x 139.60704pt.
+ [22 <./Figures/Ideal_Exo_ParetoOpt_Figures/Paretofront.pdf>]
+Underfull \hbox (badness 10000) in paragraph at lines 681--696
 [][]
  []
 
-<./Figures/Ideal_Exo_ParetoOpt_Figures/ExoskeletonsHipActuatorPower.pdf, id=101
-9, 794.97pt x 614.295pt>
+<./Figures/Ideal_Exo_ParetoOpt_Figures/ExoskeletonsHipActuatorPower.pdf, id=106
+3, 794.97pt x 614.295pt>
 File: ./Figures/Ideal_Exo_ParetoOpt_Figures/ExoskeletonsHipActuatorPower.pdf Gr
 aphic file (type pdf)
 <use ./Figures/Ideal_Exo_ParetoOpt_Figures/ExoskeletonsHipActuatorPower.pdf>
 Package pdftex.def Info: ./Figures/Ideal_Exo_ParetoOpt_Figures/ExoskeletonsHipA
-ctuatorPower.pdf  used on input line 717.
+ctuatorPower.pdf  used on input line 702.
 (pdftex.def)             Requested size: 180.67499pt x 139.60704pt.
 <./Figures/Ideal_Exo_ParetoOpt_Figures/ExoskeletonsKneeActuatorPower.pdf, id=10
-20, 794.97pt x 614.295pt>
+64, 794.97pt x 614.295pt>
 File: ./Figures/Ideal_Exo_ParetoOpt_Figures/ExoskeletonsKneeActuatorPower.pdf G
 raphic file (type pdf)
 <use ./Figures/Ideal_Exo_ParetoOpt_Figures/ExoskeletonsKneeActuatorPower.pdf>
 Package pdftex.def Info: ./Figures/Ideal_Exo_ParetoOpt_Figures/ExoskeletonsKnee
-ActuatorPower.pdf  used on input line 720.
+ActuatorPower.pdf  used on input line 705.
 (pdftex.def)             Requested size: 180.67499pt x 139.60704pt.
-[22 <./Figures/Ideal_Exo_ParetoOpt_Figures/Paretofront.pdf>] [23 <./Figures/Ide
-al_Exo_ParetoOpt_Figures/SubjectsMetabolicEnergyConsumption.pdf> <./Figures/Ide
-al_Exo_ParetoOpt_Figures/KneeActuatorsEnergyConsumption.pdf> <./Figures/Ideal_E
-xo_ParetoOpt_Figures/HipActuatorsEnergyConsumption.pdf> <./Figures/Ideal_Exo_Pa
-retoOpt_Figures/ExoskeletonsHipActuatorPower.pdf> <./Figures/Ideal_Exo_ParetoOp
-t_Figures/ExoskeletonsKneeActuatorPower.pdf
 
-pdfTeX warning: pdflatex.exe (file ./Figures/Ideal_Exo_ParetoOpt_Figures/Exoske
-letonsKneeActuatorPower.pdf): PDF inclusion: multiple pdfs with page group incl
-uded in a single page
->]
+LaTeX Warning: `!h' float specifier changed to `!ht'.
+
+[23 <./Figures/Ideal_Exo_ParetoOpt_Figures/SubjectsMetabolicEnergyConsumption.p
+df> <./Figures/Ideal_Exo_ParetoOpt_Figures/KneeActuatorsEnergyConsumption.pdf> 
+<./Figures/Ideal_Exo_ParetoOpt_Figures/HipActuatorsEnergyConsumption.pdf>]
+
+LaTeX Warning: Reference `Eqn_Frame_Transformation' on page 24 undefined on inp
+ut line 711.
+
 <./Figures/Ideal_Exo_ParetoOpt_Figures/BiarticularExoskeletonHipActuatorTorquea
-ndMuscleMomentComparison.pdf, id=1164, 794.97pt x 614.295pt>
+ndMuscleMomentComparison.pdf, id=1117, 794.97pt x 614.295pt>
 File: ./Figures/Ideal_Exo_ParetoOpt_Figures/BiarticularExoskeletonHipActuatorTo
 rqueandMuscleMomentComparison.pdf Graphic file (type pdf)
 <use ./Figures/Ideal_Exo_ParetoOpt_Figures/BiarticularExoskeletonHipActuatorTor
 queandMuscleMomentComparison.pdf>
 Package pdftex.def Info: ./Figures/Ideal_Exo_ParetoOpt_Figures/BiarticularExosk
-eletonHipActuatorTorqueandMuscleMomentComparison.pdf  used on input line 730.
+eletonHipActuatorTorqueandMuscleMomentComparison.pdf  used on input line 715.
 (pdftex.def)             Requested size: 180.67499pt x 139.60704pt.
 <./Figures/Ideal_Exo_ParetoOpt_Figures/BiarticularExoskeletonKneeActuatorTorque
-andMuscleMomentComparison.pdf, id=1165, 794.97pt x 614.295pt>
+andMuscleMomentComparison.pdf, id=1118, 794.97pt x 614.295pt>
 File: ./Figures/Ideal_Exo_ParetoOpt_Figures/BiarticularExoskeletonKneeActuatorT
 orqueandMuscleMomentComparison.pdf Graphic file (type pdf)
 <use ./Figures/Ideal_Exo_ParetoOpt_Figures/BiarticularExoskeletonKneeActuatorTo
 rqueandMuscleMomentComparison.pdf>
 Package pdftex.def Info: ./Figures/Ideal_Exo_ParetoOpt_Figures/BiarticularExosk
-eletonKneeActuatorTorqueandMuscleMomentComparison.pdf  used on input line 733.
+eletonKneeActuatorTorqueandMuscleMomentComparison.pdf  used on input line 718.
 (pdftex.def)             Requested size: 180.67499pt x 139.60704pt.
 <./Figures/Ideal_Exo_ParetoOpt_Figures/MonoarticularExoskeletonHipActuatorTorqu
-eandMuscleMomentComparison.pdf, id=1166, 794.97pt x 614.295pt>
+eandMuscleMomentComparison.pdf, id=1119, 794.97pt x 614.295pt>
 File: ./Figures/Ideal_Exo_ParetoOpt_Figures/MonoarticularExoskeletonHipActuator
 TorqueandMuscleMomentComparison.pdf Graphic file (type pdf)
 <use ./Figures/Ideal_Exo_ParetoOpt_Figures/MonoarticularExoskeletonHipActuatorT
 orqueandMuscleMomentComparison.pdf>
 Package pdftex.def Info: ./Figures/Ideal_Exo_ParetoOpt_Figures/MonoarticularExo
-skeletonHipActuatorTorqueandMuscleMomentComparison.pdf  used on input line 736.
+skeletonHipActuatorTorqueandMuscleMomentComparison.pdf  used on input line 721.
 
 (pdftex.def)             Requested size: 180.67499pt x 139.60704pt.
 <./Figures/Ideal_Exo_ParetoOpt_Figures/MonoarticularExoskeletonKneeActuatorTorq
-ueandMuscleMomentComparison.pdf, id=1167, 794.97pt x 614.295pt>
+ueandMuscleMomentComparison.pdf, id=1120, 794.97pt x 614.295pt>
 File: ./Figures/Ideal_Exo_ParetoOpt_Figures/MonoarticularExoskeletonKneeActuato
 rTorqueandMuscleMomentComparison.pdf Graphic file (type pdf)
 <use ./Figures/Ideal_Exo_ParetoOpt_Figures/MonoarticularExoskeletonKneeActuator
 TorqueandMuscleMomentComparison.pdf>
 Package pdftex.def Info: ./Figures/Ideal_Exo_ParetoOpt_Figures/MonoarticularExo
-skeletonKneeActuatorTorqueandMuscleMomentComparison.pdf  used on input line 739
+skeletonKneeActuatorTorqueandMuscleMomentComparison.pdf  used on input line 724
 .
 (pdftex.def)             Requested size: 180.67499pt x 139.60704pt.
+
+LaTeX Warning: `!h' float specifier changed to `!ht'.
+
 File: ./Figures/Cartoons/Saggital_Leg_Monoarticular_Muscles.pdf Graphic file (t
 ype pdf)
 <use ./Figures/Cartoons/Saggital_Leg_Monoarticular_Muscles.pdf>
 Package pdftex.def Info: ./Figures/Cartoons/Saggital_Leg_Monoarticular_Muscles.
-pdf  used on input line 750.
+pdf  used on input line 735.
 (pdftex.def)             Requested size: 108.405pt x 98.3658pt.
 File: ./Figures/Cartoons/Saggital_Leg_Biarticular_Muscles.pdf Graphic file (typ
 e pdf)
 <use ./Figures/Cartoons/Saggital_Leg_Biarticular_Muscles.pdf>
 Package pdftex.def Info: ./Figures/Cartoons/Saggital_Leg_Biarticular_Muscles.pd
-f  used on input line 753.
+f  used on input line 738.
 (pdftex.def)             Requested size: 108.405pt x 98.3658pt.
 <./Figures/Ideal_Exo_ParetoOpt_Figures/MusclesActivity/Rectus_femoris_Muscle_Ac
-tivation.pdf, id=1168, 794.97pt x 614.295pt>
+tivation.pdf, id=1121, 794.97pt x 614.295pt>
 File: ./Figures/Ideal_Exo_ParetoOpt_Figures/MusclesActivity/Rectus_femoris_Musc
 le_Activation.pdf Graphic file (type pdf)
 <use ./Figures/Ideal_Exo_ParetoOpt_Figures/MusclesActivity/Rectus_femoris_Muscl
 e_Activation.pdf>
 Package pdftex.def Info: ./Figures/Ideal_Exo_ParetoOpt_Figures/MusclesActivity/
-Rectus_femoris_Muscle_Activation.pdf  used on input line 756.
+Rectus_femoris_Muscle_Activation.pdf  used on input line 741.
 (pdftex.def)             Requested size: 108.405pt x 83.76047pt.
 <./Figures/Ideal_Exo_ParetoOpt_Figures/MusclesActivity/Vastus_lateralis_Muscle_
-Activation.pdf, id=1169, 794.97pt x 614.295pt>
+Activation.pdf, id=1122, 794.97pt x 614.295pt>
 File: ./Figures/Ideal_Exo_ParetoOpt_Figures/MusclesActivity/Vastus_lateralis_Mu
 scle_Activation.pdf Graphic file (type pdf)
 <use ./Figures/Ideal_Exo_ParetoOpt_Figures/MusclesActivity/Vastus_lateralis_Mus
 cle_Activation.pdf>
 Package pdftex.def Info: ./Figures/Ideal_Exo_ParetoOpt_Figures/MusclesActivity/
-Vastus_lateralis_Muscle_Activation.pdf  used on input line 759.
+Vastus_lateralis_Muscle_Activation.pdf  used on input line 744.
 (pdftex.def)             Requested size: 108.405pt x 83.76047pt.
 <./Figures/Ideal_Exo_ParetoOpt_Figures/MusclesActivity/Psoas_Muscle_Activation.
-pdf, id=1170, 794.97pt x 614.295pt>
+pdf, id=1123, 794.97pt x 614.295pt>
 File: ./Figures/Ideal_Exo_ParetoOpt_Figures/MusclesActivity/Psoas_Muscle_Activa
 tion.pdf Graphic file (type pdf)
 <use ./Figures/Ideal_Exo_ParetoOpt_Figures/MusclesActivity/Psoas_Muscle_Activat
 ion.pdf>
 Package pdftex.def Info: ./Figures/Ideal_Exo_ParetoOpt_Figures/MusclesActivity/
-Psoas_Muscle_Activation.pdf  used on input line 762.
+Psoas_Muscle_Activation.pdf  used on input line 747.
 (pdftex.def)             Requested size: 108.405pt x 83.76047pt.
 <./Figures/Ideal_Exo_ParetoOpt_Figures/MusclesActivity/Iliacus_Muscle_Activatio
-n.pdf, id=1171, 794.97pt x 614.295pt>
+n.pdf, id=1124, 794.97pt x 614.295pt>
 File: ./Figures/Ideal_Exo_ParetoOpt_Figures/MusclesActivity/Iliacus_Muscle_Acti
 vation.pdf Graphic file (type pdf)
 <use ./Figures/Ideal_Exo_ParetoOpt_Figures/MusclesActivity/Iliacus_Muscle_Activ
 ation.pdf>
 Package pdftex.def Info: ./Figures/Ideal_Exo_ParetoOpt_Figures/MusclesActivity/
-Iliacus_Muscle_Activation.pdf  used on input line 765.
+Iliacus_Muscle_Activation.pdf  used on input line 750.
 (pdftex.def)             Requested size: 108.405pt x 83.76047pt.
 <./Figures/Ideal_Exo_ParetoOpt_Figures/MusclesActivity/Biceps_femoris_long_head
-_Muscle_Activation.pdf, id=1172, 794.97pt x 614.295pt>
+_Muscle_Activation.pdf, id=1125, 794.97pt x 614.295pt>
 File: ./Figures/Ideal_Exo_ParetoOpt_Figures/MusclesActivity/Biceps_femoris_long
 _head_Muscle_Activation.pdf Graphic file (type pdf)
 <use ./Figures/Ideal_Exo_ParetoOpt_Figures/MusclesActivity/Biceps_femoris_long_
 head_Muscle_Activation.pdf>
 Package pdftex.def Info: ./Figures/Ideal_Exo_ParetoOpt_Figures/MusclesActivity/
-Biceps_femoris_long_head_Muscle_Activation.pdf  used on input line 768.
+Biceps_femoris_long_head_Muscle_Activation.pdf  used on input line 753.
 (pdftex.def)             Requested size: 108.405pt x 83.76047pt.
 <./Figures/Ideal_Exo_ParetoOpt_Figures/MusclesActivity/Biceps_femoris_short_hea
-d_Muscle_Activation.pdf, id=1173, 794.97pt x 614.295pt>
+d_Muscle_Activation.pdf, id=1126, 794.97pt x 614.295pt>
 File: ./Figures/Ideal_Exo_ParetoOpt_Figures/MusclesActivity/Biceps_femoris_shor
 t_head_Muscle_Activation.pdf Graphic file (type pdf)
 <use ./Figures/Ideal_Exo_ParetoOpt_Figures/MusclesActivity/Biceps_femoris_short
 _head_Muscle_Activation.pdf>
 Package pdftex.def Info: ./Figures/Ideal_Exo_ParetoOpt_Figures/MusclesActivity/
-Biceps_femoris_short_head_Muscle_Activation.pdf  used on input line 771.
+Biceps_femoris_short_head_Muscle_Activation.pdf  used on input line 756.
 (pdftex.def)             Requested size: 108.405pt x 83.76047pt.
 <./Figures/Ideal_Exo_ParetoOpt_Figures/MusclesActivity/Gluteus_maximus_middle_M
-uscle_Activation.pdf, id=1174, 794.97pt x 614.295pt>
+uscle_Activation.pdf, id=1127, 794.97pt x 614.295pt>
 File: ./Figures/Ideal_Exo_ParetoOpt_Figures/MusclesActivity/Gluteus_maximus_mid
 dle_Muscle_Activation.pdf Graphic file (type pdf)
 <use ./Figures/Ideal_Exo_ParetoOpt_Figures/MusclesActivity/Gluteus_maximus_midd
 le_Muscle_Activation.pdf>
 Package pdftex.def Info: ./Figures/Ideal_Exo_ParetoOpt_Figures/MusclesActivity/
-Gluteus_maximus_middle_Muscle_Activation.pdf  used on input line 774.
+Gluteus_maximus_middle_Muscle_Activation.pdf  used on input line 759.
 (pdftex.def)             Requested size: 108.405pt x 83.76047pt.
 <./Figures/Ideal_Exo_ParetoOpt_Figures/MusclesActivity/Gastrocnemius_medial_hea
-d_Muscle_Activation.pdf, id=1175, 794.97pt x 614.295pt>
+d_Muscle_Activation.pdf, id=1128, 794.97pt x 614.295pt>
 File: ./Figures/Ideal_Exo_ParetoOpt_Figures/MusclesActivity/Gastrocnemius_media
 l_head_Muscle_Activation.pdf Graphic file (type pdf)
 <use ./Figures/Ideal_Exo_ParetoOpt_Figures/MusclesActivity/Gastrocnemius_medial
 _head_Muscle_Activation.pdf>
 Package pdftex.def Info: ./Figures/Ideal_Exo_ParetoOpt_Figures/MusclesActivity/
-Gastrocnemius_medial_head_Muscle_Activation.pdf  used on input line 777.
+Gastrocnemius_medial_head_Muscle_Activation.pdf  used on input line 762.
 (pdftex.def)             Requested size: 108.405pt x 83.76047pt.
 <./Figures/Ideal_Exo_ParetoOpt_Figures/MusclesActivity/Semimembranosus_Muscle_A
-ctivation.pdf, id=1176, 794.97pt x 614.295pt>
+ctivation.pdf, id=1129, 794.97pt x 614.295pt>
 File: ./Figures/Ideal_Exo_ParetoOpt_Figures/MusclesActivity/Semimembranosus_Mus
 cle_Activation.pdf Graphic file (type pdf)
 <use ./Figures/Ideal_Exo_ParetoOpt_Figures/MusclesActivity/Semimembranosus_Musc
 le_Activation.pdf>
 Package pdftex.def Info: ./Figures/Ideal_Exo_ParetoOpt_Figures/MusclesActivity/
-Semimembranosus_Muscle_Activation.pdf  used on input line 780.
+Semimembranosus_Muscle_Activation.pdf  used on input line 765.
 (pdftex.def)             Requested size: 108.405pt x 83.76047pt.
 <./Figures/Ideal_Exo_ParetoOpt_Figures/MusclesActivity/Semitendinosus_Muscle_Ac
-tivation.pdf, id=1177, 794.97pt x 614.295pt>
+tivation.pdf, id=1130, 794.97pt x 614.295pt>
 File: ./Figures/Ideal_Exo_ParetoOpt_Figures/MusclesActivity/Semitendinosus_Musc
 le_Activation.pdf Graphic file (type pdf)
 <use ./Figures/Ideal_Exo_ParetoOpt_Figures/MusclesActivity/Semitendinosus_Muscl
 e_Activation.pdf>
 Package pdftex.def Info: ./Figures/Ideal_Exo_ParetoOpt_Figures/MusclesActivity/
-Semitendinosus_Muscle_Activation.pdf  used on input line 783.
+Semitendinosus_Muscle_Activation.pdf  used on input line 768.
 (pdftex.def)             Requested size: 108.405pt x 83.76047pt.
-
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
-[24 <./Figures/Ideal_Exo_ParetoOpt_Figures/BiarticularExoskeletonHipActuatorTor
-queandMuscleMomentComparison.pdf> <./Figures/Ideal_Exo_ParetoOpt_Figures/Biarti
-cularExoskeletonKneeActuatorTorqueandMuscleMomentComparison.pdf
+[24 <./Figures/Ideal_Exo_ParetoOpt_Figures/ExoskeletonsHipActuatorPower.pdf> <.
+/Figures/Ideal_Exo_ParetoOpt_Figures/ExoskeletonsKneeActuatorPower.pdf
+
+pdfTeX warning: pdflatex.exe (file ./Figures/Ideal_Exo_ParetoOpt_Figures/Exoske
+letonsKneeActuatorPower.pdf): PDF inclusion: multiple pdfs with page group incl
+uded in a single page
+>] [25 <./Figures/Ideal_Exo_ParetoOpt_Figures/BiarticularExoskeletonHipActuator
+TorqueandMuscleMomentComparison.pdf> <./Figures/Ideal_Exo_ParetoOpt_Figures/Bia
+rticularExoskeletonKneeActuatorTorqueandMuscleMomentComparison.pdf
 
 pdfTeX warning: pdflatex.exe (file ./Figures/Ideal_Exo_ParetoOpt_Figures/Biarti
 cularExoskeletonKneeActuatorTorqueandMuscleMomentComparison.pdf): PDF inclusion
@@ -1381,7 +1295,7 @@ rqueandMuscleMomentComparison.pdf
 pdfTeX warning: pdflatex.exe (file ./Figures/Ideal_Exo_ParetoOpt_Figures/Monoar
 ticularExoskeletonKneeActuatorTorqueandMuscleMomentComparison.pdf): PDF inclusi
 on: multiple pdfs with page group included in a single page
->] [25 <./Figures/Ideal_Exo_ParetoOpt_Figures/MusclesActivity/Rectus_femoris_Mu
+>] [26 <./Figures/Ideal_Exo_ParetoOpt_Figures/MusclesActivity/Rectus_femoris_Mu
 scle_Activation.pdf> <./Figures/Ideal_Exo_ParetoOpt_Figures/MusclesActivity/Vas
 tus_lateralis_Muscle_Activation.pdf> <./Figures/Ideal_Exo_ParetoOpt_Figures/Mus
 clesActivity/Psoas_Muscle_Activation.pdf> <./Figures/Ideal_Exo_ParetoOpt_Figure
@@ -1393,15 +1307,15 @@ us_maximus_middle_Muscle_Activation.pdf> <./Figures/Ideal_Exo_ParetoOpt_Figures
 /MusclesActivity/Gastrocnemius_medial_head_Muscle_Activation.pdf> <./Figures/Id
 eal_Exo_ParetoOpt_Figures/MusclesActivity/Semimembranosus_Muscle_Activation.pdf
 > <./Figures/Ideal_Exo_ParetoOpt_Figures/MusclesActivity/Semitendinosus_Muscle_
-Activation.pdf>] [26] [27] (Ideal_Exoskeleton_Draft.bbl [28] [29]
+Activation.pdf>] [27] [28] (Ideal_Exoskeleton_Draft.bbl [29]
 ("E:\MiKTeX 2.9\tex/latex/ucs\uni-32.def"
 File: uni-32.def 2013/05/13 UCS: Unicode data U+2000..U+20FF
-)
+) [30]
 Package microtype Info: Loading generic protrusion settings for font family
 (microtype)             `cmtt' (encoding: OT1).
 (microtype)             For optimal results, create family-specific settings.
 (microtype)             See the microtype manual for details.
- [30]
+
 ("E:\MiKTeX 2.9\tex/latex/ucs\uni-0.def"
 File: uni-0.def 2013/05/13 UCS: Unicode data U+0000..U+00FF
 )
@@ -1411,11 +1325,11 @@ File: uni-33.def 2013/05/13 UCS: Unicode data U+2100..U+21FF
 [37]) 
 AED: lastpage setting LastPage
 [38]
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 861.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 861.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 846.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 846.
  (Ideal_Exoskeleton_Draft.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 861.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 861.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 846.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 846.
 Package rerunfilecheck Info: File `Ideal_Exoskeleton_Draft.out' has not changed
 .
 (rerunfilecheck)             Checksum: D41D8CD98F00B204E9800998ECF8427E;0.
@@ -1423,31 +1337,32 @@ Package rerunfilecheck Info: File `Ideal_Exoskeleton_Draft.out' has not changed
 
 LaTeX Warning: There were undefined references.
 
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 861.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 846.
  ) 
 Here is how much of TeX's memory you used:
- 14080 strings out of 492478
- 229369 string characters out of 3137227
- 339391 words of memory out of 3000000
- 17779 multiletter control sequences out of 15000+200000
- 9287 words of font info for 57 fonts, out of 3000000 for 9000
+ 14073 strings out of 492478
+ 228435 string characters out of 3137227
+ 346645 words of memory out of 3000000
+ 17765 multiletter control sequences out of 15000+200000
+ 10200 words of font info for 65 fonts, out of 3000000 for 9000
  1141 hyphenation exceptions out of 8191
  41i,16n,49p,1692b,598s stack positions out of 5000i,500n,10000p,200000b,50000s
  <C:\Users\T.a\AppData\Local\MiKTeX\2.9\fonts/pk/ljfour/jknappen/ec/dpi600\tc
 rm1000.pk><E:/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmbx10.pfb><E:/MiKTeX 2
 .9/fonts/type1/public/amsfonts/cm/cmbx12.pfb><E:/MiKTeX 2.9/fonts/type1/public/
-amsfonts/cm/cmbx8.pfb><E:/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmex10.pfb>
-<E:/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmmi10.pfb><E:/MiKTeX 2.9/fonts/t
-ype1/public/amsfonts/cm/cmmi7.pfb><E:/MiKTeX 2.9/fonts/type1/public/amsfonts/cm
-/cmr10.pfb><E:/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr12.pfb><E:/MiKTeX 2
-.9/fonts/type1/public/amsfonts/cm/cmr5.pfb><E:/MiKTeX 2.9/fonts/type1/public/am
-sfonts/cm/cmr7.pfb><E:/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr8.pfb><E:/M
-iKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy10.pfb><E:/MiKTeX 2.9/fonts/type1/
-public/amsfonts/cm/cmsy7.pfb><E:/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmtt
-10.pfb>
-Output written on Ideal_Exoskeleton_Draft.pdf (38 pages, 11014514 bytes).
+amsfonts/cm/cmbx8.pfb><E:/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmbx9.pfb><
+E:/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmex10.pfb><E:/MiKTeX 2.9/fonts/ty
+pe1/public/amsfonts/cm/cmmi10.pfb><E:/MiKTeX 2.9/fonts/type1/public/amsfonts/cm
+/cmmi7.pfb><E:/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr10.pfb><E:/MiKTeX 2
+.9/fonts/type1/public/amsfonts/cm/cmr12.pfb><E:/MiKTeX 2.9/fonts/type1/public/a
+msfonts/cm/cmr5.pfb><E:/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr7.pfb><E:/
+MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr8.pfb><E:/MiKTeX 2.9/fonts/type1/p
+ublic/amsfonts/cm/cmr9.pfb><E:/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy10
+.pfb><E:/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy7.pfb><E:/MiKTeX 2.9/fon
+ts/type1/public/amsfonts/cm/cmtt10.pfb>
+Output written on Ideal_Exoskeleton_Draft.pdf (38 pages, 11132692 bytes).
 PDF statistics:
- 1615 PDF objects out of 1728 (max. 8388607)
- 291 named destinations out of 1000 (max. 500000)
- 11013 words of extra memory for PDF output out of 12000 (max. 10000000)
+ 1631 PDF objects out of 1728 (max. 8388607)
+ 287 named destinations out of 1000 (max. 500000)
+ 13568 words of extra memory for PDF output out of 14400 (max. 10000000)
 
