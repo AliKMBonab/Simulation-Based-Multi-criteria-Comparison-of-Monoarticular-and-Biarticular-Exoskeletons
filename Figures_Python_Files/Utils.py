@@ -530,7 +530,8 @@ def plot_shaded_avg(plot_dic,toeoff_color='xkcd:medium grey',toeoff_alpha=1.0,
 def plot_muscles_avg(plot_dic,toeoff_color='xkcd:medium grey',
                      toeoff_alpha=1.0,row_num=3,col_num=3,
                      lw=2.0,ls='-',alpha=0.2,fill_lw=0,
-                     is_std = False,is_smooth=True,WS=3,fill_std=True,*args, **kwargs):
+                     is_std = False,is_smooth=True,WS=3,
+                     fill_std=True,*args, **kwargs):
 
     pgc = plot_dic['pgc']
     avg = plot_dic['avg']
@@ -567,10 +568,13 @@ def plot_muscles_avg(plot_dic,toeoff_color='xkcd:medium grey',
             pass
         ax.plot(pgc, avg[:,i], *args, lw=lw, ls=ls,label=label,**kwargs) # mean
 
-def plot_joint_muscle_exo (nrows,ncols,plot_dic,color_dic,ylabel,legend_loc=[0,1],thirdplot=True,y_ticks = [-2,-1,0,1,2]):
+def plot_joint_muscle_exo (nrows,ncols,plot_dic,color_dic,
+                           ylabel,nplots=None,legend_loc=[0,1],
+                           subplot_legend=False,fig=None,thirdplot=True,y_ticks = [-2,-1,0,1,2]):
     '''Note: please note that since it is in the for loop, if some data is
     needed to plot several times it should be repeated in the lists.  '''
-
+    if nplots == None:
+        nplots = ncols*nrows
     # reading data
     plot_1_list = plot_dic['plot_1_list']
     plot_2_list = plot_dic['plot_2_list']
@@ -581,21 +585,44 @@ def plot_joint_muscle_exo (nrows,ncols,plot_dic,color_dic,ylabel,legend_loc=[0,1
         color_3_list = color_dic['color_3_list']
         plot_3_list = plot_dic['plot_3_list']
     #plot
-    for i in range(nrows*ncols):
+    for i in range(nplots):
         ax = plt.subplot(nrows,ncols,i+1)
         plot_shaded_avg(plot_dic=plot_1_list[i],color=color_1_list[i])
         plot_shaded_avg(plot_dic=plot_2_list[i],color=color_2_list[i])
         if thirdplot == True:
             plot_shaded_avg(plot_dic=plot_3_list[i],color=color_3_list[i])
-        plt.yticks(y_ticks)
-        plt.title(plot_titles[i])
+        ax.set_yticks(y_ticks)
+        ax.set_title(plot_titles[i])
+        plt.tick_params(axis='both',direction='in')
         no_top_right(ax)
-        if i in legend_loc:
+        if subplot_legend == True and i == nplots-1:
+            ax_list = fig.axes
+            ax_last = plt.subplot(nrows,ncols,nrows*ncols)
+            ax_last.spines["right"].set_visible(False)
+            ax_last.spines["top"].set_visible(False)
+            ax_last.spines["bottom"].set_visible(False)
+            ax_last.spines["left"].set_visible(False)
+            ax_last.set_xticks([], [])
+            ax_last.set_yticks([], []) 
+            pos = ax_last.get_position()
+            handle1,label1 = ax_list[legend_loc[0]].get_legend_handles_labels()
+            handle2,label2 = ax_list[legend_loc[1]].get_legend_handles_labels()
+            plt.figlegend(handles=handle1,labels=label1, bbox_to_anchor=(pos.x0+0.05, pos.y0-0.05,  pos.width / 1.5, pos.height / 1.5))
+            plt.figlegend(handles=handle2,labels=label2, bbox_to_anchor=(pos.x0+0.05, pos.y0+0.05,  pos.width / 1.5, pos.height / 1.5))
+        elif i in legend_loc and subplot_legend == False:
             plt.legend(loc='upper right',frameon=False)
-        if i in range((nrows*ncols)-nrows,(nrows*ncols)):
-            plt.xlabel('gait cycle (%)')
-        if i not in np.arange(1,nrows*ncols,ncols):
-            plt.ylabel(ylabel)
+        if ncols==2 and i in [2,3]:
+            ax.set_xlabel('gait cycle (%)')
+        elif ncols==3 and i in [7,6]:
+            ax.set_xlabel('gait cycle (%)')
+        if ncols==2 and i in [0,2]:
+            ax.set_ylabel(ylabel)
+        elif ncols==3 and i in [0,6]:
+            ax.set_ylabel(ylabel)
+        if ncols==3 and i not in [7,6,5]:
+            labels = [item.get_text() for item in ax.get_xticklabels()]
+            empty_string_labels = ['']*len(labels)
+            ax.set_xticklabels(empty_string_labels)
 
 ######################################################################
 ######################################################################
