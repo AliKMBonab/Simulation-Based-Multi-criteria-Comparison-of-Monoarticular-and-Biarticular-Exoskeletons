@@ -109,7 +109,7 @@ mean_mono_loaded_regen_energy, std_mono_loaded_regen_energy = utils.pareto_avg_s
 # Paretofront data
 # mean & std metabolics cost reduction percents
 # loaded biarticular
-bi_loaded_indices = np.array([25,24,23,22,19,17,16,13,12,11,6,1])
+bi_loaded_indices = np.array([25,24,23,22,21,17,16,13,12,11,6,1])
 mean_bi_loaded_paretofront = utils.manual_paretofront(mean_bi_loaded_metabolics_percent,mean_bi_loaded_energy,bi_loaded_indices)
 std_bi_loaded_paretofront = utils.manual_paretofront(std_bi_loaded_metabolics_percent,std_bi_loaded_energy,bi_loaded_indices)
 # loaded monoarticular
@@ -117,7 +117,7 @@ mono_loaded_indices = np.array([25,20,15,10,5,4,3,2,1])
 mean_mono_loaded_paretofront = utils.manual_paretofront(mean_mono_loaded_metabolics_percent,mean_mono_loaded_energy,mono_loaded_indices)
 std_mono_loaded_paretofront = utils.manual_paretofront(std_mono_loaded_metabolics_percent,std_mono_loaded_energy,mono_loaded_indices)
 # noload biarticular
-bi_noload_indices = np.array([25,24,20,19,18,14,13,12,11,6,1])
+bi_noload_indices = np.array([25,24,23,22,21,19,18,17,13,12,11,1])
 mean_bi_noload_paretofront = utils.manual_paretofront(mean_bi_noload_metabolics_percent,mean_bi_noload_energy,bi_noload_indices)
 std_bi_noload_paretofront = utils.manual_paretofront(std_bi_noload_metabolics_percent,std_bi_noload_energy,bi_noload_indices)
 # noload monoarticular
@@ -126,19 +126,19 @@ mean_mono_noload_paretofront = utils.manual_paretofront(mean_mono_noload_metabol
 std_mono_noload_paretofront = utils.manual_paretofront(std_mono_noload_metabolics_percent,std_mono_noload_energy,mono_noload_indices)
 
 # loaded biarticular regenerated
-bi_loaded_indices = np.array([25,24,23,22,19,17,16,13,11,6,1])
+bi_loaded_indices = np.array([25,23,22,13,11,7,6,1])
 mean_bi_loaded_regen_paretofront = utils.manual_paretofront(mean_bi_loaded_metabolics_percent,mean_bi_loaded_regen_energy,bi_loaded_indices)
 std_bi_loaded_regen_paretofront = utils.manual_paretofront(std_bi_loaded_metabolics_percent,std_bi_loaded_regen_energy,bi_loaded_indices)
 # loaded monoarticular regenerated
-mono_loaded_indices = np.array([25,20,15,10,5,4,3,2,1])
+mono_loaded_indices = np.array([25,20,15,10,9,8,3,2,1])
 mean_mono_loaded_regen_paretofront = utils.manual_paretofront(mean_mono_loaded_metabolics_percent,mean_mono_loaded_regen_energy,mono_loaded_indices)
 std_mono_loaded_regen_paretofront = utils.manual_paretofront(std_mono_loaded_metabolics_percent,std_mono_loaded_regen_energy,mono_loaded_indices)
 # noload biarticular regenerated
-bi_noload_indices = np.array([24,23,22,21,16,11,6,1])
+bi_noload_indices = np.array([25,21,20,19,18,17,13,12,11,6,1])
 mean_bi_noload_regen_paretofront = utils.manual_paretofront(mean_bi_noload_metabolics_percent,mean_bi_noload_regen_energy,bi_noload_indices)
 std_bi_noload_regen_paretofront = utils.manual_paretofront(std_bi_noload_metabolics_percent,std_bi_noload_regen_energy,bi_noload_indices)
 # noload monoarticular regenerated
-mono_noload_indices = np.array([25,24,10,9,8,7,6,2,1])
+mono_noload_indices = np.array([25,24,20,19,15,5,2,1])
 mean_mono_noload_regen_paretofront = utils.manual_paretofront(mean_mono_noload_metabolics_percent,mean_mono_noload_regen_energy,mono_noload_indices)
 std_mono_noload_regen_paretofront = utils.manual_paretofront(std_mono_noload_metabolics_percent,std_mono_noload_regen_energy,mono_noload_indices)
 

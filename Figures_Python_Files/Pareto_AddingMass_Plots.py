@@ -347,7 +347,7 @@ color_1 = mycolors['magenta pink']
 color_2 = mycolors['lavender purple']
 plot_titles = ['noload, ideal','noload, exo mass','noload, exo mass + renegeration']
 
-fig = plt.figure(num='Pareto Curve: noload mono vs bi',figsize=(16.4, 10.8))
+fig = plt.figure(num='Pareto Curve: noload mono vs bi',figsize=(14.4, 10.8))
 nplot=3
 ncols=3
 nrows=1
@@ -365,8 +365,9 @@ for i in range(nplot):
     plt.legend(loc='best',frameon=False)
     plt.xlabel('Metabolic Reduction (%)')
     plt.ylabel('Energy Consumption (W/kg)')
-    plt.xlim((8,20))
-    plt.ylim((0.4,1.5))
-fig.tight_layout()
+    plt.xlim((8,18))
+    plt.ylim((0.5,3.5))
+fig.tight_layout(h_pad=-1.5, w_pad=-1.5)
+fig.subplots_adjust(top=0.99, bottom=0.075, left=0.100, right=0.975,hspace=0.2,wspace=0.15)
 fig.savefig('./Figures/Pareto/Adding_Mass_Pareto/Avg_Paretos.pdf',orientation='landscape',bbox_inches='tight')
 plt.show()

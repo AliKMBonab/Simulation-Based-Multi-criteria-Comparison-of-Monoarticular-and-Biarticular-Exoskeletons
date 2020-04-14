@@ -136,7 +136,7 @@ mono_noload_metabolics_addedmass_regen_percent_Paretofront,\
 mono_noload_energy_regen_Paretofront = utils.paretofront_subjects(monoarticular_out[0],mono_noload_regen_energy,noload_metabolics_energy_monoarticular_mass_added,adding_mass_case=True)
 
 # noload biarticular
-bi_noload_indices = np.array([25,24,20,19,18,14,13,12,11,6,1])
+bi_noload_indices = np.array([25,24,23,22,21,19,18,17,13,12,11,1])
 mean_bi_noload_paretofront = utils.manual_paretofront(mean_bi_noload_metabolics_percent,mean_bi_noload_energy,bi_noload_indices)
 std_bi_noload_paretofront = utils.manual_paretofront(std_bi_noload_metabolics_percent,std_bi_noload_energy,bi_noload_indices)
 
@@ -146,22 +146,22 @@ mean_mono_noload_paretofront = utils.manual_paretofront(mean_mono_noload_metabol
 std_mono_noload_paretofront = utils.manual_paretofront(std_mono_noload_metabolics_percent,std_mono_noload_energy,mono_noload_indices)
 
 # biarticular noload mass added
-bi_noload_indices = np.array([25,24,20,19,18,17,13,12,11])
+bi_noload_indices = np.array([25,24,23,19,18,17,12])
 mean_bi_noload_addedmass_paretofront = utils.manual_paretofront(mean_bi_noload_metabolics_addedmass_percent,mean_bi_noload_energy,bi_noload_indices)
 std_bi_noload_addedmass_paretofront = utils.manual_paretofront(std_bi_noload_metabolics_addedmass_percent,std_bi_noload_energy,bi_noload_indices)
 
 # monoarticular noload mass added
-mono_noload_indices = np.array([25,24,20,15,19,14,13,12,11])
+mono_noload_indices = np.array([25,24,20,19,14,13,12,11])
 mean_mono_noload_addedmass_paretofront = utils.manual_paretofront(mean_mono_noload_metabolics_addedmass_percent,mean_mono_noload_energy,mono_noload_indices)
 std_mono_noload_addedmass_paretofront = utils.manual_paretofront(std_mono_noload_metabolics_addedmass_percent,std_mono_noload_energy,mono_noload_indices)
 
 # noload biarticular added mass with regeneration
-bi_noload_indices = np.array([24,22,20,19,18,17,13,12,11])
+bi_noload_indices = np.array([25,24,19,18,17,13,12,11])
 mean_bi_noload_regen_paretofront = utils.manual_paretofront(mean_bi_noload_metabolics_addedmass_percent,mean_bi_noload_regen_energy,bi_noload_indices)
 std_bi_noload_regen_paretofront = utils.manual_paretofront(std_bi_noload_metabolics_addedmass_percent,std_bi_noload_regen_energy,bi_noload_indices)
 
 # noload monoarticular added mass with regeneration
-mono_noload_indices = np.array([25,24,20,15,14,13,12,11])
+mono_noload_indices = np.array([25,24,20,19,14,13,12,11])
 mean_mono_noload_regen_paretofront = utils.manual_paretofront(mean_mono_noload_metabolics_addedmass_percent,mean_mono_noload_regen_energy,mono_noload_indices)
 std_mono_noload_regen_paretofront = utils.manual_paretofront(std_mono_noload_metabolics_addedmass_percent,std_mono_noload_regen_energy,mono_noload_indices)
 

@@ -908,8 +908,12 @@ def pareto_avg_std_energy(data,simulation_num=25,subject_num=7,trial_num=3,resha
         final_data = filter_outliers(reshaped_data,*args,**kwargs)
     if delete_subject != None:
         final_data = delete_subject_data(reshaped_data,delete_subject,profile_energy='energy',is_reshaped=True)
-    avg = np.nanmean(final_data,axis=1)
-    std = np.nanstd(final_data,axis=1)
+        length = len(delete_subject)
+    else:
+        length = 0
+    subject_avg,_ = pareto_avg_std_within_subjects(final_data,reshape=False,subject_num=7-length)
+    avg = np.nanmean(subject_avg,axis=1)
+    std = np.nanstd(subject_avg,axis=1)
     return avg,std
 
 def pareto_avg_std_within_subjects(data,simulation_num=25,subject_num=7,trial_num=3,reshape=True,delete_subject=None):
@@ -920,8 +924,8 @@ def pareto_avg_std_within_subjects(data,simulation_num=25,subject_num=7,trial_nu
     if delete_subject != None:
         reshaped_data = delete_subject_data(reshaped_data,delete_subject,profile_energy='profile')
     # reserving variables
-    avg = np.zeros((reshaped_data.shape[0],reshaped_data.shape[1]/trial_num))
-    std = np.zeros((reshaped_data.shape[0],reshaped_data.shape[1]/trial_num))
+    avg = np.zeros((int(reshaped_data.shape[0]),int(reshaped_data.shape[1]/trial_num)))
+    std = np.zeros((int(reshaped_data.shape[0]),int(reshaped_data.shape[1]/trial_num)))
     # avg std for subjects
     c=0
     for i in range(subject_num):
