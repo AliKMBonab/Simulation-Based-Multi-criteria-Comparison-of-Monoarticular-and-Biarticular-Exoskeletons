@@ -587,7 +587,6 @@ def plot_muscles_avg(plot_dic,toeoff_color='xkcd:medium grey',
         plt.title(muscles_name[i])
         plt.xticks([0,20,40,60,80,100])
         plt.xlim([0,100])
-        plt.yticks((0,0.1,0.3,0.5,0.7,0.9))
         if i in [0,1,2,3,4,5]:
                 labels = [item.get_text() for item in ax.get_xticklabels()]
                 empty_string_labels = ['']*len(labels)
@@ -598,6 +597,13 @@ def plot_muscles_avg(plot_dic,toeoff_color='xkcd:medium grey',
         else:
             pass
         ax.plot(pgc, avg[:,i], *args, lw=lw, ls=ls,label=label,**kwargs) # mean
+        ax.set_ylim((0,1))
+        ax.set_yticks((0,0.5,1))
+        if i in [0,3,6]:
+            ax.set_ylabel('activation')
+        if i in [6,7,8]:
+            ax.set_xlabel('gait cycle (%)')
+        
 
 def plot_joint_muscle_exo (nrows,ncols,plot_dic,color_dic,
                            ylabel,nplots=None,legend_loc=[0,1],
@@ -1272,7 +1278,7 @@ def plot_paretofront_profile_changes(plot_dic,colormap,toeoff_color,include_colo
     # plot the colorbar
     if include_colorbar == True:
         cbar = plt.colorbar(sm,ticks=np.arange(1,len(indices)+1,1),aspect=50)
-        indices_str =[str(item) for item in indices]
+        indices_str =[str(item) for item in list(reversed(indices))]
         cbar.set_ticklabels(indices_str)
         cbar.outline.set_visible(False)
     #title
