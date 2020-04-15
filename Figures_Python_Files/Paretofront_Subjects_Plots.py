@@ -148,7 +148,7 @@ plot_dic = {'data':utils.smooth(mean_bi_loaded_hip_torque_paretofront,5,multidim
             'avg_toeoff':loaded_mean_toe_off,'indices':bi_loaded_indices,'title':'biarticular hip\n torque, loaded'}
 ax = plt.subplot(2,4,1)
 utils.plot_paretofront_profile_changes(plot_dic,colormap='tab20',include_colorbar=False,toeoff_color='k',ylabel='flexion/extension\n moment (N.m/kg)')
-ax.set_yticks([-1.5,-1,0,1,1.5])
+ax.set_yticks([-1.5,-0.5,0.5,1.5])
 ax.set_ylim((-1.5,1.5))
 # biarticular loaded knee
 plot_dic = {'data':utils.smooth(mean_bi_loaded_knee_torque_paretofront,5,multidim=True),
@@ -156,7 +156,7 @@ plot_dic = {'data':utils.smooth(mean_bi_loaded_knee_torque_paretofront,5,multidi
             'avg_toeoff':loaded_mean_toe_off,'indices':bi_loaded_indices,'title':'biarticular knee\n torque, loaded'}
 ax = plt.subplot(2,4,2)
 utils.plot_paretofront_profile_changes(plot_dic,colormap='tab20',toeoff_color='k')
-ax.set_yticks([-1.5,-1,0,1,1.5])
+ax.set_yticks([-1.5,-0.5,0.5,1.5])
 ax.set_ylim((-1.5,1.5))
 #****************************************
 # monoarticular loaded hip
@@ -165,7 +165,7 @@ plot_dic = {'data':utils.smooth(mean_mono_loaded_hip_torque_paretofront,5,multid
             'avg_toeoff':loaded_mean_toe_off,'indices':mono_loaded_indices,'title':'monoarticular hip\n torque, loaded'}
 ax = plt.subplot(2,4,3)
 utils.plot_paretofront_profile_changes(plot_dic,colormap='tab20',include_colorbar=False,toeoff_color='k')
-ax.set_yticks([-1.5,-1,0,1,1.5])
+ax.set_yticks([-1.5,-0.5,0.5,1.5])
 ax.set_ylim((-1.5,1.5))
 # monoarticular loaded knee
 plot_dic = {'data':utils.smooth(mean_mono_loaded_knee_torque_paretofront,5,multidim=True),
@@ -173,7 +173,7 @@ plot_dic = {'data':utils.smooth(mean_mono_loaded_knee_torque_paretofront,5,multi
             'avg_toeoff':loaded_mean_toe_off,'indices':mono_loaded_indices,'title':'monoarticular knee\n torque, loaded'}
 ax = plt.subplot(2,4,4)
 utils.plot_paretofront_profile_changes(plot_dic,colormap='tab20',toeoff_color='k')
-ax.set_yticks([-1.5,-1,0,1,1.5])
+ax.set_yticks([-1.5,-0.5,0.5,1.5])
 ax.set_ylim((-1.5,1.5))
 #****************************************
 # biarticular noload hip
@@ -182,7 +182,7 @@ plot_dic = {'data':utils.smooth(mean_bi_noload_hip_torque_paretofront,5,multidim
             'avg_toeoff':noload_mean_toe_off,'indices':bi_noload_indices,'title':'biarticular hip\n torque, noload'}
 ax = plt.subplot(2,4,5)
 utils.plot_paretofront_profile_changes(plot_dic,colormap='tab20',include_colorbar=False,toeoff_color='xkcd:shamrock green',ylabel='flexion/extension\n moment (N.m/kg)',xlabel=True)
-ax.set_yticks([-1.5,-1,0,1,1.5])
+ax.set_yticks([-1.5,-0.5,0.5,1.5])
 ax.set_ylim((-1.5,1.5))
 # biarticular noload knee
 plot_dic = {'data':utils.smooth(mean_bi_noload_knee_torque_paretofront,5,multidim=True),
@@ -190,7 +190,7 @@ plot_dic = {'data':utils.smooth(mean_bi_noload_knee_torque_paretofront,5,multidi
             'avg_toeoff':noload_mean_toe_off,'indices':bi_noload_indices,'title':'biarticular knee\n torque, noload'}
 ax = plt.subplot(2,4,6)
 utils.plot_paretofront_profile_changes(plot_dic,colormap='tab20',toeoff_color='xkcd:shamrock green',xlabel=True)
-ax.set_yticks([-1.5,-1,0,1,1.5])
+ax.set_yticks([-1.5,-0.5,0.5,1.5])
 ax.set_ylim((-1.5,1.5))
 #****************************************
 # monoarticular noload hip
@@ -199,7 +199,7 @@ plot_dic = {'data':utils.smooth(mean_mono_noload_hip_torque_paretofront,5,multid
             'avg_toeoff':noload_mean_toe_off,'indices':mono_noload_indices,'title':'monoarticular hip\n torque, noload'}
 ax = plt.subplot(2,4,7)
 utils.plot_paretofront_profile_changes(plot_dic,colormap='tab20',include_colorbar=False,toeoff_color='xkcd:shamrock green',xlabel=True)
-ax.set_yticks([-1.5,-1,0,1,1.5])
+ax.set_yticks([-1.5,-0.5,0.5,1.5])
 ax.set_ylim((-1.5,1.5))
 # monoarticular noload knee
 plot_dic = {'data':utils.smooth(mean_mono_noload_knee_torque_paretofront,5,multidim=True),
@@ -207,7 +207,7 @@ plot_dic = {'data':utils.smooth(mean_mono_noload_knee_torque_paretofront,5,multi
             'avg_toeoff':noload_mean_toe_off,'indices':mono_noload_indices,'title':'monoarticular knee\n torque, noload'}
 ax = plt.subplot(2,4,8)
 utils.plot_paretofront_profile_changes(plot_dic,colormap='tab20',toeoff_color='xkcd:shamrock green',xlabel=True)
-ax.set_yticks([-1.5,-1,0,1,1.5])
+ax.set_yticks([-1.5,-0.5,0.5,1.5])
 ax.set_ylim((-1.5,1.5))
 fig.tight_layout(h_pad=-1.5, w_pad=-1.5)
 fig.subplots_adjust(top=0.98, bottom=0.075, left=0.100, right=0.975,hspace=0.20,wspace=0.25)
@@ -224,7 +224,7 @@ plot_dic = {'data':utils.smooth(mean_bi_loaded_hip_power_paretofront,5,multidim=
             'avg_toeoff':loaded_mean_toe_off,'indices':bi_loaded_indices,'title':'biarticular hip\n power, loaded'}
 ax = plt.subplot(2,4,1)
 utils.plot_paretofront_profile_changes(plot_dic,colormap='tab20',include_colorbar=False,toeoff_color='k',ylabel='flexion/extension\n power (W/kg)')
-ax.set_yticks([-2.5,-1.5,-0.5,0,0.5,1.5,2.5,3.5])
+ax.set_yticks([-2.5,-1.5,-0.5,0.5,1.5,2.5,3.5])
 ax.set_ylim((-2.5,3.5))
 # biarticular loaded knee
 plot_dic = {'data':utils.smooth(mean_bi_loaded_knee_power_paretofront,5,multidim=True),
@@ -232,7 +232,7 @@ plot_dic = {'data':utils.smooth(mean_bi_loaded_knee_power_paretofront,5,multidim
             'avg_toeoff':loaded_mean_toe_off,'indices':bi_loaded_indices,'title':'biarticular knee\n power, loaded'}
 ax = plt.subplot(2,4,2)
 utils.plot_paretofront_profile_changes(plot_dic,colormap='tab20',toeoff_color='k')
-ax.set_yticks([-2.5,-1.5,-0.5,0,0.5,1.5,2.5,3.5])
+ax.set_yticks([-2.5,-1.5,-0.5,0.5,1.5,2.5,3.5])
 ax.set_ylim((-2.5,3.5))
 #****************************************
 # monoarticular loaded hip
@@ -241,7 +241,7 @@ plot_dic = {'data':utils.smooth(mean_mono_loaded_hip_power_paretofront,5,multidi
             'avg_toeoff':loaded_mean_toe_off,'indices':mono_loaded_indices,'title':'monoarticular hip\n power, loaded'}
 ax = plt.subplot(2,4,3)
 utils.plot_paretofront_profile_changes(plot_dic,colormap='tab20',include_colorbar=False,toeoff_color='k')
-ax.set_yticks([-2.5,-1.5,-0.5,0,0.5,1.5,2.5,3.5])
+ax.set_yticks([-2.5,-1.5,-0.5,0.5,1.5,2.5,3.5])
 ax.set_ylim((-2.5,3.5))
 # monoarticular loaded knee
 plot_dic = {'data':utils.smooth(mean_mono_loaded_knee_power_paretofront,5,multidim=True),
@@ -249,7 +249,7 @@ plot_dic = {'data':utils.smooth(mean_mono_loaded_knee_power_paretofront,5,multid
             'avg_toeoff':loaded_mean_toe_off,'indices':mono_loaded_indices,'title':'monoarticular knee\n power, loaded'}
 ax = plt.subplot(2,4,4)
 utils.plot_paretofront_profile_changes(plot_dic,colormap='tab20',toeoff_color='k')
-ax.set_yticks([-2.5,-1.5,-0.5,0,0.5,1.5,2.5,3.5])
+ax.set_yticks([-2.5,-1.5,-0.5,0.5,1.5,2.5,3.5])
 ax.set_ylim((-2.5,3.5))
 #****************************************
 # biarticular noload hip
@@ -258,7 +258,7 @@ plot_dic = {'data':utils.smooth(mean_bi_noload_hip_power_paretofront,5,multidim=
             'avg_toeoff':noload_mean_toe_off,'indices':bi_noload_indices,'title':'biarticular hip\n power, noload'}
 ax = plt.subplot(2,4,5)
 utils.plot_paretofront_profile_changes(plot_dic,colormap='tab20',include_colorbar=False,toeoff_color='xkcd:shamrock green',ylabel='flexion/extension\n power (W/kg)',xlabel=True)
-ax.set_yticks([-2.5,-1.5,-0.5,0,0.5,1.5,2.5,3.5])
+ax.set_yticks([-2.5,-1.5,-0.5,0.5,1.5,2.5,3.5])
 ax.set_ylim((-2.5,3.5))
 # biarticular noload knee
 plot_dic = {'data':utils.smooth(mean_bi_noload_knee_power_paretofront,5,multidim=True),
@@ -266,7 +266,7 @@ plot_dic = {'data':utils.smooth(mean_bi_noload_knee_power_paretofront,5,multidim
             'avg_toeoff':noload_mean_toe_off,'indices':bi_noload_indices,'title':'biarticular knee\n power, noload'}
 ax = plt.subplot(2,4,6)
 utils.plot_paretofront_profile_changes(plot_dic,colormap='tab20',toeoff_color='xkcd:shamrock green',xlabel=True)
-ax.set_yticks([-2.5,-1.5,-0.5,0,0.5,1.5,2.5,3.5])
+ax.set_yticks([-2.5,-1.5,-0.5,0.5,1.5,2.5,3.5])
 ax.set_ylim((-2.5,3.5))
 #****************************************
 # monoarticular noload hip
@@ -275,7 +275,7 @@ plot_dic = {'data':utils.smooth(mean_mono_noload_hip_power_paretofront,5,multidi
             'avg_toeoff':noload_mean_toe_off,'indices':mono_noload_indices,'title':'monoarticular hip\n power, noload'}
 ax = plt.subplot(2,4,7)
 utils.plot_paretofront_profile_changes(plot_dic,colormap='tab20',include_colorbar=False,toeoff_color='xkcd:shamrock green',xlabel=True)
-ax.set_yticks([-2.5,-1.5,-0.5,0,0.5,1.5,2.5,3.5])
+ax.set_yticks([-2.5,-1.5,-0.5,0.5,1.5,2.5,3.5])
 ax.set_ylim((-2.5,3.5))
 # monoarticular noload knee
 plot_dic = {'data':utils.smooth(mean_mono_noload_knee_power_paretofront,5,multidim=True),
@@ -283,7 +283,7 @@ plot_dic = {'data':utils.smooth(mean_mono_noload_knee_power_paretofront,5,multid
             'avg_toeoff':noload_mean_toe_off,'indices':mono_noload_indices,'title':'monoarticular knee\n power, noload'}
 ax = plt.subplot(2,4,8)
 utils.plot_paretofront_profile_changes(plot_dic,colormap='tab20',toeoff_color='xkcd:shamrock green',xlabel=True)
-ax.set_yticks([-2.5,-1.5,-0.5,0,0.5,1.5,2.5,3.5])
+ax.set_yticks([-2.5,-1.5,-0.5,0.5,1.5,2.5,3.5])
 ax.set_ylim((-2.5,3.5))
 fig.tight_layout(h_pad=-1.5, w_pad=-1.5)
 fig.subplots_adjust(top=0.98, bottom=0.075, left=0.100, right=0.975,hspace=0.20,wspace=0.25)

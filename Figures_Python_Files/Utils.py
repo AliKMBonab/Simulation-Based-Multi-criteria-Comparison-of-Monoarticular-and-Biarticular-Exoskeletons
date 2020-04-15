@@ -1271,9 +1271,10 @@ def plot_paretofront_profile_changes(plot_dic,colormap,toeoff_color,include_colo
         plt.plot(gpc, data[:,i], c=cmap(i),*args,lw=lw,**kwargs)
     # plot the colorbar
     if include_colorbar == True:
-        cbar = plt.colorbar(sm,ticks=np.arange(1,len(indices)+1,1))
+        cbar = plt.colorbar(sm,ticks=np.arange(1,len(indices)+1,1),aspect=50)
         indices_str =[str(item) for item in indices]
         cbar.set_ticklabels(indices_str)
+        cbar.outline.set_visible(False)
     #title
     plt.title(title)
     #beauty plot
