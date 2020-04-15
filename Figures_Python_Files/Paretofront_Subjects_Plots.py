@@ -78,6 +78,26 @@ mono_noload_hip_energy= np.reshape(assisted_energy_dataset['monoarticular_pareto
 mono_noload_knee_energy= np.reshape(assisted_energy_dataset['monoarticular_pareto_noload_kneeactuator_energy'],(25,21),order='F')
 mono_noload_energy = mono_noload_hip_energy + mono_noload_knee_energy
 
+# actuators power profiles
+mean_bi_loaded_hip_power, std_bi_loaded_hip_power = utils.pareto_profiles_avg_std(exo_power_dataset['biarticular_pareto_load_hipactuator_power'],gl_noload,change_direction=False)
+mean_bi_loaded_knee_power, std_bi_loaded_knee_power = utils.pareto_profiles_avg_std(exo_power_dataset['biarticular_pareto_load_kneeactuator_power'],gl_noload,change_direction=False)
+mean_bi_noload_hip_power, std_bi_noload_hip_power = utils.pareto_profiles_avg_std(exo_power_dataset['biarticular_pareto_noload_hipactuator_power'],gl_noload,change_direction=False)
+mean_bi_noload_knee_power, std_bi_noload_knee_power = utils.pareto_profiles_avg_std(exo_power_dataset['biarticular_pareto_noload_kneeactuator_power'],gl_noload,change_direction=False)
+mean_mono_loaded_hip_power, std_mono_loaded_hip_power = utils.pareto_profiles_avg_std(exo_power_dataset['monoarticular_pareto_load_hipactuator_power'],gl_noload,change_direction=False)
+mean_mono_loaded_knee_power, std_mono_loaded_knee_power = utils.pareto_profiles_avg_std(exo_power_dataset['monoarticular_pareto_load_kneeactuator_power'],gl_noload,change_direction=False)
+mean_mono_noload_hip_power, std_mono_noload_hip_power = utils.pareto_profiles_avg_std(exo_power_dataset['monoarticular_pareto_noload_hipactuator_power'],gl_noload,change_direction=False)
+mean_mono_noload_knee_power, std_mono_noload_knee_power = utils.pareto_profiles_avg_std(exo_power_dataset['monoarticular_pareto_noload_kneeactuator_power'],gl_noload,change_direction=False)
+
+# actuators torque profiles
+mean_bi_loaded_hip_torque, std_bi_loaded_hip_torque = utils.pareto_profiles_avg_std(exo_torque_dataset['biarticular_pareto_load_hipactuator_torque'],gl_noload,change_direction=False)
+mean_bi_loaded_knee_torque, std_bi_loaded_knee_torque = utils.pareto_profiles_avg_std(exo_torque_dataset['biarticular_pareto_load_kneeactuator_torque'],gl_noload,change_direction=True)
+mean_bi_noload_hip_torque, std_bi_noload_hip_torque = utils.pareto_profiles_avg_std(exo_torque_dataset['biarticular_pareto_noload_hipactuator_torque'],gl_noload,change_direction=False)
+mean_bi_noload_knee_torque, std_bi_noload_knee_torque = utils.pareto_profiles_avg_std(exo_torque_dataset['biarticular_pareto_noload_kneeactuator_torque'],gl_noload,change_direction=True)
+mean_mono_loaded_hip_torque, std_mono_loaded_hip_torque = utils.pareto_profiles_avg_std(exo_torque_dataset['monoarticular_pareto_load_hipactuator_torque'],gl_noload,change_direction=False)
+mean_mono_loaded_knee_torque, std_mono_loaded_knee_torque = utils.pareto_profiles_avg_std(exo_torque_dataset['monoarticular_pareto_load_kneeactuator_torque'],gl_noload,change_direction=True)
+mean_mono_noload_hip_torque, std_mono_noload_hip_torque = utils.pareto_profiles_avg_std(exo_torque_dataset['monoarticular_pareto_noload_hipactuator_torque'],gl_noload,change_direction=False)
+mean_mono_noload_knee_torque, std_mono_noload_knee_torque = utils.pareto_profiles_avg_std(exo_torque_dataset['monoarticular_pareto_noload_kneeactuator_torque'],gl_noload,change_direction=True)
+
 #####################################################################################
 # Paretofront
 bi_loaded_metabolics_percent_Paretofront,\
@@ -89,8 +109,189 @@ mono_loaded_energy_Paretofront = utils.paretofront_subjects(mono_loaded_metaboli
 mono_noload_metabolics_percent_Paretofront,\
 mono_noload_energy_Paretofront = utils.paretofront_subjects(mono_noload_metabolics_energy,mono_noload_energy,unassist_noload_metabolics_energy)
 
+# loaded biarticular
+bi_loaded_indices = np.array([25,24,23,22,21,17,16,13,12,11,6,1])
+mean_bi_loaded_hip_torque_paretofront = utils.manual_paretofront_profiles(mean_bi_loaded_hip_torque,bi_loaded_indices)
+mean_bi_loaded_knee_torque_paretofront = utils.manual_paretofront_profiles(mean_bi_loaded_knee_torque,bi_loaded_indices)
+mean_bi_loaded_hip_power_paretofront = utils.manual_paretofront_profiles(mean_bi_loaded_hip_power,bi_loaded_indices)
+mean_bi_loaded_knee_power_paretofront = utils.manual_paretofront_profiles(mean_bi_loaded_knee_power,bi_loaded_indices)
+
+# loaded monoarticular
+mono_loaded_indices = np.array([25,20,15,10,5,4,3,2,1])
+mean_mono_loaded_hip_torque_paretofront = utils.manual_paretofront_profiles(mean_mono_loaded_hip_torque,mono_loaded_indices)
+mean_mono_loaded_knee_torque_paretofront = utils.manual_paretofront_profiles(mean_mono_loaded_knee_torque,mono_loaded_indices)
+mean_mono_loaded_hip_power_paretofront = utils.manual_paretofront_profiles(mean_mono_loaded_hip_power,mono_loaded_indices)
+mean_mono_loaded_knee_power_paretofront = utils.manual_paretofront_profiles(mean_mono_loaded_knee_power,mono_loaded_indices)
+
+# noload biarticular
+bi_noload_indices = np.array([25,24,23,22,21,19,18,17,13,12,11,1])
+mean_bi_noload_hip_torque_paretofront = utils.manual_paretofront_profiles(mean_bi_noload_hip_torque,bi_noload_indices)
+mean_bi_noload_knee_torque_paretofront = utils.manual_paretofront_profiles(mean_bi_noload_knee_torque,bi_noload_indices)
+mean_bi_noload_hip_power_paretofront = utils.manual_paretofront_profiles(mean_bi_noload_hip_power,bi_noload_indices)
+mean_bi_noload_knee_power_paretofront = utils.manual_paretofront_profiles(mean_bi_noload_knee_power,bi_noload_indices)
+
+# noload monoarticular
+mono_noload_indices = np.array([25,20,15,14,13,8,7,6,2,1])
+mean_mono_noload_hip_torque_paretofront = utils.manual_paretofront_profiles(mean_mono_noload_hip_torque,mono_noload_indices)
+mean_mono_noload_knee_torque_paretofront = utils.manual_paretofront_profiles(mean_mono_noload_knee_torque,mono_noload_indices)
+mean_mono_noload_hip_power_paretofront = utils.manual_paretofront_profiles(mean_mono_noload_hip_power,mono_noload_indices)
+mean_mono_noload_knee_power_paretofront = utils.manual_paretofront_profiles(mean_mono_noload_knee_power,mono_noload_indices)
+
 #####################################################################################
-# plots
+# profile plots
+#************************************************************************************
+# torque profile
+fig, axes = plt.subplots(nrows=2,ncols=4,num='Pareto Curve: loaded mono vs bi',figsize=(14.8, 9.6))
+# biarticular loaded hip
+plot_dic = {'data':utils.smooth(mean_bi_loaded_hip_torque_paretofront,5,multidim=True),
+            'joint_data':utils.smooth(rra_dataset['mean_norm_loaded_hipjoint_moment'],5),'joint_color':'k',
+            'avg_toeoff':loaded_mean_toe_off,'indices':bi_loaded_indices,'title':'biarticular hip\n torque, loaded'}
+ax = plt.subplot(2,4,1)
+utils.plot_paretofront_profile_changes(plot_dic,colormap='tab20',include_colorbar=False,toeoff_color='k',ylabel='flexion/extension\n moment (N.m/kg)')
+ax.set_yticks([-1.5,-1,0,1,1.5])
+ax.set_ylim((-1.5,1.5))
+# biarticular loaded knee
+plot_dic = {'data':utils.smooth(mean_bi_loaded_knee_torque_paretofront,5,multidim=True),
+            'joint_data':utils.smooth(rra_dataset['mean_norm_loaded_kneejoint_moment'],5),'joint_color':'k',
+            'avg_toeoff':loaded_mean_toe_off,'indices':bi_loaded_indices,'title':'biarticular knee\n torque, loaded'}
+ax = plt.subplot(2,4,2)
+utils.plot_paretofront_profile_changes(plot_dic,colormap='tab20',toeoff_color='k')
+ax.set_yticks([-1.5,-1,0,1,1.5])
+ax.set_ylim((-1.5,1.5))
+#****************************************
+# monoarticular loaded hip
+plot_dic = {'data':utils.smooth(mean_mono_loaded_hip_torque_paretofront,5,multidim=True),
+            'joint_data':utils.smooth(rra_dataset['mean_norm_loaded_hipjoint_moment'],5),'joint_color':'k',
+            'avg_toeoff':loaded_mean_toe_off,'indices':mono_loaded_indices,'title':'monoarticular hip\n torque, loaded'}
+ax = plt.subplot(2,4,3)
+utils.plot_paretofront_profile_changes(plot_dic,colormap='tab20',include_colorbar=False,toeoff_color='k')
+ax.set_yticks([-1.5,-1,0,1,1.5])
+ax.set_ylim((-1.5,1.5))
+# monoarticular loaded knee
+plot_dic = {'data':utils.smooth(mean_mono_loaded_knee_torque_paretofront,5,multidim=True),
+            'joint_data':utils.smooth(rra_dataset['mean_norm_loaded_kneejoint_moment'],5),'joint_color':'k',
+            'avg_toeoff':loaded_mean_toe_off,'indices':mono_loaded_indices,'title':'monoarticular knee\n torque, loaded'}
+ax = plt.subplot(2,4,4)
+utils.plot_paretofront_profile_changes(plot_dic,colormap='tab20',toeoff_color='k')
+ax.set_yticks([-1.5,-1,0,1,1.5])
+ax.set_ylim((-1.5,1.5))
+#****************************************
+# biarticular noload hip
+plot_dic = {'data':utils.smooth(mean_bi_noload_hip_torque_paretofront,5,multidim=True),
+            'joint_data':utils.smooth(rra_dataset['mean_norm_noload_hipjoint_moment'],5),'joint_color':'xkcd:shamrock green',
+            'avg_toeoff':noload_mean_toe_off,'indices':bi_noload_indices,'title':'biarticular hip\n torque, noload'}
+ax = plt.subplot(2,4,5)
+utils.plot_paretofront_profile_changes(plot_dic,colormap='tab20',include_colorbar=False,toeoff_color='xkcd:shamrock green',ylabel='flexion/extension\n moment (N.m/kg)',xlabel=True)
+ax.set_yticks([-1.5,-1,0,1,1.5])
+ax.set_ylim((-1.5,1.5))
+# biarticular noload knee
+plot_dic = {'data':utils.smooth(mean_bi_noload_knee_torque_paretofront,5,multidim=True),
+            'joint_data':utils.smooth(rra_dataset['mean_norm_noload_kneejoint_moment'],5),'joint_color':'xkcd:shamrock green',
+            'avg_toeoff':noload_mean_toe_off,'indices':bi_noload_indices,'title':'biarticular knee\n torque, noload'}
+ax = plt.subplot(2,4,6)
+utils.plot_paretofront_profile_changes(plot_dic,colormap='tab20',toeoff_color='xkcd:shamrock green',xlabel=True)
+ax.set_yticks([-1.5,-1,0,1,1.5])
+ax.set_ylim((-1.5,1.5))
+#****************************************
+# monoarticular noload hip
+plot_dic = {'data':utils.smooth(mean_mono_noload_hip_torque_paretofront,5,multidim=True),
+            'joint_data':utils.smooth(rra_dataset['mean_norm_noload_hipjoint_moment'],5),'joint_color':'xkcd:shamrock green',
+            'avg_toeoff':noload_mean_toe_off,'indices':mono_noload_indices,'title':'monoarticular hip\n torque, noload'}
+ax = plt.subplot(2,4,7)
+utils.plot_paretofront_profile_changes(plot_dic,colormap='tab20',include_colorbar=False,toeoff_color='xkcd:shamrock green',xlabel=True)
+ax.set_yticks([-1.5,-1,0,1,1.5])
+ax.set_ylim((-1.5,1.5))
+# monoarticular noload knee
+plot_dic = {'data':utils.smooth(mean_mono_noload_knee_torque_paretofront,5,multidim=True),
+            'joint_data':utils.smooth(rra_dataset['mean_norm_noload_kneejoint_moment'],5),'joint_color':'xkcd:shamrock green',
+            'avg_toeoff':noload_mean_toe_off,'indices':mono_noload_indices,'title':'monoarticular knee\n torque, noload'}
+ax = plt.subplot(2,4,8)
+utils.plot_paretofront_profile_changes(plot_dic,colormap='tab20',toeoff_color='xkcd:shamrock green',xlabel=True)
+ax.set_yticks([-1.5,-1,0,1,1.5])
+ax.set_ylim((-1.5,1.5))
+fig.tight_layout(h_pad=-1.5, w_pad=-1.5)
+fig.subplots_adjust(top=0.98, bottom=0.075, left=0.100, right=0.975,hspace=0.20,wspace=0.25)
+fig.savefig('./Figures/Paretofront/Subjects_Pareto/PaperFigure_Paretofront_TorqueProfiles.pdf',orientation='landscape',bbox_inches='tight')
+plt.show()
+
+#************************************************************************************
+#************************************************************************************
+# power profile
+fig, axes = plt.subplots(nrows=2,ncols=4,num='Pareto Curve: loaded mono vs bi',figsize=(14.8, 9.6))
+# biarticular loaded hip
+plot_dic = {'data':utils.smooth(mean_bi_loaded_hip_power_paretofront,5,multidim=True),
+            'joint_data':utils.smooth(rra_dataset['mean_norm_loaded_hipjoint_power'],5),'joint_color':'k',
+            'avg_toeoff':loaded_mean_toe_off,'indices':bi_loaded_indices,'title':'biarticular hip\n power, loaded'}
+ax = plt.subplot(2,4,1)
+utils.plot_paretofront_profile_changes(plot_dic,colormap='tab20',include_colorbar=False,toeoff_color='k',ylabel='flexion/extension\n power (W/kg)')
+ax.set_yticks([-2.5,-1.5,-0.5,0,0.5,1.5,2.5,3.5])
+ax.set_ylim((-2.5,3.5))
+# biarticular loaded knee
+plot_dic = {'data':utils.smooth(mean_bi_loaded_knee_power_paretofront,5,multidim=True),
+            'joint_data':utils.smooth(rra_dataset['mean_norm_loaded_kneejoint_power'],5),'joint_color':'k',
+            'avg_toeoff':loaded_mean_toe_off,'indices':bi_loaded_indices,'title':'biarticular knee\n power, loaded'}
+ax = plt.subplot(2,4,2)
+utils.plot_paretofront_profile_changes(plot_dic,colormap='tab20',toeoff_color='k')
+ax.set_yticks([-2.5,-1.5,-0.5,0,0.5,1.5,2.5,3.5])
+ax.set_ylim((-2.5,3.5))
+#****************************************
+# monoarticular loaded hip
+plot_dic = {'data':utils.smooth(mean_mono_loaded_hip_power_paretofront,5,multidim=True),
+            'joint_data':utils.smooth(rra_dataset['mean_norm_loaded_hipjoint_power'],5),'joint_color':'k',
+            'avg_toeoff':loaded_mean_toe_off,'indices':mono_loaded_indices,'title':'monoarticular hip\n power, loaded'}
+ax = plt.subplot(2,4,3)
+utils.plot_paretofront_profile_changes(plot_dic,colormap='tab20',include_colorbar=False,toeoff_color='k')
+ax.set_yticks([-2.5,-1.5,-0.5,0,0.5,1.5,2.5,3.5])
+ax.set_ylim((-2.5,3.5))
+# monoarticular loaded knee
+plot_dic = {'data':utils.smooth(mean_mono_loaded_knee_power_paretofront,5,multidim=True),
+            'joint_data':utils.smooth(rra_dataset['mean_norm_loaded_kneejoint_power'],5),'joint_color':'k',
+            'avg_toeoff':loaded_mean_toe_off,'indices':mono_loaded_indices,'title':'monoarticular knee\n power, loaded'}
+ax = plt.subplot(2,4,4)
+utils.plot_paretofront_profile_changes(plot_dic,colormap='tab20',toeoff_color='k')
+ax.set_yticks([-2.5,-1.5,-0.5,0,0.5,1.5,2.5,3.5])
+ax.set_ylim((-2.5,3.5))
+#****************************************
+# biarticular noload hip
+plot_dic = {'data':utils.smooth(mean_bi_noload_hip_power_paretofront,5,multidim=True),
+            'joint_data':utils.smooth(rra_dataset['mean_norm_noload_hipjoint_power'],5),'joint_color':'xkcd:shamrock green',
+            'avg_toeoff':noload_mean_toe_off,'indices':bi_noload_indices,'title':'biarticular hip\n power, noload'}
+ax = plt.subplot(2,4,5)
+utils.plot_paretofront_profile_changes(plot_dic,colormap='tab20',include_colorbar=False,toeoff_color='xkcd:shamrock green',ylabel='flexion/extension\n power (W/kg)',xlabel=True)
+ax.set_yticks([-2.5,-1.5,-0.5,0,0.5,1.5,2.5,3.5])
+ax.set_ylim((-2.5,3.5))
+# biarticular noload knee
+plot_dic = {'data':utils.smooth(mean_bi_noload_knee_power_paretofront,5,multidim=True),
+            'joint_data':utils.smooth(rra_dataset['mean_norm_noload_kneejoint_power'],5),'joint_color':'xkcd:shamrock green',
+            'avg_toeoff':noload_mean_toe_off,'indices':bi_noload_indices,'title':'biarticular knee\n power, noload'}
+ax = plt.subplot(2,4,6)
+utils.plot_paretofront_profile_changes(plot_dic,colormap='tab20',toeoff_color='xkcd:shamrock green',xlabel=True)
+ax.set_yticks([-2.5,-1.5,-0.5,0,0.5,1.5,2.5,3.5])
+ax.set_ylim((-2.5,3.5))
+#****************************************
+# monoarticular noload hip
+plot_dic = {'data':utils.smooth(mean_mono_noload_hip_power_paretofront,5,multidim=True),
+            'joint_data':utils.smooth(rra_dataset['mean_norm_noload_hipjoint_power'],5),'joint_color':'xkcd:shamrock green',
+            'avg_toeoff':noload_mean_toe_off,'indices':mono_noload_indices,'title':'monoarticular hip\n power, noload'}
+ax = plt.subplot(2,4,7)
+utils.plot_paretofront_profile_changes(plot_dic,colormap='tab20',include_colorbar=False,toeoff_color='xkcd:shamrock green',xlabel=True)
+ax.set_yticks([-2.5,-1.5,-0.5,0,0.5,1.5,2.5,3.5])
+ax.set_ylim((-2.5,3.5))
+# monoarticular noload knee
+plot_dic = {'data':utils.smooth(mean_mono_noload_knee_power_paretofront,5,multidim=True),
+            'joint_data':utils.smooth(rra_dataset['mean_norm_noload_kneejoint_power'],5),'joint_color':'xkcd:shamrock green',
+            'avg_toeoff':noload_mean_toe_off,'indices':mono_noload_indices,'title':'monoarticular knee\n power, noload'}
+ax = plt.subplot(2,4,8)
+utils.plot_paretofront_profile_changes(plot_dic,colormap='tab20',toeoff_color='xkcd:shamrock green',xlabel=True)
+ax.set_yticks([-2.5,-1.5,-0.5,0,0.5,1.5,2.5,3.5])
+ax.set_ylim((-2.5,3.5))
+fig.tight_layout(h_pad=-1.5, w_pad=-1.5)
+fig.subplots_adjust(top=0.98, bottom=0.075, left=0.100, right=0.975,hspace=0.20,wspace=0.25)
+fig.savefig('./Figures/Paretofront/Subjects_Pareto/PaperFigure_Paretofront_PowerProfiles.pdf',orientation='landscape',bbox_inches='tight')
+plt.show()
+
+#####################################################################################
+# plots front plots
 # subjects pareto curve: loaded mono vs biarticular
 fig = plt.figure(num='Pareto Curve: loaded mono vs bi',figsize=(12.4, 18.8))
 plot_dic = {'x1_data':bi_loaded_metabolics_percent_Paretofront,'x2_data':mono_loaded_metabolics_percent_Paretofront,

@@ -345,3 +345,90 @@ fig.savefig('./Figures/Paretofront/Mean_Pareto/Pareto_Noload_Bi_GenVsNonGen.pdf'
 plt.show()
 
 
+#####################################################################################
+#####################################################################################
+# PAPER FIGURE
+# plots
+# average pareto curve: loaded mono vs biarticular
+
+plot_dic = {'x1_data':mean_bi_loaded_paretofront[:,0],'x1err_data':std_bi_loaded_paretofront[:,0],
+          'x2_data':mean_mono_loaded_paretofront[:,0],'x2err_data':std_mono_loaded_paretofront[:,0],
+          'y1_data':mean_bi_loaded_paretofront[:,1],'y1err_data':std_bi_loaded_paretofront[:,1],
+          'y2_data':mean_mono_loaded_paretofront[:,1],'y2err_data':std_mono_loaded_paretofront[:,1],
+          'color_1':mycolors['crimson red'],'color_2':mycolors['dark purple']
+          }
+fig, axes = plt.subplots(nrows=2,ncols=2,num='PaperFigure_Paretofront',figsize=(9.6, 7.2))
+plt.subplot(2,2,1)
+utils.plot_pareto_avg_curve (plot_dic,loadcond='loaded',line=True)
+plt.ylabel('Exoskeleton Energy\n Consumption (W/kg)')
+plt.title('loaded: mono. vs bi.')
+ax = plt.gca()
+ax.set_xticks([5, 10, 15, 20, 25, 30])
+ax.set_yticks([1, 1.5, 2, 2.5, 3.2])
+plt.tick_params(axis='both',direction='in')
+utils.no_top_right(ax)
+plt.legend(loc='best',frameon=False)
+
+# average pareto curve: noload mono vs biarticular
+
+plot_dic = {'x1_data':mean_bi_noload_paretofront[:,0],'x1err_data':std_bi_noload_paretofront[:,0],
+          'x2_data':mean_mono_noload_paretofront[:,0],'x2err_data':std_mono_noload_paretofront[:,0],
+          'y1_data':mean_bi_noload_paretofront[:,1],'y1err_data':std_bi_noload_paretofront[:,1],
+          'y2_data':mean_mono_noload_paretofront[:,1],'y2err_data':std_mono_noload_paretofront[:,1],
+          'color_1':mycolors['magenta pink'],'color_2':mycolors['lavender purple']
+          }
+plt.subplot(2,2,2)
+utils.plot_pareto_avg_curve (plot_dic,loadcond='noload',line=True)
+plt.title('noload: mono. vs bi.')
+plt.tick_params(axis='both',direction='in')
+ax = plt.gca()
+ax.set_xticks([5, 10, 15, 20, 25, 30])
+ax.set_yticks([1, 1.5, 2, 2.5, 3.2])
+utils.no_top_right(ax)
+plt.legend(loc='best',frameon=False)
+
+# average pareto curve: biarticular noload vs loaded
+
+plot_dic = {'x1_data':mean_bi_loaded_paretofront[:,0],'x1err_data':std_bi_loaded_paretofront[:,0],
+          'x2_data':mean_bi_noload_paretofront[:,0],'x2err_data':std_bi_noload_paretofront[:,0],
+          'y1_data':mean_bi_loaded_paretofront[:,1],'y1err_data':std_bi_loaded_paretofront[:,1],
+          'y2_data':mean_bi_noload_paretofront[:,1],'y2err_data':std_bi_noload_paretofront[:,1],
+          'color_1':mycolors['crimson red'],'color_2':mycolors['olympic blue'],
+          'legend_1':'loaded biarticular','legend_2':'noload biarticular'
+          }
+plt.subplot(2,2,3)
+utils.plot_pareto_avg_curve (plot_dic,loadcond='loaded',line=True)
+plt.title('biarticular: loaded vs noload')
+plt.xlabel('Metabolic Cost Reduction (%)')
+plt.ylabel('Exoskeleton Energy\n Consumption (W/kg)')
+plt.tick_params(axis='both',direction='in')
+ax = plt.gca()
+ax.set_xticks([5, 10, 15, 20, 25, 30])
+ax.set_yticks([1, 1.5, 2, 2.5, 3.2])
+utils.no_top_right(ax)
+plt.legend(loc='best',frameon=False)
+
+# average pareto curve: monoarticular noload vs loaded
+
+plot_dic = {'x1_data':mean_mono_loaded_paretofront[:,0],'x1err_data':std_mono_loaded_paretofront[:,0],
+          'x2_data':mean_mono_noload_paretofront[:,0],'x2err_data':std_mono_noload_paretofront[:,0],
+          'y1_data':mean_mono_loaded_paretofront[:,1],'y1err_data':std_mono_loaded_paretofront[:,1],
+          'y2_data':mean_mono_noload_paretofront[:,1],'y2err_data':std_mono_noload_paretofront[:,1],
+          'color_1':mycolors['crimson red'],'color_2':mycolors['olympic blue'],
+          'legend_1':'loaded monoarticular','legend_2':'noload monoarticular'
+          }
+plt.subplot(2,2,4)
+utils.plot_pareto_avg_curve (plot_dic,loadcond='loaded',line=True)
+plt.title('monoarticular: loaded vs noload')
+plt.xlabel('Metabolic Cost Reduction (%)')
+plt.tick_params(axis='both',direction='in')
+ax = plt.gca()
+ax.set_xticks([5, 10, 15, 20, 25, 30])
+ax.set_yticks([1, 1.5, 2, 2.5, 3.2])
+utils.no_top_right(ax)
+plt.legend(loc='best',frameon=False)
+fig.tight_layout(h_pad=-1, w_pad=-1.5)
+fig.subplots_adjust(top=0.98, bottom=0.075, left=0.100, right=0.975,hspace=0.25,wspace=0.15)
+fig.savefig('./Figures/Paretofront/Mean_Pareto/PaperFigure_Main_Pareto.pdf',orientation='landscape',bbox_inches='tight')
+plt.show()
+ 

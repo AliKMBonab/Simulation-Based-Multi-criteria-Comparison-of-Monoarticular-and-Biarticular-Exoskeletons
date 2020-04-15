@@ -261,17 +261,28 @@ def toe_off_avg_std(gl_noload,gl_loaded):
         c1+=1
     return np.mean(noload_toe_off),np.std(noload_toe_off),np.mean(loaded_toe_off),np.std(loaded_toe_off)
 
-def smooth(a,WSZ):
+def smooth(a,WSZ,multidim=False):
     """
     a: NumPy 1-D array containing the data to be smoothed
     WSZ: smoothing window size needs, which must be odd number,
     as in the original MATLAB implementation.
     """
-    out0 = np.convolve(a,np.ones(WSZ,dtype=int),'valid')/WSZ    
-    r = np.arange(1,WSZ-1,2)
-    start = np.cumsum(a[:WSZ-1])[::2]/r
-    stop = (np.cumsum(a[:-WSZ:-1])[::2]/r)[::-1]
-    return np.concatenate((  start , out0, stop  ))
+    if multidim == False:
+        out0 = np.convolve(a,np.ones(WSZ,dtype=int),'valid')/WSZ    
+        r = np.arange(1,WSZ-1,2)
+        start = np.cumsum(a[:WSZ-1])[::2]/r
+        stop = (np.cumsum(a[:-WSZ:-1])[::2]/r)[::-1]
+        return np.concatenate((  start , out0, stop  ))
+    else:
+        a_smooth = np.zeros((a.shape[0],a.shape[1]))
+        for i in range(a.shape[1]):
+            elem = a[:,i]
+            out0 = np.convolve(elem,np.ones(WSZ,dtype=int),'valid')/WSZ    
+            r = np.arange(1,WSZ-1,2)
+            start = np.cumsum(elem[:WSZ-1])[::2]/r
+            stop = (np.cumsum(elem[:-WSZ:-1])[::2]/r)[::-1]
+            a_smooth[:,i] =  np.concatenate((  start , out0, stop  ))
+        return a_smooth
 
 def reduction_calc(data1,data2):
     """ Please assign data according to the formula: (data1-data2)100/data1."""
@@ -762,6 +773,26 @@ def manual_paretofront(data_1,data_2,indices):
             data[i,:] = np.nan
     return data
 
+def manual_paretofront_profiles(data,indices):
+    '''
+    - indices are from 1 not 0 to avoid confusion.
+    - indices should be started from last to first and then
+      algorithm will flip them automatically.
+    '''
+    paretofront_data = np.zeros((data.shape[0],len(indices)))
+    indices = indices.copy()
+    indices = np.flip(indices,axis=0)
+    for i,j in enumerate(indices):
+        indices[i]=j-1
+    if data.dtype != 'float64':
+        data = data.astype('float64')
+    c=0
+    for i in range(data.shape[1]):
+        if i in indices:
+            paretofront_data[:,c] = data[:,i]
+            c+=1
+    return paretofront_data
+
 def paretofront_subjects(data_1,data_2,unassist_data=None,calc_percent=True,adding_mass_case=False):
     '''
     data_1 assumed to be metabolic energy
@@ -1214,3 +1245,43 @@ def plot_pareto_comparison(plot_dic,loadcond,compare,labels=None,legend_loc=[0],
         if i in np.arange(0,nrows*ncols,ncols):
             ax.set_ylabel(ylabel)
         plt.tight_layout()
+
+def plot_paretofront_profile_changes(plot_dic,colormap,toeoff_color,include_colorbar=True,xlabel=False,ylabel=None,lw=1.75,*args,**kwargs):
+    joint_data = plot_dic['joint_data']
+    data = plot_dic['data']
+    indices = plot_dic['indices']
+    title = plot_dic['title']
+    joint_color = plot_dic['joint_color']
+    avg_toeoff = plot_dic['avg_toeoff']
+    gpc = np.linspace(0,100,1000)
+    plt.xticks([0,20,40,60,80,100])
+    plt.xlim([0,100])
+    # plotting joint profile
+    plt.plot(gpc,joint_data, *args, lw=3,ls='--',color=joint_color,label='Joint', **kwargs)
+    # toe-off and zero lines
+    plt.axvline(avg_toeoff, lw=2, color=toeoff_color, zorder=0, alpha=0.5) #vertical line
+    plt.axhline(0, lw=2, color='grey', zorder=0, alpha=0.75) # horizontal line
+    #get discrete colormap
+    cmap = plt.get_cmap(colormap, len(indices))
+    norm = matplotlib.colors.BoundaryNorm(np.arange(len(indices)+1)+0.5,len(indices))
+    sm = plt.cm.ScalarMappable(norm=norm, cmap=cmap)
+    sm.set_array([])
+    # plot the profiles
+    for i in range(data.shape[1]):
+        plt.plot(gpc, data[:,i], c=cmap(i),*args,lw=lw,**kwargs)
+    # plot the colorbar
+    if include_colorbar == True:
+        cbar = plt.colorbar(sm,ticks=np.arange(1,len(indices)+1,1))
+        indices_str =[str(item) for item in indices]
+        cbar.set_ticklabels(indices_str)
+    #title
+    plt.title(title)
+    #beauty plot
+    ax = plt.gca()
+    no_top_right(ax)
+    plt.tick_params(axis='both',direction='in')
+    if xlabel== True:
+        plt.xlabel('gait cycle (%)')
+    if ylabel != None:
+        plt.ylabel(ylabel)
+    
