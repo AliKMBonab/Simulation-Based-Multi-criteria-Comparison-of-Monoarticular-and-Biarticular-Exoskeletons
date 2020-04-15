@@ -486,6 +486,7 @@ I_{ratio} &= \frac{I_{Exo,segment} + I_{unloaded\;leg}}{I_{unloaded\;leg}}\\
 \Delta MC_{Shank} &= ((0.63749 + (0.40916\times I_{Shank,ratio}))\times MC_{unassisted})-MC_{unassisted}
 \end{aligned}
 \end{equation}
+The effect of the exoskeleton mass and inertia has on metabolic cost has been considered on the pareto curves and filtered to obtain the pareto front with the effect of the exoskeleton inertial properties on metabolic expenditure.
 %TODO: how they are added to the paretocurves and how they are filtered.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection*{Validation of Simulations}
@@ -503,173 +504,56 @@ At the pareto optimization part of the study, these two metrics (i.e., metabolic
 Additionally, the effect of regeneratable energy and inertial properties of the exoskeletons, as two important metrics for analyzing the performance of the assistive devices, have been studied in pareto simulations by reflecting their effect on the Pareto-curves and obtaining the pareto sets affected by these two metrics.
 Finally, some of the muscular activations of the lower limb key muscles were extracted and studied to have insight into how an assistive device can change muscles activities and consequently, metabolic cost which is resulted from muscles activities.
 \subsection*{Statistical Analysis}
-To conduct methodical comparisons among scenarios with the discussed metrics, we employed statistical analyses. Since the simulations were performed on seven subjects with three trials in five different scenarios, repeated measures analysis of variance (ANOVA) and Tukey Post-hoc were applied to test the statistically significant difference between the selected metrics and scenarios.  Additionally, for the pareto simulations, the statistical analysis has been performed for the specific points selected from the pareto front for further investigation, nevertheless, standard deviation of all points on pareto front has been explicitly plotted for both criteria. We used a significance level of 0.05 and SPSS \cite{bibid} for performing the tests.
+To conduct methodical comparisons among scenarios with the discussed metrics, we employed statistical analyses. Since the simulations were performed on seven subjects with three trials in five different scenarios, repeated measures analysis of variance (ANOVA) and Tukey Post-hoc were applied to test the statistically significant difference between the selected metrics and scenarios.  Additionally, for the pareto simulations, the statistical analysis has been performed for the specific points selected from the pareto front for further investigation, nevertheless, standard deviation of all points on pareto front has been explicitly plotted for both criteria. We used a significance level of 0.05 and SPSS \cite{spss} for performing the tests. Same as \cite{93}, to remove the hierarchical structure from the data, they were averaged over the trials for each subject-scenario pair. However, the time-dependent data are averaged over all subjects and their trials and represented by their mean and standard deviation.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section*{Results and Discussion}
+%TODO: The results are changed by averaging within trials for each subject and getting overal average for all averaged subjects
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection*{Ideal Exoskeletons with Maximum Performance Musculoskeletal Simulations Results}
+\subsection*{Ideal Exoskeletons Results}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsubsection*{Device Performance}
-All five configurations of ideal exoskeletons with maximum Optimal Force (i.e. 1 MN.m) decreased the metabolic cost of subjects running at 2 m/s compared with running subjects without any assistance. Biarticular and monoarticular knee exoskeletons reduced 11.25$\pm$3.64\% and 24.01$\pm$3.55\% metabolic energy, and hip exoskeleton reduced the subject energy consumption by 26.45$\pm$4.34\%, two main configurations of the exoskeleton had the most significant reduction in the metabolic energy where biarticular and monoarticular exoskeletons reduced the running subjects lower extremity's muscle energy by 41.23$\pm$3.04\% and 41.21$\pm$3.04\%. These results are matching with Uchida et al.\cite{2}, which they used the same dataset to perform their simulations. As it can be inferred from the average metabolic energy reduction, monoarticular knee exoskeleton has better performance than biarticular one when they are assisting knee joint, however, metabolic cost reduction on the main exoskeletons are almost the same. Figure \ref{Fig_Assist_Subjects_Avg_MC_Reduction} represents metabolic energy reduction by five different configurations of exoskeletons when subjects were running in 2 m/s speed.\\
-
-\begin{figure*}[h!]
+Both biarticular and monoarticular configurations of the ideal exoskeletons reduced the metabolic energy consumption of subjects walking without and with carrying a heavy load at self-selected speed walking. Biarticular and monoarticular exoskeletons decreased the subjects carrying a heavy load metabolic rate by 20.49$\pm$2.87\% and 20.45$\pm$2.81\%. The monoarticular and biarticular configurations of the exoskeleton were able to reduce the gross whole-body metabolic cost of the subject in the noload condition by 22.38$\pm$4.91\% and 22.47$\pm$4.89\%. These exoskeletons were expected to have the same performance on reducing the metabolic energy consumption of the subjects due to their kinematic relation, and the results are representing the expected performance for these two devices.\\
+\begin{figure*}[h!]   
 	\centering
-	\subfloat[Assisted subjects lower extremity muscles average metabolic energy reduction.]{\includegraphics[width=2.5in]{IdealExo_Simulations_General_Figures/AllConfigurationsMetabolicEnergyConsumption.pdf}
-		\label{Fig_Assist_Subjects_Avg_MC_Reduction}}
-	\hfil
-	\subfloat[Single joint assistive devices effect on metabolic energy expenditure of the subjects]{\includegraphics[width=2.5in]{Ideal_Exo_SingleJoint_Figures/SubjectsMetabolicEnergyConsumption.pdf}
-		\label{Fig_SingleJointExo_MetabolicCost_BoxPlot}}
-	\hfil
-	\subfloat[Monoarticular and biarticular assistive devices effect on metabolic energy expenditure of the subjects]{\includegraphics[width=2.5in]{Ideal_Exo_MonovsBi_Figures/SubjectsMetabolicEnergyConsumption.pdf}
-		\label{Fig_IdealExo_MetabolicCost_BoxPlot}}
-	\caption{Ideal exoskeletons effect on the 7 running subjects energy consumption.}
-	\label{Fig_Exos_MetabolicCost_Effect}
+	\includegraphics[scale=0.35]{Ideal_Exo_MonovsBi_Figures/Paper_Figure_Energy_BoxPlot.pdf}
+	\caption{Assistive devices effect on whole-body metabolic rate of the subjects and their energy consumption.}
+	\label{Fig_IdealExo_Energy_BoxPlot}
 \end{figure*}
-
-Among the exoskeletons assisting a joint, hip exoskeleton has the highest positive peak and mean power resulting in a significantly lower metabolic cost to peak/mean positive power ratio (Table \ref{Table_Torques_Comparison} and \ref{Table_Exoskeletons_Power_Metabolic}). Although biarticular knee exoskeleton provides low assistance to subjects, its power consumption is also considerably low such that metabolic to peak and mean power ratios are highest among all the exoskeletons assisting a joint.
-Between monoarticular and biarticular exoskeletons assisting hip and knee joints, hip actuators have very similar power consumption and ratios; however, biarticular exoskeleton's knee actuator has considerably better performance such that it has remarkably lower peak and mean power which causing to higher metabolic power to peak/mean power ratios.
-Tables \ref{Table_Torques_Comparison} and \ref{Table_Exoskeletons_Power_Metabolic} give a broad view of the torque profiles of five different configurations of the exoskeleton which is reported as a mean $\pm$ standard deviation across seven subjects.\\
-\begin{table}[h]
-	\begin{adjustwidth}{-2.25in}{0in}
-	\caption{Ideal exoskeletons torque data and performance}
-		\resizebox{19cm}{!}{\begin{tabular}{c|c|c|c|c|c|c}
-		\hline
-		&& \textbf{Peak Torque}& \textbf{Mean Positive} & \textbf{Mean Negative} & \textbf{Metabolic Power}&\textbf{Metabolic Power} \\
-		\textbf{Device}&\textbf{Actuator} &\textbf{(N-m/Kg)} & \textbf{Torque (N-m/Kg)} & \textbf{Torque (N-m/Kg)} & \textbf{ to Peak Power}&\textbf{to Mean Positive}\\
-		& &  &  &  &\textbf{Ratio}&\textbf{Power Ratio} \\
-		\hline
-		Monoarticular&Total & &       &       &   &  \\
-		
-		Hip+Knee&Hip Actuator&-2.57$\pm$0.50 & 0.23$\pm$0.07 & -0.57$\pm$0.12 & 0.52$\pm$0.12 & 2.84$\pm$0.66 \\
-		
-		&Knee Actuator&1.29$\pm$0.30 & 0.22$\pm$0.06 & -0.14$\pm$0.02 & 1.58$\pm$0.59 & 7.73$\pm$2.52 \\
-		\hline
-		Biarticular&Total&&       &       &   &  \\
-		
-		Hip+Knee&Hip Actuator&-2.5$\pm$0.43 & 0.23$\pm$0.07 & -0.55$\pm$0.11 & 0.54$\pm$0.12 & 2.91$\pm$0.71 \\
-		
-		&Knee Actuator&1.29$\pm$0.30 & 0.22$\pm$0.06 & -0.14$\pm$0.02 & 2.03$\pm$0.62 & 10.84$\pm$2.95 \\
-		\hline
-		Biarticular Knee&&0.40$\pm$0.17 & 0.3$\pm$0.02 & -0.41$\pm$0.07 & 2.05$\pm$0.38 & 7.71$\pm$0.98 \\
-		\hline
-		Monoarticular Knee&&2.05$\pm$0.33 & 0.37$\pm$0.07 & -0.14$\pm$0.02 & 1.32$\pm$0.27 & 6.40$\pm$0.92 \\
-		\hline
-		Hip&&-2.64$\pm$0.60 & 0.25$\pm$0.06 & -0.55$\pm$0.12 & 0.64$\pm$0.16 & 3.36$\pm$0.76 \\
-		\hline
-	\end{tabular}}
-	\label{Table_Torques_Comparison}
-	\end{adjustwidth}
-\end{table}%
-
-\begin{table}[t]
-	\begin{adjustwidth}{-2.25in}{0in}
-	\caption{Ideal exoskeletons power, energy consumption and metabolic power.}
-	\resizebox{19cm}{!}{\begin{tabular}{c|c|c|c|c|c|c|c}
-		\hline
-		&  & \textbf{Mean Metabolic}& \textbf{Peak Positive}& \textbf{Mean Positive} & \textbf{Mean Negative} & \textbf{Mean Energy} & \textbf{Regeneratable}\\
-		\textbf{Device}&\textbf{Actuator} &\textbf{Power (W/kg)} &\textbf{Power (W/kg)} & \textbf{power (W/kg)} & \textbf{Power (W/kg)} & \textbf{(J/kg)}&\textbf{Energy (J/kg)}\\
-		\hline
-		Monoarticular&Total&5.36 $\pm$ 0.36 & &  & &\\
-		Hip+Knee&Hip Actuator&& 10.68 $\pm$ 2.28 & 1.97 $\pm$ 0.43 & -0.17$\pm$0.08 & 216.33$\pm$47.54&18.65$\pm$8.16 \\
-		& Knee Actuator && 4.06 $\pm$ 2.22 & 0.77 $\pm$ 0.28 & -0.52$\pm$0.09 & 131.06$\pm$33.65 &53.48$\pm$10.35\\
-		\hline
-		Biarticular& Total&5.36 $\pm$ 0.37 &       &   &   &&  \\
-		Hip+Knee &Hip Actuator&& 10.35 $\pm$ 2.15 & 1.93 $\pm$ 0.51 & -0.18$\pm$0.08 & 211.38$\pm$45.17&18.17$\pm$7.76 \\
-		&Knee Actuator&& 2.91 $\pm$ 1.04 & 0.52 $\pm$0.13 & -0.53$\pm$0.10 & 106.89$\pm$22.79&54.24$\pm$13.90 \\
-		\hline
-		Biarticular Knee&&8.13$\pm$0.58 & 4.08$\pm$0.81 & 1.06$\pm$0.12 & -0.05$\pm$0.02 & 112.17$\pm$14.02&5.59$\pm$2.97 \\
-		\hline
-		Monoarticular Knee&&6.87$\pm$0.36 & 5.43$\pm$1.23 & 1.10 $\pm$0.19 & -0.59$\pm$0.15 & 169.74$\pm$26.44&59.51$\pm$15.85\\
-		\hline
-		Hip&&6.72$\pm$0.53 & 10.92$\pm$2.37 & 2.08$\pm$0.45 & -0.14$\pm$0.05 & 222.99$\pm$46.50&14.12$\pm$5.41 \\
-		\hline
-	\end{tabular}}
-	\label{Table_Exoskeletons_Power_Metabolic}%
-\end{adjustwidth}
-\end{table}%
-
+The assistance of both exoskeletons on subjects carrying a heavy load was able to compensate for demanding metabolic energy for carrying the heavy load. As it can be seen in figure \ref{Fig_IdealExo_Energy_BoxPlot}, the assisted subjects in loaded condition have a similar metabolic rate with unassisted subjects do not carry any load meaning that the best both ideal exoskeletons can do is reducing the metabolic energy-demanding of the loaded subject to subject without any load.\\
+The energy consumption of both exoskeletons has a high within-subject variation on the loaded condition comparing to the noload condition. While monoarticular exoskeleton had less energy consumption in both knee and hip actuators and both conditions, but these differences are not statistically significant between the two exoskeletons.  Although both exoskeletons have considerably different hip actuator energy consumption between noload and loaded conditions, the significant difference between the loading conditions of the subjects cannot be observed for energy expenditure of the knee actuator in both configurations.\\
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsubsection*{Devices Power and Torque}
-During a gait cycle, all five configurations of the exoskeleton had different torque profiles than the assigned joint moment, which is the same with relevant papers \cite{2,93}. The assistive devices are primarily active during stance phases, and all of them reached their peak moment during the mid-stance phase.\\
-According to figure \ref{Fig_Exo_TorqueProfiles}\subref{Fig_Bi_Knee_Knee_Muscles_TorqueProfile} and \ref{Fig_Exo_TorqueProfiles}\subref{Fig_Bi_Knee_Hip_Muscles_TorqueProfile}, biarticular knee exoskeleton neither follow hip nor knee joint moment during a gait cycle and increasing the muscles generated moment to compensate for opposing torque which needs to increase the subjects metabolic cost. However, since optimizer used the device to reduce overall muscle activation this is the optimal profile for the biarticular exoskeleton.\\ Similar phenomena where muscles generated moments and assistive device torques are opposing with each other can be seen in other configurations of the exoskeletons assisting a joint as well which is selected as an optimal torque profile by Computed Muscle Control algorithm. This behavior will be analyzed in the " Device Effect on Muscles Activation and Generated Moment".\\
-\begin{figure*}[!h]
+\subsubsection*{Devices Speed, Torque and Power}
+One of the main objectives of this section is to validate the kinematic modeling of the exoskeleton on OpenSim. As it is already discussed, there is a mapping between monoarticular and biarticular exoskeletons, and if the modeling of the devices were correct in the musculoskeletal simulator, this kinematics relation requires to be held.\\
+The figure \ref{Fig_IdealExo_Speed} represents the velocity profiles of the biarticular and monoarticular exoskeletons in both load conditions. From the Eqn. \ref{Eqn_Mono_Bi_Jacobian} we were expecting to have the same angular velocity profiles hip actuator, and since hip actuator in both exoskeletons were supposed to be attached directly to the hip joint, the velocity of the joint and actuators in both devices have practically the same profiles as it is shown in figure \ref{Fig_IdealExo_Speed}  for hip joints in both load conditions.\\
+\begin{figure*}[t]   
 	\centering
-	\subfloat[monoarticular knee exoskeleton actuator torque profile. ]{\includegraphics[width=2in]{Ideal_Exo_SingleJoint_Figures/MonoarticularKneeExoskeletonsActuatorTorqueComparingwithKneeMusclesMoment.pdf}
-		\label{Fig_Mono_Knee_Knee_Muscles_TorqueProfile}}
-	\hfil
-	\subfloat[Biarticular knee exoskeleton actuator torque profile.]{\includegraphics[width=2in]{Ideal_Exo_SingleJoint_Figures/BiarticularKneeExoskeletonsActuatorTorqueComparingwithKneeMusclesMoment.pdf}
-		\label{Fig_Bi_Knee_Knee_Muscles_TorqueProfile}}
-	\hfil
-	\subfloat[Hip exoskeleton actuator torque profile.]{\includegraphics[width=2in]{Ideal_Exo_SingleJoint_Figures/HipExoskeletonActuatorTorqueComparingwithHipMusclesMoment.pdf}
-		\label{Fig_HipExo_Hip_Muscles_TorqueProfile}}
-	\hfil
-	\subfloat[Biarticular knee exoskeleton actuator torque profile.]{\includegraphics[width=2in]{Ideal_Exo_SingleJoint_Figures/BiarticularKneeExoskeletonActuatorTorqueComparingwithHipMusclesMoment.pdf}
-		\label{Fig_Bi_Knee_Hip_Muscles_TorqueProfile}}
-	\caption{Exoskeletons assisting a joint torque profiles compared to net joint moment and muscles generated moment.}
-	\label{Fig_SingleJointExo_TorqueProfiles}
+	\includegraphics[width=\linewidth]{Ideal_Exo_MonovsBi_Figures/PaperFigure_Exoskeletons_Speed.pdf}
+	\vspace{1mm}
+	\caption{{\small\textbf{Assistive devices velocity profiles compared to joint required velocities.} The device actuator velocity for subjects carrying heavy load (dark blue) and without any load (blue), and net joint velocity profile for loaded (black) and noload (green) conditions are shown for each actuator of the devices. The curves are averaged over 7 subjects with 3 trials; shaded regions around the mean profile indicate standard deviation of the profile.}}
+	\label{Fig_IdealExo_Speed}
 \end{figure*}
-\begin{figure*}
+The main difference between the two configurations of the exoskeleton is on the knee joint, where the biarticular device assists the joint through a parallelogram mechanism, and the velocity profiles of the knee actuator were supposed to be different according to their jacobian. This difference can be seen in the figure \ref{Fig_IdealExo_Speed} where monoarticular knee actuator follows the knee joint velocity profile, but the biarticular actuator is showing different profile than the knee joint profile due to Eqn. \ref{Eqn_Mono_Bi_Jacobian}. Analyzing velocity profiles of the devices validating the mapping between two exoskeletons and modeling of them through OpenSim.\\
+According to the jacobian between these two devices expressed in Eqn. \ref{Mono_Bi_Torque_Mapping}, the knee and hip actuators were expected to have the same and different torque profiles respectively, which is evident in figure \ref{Fig_IdealExo_Torque} for both loaded and noload conditions. The generated optimal torque profiles of the ideal exoskeletons did not resemble the net moment of the assisted joint, which was also observed by \cite{93,2} for the simulation-based study of the walking with heavy load and running respectively. The torque of assistive actuators in both hip and knee joints exceeded the corresponding net joint moment and resulted in opposing muscles generated moment and device torque in the joint.\\
+\begin{figure*}[ht]   
 	\centering
-	\subfloat[monoarticular exoskeleton knee actuator torque profile. ]{\includegraphics[width=2in]{Ideal_Exo_MonovsBi_Figures/MonoarticularExoskeletonKneeActuatorTorqueandMuscleMomentComparison.pdf}
-		\label{Fig_Monoarticular_Knee_Muscles_TorqueProfile}}
-	\hfil
-	\subfloat[Biarticular exoskeleton knee actuator torque profile.]{\includegraphics[width=2in]{Ideal_Exo_MonovsBi_Figures/BiarticularExoskeletonKneeActuatorTorqueandMuscleMomentComparison.pdf}
-		\label{Fig_Biarticular_Knee_Muscles_TorqueProfile}}
-
-	\hfil
-	\subfloat[Monoarticular exoskeleton hip actuator torque profile.]{\includegraphics[width=2in]{Ideal_Exo_MonovsBi_Figures/MonoarticularExoskeletonHipActuatorTorqueandMuscleMomentComparison.pdf}
-		\label{Fig_Monoarticular_Hip_Muscles_TorqueProfile}}
-	\hfil
-	\subfloat[Biarticular exoskeleton hip actuator torque profile.]{\includegraphics[width=2in]{Ideal_Exo_MonovsBi_Figures/BiarticularExoskeletonHipActuatorTorqueandMuscleMomentComparison.pdf}
-		\label{Fig_Biarticular_Hip_Muscles_TorqueProfile}}
-	\caption{Monoarticular and biarticular exoskeletons hip and knee torque profiles compared to net joint moment and muscles generated moment.}
-	\label{Fig_Exo_TorqueProfiles}
+	\includegraphics[width=\linewidth]{Ideal_Exo_MonovsBi_Figures/PaperFigure_Exoskeletons_Torque.pdf}
+	\vspace{1mm}
+	\caption{{\small\textbf{Assistive devices torque profiles compared to joint and muscles generated moment.} The device actuator torque for subjects carrying heavy load (dark blue) and without any load (blue), net joint moment profile generated by unassisted muscles for loaded (black) and noload (green) conditions, and the generated moment by assisted muscles for loaded (dark rose red) and noload (rose red) conditions are shown for each actuator of the devices. The curves are averaged over 7 subjects with 3 trials and normalized by subject mass; shaded regions around the mean profile indicate standard deviation of the profile.}}
+	\label{Fig_IdealExo_Torque}
 \end{figure*}
-
-Figure \ref{Fig_Exo_TorqueProfiles}\subref{Fig_Biarticular_Hip_Muscles_TorqueProfile}-\subref{Fig_Monoarticular_Knee_Muscles_TorqueProfile} demonstrates the torque profiles for two main configurations i.e. Monoarticular and Biarticular exoskeletons assisting hip and knee. Biarticular exoskeleton knee actuator's torque is completely different from biarticular knee exoskeleton profile while the monoarticular exoskeleton in both hip and knee actuators torque profiles are similar to hip and monoarticular knee exoskeletons.
-In a gait cycle, monoarticular and biarticular devices are opposing the joint moment and muscles generated moment during some phases of the gait cycle which is more evident in hip actuators where it opposes the muscles considerably during stance and swing phases.\\
-Furthermore, while exoskeletons have similar torque profiles, the monoarticular hip actuator executes more torque than biarticular one (Table \ref{Table_Torques_Comparison}) which is already expected from dynamics of the devices where monoarticular device's hip actuator should not only assist the assigned joint but also compensate the knee actuator's reaction force. This subject, as well as the assistive devices and muscles, generated moment profiles opposing will be studied in next sections.\\
-It is worth mentioning that due to knee actuator assignment in biarticular and monoarticular exoskeletons, their torque profiles were not in the same reference frame. In order to transform the biarticular exoskeleton in the knee's generalized frame which joint moment and monoarticular torque were represented, we subtract the total knee muscles generated moment and knee reserve actuator from the net joint moment which results in the biarticular exoskeletons' knee actuator in the knee joint generalized frame:
-\begin{equation}
-\tau^{F/T}_{Bi.} = \tau^{F/T}_{Joint Moment} - \tau^{F/T}_{Muscles Moment} -  \tau^{F/T}_{Reserve}
-\label{Eqn_Frame_Transformation}
-\end{equation}
-where T and F represent tibia and femur bodies respectively and all joint, muscle ,and reserve moment were calculated for knee joint. This method for transforming the torque to generalized frame was tested on monoarticular exoskeletons' actuators and Due to the same reference frame, the CMC reported and calculated torque were the same.\\
-
-\begin{figure*}[!h]
+This antagonism is more significant on the knee joint than hip during the mid-stance phase to the mid-swing phase, with the highest opposition on the start of the pre-swing phase. The hip joint has significant actuator and muscle torque opposition during the pre-swing to terminal swing phases meaning unlike the knee joint in which major portion of antagonism happens during the stance phase; the hip is getting into muscle and actuator torque contraction during swing phase. \\
+The torque profiles represented in figure \ref{Fig_IdealExo_Torque} indicate that the loading subject with a heavy load does not result in substantial changes in the torque profiles of the assistive devices. The main changes between loaded and noload conditions are the timing and magnitude of the profiles, which is due to the change of the joints kinematics and kinetics.
+Nevertheless, the standard deviation of assistive devices and assisted muscles generated torques are considerably greater in the loaded condition, and it is more evident in the knee joint where the net joint moment has a remarkable deviation during the stance phase. This high within-subject deviation of torque profiles indicates that the assistance of subjects carrying heavy load requires the subject-specific design of the exoskeletons \cite{2}.\\
+\begin{figure*}[t]   
 	\centering
-	\subfloat[Biarticular and Monoarticular knee exoskeleons power profiles]{\includegraphics[width=2in]{Ideal_Exo_SingleJoint_Figures/BiandMonoarticularExoskeletonsKneeActuatorPower.pdf}
-		\label{Fig_Bi_Mono_KneeExo_Power_Profiles}}
-	\hfil
-	\subfloat[Hip exoskeleons power profiles]{\includegraphics[width=2in]{Ideal_Exo_SingleJoint_Figures/HipExoskeletonsHipActuatorPower.pdf}
-		\label{Fig_HipExo_Power_Profiles}}
-	\caption{Assistive devices assisting single joint power and speed profiles compared to joints power and speed.}
-	\label{Fig_SingleJointExo_PowerProfiles}
+	\includegraphics[width=\linewidth]{Ideal_Exo_MonovsBi_Figures/PaperFigure_Exoskeletons_Power.pdf}
+	\vspace{1mm}
+	\caption{{\small\textbf{Assistive devices power profiles compared to joint powers.} The device actuator power for subjects carrying heavy load (dark blue) and without any load (blue), and net joint power profile for loaded (black) and noload (green) conditions are shown for each actuator of the devices. The curves are averaged over 7 subjects with 3 trials and normalized by subject mass; shaded regions around the mean profile indicate standard deviation of the profile.}}
+	\label{Fig_IdealExo_Power}
 \end{figure*}
-\begin{figure*}
-	\centering
-	\subfloat[Mono and Biarticular exoskeleons hip actuators power profiles]{\includegraphics[width=2in]{Ideal_Exo_MonovsBi_Figures/ExoskeletonsHipActuatorPower.pdf}
-		\label{Fig_MonoVsBi_HipActuator_Power_Profiles}}
-	\hfil
-	\subfloat[Mono and Biarticular exoskeleons knee actuators power profiles]{\includegraphics[width=2in]{Ideal_Exo_MonovsBi_Figures/ExoskeletonsKneeActuatorPower.pdf}
-		\label{Fig_MonoVsBi_KneeActuator_Power_Profiles}}
-	\hfil
-	\subfloat[Mono and Biarticular exoskeleons hip actuators speed profiles]{\includegraphics[width=2in]{Ideal_Exo_MonovsBi_Figures/ExoskeletonsHipActuatorSpeed.pdf}
-		\label{Fig_MonoVsBi_HipActuator_Speed_Profiles}}
-	\hfil
-	\subfloat[Mono and Biarticular exoskeleons knee actuators speed profiles]{\includegraphics[width=2in]{Ideal_Exo_MonovsBi_Figures/ExoskeletonsKneeActuatorSpeed.pdf}
-		\label{Fig_MonoVsBi_KneeActuator_Speed_Profiles}}
-	\caption{Monoarticular and biarticular devices power and speed profiles compared to joints power and speed.}
-	\label{Fig_Exo_PowerProfiles}
-\end{figure*}
-
-Similar to torque profiles, power profiles are also reaching their peak amount during the stance phase, and in most of the cases, they have a substantially different profile than the net joint power. Among the exoskeletons assisting specific joint, hip exoskeleton requires high positive power, especially during the mid-stance phase. Monoarticular knee exoskeleton at the initial phase of the gait, demonstrates remarkably high negative power which gives considerable potential for energy regeneration (Table \ref{Table_Exoskeletons_Power_Metabolic}) and then during the mid-stance and initial swing phases it required two high positive mechanical power; however, unlike the monoarticular knee, biarticular knee device performed mostly positive mechanical work with lower peak and mean power consumptions. This economic profile of biarticular knee device makes it highly efficient than monoarticular exoskeleton experiencing high variations in the power profile even with complete regeneration where all negative work can be restored to the battery.
-For the main configurations of the exoskeletons, monoarticular and biarticular has very similar power profiles in hip actuators but in the knee actuators, while they had two closely matching torque profiles, the power consumption of biarticular is remarkably economical than monoarticular device (Table \ref{Table_Exoskeletons_Power_Metabolic}) which is result of actuator's considerably lower velocity as shown in figure \ref{Fig_Exo_PowerProfiles}\subref{Fig_MonoVsBi_KneeActuator_Speed_Profiles}; velocity difference between mono. and biarticular knee actuators is due to the kinematics between them:
-\begin{equation}
-	{}^{femur}\omega^{tibia} = {}^{torso}\omega^{tibia} - {}^{torso}\omega^{femur} 
-\end{equation}
-Moreover, same as the single joint exoskeletons, the peak power required during the stance phases of the gait cycle in both actuators of the exoskeletons where hip actuators and monoarticular knee have resemblant profiles with relevant single joint assistive devices with lower peak and mean positive power (Table \ref{Table_Exoskeletons_Power_Metabolic}). Biarticular knee, however, has a different profile than its assistive device profile where it has considerably more energy to be regenerated with a lower positive peak and mean power (Table \ref{Table_Exoskeletons_Power_Metabolic}).
+Due to the discussed kinematic differences between two configurations, the power profile of the exoskeletons were different in both actuators. The magnitude of mechanical work performed by the biarticular actuators are higher than monoarticular mechanical work, and their profiles are different during the gait cycle except in the loading response and partially in mid-stance phases. The load carried by subjects causing different timing and magnitude than subjects walking with no load and the deviation of the profiles are higher for the loaded subject, which both are observed in torque profiles as well.\\
+Although the power profiles of hip actuators were roughly following the net joint power profile, the knee actuator profiles not resembled the knee joint power. The mechanical work performed by the assistive devices were mostly positive work for both knee and hip actuators. The negative mechanical work in the biarticular exoskeleton can be harvested mostly during the initial-swing and mid-swing phases for the knee actuator and terminal phase for the hip actuator. Unlike the biarticular device, the monoarticular hip actuator performed practically no negative mechanical work, and the regeneratable work of the knee actuator is within both mid-stance and late-swing phases.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsubsection*{Device Effect on Subjects Muscles}
 Adding an actuator to optimizer would affect the optimization result, and optimizer can find a more economical set of actuation to track the kinematics; therefore, assistive devices affect the subjects muscular activation which is the output of optimizer in CMC algorithm. This effect would not necessarily decrease all muscles activity, and it can be more economical to increase specific muscles activities during some phases of gait to track the kinematics with lower cost (i.e. metabolic power consumption).\\
