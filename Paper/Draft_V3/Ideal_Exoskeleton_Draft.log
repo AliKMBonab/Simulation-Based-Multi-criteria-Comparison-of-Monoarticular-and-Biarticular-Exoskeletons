@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.21 (MiKTeX 2.9.7380 64-bit) (preloaded format=pdflatex 2020.4.9)  15 APR 2020 20:21
+This is pdfTeX, Version 3.14159265-2.6-1.40.21 (MiKTeX 2.9.7380 64-bit) (preloaded format=pdflatex 2020.4.9)  16 APR 2020 00:50
 entering extended mode
 **./Ideal_Exoskeleton_Draft.tex
 (Ideal_Exoskeleton_Draft.tex
@@ -663,8 +663,6 @@ Package hyperref Info: Link coloring OFF on input line 185.
 LaTeX Info: Redefining \ref on input line 185.
 LaTeX Info: Redefining \pageref on input line 185.
 LaTeX Info: Redefining \nameref on input line 185.
- (Ideal_Exoskeleton_Draft.out)
-(Ideal_Exoskeleton_Draft.out)
 \@outlinefile=\write3
 \openout3 = `Ideal_Exoskeleton_Draft.out'.
 
@@ -679,7 +677,8 @@ LaTeX Info: Redefining \showhyphens on input line 185.
 Package microtype Info: No adjustment of tracking.
 Package microtype Info: No adjustment of interword spacing.
 Package microtype Info: No adjustment of character kerning.
- ("E:\MiKTeX 2.9\tex/latex/microtype\mt-cmr.cfg"
+
+("E:\MiKTeX 2.9\tex/latex/microtype\mt-cmr.cfg"
 File: mt-cmr.cfg 2013/05/19 v2.2 microtype config. file: Computer Modern Roman 
 (RS)
 )
@@ -720,67 +719,111 @@ File: mt-msb.cfg 2005/06/01 v1.0 microtype config. file: AMS symbols (b) (RS)
 
 {C:/Users/T.a/AppData/Local/MiKTeX/2.9/pdftex/config/pdftex.map}] [2] [3] [4] [
 5]
-<./Figures/Cartoons/Biarticular_Exo_Mechanism.pdf, id=291, 599.23875pt x 558.36
-203pt>
-File: ./Figures/Cartoons/Biarticular_Exo_Mechanism.pdf Graphic file (type pdf)
-<use ./Figures/Cartoons/Biarticular_Exo_Mechanism.pdf>
-Package pdftex.def Info: ./Figures/Cartoons/Biarticular_Exo_Mechanism.pdf  used
- on input line 259.
-(pdftex.def)             Requested size: 144.54pt x 134.67418pt.
-<./Figures/Cartoons/Monoarticular_Exo_Mechanism.pdf, id=293, 599.24377pt x 558.
-35701pt>
-File: ./Figures/Cartoons/Monoarticular_Exo_Mechanism.pdf Graphic file (type pdf
-)
-<use ./Figures/Cartoons/Monoarticular_Exo_Mechanism.pdf>
-Package pdftex.def Info: ./Figures/Cartoons/Monoarticular_Exo_Mechanism.pdf  us
-ed on input line 273.
-(pdftex.def)             Requested size: 144.54pt x 134.67296pt.
- [6 <./Figures/Cartoons/Biarticular_Exo_Mechanism.pdf> <./Figures/Cartoons/Mono
-articular_Exo_Mechanism.pdf>] [7]
-<./Figures/Cartoons/OpenSim.pdf, id=401, 1195.01462pt x 845.0471pt>
-File: ./Figures/Cartoons/OpenSim.pdf Graphic file (type pdf)
-<use ./Figures/Cartoons/OpenSim.pdf>
-Package pdftex.def Info: ./Figures/Cartoons/OpenSim.pdf  used on input line 362
-.
-(pdftex.def)             Requested size: 1195.0117pt x 845.04504pt.
 
-Overfull \hbox (18.91365pt too wide) in paragraph at lines 362--363
+LaTeX Warning: File `Cartoons/Biarticular_Exo_Mechanism.pdf' not found on input
+ line 259.
+
+
+! Package pdftex.def Error: File `Cartoons/Biarticular_Exo_Mechanism.pdf' not f
+ound: using draft setting.
+
+See the pdftex.def package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.259 ...]{Cartoons/Biarticular_Exo_Mechanism.pdf}
+                                                  
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+Package microtype Info: Loading generic protrusion settings for font family
+(microtype)             `cmtt' (encoding: OT1).
+(microtype)             For optimal results, create family-specific settings.
+(microtype)             See the microtype manual for details.
+
+LaTeX Warning: File `Cartoons/Monoarticular_Exo_Mechanism.pdf' not found on inp
+ut line 273.
+
+
+! Package pdftex.def Error: File `Cartoons/Monoarticular_Exo_Mechanism.pdf' not
+ found: using draft setting.
+
+See the pdftex.def package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.273 ...Cartoons/Monoarticular_Exo_Mechanism.pdf}
+                                                  
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+[6] [7]
+
+LaTeX Warning: File `Cartoons/OpenSim.pdf' not found on input line 362.
+
+
+! Package pdftex.def Error: File `Cartoons/OpenSim.pdf' not found: using draft 
+setting.
+
+See the pdftex.def package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.362 ...}{\includegraphics{Cartoons/OpenSim.pdf}}
+                                                  
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+Overfull \hbox (19.03123pt too wide) in paragraph at lines 362--363
 [][] 
  []
 
 [8]
-<./Figures/Cartoons/Biarticular_Exo_Assignment.pdf, id=427, 182.18062pt x 196.7
-35pt>
-File: ./Figures/Cartoons/Biarticular_Exo_Assignment.pdf Graphic file (type pdf)
 
-<use ./Figures/Cartoons/Biarticular_Exo_Assignment.pdf>
-Package pdftex.def Info: ./Figures/Cartoons/Biarticular_Exo_Assignment.pdf  use
-d on input line 383.
-(pdftex.def)             Requested size: 108.405pt x 117.06326pt.
-<./Figures/Cartoons/Monoarticular_Exo_Assignment.pdf, id=428, 180.675pt x 200.4
-1576pt>
-File: ./Figures/Cartoons/Monoarticular_Exo_Assignment.pdf Graphic file (type pd
-f)
-<use ./Figures/Cartoons/Monoarticular_Exo_Assignment.pdf>
-Package pdftex.def Info: ./Figures/Cartoons/Monoarticular_Exo_Assignment.pdf  u
-sed on input line 386.
-(pdftex.def)             Requested size: 108.405pt x 120.25038pt.
+LaTeX Warning: File `Cartoons/Biarticular_Exo_Assignment.pdf' not found on inpu
+t line 383.
 
 
-LaTeX Warning: `!h' float specifier changed to `!ht'.
+! Package pdftex.def Error: File `Cartoons/Biarticular_Exo_Assignment.pdf' not 
+found: using draft setting.
 
-[9 <./Figures/Cartoons/OpenSim.pdf>] [10 <./Figures/Cartoons/Biarticular_Exo_As
-signment.pdf> <./Figures/Cartoons/Monoarticular_Exo_Assignment.pdf>] [11]
+See the pdftex.def package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.383 		\label{Fig_Bi_Exo_Model_Opensim}}
+                                         
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+LaTeX Warning: File `Cartoons/Monoarticular_Exo_Assignment.pdf' not found on in
+put line 386.
+
+
+! Package pdftex.def Error: File `Cartoons/Monoarticular_Exo_Assignment.pdf' no
+t found: using draft setting.
+
+See the pdftex.def package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.386 		\label{Fig_Mono_Exo_Model_Opensim}}
+                                           
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+[9] [10] [11]
 Package hyperref Info: bookmark level for unknown algorithm defaults to 0 on in
 put line 425.
-
-[12]
+ [12]
 Overfull \hbox (16.12613pt too wide) in paragraph at lines 462--471
 [][]
  []
 
 [13] [14]
-<./Figures/Ideal_Exo_MonovsBi_Figures/Paper_Figure_Energy_BoxPlot.pdf, id=620, 
+<./Figures/Ideal_Exo_MonovsBi_Figures/Paper_Figure_Energy_BoxPlot.pdf, id=463, 
 1027.63802pt x 596.27063pt>
 File: ./Figures/Ideal_Exo_MonovsBi_Figures/Paper_Figure_Energy_BoxPlot.pdf Grap
 hic file (type pdf)
@@ -793,25 +836,25 @@ gy_BoxPlot.pdf  used on input line 518.
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
 [15]
-<./Figures/Ideal_Exo_MonovsBi_Figures/PaperFigure_Exoskeletons_Speed.pdf, id=63
-6, 885.84859pt x 510.1745pt>
+<./Figures/Ideal_Exo_MonovsBi_Figures/PaperFigure_Exoskeletons_Speed.pdf, id=47
+9, 885.84859pt x 510.1745pt>
 File: ./Figures/Ideal_Exo_MonovsBi_Figures/PaperFigure_Exoskeletons_Speed.pdf G
 raphic file (type pdf)
 <use ./Figures/Ideal_Exo_MonovsBi_Figures/PaperFigure_Exoskeletons_Speed.pdf>
 Package pdftex.def Info: ./Figures/Ideal_Exo_MonovsBi_Figures/PaperFigure_Exosk
 eletons_Speed.pdf  used on input line 530.
 (pdftex.def)             Requested size: 379.4175pt x 218.50665pt.
-<./Figures/Ideal_Exo_MonovsBi_Figures/PaperFigure_Exoskeletons_Torque.pdf, id=6
-43, 885.84859pt x 697.14003pt>
+ [16 <./Figures/Ideal_Exo_MonovsBi_Figures/Paper_Figure_Energy_BoxPlot.pdf>]
+<./Figures/Ideal_Exo_MonovsBi_Figures/PaperFigure_Exoskeletons_Torque.pdf, id=5
+44, 885.84859pt x 697.14003pt>
 File: ./Figures/Ideal_Exo_MonovsBi_Figures/PaperFigure_Exoskeletons_Torque.pdf 
 Graphic file (type pdf)
 <use ./Figures/Ideal_Exo_MonovsBi_Figures/PaperFigure_Exoskeletons_Torque.pdf>
 Package pdftex.def Info: ./Figures/Ideal_Exo_MonovsBi_Figures/PaperFigure_Exosk
 eletons_Torque.pdf  used on input line 539.
 (pdftex.def)             Requested size: 379.4175pt x 298.5836pt.
- [16 <./Figures/Ideal_Exo_MonovsBi_Figures/Paper_Figure_Energy_BoxPlot.pdf>]
-<./Figures/Ideal_Exo_MonovsBi_Figures/PaperFigure_Exoskeletons_Power.pdf, id=70
-4, 885.84859pt x 510.1745pt>
+<./Figures/Ideal_Exo_MonovsBi_Figures/PaperFigure_Exoskeletons_Power.pdf, id=54
+7, 885.84859pt x 510.1745pt>
 File: ./Figures/Ideal_Exo_MonovsBi_Figures/PaperFigure_Exoskeletons_Power.pdf G
 raphic file (type pdf)
 <use ./Figures/Ideal_Exo_MonovsBi_Figures/PaperFigure_Exoskeletons_Power.pdf>
@@ -820,7 +863,7 @@ eletons_Power.pdf  used on input line 549.
 (pdftex.def)             Requested size: 379.4175pt x 218.50665pt.
  [17 <./Figures/Ideal_Exo_MonovsBi_Figures/PaperFigure_Exoskeletons_Speed.pdf>]
 <./Figures/Ideal_Exo_MonovsBi_Figures/PaperFigure_Biarticular_MuscleActivation.
-pdf, id=754, 599.95174pt x 484.28616pt>
+pdf, id=597, 599.95174pt x 484.28616pt>
 File: ./Figures/Ideal_Exo_MonovsBi_Figures/PaperFigure_Biarticular_MuscleActiva
 tion.pdf Graphic file (type pdf)
 <use ./Figures/Ideal_Exo_MonovsBi_Figures/PaperFigure_Biarticular_MuscleActivat
@@ -832,7 +875,7 @@ icular_MuscleActivation.pdf  used on input line 560.
 ] [19 <./Figures/Ideal_Exo_MonovsBi_Figures/PaperFigure_Exoskeletons_Power.pdf>
 ] [20 <./Figures/Ideal_Exo_MonovsBi_Figures/PaperFigure_Biarticular_MuscleActiv
 ation.pdf>]
-<./Figures/Pareto_Simulations_Figures/PaperFigure_Main_Pareto.pdf, id=903, 672.
+<./Figures/Pareto_Simulations_Figures/PaperFigure_Main_Pareto.pdf, id=746, 672.
 33998pt x 527.49146pt>
 File: ./Figures/Pareto_Simulations_Figures/PaperFigure_Main_Pareto.pdf Graphic 
 file (type pdf)
@@ -840,16 +883,11 @@ file (type pdf)
 Package pdftex.def Info: ./Figures/Pareto_Simulations_Figures/PaperFigure_Main_
 Pareto.pdf  used on input line 579.
 (pdftex.def)             Requested size: 379.4175pt x 297.68712pt.
- [21 <./Figures/Pareto_Simulations_Figures/PaperFigure_Main_Pareto.pdf>] [22] [
+ [21] [22 <./Figures/Pareto_Simulations_Figures/PaperFigure_Main_Pareto.pdf>] [
 23] (Ideal_Exoskeleton_Draft.bbl [24]
 ("E:\MiKTeX 2.9\tex/latex/ucs\uni-32.def"
 File: uni-32.def 2013/05/13 UCS: Unicode data U+2000..U+20FF
 ) [25]
-Package microtype Info: Loading generic protrusion settings for font family
-(microtype)             `cmtt' (encoding: OT1).
-(microtype)             For optimal results, create family-specific settings.
-(microtype)             See the microtype manual for details.
-
 ("E:\MiKTeX 2.9\tex/latex/ucs\uni-0.def"
 File: uni-0.def 2013/05/13 UCS: Unicode data U+0000..U+00FF
 )
@@ -864,16 +902,26 @@ Package atveryend Info: Empty hook `AfterLastShipout' on input line 653.
  (Ideal_Exoskeleton_Draft.aux)
 Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 653.
 Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 653.
-Package rerunfilecheck Info: File `Ideal_Exoskeleton_Draft.out' has not changed
-.
-(rerunfilecheck)             Checksum: D41D8CD98F00B204E9800998ECF8427E;0.
+
+
+Package rerunfilecheck Warning: File `Ideal_Exoskeleton_Draft.out' has changed.
+
+(rerunfilecheck)                Rerun to get outlines right
+(rerunfilecheck)                or use package `bookmark'.
+
+Package rerunfilecheck Info: Checksums for `Ideal_Exoskeleton_Draft.out':
+(rerunfilecheck)             Before: <no file>
+(rerunfilecheck)             After:  D41D8CD98F00B204E9800998ECF8427E;0.
+
+LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
+
 Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 653.
  ) 
 Here is how much of TeX's memory you used:
- 13651 strings out of 492478
- 199806 string characters out of 3137227
- 334968 words of memory out of 3000000
- 17436 multiletter control sequences out of 15000+200000
+ 13716 strings out of 492478
+ 201404 string characters out of 3137227
+ 334876 words of memory out of 3000000
+ 17486 multiletter control sequences out of 15000+200000
  10252 words of font info for 66 fonts, out of 3000000 for 9000
  1141 hyphenation exceptions out of 8191
  41i,16n,49p,1692b,598s stack positions out of 5000i,500n,10000p,200000b,50000s
@@ -890,9 +938,9 @@ MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr8.pfb><E:/MiKTeX 2.9/fonts/type1/p
 ublic/amsfonts/cm/cmr9.pfb><E:/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy10
 .pfb><E:/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy7.pfb><E:/MiKTeX 2.9/fon
 ts/type1/public/amsfonts/cm/cmtt10.pfb>
-Output written on Ideal_Exoskeleton_Draft.pdf (33 pages, 5557667 bytes).
+Output written on Ideal_Exoskeleton_Draft.pdf (33 pages, 1632501 bytes).
 PDF statistics:
- 1208 PDF objects out of 1440 (max. 8388607)
+ 1050 PDF objects out of 1200 (max. 8388607)
  229 named destinations out of 1000 (max. 500000)
- 13368 words of extra memory for PDF output out of 14400 (max. 10000000)
+ 13343 words of extra memory for PDF output out of 14400 (max. 10000000)
 
