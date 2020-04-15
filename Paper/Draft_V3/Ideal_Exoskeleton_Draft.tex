@@ -411,7 +411,7 @@ In the adjusted objective function, $w_{exo,i}$ is torque actuator weights which
 \vspace{5mm}
 \textbf{Metabolics and actuators energy calculation.} Similar to the unassisted procedure, the instantaneous metabolic power of the subjects was computed using the energetic model of Uchida et al. \cite{106} and then metabolic energy of subjects were derived by integration of the metabolic power over the gait cycle. In order to compute the energy consumption of the assistive actuators, the power profile of the actuators were obtained and their absolute power profiles were integrated over the gait cycle and divided to the subjects mass. Similar to the energy consumption of the exoskeleton procedure, the negative energy or regeneratable energy through a gait cycle were calculated by obtaining the negative power profile and integrated over the gait cycle and normalized to the mass of the subject.\\
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection*{Pareto Optimization Simulations}
+\subsection*{Pareto Simulations}
 The optimization stage of the Computed Muscle Control (CMC) algorithm uses the weighted sum of squares to solve muscles and assigned actuators redundancy to select a set of actuation with the lowest cost for tracking the kinematics of the dynamic model of the subject \cite{92}. To investigate the ideal assistive devices maximum effect on the subjects metabolic power consumption regardless of their energy expenditure, large weights were assigned to assistive actuator.\\
 However, in the real-time, exoskeletons are restricted by the energy that can be supplied to the actuation module and the maximum torque that the actuation module can provide to the joint of interest; to study devices performance under the maximum providable torque to the joints and their effect on musculoskeletal system in lower energy consumption regions, we used the Pareto-Optimization concept\cite{113}.\\
 Pareto method integrates all optimization criteria in its procedure and constructs a Pareto front representing trade-off among the criteria enabling us to have optima curves for each configuration of the devices \cite{107} and conduct a fair comparison between the exoskeletons and the load conditions. In this study, metabolic cost reduction and assistive actuators energy consumption were considered as two optimization criteria to study the trade-off between the exoskeletons and load conditions.\\
@@ -566,135 +566,21 @@ The muscular activation of the subjects assisted by ideal assistive devices has 
 The effect of appending ideal actuators not necessarily decreases the activity of all muscles, and it can be more economical for the complete set of actuators to increase the activity of specific muscles during some phases of gait to decrease the activity of less cost-effective muscles. Since metabolic power of muscles is a function of their activity, and their fiber properties \cite{106}, the reduction in the activity of the entire set of muscles is resulting in gross whole-body metabolic cost reduction.\\
 Despite the kinematic difference between the two configurations of the assistive device, the applied torques to the joints are practically identical, and it resulted in an identical effect on the muscular activation of the subjects.\\
 The reason for this issue rooted in the ideal nature of the actuators and devices, meaning that there are no constraints on the torque actuators can provide, the devices are assumed to be massless, and actuators do not have any reflected inertia effect. The muscle activation in figure \ref{Fig_IdealExo_MusclesActivation}, which is showing the effect of the biarticular device on the activation of representative muscles, is sufficient and can be generalized for both configurations of the assistive device. \\
-The devices affected the activity of muscles throughout the lower extremity. This effect was significant on the Bicep femoris short head, Semimembranosus, and vasti muscles, where their activation has been replaced by another set of actuators, including muscles and ideal actuators.  The rectus femoris, which is a large knee extensor and hip flexor biarticular muscle,  activity has been considerably increased during the stance phase. This occurred so that the optimizer could take advantage of the rectus femoris high force-generating capacity to exert hip flexion and knee extension moments more economically. In the meanwhile, this high muscular activity of the rectus femoris resulted in high knee extension and hip flexion moments exceeding net joint moment of the joints that have been neutralized by ideal actuators, which are extremely economical for applying high torques due to its high optimal force assignments.  This set of activation in which hip flexion and knee extension required moment could be applied by more cost-effective muscles and actuators resulted in a substantial reduction in the activity of psoas and iliacus muscles as two major hip flexor muscles and the vasti muscles (vastus lateralis, vastus intermedius, and vastus medialis) as knee extensor set of muscles. The semimembranous muscle is another biarticular muscle contributing to hip extension and knee flexion moments, which has been affected by the assistive devices, and the new set of actuation has practically replaced its activity. The medial gastrocnemius as a critical knee flexor and ankle plantar flexor muscle has been affected by the assistive devices in which its activity has been substantially reduced, yet the muscle remained partially active to supply an ankle plantarflexion moment. The reduction of ankle plantarflexion moment has been compensated by increasing the activity of soleus as another primary ankle plantarflexor muscle. The assistive devices affected the activity of the gluteus medius muscles as well, which are not only responsible for a large fraction of hip abduction moment, but also they contribute to hip motion in the sagittal plane as well and hip rotation. The anterior and posterior portions of the gluteus medius muscle, besides their primary contribution to hip abduction, were supporting the hip extension and flexion and its lateral and medial rotations. However, the contribution of this muscle to the hip sagittal moment replaced by assistive devices and a modified set of activations in assisted subjects, and it resulted in their muscular activity reduction.
+The devices affected the activity of muscles throughout the lower extremity. This effect was significant on the Bicep femoris short head, Semimembranosus, and vasti muscles, where their activation has been replaced by another set of actuators, including muscles and ideal actuators.  The rectus femoris, which is a large knee extensor and hip flexor biarticular muscle,  activity has been considerably increased during the stance phase. This occurred so that the optimizer could take advantage of the rectus femoris high force-generating capacity to exert hip flexion and knee extension moments more economically. In the meanwhile, this high muscular activity of the rectus femoris resulted in high knee extension and hip flexion moments exceeding net joint moment of the joints that have been neutralized by ideal actuators, which are extremely economical for applying high torques due to its high optimal force assignments.\\
+This set of activation in which hip flexion and knee extension required moment could be applied by more cost-effective muscles and actuators resulted in a substantial reduction in the activity of psoas and iliacus muscles as two major hip flexor muscles and the vasti muscles (vastus lateralis, vastus intermedius, and vastus medialis) as knee extensor set of muscles. The semimembranous muscle is another biarticular muscle contributing to hip extension and knee flexion moments, which has been affected by the assistive devices, and the new set of actuation has practically replaced its activity. The medial gastrocnemius as a critical knee flexor and ankle plantar flexor muscle has been affected by the assistive devices in which its activity has been substantially reduced, yet the muscle remained partially active to supply an ankle plantarflexion moment. The reduction of ankle plantarflexion moment has been compensated by increasing the activity of soleus as another primary ankle plantarflexor muscle. The assistive devices affected the activity of the gluteus medius muscles as well, which are not only responsible for a large fraction of hip abduction moment, but also they contribute to hip motion in the sagittal plane as well and hip rotation.\\
+The anterior and posterior portions of the gluteus medius muscle, besides their primary contribution to hip abduction, were supporting the hip extension and flexion and its lateral and medial rotations. However, the contribution of this muscle to the hip sagittal moment replaced by assistive devices and a modified set of activations in assisted subjects, and it resulted in their muscular activity reduction.\\
+The main differences between the muscular activity of the subjects walking normally and subjects walking while carrying a heavy load on torso are the magnitude and timing of the muscular activations which were observed already in other profiles as well. This load condition affected partially some muscles like Semimembranosus in which the device did not completely replaced by the ideal devices.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection*{Ideal Exoskeletons Result in Feasible Energy Region}
-To have more realistic results for the exoskeletons, we derived Pareto-front curves for monoarticular and biarticular which, as stated earlier, is not promised to be the global optima for each subject but it enables to have a fair comparison between two configurations and also provide a broad view about average performance of the devices throughout the chosen cost functions.
-\begin{figure*}[!h]
+\subsection*{Pareto Simulation Results}
+The assistive devices have been analyzed in the previous section, and their effect on metabolic cost and muscular activation of the subjects have been in two different load conditions have been studied. The simulations of the previous section were performed under the assumption that the assistive actuators have no bound on the amount of the moment they can supply to the musculoskeletal model.\\
+However, this assumption is not a descriptive assumption for the real-time designing and controlling assistive device because the assistive devices and especially untethered exoskeletons have some constraints on the amount of moment that the actuation unit can provide to assist the joint of interest and the suppliable energy from the battery for untethered exoskeletons where the energy source is limited by the battery life. One of the main aims of Pareto simulations was addressing this limitation through a simulation-based study in which we can analyze the profiles of assistive devices under the limitation of their actuators on providing torque to the joints. 
+\begin{figure*}[ht]   
 	\centering
-	\vspace{-1.\baselineskip}    
-	{\includegraphics[width=\columnwidth]{Ideal_Exo_ParetoOpt_Figures/Paretofront.pdf}}
-	\caption{Monoarticular and Biarticular hip and knee exoskeletons Pareto-front.}
-	\label{Fig_Paretofront}
+	\includegraphics[width=\linewidth]{Pareto_Simulations_Figures/PaperFigure_Main_Pareto.pdf}
+	\vspace{1mm}
+	\caption{{\small\textbf{Optimal trade-offs between metabolic cost reduction and device energy consumption.} The numbering on each marker denotes results from different peak torque constraints. The hip and knee constraints are numbered from 1 to 5 in which 1 to 5 stand for 30 N.m to 70 N.m respectively, and each marker, which stands for a specific configuration of a device, is numbered by multiplication of hip and knee constraints numbers. The optima points on Paretofronts are resulted from averaging over 7 subjects.}}
+	\label{Fig_Main_Paretofronts}
 \end{figure*}
-figure \ref{Fig_Paretofront} shows the average trade-off between assistive actuators energy consumption and exoskeletons effect on metabolic cost reduction. Any point on these curves can be chosen as an average optima points based on the secondary criteria.
-There were some large deviations in the energy axis which were due to presence of some outlier data where we reduced their weight in standard deviation calculations, but the mean is calculated without excluding them; however, in higher weights, where metabolic cost reduction and energy consumption are quite high, even though we did not observer outliers but between the subject variations were high in this region which is due to high between the subject variation of hip actuators in both monoarticular and biarticular assistive devices which also already observed by Uchida et al. \cite{2} in their simulations.\\
-Our aim was to compare these two exoskeletons during lower energy consumption levels with two different weight to study the effect of selected weight and lower energy consumption on their performance. To this end, we chose biarticular exoskeleton with hip and knee weights (Optimal Force) 160 and 120 (N-m) respectively and monoarticular with hip and knee optimal force 70 and 70 (N-m) where it is shown on the figure \ref{Fig_Paretofront}. As it can be inferred from the Pareto front curves, these two points have very similar performance in terms of the metabolic energy reduction and actuators energy consumption making possible to have a fair comparison between biarticular and monoarticular exoskeletons.\\
-\subsubsection*{Device Performance, Torque and Power}
-\begin{figure*}[h!]
-	\centering
-	\subfloat[Assisted subjects lower extremity muscles average metabolic energy consumption.]{\includegraphics[width=2.5in]{Ideal_Exo_ParetoOpt_Figures/SubjectsMetabolicEnergyConsumption.pdf}
-		\label{Fig_FeasibleExo_MetabolicCost_BoxPlot}}
-	\hfil
-	\subfloat[Ideal biarticular and monoarticular exoskeletons knee actuators energy consumption]{\includegraphics[width=2.5in]{Ideal_Exo_ParetoOpt_Figures/KneeActuatorsEnergyConsumption.pdf}
-		\label{Fig__FeasibleExo_KneeActuator_BoxPlot}}
-	\hfil
-	\subfloat[Ideal biarticular and monoarticular exoskeletons hip actuators energy consumption]{\includegraphics[width=2.5in]{Ideal_Exo_ParetoOpt_Figures/HipActuatorsEnergyConsumption.pdf}
-		\label{Fig_FeasibleExo_HipActuator_BoxPlot}}
-	\caption{Ideal exoskeletons with lower energy consumption effect on the 7 running subjects metabolic and actuators energy expenditures.}
-	\label{Fig_FeasibleExos_MetabolicCost_EnergyConsumption}
-\end{figure*}
-Both devices reduced the subjects metabolic cost considerably where biarticular and monoarticular devices cause 35.48$\pm$3.64\% and 35.66$\pm$3.17\% reduction on the metabolic power consumption of 7 subjects running in 2 m/s. To achieve this metabolic cost reduction, biarticular and monoarticular devices hip actuators consumed 1.86$\pm$0.44 and 1.73$\pm$0.45 (W/Kg) and the knee actuators consumed 0.44$\pm$0.07 and 0.52$\pm$0.13 (W/Kg) average positive power (Table \ref{Table_Feasible_Exoskeletons_Power_Metabolic}). Although both devices provide very close assistance to the subjects, biarticular power consumption is economical than monoarticular thanks to biarticular knee configuration of the device. However, unlike the devices with maximum performance, the biarticular hip actuator has higher energy consumption (Table \ref{Table_Feasible_Exoskeletons_Power_Metabolic}).
-
-\begin{table*}[t]
-	\begin{adjustwidth}{-2.25in}{0in}
-	\caption{Ideal exoskeletons with feasible energy consumption power, energy consumption, metabolic power, and ratios.}
-	\resizebox{19cm}{!}{\begin{tabular}{c|c|c|c|c|c|c|c}
-		\hline
-		&  & \textbf{Mean Metabolic}& \textbf{Peak Positive}& \textbf{Mean Positive} & \textbf{Mean Energy} & \textbf{Metabolic to Peak} & \textbf{Metabolic to Mean} \\
-		\textbf{Device}&\textbf{Actuator} &\textbf{Power (W/kg)} &\textbf{Power (W/kg)} & \textbf{power (W/kg)} & \textbf{Power (W/kg)} & \textbf{Power Ratio}&\textbf{Power Ratio}\\
-		\hline
-		Monoarticular&Total&5.87 $\pm$ 0.40 & &  & &\\
-		Hip+Knee&Hip Actuator&& 10.33 $\pm$ 2.76 & 1.73 $\pm$ 0.45 & 185.99$\pm$47.39 & 0.61$\pm$0.28&3.62$\pm$1.01 \\
-		& Knee Actuator && 2.97 $\pm$ 0.94 & 0.52$\pm$ 0.13 & 75.46$\pm$10.12 & 2.77$\pm$0.01 &12.57$\pm$0.04\\
-		\hline
-		Biarticular& Total&5.88$\pm$ 0.45 &       &   &   &&  \\
-		Hip+Knee &Hip Actuator&& 10.56 $\pm$ 2.64 & 1.86 $\pm$ 0.44 & 201.90$\pm$47.70 & 0.59$\pm$0.27&3.32$\pm$0.83\\
-		&Knee Actuator&& 2.17 $\pm$ 0.43 & 0.44 $\pm$0.07 & 55.12$\pm$15.63& 3.12$\pm$0.01&13.72$\pm$0.03 \\
-		\hline
-	\end{tabular}}
-	\label{Table_Feasible_Exoskeletons_Power_Metabolic}
-	\end{adjustwidth}
-\end{table*}
-Figure \ref{Fig_Feasible_Exo_PowerProfiles} represents the power profiles of the biarticular and monoarticular assistive devices. As it can be seen in figure \ref{Fig_Feasible_Exo_PowerProfiles} \subref{Fig_Feasible_MonoVsBi_HipActuator_Power_Profiles}, the biarticular hip actuator has higher power consumption than monoarticular one during the stance phase and after toe-off. Another remarkable change is biarticular knee actuator power profile (Fig. \ref{Fig_Feasible_Exo_PowerProfiles} \subref{Fig_Feasible_MonoVsBi_HipActuator_Power_Profiles}) where it consumed power during the early stance phase, which is unlike to exoskeleton with maximum performance. Furthermore, it can be easily inferred that energy regeneration will not be effective in this assistance level since all actuators are performing an insignificant amount of negative mechanical work.
-\begin{figure*}[!h]
-	\centering
-	\subfloat[Mono and Biarticular exoskeleons hip actuators power profiles]{{\includegraphics[width=2.5in]{Ideal_Exo_ParetoOpt_Figures/ExoskeletonsHipActuatorPower.pdf}}
-		\label{Fig_Feasible_MonoVsBi_HipActuator_Power_Profiles}}
-	\hfil
-	\subfloat[Mono and Biarticular exoskeleons knee actuators power profiles]{{\includegraphics[width=2.5in]{Ideal_Exo_ParetoOpt_Figures/ExoskeletonsKneeActuatorPower.pdf}}
-		\label{Fig_Feasible_MonoVsBi_KneeActuator_Power_Profiles}}
-	\hfil	
-	\caption{Devices power and speed profiles compared to joints power and speed.}
-	\label{Fig_Feasible_Exo_PowerProfiles}
-\end{figure*}
-Torque profiles of the hip actuators are similar to the assistive devices with maximum performance; however, knee profiles had considerable changes where they do not oppose with muscles generated moment during the stance phases, and their magnitude are considerably reduced.\\
-It is noteworthy that the biarticular knee actuator's frame has been transformed using transformation on Eq \ref{Eqn_Frame_Transformation}; due to this operation, some numerical errors appeared as a small variation on the biarticular knee profile, and higher standard deviation appeared which is more evident during stance phase.
-\begin{figure*}[!h]
-	\centering
-	\subfloat[Mono and Biarticular exoskeleons hip actuators power profiles]{{\includegraphics[width=2.5in]{Ideal_Exo_ParetoOpt_Figures/BiarticularExoskeletonHipActuatorTorqueandMuscleMomentComparison.pdf}}
-		\label{Fig_Feasible_Biarticular_HipActuator_Torque_Profiles}}
-	\hfil
-	\subfloat[Mono and Biarticular exoskeleons knee actuators power profiles]{{\includegraphics[width=2.5in]{Ideal_Exo_ParetoOpt_Figures/BiarticularExoskeletonKneeActuatorTorqueandMuscleMomentComparison.pdf}}
-		\label{Fig_Feasible_Biarticular_KneeActuator_Torque_Profiles}}
-	\hfil
-	\subfloat[Mono and Biarticular exoskeleons hip actuators power profiles]{{\includegraphics[width=2.5in]{Ideal_Exo_ParetoOpt_Figures/MonoarticularExoskeletonHipActuatorTorqueandMuscleMomentComparison.pdf}}
-		\label{Fig_Feasible_Monoarticular_HipActuator_Torque_Profiles}}
-	\hfil
-	\subfloat[Mono and Biarticular exoskeleons knee actuators power profiles]{{\includegraphics[width=2.5in]{Ideal_Exo_ParetoOpt_Figures/MonoarticularExoskeletonKneeActuatorTorqueandMuscleMomentComparison.pdf}}
-		\label{Fig_Feasible_Monoarticular_KneeActuator_Torque_Profiles}}
-	\hfil		
-	\caption{Devices power and speed profiles compared to joints power and speed.}
-	\label{Fig_Feasible_Exo_TorqueProfiles}
-\end{figure*}
-
-\subsubsection*{Device Effect on Subject Muscles}
-Most of the muscles are affected by assistive devices similar to the devices with maximum performance, however, unlike the previous case, no muscle was almost disabled which is not surprising due to the assistance level and the actuators torque profiles.\\
-\begin{figure*}[!h]
-	\centering
-	\subfloat[Lower limb key monoarticular muscles]{\includegraphics[width=1.5in]{Cartoons/Saggital_Leg_Monoarticular_Muscles}
-		\label{Fig_Leg_Monoarticular_Muscles_3}}
-	\hfil
-	\subfloat[Lower limb key biarticular muscles]{\includegraphics[width=1.5in]{Cartoons/Saggital_Leg_Biarticular_Muscles}
-		\label{Fig_Leg_Biarticular_Muscles_3}}
-	\hfil
-	\subfloat[Rectus femoris]{\includegraphics[width=1.5in]{Ideal_Exo_ParetoOpt_Figures/MusclesActivity/Rectus_femoris_Muscle_Activation}
-		\label{Fig_Feasible_MonovsBi_Rectus_femoris_MuscleActivity}}
-	\hfil
-	\subfloat[Vastus lateralis]{\includegraphics[width=1.5in]{Ideal_Exo_ParetoOpt_Figures/MusclesActivity/Vastus_lateralis_Muscle_Activation}
-		\label{Fig_Feasible_MonovsBi_Vastus_lateralis_MuscleActivity}}
-	\hfil
-	\subfloat[Psoas]{\includegraphics[width=1.5in]{Ideal_Exo_ParetoOpt_Figures/MusclesActivity/Psoas_Muscle_Activation}
-		\label{Fig_Feasible_MonovsBi_Psoas_MuscleActivity}}
-	\hfil
-	\subfloat[Iliacus]{\includegraphics[width=1.5in]{Ideal_Exo_ParetoOpt_Figures/MusclesActivity/Iliacus_Muscle_Activation}
-		\label{Fig_Feasible_MonovsBi_Iliacus_MuscleActivity}}
-	\hfil
-	\subfloat[Biceps femoris long head]{\includegraphics[width=1.5in]{Ideal_Exo_ParetoOpt_Figures/MusclesActivity/Biceps_femoris_long_head_Muscle_Activation}
-		\label{Fig_Feasible_MonovsBi_Biceps_femoris_long_head_MuscleActivity}}
-	\hfil
-	\subfloat[Biceps femoris short head]{\includegraphics[width=1.5in]{Ideal_Exo_ParetoOpt_Figures/MusclesActivity/Biceps_femoris_short_head_Muscle_Activation}
-		\label{Fig_Feasible_MonovsBi_Biceps_femoris_short_head_MuscleActivity}}
-	\hfil
-	\subfloat[Gluteus maximus middle]{\includegraphics[width=1.5in]{Ideal_Exo_ParetoOpt_Figures/MusclesActivity/Gluteus_maximus_middle_Muscle_Activation}
-		\label{Fig_Feasible_MonovsBi_Gluteus_maximus_middle}}
-	\hfil
-	\subfloat[Gastrocnemius medial head ]{\includegraphics[width=1.5in]{Ideal_Exo_ParetoOpt_Figures/MusclesActivity/Gastrocnemius_medial_head_Muscle_Activation}
-		\label{Fig_Feasible_MonovsBi_Gastrocnemius_medial_head_MuscleActivity}}
-	\hfil
-	\subfloat[Semimembranosus]{\includegraphics[width=1.5in]{Ideal_Exo_ParetoOpt_Figures/MusclesActivity/Semimembranosus_Muscle_Activation}
-		\label{Fig_Feasible_MonovsBi_Semimembranosus_MuscleActivity}}
-	\hfil
-	\subfloat[Semitendinosus]{\includegraphics[width=1.5in]{Ideal_Exo_ParetoOpt_Figures/MusclesActivity/Semitendinosus_Muscle_Activation}
-		\label{Fig_Feasible_MonovsBi_Semitendinosus_MuscleActivity}}
-	\caption{Monoarticular and Biarticular hip and knee bilateral exoskeletons with feasible energy consumption effect on the subjects muscles activation. Red and blue profiles represent biarticular and monoarticular exoskeletons effect on the specific muscle.}
-	\label{Fig_Feasible_MonovsBiExo_MuscleActivation}
-\end{figure*}
-
-One of the main changes is that we cannot observe any dramatic reduction of muscular activation such as Biceps femoris short head (Fig. \ref{Fig_Feasible_MonovsBiExo_MuscleActivation}\subref{Fig_Feasible_MonovsBi_Biceps_femoris_short_head_MuscleActivity}) which was almost entirely deactivated by the optimizer when devices were with their maximum performance, and all muscles are considerably involved by optimizer to provide necessary torque for tracking the joints kinematics.
-Vasti muscles (Fig. \ref{Fig_Feasible_MonovsBiExo_MuscleActivation}\subref{Fig_Feasible_MonovsBi_Vastus_lateralis_MuscleActivity}) were also deactivated due to presence of assistive actuators with negligible cost function and optimizer were finding assistive actuators more economical to use than the muscles; however, these devices have higher cost functions making the optimizer to consider trade-off between the vasti muscles and the actuators where it result in more activity and metabolic cost reduction on the subjects. It can be easily inferred from the knee extensor muscles activation that monoarticular device is more effective than biarticular on assisting the knee.\\
-Rectus femoris (Fig. \ref{Fig_Feasible_MonovsBiExo_MuscleActivation}\subref{Fig_Feasible_MonovsBi_Rectus_femoris_MuscleActivity}) activation was increased similar to the previous case with the difference that monoarticular made it less active than the biarticular device; another notable change can be seen in Biceps femoris long head (Fig. \ref{Fig_Feasible_MonovsBiExo_MuscleActivation}\subref{Fig_Feasible_MonovsBi_Biceps_femoris_long_head_MuscleActivity}) and Semitendinosus(Fig. \ref{Fig_Feasible_MonovsBiExo_MuscleActivation}\subref{Fig_Feasible_MonovsBi_Semitendinosus_MuscleActivity}) muscles where they were providing negligible moment during the stance phases in previous assistance scenario, however, they got activated during the stance phases in the feasible energy region. Most of the other muscles activation profile has minor changes like Gastrocnemius medial head, Gluteus maximus middle muscles.\\
-Although most of the muscles with a central role in generating necessary muscles moment such as rectus femoris, iliopsoas are highly activated during stance phase, the total metabolic power of the assisted subjects was reduced. There are three major reasons to explain this; First and foremost reason is that  major portion of the metabolic cost is affected by remaining muscles, as shown in \cite{2}, which mostly experienced reduction in their activation; secondly, vasti and Gluteus maximus muscles constitute notable portion of metabolic power which experienced high activation reduction during stance phase which can compensate for the highly activated muscles metabolic cost. Another issue that needs to be highlighted is that while iliopsoas muscles were experiencing increase during mid-stance and terminal stance phases, their activation during next phases, which is a big fraction of the gait cycle, is considerably decreased. This reduction resulting in iliopsoas muscles metabolic cost reduction; similarly, rectus femoris activation is decreased in major part of swing phase which can result in marginal metabolic energy consumption reduction which is observed for the assistive device simulated by Uchida et al. \cite{2}.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection*{Study Limitations}
 This simulation-based studying assistive device has some limitations that need to be considered for any interpretation of the results. One of the main limitations is kinematics and ground reaction forces for the assisted subjects; Although experimental studies reported that exoskeleton could make a minor \cite{42,79,91,114,115,116} and significant \cite{80,117,118,119} changes on assisted subjects kinematics and joint moment, our simulator's algorithm (CMC) is not capturing these changes and it is assumed that unassisted and assisted subjects have the same kinematics, ground reaction force, and joint moment, nonetheless, it is reported that metabolic cost may not substantially be affected by kinematics changes\cite{120}. This limitation recently has been addressed by employing predictive simulations which can capture the changes in the kinematics and dynamics of the assisted subjects.\\  
