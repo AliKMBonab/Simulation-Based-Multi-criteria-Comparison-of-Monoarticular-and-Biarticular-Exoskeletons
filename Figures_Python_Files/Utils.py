@@ -8,6 +8,7 @@ import glob
 import numpy as np
 import matplotlib
 import matplotlib.pyplot as plt
+from mpl_toolkits.mplot3d import Axes3D
 import pylab as pl
 from scipy.signal import butter, filtfilt
 from scipy import integrate
@@ -604,7 +605,6 @@ def plot_muscles_avg(plot_dic,toeoff_color='xkcd:medium grey',
         if i in [6,7,8]:
             ax.set_xlabel('gait cycle (%)')
         
-
 def plot_joint_muscle_exo (nrows,ncols,plot_dic,color_dic,
                            ylabel,nplots=None,legend_loc=[0,1],
                            subplot_legend=False,fig=None,thirdplot=True,y_ticks = [-2,-1,0,1,2]):
@@ -1020,6 +1020,27 @@ def label_datapoints(x,y,labels,xytext=(0,0),ha='right',fontsize=10, *args, **kw
         plt.annotate(labels[c], (x,y),textcoords="offset points",xytext=xytext,ha=ha,fontsize=fontsize)
         c+=1
 
+def label_datapoints_3D(x,y,z,labels,ha='right',fontsize=10, *args, **kwargs):
+    c = 0
+    ax = plt.gca()
+    for x,y,z in zip(x,y,z):
+        ax.text(x,y,z,str(labels[c]),fontsize=fontsize)
+        c+=1
+
+def errorbar_3D(x,y,z,x_err,y_err,z_err,color,marker='_',lw=2):
+    x = x[~np.isnan(x)]
+    y = y[~np.isnan(y)]
+    z = z[~np.isnan(z)]
+    x_err = x_err[~np.isnan(x_err)]
+    y_err = y_err[~np.isnan(y_err)]
+    z_err = z_err[~np.isnan(z_err)]
+    
+    ax = plt.gca()
+    for i in range(x.shape[0]):
+        ax.plot([x[i]+x_err[i], x[i]-x_err[i]], [y[i], y[i]], [z[i], z[i]], marker=marker,color=color,lw=lw)
+        ax.plot([x[i], x[i]], [y[i]+y_err[i], y[i]-y_err[i]], [z[i], z[i]], marker=marker,color=color,lw=lw)
+        ax.plot([x[i], x[i]], [y[i], y[i]], [z[i]+z_err[i], z[i]-z_err[i]], marker=marker,color=color,lw=lw)
+
 def plot_pareto_avg_curve (plot_dic,loadcond,legend_loc=0,label_on=True,errbar_on=True,line=False,*args, **kwargs):
     '''plotting avg and std subplots for combinations of weights.\n
     -labels: needs to be provided by user otherwise data will be labeled from 1 to 25 automatically.
@@ -1292,3 +1313,89 @@ def plot_paretofront_profile_changes(plot_dic,colormap,toeoff_color,include_colo
     if ylabel != None:
         plt.ylabel(ylabel)
     
+def plot3D_pareto_avg_curve (plot_dic,loadcond,legend_loc=0,label_on=True,errbar_on=True,line=False,*args, **kwargs):
+    '''plotting avg and std subplots for combinations of weights.\n
+    -labels: needs to be provided by user otherwise data will be labeled from 1 to 25 automatically.
+             labeling is True (i.e. label_on=True) by default.\n
+    -legends: needs to be provided by user otherwise datasets will have biarticular and monoarticular legend.\n
+    -errorbar: it plots the standard deviation and it is True by default.\n
+    -line: it plots line (linear interpolation) among data by filtering its nan values.
+
+    '''
+    x1_data = plot_dic['x1_data']
+    x2_data = plot_dic['x2_data']
+    y1_data = plot_dic['y1_data']
+    y2_data = plot_dic['y2_data']
+    z1_data = plot_dic['z1_data']
+    z2_data = plot_dic['z2_data']
+    x1err_data = plot_dic['x1err_data']
+    x2err_data = plot_dic['x2err_data']
+    y1err_data = plot_dic['y1err_data']
+    y2err_data = plot_dic['y2err_data']
+    z1err_data = plot_dic['z1err_data']
+    z2err_data = plot_dic['z2err_data']
+    color_1 = plot_dic['color_1']
+    color_2 = plot_dic['color_2']
+    # handle labels
+    if 'label_1' and 'label_2' not in plot_dic:
+        label_1 = np.arange(1,26,1)
+        label_2 = np.arange(1,26,1)
+    else:
+        label_1 = plot_dic['label_1']
+        label_2 = plot_dic['label_2']
+    # handle legends
+    if 'legend_1' and 'legend_2' not in plot_dic:
+        legend_1 = 'biarticular,{}'.format(loadcond)
+        legend_2 = 'monoaricular,{}'.format(loadcond)
+    else:
+        legend_1 = plot_dic['legend_1']
+        legend_2 = plot_dic['legend_2']
+    # main plot
+    plt.scatter(x1_data,y1_data,z1_data,marker="o",color=color_1,label=legend_1,*args, **kwargs)
+    plt.scatter(x2_data,y2_data,z2_data,marker="v",color=color_2,label=legend_2,*args, **kwargs)
+    if errbar_on == True:
+        errorbar_3D(x1_data,y1_data,z1_data,x1err_data,y1err_data,z1err_data,color=color_1)
+        errorbar_3D(x2_data,y2_data,z2_data,x2err_data,y2err_data,z2err_data,color=color_2)
+    if label_on == True:
+        label_datapoints_3D(x1_data,y1_data,z1_data,label_1,*args, **kwargs)
+        label_datapoints_3D(x2_data,y2_data,z2_data,label_2,ha='left',*args, **kwargs)
+    if line == True:
+        plt.plot(x1_data[~np.isnan(x1_data)],y1_data[~np.isnan(y1_data)],z1_data[~np.isnan(z1_data)],ls='-',lw=1,color=color_1)
+        plt.plot(x2_data[~np.isnan(x2_data)],y2_data[~np.isnan(y2_data)],z2_data[~np.isnan(z2_data)],ls='-',lw=1,color=color_2) 
+    
+def paretofront_barplot(plot_dic,indices,loadcond):
+    x1_data = plot_dic['x1_data']
+    y1_data = plot_dic['y1_data']
+    x1err_data = plot_dic['x1err_data']
+    y1err_data = plot_dic['y1err_data']
+    if 'legend_1' or 'legend_2' not in plot_dic:
+        legend_1 = 'hip actuator,{}'.format(loadcond)
+        legend_2 = 'knee actuator,{}'.format(loadcond)
+    else:
+        legend_1 = plot_dic['legend_1']
+        legend_2 = plot_dic['legend_2']
+
+    index = np.arange(1,len(indices)+1,1)
+    bar_width = 0.35
+    opacity = 0.4
+    error_config = {'ecolor': '0.3'}
+    x1_data = x1_data[~np.isnan(x1_data)]
+    y1_data = y1_data[~np.isnan(y1_data)]
+    x1err_data = x1err_data[~np.isnan(x1err_data)]
+    y1err_data = y1err_data[~np.isnan(y1err_data)]
+    
+    rects1 = plt.bar(index, x1_data, bar_width,
+                    alpha=opacity,
+                    color='b',
+                    yerr=x1err_data,
+                    error_kw=error_config,
+                    label=legend_1)
+
+    rects2 = plt.bar(index + bar_width, y1_data, bar_width,
+                    alpha=opacity,
+                    color='r',
+                    yerr=y1err_data,
+                    error_kw=error_config,
+                    label=legend_2)
+    indices_str =[str(item) for item in list(reversed(indices))]
+    plt.xticks(index + bar_width / 2,indices_str )
