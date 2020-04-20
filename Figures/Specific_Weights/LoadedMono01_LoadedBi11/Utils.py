@@ -8,6 +8,7 @@ import glob
 import numpy as np
 import matplotlib
 import matplotlib.pyplot as plt
+from mpl_toolkits.mplot3d import Axes3D
 import pylab as pl
 from scipy.signal import butter, filtfilt
 from scipy import integrate
@@ -215,7 +216,19 @@ def construct_gl_mass_side(subjectno,trialno,loadcond):
                                 right_toeoff= data['toeoff_time_right_leg'])
     return gl,mass,side
 
-def mean_std_over_subjects(data,ax=1):
+def mean_over_trials(data,ax=1):
+    subjects = np.array([0,3,6,9,12,15,18])
+    data_shape = data.shape[0]
+    avg = np.zeros(int(data_shape/3))
+    c = 0
+    for i in subjects:
+        avg[c] = np.nanmean(data[i:i+3])
+        c+=1
+    return avg
+
+def mean_std_over_subjects(data,avg_trials=True,ax=1):
+    if avg_trials == True:
+        data = mean_over_trials(data,ax=ax)
     mean = np.nanmean(data,axis=ax)
     std = np.nanstd(data,axis=ax)
     return mean,std
@@ -249,17 +262,28 @@ def toe_off_avg_std(gl_noload,gl_loaded):
         c1+=1
     return np.mean(noload_toe_off),np.std(noload_toe_off),np.mean(loaded_toe_off),np.std(loaded_toe_off)
 
-def smooth(a,WSZ):
+def smooth(a,WSZ,multidim=False):
     """
     a: NumPy 1-D array containing the data to be smoothed
     WSZ: smoothing window size needs, which must be odd number,
     as in the original MATLAB implementation.
     """
-    out0 = np.convolve(a,np.ones(WSZ,dtype=int),'valid')/WSZ    
-    r = np.arange(1,WSZ-1,2)
-    start = np.cumsum(a[:WSZ-1])[::2]/r
-    stop = (np.cumsum(a[:-WSZ:-1])[::2]/r)[::-1]
-    return np.concatenate((  start , out0, stop  ))
+    if multidim == False:
+        out0 = np.convolve(a,np.ones(WSZ,dtype=int),'valid')/WSZ    
+        r = np.arange(1,WSZ-1,2)
+        start = np.cumsum(a[:WSZ-1])[::2]/r
+        stop = (np.cumsum(a[:-WSZ:-1])[::2]/r)[::-1]
+        return np.concatenate((  start , out0, stop  ))
+    else:
+        a_smooth = np.zeros((a.shape[0],a.shape[1]))
+        for i in range(a.shape[1]):
+            elem = a[:,i]
+            out0 = np.convolve(elem,np.ones(WSZ,dtype=int),'valid')/WSZ    
+            r = np.arange(1,WSZ-1,2)
+            start = np.cumsum(elem[:WSZ-1])[::2]/r
+            stop = (np.cumsum(elem[:-WSZ:-1])[::2]/r)[::-1]
+            a_smooth[:,i] =  np.concatenate((  start , out0, stop  ))
+        return a_smooth
 
 def reduction_calc(data1,data2):
     """ Please assign data according to the formula: (data1-data2)100/data1."""
@@ -444,6 +468,21 @@ def addingmass_metabolics_reduction(assist_data,unassist_data,subject_num=7,tria
 
 ######################################################################
 # Plot related functions
+def resize(axes):
+    # this assumes a fixed aspect being set for the axes.
+    for ax in axes:
+        if ax.get_aspect() == "auto":
+            return
+        elif ax.get_aspect() == "equal":
+            ax.set_aspect(1)
+    fig = axes[0].figure
+    s = fig.subplotpars
+    n = len(axes)
+    axw = fig.get_size_inches()[0]*(s.right-s.left)/(n+(n-1)*s.wspace)
+    r = lambda ax: np.diff(ax.get_ylim())[0]/np.diff(ax.get_xlim())[0]*ax.get_aspect()
+    a = max([r(ax) for ax in axes])
+    figh = a*axw/(s.top-s.bottom)
+    fig.set_size_inches(fig.get_size_inches()[0],figh)
 
 def autolabel(rects,text=None,label_value=True):
     """Attach a text label above each bar"""
@@ -518,7 +557,8 @@ def plot_shaded_avg(plot_dic,toeoff_color='xkcd:medium grey',toeoff_alpha=1.0,
 def plot_muscles_avg(plot_dic,toeoff_color='xkcd:medium grey',
                      toeoff_alpha=1.0,row_num=3,col_num=3,
                      lw=2.0,ls='-',alpha=0.2,fill_lw=0,
-                     is_std = False,is_smooth=True,WS=3,fill_std=True,*args, **kwargs):
+                     is_std = False,is_smooth=True,WS=3,
+                     fill_std=True,*args, **kwargs):
 
     pgc = plot_dic['pgc']
     avg = plot_dic['avg']
@@ -542,23 +582,36 @@ def plot_muscles_avg(plot_dic,toeoff_color='xkcd:medium grey',
     # plots
     for i in range(len(muscles_name)):
         ax = plt.subplot(row_num,col_num,i+1)
+        plt.tick_params(axis='both',direction='in')
         no_top_right(ax)
         plt.tight_layout()
         plt.title(muscles_name[i])
         plt.xticks([0,20,40,60,80,100])
         plt.xlim([0,100])
-        plt.yticks((0,0.2,0.4,0.6,0.8,1))
+        if i in [0,1,2,3,4,5]:
+                labels = [item.get_text() for item in ax.get_xticklabels()]
+                empty_string_labels = ['']*len(labels)
+                ax.set_xticklabels(empty_string_labels)
         ax.axvline(avg_toeoff, lw=lw, color=toeoff_color, zorder=0, alpha=toeoff_alpha) #vertical line
         if is_std == True:
             ax.fill_between(pgc, avg[:,i] + std[:,i], avg[:,i] - std[:,i], alpha=alpha,linewidth=fill_lw, *args, **kwargs) # shaded std
         else:
             pass
         ax.plot(pgc, avg[:,i], *args, lw=lw, ls=ls,label=label,**kwargs) # mean
-
-def plot_joint_muscle_exo (nrows,ncols,plot_dic,color_dic,ylabel,legend_loc=[0,1],thirdplot=True,y_ticks = [-2,-1,0,1,2]):
+        ax.set_ylim((0,1))
+        ax.set_yticks((0,0.5,1))
+        if i in [0,3,6]:
+            ax.set_ylabel('activation')
+        if i in [6,7,8]:
+            ax.set_xlabel('gait cycle (%)')
+        
+def plot_joint_muscle_exo (nrows,ncols,plot_dic,color_dic,
+                           ylabel,nplots=None,legend_loc=[0,1],
+                           subplot_legend=False,fig=None,thirdplot=True,y_ticks = [-2,-1,0,1,2]):
     '''Note: please note that since it is in the for loop, if some data is
     needed to plot several times it should be repeated in the lists.  '''
-
+    if nplots == None:
+        nplots = ncols*nrows
     # reading data
     plot_1_list = plot_dic['plot_1_list']
     plot_2_list = plot_dic['plot_2_list']
@@ -569,21 +622,62 @@ def plot_joint_muscle_exo (nrows,ncols,plot_dic,color_dic,ylabel,legend_loc=[0,1
         color_3_list = color_dic['color_3_list']
         plot_3_list = plot_dic['plot_3_list']
     #plot
-    for i in range(nrows*ncols):
+    for i in range(nplots):
         ax = plt.subplot(nrows,ncols,i+1)
         plot_shaded_avg(plot_dic=plot_1_list[i],color=color_1_list[i])
         plot_shaded_avg(plot_dic=plot_2_list[i],color=color_2_list[i])
         if thirdplot == True:
             plot_shaded_avg(plot_dic=plot_3_list[i],color=color_3_list[i])
-        plt.yticks(y_ticks)
-        plt.title(plot_titles[i])
+        ax.set_yticks(y_ticks)
+        ax.set_title(plot_titles[i])
+        plt.tick_params(axis='both',direction='in')
         no_top_right(ax)
-        if i in legend_loc:
-            plt.legend(loc='upper right',frameon=False)
-        if i in range((nrows*ncols)-nrows,(nrows*ncols)):
-            plt.xlabel('gait cycle (%)')
-        if i not in np.arange(1,nrows*ncols,ncols):
-            plt.ylabel(ylabel)
+        if subplot_legend == True and i == nplots-1:
+            ax_list = fig.axes
+            ax_last = plt.subplot(nrows,ncols,nrows*ncols)
+            ax_last.spines["right"].set_visible(False)
+            ax_last.spines["top"].set_visible(False)
+            ax_last.spines["bottom"].set_visible(False)
+            ax_last.spines["left"].set_visible(False)
+            ax_last.set_xticks([], [])
+            ax_last.set_yticks([], []) 
+            pos = ax_last.get_position()
+            handle1,label1 = ax_list[legend_loc[0]].get_legend_handles_labels()
+            handle2,label2 = ax_list[legend_loc[1]].get_legend_handles_labels()
+            plt.figlegend(handles=handle1,labels=label1, bbox_to_anchor=(pos.x0+0.05, pos.y0-0.05,  pos.width / 1.5, pos.height / 1.5))
+            plt.figlegend(handles=handle2,labels=label2, bbox_to_anchor=(pos.x0+0.05, pos.y0+0.05,  pos.width / 1.5, pos.height / 1.5))
+        elif i in legend_loc and subplot_legend == False:
+            plt.legend(loc='best',frameon=False)
+        if ncols==2 and i in [2,3]:
+            ax.set_xlabel('gait cycle (%)')
+        elif ncols==3 and i in [7,6]:
+            ax.set_xlabel('gait cycle (%)')
+        elif ncols==4 and i in [4,5,6,7]:
+            ax.set_xlabel('gait cycle (%)')
+        if ncols==2 and i in [0,1,2,3]:
+            ax.set_ylabel(ylabel)
+        elif ncols==3 and i in [0,3,6]:
+            ax.set_ylabel(ylabel)
+        elif ncols==4 and i in [0,4]:
+            ax.set_ylabel(ylabel)
+        if ncols==3 :
+            if i not in [7,6,5]:
+                labels = [item.get_text() for item in ax.get_xticklabels()]
+                empty_string_labels = ['']*len(labels)
+                ax.set_xticklabels(empty_string_labels)
+            if i not in [0,3,6]:
+                labels = [item.get_text() for item in ax.get_yticklabels()]
+                empty_string_labels = ['']*len(labels)
+                ax.set_yticklabels(empty_string_labels)
+        elif ncols==4:
+            if i in [0,1,2,3]:
+                labels = [item.get_text() for item in ax.get_xticklabels()]
+                empty_string_labels = ['']*len(labels)
+                ax.set_xticklabels(empty_string_labels)
+            if i not in [0,4]:
+                labels = [item.get_text() for item in ax.get_yticklabels()]
+                empty_string_labels = ['']*len(labels)
+                ax.set_yticklabels(empty_string_labels)
 
 ######################################################################
 ######################################################################
@@ -684,6 +778,26 @@ def manual_paretofront(data_1,data_2,indices):
         if i not in indices:
             data[i,:] = np.nan
     return data
+
+def manual_paretofront_profiles(data,indices):
+    '''
+    - indices are from 1 not 0 to avoid confusion.
+    - indices should be started from last to first and then
+      algorithm will flip them automatically.
+    '''
+    paretofront_data = np.zeros((data.shape[0],len(indices)))
+    indices = indices.copy()
+    indices = np.flip(indices,axis=0)
+    for i,j in enumerate(indices):
+        indices[i]=j-1
+    if data.dtype != 'float64':
+        data = data.astype('float64')
+    c=0
+    for i in range(data.shape[1]):
+        if i in indices:
+            paretofront_data[:,c] = data[:,i]
+            c+=1
+    return paretofront_data
 
 def paretofront_subjects(data_1,data_2,unassist_data=None,calc_percent=True,adding_mass_case=False):
     '''
@@ -831,8 +945,12 @@ def pareto_avg_std_energy(data,simulation_num=25,subject_num=7,trial_num=3,resha
         final_data = filter_outliers(reshaped_data,*args,**kwargs)
     if delete_subject != None:
         final_data = delete_subject_data(reshaped_data,delete_subject,profile_energy='energy',is_reshaped=True)
-    avg = np.nanmean(final_data,axis=1)
-    std = np.nanstd(final_data,axis=1)
+        length = len(delete_subject)
+    else:
+        length = 0
+    subject_avg,_ = pareto_avg_std_within_subjects(final_data,reshape=False,subject_num=7-length)
+    avg = np.nanmean(subject_avg,axis=1)
+    std = np.nanstd(subject_avg,axis=1)
     return avg,std
 
 def pareto_avg_std_within_subjects(data,simulation_num=25,subject_num=7,trial_num=3,reshape=True,delete_subject=None):
@@ -843,8 +961,8 @@ def pareto_avg_std_within_subjects(data,simulation_num=25,subject_num=7,trial_nu
     if delete_subject != None:
         reshaped_data = delete_subject_data(reshaped_data,delete_subject,profile_energy='profile')
     # reserving variables
-    avg = np.zeros((reshaped_data.shape[0],reshaped_data.shape[1]/trial_num))
-    std = np.zeros((reshaped_data.shape[0],reshaped_data.shape[1]/trial_num))
+    avg = np.zeros((int(reshaped_data.shape[0]),int(reshaped_data.shape[1]/trial_num)))
+    std = np.zeros((int(reshaped_data.shape[0]),int(reshaped_data.shape[1]/trial_num)))
     # avg std for subjects
     c=0
     for i in range(subject_num):
@@ -901,6 +1019,27 @@ def label_datapoints(x,y,labels,xytext=(0,0),ha='right',fontsize=10, *args, **kw
     for x,y in zip(x,y):
         plt.annotate(labels[c], (x,y),textcoords="offset points",xytext=xytext,ha=ha,fontsize=fontsize)
         c+=1
+
+def label_datapoints_3D(x,y,z,labels,ha='right',fontsize=10, *args, **kwargs):
+    c = 0
+    ax = plt.gca()
+    for x,y,z in zip(x,y,z):
+        ax.text(x,y,z,str(labels[c]),fontsize=fontsize)
+        c+=1
+
+def errorbar_3D(x,y,z,x_err,y_err,z_err,color,marker='_',lw=2):
+    x = x[~np.isnan(x)]
+    y = y[~np.isnan(y)]
+    z = z[~np.isnan(z)]
+    x_err = x_err[~np.isnan(x_err)]
+    y_err = y_err[~np.isnan(y_err)]
+    z_err = z_err[~np.isnan(z_err)]
+    
+    ax = plt.gca()
+    for i in range(x.shape[0]):
+        ax.plot([x[i]+x_err[i], x[i]-x_err[i]], [y[i], y[i]], [z[i], z[i]], marker=marker,color=color,lw=lw)
+        ax.plot([x[i], x[i]], [y[i]+y_err[i], y[i]-y_err[i]], [z[i], z[i]], marker=marker,color=color,lw=lw)
+        ax.plot([x[i], x[i]], [y[i], y[i]], [z[i]+z_err[i], z[i]-z_err[i]], marker=marker,color=color,lw=lw)
 
 def plot_pareto_avg_curve (plot_dic,loadcond,legend_loc=0,label_on=True,errbar_on=True,line=False,*args, **kwargs):
     '''plotting avg and std subplots for combinations of weights.\n
@@ -1133,3 +1272,130 @@ def plot_pareto_comparison(plot_dic,loadcond,compare,labels=None,legend_loc=[0],
         if i in np.arange(0,nrows*ncols,ncols):
             ax.set_ylabel(ylabel)
         plt.tight_layout()
+
+def plot_paretofront_profile_changes(plot_dic,colormap,toeoff_color,include_colorbar=True,xlabel=False,ylabel=None,lw=1.75,*args,**kwargs):
+    joint_data = plot_dic['joint_data']
+    data = plot_dic['data']
+    indices = plot_dic['indices']
+    title = plot_dic['title']
+    joint_color = plot_dic['joint_color']
+    avg_toeoff = plot_dic['avg_toeoff']
+    gpc = np.linspace(0,100,1000)
+    plt.xticks([0,20,40,60,80,100])
+    plt.xlim([0,100])
+    # plotting joint profile
+    plt.plot(gpc,joint_data, *args, lw=3,ls='--',color=joint_color,label='Joint', **kwargs)
+    # toe-off and zero lines
+    plt.axvline(avg_toeoff, lw=2, color=toeoff_color, zorder=0, alpha=0.5) #vertical line
+    plt.axhline(0, lw=2, color='grey', zorder=0, alpha=0.75) # horizontal line
+    #get discrete colormap
+    cmap = plt.get_cmap(colormap, len(indices))
+    norm = matplotlib.colors.BoundaryNorm(np.arange(len(indices)+1)+0.5,len(indices))
+    sm = plt.cm.ScalarMappable(norm=norm, cmap=cmap)
+    sm.set_array([])
+    # plot the profiles
+    for i in range(data.shape[1]):
+        plt.plot(gpc, data[:,i], c=cmap(i),*args,lw=lw,**kwargs)
+    # plot the colorbar
+    if include_colorbar == True:
+        cbar = plt.colorbar(sm,ticks=np.arange(1,len(indices)+1,1),aspect=80)
+        indices_str =[str(item) for item in list(reversed(indices))]
+        cbar.set_ticklabels(indices_str)
+        cbar.outline.set_visible(False)
+    #title
+    plt.title(title)
+    #beauty plot
+    ax = plt.gca()
+    no_top_right(ax)
+    plt.tick_params(axis='both',direction='in')
+    if xlabel== True:
+        plt.xlabel('gait cycle (%)')
+    if ylabel != None:
+        plt.ylabel(ylabel)
+    
+def plot3D_pareto_avg_curve (plot_dic,loadcond,legend_loc=0,label_on=True,errbar_on=True,line=False,*args, **kwargs):
+    '''plotting avg and std subplots for combinations of weights.\n
+    -labels: needs to be provided by user otherwise data will be labeled from 1 to 25 automatically.
+             labeling is True (i.e. label_on=True) by default.\n
+    -legends: needs to be provided by user otherwise datasets will have biarticular and monoarticular legend.\n
+    -errorbar: it plots the standard deviation and it is True by default.\n
+    -line: it plots line (linear interpolation) among data by filtering its nan values.
+
+    '''
+    x1_data = plot_dic['x1_data']
+    x2_data = plot_dic['x2_data']
+    y1_data = plot_dic['y1_data']
+    y2_data = plot_dic['y2_data']
+    z1_data = plot_dic['z1_data']
+    z2_data = plot_dic['z2_data']
+    x1err_data = plot_dic['x1err_data']
+    x2err_data = plot_dic['x2err_data']
+    y1err_data = plot_dic['y1err_data']
+    y2err_data = plot_dic['y2err_data']
+    z1err_data = plot_dic['z1err_data']
+    z2err_data = plot_dic['z2err_data']
+    color_1 = plot_dic['color_1']
+    color_2 = plot_dic['color_2']
+    # handle labels
+    if 'label_1' and 'label_2' not in plot_dic:
+        label_1 = np.arange(1,26,1)
+        label_2 = np.arange(1,26,1)
+    else:
+        label_1 = plot_dic['label_1']
+        label_2 = plot_dic['label_2']
+    # handle legends
+    if 'legend_1' and 'legend_2' not in plot_dic:
+        legend_1 = 'biarticular,{}'.format(loadcond)
+        legend_2 = 'monoaricular,{}'.format(loadcond)
+    else:
+        legend_1 = plot_dic['legend_1']
+        legend_2 = plot_dic['legend_2']
+    # main plot
+    plt.scatter(x1_data,y1_data,z1_data,marker="o",color=color_1,label=legend_1,*args, **kwargs)
+    plt.scatter(x2_data,y2_data,z2_data,marker="v",color=color_2,label=legend_2,*args, **kwargs)
+    if errbar_on == True:
+        errorbar_3D(x1_data,y1_data,z1_data,x1err_data,y1err_data,z1err_data,color=color_1)
+        errorbar_3D(x2_data,y2_data,z2_data,x2err_data,y2err_data,z2err_data,color=color_2)
+    if label_on == True:
+        label_datapoints_3D(x1_data,y1_data,z1_data,label_1,*args, **kwargs)
+        label_datapoints_3D(x2_data,y2_data,z2_data,label_2,ha='left',*args, **kwargs)
+    if line == True:
+        plt.plot(x1_data[~np.isnan(x1_data)],y1_data[~np.isnan(y1_data)],z1_data[~np.isnan(z1_data)],ls='-',lw=1,color=color_1)
+        plt.plot(x2_data[~np.isnan(x2_data)],y2_data[~np.isnan(y2_data)],z2_data[~np.isnan(z2_data)],ls='-',lw=1,color=color_2) 
+    
+def paretofront_barplot(plot_dic,indices,loadcond):
+    x1_data = plot_dic['x1_data']
+    y1_data = plot_dic['y1_data']
+    x1err_data = plot_dic['x1err_data']
+    y1err_data = plot_dic['y1err_data']
+    if 'legend_1' or 'legend_2' not in plot_dic:
+        legend_1 = 'hip actuator,{}'.format(loadcond)
+        legend_2 = 'knee actuator,{}'.format(loadcond)
+    else:
+        legend_1 = plot_dic['legend_1']
+        legend_2 = plot_dic['legend_2']
+
+    index = np.arange(1,len(indices)+1,1)
+    bar_width = 0.35
+    opacity = 0.4
+    error_config = {'ecolor': '0.3'}
+    x1_data = x1_data[~np.isnan(x1_data)]
+    y1_data = y1_data[~np.isnan(y1_data)]
+    x1err_data = x1err_data[~np.isnan(x1err_data)]
+    y1err_data = y1err_data[~np.isnan(y1err_data)]
+    
+    rects1 = plt.bar(index, x1_data, bar_width,
+                    alpha=opacity,
+                    color='b',
+                    yerr=x1err_data,
+                    error_kw=error_config,
+                    label=legend_1)
+
+    rects2 = plt.bar(index + bar_width, y1_data, bar_width,
+                    alpha=opacity,
+                    color='r',
+                    yerr=y1err_data,
+                    error_kw=error_config,
+                    label=legend_2)
+    indices_str =[str(item) for item in list(reversed(indices))]
+    plt.xticks(index + bar_width / 2,indices_str )

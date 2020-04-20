@@ -11,8 +11,8 @@ muscle_group_name = {
                 'Vastus intermedius','Vastus lateralis','Vastus medialis'],
 
 # The name of nine representitive muscles on lower extermity
-"nine_muscles" : ['Biceps femoris short head','Gluteus maximus (superior)','Psoas','Gastrocnemius lateral head',\
-                'Rectus femoris','Semimembranosus','Soleus','Tibialis anterior','Vastus lateralis'],
+"nine_muscles" : ['Biceps femoris short head','Gluteus medius (posterior)','Psoas','Gastrocnemius medial head',\
+                'Rectus femoris','Semimembranosus','Soleus','Gluteus medius (anterior)','Vastus lateralis'],
 
 # The name of hip and knee muscles together
 "hipandknee_muscles" : [ 'Adductor brevis','Adductor longus','Adductor magnus (middle)','Adductor magnus (ischial)',\
