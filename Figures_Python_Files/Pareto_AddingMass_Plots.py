@@ -116,6 +116,41 @@ mean_bi_noload_metabolics_addedmass_percent, std_bi_noload_metabolics_addedmass_
 mean_mono_noload_metabolics_addedmass_percent, std_mono_noload_metabolics_addedmass_percent = utils.pareto_avg_std_energy(mono_noload_metabolics_addedmass_percent,reshape=False)
 
 #####################################################################################
+# All average paretos
+
+
+x1_data = np.reshape(np.concatenate((mean_bi_noload_metabolics_percent,mean_bi_noload_metabolics_addedmass_percent,mean_bi_noload_metabolics_percent),axis=0),(25,3),order='F')
+x2_data = np.reshape(np.concatenate((mean_mono_noload_metabolics_percent,mean_mono_noload_metabolics_addedmass_percent,mean_mono_noload_metabolics_percent),axis=0),(25,3),order='F')
+y1_data = np.reshape(np.concatenate((mean_bi_noload_energy,mean_bi_noload_energy,mean_bi_noload_regen_energy),axis=0),(25,3),order='F')
+y2_data = np.reshape(np.concatenate((mean_mono_noload_energy,mean_mono_noload_energy,mean_mono_noload_regen_energy),axis=0),(25,3),order='F')
+color_1 = mycolors['magenta pink']
+color_2 = mycolors['lavender purple']
+plot_titles = ['noload, ideal','noload, exo mass','noload, exo mass + renegeration']
+
+fig = plt.figure(num='Pareto Curve: noload mono vs bi',figsize=(14.4, 10.8))
+nplot=3
+ncols=3
+nrows=1
+labels = np.arange(1,26,1)
+for i in range(nplot):
+    plt.subplot(nrows,ncols,i+1)
+    plt.scatter(x1_data[:,i],y1_data[:,i],marker="o",color=color_1,label='biarticular')
+    plt.scatter(x2_data[:,i],y2_data[:,i],marker="v",color=color_2,label='monoarticular')
+    utils.label_datapoints(x1_data[:,i],y1_data[:,i],labels)
+    utils.label_datapoints(x2_data[:,i],y2_data[:,i],labels,ha='left')
+    plt.title(plot_titles[i])
+    ax = plt.gca()
+    plt.tight_layout()
+    utils.no_top_right(ax)
+    plt.legend(loc='best',frameon=False)
+    plt.xlabel('Metabolic Reduction (%)')
+    plt.ylabel('Energy Consumption (W/kg)')
+fig.tight_layout(h_pad=-1.5, w_pad=-1.5)
+fig.subplots_adjust(top=0.99, bottom=0.075, left=0.100, right=0.975,hspace=0.2,wspace=0.15)
+fig.savefig('./Figures/Pareto/Adding_Mass_Pareto/Avg_Paretos.pdf',orientation='landscape',bbox_inches='tight')
+plt.show()
+
+#####################################################################################
 # plots
 
 # subjects pareto curve: noload mono vs biarticular
@@ -333,41 +368,4 @@ utils.no_top_right(ax)
 plt.legend(loc='best',frameon=False)
 fig.tight_layout()
 fig.savefig('./Figures/Pareto/Adding_Mass_Pareto/Pareto_Noload_Mono_NonGenVsGen.pdf',orientation='landscape',bbox_inches='tight')
-plt.show()
-
-#####################################################################################
-# All average paretos
-
-
-x1_data = np.reshape(np.concatenate((mean_bi_noload_metabolics_percent,mean_bi_noload_metabolics_addedmass_percent,mean_bi_noload_metabolics_addedmass_percent),axis=0),(25,3),order='F')
-x2_data = np.reshape(np.concatenate((mean_mono_noload_metabolics_percent,mean_mono_noload_metabolics_addedmass_percent,mean_mono_noload_metabolics_addedmass_percent),axis=0),(25,3),order='F')
-y1_data = np.reshape(np.concatenate((mean_bi_noload_energy,mean_bi_noload_energy,mean_bi_noload_regen_energy),axis=0),(25,3),order='F')
-y2_data = np.reshape(np.concatenate((mean_mono_noload_energy,mean_mono_noload_energy,mean_mono_noload_regen_energy),axis=0),(25,3),order='F')
-color_1 = mycolors['magenta pink']
-color_2 = mycolors['lavender purple']
-plot_titles = ['noload, ideal','noload, exo mass','noload, exo mass + renegeration']
-
-fig = plt.figure(num='Pareto Curve: noload mono vs bi',figsize=(14.4, 10.8))
-nplot=3
-ncols=3
-nrows=1
-labels = np.arange(1,26,1)
-for i in range(nplot):
-    plt.subplot(nrows,ncols,i+1)
-    plt.scatter(x1_data[:,i],y1_data[:,i],marker="o",color=color_1,label='biarticular')
-    plt.scatter(x2_data[:,i],y2_data[:,i],marker="v",color=color_2,label='monoarticular')
-    utils.label_datapoints(x1_data[:,i],y1_data[:,i],labels)
-    utils.label_datapoints(x2_data[:,i],y2_data[:,i],labels,ha='left')
-    plt.title(plot_titles[i])
-    ax = plt.gca()
-    plt.tight_layout()
-    utils.no_top_right(ax)
-    plt.legend(loc='best',frameon=False)
-    plt.xlabel('Metabolic Reduction (%)')
-    plt.ylabel('Energy Consumption (W/kg)')
-    plt.xlim((8,18))
-    plt.ylim((0.5,3.5))
-fig.tight_layout(h_pad=-1.5, w_pad=-1.5)
-fig.subplots_adjust(top=0.99, bottom=0.075, left=0.100, right=0.975,hspace=0.2,wspace=0.15)
-fig.savefig('./Figures/Pareto/Adding_Mass_Pareto/Avg_Paretos.pdf',orientation='landscape',bbox_inches='tight')
 plt.show()
