@@ -132,7 +132,7 @@ def muscles_header(prefix,whichgroup='nine'):
                             'rect_fem','sar','semimem','semiten','vas_int','vas_lat','vas_med']
     elif whichgroup == 'nine':
         # The name of nine representitive muscles on lower extermity
-        muscles_name = ['bifemsh','glut_max1','psoas','lat_gas','rect_fem','semimem','soleus','tib_ant','vas_lat']
+        muscles_name = ['bifemsh','glut_med3','psoas','med_gas','rect_fem','semimem','soleus','glut_med1','vas_lat']
     elif whichgroup == 'both':
          # The name of muscles contributing on knee and hip flexion and extension
         muscles_name = ['add_brev','add_long','add_mag3','add_mag2','add_mag1','bifemlh',\
@@ -216,7 +216,7 @@ def construct_gl_mass_side(subjectno,trialno,loadcond):
                                 right_toeoff= data['toeoff_time_right_leg'])
     return gl,mass,side
 
-def mean_over_trials(data,ax=1):
+def mean_over_trials(data,ax=0):
     subjects = np.array([0,3,6,9,12,15,18])
     data_shape = data.shape[0]
     avg = np.zeros(int(data_shape/3))
