@@ -40,10 +40,10 @@ gl_loaded = {'loaded_subject{}_trial{}'.format(i,j): utils.construct_gl_mass_sid
 noload_mean_toe_off,_,loaded_mean_toe_off,_ = utils.toe_off_avg_std(gl_noload,gl_loaded)
 # muscles activation
 # biarticular
-bi_noload_muscles_activation = utils.normalize_direction_data(musclesactivation_dataset['biarticular_hip50knee40_noload_ninemuscles_activation'],gl_noload,direction=False,normalize=False)
+bi_noload_muscles_activation = utils.normalize_direction_data(musclesactivation_dataset['biarticular_hip50knee60_noload_ninemuscles_activation'],gl_noload,direction=False,normalize=False)
 mean_bi_noload_muscles_activation,std_bi_noload_muscles_activation = utils.mean_std_muscles_subjects(bi_noload_muscles_activation)
 # monoarticular
-mono_noload_muscles_activation = utils.normalize_direction_data(musclesactivation_dataset['monoarticular_hip50knee50_noload_ninemuscles_activation'],gl_noload,direction=False,normalize=False)
+mono_noload_muscles_activation = utils.normalize_direction_data(musclesactivation_dataset['monoarticular_hip60knee70_noload_ninemuscles_activation'],gl_noload,direction=False,normalize=False)
 mean_mono_noload_muscles_activation,std_mono_noload_muscles_activation = utils.mean_std_muscles_subjects(mono_noload_muscles_activation)
 #unassist
 mean_unassist_noload_muscles_activation = utils.recover_muscledata(unassist_dataset,'mean_norm_noload_muscles_activation')
@@ -77,7 +77,7 @@ utils.plot_muscles_avg(plot_dic=muscles_activation_biarticular_noload_plot_dic,t
 plt.legend(loc='best',frameon=False)
 plt.show()
 fig.tight_layout()
-fig.savefig('./Figures/Specific_Weights/NoloadMono13_NoloadBi14/Biarticular_Noload_MusclesActivation.pdf',orientation='landscape',bbox_inches='tight')
+fig.savefig('./Figures/Specific_Weights/NoloadMono06_NoloadBi12/Biarticular_Noload_MusclesActivation.pdf',orientation='landscape',bbox_inches='tight')
 
 # monoarticular
 fig, ax = plt.subplots(num='Monoarticular Noload Muscles Activation',figsize=(8.4, 6.8))
@@ -86,15 +86,15 @@ utils.plot_muscles_avg(plot_dic=muscles_activation_monoarticular_noload_plot_dic
 plt.legend(loc='best',frameon=False)
 plt.show()
 fig.tight_layout()
-fig.savefig('./Figures/Specific_Weights/NoloadMono13_NoloadBi14/Monoarticular_Noload_MusclesActivation.pdf',orientation='landscape',bbox_inches='tight')
+fig.savefig('./Figures/Specific_Weights/NoloadMono06_NoloadBi12/Monoarticular_Noload_MusclesActivation.pdf',orientation='landscape',bbox_inches='tight')
 
 # monoarticular versus biarticular
 fig, ax = plt.subplots(num='Noload Muscles Activation',figsize=(8.4, 6.8))
-utils.plot_muscles_avg(plot_dic=muscles_activation_noload_plot_dic,toeoff_color='xkcd:shamrock green',color='xkcd:irish green',is_std=True)
-utils.plot_muscles_avg(plot_dic=muscles_activation_biarticular_noload_plot_dic,toeoff_color='xkcd:shamrock green',color=mycolors['french rose'],is_std=True)
-utils.plot_muscles_avg(plot_dic=muscles_activation_monoarticular_noload_plot_dic,toeoff_color='xkcd:shamrock green',color=mycolors['lavender purple'],is_std=True)
+utils.plot_muscles_avg(plot_dic=muscles_activation_noload_plot_dic,toeoff_color='xkcd:shamrock green',color='xkcd:irish green',is_std=False)
+utils.plot_muscles_avg(plot_dic=muscles_activation_biarticular_noload_plot_dic,toeoff_color='xkcd:shamrock green',color=mycolors['crimson red'],is_std=False)
+utils.plot_muscles_avg(plot_dic=muscles_activation_monoarticular_noload_plot_dic,toeoff_color='xkcd:shamrock green',color=mycolors['lavender purple'],is_std=False)
 plt.legend(loc='best',frameon=False)
 plt.show()
 fig.tight_layout()
-fig.savefig('./Figures/Specific_Weights/NoloadMono13_NoloadBi14/MonoarticularVSBiarticular_Noload_MusclesActivation.pdf',orientation='landscape',bbox_inches='tight')
+fig.savefig('./Figures/Specific_Weights/NoloadMono06_NoloadBi12/MonoarticularVSBiarticular_Noload_MusclesActivation.pdf',orientation='landscape',bbox_inches='tight')
 
