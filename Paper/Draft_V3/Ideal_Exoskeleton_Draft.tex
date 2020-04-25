@@ -467,7 +467,7 @@ The typical mass, center of mass and inertia that have been used for numerical s
 		 \multirow{2}{*}{\textbf{configuration}} & \textbf{Waist}   & \multicolumn{2}{ c!{\vline width 0.2pt} }{\textbf{thigh}} & \multicolumn{2}{ c!{\vline width 0.2pt} }{\textbf{shank}} & \textbf{actuator} \\  \cmidrule{2-7}
 		  &  Mass ($kg$)& mass ($kg$) & COM ($m$)& mass ($kg$) & COM ($m$)& inertia ($kg.m^2$) \\ \midrule[0.5pt]
 		  \textbf{Biarticular} &  6 &1& 0.23 &0.9&0.18&$5.06\times10^{-4}$\\ \midrule[0.2pt]
-		  \textbf{Monoarticular} & 3 &2.5& 0.30 &0.9&0.18&$5.06\times10^{-4}$\\
+		  \textbf{Monoarticular} & 4.5 &2.5& 0.30 &0.9&0.18&$5.06\times10^{-4}$\\
 		  \bottomrule
 	\end{tabular}
 	\label{Table_Exokeletons_Mass_Inerta}
@@ -518,7 +518,8 @@ To conduct methodical comparisons among scenarios with the discussed metrics, we
 Both biarticular and monoarticular configurations of the ideal exoskeletons reduced the metabolic energy consumption of subjects walking without and with carrying a heavy load at self-selected speed walking. Biarticular and monoarticular exoskeletons decreased the subjects carrying a heavy load metabolic rate by 20.49$\pm$2.87\% and 20.45$\pm$2.81\%. The monoarticular and biarticular configurations of the exoskeleton were able to reduce the gross whole-body metabolic cost of the subject in the \textit{noload} condition by 22.38$\pm$4.91\% and 22.47$\pm$4.89\%. These exoskeletons were expected to have the same performance on reducing the metabolic energy consumption of the subjects due to their kinematic relation, and the results are representing the expected performance for these two devices.\\
 \begin{figure*}[ht]   
 	\centering
-	\includegraphics[scale=0.35]{Ideal_Exo_MonovsBi_Figures/Paper_Figure_Energy_BoxPlot.pdf}
+	\includegraphics[width=\linewidth]{Ideal_Exo_MonovsBi_Figures/Paper_Figure_Energy_BoxPlot.pdf}
+	\vspace{1mm}
 	\caption{Assistive devices effect on whole-body metabolic rate of the subjects and their energy consumption.}
 	\label{Fig_IdealExo_Energy_BoxPlot}
 \end{figure*}
@@ -575,17 +576,23 @@ The anterior and posterior portions of the gluteus medius muscle, besides their 
 The main differences between the muscular activity of the subjects walking normally and subjects walking while carrying a heavy load on torso are the magnitude and timing of the muscular activations which were observed already in other profiles as well. This load condition affected partially some muscles like Semimembranosus in which the device did not completely replaced by the ideal devices.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection*{Pareto Simulation Results}
-The assistive devices have been analyzed in the previous section, and their effect on metabolic cost and muscular activation of the subjects have been in two different load conditions have been studied. The simulations of the previous section were performed under the assumption that the assistive actuators have no bound on the amount of the moment they can supply to the musculoskeletal mod. However, this assumption is not a descriptive assumption for the real-time designing and controlling assistive device because the assistive devices and especially untethered exoskeletons have some constraints on the amount of moment that their actuation unit can provide to assist the joint of interest and the suppliable energy from the battery for untethered exoskeletons where the battery life limits the energy source. 
-One of the main aims of Pareto simulations was addressing this limitation through a simulation-based study in which we can analyze the profiles of assistive devices under the limitation of their actuators on providing torque to the joints. \\
+The assistive devices analyzed in the previous section, and their effect on metabolic cost and muscular activation of the subjects in two different load conditions have been studied. The simulations of the previous section were performed under the assumption that the assistive actuators have no bounds on the amount of the moment they can supply to the musculoskeletal model. However, this assumption is not a descriptive assumption for the real-time designing and controlling assistive device because the devices and especially untethered exoskeletons have some constraints on the amount of moment that their actuation unit can provide to assist the joint of interest and the suppliable energy from the battery for untethered exoskeletons is limited by the battery life. \\
+One of the main aims of Pareto simulations was addressing this limitation through a simulation-based study in which we can analyze the performance of assistive devices under the limitation of their actuators on providing torque to the joints. 
 The study has been accomplished by constraining the peak torque the assistive actuators can provide, and the optimal trade-off between the metabolic cost reduction and energy consumption of the devices has been obtained. The average Pareto front for the biarticular and monoarticular exoskeletons for both loading conditions of the subjects are represented in figure \ref{Fig_Main_Paretofronts}.\\
-\begin{figure*}[hb]   
+\begin{figure*}[ht]   
 	\centering
 	\includegraphics[width=\linewidth]{Pareto_Simulations_Figures/PaperFigure_Main_Pareto.pdf}
 	\vspace{1mm}
 	\caption{{\small\textbf{Optimal trade-offs between metabolic cost reduction and device energy consumption.} The numbering on each marker denotes results from different peak torque constraints. The hip and knee constraints are numbered from 1 to 5 in which 1 to 5 stand for 70 N.m to 30 N.m respectively, and each marker, which stands for a specific configuration of a device, is numbered by iterations of hip and knee constraints numbers. The optima points on Paretofronts are resulted from averaging over 7 subjects.}}
 	\label{Fig_Main_Paretofronts}
 \end{figure*}
-
+\begin{figure*}[ht]   
+	\centering
+	\includegraphics[width=\linewidth]{Pareto_Simulations_Figures/PaperFigure_Paretofront_EnergyBarPlot.pdf}
+	\vspace{1mm}
+	\caption{{\small\textbf{Energy consumption of optimal assistive actuators}. The horizontal axis shows the device number on the optimal pareto-front. The vertical lines represent the standard deviation of devices in 7 subjects.}}
+	\label{Fig_Paretofronts_Actuators_EnergyBarPlot}
+\end{figure*}
 One of the immediate implications these Pareto fronts are providing is that the constrained devices in their maximum torque bounds where hip and knee restricted to 70 N.m peak torque, can mostly provide assistance that has been provided by the ideal exoskeletons with lower energy consumption in both load conditions (Table \ref{Table_Device_Performance_Comparison}).  Both constrained devices were able to assist the \textit{noload} subjects as much as the ideal exoskeletons were assisting, whereas the energy consumption in the biarticular exoskeleton was reduced considerably reduced compared to its ideal actuation, but the monoarticular energy consumption was practically the same with its ideal configuration.\\
 Similar to the \textit{noload} condition, the constrained devices had a high metabolic reduction in the \textit{loaded} subjects; even though it was not the same with the ideal configuration of the devices, the energy consumption had a considerable reduction, especially in the biarticular configuration which is the same as the \textit{noload} condition.
 The performance of devices under peak torque limitation and its comparison with the ideal devices implies that the comparison of assistive devices with unlimited actuation units is not a legitimate comparison suggesting that the comparison between assistive devices should be conducted using optimal trade-off points of devices in which a device has its optimal performance in both energy consumption and metabolic cost reduction criteria.\\
@@ -619,13 +626,6 @@ The performance of devices under peak torque limitation and its comparison with 
 	\label{Table_Device_Performance_Comparison}
 	\end{adjustwidth}
 \end{table}
-\begin{figure*}[ht]   
-	\centering
-	\includegraphics[width=\linewidth]{Pareto_Simulations_Figures/PaperFigure_Paretofront_EnergyBarPlot.pdf}
-	\vspace{1mm}
-	\caption{{\small\textbf{Energy consumption of optimal assistive actuators}. The horizontal axis shows the device number on the optimal pareto-front. The vertical lines represent the standard deviation of devices in 7 subjects.}}
-	\label{Fig_Paretofronts_Actuators_EnergyBarPlot}
-\end{figure*}
 The biarticular and monoarticular exoskeletons are showing practically similar performance in assisting subjects with and without load. Nevertheless, analyzing the energy consumption of the devices on the Pareto front reveal that the monoarticular device considerably affected by the load condition of subjects in which the performance of monoarticular exoskeleton became practically identical with the biarticular device when subjects were \textit{loaded} whereas the monoarticular device had superior performance in \textit{noload} condition.\\
 The detailed analysis of the monoarticular device show that both actuators of this device were affected by loading subjects with a heavy load (figure \ref{Fig_Main_Paretofronts} and \ref{Fig_Paretofronts_Actuators_EnergyBarPlot}), and unlike the \textit{noload} condition where knee actuator energy consumption was dominant to the hip in all optimal devices, loading subjects increased the amount of mechanical work of performed by the hip. In contrast, the energy consumption of the biarticular knee and hip actuators was not affected noticeably by loading subjects as figure \ref{Fig_Paretofronts_Actuators_EnergyBarPlot} representing the energy consumption of optimal devices.Additionally, the optimal configurations of the biarticular exoskeleton are mostly similar in the subjects walking while carrying a heavy load and walking normally, whereas monoarticular exoskeleton has different configurations in both load conditions. The practically similar configurations and the performance of the biarticular exoskeleton in both load conditions can facilitate designing a biarticular device and and developing a generic controller to assist the subjects in different  load conditions.\\
 \subsection*{Optimal device torque and power profiles }
@@ -647,13 +647,28 @@ Both actuators of the constrained monoarticular device have different profiles w
 \end{figure*}
 The restrained biarticular and monoarticular devices had a resemblance to the ideal devices similar to the torque profiles similarity to ideal profiles. The biarticular hip actuator has mostly a similar power trajectory for the hip in both load conditions with considerably lower magnitude for all optimal devices where this magnitude difference is more substantial during mid-stance and initial swing to mid-swing phases; while the knee actuator has a high correlation with the ideal actuator, the loading response and mid-stance phases of the constrained knee actuator is different with the ideal actuator like the torque profile. The constrained monoarticular hip actuator has a high variation within optimal devices, and most of the optimal configurations have their unique power profile; nevertheless, the optimal devices with the highest peak torque limitations have a close resemblance to the ideal device. In contrast to the hip actuators, the power trajectories of the knee actuator in both load conditions were similar to the ideal device with a difference during pre-swing to mid-swing phases where the peak power consumption occurs about the toe-off in the constrained knee actuators.\\
 The power and torque profiles of optimal biarticular and monoarticular devices revealing that although the optimal monoarticular exoskeletons have a lower energy consumption comparing to the optimal biarticular devices, the variation of the torque and power profiles within optimal configurations of the monoarticular device is higher than biarticular devices and load condition of the subjects can considerably affect the profiles of assistive actuators. These variations within optimal monoarticular devices indicate that achieving a generalized design and control policies for assisting subjects in different load conditions and different actuation and battery life limitations would be genuinely challenging with monoarticular exoskeletons.\\
+
+\subsection*{Mass, inertia and regeneration effects}
+\begin{figure*}[ht]   
+	\centering
+	\includegraphics[width=\linewidth]{Pareto_Mass_Regenration_Figures/PaperFigure_AddingMass_Pareto.pdf}
+	\vspace{1mm}
+	\caption{{\small\textbf{Optimal assistive devices power profiles compared to joint power.} }}
+	\label{Fig_Paretofronts_Mass_Regeneration_Effect}
+\end{figure*}
+\begin{figure*}[ht]   
+	\centering
+	\includegraphics[width=\linewidth]{Pareto_Mass_Regenration_Figures/PaperFigure_Pareto_Comparison.pdf}
+	\vspace{1mm}
+	\caption{{\small\textbf{Optimal assistive devices power profiles compared to joint power.}}}
+	\label{Fig_Paretofronts_Mass_Regeneration_Effect_Comparison}
+\end{figure*}
 \subsection*{Case Study}
 We conducted four different case studies to get more insight into the performance of two assistive devices in a particular load condition or an assistive device in two different load conditions with the same effect on the metabolic energy expenditure or the same energy consumption of assistive actuators. Investigating these specific configurations of the optimal devices helps us understand how the profiles of devices with the same performances are changing in a load condition and what their effect is on muscle coordination. These cases can help to clarify the effect of load condition on an assistive device profiles, and their muscles and how a particular device will be affected by loading assisted subjects with a heavy load.
 \subsubsection*{Case 1: Devices Performance in \textit{\textit{noload}} Condition} 
 \subsubsection*{Case 2: Devices Performance in \textit{\textit{loaded}} Condition} 
 \subsubsection*{Case 3: Biarticular Exoskeleton Performance} 
 \subsubsection*{Case 4: Monoarticular Exoskeleton Performance}
-\subsection*{Mass, inertia and regeneration effects}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection*{Study Limitations}
 This simulation-based studying assistive device has some limitations that need to be considered for any interpretation of the results. One of the main limitations is kinematics and ground reaction forces for the assisted subjects; Although experimental studies reported that exoskeleton could make a minor \cite{42,79,91,114,115,116} and significant \cite{80,117,118,119} changes on assisted subjects kinematics and joint moment, our simulator's algorithm (CMC) is not capturing these changes and it is assumed that unassisted and assisted subjects have the same kinematics, ground reaction force, and joint moment, nonetheless, it is reported that metabolic cost may not substantially be affected by kinematics changes\cite{120}. This limitation recently has been addressed by employing predictive simulations which can capture the changes in the kinematics and dynamics of the assisted subjects.\\  
