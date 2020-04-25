@@ -44,6 +44,10 @@ exo_speed_dataset = {pathlib.PurePath(f[1]).stem: np.loadtxt(f[1], delimiter=','
 directory = 'D:/Ali.K.M.Bonab/Walking_Mass_Inertia_Effect/Data/Data/Ideal/*_musclesmoment.csv'
 files = enumerate(glob.iglob(directory), 1)
 musclesmoment_dataset = {pathlib.PurePath(f[1]).stem: np.loadtxt(f[1], delimiter=',') for f in files}
+# muscles power dataset
+directory = 'D:/Ali.K.M.Bonab/Walking_Mass_Inertia_Effect/Data/Data/Ideal/*_musclespower.csv'
+files = enumerate(glob.iglob(directory), 1)
+musclespower_dataset = {pathlib.PurePath(f[1]).stem: np.loadtxt(f[1], delimiter=',') for f in files}
 # assisted subjects muscles activation dataset
 directory = 'D:/Ali.K.M.Bonab/Walking_Mass_Inertia_Effect/Data/Data/Ideal/*_activation.csv'
 files = enumerate(glob.iglob(directory), 1)
@@ -159,6 +163,30 @@ mean_mono_loaded_kneemuscles_moment,std_mono_loaded_kneemuscles_moment = utils.m
 mean_mono_noload_kneemuscles_moment,std_mono_noload_kneemuscles_moment = utils.mean_std_over_subjects(mono_noload_kneemuscles_moment,avg_trials=False)
 
 #******************************
+# hip muscles power
+# biarticular
+bi_loaded_hipmuscles_power = utils.normalize_direction_data(musclespower_dataset['biarticular_ideal_loaded_hip_musclespower'],gl_noload,direction=False)
+bi_noload_hipmuscles_power = utils.normalize_direction_data(musclespower_dataset['biarticular_ideal_noload_hip_musclespower'],gl_noload,direction=False)
+mean_bi_loaded_hipmuscles_power,std_bi_loaded_hipmuscles_power = utils.mean_std_over_subjects(bi_loaded_hipmuscles_power,avg_trials=False)
+mean_bi_noload_hipmuscles_power,std_bi_noload_hipmuscles_power = utils.mean_std_over_subjects(bi_noload_hipmuscles_power,avg_trials=False)
+# monoarticular
+mono_loaded_hipmuscles_power = utils.normalize_direction_data(musclespower_dataset['monoarticular_ideal_loaded_hip_musclespower'],gl_noload,direction=False)
+mono_noload_hipmuscles_power = utils.normalize_direction_data(musclespower_dataset['monoarticular_ideal_noload_hip_musclespower'],gl_noload,direction=False)
+mean_mono_loaded_hipmuscles_power,std_mono_loaded_hipmuscles_power = utils.mean_std_over_subjects(mono_loaded_hipmuscles_power,avg_trials=False)
+mean_mono_noload_hipmuscles_power,std_mono_noload_hipmuscles_power = utils.mean_std_over_subjects(mono_noload_hipmuscles_power,avg_trials=False)
+# knee muscles power
+# biarticular
+bi_loaded_kneemuscles_power = utils.normalize_direction_data(musclespower_dataset['biarticular_ideal_loaded_knee_musclespower'],gl_noload,direction=False)
+bi_noload_kneemuscles_power = utils.normalize_direction_data(musclespower_dataset['biarticular_ideal_noload_knee_musclespower'],gl_noload,direction=False)
+mean_bi_loaded_kneemuscles_power,std_bi_loaded_kneemuscles_power = utils.mean_std_over_subjects(bi_loaded_kneemuscles_power,avg_trials=False)
+mean_bi_noload_kneemuscles_power,std_bi_noload_kneemuscles_power = utils.mean_std_over_subjects(bi_noload_kneemuscles_power,avg_trials=False)
+# monoarticular
+mono_loaded_kneemuscles_power = utils.normalize_direction_data(musclespower_dataset['monoarticular_ideal_loaded_knee_musclespower'],gl_noload,direction=False)
+mono_noload_kneemuscles_power = utils.normalize_direction_data(musclespower_dataset['monoarticular_ideal_noload_knee_musclespower'],gl_noload,direction=False)
+mean_mono_loaded_kneemuscles_power,std_mono_loaded_kneemuscles_power = utils.mean_std_over_subjects(mono_loaded_kneemuscles_power,avg_trials=False)
+mean_mono_noload_kneemuscles_power,std_mono_noload_kneemuscles_power = utils.mean_std_over_subjects(mono_noload_kneemuscles_power,avg_trials=False)
+
+#******************************
 # muscles activation
 # biarticular
 bi_loaded_muscles_activation = utils.normalize_direction_data(musclesactivation_dataset['biarticular_ideal_loaded_ninemuscles_activation'],gl_noload,direction=False,normalize=False)
@@ -187,7 +215,6 @@ bi_loadedvsnoload_metabolics = utils.reduction_calc(assisted_energy_dataset['bia
 mono_loadedvsnoload_metabolics = utils.reduction_calc(assisted_energy_dataset['monoarticular_ideal_loaded_metabolics_energy'],assisted_energy_dataset['monoarticular_ideal_noload_metabolics_energy'])
 
 #####################################################################################
-# Plots
 # hip joint moment plot dictionaries
 bi_loaded_hip_musclesmoment_dic = {'pgc':gait_cycle,'avg':utils.smooth(mean_bi_loaded_hipmuscles_moment,3),'label':'loaded muscles',
                         'std':utils.smooth(std_bi_loaded_hipmuscles_moment,3),'avg_toeoff':loaded_mean_toe_off}
@@ -197,6 +224,14 @@ mono_loaded_hip_musclesmoment_dic = {'pgc':gait_cycle,'avg':utils.smooth(mean_mo
                         'std':utils.smooth(std_mono_loaded_hipmuscles_moment,3),'avg_toeoff':loaded_mean_toe_off}
 mono_noload_hip_musclesmoment_dic = {'pgc':gait_cycle,'avg':utils.smooth(mean_mono_noload_hipmuscles_moment,3),'label':'noload muscles ',
                         'std':utils.smooth(std_mono_noload_hipmuscles_moment,3),'avg_toeoff':noload_mean_toe_off,'load':'noload'}
+bi_loaded_hip_musclespower_dic = {'pgc':gait_cycle,'avg':utils.smooth(mean_bi_loaded_hipmuscles_power,3),'label':'loaded muscles',
+                        'std':utils.smooth(std_bi_loaded_hipmuscles_power,3),'avg_toeoff':loaded_mean_toe_off}
+bi_noload_hip_musclespower_dic = {'pgc':gait_cycle,'avg':utils.smooth(mean_bi_noload_hipmuscles_power,3),'label':'noload muscles',
+                        'std':utils.smooth(std_bi_noload_hipmuscles_power,3),'avg_toeoff':noload_mean_toe_off,'load':'noload'}
+mono_loaded_hip_musclespower_dic = {'pgc':gait_cycle,'avg':utils.smooth(mean_mono_loaded_hipmuscles_power,3),'label':'loaded muscles',
+                        'std':utils.smooth(std_mono_loaded_hipmuscles_power,3),'avg_toeoff':loaded_mean_toe_off}
+mono_noload_hip_musclespower_dic = {'pgc':gait_cycle,'avg':utils.smooth(mean_mono_noload_hipmuscles_power,3),'label':'noload muscles ',
+                        'std':utils.smooth(std_mono_noload_hipmuscles_power,3),'avg_toeoff':noload_mean_toe_off,'load':'noload'}
 unassist_loaded_hip_musclesmoment_dic = {'pgc':gait_cycle,'avg':utils.smooth(unassist_dataset['mean_norm_loaded_hipmuscles_moment'],3),'label':'loaded joint',
                         'std':utils.smooth(unassist_dataset['std_norm_loaded_hipmuscles_moment'],3),'avg_toeoff':loaded_mean_toe_off}
 unassist_noload_hip_musclesmoment_dic = {'pgc':gait_cycle,'avg':utils.smooth(unassist_dataset['mean_norm_noload_hipmuscles_moment'],3),'label':'noload joint',
@@ -211,6 +246,14 @@ mono_loaded_knee_musclesmoment_dic = {'pgc':gait_cycle,'avg':utils.smooth(mean_m
                         'std':utils.smooth(std_mono_loaded_kneemuscles_moment,3),'avg_toeoff':loaded_mean_toe_off}
 mono_noload_knee_musclesmoment_dic = {'pgc':gait_cycle,'avg':utils.smooth(mean_mono_noload_kneemuscles_moment,3),'label':'noload muscles',
                         'std':utils.smooth(std_mono_noload_kneemuscles_moment,3),'avg_toeoff':noload_mean_toe_off,'load':'noload'}
+bi_loaded_knee_musclespower_dic = {'pgc':gait_cycle,'avg':utils.smooth(mean_bi_loaded_kneemuscles_power,3),'label':'loaded muscles',
+                        'std':utils.smooth(std_bi_loaded_kneemuscles_power,3),'avg_toeoff':loaded_mean_toe_off}
+bi_noload_knee_musclespower_dic = {'pgc':gait_cycle,'avg':utils.smooth(mean_bi_noload_kneemuscles_power,3),'label':'noload muscles',
+                        'std':utils.smooth(std_bi_noload_kneemuscles_power,3),'avg_toeoff':noload_mean_toe_off,'load':'noload'}
+mono_loaded_knee_musclespower_dic = {'pgc':gait_cycle,'avg':utils.smooth(mean_mono_loaded_kneemuscles_power,3),'label':'loaded muscles',
+                        'std':utils.smooth(std_mono_loaded_kneemuscles_power,3),'avg_toeoff':loaded_mean_toe_off}
+mono_noload_knee_musclespower_dic = {'pgc':gait_cycle,'avg':utils.smooth(mean_mono_noload_kneemuscles_power,3),'label':'noload muscles',
+                        'std':utils.smooth(std_mono_noload_kneemuscles_power,3),'avg_toeoff':noload_mean_toe_off,'load':'noload'}
 unassist_loaded_knee_musclesmoment_dic = {'pgc':gait_cycle,'avg':utils.smooth(unassist_dataset['mean_norm_loaded_kneemuscles_moment'],3),'label':'loaded joint',
                         'std':utils.smooth(unassist_dataset['std_norm_loaded_kneemuscles_moment'],3),'avg_toeoff':loaded_mean_toe_off}
 unassist_noload_knee_musclesmoment_dic = {'pgc':gait_cycle,'avg':utils.smooth(unassist_dataset['mean_norm_noload_kneemuscles_moment'],3),'label':'noload joint',
@@ -366,13 +409,15 @@ fig.savefig('./Figures/Ideal/Exoskeletons_Knee_Torque.pdf',orientation='landscap
 plot_dic={
 'plot_1_list' : [loaded_hip_power_dic,noload_hip_power_dic,\
                      loaded_hip_power_dic,noload_hip_power_dic],
+'plot_3_list' : [bi_loaded_hip_musclespower_dic,bi_noload_hip_musclespower_dic,\
+                      mono_loaded_hip_musclespower_dic,mono_noload_hip_musclespower_dic],
 'plot_2_list' : [bi_loaded_hip_power_dic,bi_noload_hip_power_dic,mono_loaded_hip_power_dic,mono_noload_hip_power_dic],
 'plot_titles' : ['loaded biarticular hip joint','noload biarticular hip joint','loaded monoarticular hip joint','noload monoarticular hip joint']
 }
 # plot
 fig = plt.figure(num='Loaded Hip Power',figsize=(9.4, 6.8))
 utils.plot_joint_muscle_exo(nrows=2,ncols=2,plot_dic=plot_dic,color_dic=default_color_dic,\
-                            thirdplot=False,ylabel='hip flexion/extension (W/kg)',y_ticks=np.arange(-4,5,2))
+                            thirdplot=True,ylabel='hip flexion/extension (W/kg)',y_ticks=np.arange(-4,5,2))
 fig.tight_layout()
 fig.savefig('./Figures/Ideal/Exoskeletons_Hip_Power.pdf',orientation='landscape',bbox_inches='tight')
 plt.show()
@@ -383,13 +428,15 @@ plt.show()
 plot_dic={
 'plot_1_list' : [loaded_knee_power_dic,noload_knee_power_dic,\
                      loaded_knee_power_dic,noload_knee_power_dic],
+'plot_3_list' : [bi_loaded_knee_musclespower_dic,bi_noload_knee_musclespower_dic,\
+                      mono_loaded_knee_musclespower_dic,mono_noload_knee_musclespower_dic],
 'plot_2_list' : [bi_loaded_knee_power_dic,bi_noload_knee_power_dic,mono_loaded_knee_power_dic,mono_noload_knee_power_dic],
 'plot_titles' : ['loaded biarticular knee joint','noload biarticular knee joint','loaded monoarticular knee joint','noload monoarticular knee joint']
 }
 # 
 fig = plt.figure(num='Loaded Knee Power',figsize=(9.4, 6.8))
 utils.plot_joint_muscle_exo(nrows=2,ncols=2,plot_dic=plot_dic,color_dic=default_color_dic,\
-                            thirdplot=False,ylabel='knee flexion/extension (W/kg)',y_ticks=np.arange(-4,6,2))
+                            thirdplot=True,ylabel='knee flexion/extension (W/kg)',y_ticks=np.arange(-4,6,2))
 fig.tight_layout()
 plt.show()
 fig.savefig('./Figures/Ideal/Exoskeletons_Knee_Power.pdf',orientation='landscape',bbox_inches='tight')
@@ -456,7 +503,7 @@ default_color_dic = {
                   mycolors['french rose'],mycolors['french rose'],mycolors['crimson red'],mycolors['french rose']]
 }
 # plot
-fig = plt.figure(num='Loaded Hip Torque',figsize=(12.8, 9.6))
+fig = plt.figure(num='Moment Figure',figsize=(12.8, 9.6))
 utils.plot_joint_muscle_exo(nrows=3,ncols=3,nplots=8,plot_dic=plot_dic,color_dic=default_color_dic,legend_loc=[0,3],\
                             subplot_legend=True,fig=fig,ylabel='flexion/extension\n moment (N-m/kg)')
 fig.tight_layout(h_pad=-1.5, w_pad=-1.5)
@@ -468,26 +515,33 @@ plt.show()
 # power figure
 # required dictionary
 plot_dic={
-'plot_1_list' : [loaded_hip_power_dic,loaded_knee_power_dic,loaded_hip_power_dic,loaded_knee_power_dic,\
-                 noload_hip_power_dic,noload_knee_power_dic,noload_hip_power_dic,noload_knee_power_dic],
-'plot_2_list' : [bi_loaded_hip_power_dic,bi_loaded_knee_power_dic,mono_loaded_hip_power_dic,mono_loaded_knee_power_dic,\
-                 bi_noload_hip_power_dic,bi_noload_knee_power_dic,mono_noload_hip_power_dic,mono_noload_knee_power_dic],
-'plot_titles' : ['loaded biarticular\n hip joint','loaded biarticular\n knee joint','loaded monoarticular\n hip joint','loaded monoarticular\n knee joint',\
-                 'noload biarticular\n hip joint','noload biarticular\n knee joint','noload monoarticular\n hip joint','noload monoarticular\n knee joint']
+'plot_1_list' : [loaded_hip_power_dic,loaded_knee_power_dic,\
+                 loaded_hip_power_dic,noload_hip_power_dic,\
+                 noload_knee_power_dic,noload_hip_power_dic,\
+                 loaded_knee_power_dic,noload_knee_power_dic],
+'plot_3_list' : [bi_loaded_hip_musclespower_dic,bi_loaded_knee_musclespower_dic,mono_loaded_hip_musclespower_dic,\
+                 bi_noload_hip_musclespower_dic,bi_noload_knee_musclespower_dic,mono_noload_hip_musclespower_dic,\
+                 mono_loaded_knee_musclespower_dic,mono_noload_knee_musclespower_dic],
+'plot_2_list' : [bi_loaded_hip_power_dic,bi_loaded_knee_power_dic,mono_loaded_hip_power_dic,\
+                 bi_noload_hip_power_dic,bi_noload_knee_power_dic,mono_noload_hip_power_dic,\
+                 mono_loaded_knee_power_dic,mono_noload_knee_power_dic],
+'plot_titles' : ['loaded biarticular hip joint','loaded biarticular knee joint','loaded monoarticular hip joint',\
+                 'noload biarticular hip joint','noload biarticular knee joint','noload monoarticular hip joint',\
+                 'loaded monoarticular knee joint','noload monoarticular knee joint']
 }
 default_color_dic = {
-'color_1_list' : ['k','k','k','k','xkcd:irish green','xkcd:irish green','xkcd:irish green','xkcd:irish green'],
-'color_2_list' : [mycolors['cyan blue'],mycolors['cyan blue'],mycolors['cyan blue'],mycolors['cyan blue'],\
-                  mycolors['olympic blue'],mycolors['olympic blue'],mycolors['olympic blue'],mycolors['olympic blue']],
-'color_3_list' : [mycolors['crimson red'],mycolors['crimson red'],mycolors['crimson red'],mycolors['crimson red'],\
-                  mycolors['french rose'],mycolors['french rose'],mycolors['french rose'],mycolors['french rose']]
+'color_1_list' : ['k','k','k','xkcd:irish green','xkcd:irish green','xkcd:irish green','k','xkcd:irish green'],
+'color_2_list' : [mycolors['cyan blue'],mycolors['cyan blue'],mycolors['cyan blue'],mycolors['olympic blue'],\
+                  mycolors['olympic blue'],mycolors['olympic blue'],mycolors['cyan blue'],mycolors['olympic blue']],
+'color_3_list' : [mycolors['crimson red'],mycolors['crimson red'],mycolors['crimson red'],mycolors['french rose'],\
+                  mycolors['french rose'],mycolors['french rose'],mycolors['crimson red'],mycolors['french rose']]
 }
 # plot
-fig = plt.figure(num='Loaded Hip Torque',figsize=(12.8,6.6))
-utils.plot_joint_muscle_exo(nrows=2,ncols=4,nplots=8,plot_dic=plot_dic,color_dic=default_color_dic,legend_loc=[0,4],\
-                            thirdplot=False,subplot_legend=False,fig=fig,ylabel='flexion/extension\n power (W/kg)',y_ticks=[-4,-2,0,2,4])
-fig.tight_layout(h_pad=-1, w_pad=-1.5)
-fig.subplots_adjust(top=0.98, bottom=0.075, left=0.100, right=0.975,hspace=0.25,wspace=0.15)
+fig = plt.figure(num='Power Figure',figsize=(12.8, 9.6))
+utils.plot_joint_muscle_exo(nrows=3,ncols=3,nplots=8,plot_dic=plot_dic,color_dic=default_color_dic,legend_loc=[0,3],\
+                            subplot_legend=True,fig=fig,ylabel='flexion/extension\n moment (W/kg)')
+fig.tight_layout(h_pad=-1.5, w_pad=-1.5)
+fig.subplots_adjust(top=0.99, bottom=0.075, left=0.100, right=0.975,hspace=0.2,wspace=0.15)
 fig.savefig('./Figures/Ideal/PaperFigure_Exoskeletons_Power.pdf',orientation='landscape',bbox_inches='tight')
 plt.show()
 

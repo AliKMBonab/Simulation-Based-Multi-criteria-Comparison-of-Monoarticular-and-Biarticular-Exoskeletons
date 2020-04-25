@@ -79,31 +79,44 @@ mono_noload_hip_regen_energy= np.reshape(assisted_energy_dataset['monoarticular_
 mono_noload_knee_regen_energy= np.reshape(assisted_energy_dataset['monoarticular_pareto_noload_kneeregenrative_energy'],(25,21),order='F')
 mono_noload_regen_energy = -mono_noload_hip_regen_energy - mono_noload_knee_regen_energy + mono_noload_hip_energy + mono_noload_knee_energy
 # mean & std actuators regenrative energy
-# noload bi
-mean_bi_noload_hip_regen_energy, std_bi_noload_hip_regen_energy = utils.pareto_avg_std_energy(-assisted_energy_dataset['biarticular_pareto_noload_hipregenrative_energy']+\
-                                                                                                  assisted_energy_dataset['biarticular_pareto_noload_hipactuator_energy'],reshape=True)
-mean_bi_noload_knee_regen_energy, std_bi_noload_knee_regen_energy = utils.pareto_avg_std_energy(-assisted_energy_dataset['biarticular_pareto_noload_kneeregenrative_energy']+\
-                                                                                                    assisted_energy_dataset['biarticular_pareto_noload_kneeactuator_energy'],reshape=True)
-mean_bi_noload_regen_energy, std_bi_noload_regen_energy = utils.pareto_avg_std_energy(-assisted_energy_dataset['biarticular_pareto_noload_kneeregenrative_energy']-\
-                                                                                          assisted_energy_dataset['biarticular_pareto_noload_hipregenrative_energy']+\
-                                                                                          assisted_energy_dataset['biarticular_pareto_noload_kneeactuator_energy']+\
-                                                                                          assisted_energy_dataset['biarticular_pareto_noload_hipactuator_energy'],reshape=True)
-# noload mono
-mean_mono_noload_hip_regen_energy, std_mono_noload_hip_regen_energy = utils.pareto_avg_std_energy(-assisted_energy_dataset['monoarticular_pareto_noload_hipregenrative_energy']+\
-                                                                                                  assisted_energy_dataset['monoarticular_pareto_noload_hipactuator_energy'],reshape=True)
-mean_mono_noload_knee_regen_energy, std_mono_noload_knee_regen_energy = utils.pareto_avg_std_energy(-assisted_energy_dataset['monoarticular_pareto_noload_kneeregenrative_energy']+\
-                                                                                                    assisted_energy_dataset['monoarticular_pareto_noload_kneeactuator_energy'],reshape=True)
-mean_mono_noload_regen_energy, std_mono_noload_regen_energy = utils.pareto_avg_std_energy(-assisted_energy_dataset['monoarticular_pareto_noload_kneeregenrative_energy']-\
-                                                                                          assisted_energy_dataset['monoarticular_pareto_noload_hipregenrative_energy']+\
-                                                                                          assisted_energy_dataset['monoarticular_pareto_noload_kneeactuator_energy']+\
-                                                                                          assisted_energy_dataset['monoarticular_pareto_noload_hipactuator_energy'],reshape=True)
-
+mean_bi_noload_hip_regen_energy, std_bi_noload_hip_regen_energy = utils.regeneratable_percent(assisted_energy_dataset['biarticular_pareto_noload_hipregenrative_energy'],\
+                                                                                              assisted_energy_dataset['biarticular_pareto_noload_hipactuator_energy'])
+mean_bi_noload_knee_regen_energy, std_bi_noload_knee_regen_energy = utils.regeneratable_percent(assisted_energy_dataset['biarticular_pareto_noload_kneeregenrative_energy'],\
+                                                                                                assisted_energy_dataset['biarticular_pareto_noload_kneeactuator_energy'])
+mean_mono_noload_hip_regen_energy, std_mono_noload_hip_regen_energy = utils.regeneratable_percent(assisted_energy_dataset['monoarticular_pareto_noload_hipregenrative_energy'],\
+                                                                                                  assisted_energy_dataset['monoarticular_pareto_noload_hipactuator_energy'])
+mean_mono_noload_knee_regen_energy, std_mono_noload_knee_regen_energy = utils.regeneratable_percent(assisted_energy_dataset['monoarticular_pareto_noload_kneeregenrative_energy'],\
+                                                                                                    assisted_energy_dataset['monoarticular_pareto_noload_kneeactuator_energy'])
+mean_bi_loaded_hip_regen_energy, std_bi_loaded_hip_regen_energy = utils.regeneratable_percent(assisted_energy_dataset['biarticular_pareto_load_hipregenrative_energy'],\
+                                                                                              assisted_energy_dataset['biarticular_pareto_load_hipactuator_energy'])
+mean_bi_loaded_knee_regen_energy, std_bi_loaded_knee_regen_energy = utils.regeneratable_percent(assisted_energy_dataset['biarticular_pareto_load_kneeregenrative_energy'],\
+                                                                                                assisted_energy_dataset['biarticular_pareto_load_kneeactuator_energy'])
+mean_mono_loaded_hip_regen_energy, std_mono_loaded_hip_regen_energy = utils.regeneratable_percent(assisted_energy_dataset['monoarticular_pareto_load_hipregenrative_energy'],\
+                                                                                                  assisted_energy_dataset['monoarticular_pareto_load_hipactuator_energy'])
+mean_mono_loaded_knee_regen_energy, std_mono_loaded_knee_regen_energy = utils.regeneratable_percent(assisted_energy_dataset['monoarticular_pareto_load_kneeregenrative_energy'],\
+                                                                                                    assisted_energy_dataset['monoarticular_pareto_load_kneeactuator_energy'])
+##############################################################
+efficiency = np.array([0.25,0.50,0.75,1])
+mean_bi_noload_regen_energy = np.zeros((25,4))
+std_bi_noload_regen_energy = np.zeros((25,4))
+mean_mono_noload_regen_energy = np.zeros((25,4))
+std_mono_noload_regen_energy = np.zeros((25,4))
+for i in range(4):
+    # noload bi
+    mean_bi_noload_regen_energy[:,i], std_bi_noload_regen_energy[:,i] = utils.pareto_avg_std_energy(-efficiency[i]*assisted_energy_dataset['biarticular_pareto_noload_kneeregenrative_energy']-\
+                                                                                            efficiency[i]*assisted_energy_dataset['biarticular_pareto_noload_hipregenrative_energy']+\
+                                                                                            assisted_energy_dataset['biarticular_pareto_noload_kneeactuator_energy']+\
+                                                                                            assisted_energy_dataset['biarticular_pareto_noload_hipactuator_energy'],reshape=True)
+    # noload mono
+    mean_mono_noload_regen_energy[:,i], std_mono_noload_regen_energy[:,i] = utils.pareto_avg_std_energy(-efficiency[i]*assisted_energy_dataset['monoarticular_pareto_noload_kneeregenrative_energy']-\
+                                                                                            efficiency[i]*assisted_energy_dataset['monoarticular_pareto_noload_hipregenrative_energy']+\
+                                                                                            assisted_energy_dataset['monoarticular_pareto_noload_kneeactuator_energy']+\
+                                                                                            assisted_energy_dataset['monoarticular_pareto_noload_hipactuator_energy'],reshape=True)
 #####################################################################################
 #####################################################################################
-
 # Processing Data For Adding Mass
 biarticular_exoskeleton_dic = {'m_waist':6, 'm_thigh':1, 'm_shank':0.9, 'motor_max_torque':2, 'motor_inertia':0.000506, 'thigh_com':0.23, 'shank_com':0.18, 'leg_inertia':2.52}
-monoarticular_exoskeleton_dic = {'m_waist':3, 'm_thigh':4, 'm_shank':0.9, 'motor_max_torque':2, 'motor_inertia':0.000506, 'thigh_com':0.3, 'shank_com':0.18, 'leg_inertia':2.52}
+monoarticular_exoskeleton_dic = {'m_waist':4.5, 'm_thigh':2.5, 'm_shank':0.9, 'motor_max_torque':2, 'motor_inertia':0.000506, 'thigh_com':0.3, 'shank_com':0.18, 'leg_inertia':2.52}
 biarticular_out = utils.addingmass_metabolics_pareto(unassisted_energy_dataset['noload_metabolics_energy'],bi_noload_metabolics,biarticular_exoskeleton_dic)
 monoarticular_out = utils.addingmass_metabolics_pareto(unassisted_energy_dataset['noload_metabolics_energy'],mono_noload_metabolics,monoarticular_exoskeleton_dic)
 # Metabolic cost reduction after adding mass
@@ -114,24 +127,25 @@ mono_noload_metabolics_addedmass_percent = utils.addingmass_metabolics_reduction
 # mean & std metabolics cost reduction percents after adding mass
 mean_bi_noload_metabolics_addedmass_percent, std_bi_noload_metabolics_addedmass_percent = utils.pareto_avg_std_energy(bi_noload_metabolics_addedmass_percent,reshape=False)
 mean_mono_noload_metabolics_addedmass_percent, std_mono_noload_metabolics_addedmass_percent = utils.pareto_avg_std_energy(mono_noload_metabolics_addedmass_percent,reshape=False)
-
 #####################################################################################
 # All average paretos
-
-
-x1_data = np.reshape(np.concatenate((mean_bi_noload_metabolics_percent,mean_bi_noload_metabolics_addedmass_percent,mean_bi_noload_metabolics_percent),axis=0),(25,3),order='F')
-x2_data = np.reshape(np.concatenate((mean_mono_noload_metabolics_percent,mean_mono_noload_metabolics_addedmass_percent,mean_mono_noload_metabolics_percent),axis=0),(25,3),order='F')
-y1_data = np.reshape(np.concatenate((mean_bi_noload_energy,mean_bi_noload_energy,mean_bi_noload_regen_energy),axis=0),(25,3),order='F')
-y2_data = np.reshape(np.concatenate((mean_mono_noload_energy,mean_mono_noload_energy,mean_mono_noload_regen_energy),axis=0),(25,3),order='F')
+x1_data = np.reshape(np.concatenate((mean_bi_noload_metabolics_percent,mean_bi_noload_metabolics_addedmass_percent,\
+                                    mean_bi_noload_metabolics_percent,mean_bi_noload_metabolics_addedmass_percent),axis=0),(25,4),order='F')
+x2_data = np.reshape(np.concatenate((mean_mono_noload_metabolics_percent,mean_mono_noload_metabolics_addedmass_percent,\
+                                     mean_mono_noload_metabolics_percent,mean_mono_noload_metabolics_addedmass_percent),axis=0),(25,4),order='F')
+y1_data = np.reshape(np.concatenate((mean_bi_noload_energy,mean_bi_noload_energy,mean_bi_noload_regen_energy[:,3],mean_bi_noload_regen_energy[:,3]),axis=0),(25,4),order='F')
+y2_data = np.reshape(np.concatenate((mean_mono_noload_energy,mean_mono_noload_energy,mean_mono_noload_regen_energy[:,3],mean_mono_noload_regen_energy[:,3]),axis=0),(25,4),order='F')
 color_1 = mycolors['magenta pink']
 color_2 = mycolors['lavender purple']
-plot_titles = ['noload, ideal','noload, exo mass','noload, exo mass + renegeration']
-
-fig = plt.figure(num='Pareto Curve: noload mono vs bi',figsize=(14.4, 10.8))
-nplot=3
-ncols=3
-nrows=1
-labels = np.arange(1,26,1)
+plot_titles = ['noload, ideal','noload, exo mass','noload, renegeration','noload, renegeration\n + exo mass',]
+fig = plt.figure(num='Pareto Curve: noload mono vs bi',figsize=(14.4, 12.8))
+nplot=4
+ncols=2
+nrows=2
+labels=[]
+for i in ['A','B','C','D','E']:
+    for j in ['a','b','c','d','e']:
+        labels.append('{}{}'.format(i,j))
 for i in range(nplot):
     plt.subplot(nrows,ncols,i+1)
     plt.scatter(x1_data[:,i],y1_data[:,i],marker="o",color=color_1,label='biarticular')
@@ -146,13 +160,68 @@ for i in range(nplot):
     plt.xlabel('Metabolic Reduction (%)')
     plt.ylabel('Energy Consumption (W/kg)')
 fig.tight_layout(h_pad=-1.5, w_pad=-1.5)
-fig.subplots_adjust(top=0.99, bottom=0.075, left=0.100, right=0.975,hspace=0.2,wspace=0.15)
+fig.subplots_adjust(top=0.99, bottom=0.075, left=0.100, right=0.975,hspace=0.30,wspace=0.15)
 fig.savefig('./Figures/Pareto/Adding_Mass_Pareto/Avg_Paretos.pdf',orientation='landscape',bbox_inches='tight')
 plt.show()
 
 #####################################################################################
+# bar plots for the percent of regeneratable energy
+fig = plt.figure(num='regeneratable energy',figsize=(14.4, 12.8))
+indices = np.arange(1,26,1)
+# biarticular noload
+plot_dic = {'x1_data':mean_bi_noload_hip_regen_energy,'x1err_data':std_bi_noload_hip_regen_energy,
+            'y1_data':mean_bi_noload_knee_regen_energy,'y1err_data':std_bi_noload_knee_regen_energy
+            }
+plt.subplot(2,2,1)
+utils.paretofront_barplot(plot_dic,indices,loadcond='noload')
+plt.ylabel('regenerable energy (%)')
+plt.title('biarticular, noload')
+ax = plt.gca()
+plt.tight_layout()
+utils.no_top_right(ax)
+plt.legend(loc='best',frameon=False)
+# monoarticular noload
+plot_dic = {'x1_data':mean_mono_noload_hip_regen_energy,'x1err_data':std_mono_noload_hip_regen_energy,
+            'y1_data':mean_mono_noload_knee_regen_energy,'y1err_data':std_mono_noload_knee_regen_energy
+            }
+plt.subplot(2,2,2)
+utils.paretofront_barplot(plot_dic,indices,loadcond='noload')
+plt.title('monoarticular, noload')
+ax = plt.gca()
+plt.tight_layout()
+utils.no_top_right(ax)
+plt.legend(loc='best',frameon=False)
+# biarticular loaded
+plot_dic = {'x1_data':mean_bi_loaded_hip_regen_energy,'x1err_data':std_bi_loaded_hip_regen_energy,
+            'y1_data':mean_bi_loaded_knee_regen_energy,'y1err_data':std_bi_loaded_knee_regen_energy
+            }
+plt.subplot(2,2,3)
+utils.paretofront_barplot(plot_dic,indices,loadcond='loaded')
+plt.ylabel('regenerable energy (%)')
+plt.xlabel('device configuration')
+plt.title('biarticular, loaded')
+ax = plt.gca()
+plt.tight_layout()
+utils.no_top_right(ax)
+plt.legend(loc='best',frameon=False)
+# monoarticular loaded
+plot_dic = {'x1_data':mean_mono_loaded_hip_regen_energy,'x1err_data':std_mono_loaded_hip_regen_energy,
+            'y1_data':mean_mono_loaded_knee_regen_energy,'y1err_data':std_mono_loaded_knee_regen_energy
+            }
+plt.subplot(2,2,4)
+utils.paretofront_barplot(plot_dic,indices,loadcond='loaded')
+plt.title('monoarticular, loaded')
+plt.xlabel('device configuration')
+ax = plt.gca()
+plt.tight_layout()
+utils.no_top_right(ax)
+plt.legend(loc='best',frameon=False)
+fig.tight_layout(h_pad=-1.5, w_pad=-1.5)
+fig.subplots_adjust(top=0.99, bottom=0.075, left=0.100, right=0.975,hspace=0.30,wspace=0.15)
+fig.savefig('./Figures/Pareto/Adding_Mass_Pareto/Regenerable_Energy.pdf',orientation='landscape',bbox_inches='tight')
+plt.show()
+#####################################################################################
 # plots
-
 # subjects pareto curve: noload mono vs biarticular
 
 plot_dic = {'x1_data':bi_noload_metabolics_percent,'x2_data':mono_noload_metabolics_percent,
@@ -205,7 +274,7 @@ plt.show()
 
 plot_dic = {'x1_data':bi_noload_metabolics_addedmass_percent,'x2_data':bi_noload_metabolics_percent,
           'y1_data':bi_noload_energy,'y2_data':bi_noload_energy,
-          'color_1':mycolors['burgundy red'],'color_2':mycolors['gold'],
+          'color_1':mycolors['burgundy red'],'color_2':mycolors['salmon'],
           'ylabel':'Energy Consumption (W/kg)','xlabel':'Metabolic Reduction (%)',
           'legend_1': 'bi non-ideal','legend_2': 'bi ideal'}
 fig = plt.figure(num='Pareto Curve: noload bi non-ideal vs ideal',figsize=(10.4, 18.8))
@@ -252,7 +321,7 @@ plot_dic = {'x1_data':mean_bi_noload_metabolics_addedmass_percent,'x1err_data':s
           'x2_data':mean_bi_noload_metabolics_percent,'x2err_data':std_bi_noload_metabolics_percent,
           'y1_data':mean_bi_noload_energy,'y1err_data':std_bi_noload_energy,
           'y2_data':mean_bi_noload_energy,'y2err_data':std_bi_noload_energy,
-          'color_1':mycolors['burgundy red'],'color_2':mycolors['gold'],
+          'color_1':mycolors['burgundy red'],'color_2':mycolors['salmon'],
           'legend_1': 'bi non-ideal','legend_2': 'bi ideal'}
 
 fig = plt.figure(num='Pareto Curve: noload bi non-ideal vs ideal',figsize=(10.4, 8.8))
@@ -307,7 +376,7 @@ plt.show()
 
 plot_dic = {'x1_data':bi_noload_metabolics_addedmass_percent,'x2_data':bi_noload_metabolics_addedmass_percent,
           'y1_data':bi_noload_regen_energy,'y2_data':bi_noload_energy,
-          'color_1':mycolors['burgundy red'],'color_2':mycolors['gold'],
+          'color_1':mycolors['burgundy red'],'color_2':mycolors['salmon'],
           'ylabel':'Energy Consumption (W/kg)','xlabel':'Metabolic Reduction (%)',
           'legend_1': 'bi regenerated','legend_2': 'bi non-regenerated'}
 fig = plt.figure(num='Pareto Curve: noload bi regenerated vs no regeneration',figsize=(10.4, 18.8))
@@ -335,8 +404,8 @@ plt.show()
 plot_dic = {'x1_data':mean_bi_noload_metabolics_addedmass_percent,'x1err_data':std_bi_noload_metabolics_addedmass_percent,
           'x2_data':mean_bi_noload_metabolics_addedmass_percent,'x2err_data':std_bi_noload_metabolics_addedmass_percent,
           'y1_data':mean_bi_noload_energy,'y1err_data':std_bi_noload_energy,
-          'y2_data':mean_bi_noload_regen_energy,'y2err_data':std_bi_noload_regen_energy,
-          'color_1':mycolors['burgundy red'],'color_2':mycolors['gold'],
+          'y2_data':mean_bi_noload_regen_energy[:,3],'y2err_data':std_bi_noload_regen_energy[:,3],
+          'color_1':mycolors['burgundy red'],'color_2':mycolors['salmon'],
           'legend_1': 'bi no-regenrated','legend_2': 'bi regenrated'}
 
 fig = plt.figure(num='Pareto Curve: noload bi non-regenerated vs regenerated',figsize=(10.4, 8.8))
@@ -355,7 +424,7 @@ plt.show()
 plot_dic = {'x1_data':mean_mono_noload_metabolics_addedmass_percent,'x1err_data':std_mono_noload_metabolics_addedmass_percent,
           'x2_data':mean_mono_noload_metabolics_addedmass_percent,'x2err_data':std_mono_noload_metabolics_addedmass_percent,
           'y1_data':mean_mono_noload_energy,'y1err_data':std_mono_noload_energy,
-          'y2_data':mean_mono_noload_regen_energy,'y2err_data':std_mono_noload_regen_energy,
+          'y2_data':mean_mono_noload_regen_energy[:,3],'y2err_data':std_mono_noload_regen_energy[:,3],
           'color_1':mycolors['royal blue'],'color_2':mycolors['lavender purple'],
           'legend_1': 'mono non-regenerated','legend_2': 'mono regenerated'}
         

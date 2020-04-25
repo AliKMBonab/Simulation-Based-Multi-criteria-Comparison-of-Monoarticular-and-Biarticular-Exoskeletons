@@ -71,12 +71,12 @@ middle =['hipactuator','kneeactuator','hipactuator','kneeactuator',\
          'hipactuator','kneeactuator','hipactuator','kneeactuator',\
          'hipactuator','kneeactuator','metabolics','ninemuscles',\
          'hip','knee','processed_hipactuator','processed_kneeactuator',\
-         'processed_hipactuator','processed_kneeactuator','processed_metabolics']
+         'processed_hipactuator','processed_kneeactuator','processed_metabolics','hip','knee']
 suffixes = ['torque','torque','power','power','speed','speed',\
             'energy','energy','regenrative_energy','regenrative_energy',\
             'energy','activation','musclesmoment','musclesmoment',\
             'energy','energy','regenrative_energy','regenrative_energy',\
-            'energy']
+            'energy','musclespower','musclespower']
 #***************************
 print('Section 03:\t extracting Ideal exoskeletons related files: Actuators Data, Muscles Activation, Muscles Moment, Metabolic Energy.\n')
 #***************************
@@ -105,11 +105,13 @@ middle =['hipactuator','kneeactuator','hipactuator','kneeactuator',\
          'hipactuator','kneeactuator','metabolics',\
          'processed_hipactuator','processed_kneeactuator',\
          'processed_metabolics','metabolics','hipregenrative','kneeregenrative',\
-         'hipregenrative','kneeregenrative','unsimulated']
+         'hipregenrative','kneeregenrative','hip_max','knee_max',\
+        'hip_mean','knee_mean','hip_mean','knee_mean','unsimulated']
 suffixes = ['torque','torque','power','power',\
             'energy','energy','energy',\
             'energy','energy','energy','power',\
-            'energy','energy','frompower_energy','frompower_energy','unsimulated']
+            'energy','energy','frompower_energy','frompower_energy',\
+            'power','power','positive_power','positive_power','negative_power','negative_power','unsimulated']
 #***************************
 print('Section 04:\t extracting Pareto exoskeletons related files: Actuators Data, Muscles Activation, Muscles Moment, Metabolic Energy.\n')
 #***************************
@@ -135,11 +137,12 @@ config_names = ['monoarticular','biarticular']
 middle =['hipactuator','kneeactuator','hipactuator','kneeactuator',\
          'hipactuator','kneeactuator','hipactuator','kneeactuator',\
          'metabolics','ninemuscles','hipmuscles','kneemuscles',\
-         'hipactuator','kneeactuator']
+         'hipactuator','kneeactuator','hipmuscles','kneemuscles']
 suffixes = ['torque','torque','power','power',\
             'speed','speed','energy','energy',\
             'energy','activation','moment','moment',\
-            'regenerative_energy','regenerative_energy']
+            'regenerative_energy','regenerative_energy',
+            'power','power']
 HWs = {'mono_load':[70,70,70,30],'bi_load':[70,50,50,40,30],'mono_noload':[70,60,50,30],'bi_noload':[70,50,30,30]}
 KWs = {'mono_load':[70,40,30,30],'bi_load':[70,70,60,70,50],'mono_noload':[70,70,30,30],'bi_noload':[70,60,70,50]}
 labeling = ['mono','bi']

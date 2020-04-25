@@ -1004,6 +1004,22 @@ def energy_processed_power(data,gl,simulation_num=25,subject_num=7,trial_num=3):
         cols = np.arange(i,((simulation_num*subject_num*trial_num)-simulation_num)+i,simulation_num)
         selected_data = data[:,cols]
 
+def regeneratable_percent(regenerated_energy,absolute_energy,reshape=True):
+    if reshape == True:
+        regenerated_energy = np.reshape(regenerated_energy,(25,21),order='F')
+        absolute_energy = np.reshape(absolute_energy,(25,21),order='F')
+    percent = np.zeros((25,21))
+    for i in range (21):
+        percent[:,i] = np.true_divide(((regenerated_energy[:,i])),absolute_energy[:,i])*100
+    subject_percent = np.zeros((25,7))
+    c=0
+    for i in range(7):
+        subject_percent[:,i] = np.nanmean(percent[:,c:c+2],axis=1)
+        c+=3
+    avg_percent = np.nanmean(subject_percent,axis=1)
+    std_percent = np.nanstd(subject_percent,axis=1)
+    return avg_percent, std_percent
+
 ######################################################################
 # Plot related functions for Pareto Simulations
 
@@ -1041,7 +1057,7 @@ def errorbar_3D(x,y,z,x_err,y_err,z_err,color,marker='_',lw=2):
         ax.plot([x[i], x[i]], [y[i]+y_err[i], y[i]-y_err[i]], [z[i], z[i]], marker=marker,color=color,lw=lw)
         ax.plot([x[i], x[i]], [y[i], y[i]], [z[i]+z_err[i], z[i]-z_err[i]], marker=marker,color=color,lw=lw)
 
-def plot_pareto_avg_curve (plot_dic,loadcond,legend_loc=0,label_on=True,errbar_on=True,line=False,*args, **kwargs):
+def plot_pareto_avg_curve (plot_dic,loadcond,legend_loc=0,label_on=True,which_label='number',errbar_on=True,line=False,*args, **kwargs):
     '''plotting avg and std subplots for combinations of weights.\n
     -labels: needs to be provided by user otherwise data will be labeled from 1 to 25 automatically.
              labeling is True (i.e. label_on=True) by default.\n
@@ -1062,8 +1078,18 @@ def plot_pareto_avg_curve (plot_dic,loadcond,legend_loc=0,label_on=True,errbar_o
     color_2 = plot_dic['color_2']
     # handle labels
     if 'label_1' and 'label_2' not in plot_dic:
-        label_1 = np.arange(1,26,1)
-        label_2 = np.arange(1,26,1)
+        if which_label == 'alphabet':
+            label_1 =[]
+            for i in ['A','B','C','D','E']:
+                for j in ['a','b','c','d','e']:
+                    label_1.append('{}{}'.format(i,j))
+            label_2 =[]
+            for i in ['A','B','C','D','E']:
+                for j in ['a','b','c','d','e']:
+                    label_2.append('{}{}'.format(i,j))
+        elif which_label == 'number':
+            label_1 = np.arange(1,26,1)
+            label_2 = np.arange(1,26,1)
     else:
         label_1 = plot_dic['label_1']
         label_2 = plot_dic['label_2']
@@ -1100,7 +1126,10 @@ def plot_pareto_curve_subjects (nrows,ncols,nplot,plot_dic,loadcond,\
     xlabel = plot_dic ['xlabel']
     # handle labels
     if labels == None:
-        labels = np.arange(1,26,1)
+        labels=[]
+        for i in ['A','B','C','D','E']:
+            for j in ['a','b','c','d','e']:
+                labels.append('{}{}'.format(i,j))
     # handle titles
     if 'plot_titles' not in plot_dic:
         subjects = ['05','07','09','10','11','12','14']
@@ -1235,7 +1264,10 @@ def plot_pareto_comparison(plot_dic,loadcond,compare,labels=None,legend_loc=[0],
         raise   Exception('comparison case is not valid.')
     # handle labels
     if labels == None:
-        labels = np.arange(1,26,1)
+        label=[]
+        for i in ['A','B','C','D','E']:
+            for j in ['a','b','c','d','e']:
+                label.append('{}{}'.format(i,j))
     # handle legends
     if 'legend_1' and 'legend_2' not in plot_dic:
         legend_1 = 'biarticular,{}'.format(loadcond)
@@ -1299,7 +1331,13 @@ def plot_paretofront_profile_changes(plot_dic,colormap,toeoff_color,include_colo
     # plot the colorbar
     if include_colorbar == True:
         cbar = plt.colorbar(sm,ticks=np.arange(1,len(indices)+1,1),aspect=80)
-        indices_str =[str(item) for item in list(reversed(indices))]
+        label=[]
+        for i in ['A','B','C','D','E']:
+            for j in ['a','b','c','d','e']:
+                label.append('{}{}'.format(i,j))
+        indices_str = []
+        for i in reversed(indices):
+            indices_str.append(label[i-1])
         cbar.set_ticklabels(indices_str)
         cbar.outline.set_visible(False)
     #title
@@ -1397,5 +1435,11 @@ def paretofront_barplot(plot_dic,indices,loadcond):
                     yerr=y1err_data,
                     error_kw=error_config,
                     label=legend_2)
-    indices_str =[str(item) for item in list(reversed(indices))]
+    label=[]
+    for i in ['A','B','C','D','E']:
+        for j in ['a','b','c','d','e']:
+            label.append('{}{}'.format(i,j))
+    indices_str = []
+    for i in reversed(indices):
+        indices_str.append(label[i-1])
     plt.xticks(index + bar_width / 2,indices_str )
