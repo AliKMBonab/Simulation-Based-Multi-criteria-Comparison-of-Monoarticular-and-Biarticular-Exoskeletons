@@ -1,0 +1,1 @@
+1. metabolic energy and actuators energy has been normalized to the gait cycle duration of the subject gait cycle. It means that the J/s or W is outcome of energy calculations. 
