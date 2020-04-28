@@ -1054,47 +1054,108 @@ def phase_correspond_data(phase,toe_off):
     gait_cycle = np.linspace(0,100,1000)
     toe_off_diff = toe_off-60
     if phase == 'all':
-        return np.where((gait_cycle >= 0) & (gait_cycle <= 100),gait_cycle)
+        index = np.where((gait_cycle >= 0) & (gait_cycle <= 100))
+        return index
     elif phase == 'loading response':
         phase_start = 0 + toe_off_diff
         phase_end = 10 + toe_off_diff
         if phase_start < 0:
-            indices_1 = np.where((gait_cycle >= 0) & (gait_cycle <= phase_end),gait_cycle)
-            indices_2 = np.where((100+toe_off_diff >= 0) & (gait_cycle <= 100),gait_cycle)
-            return np.concatenate((indices_1,indices_2), axis=0)
+            indices_1 = np.where((gait_cycle >= 0) & (gait_cycle <= phase_end))
+            indices_2 = np.where((gait_cycle >= 100+toe_off_diff) & (gait_cycle <= 100))
+            index = np.concatenate((indices_1[0],indices_2[0]), axis=0)
+            return [index]
         else:
-            return np.where((gait_cycle >= phase_start) & (gait_cycle <= phase_end),gait_cycle)
+            index = np.where((gait_cycle >= phase_start) & (gait_cycle <= phase_end))
+            return index
     elif phase == 'mid stance':
         phase_start = 10 + toe_off_diff
         phase_end = 30 + toe_off_diff
-        return np.where((gait_cycle >= phase_start) & (gait_cycle <= phase_end),gait_cycle)
+        index = np.where((gait_cycle >= phase_start) & (gait_cycle <= phase_end))
+        return index
     elif phase == 'terminal stance':
         phase_start = 30 + toe_off_diff
         phase_end = 50 + toe_off_diff
-        return np.where((gait_cycle >= phase_start) & (gait_cycle <= phase_end),gait_cycle)
+        index = np.where((gait_cycle >= phase_start) & (gait_cycle <= phase_end))
+        return index
     elif phase == 'pre swing':
         phase_start = 50 + toe_off_diff
         phase_end = 60 + toe_off_diff
-        return np.where((gait_cycle >= phase_start) & (gait_cycle <= phase_end),gait_cycle)
+        index = np.where((gait_cycle >= phase_start) & (gait_cycle <= phase_end))
+        return index
     elif phase == 'initial swing':
         phase_start = 60 + toe_off_diff
         phase_end = 70 + toe_off_diff
-        return np.where((gait_cycle >= phase_start) & (gait_cycle <= phase_end),gait_cycle)
+        index = np.where((gait_cycle >= phase_start) & (gait_cycle <= phase_end))
+        return index
     elif phase == 'mid swing':
         phase_start = 70 + toe_off_diff
         phase_end = 85 + toe_off_diff
-        return np.where((gait_cycle >= phase_start) & (gait_cycle <= phase_end),gait_cycle)
+        index = np.where((gait_cycle >= phase_start) & (gait_cycle <= phase_end))
+        return index
     elif phase == 'terminal swing':
         phase_start = 85 + toe_off_diff
         phase_end = 100 + toe_off_diff
         if phase_start > 100:
-            indices_1 = np.where((gait_cycle >= phase_start) & (gait_cycle <= 100),gait_cycle)
-            indices_2 = np.where((gait_cycle >= 0) & (gait_cycle <= toe_off_diff),gait_cycle)
-            return np.concatenate((indices_1,indices_2), axis=0)
+            indices_1 = np.where((gait_cycle >= phase_start) & (gait_cycle <= 100))
+            indices_2 = np.where((gait_cycle >= 0) & (gait_cycle <= toe_off_diff))
+            index = np.concatenate((indices_1[0],indices_2[0]), axis=0)
+            return [index]
         else:
-            return np.where((gait_cycle >= phase_start) & (gait_cycle <= phase_end),gait_cycle)
+            index = np.where((gait_cycle >= phase_start) & (gait_cycle <= phase_end))
+            return index
+
+def fix_data_shape(phase_index_1,phase_index_2):
+    '''
+    There are two conditions in where phase_1 > phase_2 or phase_1 < phase_2.
+    Then, there are three conditions can happen:\n
+    \t-index starts from 0\n\t-index ends with 1000\n\t-non of these conditions
+    '''
+    if len(phase_index_1) > len(phase_index_2):# main condition #1
         
-def profiles_rmse(data_1,data_2,toe_off,phase='all',which_comparison='pareto vs pareto',avg_within_trials=True):
+        if phase_index_2[0] == 0 :  # secondary condition #1
+                
+            phase_index_2 = np.arange(phase_index_2,phase_index_2[-1]+(len(phase_index_1) - len(phase_index_2))+1,1) 
+                
+        elif phase_index_2[-1] == 999 : # secondary condition #2
+            
+            phase_index_2 = np.arange(phase_index_2-(len(phase_index_1) - len(phase_index_2)),phase_index_2[-1]+1,1) 
+                
+            if any(phase_index_2<0):
+                raise Exception('wrong list of indices')
+        else:                         # secondary condition #3
+            if (np.abs(phase_index_1[0]-phase_index_2[0]))>(np.abs(phase_index_1[-1]-phase_index_2[-1])):
+
+                phase_index_2 = np.arange(phase_index_2[0]-(len(phase_index_1) - len(phase_index_2)),phase_index_2[-1]+1,1) 
+                
+            else:
+                
+                phase_index_2 = np.arange(phase_index_2[0],phase_index_2[-1]+(len(phase_index_1) - len(phase_index_2))+1,1) 
+                    
+    elif len(phase_index_1) < len(phase_index_2): # main condition #2
+        
+        if phase_index_1[0] == 0 : # secondary condition #1
+            
+            phase_index_1 = np.arange(phase_index_1[0],phase_index_1[-1]+(len(phase_index_2) - len(phase_index_1))+1,1) 
+                
+        elif phase_index_1[-1] == 999 : # secondary condition #2
+            
+            phase_index_1 = np.arange(phase_index_1[0]-(len(phase_index_2) - len(phase_index_1)),phase_index_1[-1]+1,1)
+                
+            if any(phase_index_1<0):
+                raise Exception('wrong list of indices')
+        else:                          # secondary condition #3
+            
+            if (np.abs(phase_index_2[0]-phase_index_1[0]))>(np.abs(phase_index_2[-1]-phase_index_1[-1])):
+                
+                phase_index_1 = np.arange(phase_index_1[0]-(len(phase_index_2) - len(phase_index_1)),phase_index_1[-1]+1,1) 
+            
+            else:
+                
+                phase_index_1 = np.arange(phase_index_1[0],phase_index_1[-1]+(len(phase_index_2) - len(phase_index_1))+1,1)   
+    # final return           
+    return [phase_index_1],[phase_index_2]
+  
+def profiles_rmse(data_1,data_2,toe_off_1,toe_off_2,phase='all',which_comparison='pareto vs pareto',avg_within_trials=True):
     '''
     profiles_rmse function extract root mean square error between two selected profiles.\n
     ** toe_off shall be imported as a toe_off vector of all subjects and trials.\n
@@ -1109,38 +1170,90 @@ def profiles_rmse(data_1,data_2,toe_off,phase='all',which_comparison='pareto vs 
     - pareto vs pareto\n
     - *pareto vs ideal: data_1:\t pareto, data_2: ideal
     - ideal vs ideal\n
+    #==========================================================\n
+    defaults:\n
+    -number of subject*trials = 21\n
+    -number of pareto simulations = 25\n
+    - data shape in 0 axis (rows) = 1000\n
     '''
+    
     if which_comparison == 'pareto vs pareto':
         total_rmse = np.zeros(21*25)
         c=0
         for i in range(21):
-            phase_index = phase_correspond_data(phase,toe_off[i])
-            selected_data_1 = np.take(data_1[:,c:c+24],phase_index)
-            selected_data_2 = np.take(data_2[:,c:24],phase_index)
-            total_rmse[c:c+24] = np.sqrt(metrics.mean_squared_error(selected_data_1[:,c:c+24],selected_data_2[:,c:c+24]))
-            c+=25
+            for j in range(25):
+                # finding the indices corresponding to the selected phase
+                phase_index_1 = phase_correspond_data(phase,toe_off_1[i])
+                phase_index_2 = phase_correspond_data(phase,toe_off_2[i])
+                # fixing issue of list length difference
+                if len(phase_index_1[0]) != len(phase_index_2[0]):
+                    phase_index_1,phase_index_2 = fix_data_shape(phase_index_1[0],phase_index_2[0])
+                selected_data_1 = np.take(data_1[:,c],phase_index_1,axis=0)
+                selected_data_2 = np.take(data_2[:,c],phase_index_2,axis=0)
+                # fixing nan issue for importing in sklearn.metrics.mean_squared_error
+                if np.isnan(selected_data_1).any() == True:
+                    mask = np.isnan(selected_data_1)
+                    idx = np.where(~mask,np.arange(mask.shape[1]),0)
+                    selected_data_1[mask] = selected_data_1[np.nonzero(mask)[0], idx[mask]]
+                elif np.isnan(selected_data_2).any() == True:
+                    mask = np.isnan(selected_data_2)
+                    idx = np.where(~mask,np.arange(mask.shape[1]),0)
+                    selected_data_2[mask] = selected_data_2[np.nonzero(mask)[0], idx[mask]]
+                # fixing issue with unsimulated simulations
+                if np.isnan(selected_data_2).all() == True or np.isnan(selected_data_1).any() == True:
+                    total_rmse[c] = np.nan
+                else:
+                    total_rmse[c] = np.sqrt(metrics.mean_squared_error(selected_data_1,selected_data_2))
+                c+=1
         avg,std = pareto_avg_std_energy(total_rmse,reshape=True,avg_within_subjects=avg_within_trials)
     elif which_comparison == 'pareto vs ideal':
         total_rmse = np.zeros(21*25)
         c=0
         for i in range(21):
-            phase_index = phase_correspond_data(phase,toe_off[i])
-            selected_data_1 = np.take(data_1[:,c:c+24],phase_index)
-            selected_data_2 = np.take(data_2[:,i],phase_index)
-            total_rmse[c:c+24] = np.sqrt(metrics.mean_squared_error(selected_data_1[:,c:c+24],selected_data_2[:,i]))
-            c+=25
+            for j in range(25):
+                phase_index_1 = phase_correspond_data(phase,toe_off_1[i])
+                phase_index_2 = phase_correspond_data(phase,toe_off_2[i])
+                selected_data_1 = np.take(data_1[:,c],phase_index_1,axis=0)
+                selected_data_2 = np.take(data_2[:,i],phase_index_2,axis=0)
+                if np.isnan(selected_data_1).any() == True:
+                    mask = np.isnan(selected_data_1)
+                    idx = np.where(~mask,np.arange(mask.shape[1]),0)
+                    selected_data_1[mask] = selected_data_1[np.nonzero(mask)[0], idx[mask]]
+                elif np.isnan(selected_data_2).any() == True:
+                    mask = np.isnan(selected_data_2)
+                    idx = np.where(~mask,np.arange(mask.shape[1]),0)
+                    selected_data_2[mask] = selected_data_2[np.nonzero(mask)[0], idx[mask]]
+                if np.isnan(selected_data_2).all() == True or np.isnan(selected_data_1).any() == True:
+                    total_rmse[c] = np.nan
+                else:
+                    total_rmse[c] = np.sqrt(metrics.mean_squared_error(selected_data_1,selected_data_2))
+                total_rmse[c] = np.sqrt(metrics.mean_squared_error(selected_data_1,selected_data_2))
+                c+=1
         avg,std = pareto_avg_std_energy(total_rmse,reshape=True,avg_within_subjects=avg_within_trials)
     elif which_comparison == 'ideal vs ideal':
         total_rmse = np.zeros(21)
         for i in range(21):
-            phase_index = phase_correspond_data(phase,toe_off[i])
-            selected_data_1 = np.take(data_1[:,i],phase_index)
-            selected_data_2 = np.take(data_2[:,i],phase_index)
-            total_rmse[i] = np.sqrt(metrics.mean_squared_error(selected_data_1[:,i],selected_data_2[:,i]))
+            phase_index_1 = phase_correspond_data(phase,toe_off_1[i])
+            phase_index_2 = phase_correspond_data(phase,toe_off_2[i])
+            selected_data_1 = np.take(data_1[:,i],phase_index_1,axis=0)
+            selected_data_2 = np.take(data_2[:,i],phase_index_2,axis=0)
+            if np.isnan(selected_data_1).any() == True:
+                mask = np.isnan(selected_data_1)
+                idx = np.where(~mask,np.arange(mask.shape[1]),0)
+                selected_data_1[mask] = selected_data_1[np.nonzero(mask)[0], idx[mask]]
+            elif np.isnan(selected_data_2).any() == True:
+                mask = np.isnan(selected_data_2)
+                idx = np.where(~mask,np.arange(mask.shape[1]),0)
+                selected_data_2[mask] = selected_data_2[np.nonzero(mask)[0], idx[mask]]
+            if np.isnan(selected_data_2).all() == True or np.isnan(selected_data_1).any() == True:
+                total_rmse[c] = np.nan
+            else:
+                total_rmse[c] = np.sqrt(metrics.mean_squared_error(selected_data_1,selected_data_2))
+            total_rmse[i] = np.sqrt(metrics.mean_squared_error(selected_data_1,selected_data_2))
         avg,std = mean_std_over_subjects(total_rmse,avg_trials=avg_within_trials,ax=0)
     return avg,std
 
-def profiles_all_phases_rmse(data_1,data_2,toe_off,which_comparison='pareto vs pareto',avg_within_trials=True):
+def profiles_all_phases_rmse(data_1,data_2,toe_off_1,toe_off_2,which_comparison='pareto vs pareto',avg_within_trials=True):
     '''
     profiles_rmse function extract root mean square error between two selected profiles.\n
     ** toe_off shall be imported as a toe_off vector of all subjects and trials.\n
@@ -1157,10 +1270,10 @@ def profiles_all_phases_rmse(data_1,data_2,toe_off,which_comparison='pareto vs p
     - ideal vs ideal\n
     '''
     gait_phases = ['all','loading response','mid stance','terminal stance','pre swing','initial swing','mid swing','terminal swing']
-    all_phases_avg = np.zeros(25,len(gait_phases))
-    all_phases_std = np.zeros(25,len(gait_phases))
+    all_phases_avg = np.zeros((25,len(gait_phases)))
+    all_phases_std = np.zeros((25,len(gait_phases)))
     for i,phase in enumerate(gait_phases):
-        avg,std = all_phases_avg profiles_rmse(data_1,data_2,toe_off,phase=phase,which_comparison= which_comparison,avg_within_trials=True)
+        avg,std = profiles_rmse(data_1,data_2,toe_off_1,toe_off_2,phase=phase,which_comparison= which_comparison,avg_within_trials=True)
         all_phases_avg[:,i]=avg
         all_phases_std[:,i]=std
     return all_phases_avg,all_phases_std
@@ -1204,11 +1317,11 @@ def modified_augmentation_factor(analysis_dict,regen_effect=False,normalize_AF =
     if len(exo_mass) != 4:
         print('4 items are expected for the mass list.\n considering last {} terms as zero.'.format(4-len(exo_mass)))
         for i in range(4-len(exo_mass)):
-        exo_mass.append(0)
+            exo_mass.append(0)
     if len(exo_inertia) != 3:
         print('3 items are expected for the inertia list.\n considering last {} terms as zero.'.format(3-len(exo_inertia)))
         for i in range(3-len(exo_inertia)):
-        exo_inertia.append(0)
+            exo_inertia.append(0)
     if regen_effect == True:
         alpha = analysis_dict['regen_efficiency']
     # mass and inertia effect calculation
@@ -1230,7 +1343,7 @@ def modified_augmentation_factor(analysis_dict,regen_effect=False,normalize_AF =
     else:
         return modified_AF
     
-def specific_weights_modified_AF(analysis_dict,regen_effect=False,normalize_AF=False,avg_trials=True,return_sub_means=True):        
+def specific_weights_modified_AF(analysis_dict,regen_effect=False,normalize_AF=False,avg_trials=True,return_sub_means=False):        
     '''
     specific_weights_modified_AF calculate the modified augmentation factor for a set of simulations
     with specific configuration of the exoskeleton.\n
@@ -1249,12 +1362,12 @@ def specific_weights_modified_AF(analysis_dict,regen_effect=False,normalize_AF=F
                             'gl':gl[key],
                             'regen_efficiency':regeneration_efficiency}
         subjects_modified_AF[i] = modified_augmentation_factor(analysis_dict=AF_analysis_dict,regen_effect=regen_effect,normalize_AF=normalize_AF)
-    if avg_trials == True and return_sub_means=True:
+    if avg_trials == True and return_sub_means==True:
         avg_subjects_modified_AF = mean_over_trials(subjects_modified_AF,ax=0)
         return avg_subjects_modified_AF
-    elif avg_trials == False and return_sub_means=True:
+    elif avg_trials == False and return_sub_means==True:
         return subjects_modified_AF
-    elif return_sub_means=False:
+    elif return_sub_means==False:
         avg,std = mean_std_over_subjects(subjects_modified_AF,avg_trials=avg_trials,ax=0)
         return avg,std
           
