@@ -132,7 +132,7 @@ plot_dic = {'mean_11':mean_rmse_hip_actuator_torque,'mean_12':mean_rmse_knee_act
             'std_22':std_rmse_hip_musclesmoment,'std_23':std_rmse_knee_musclesmoment,
             'color_1':mycolors['pastel blue'],'color_2':mycolors['deep space sparkle'],'title_1':'assistive actuators\n torque error',
             'title_2':'assistive actuators\n power error','title_3':'assisted muscles\n moment error'}
-fig = plt.figure(num='RMSE',figsize=(12.8, 9.6))
+fig = plt.figure(num='RMSE',figsize=(20.8, 6.4))
 utils.rmse_barplots(plot_dic=plot_dic)
 fig.tight_layout(h_pad=-1, w_pad=-1.5)
 fig.subplots_adjust(top=0.98, bottom=0.075, left=0.100, right=0.975,hspace=0.35,wspace=0.15)
@@ -172,7 +172,7 @@ mono_loaded_I_shank =motor_inertia*(mono_loaded_knee_ratio**2) + (((thigh_length
 bi_loaded_I_thigh = motor_inertia*(bi_loaded_hip_ratio**2)+ ((bi_thigh_com**2)*bi_loaded_m_thigh)
 bi_loaded_I_shank =motor_inertia*(bi_loaded_knee_ratio**2) + (((thigh_length+shank_com)**2)*bi_loaded_m_shank)
 
-# modified augmentation factor
+# modified augmentation factor dictionary
 mono_loaded_modified_AF_dic = {'positive_power' : exo_power_dataset['monoarticular_hip70knee70_load_hipactuator_avg_positive_power']+exo_power_dataset['monoarticular_hip70knee70_load_kneeactuator_avg_positive_power'],
                                'negative_power' : exo_power_dataset['monoarticular_hip70knee70_load_hipactuator_avg_negative_power']+exo_power_dataset['monoarticular_hip70knee70_load_kneeactuator_avg_negative_power'],
                                      'exo_mass' : [mono_loaded_m_waist,mono_loaded_m_thigh,mono_loaded_m_shank,0],
@@ -183,18 +183,22 @@ bi_loaded_modified_AF_dic = {'positive_power' : exo_power_dataset['biarticular_h
                                    'exo_mass' : [bi_loaded_m_waist,bi_loaded_m_thigh,bi_loaded_m_shank,0],
                                 'exo_inertia' : [bi_loaded_I_thigh,bi_loaded_I_shank,0],
                                          'gl' : gl_noload}
-
+# modified augmentation factor
 mean_mono_loaded_modified_AF,std_mono_loaded_modified_AF = utils.specific_weights_modified_AF(mono_loaded_modified_AF_dic,normalize_AF=True)
 mean_bi_loaded_modified_AF,std_bi_loaded_modified_AF = utils.specific_weights_modified_AF(bi_loaded_modified_AF_dic,normalize_AF=True)
-
-cellText = [[bi_loaded_hip_weight,bi_loaded_knee_weight,bi_loaded_hip_ratio,bi_loaded_knee_ratio,bi_loaded_I_thigh,bi_loaded_I_shank,mean_bi_loaded_modified_AF,std_bi_loaded_modified_AF],\
-            [mono_loaded_hip_weight,mono_loaded_knee_weight,mono_loaded_hip_ratio,mono_loaded_knee_ratio,mono_loaded_I_thigh,mono_loaded_I_shank,mean_mono_loaded_modified_AF,std_mono_loaded_modified_AF]]
+mean_mono_loaded_regen_modified_AF,std_mono_loaded_regen_modified_AF = utils.specific_weights_modified_AF(mono_loaded_modified_AF_dic,normalize_AF=True,regen_effect=True,regeneration_efficiency=0.65)
+mean_bi_loaded_regen_modified_AF,std_bi_loaded_regen_modified_AF = utils.specific_weights_modified_AF(bi_loaded_modified_AF_dic,normalize_AF=True,regen_effect=True,regeneration_efficiency=0.65)
+# Table
+cellText = [[bi_loaded_hip_weight,bi_loaded_knee_weight,bi_loaded_hip_ratio,bi_loaded_knee_ratio,bi_loaded_I_thigh,bi_loaded_I_shank,\
+            mean_bi_loaded_modified_AF,std_bi_loaded_modified_AF,mean_bi_loaded_regen_modified_AF,std_bi_loaded_regen_modified_AF],\
+            [mono_loaded_hip_weight,mono_loaded_knee_weight,mono_loaded_hip_ratio,mono_loaded_knee_ratio,mono_loaded_I_thigh,mono_loaded_I_shank,\
+            mean_mono_loaded_modified_AF,std_mono_loaded_modified_AF,mean_mono_loaded_regen_modified_AF,std_mono_loaded_regen_modified_AF]]
 rows = ['biarticular','monoarticular']
 columns = ['hip actuator\npeak torque','knee actuator\n peak torque',
            'hip actuator\n gear ratio','knee actuator\n gear ratio',
-           'thigh inertia','shank inertia','Mean Modified AF','Std Modified AF']
+           'thigh inertia','shank inertia','Mean Modified AF','Std Modified AF','Mean Modified AF\n+regeneration','Std Modified AF\n+regeneration']
 fig, ax = plt.subplots(figsize=(6.4, 6.8))
-table = ax.table(cellText=cellText,rowLabels=rows,colLabels=columns,loc='center',)
+table = ax.table(cellText=cellText,rowLabels=rows,colLabels=columns,loc='center')
 table.scale(3,6)
 table.set_fontsize(25)
 ax.axis('off')
