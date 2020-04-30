@@ -19,6 +19,7 @@ from perimysium import postprocessing as pp
 from perimysium import dataman
 import pathlib
 from sklearn import metrics
+from Colors import colors as mycolors
 #######################################################################
 #######################################################################
 # Data saving and reading related functions
@@ -1487,6 +1488,7 @@ def modified_augmentation_factor(analysis_dict,regen_effect=False,normalize_AF =
             exo_inertia.append(0)
     if regen_effect == True:
         alpha = analysis_dict['regen_efficiency']
+        positive_power_W = positive_power_W + alpha*negative_power_W
     # mass and inertia effect calculation
     # order: foot,shank,thigh,waist
     mass_effect = 14.8*2*exo_mass[3]+5.6*2*exo_mass[2]+5.6*2*exo_mass[1]+3.2*2*exo_mass[0]
@@ -1494,7 +1496,7 @@ def modified_augmentation_factor(analysis_dict,regen_effect=False,normalize_AF =
     # dissipated power calculation
     if negative_power > positive_power:
         if regen_effect == True:
-            p_dissipation = alpha*(negative_power_W-positive_power_W)
+            p_dissipation = (negative_power_W-positive_power_W)
         else:
             p_dissipation = negative_power_W-positive_power_W
     else:
@@ -1506,7 +1508,7 @@ def modified_augmentation_factor(analysis_dict,regen_effect=False,normalize_AF =
     else:
         return modified_AF
     
-def specific_weights_modified_AF(analysis_dict,regen_effect=False,normalize_AF=False,avg_trials=True,return_sub_means=False):        
+def specific_weights_modified_AF(analysis_dict,regen_effect=False,normalize_AF=False,avg_trials=True,return_sub_means=False,regeneration_efficiency = 0.65):        
     '''
     specific_weights_modified_AF calculate the modified augmentation factor for a set of simulations
     with specific configuration of the exoskeleton.\n
@@ -1515,7 +1517,6 @@ def specific_weights_modified_AF(analysis_dict,regen_effect=False,normalize_AF=F
     negative_power = analysis_dict['negative_power']
     exo_mass = analysis_dict['exo_mass']
     exo_inertia = analysis_dict['exo_inertia']
-    regeneration_efficiency = 0.65
     gl = analysis_dict['gl']
     subjects_modified_AF = np.zeros(positive_power.shape[0])
     for i,key in enumerate(gl.keys()):
@@ -1535,15 +1536,21 @@ def specific_weights_modified_AF(analysis_dict,regen_effect=False,normalize_AF=F
         avg,std = mean_std_over_subjects(subjects_modified_AF,avg_trials=avg_trials,ax=0)
         return avg,std
 
-def rmse_barplots(plot_dic,ncols=2,nrows=2,nplots=3):
+def rmse_barplots(plot_dic,ncols=3,nrows=1,nplots=3):
     phase_name = ['total gait\n cycle','loading\n response','mid\n stance','terminal\n stance','pre\nswing',\
                   'initial\n swing','mid\n swing','terminal\n swing']
     x_position = np.arange(0,len(phase_name),1)
     width = 0.30
     color_1 = plot_dic['color_1']
     color_2 = plot_dic['color_2']
-    y_ticks = [-0,0.2,0.4,0.6,0.8,1,1.2]
+    if 'y_ticks' not in plot_dic:
+        y_ticks = [0,0.2,0.4,0.6,0.8,1,1.2]
+    else:
+        y_ticks = plot_dic['y_ticks']
     for i in range(nplots):
+        if i == 2:
+            color_1 = mycolors['mint']
+            color_2 = mycolors['pale blue']
         ax = plt.subplot(nrows,ncols,i+1)
         plt.bar(x_position-width/2,plot_dic['mean_1{}'.format(i+1)],width=width,alpha=0.75,color=color_1,\
                 yerr=plot_dic['std_1{}'.format(i+1)],ecolor=[0.09,0.09,0.09],capsize=5,align='center')
@@ -1556,6 +1563,7 @@ def rmse_barplots(plot_dic,ncols=2,nrows=2,nplots=3):
         ax.set_title(plot_dic['title_{}'.format(i+1)])
         plt.tick_params(axis='both',direction='in')
         no_top_right(ax)
+        ax.set_ylim(bottom=-0.01)
         if i == 2:
             plt.legend(['hip joint muscles','knee joint muscles'],loc='best',frameon=True)      
         elif i == 1:

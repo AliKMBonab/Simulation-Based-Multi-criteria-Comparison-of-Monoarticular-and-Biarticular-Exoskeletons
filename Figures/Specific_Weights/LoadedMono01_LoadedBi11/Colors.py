@@ -16,4 +16,7 @@ colors = {  'moon yellow':[1.00,0.75,0.11],
            'burgundy red':[0.55,0.00,0.12],
                    'gold':[0.97,0.65,0.01],
             'pastel blue':[0.68,0.74,0.83],
-     'deep space sparkle':[0.28,0.36,0.43]}
+     'deep space sparkle':[0.28,0.36,0.43],
+                   'mint':[0.26,0.70,0.57],
+              'pale blue':[0.74,0.95,0.93]
+     }
