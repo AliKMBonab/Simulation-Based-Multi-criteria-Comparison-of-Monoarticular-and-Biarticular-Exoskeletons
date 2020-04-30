@@ -362,3 +362,22 @@ fig.tight_layout(h_pad=-1, w_pad=-1.5)
 fig.subplots_adjust(top=0.98, bottom=0.075, left=0.100, right=0.975,hspace=0.25,wspace=0.15)
 plt.show()
 fig.savefig('./Figures/Ideal/Paper_Figure_Energy_BoxPlot.pdf',orientation='landscape',bbox_inches='tight')
+#####################################################################################
+# Processing Data
+# toe-off
+mean_noload_toe_off,_,mean_loaded_toe_off,_,noload_toe_off,loaded_toe_off = utils.toe_off_avg_std(gl_noload,gl_loaded,subjects=True)
+mean_loaded_gaitcycle, std_loaded_gaitcycle = utils.mean_std_gaitcycle_phases(loaded_toe_off)
+mean_noload_gaitcycle, std_noload_gaitcycle = utils.mean_std_gaitcycle_phases(noload_toe_off)
+
+#####################################################################################
+# gait phases
+fig = plt.figure(num='gait cycles',figsize=(12.8, 9.6))
+plt.subplot(211)
+utils.plot_gait_cycle_phase(mean_loaded_gaitcycle, std_loaded_gaitcycle,mean_loaded_toe_off,loadcond='loaded')
+plt.subplot(212)
+utils.plot_gait_cycle_phase(mean_noload_gaitcycle, std_noload_gaitcycle,mean_noload_toe_off,loadcond='noload')
+plt.xlabel('gait cycle (%)')
+fig.tight_layout(h_pad=-1, w_pad=-1.5)
+fig.subplots_adjust(top=0.98, bottom=0.075, left=0.100, right=0.975,hspace=0.25,wspace=0.15)
+fig.savefig('./Figures/Ideal/Gait_Cycle_Phases.pdf',orientation='landscape',bbox_inches='tight')
+plt.show()
