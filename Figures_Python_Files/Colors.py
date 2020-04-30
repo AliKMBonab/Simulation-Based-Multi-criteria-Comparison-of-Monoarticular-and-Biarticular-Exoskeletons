@@ -18,4 +18,6 @@ colors = {  'moon yellow':[1.00,0.75,0.11],
                  'salmon':[0.98,0.49,0.30],
                 'ferrari':[1.00,0.15,0.00],
                    'teal':[0.00,0.50,0.50],
-           'imperial red':[0.92,0.16,0.22]}
+           'imperial red':[0.92,0.16,0.22],
+            'pastel blue':[0.68,0.74,0.83],
+     'deep space sparkle':[0.28,0.36,0.43]}

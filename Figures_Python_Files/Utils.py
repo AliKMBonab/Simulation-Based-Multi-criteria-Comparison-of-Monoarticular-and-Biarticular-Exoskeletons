@@ -719,6 +719,69 @@ def plot_joint_muscle_exo (nrows,ncols,plot_dic,color_dic,
                 empty_string_labels = ['']*len(labels)
                 ax.set_yticklabels(empty_string_labels)
 
+def plot_gait_cycle_phase(mean_dic,std_dic,avg_toeoff,loadcond):
+    '''
+    -loading response\t-mid stance\t-terminal stance\n
+    -pre swing\t-initial swing\t-mid swing\t-terminal swing\n
+    '''
+    phases = ['loading_response_phase','mid_stance_phase','terminal_stance_phase','pre_swing_phase',\
+              'initial_swing_phase','mid_swing_phase','terminal_swing_phase']
+    phase_name = ['loading\n response','mid\n stance','terminal stance','pre\nswing',\
+                  'initial\n swing','mid swing','terminal swing']
+    y = [2.95,3.05,2.95,3.05,2.95,3.05,2.95]
+    iterations = np.arange(0,len(phases),1)
+    if loadcond == 'loaded':
+        color='k'
+    elif loadcond == 'noload':
+        color = 'xkcd:shamrock green'
+    for i in iterations:
+        bottom = y[i]
+        left = mean_dic['avg_'+phases[i]+'_start']
+        width = mean_dic['avg_'+phases[i]+'_end'] - mean_dic['avg_'+phases[i]+'_start']
+        plt.axvline(avg_toeoff, lw=2, color=color, zorder=0, alpha=0.5) #vertical line
+        rect1 = plt.Rectangle((left,bottom), width, height=0.05,facecolor=color, alpha=0.3,linewidth=0)
+        rect2 = plt.Rectangle((left,bottom), width, height=-0.05,facecolor=color, alpha=0.3,linewidth=0)
+        plt.plot(mean_dic['avg_'+phases[i]+'_start'], y[i], marker='|',color=color,markersize=50)
+        plt.errorbar(mean_dic['avg_'+phases[i]+'_start'], y[i], yerr=None, xerr=std_dic['std_'+phases[i]+'_start'],color=color,capsize=50,alpha=0.5,fmt='None')
+        plt.plot(mean_dic['avg_'+phases[i]+'_end'], y[i], marker='|',color=color,markersize=50)
+        plt.errorbar(mean_dic['avg_'+phases[i]+'_end'], y[i], yerr=None, xerr=std_dic['std_'+phases[i]+'_end'],color=color,capsize=50,alpha=0.5,fmt='None')
+        plt.text(left+(width)/2, y[i], str(phase_name[i]), ha='center', va='center',color=color)
+        plt.xlim((-2,110))
+        plt.xticks([0,10,20,30,40,50,60,70,80,90,100,110])
+        plt.yticks([])
+        ax = plt.gca()
+        ax.add_patch(rect1)
+        ax.add_patch(rect2)
+        ax.spines["right"].set_visible(False)
+        ax.spines["left"].set_visible(False)
+        ax.spines["top"].set_visible(False)
+        
+def rmse_barplots(plot_dic,ncols=2,nrows=2,nplots=3):
+    phase_name = ['total gait\n cycle','loading\n response','mid\n stance','terminal\n stance','pre\nswing',\
+                  'initial\n swing','mid\n swing','terminal\n swing']
+    x_position = np.arange(0,len(phase_name),1)
+    width = 0.30
+    color_1 = plot_dic['color_1']
+    color_2 = plot_dic['color_2']
+    y_ticks = [-0,0.2,0.4,0.6,0.8,1,1.2]
+    for i in range(nplots):
+        ax = plt.subplot(nrows,ncols,i+1)
+        plt.bar(x_position-width/2,plot_dic['mean_1{}'.format(i+1)],width=width,alpha=0.75,color=color_1,\
+                yerr=plot_dic['std_1{}'.format(i+1)],ecolor='grey',capsize=5,align='center')
+        plt.bar(x_position+width/2,plot_dic['mean_2{}'.format(i+1)],width=width,alpha=0.75,color=color_2,\
+                yerr=plot_dic['std_2{}'.format(i+1)],ecolor='grey',capsize=5,align='center')
+        plt.ylabel('RMSE (W/kg)')
+        ax.set_yticks(y_ticks)
+        ax.set_xticks(x_position)
+        ax.set_xticklabels(phase_name)
+        ax.set_title(plot_dic['title_{}'.format(i+1)])
+        plt.tick_params(axis='both',direction='in')
+        no_top_right(ax)
+        if i == 2:
+            plt.legend(['hip joint muscles','knee joint muscles'],loc='best',frameon=True)      
+        elif i == 1:
+            plt.legend(['hip actuator','knee actuator'],loc='best',frameon=True)  
+
 ######################################################################
 ######################################################################
 # Data Processing related functions for Pareto Simulations
@@ -988,7 +1051,7 @@ def pareto_avg_std_within_subjects(data,simulation_num=25,subject_num=7,trial_nu
         c+=trial_num
     return avg,std
 
-def pareto_profiles_avg_std(data,gl,simulation_num=25,subject_num=7,trial_num = 3,change_direction=True,delete_subject=None):
+def pareto_profiles_avg_std(data,gl,simulation_num=25,subject_num=7,trial_num = 3,change_direction=True,mean_std=True,delete_subject=None):
     avg = np.zeros((data.shape[0],simulation_num))
     std = np.zeros((data.shape[0],simulation_num))
     normal_data = np.zeros((data.shape[0],data.shape[1]))
@@ -1013,7 +1076,10 @@ def pareto_profiles_avg_std(data,gl,simulation_num=25,subject_num=7,trial_num = 
         avg[:,c] = np.nanmean(selected_data,axis=1)
         std[:,c] = np.nanstd(selected_data,axis=1)
         c+=1
-    return avg,std
+    if mean_std == True:
+        return avg,std
+    else:
+        return normal_data
 
 def energy_processed_power(data,gl,simulation_num=25,subject_num=7,trial_num=3):
     c = 0
@@ -1039,6 +1105,106 @@ def regeneratable_percent(regenerated_energy,absolute_energy,reshape=True):
 
 ######################################################################
 # root-mean-square error and modified augmentation factor analyses
+def mean_std_gaitcycle_phases(toe_offs):
+    '''
+    #==========================================================\n
+    gait phases:\n
+    \n
+    -loading response\t-mid stance\t-terminal stance\n
+    -pre swing\t-initial swing\t-mid swing\t-terminal swing\n
+    
+    '''
+    # loading reponse 
+    loading_response_phase_start = np.zeros((toe_offs.shape[0]))
+    loading_response_phase_end = np.zeros((toe_offs.shape[0]))
+    # mid stance
+    mid_stance_phase_start = np.zeros((toe_offs.shape[0]))
+    mid_stance_phase_end = np.zeros((toe_offs.shape[0]))
+    # terminal stance
+    terminal_stance_phase_start = np.zeros((toe_offs.shape[0]))
+    terminal_stance_phase_end = np.zeros((toe_offs.shape[0]))
+    # pre swing
+    pre_swing_phase_start = np.zeros((toe_offs.shape[0]))
+    pre_swing_phase_end = np.zeros((toe_offs.shape[0]))
+    # initial swing
+    initial_swing_phase_start = np.zeros((toe_offs.shape[0]))
+    initial_swing_phase_end = np.zeros((toe_offs.shape[0]))
+    # mid swing
+    mid_swing_phase_start = np.zeros((toe_offs.shape[0]))
+    mid_swing_phase_end = np.zeros((toe_offs.shape[0]))
+    # terminal swing 
+    terminal_swing_phase_start = np.zeros((toe_offs.shape[0]))
+    terminal_swing_phase_end = np.zeros((toe_offs.shape[0]))
+    # iteration
+    for i,toe_off in enumerate(toe_offs):
+        toe_off_diff = toe_off-60
+        # loading response phase
+        loading_response_phase_start[i] = 0 + toe_off_diff
+        loading_response_phase_end[i] = 10 + toe_off_diff
+        # mid stance phase
+        mid_stance_phase_start[i] = 10 + toe_off_diff
+        mid_stance_phase_end[i] = 30 + toe_off_diff
+        # terminal stance phase
+        terminal_stance_phase_start[i] = 30 + toe_off_diff
+        terminal_stance_phase_end[i] = 50 + toe_off_diff
+        # pre swing phase
+        pre_swing_phase_start[i] = 50 + toe_off_diff
+        pre_swing_phase_end[i] = 60 + toe_off_diff
+        # initial swing phase
+        initial_swing_phase_start[i] = 60 + toe_off_diff
+        initial_swing_phase_end[i] = 70 + toe_off_diff
+        # mid swing phase
+        mid_swing_phase_start[i] = 70 + toe_off_diff
+        mid_swing_phase_end[i] = 85 + toe_off_diff
+        # terminal swing phase
+        terminal_swing_phase_start[i] = 85 + toe_off_diff
+        terminal_swing_phase_end[i] = 100 + toe_off_diff
+    # establishing dictionary
+    # avg
+    avg_output_dic = {
+    'avg_loading_response_phase_start' : np.mean(loading_response_phase_start),
+    'avg_loading_response_phase_end' : np.mean(loading_response_phase_end),
+    # mid stance
+    'avg_mid_stance_phase_start' : np.mean(mid_stance_phase_start),
+    'avg_mid_stance_phase_end' : np.mean(mid_stance_phase_end),
+    # terminal stance
+    'avg_terminal_stance_phase_start' : np.mean(terminal_stance_phase_start),
+    'avg_terminal_stance_phase_end' : np.mean(terminal_stance_phase_end),
+    # pre swing
+    'avg_pre_swing_phase_start' : np.mean(pre_swing_phase_start),
+    'avg_pre_swing_phase_end' : np.mean(pre_swing_phase_end),
+    # initial swing
+    'avg_initial_swing_phase_start' : np.mean(initial_swing_phase_start),
+    'avg_initial_swing_phase_end' : np.mean(initial_swing_phase_end),
+    # mid swing
+    'avg_mid_swing_phase_start' : np.mean(mid_swing_phase_start),
+    'avg_mid_swing_phase_end' : np.mean(mid_swing_phase_end),
+    # terminal swing 
+    'avg_terminal_swing_phase_start' : np.mean(terminal_swing_phase_start),
+    'avg_terminal_swing_phase_end' : np.mean(terminal_swing_phase_end)}
+    # std
+    std_output_dic = {
+    'std_loading_response_phase_start' : np.std(loading_response_phase_start),
+    'std_loading_response_phase_end' : np.std(loading_response_phase_end),
+    # mid stance
+    'std_mid_stance_phase_start' : np.std(mid_stance_phase_start),
+    'std_mid_stance_phase_end' : np.std(mid_stance_phase_end),
+    # terminal stance
+    'std_terminal_stance_phase_start' : np.std(terminal_stance_phase_start),
+    'std_terminal_stance_phase_end' : np.std(terminal_stance_phase_end),
+    # pre swing
+    'std_pre_swing_phase_start' : np.std(pre_swing_phase_start),
+    'std_pre_swing_phase_end' : np.std(pre_swing_phase_end),
+    # initial swing
+    'std_initial_swing_phase_start' : np.std(initial_swing_phase_start),
+    'std_initial_swing_phase_end' : np.std(initial_swing_phase_end),
+    # mid swing
+    'std_mid_swing_phase_start' : np.std(mid_swing_phase_start),
+    'std_mid_swing_phase_end' : np.std(mid_swing_phase_end),
+    # terminal swing 
+    'std_terminal_swing_phase_start' : np.std(terminal_swing_phase_start),
+    'std_terminal_swing_phase_end' : np.std(terminal_swing_phase_end)}
+    return avg_output_dic,std_output_dic
 
 def phase_correspond_data(phase,toe_off):
     '''
@@ -1195,7 +1361,7 @@ def profiles_rmse(data_1,data_2,toe_off_1,toe_off_2,phase='all',which_comparison
                     mask = np.isnan(selected_data_1)
                     idx = np.where(~mask,np.arange(mask.shape[1]),0)
                     selected_data_1[mask] = selected_data_1[np.nonzero(mask)[0], idx[mask]]
-                elif np.isnan(selected_data_2).any() == True:
+                if np.isnan(selected_data_2).any() == True:
                     mask = np.isnan(selected_data_2)
                     idx = np.where(~mask,np.arange(mask.shape[1]),0)
                     selected_data_2[mask] = selected_data_2[np.nonzero(mask)[0], idx[mask]]
@@ -1219,7 +1385,7 @@ def profiles_rmse(data_1,data_2,toe_off_1,toe_off_2,phase='all',which_comparison
                     mask = np.isnan(selected_data_1)
                     idx = np.where(~mask,np.arange(mask.shape[1]),0)
                     selected_data_1[mask] = selected_data_1[np.nonzero(mask)[0], idx[mask]]
-                elif np.isnan(selected_data_2).any() == True:
+                if np.isnan(selected_data_2).any() == True:
                     mask = np.isnan(selected_data_2)
                     idx = np.where(~mask,np.arange(mask.shape[1]),0)
                     selected_data_2[mask] = selected_data_2[np.nonzero(mask)[0], idx[mask]]
@@ -1241,7 +1407,7 @@ def profiles_rmse(data_1,data_2,toe_off_1,toe_off_2,phase='all',which_comparison
                 mask = np.isnan(selected_data_1)
                 idx = np.where(~mask,np.arange(mask.shape[1]),0)
                 selected_data_1[mask] = selected_data_1[np.nonzero(mask)[0], idx[mask]]
-            elif np.isnan(selected_data_2).any() == True:
+            if np.isnan(selected_data_2).any() == True:
                 mask = np.isnan(selected_data_2)
                 idx = np.where(~mask,np.arange(mask.shape[1]),0)
                 selected_data_2[mask] = selected_data_2[np.nonzero(mask)[0], idx[mask]]

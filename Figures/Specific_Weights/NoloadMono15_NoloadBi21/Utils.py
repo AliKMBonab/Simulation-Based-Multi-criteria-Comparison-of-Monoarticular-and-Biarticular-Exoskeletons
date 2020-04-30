@@ -18,6 +18,7 @@ from numpy import nanmean, nanstd
 from perimysium import postprocessing as pp
 from perimysium import dataman
 import pathlib
+from sklearn import metrics
 #######################################################################
 #######################################################################
 # Data saving and reading related functions
@@ -216,7 +217,7 @@ def construct_gl_mass_side(subjectno,trialno,loadcond):
                                 right_toeoff= data['toeoff_time_right_leg'])
     return gl,mass,side
 
-def mean_over_trials(data,ax=0):
+def mean_over_trials(data,ax=1):
     subjects = np.array([0,3,6,9,12,15,18])
     data_shape = data.shape[0]
     avg = np.zeros(int(data_shape/3))
@@ -242,7 +243,7 @@ def mean_std_muscles_subjects(data,muscles_num=9):
         std_data [:,i] = np.nanstd (data[:,cols],axis=1)
     return mean_data,std_data
 
-def toe_off_avg_std(gl_noload,gl_loaded):
+def toe_off_avg_std(gl_noload,gl_loaded,subjects=False):
     '''This function returns the mean toe off percentage for loaded and noloaded subjects
         parameters:
             gl_noload: a dictionary of noload subjects gait landmark
@@ -260,7 +261,10 @@ def toe_off_avg_std(gl_noload,gl_loaded):
     for key in gl_loaded.keys():
         loaded_toe_off[c1] =toeoff_pgc(gl=gl_loaded[key][0],side= gl_loaded[key][2])
         c1+=1
-    return np.mean(noload_toe_off),np.std(noload_toe_off),np.mean(loaded_toe_off),np.std(loaded_toe_off)
+    if subjects == False:
+        return np.mean(noload_toe_off),np.std(noload_toe_off),np.mean(loaded_toe_off),np.std(loaded_toe_off)
+    else:
+        return np.mean(noload_toe_off),np.std(noload_toe_off),np.mean(loaded_toe_off),np.std(loaded_toe_off),noload_toe_off,loaded_toe_off
 
 def smooth(a,WSZ,multidim=False):
     """
@@ -291,6 +295,40 @@ def reduction_calc(data1,data2):
     for i in range(len(data1)):
         reduction[i] = (((data1[i]-data2[i])*100)/data1[i])
     return reduction
+
+def outliers_modified_z_score(ys,threshold = 3):
+    '''
+    The Z-score, or standard score, is a way of describing a data point
+    in terms of its relationship to the mean and standard deviation of
+    a group of points. Taking a Z-score is simply mapping the data onto
+    a distribution whose mean is defined as 0 and whose standard deviation
+    is defined as 1. Another drawback of the Z-score method is that it behaves
+    strangely in small datasets – in fact, the Z-score method will never detect
+    an outlier if the dataset has fewer than 12 items in it. This motivated the
+     development of a modified Z-score method, which does not suffer from the same limitation.
+     http://colingorrie.github.io/outlier-detection.html
+
+    '''
+    median_y = np.nanmedian(ys)
+    median_absolute_deviation_y = np.nanmedian([np.abs(y - median_y) for y in ys])
+    modified_z_scores = [0.6745 * (y - median_y) / median_absolute_deviation_y
+                         for y in ys]
+    return np.where(np.abs(modified_z_scores) > threshold,True,False)
+
+def outliers_iqr(ys):
+    '''
+    The interquartile range, which gives this method of outlier detection its name,
+    is the range between the first and the third quartiles (the edges of the box).
+    Tukey considered any data point that fell outside of either 1.5 times the IQR
+    below the first – or 1.5 times the IQR above the third – quartile to be “outside” or “far out”.
+    http://colingorrie.github.io/outlier-detection.html
+    '''
+    quartile_1, quartile_3 = np.nanpercentile(ys, [25, 75])
+    iqr = quartile_3 - quartile_1
+    lower_bound = quartile_1 - (iqr * 1.5)
+    upper_bound = quartile_3 + (iqr * 1.5)
+    idx = np.where((ys > upper_bound) | (ys < lower_bound),True,False)
+    return idx
 
 ######################################################################
 # Mass and inertia effect functions
@@ -333,21 +371,22 @@ def adding_mass_metabolic(m_waist,m_thigh,m_shank,I_thigh,I_shank,I_leg=2.52):
     return  mass_metabolic_waist,mass_metabolic_thigh,mass_metabolic_shank,inertia_metabolic_thigh,inertia_metabolic_shank
 
 def metabolic_energy_mass_added_pareto(unassisted_metabolic,InertialProp_Dic,calc_metabolic_cost=True):
-    """This function calculates the following data in a performed pareto simulations:
-    - waist metabolic change
-    - waist metabolic (optional)
-    - thigh metabolic change
-    - thigh metabolic (optional)
-    - shank metabolic change
-    - shank metabolic (optional)
-    - the change of inertia in thigh in different maximum required torque (optional)
-    - the change of inertia in shank in different maximum required torque (optional)
-    #=======================================================================================
+    """This function calculates the following data in a performed pareto simulations:\n
+    - waist metabolic change\n
+    - waist metabolic (optional)\n
+    - thigh metabolic change\n
+    - thigh metabolic (optional)\n
+    - shank metabolic change\n
+    - shank metabolic (optional)\n
+    - the change of inertia in thigh in different maximum required torque (optional)\n
+    - the change of inertia in shank in different maximum required torque (optional)\n
+    #=======================================================================================\n
     - default values for actuator have been selected from Maxon Motor EC90 250W
     - default values for center of masses have been selected according to the desgin of exoskeletons
-    - leg inertia were selected according to the inertia reported by reference paper
-    #=======================================================================================
-    * Default: motor_max_torque=2, motor_inertia=0.000506, thigh_com=0.23, shank_com=0.18, leg_inertia=2.52
+    - leg inertia were selected according to the inertia reported by reference paper\n
+    #=======================================================================================\n
+    * Default: motor_max_torque=2 N.m, motor_inertia=0.000506 kg.m^2, thigh_com=0.23 m, shank_com=0.18 m, leg_inertia=2.52 kg.m^2\n
+               thigh_length = 0.52 m
     """
     # initialization
     m_waist = InertialProp_Dic["m_waist"]
@@ -372,6 +411,7 @@ def metabolic_energy_mass_added_pareto(unassisted_metabolic,InertialProp_Dic,cal
     Inertia_Thigh = np.zeros(len(Hip_weights)*len(Knee_weights))
     Inertia_Shank = np.zeros(len(Hip_weights)*len(Knee_weights))
     # the masse added two sides
+    thigh_length = 0.52
     m_waist = 2*m_waist
     m_thigh = 2*m_thigh
     m_shank = 2*m_shank
@@ -384,7 +424,7 @@ def metabolic_energy_mass_added_pareto(unassisted_metabolic,InertialProp_Dic,cal
             Knee_ratio = Knee_weights[j]/motor_max_torque
             # I = motor_inertia*(ratio^2) + segment_mass*(segment_com^2)
             I_thigh = motor_inertia*(Hip_ratio**2)+ ((thigh_com**2)*m_thigh)
-            I_shank =motor_inertia*(Knee_ratio**2) + ((shank_com**2)*m_shank)
+            I_shank =motor_inertia*(Knee_ratio**2) + (((thigh_length+shank_com)**2)*m_shank)
             # loaded leg to unloaded leg inertia ratio
             Inertia_Shank[c] = (I_shank + leg_inertia)/leg_inertia
             Inertia_Thigh[c] = (I_thigh + leg_inertia)/leg_inertia
@@ -679,10 +719,49 @@ def plot_joint_muscle_exo (nrows,ncols,plot_dic,color_dic,
                 empty_string_labels = ['']*len(labels)
                 ax.set_yticklabels(empty_string_labels)
 
+def plot_gait_cycle_phase(mean_dic,std_dic,avg_toeoff,loadcond):
+    '''
+    -loading response\t-mid stance\t-terminal stance\n
+    -pre swing\t-initial swing\t-mid swing\t-terminal swing\n
+    '''
+    phases = ['loading_response_phase','mid_stance_phase','terminal_stance_phase','pre_swing_phase',\
+              'initial_swing_phase','mid_swing_phase','terminal_swing_phase']
+    phase_name = ['loading\n response','mid\n stance','terminal stance','pre\nswing',\
+                  'initial\n swing','mid swing','terminal swing']
+    y = [2.95,3.05,2.95,3.05,2.95,3.05,2.95]
+    iterations = np.arange(0,len(phases),1)
+    if loadcond == 'loaded':
+        color='k'
+    elif loadcond == 'noload':
+        color = 'xkcd:shamrock green'
+    for i in iterations:
+        bottom = y[i]
+        left = mean_dic['avg_'+phases[i]+'_start']
+        width = mean_dic['avg_'+phases[i]+'_end'] - mean_dic['avg_'+phases[i]+'_start']
+        plt.axvline(avg_toeoff, lw=2, color=color, zorder=0, alpha=0.5) #vertical line
+        rect1 = plt.Rectangle((left,bottom), width, height=0.05,facecolor=color, alpha=0.3,linewidth=0)
+        rect2 = plt.Rectangle((left,bottom), width, height=-0.05,facecolor=color, alpha=0.3,linewidth=0)
+        plt.plot(mean_dic['avg_'+phases[i]+'_start'], y[i], marker='|',color=color,markersize=50)
+        plt.errorbar(mean_dic['avg_'+phases[i]+'_start'], y[i], yerr=None, xerr=std_dic['std_'+phases[i]+'_start'],color=color,capsize=50,alpha=0.5,fmt='None')
+        plt.plot(mean_dic['avg_'+phases[i]+'_end'], y[i], marker='|',color=color,markersize=50)
+        plt.errorbar(mean_dic['avg_'+phases[i]+'_end'], y[i], yerr=None, xerr=std_dic['std_'+phases[i]+'_end'],color=color,capsize=50,alpha=0.5,fmt='None')
+        plt.text(left+(width)/2, y[i], str(phase_name[i]), ha='center', va='center',color=color)
+        plt.xlim((-2,110))
+        plt.xticks([0,10,20,30,40,50,60,70,80,90,100,110])
+        plt.yticks([])
+        ax = plt.gca()
+        ax.add_patch(rect1)
+        ax.add_patch(rect2)
+        ax.spines["right"].set_visible(False)
+        ax.spines["left"].set_visible(False)
+        ax.spines["top"].set_visible(False)
+        
+
+
 ######################################################################
 ######################################################################
 # Data Processing related functions for Pareto Simulations
-
+    
 def paretofront(P):
     '''
      Filters a set of points P according to Pareto dominance, i.e., points
@@ -849,40 +928,6 @@ def delete_subject_data(data,subject,profile_energy='profile',is_reshaped=False)
         data = modified_data
     return modified_data
  
-def outliers_modified_z_score(ys,threshold = 3):
-    '''
-    The Z-score, or standard score, is a way of describing a data point
-    in terms of its relationship to the mean and standard deviation of
-    a group of points. Taking a Z-score is simply mapping the data onto
-    a distribution whose mean is defined as 0 and whose standard deviation
-    is defined as 1. Another drawback of the Z-score method is that it behaves
-    strangely in small datasets – in fact, the Z-score method will never detect
-    an outlier if the dataset has fewer than 12 items in it. This motivated the
-     development of a modified Z-score method, which does not suffer from the same limitation.
-     http://colingorrie.github.io/outlier-detection.html
-
-    '''
-    median_y = np.nanmedian(ys)
-    median_absolute_deviation_y = np.nanmedian([np.abs(y - median_y) for y in ys])
-    modified_z_scores = [0.6745 * (y - median_y) / median_absolute_deviation_y
-                         for y in ys]
-    return np.where(np.abs(modified_z_scores) > threshold,True,False)
-
-def outliers_iqr(ys):
-    '''
-    The interquartile range, which gives this method of outlier detection its name,
-    is the range between the first and the third quartiles (the edges of the box).
-    Tukey considered any data point that fell outside of either 1.5 times the IQR
-    below the first – or 1.5 times the IQR above the third – quartile to be “outside” or “far out”.
-    http://colingorrie.github.io/outlier-detection.html
-    '''
-    quartile_1, quartile_3 = np.nanpercentile(ys, [25, 75])
-    iqr = quartile_3 - quartile_1
-    lower_bound = quartile_1 - (iqr * 1.5)
-    upper_bound = quartile_3 + (iqr * 1.5)
-    idx = np.where((ys > upper_bound) | (ys < lower_bound),True,False)
-    return idx
-
 def filter_outliers(data,method='iqr',thershold=None,sim_num=25,sub_num=7,trial_num=3):
     '''
     energy data are supposed to be modified before using this filter.\n
@@ -936,7 +981,9 @@ def pareto_metabolics_reduction(assist_data,unassist_data,simulation_num=25,subj
         c+=1
     return reduction
     
-def pareto_avg_std_energy(data,simulation_num=25,subject_num=7,trial_num=3,reshape=True,filter_data = True,delete_subject=None,*args,**kwargs):
+def pareto_avg_std_energy(data,simulation_num=25,subject_num=7,trial_num=3,
+                          reshape=True,filter_data = True,delete_subject=None,
+                          avg_within_subjects=True,*args,**kwargs):
     if reshape == True:
         reshaped_data = np.reshape(data,(simulation_num,subject_num*trial_num),order='F')
     else:
@@ -948,12 +995,21 @@ def pareto_avg_std_energy(data,simulation_num=25,subject_num=7,trial_num=3,resha
         length = len(delete_subject)
     else:
         length = 0
-    subject_avg,_ = pareto_avg_std_within_subjects(final_data,reshape=False,subject_num=7-length)
-    avg = np.nanmean(subject_avg,axis=1)
-    std = np.nanstd(subject_avg,axis=1)
+    if avg_within_subjects == True:
+        subject_avg,_ = pareto_avg_std_within_subjects(final_data,reshape=False,subject_num=7-length)
+        avg = np.nanmean(subject_avg,axis=1)
+        std = np.nanstd(subject_avg,axis=1)
+    else:
+        avg = np.nanmean(final_data,axis=1)
+        std = np.nanstd(final_data,axis=1)
     return avg,std
 
 def pareto_avg_std_within_subjects(data,simulation_num=25,subject_num=7,trial_num=3,reshape=True,delete_subject=None):
+    '''
+    pareto_avg_std_within_subjects has been used to take average within subjects trials to remove  hierarchical
+    structure of the data. It takes the data [25,21] which are energy consumption or metabolic redution data and
+    return [25,7] by taking average of trials for subjects.
+    '''
     if reshape == True:
         reshaped_data = np.reshape(data,(simulation_num,subject_num*trial_num),order='F')
     else:
@@ -971,7 +1027,7 @@ def pareto_avg_std_within_subjects(data,simulation_num=25,subject_num=7,trial_nu
         c+=trial_num
     return avg,std
 
-def pareto_profiles_avg_std(data,gl,simulation_num=25,subject_num=7,trial_num = 3,change_direction=True,delete_subject=None):
+def pareto_profiles_avg_std(data,gl,simulation_num=25,subject_num=7,trial_num = 3,change_direction=True,mean_std=True,delete_subject=None):
     avg = np.zeros((data.shape[0],simulation_num))
     std = np.zeros((data.shape[0],simulation_num))
     normal_data = np.zeros((data.shape[0],data.shape[1]))
@@ -996,7 +1052,10 @@ def pareto_profiles_avg_std(data,gl,simulation_num=25,subject_num=7,trial_num = 
         avg[:,c] = np.nanmean(selected_data,axis=1)
         std[:,c] = np.nanstd(selected_data,axis=1)
         c+=1
-    return avg,std
+    if mean_std == True:
+        return avg,std
+    else:
+        return normal_data
 
 def energy_processed_power(data,gl,simulation_num=25,subject_num=7,trial_num=3):
     c = 0
@@ -1004,6 +1063,456 @@ def energy_processed_power(data,gl,simulation_num=25,subject_num=7,trial_num=3):
         cols = np.arange(i,((simulation_num*subject_num*trial_num)-simulation_num)+i,simulation_num)
         selected_data = data[:,cols]
 
+def regeneratable_percent(regenerated_energy,absolute_energy,reshape=True):
+    if reshape == True:
+        regenerated_energy = np.reshape(regenerated_energy,(25,21),order='F')
+        absolute_energy = np.reshape(absolute_energy,(25,21),order='F')
+    percent = np.zeros((25,21))
+    for i in range (21):
+        percent[:,i] = np.true_divide(((regenerated_energy[:,i])),absolute_energy[:,i])
+    subject_percent = np.zeros((25,7))
+    c=0
+    for i in range(7):
+        subject_percent[:,i] = np.nanmean(percent[:,c:c+2],axis=1)
+        c+=3
+    avg_percent = np.nanmean(subject_percent,axis=1)
+    std_percent = np.nanstd(subject_percent,axis=1)
+    return avg_percent, std_percent
+
+######################################################################
+# root-mean-square error and modified augmentation factor analyses
+def mean_std_gaitcycle_phases(toe_offs):
+    '''
+    #==========================================================\n
+    gait phases:\n
+    \n
+    -loading response\t-mid stance\t-terminal stance\n
+    -pre swing\t-initial swing\t-mid swing\t-terminal swing\n
+    
+    '''
+    # loading reponse 
+    loading_response_phase_start = np.zeros((toe_offs.shape[0]))
+    loading_response_phase_end = np.zeros((toe_offs.shape[0]))
+    # mid stance
+    mid_stance_phase_start = np.zeros((toe_offs.shape[0]))
+    mid_stance_phase_end = np.zeros((toe_offs.shape[0]))
+    # terminal stance
+    terminal_stance_phase_start = np.zeros((toe_offs.shape[0]))
+    terminal_stance_phase_end = np.zeros((toe_offs.shape[0]))
+    # pre swing
+    pre_swing_phase_start = np.zeros((toe_offs.shape[0]))
+    pre_swing_phase_end = np.zeros((toe_offs.shape[0]))
+    # initial swing
+    initial_swing_phase_start = np.zeros((toe_offs.shape[0]))
+    initial_swing_phase_end = np.zeros((toe_offs.shape[0]))
+    # mid swing
+    mid_swing_phase_start = np.zeros((toe_offs.shape[0]))
+    mid_swing_phase_end = np.zeros((toe_offs.shape[0]))
+    # terminal swing 
+    terminal_swing_phase_start = np.zeros((toe_offs.shape[0]))
+    terminal_swing_phase_end = np.zeros((toe_offs.shape[0]))
+    # iteration
+    for i,toe_off in enumerate(toe_offs):
+        toe_off_diff = toe_off-60
+        # loading response phase
+        loading_response_phase_start[i] = 0 + toe_off_diff
+        loading_response_phase_end[i] = 10 + toe_off_diff
+        # mid stance phase
+        mid_stance_phase_start[i] = 10 + toe_off_diff
+        mid_stance_phase_end[i] = 30 + toe_off_diff
+        # terminal stance phase
+        terminal_stance_phase_start[i] = 30 + toe_off_diff
+        terminal_stance_phase_end[i] = 50 + toe_off_diff
+        # pre swing phase
+        pre_swing_phase_start[i] = 50 + toe_off_diff
+        pre_swing_phase_end[i] = 60 + toe_off_diff
+        # initial swing phase
+        initial_swing_phase_start[i] = 60 + toe_off_diff
+        initial_swing_phase_end[i] = 70 + toe_off_diff
+        # mid swing phase
+        mid_swing_phase_start[i] = 70 + toe_off_diff
+        mid_swing_phase_end[i] = 85 + toe_off_diff
+        # terminal swing phase
+        terminal_swing_phase_start[i] = 85 + toe_off_diff
+        terminal_swing_phase_end[i] = 100 + toe_off_diff
+    # establishing dictionary
+    # avg
+    avg_output_dic = {
+    'avg_loading_response_phase_start' : np.mean(loading_response_phase_start),
+    'avg_loading_response_phase_end' : np.mean(loading_response_phase_end),
+    # mid stance
+    'avg_mid_stance_phase_start' : np.mean(mid_stance_phase_start),
+    'avg_mid_stance_phase_end' : np.mean(mid_stance_phase_end),
+    # terminal stance
+    'avg_terminal_stance_phase_start' : np.mean(terminal_stance_phase_start),
+    'avg_terminal_stance_phase_end' : np.mean(terminal_stance_phase_end),
+    # pre swing
+    'avg_pre_swing_phase_start' : np.mean(pre_swing_phase_start),
+    'avg_pre_swing_phase_end' : np.mean(pre_swing_phase_end),
+    # initial swing
+    'avg_initial_swing_phase_start' : np.mean(initial_swing_phase_start),
+    'avg_initial_swing_phase_end' : np.mean(initial_swing_phase_end),
+    # mid swing
+    'avg_mid_swing_phase_start' : np.mean(mid_swing_phase_start),
+    'avg_mid_swing_phase_end' : np.mean(mid_swing_phase_end),
+    # terminal swing 
+    'avg_terminal_swing_phase_start' : np.mean(terminal_swing_phase_start),
+    'avg_terminal_swing_phase_end' : np.mean(terminal_swing_phase_end)}
+    # std
+    std_output_dic = {
+    'std_loading_response_phase_start' : np.std(loading_response_phase_start),
+    'std_loading_response_phase_end' : np.std(loading_response_phase_end),
+    # mid stance
+    'std_mid_stance_phase_start' : np.std(mid_stance_phase_start),
+    'std_mid_stance_phase_end' : np.std(mid_stance_phase_end),
+    # terminal stance
+    'std_terminal_stance_phase_start' : np.std(terminal_stance_phase_start),
+    'std_terminal_stance_phase_end' : np.std(terminal_stance_phase_end),
+    # pre swing
+    'std_pre_swing_phase_start' : np.std(pre_swing_phase_start),
+    'std_pre_swing_phase_end' : np.std(pre_swing_phase_end),
+    # initial swing
+    'std_initial_swing_phase_start' : np.std(initial_swing_phase_start),
+    'std_initial_swing_phase_end' : np.std(initial_swing_phase_end),
+    # mid swing
+    'std_mid_swing_phase_start' : np.std(mid_swing_phase_start),
+    'std_mid_swing_phase_end' : np.std(mid_swing_phase_end),
+    # terminal swing 
+    'std_terminal_swing_phase_start' : np.std(terminal_swing_phase_start),
+    'std_terminal_swing_phase_end' : np.std(terminal_swing_phase_end)}
+    return avg_output_dic,std_output_dic
+
+def phase_correspond_data(phase,toe_off):
+    '''
+    phase_correspond_data function is returning indices corresponding to 
+    the selected phase of a gait cycle.\n
+    #==========================================================\n
+    gait phases:\n
+    \n
+    -all (complete gait cycle)\t-loading response\t-mid stance\t-terminal stance\n
+    -pre swing\t-initial swing\t-mid swing\t-terminal swing\n
+    
+    '''
+    gait_cycle = np.linspace(0,100,1000)
+    toe_off_diff = toe_off-60
+    if phase == 'all':
+        index = np.where((gait_cycle >= 0) & (gait_cycle <= 100))
+        return index
+    elif phase == 'loading response':
+        phase_start = 0 + toe_off_diff
+        phase_end = 10 + toe_off_diff
+        if phase_start < 0:
+            indices_1 = np.where((gait_cycle >= 0) & (gait_cycle <= phase_end))
+            indices_2 = np.where((gait_cycle >= 100+toe_off_diff) & (gait_cycle <= 100))
+            index = np.concatenate((indices_1[0],indices_2[0]), axis=0)
+            return [index]
+        else:
+            index = np.where((gait_cycle >= phase_start) & (gait_cycle <= phase_end))
+            return index
+    elif phase == 'mid stance':
+        phase_start = 10 + toe_off_diff
+        phase_end = 30 + toe_off_diff
+        index = np.where((gait_cycle >= phase_start) & (gait_cycle <= phase_end))
+        return index
+    elif phase == 'terminal stance':
+        phase_start = 30 + toe_off_diff
+        phase_end = 50 + toe_off_diff
+        index = np.where((gait_cycle >= phase_start) & (gait_cycle <= phase_end))
+        return index
+    elif phase == 'pre swing':
+        phase_start = 50 + toe_off_diff
+        phase_end = 60 + toe_off_diff
+        index = np.where((gait_cycle >= phase_start) & (gait_cycle <= phase_end))
+        return index
+    elif phase == 'initial swing':
+        phase_start = 60 + toe_off_diff
+        phase_end = 70 + toe_off_diff
+        index = np.where((gait_cycle >= phase_start) & (gait_cycle <= phase_end))
+        return index
+    elif phase == 'mid swing':
+        phase_start = 70 + toe_off_diff
+        phase_end = 85 + toe_off_diff
+        index = np.where((gait_cycle >= phase_start) & (gait_cycle <= phase_end))
+        return index
+    elif phase == 'terminal swing':
+        phase_start = 85 + toe_off_diff
+        phase_end = 100 + toe_off_diff
+        if phase_start > 100:
+            indices_1 = np.where((gait_cycle >= phase_start) & (gait_cycle <= 100))
+            indices_2 = np.where((gait_cycle >= 0) & (gait_cycle <= toe_off_diff))
+            index = np.concatenate((indices_1[0],indices_2[0]), axis=0)
+            return [index]
+        else:
+            index = np.where((gait_cycle >= phase_start) & (gait_cycle <= phase_end))
+            return index
+
+def fix_data_shape(phase_index_1,phase_index_2):
+    '''
+    There are two conditions in where phase_1 > phase_2 or phase_1 < phase_2.
+    Then, there are three conditions can happen:\n
+    \t-index starts from 0\n\t-index ends with 1000\n\t-non of these conditions
+    '''
+    if len(phase_index_1) > len(phase_index_2):# main condition #1
+        
+        if phase_index_2[0] == 0 :  # secondary condition #1
+                
+            phase_index_2 = np.arange(phase_index_2,phase_index_2[-1]+(len(phase_index_1) - len(phase_index_2))+1,1) 
+                
+        elif phase_index_2[-1] == 999 : # secondary condition #2
+            
+            phase_index_2 = np.arange(phase_index_2-(len(phase_index_1) - len(phase_index_2)),phase_index_2[-1]+1,1) 
+                
+            if any(phase_index_2<0):
+                raise Exception('wrong list of indices')
+        else:                         # secondary condition #3
+            if (np.abs(phase_index_1[0]-phase_index_2[0]))>(np.abs(phase_index_1[-1]-phase_index_2[-1])):
+
+                phase_index_2 = np.arange(phase_index_2[0]-(len(phase_index_1) - len(phase_index_2)),phase_index_2[-1]+1,1) 
+                
+            else:
+                
+                phase_index_2 = np.arange(phase_index_2[0],phase_index_2[-1]+(len(phase_index_1) - len(phase_index_2))+1,1) 
+                    
+    elif len(phase_index_1) < len(phase_index_2): # main condition #2
+        
+        if phase_index_1[0] == 0 : # secondary condition #1
+            
+            phase_index_1 = np.arange(phase_index_1[0],phase_index_1[-1]+(len(phase_index_2) - len(phase_index_1))+1,1) 
+                
+        elif phase_index_1[-1] == 999 : # secondary condition #2
+            
+            phase_index_1 = np.arange(phase_index_1[0]-(len(phase_index_2) - len(phase_index_1)),phase_index_1[-1]+1,1)
+                
+            if any(phase_index_1<0):
+                raise Exception('wrong list of indices')
+        else:                          # secondary condition #3
+            
+            if (np.abs(phase_index_2[0]-phase_index_1[0]))>(np.abs(phase_index_2[-1]-phase_index_1[-1])):
+                
+                phase_index_1 = np.arange(phase_index_1[0]-(len(phase_index_2) - len(phase_index_1)),phase_index_1[-1]+1,1) 
+            
+            else:
+                
+                phase_index_1 = np.arange(phase_index_1[0],phase_index_1[-1]+(len(phase_index_2) - len(phase_index_1))+1,1)   
+    # final return           
+    return [phase_index_1],[phase_index_2]
+  
+def profiles_rmse(data_1,data_2,toe_off_1,toe_off_2,phase='all',which_comparison='pareto vs pareto',avg_within_trials=True):
+    '''
+    profiles_rmse function extract root mean square error between two selected profiles.\n
+    ** toe_off shall be imported as a toe_off vector of all subjects and trials.\n
+    #==========================================================\n
+    gait phases:\n
+    \n
+    -all(a complete gait cycle)\t-loading response\t-mid stance\t-terminal stance\n
+    -pre swing\t-initial swing\t-mid swing\t-terminal swing\n
+    \n
+    #==========================================================\n
+    which comparison conditions:\n
+    - pareto vs pareto\n
+    - *pareto vs ideal: data_1:\t pareto, data_2: ideal
+    - ideal vs ideal\n
+    #==========================================================\n
+    defaults:\n
+    -number of subject*trials = 21\n
+    -number of pareto simulations = 25\n
+    - data shape in 0 axis (rows) = 1000\n
+    '''
+    
+    if which_comparison == 'pareto vs pareto':
+        total_rmse = np.zeros(21*25)
+        c=0
+        for i in range(21):
+            for j in range(25):
+                # finding the indices corresponding to the selected phase
+                phase_index_1 = phase_correspond_data(phase,toe_off_1[i])
+                phase_index_2 = phase_correspond_data(phase,toe_off_2[i])
+                # fixing issue of list length difference
+                if len(phase_index_1[0]) != len(phase_index_2[0]):
+                    phase_index_1,phase_index_2 = fix_data_shape(phase_index_1[0],phase_index_2[0])
+                selected_data_1 = np.take(data_1[:,c],phase_index_1,axis=0)
+                selected_data_2 = np.take(data_2[:,c],phase_index_2,axis=0)
+                # fixing nan issue for importing in sklearn.metrics.mean_squared_error
+                if np.isnan(selected_data_1).any() == True:
+                    mask = np.isnan(selected_data_1)
+                    idx = np.where(~mask,np.arange(mask.shape[1]),0)
+                    selected_data_1[mask] = selected_data_1[np.nonzero(mask)[0], idx[mask]]
+                if np.isnan(selected_data_2).any() == True:
+                    mask = np.isnan(selected_data_2)
+                    idx = np.where(~mask,np.arange(mask.shape[1]),0)
+                    selected_data_2[mask] = selected_data_2[np.nonzero(mask)[0], idx[mask]]
+                # fixing issue with unsimulated simulations
+                if np.isnan(selected_data_2).all() == True or np.isnan(selected_data_1).any() == True:
+                    total_rmse[c] = np.nan
+                else:
+                    total_rmse[c] = np.sqrt(metrics.mean_squared_error(selected_data_1,selected_data_2))
+                c+=1
+        avg,std = pareto_avg_std_energy(total_rmse,reshape=True,avg_within_subjects=avg_within_trials)
+    elif which_comparison == 'pareto vs ideal':
+        total_rmse = np.zeros(21*25)
+        c=0
+        for i in range(21):
+            for j in range(25):
+                phase_index_1 = phase_correspond_data(phase,toe_off_1[i])
+                phase_index_2 = phase_correspond_data(phase,toe_off_2[i])
+                selected_data_1 = np.take(data_1[:,c],phase_index_1,axis=0)
+                selected_data_2 = np.take(data_2[:,i],phase_index_2,axis=0)
+                if np.isnan(selected_data_1).any() == True:
+                    mask = np.isnan(selected_data_1)
+                    idx = np.where(~mask,np.arange(mask.shape[1]),0)
+                    selected_data_1[mask] = selected_data_1[np.nonzero(mask)[0], idx[mask]]
+                if np.isnan(selected_data_2).any() == True:
+                    mask = np.isnan(selected_data_2)
+                    idx = np.where(~mask,np.arange(mask.shape[1]),0)
+                    selected_data_2[mask] = selected_data_2[np.nonzero(mask)[0], idx[mask]]
+                if np.isnan(selected_data_2).all() == True or np.isnan(selected_data_1).any() == True:
+                    total_rmse[c] = np.nan
+                else:
+                    total_rmse[c] = np.sqrt(metrics.mean_squared_error(selected_data_1,selected_data_2))
+                total_rmse[c] = np.sqrt(metrics.mean_squared_error(selected_data_1,selected_data_2))
+                c+=1
+        avg,std = pareto_avg_std_energy(total_rmse,reshape=True,avg_within_subjects=avg_within_trials)
+    elif which_comparison == 'ideal vs ideal':
+        total_rmse = np.zeros(21)
+        for i in range(21):
+            phase_index_1 = phase_correspond_data(phase,toe_off_1[i])
+            phase_index_2 = phase_correspond_data(phase,toe_off_2[i])
+            selected_data_1 = np.take(data_1[:,i],phase_index_1,axis=0)
+            selected_data_2 = np.take(data_2[:,i],phase_index_2,axis=0)
+            if np.isnan(selected_data_1).any() == True:
+                mask = np.isnan(selected_data_1)
+                idx = np.where(~mask,np.arange(mask.shape[1]),0)
+                selected_data_1[mask] = selected_data_1[np.nonzero(mask)[0], idx[mask]]
+            if np.isnan(selected_data_2).any() == True:
+                mask = np.isnan(selected_data_2)
+                idx = np.where(~mask,np.arange(mask.shape[1]),0)
+                selected_data_2[mask] = selected_data_2[np.nonzero(mask)[0], idx[mask]]
+            if np.isnan(selected_data_2).all() == True or np.isnan(selected_data_1).any() == True:
+                total_rmse[c] = np.nan
+            else:
+                total_rmse[c] = np.sqrt(metrics.mean_squared_error(selected_data_1,selected_data_2))
+            total_rmse[i] = np.sqrt(metrics.mean_squared_error(selected_data_1,selected_data_2))
+        avg,std = mean_std_over_subjects(total_rmse,avg_trials=avg_within_trials,ax=0)
+    return avg,std
+
+def profiles_all_phases_rmse(data_1,data_2,toe_off_1,toe_off_2,which_comparison='pareto vs pareto',avg_within_trials=True):
+    '''
+    profiles_rmse function extract root mean square error between two selected profiles.\n
+    ** toe_off shall be imported as a toe_off vector of all subjects and trials.\n
+    #==========================================================\n
+    gait phases:\n
+    \n
+    -all(a complete gait cycle)\t-loading response\t-mid stance\t-terminal stance\n
+    -pre swing\t-initial swing\t-mid swing\t-terminal swing\n
+    \n
+    #==========================================================\n
+    which comparison conditions:\n
+    - pareto vs pareto\n
+    - *pareto vs ideal: data_1:\t pareto, data_2: ideal
+    - ideal vs ideal\n
+    '''
+    gait_phases = ['all','loading response','mid stance','terminal stance','pre swing','initial swing','mid swing','terminal swing']
+    all_phases_avg = np.zeros((25,len(gait_phases)))
+    all_phases_std = np.zeros((25,len(gait_phases)))
+    for i,phase in enumerate(gait_phases):
+        avg,std = profiles_rmse(data_1,data_2,toe_off_1,toe_off_2,phase=phase,which_comparison= which_comparison,avg_within_trials=True)
+        all_phases_avg[:,i]=avg
+        all_phases_std[:,i]=std
+    return all_phases_avg,all_phases_std
+
+def modified_augmentation_factor(analysis_dict,regen_effect=False,normalize_AF = False):
+    '''
+    The augmentation factor has been developed by Mooney et al. but this factor
+    does not include the inertia effect. The modified augmentation factor has been
+    developed to modify this factor by including inertia effect.\n
+    #==============================================================================\n
+    - nu = 0.41 (Mooney et al)\n
+    - P_dissipation = (mean positive power - mean negative power) \n\t if mean positive power less than mean negative power\n
+    - beta = foot: 14.8, shank: 5.6, thigh: 5.6, waist: 3.3 W/kg\t(Mooney et al)\n
+    - gamma = foot: 47.22, shank: 27.78, thigh: 125.07\n
+    #************************************\n
+    \t metabolic_ratio = bias + A*I_ratio\n
+    \t metabolic_loaded = bias*metablic_noload + A*metablic_noloaded((I_noload+I_device)/I_noload)\n
+    \t metabolic_loaded*subjects_mass = bias*metablic_noload*subjects_mass + A*subjects_mass*\n\t metablic_noloaded + A*subjects_mass*metablic_noloaded(I_device/I_noload)\n
+    \t [W/kg]*[kg] = [no dim]*[W/kg]*[kg] + [no dim]*[W/kg]*[kg] +\n\t [no dim]*[W/kg]*[kg]*([kg.m^2]/[kg.m^2]):\t [W] = [W]\n
+    \t gamma = (A*subjects_mass*metablic_noloaded/I_noload)I_device\n
+    #************************************\n
+    - alpha: regeneration efficiency\n
+    #==============================================================================\n
+    mass and inertia of the exo components have been assigned as follows:\n
+    -exo_mass[0]: waist\t -exo_mass[1]: thigh\t -exo_mass[2]: shank\t exo_mass[3]: foot\n
+    -exo_inertia[0]: thigh\t -exo_inertia[1]: shank\t -exo_inertia[2]: foot\n
+    *** The mass of one side needs to be imported and it will automatically will consider for both sides***
+    
+    '''
+    # read data from dictionary
+    positive_power = analysis_dict['positive_power']
+    negative_power = analysis_dict['negative_power']
+    exo_mass = analysis_dict['exo_mass']
+    exo_inertia = analysis_dict['exo_inertia']
+    gl = analysis_dict['gl']
+    # The main algorithm starting from here:
+    subject_mass = gl[1]
+    nu = 0.41
+    positive_power_W = positive_power*subject_mass
+    negative_power_W = negative_power*subject_mass
+    if len(exo_mass) != 4:
+        print('4 items are expected for the mass list.\n considering last {} terms as zero.'.format(4-len(exo_mass)))
+        for i in range(4-len(exo_mass)):
+            exo_mass.append(0)
+    if len(exo_inertia) != 3:
+        print('3 items are expected for the inertia list.\n considering last {} terms as zero.'.format(3-len(exo_inertia)))
+        for i in range(3-len(exo_inertia)):
+            exo_inertia.append(0)
+    if regen_effect == True:
+        alpha = analysis_dict['regen_efficiency']
+    # mass and inertia effect calculation
+    # order: foot,shank,thigh,waist
+    mass_effect = 14.8*2*exo_mass[3]+5.6*2*exo_mass[2]+5.6*2*exo_mass[1]+3.2*2*exo_mass[0]
+    inertia_effect = 47.22*exo_inertia[2]+27.78*exo_inertia[1]+125.07*exo_inertia[0]
+    # dissipated power calculation
+    if negative_power > positive_power:
+        if regen_effect == True:
+            p_dissipation = alpha*(negative_power_W-positive_power_W)
+        else:
+            p_dissipation = negative_power_W-positive_power_W
+    else:
+        p_dissipation = 0
+    # modified AF
+    modified_AF = ((positive_power_W-p_dissipation)/nu) - mass_effect - inertia_effect
+    if normalize_AF == True:
+        return modified_AF/subject_mass
+    else:
+        return modified_AF
+    
+def specific_weights_modified_AF(analysis_dict,regen_effect=False,normalize_AF=False,avg_trials=True,return_sub_means=False):        
+    '''
+    specific_weights_modified_AF calculate the modified augmentation factor for a set of simulations
+    with specific configuration of the exoskeleton.\n
+    '''
+    positive_power = analysis_dict['positive_power']
+    negative_power = analysis_dict['negative_power']
+    exo_mass = analysis_dict['exo_mass']
+    exo_inertia = analysis_dict['exo_inertia']
+    regeneration_efficiency = 0.65
+    gl = analysis_dict['gl']
+    subjects_modified_AF = np.zeros(positive_power.shape[0])
+    for i,key in enumerate(gl.keys()):
+        AF_analysis_dict = {'positive_power':positive_power[i],
+                            'negative_power':negative_power[i],
+                            'exo_mass':exo_mass,
+                            'gl':gl[key],
+                            'regen_efficiency':regeneration_efficiency}
+        subjects_modified_AF[i] = modified_augmentation_factor(analysis_dict=AF_analysis_dict,regen_effect=regen_effect,normalize_AF=normalize_AF)
+    if avg_trials == True and return_sub_means==True:
+        avg_subjects_modified_AF = mean_over_trials(subjects_modified_AF,ax=0)
+        return avg_subjects_modified_AF
+    elif avg_trials == False and return_sub_means==True:
+        return subjects_modified_AF
+    elif return_sub_means==False:
+        avg,std = mean_std_over_subjects(subjects_modified_AF,avg_trials=avg_trials,ax=0)
+        return avg,std
+          
 ######################################################################
 # Plot related functions for Pareto Simulations
 
@@ -1041,7 +1550,7 @@ def errorbar_3D(x,y,z,x_err,y_err,z_err,color,marker='_',lw=2):
         ax.plot([x[i], x[i]], [y[i]+y_err[i], y[i]-y_err[i]], [z[i], z[i]], marker=marker,color=color,lw=lw)
         ax.plot([x[i], x[i]], [y[i], y[i]], [z[i]+z_err[i], z[i]-z_err[i]], marker=marker,color=color,lw=lw)
 
-def plot_pareto_avg_curve (plot_dic,loadcond,legend_loc=0,label_on=True,errbar_on=True,line=False,*args, **kwargs):
+def plot_pareto_avg_curve (plot_dic,loadcond,legend_loc=0,label_on=True,which_label='alphabet',errbar_on=True,line=False,*args, **kwargs):
     '''plotting avg and std subplots for combinations of weights.\n
     -labels: needs to be provided by user otherwise data will be labeled from 1 to 25 automatically.
              labeling is True (i.e. label_on=True) by default.\n
@@ -1062,8 +1571,18 @@ def plot_pareto_avg_curve (plot_dic,loadcond,legend_loc=0,label_on=True,errbar_o
     color_2 = plot_dic['color_2']
     # handle labels
     if 'label_1' and 'label_2' not in plot_dic:
-        label_1 = np.arange(1,26,1)
-        label_2 = np.arange(1,26,1)
+        if which_label == 'alphabet':
+            label_1 =[]
+            for i in ['A','B','C','D','E']:
+                for j in ['a','b','c','d','e']:
+                    label_1.append('{}{}'.format(i,j))
+            label_2 =[]
+            for i in ['A','B','C','D','E']:
+                for j in ['a','b','c','d','e']:
+                    label_2.append('{}{}'.format(i,j))
+        elif which_label == 'number':
+            label_1 = np.arange(1,26,1)
+            label_2 = np.arange(1,26,1)
     else:
         label_1 = plot_dic['label_1']
         label_2 = plot_dic['label_2']
@@ -1100,7 +1619,10 @@ def plot_pareto_curve_subjects (nrows,ncols,nplot,plot_dic,loadcond,\
     xlabel = plot_dic ['xlabel']
     # handle labels
     if labels == None:
-        labels = np.arange(1,26,1)
+        labels=[]
+        for i in ['A','B','C','D','E']:
+            for j in ['a','b','c','d','e']:
+                labels.append('{}{}'.format(i,j))
     # handle titles
     if 'plot_titles' not in plot_dic:
         subjects = ['05','07','09','10','11','12','14']
@@ -1235,7 +1757,10 @@ def plot_pareto_comparison(plot_dic,loadcond,compare,labels=None,legend_loc=[0],
         raise   Exception('comparison case is not valid.')
     # handle labels
     if labels == None:
-        labels = np.arange(1,26,1)
+        label=[]
+        for i in ['A','B','C','D','E']:
+            for j in ['a','b','c','d','e']:
+                label.append('{}{}'.format(i,j))
     # handle legends
     if 'legend_1' and 'legend_2' not in plot_dic:
         legend_1 = 'biarticular,{}'.format(loadcond)
@@ -1299,7 +1824,13 @@ def plot_paretofront_profile_changes(plot_dic,colormap,toeoff_color,include_colo
     # plot the colorbar
     if include_colorbar == True:
         cbar = plt.colorbar(sm,ticks=np.arange(1,len(indices)+1,1),aspect=80)
-        indices_str =[str(item) for item in list(reversed(indices))]
+        label=[]
+        for i in ['A','B','C','D','E']:
+            for j in ['a','b','c','d','e']:
+                label.append('{}{}'.format(i,j))
+        indices_str = []
+        for i in reversed(indices):
+            indices_str.append(label[i-1])
         cbar.set_ticklabels(indices_str)
         cbar.outline.set_visible(False)
     #title
@@ -1397,5 +1928,11 @@ def paretofront_barplot(plot_dic,indices,loadcond):
                     yerr=y1err_data,
                     error_kw=error_config,
                     label=legend_2)
-    indices_str =[str(item) for item in list(reversed(indices))]
+    label=[]
+    for i in ['A','B','C','D','E']:
+        for j in ['a','b','c','d','e']:
+            label.append('{}{}'.format(i,j))
+    indices_str = []
+    for i in reversed(indices):
+        indices_str.append(label[i-1])
     plt.xticks(index + bar_width / 2,indices_str )
