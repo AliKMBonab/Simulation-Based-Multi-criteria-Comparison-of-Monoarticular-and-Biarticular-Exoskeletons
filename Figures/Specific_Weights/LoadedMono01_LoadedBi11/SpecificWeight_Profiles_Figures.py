@@ -124,12 +124,12 @@ mean_rmse_knee_actuator_power,std_rmse_knee_actuator_power = utils.profiles_all_
 mean_rmse_hip_musclesmoment,std_rmse_hip_musclesmoment = utils.profiles_all_phases_rmse(bi_loaded_hipmuscles_moment,mono_loaded_hipmuscles_moment,loaded_toe_off,loaded_toe_off,which_comparison='ideal vs ideal')
 mean_rmse_knee_musclesmoment,std_rmse_knee_musclesmoment = utils.profiles_all_phases_rmse(bi_loaded_kneemuscles_moment,mono_loaded_kneemuscles_moment,loaded_toe_off,loaded_toe_off,which_comparison='ideal vs ideal')
 # RMSE plot       
-plot_dic = {'mean_11':mean_rmse_hip_actuator_torque,'mean_12':mean_rmse_knee_actuator_torque,
-            'mean_13':mean_rmse_hip_actuator_power,'mean_21':mean_rmse_knee_actuator_power,
-            'mean_22':mean_rmse_hip_musclesmoment,'mean_23':mean_rmse_knee_musclesmoment,
-            'std_11':std_rmse_hip_actuator_torque,'std_12':std_rmse_knee_actuator_torque,
-            'std_13':std_rmse_hip_actuator_power,'std_21':std_rmse_knee_actuator_power,
-            'std_22':std_rmse_hip_musclesmoment,'std_23':std_rmse_knee_musclesmoment,
+plot_dic = {'mean_11':mean_rmse_hip_actuator_torque,'mean_12':mean_rmse_hip_actuator_power,
+            'mean_13':mean_rmse_hip_musclesmoment,'mean_21':mean_rmse_knee_actuator_torque,
+            'mean_22':mean_rmse_knee_actuator_power,'mean_23':mean_rmse_knee_musclesmoment,
+            'std_11':std_rmse_hip_actuator_torque,'std_12':std_rmse_hip_actuator_power,
+            'std_13':std_rmse_hip_musclesmoment,'std_21':std_rmse_knee_actuator_torque,
+            'std_22':std_rmse_knee_actuator_power,'std_23':std_rmse_knee_musclesmoment,
             'color_1':mycolors['pastel blue'],'color_2':mycolors['deep space sparkle'],'title_1':'assistive actuators\n torque error',
             'title_2':'assistive actuators\n power error','title_3':'assisted muscles\n moment error'}
 fig = plt.figure(num='RMSE',figsize=(20.8, 6.4))
