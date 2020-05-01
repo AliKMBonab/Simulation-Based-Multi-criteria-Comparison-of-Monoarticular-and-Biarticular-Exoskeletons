@@ -137,12 +137,14 @@ config_names = ['monoarticular','biarticular']
 middle =['hipactuator','kneeactuator','hipactuator','kneeactuator',\
          'hipactuator','kneeactuator','hipactuator','kneeactuator',\
          'metabolics','ninemuscles','hipmuscles','kneemuscles',\
-         'hipactuator','kneeactuator','hipmuscles','kneemuscles']
+         'hipactuator','kneeactuator','hipmuscles','kneemuscles',\
+         'hipactuator','kneeactuator','hipactuator','kneeactuator','hipactuator','kneeactuator']
 suffixes = ['torque','torque','power','power',\
             'speed','speed','energy','energy',\
             'energy','activation','moment','moment',\
-            'regenerative_energy','regenerative_energy',
-            'power','power']
+            'regenerative_energy','regenerative_energy',\
+            'power','power','max_power','max_power','avg_positive_power','avg_positive_power',\
+            'avg_negative_power','avg_negative_power']
 HWs = {'mono_load':[70,70,70,30],'bi_load':[70,50,50,40,30],'mono_noload':[70,60,50,30],'bi_noload':[70,50,30,30]}
 KWs = {'mono_load':[70,40,30,30],'bi_load':[70,70,60,70,50],'mono_noload':[70,70,30,30],'bi_noload':[70,60,70,50]}
 labeling = ['mono','bi']
@@ -160,3 +162,4 @@ if  y.lower() == 'y':
                 out= fcns.specific_weight_data_subjects(configuration=configs[i],HipWeight=HW[j],KneeWeight=KW[j],loadcond=load_type,regenergy=True)
                 for k in range(len(out)):
                     np.savetxt('./Data/Specific_Weights/{}_hip{}knee{}_{}_{}_{}.csv'.format(config_names[i],HW[j],KW[j],load_type,middle[k],suffixes[k]), out[k], fmt='%s', delimiter=',')
+                    

@@ -96,7 +96,7 @@ mean_mono_loaded_hip_regen_energy, std_mono_loaded_hip_regen_energy = utils.rege
 mean_mono_loaded_knee_regen_energy, std_mono_loaded_knee_regen_energy = utils.regeneratable_percent(assisted_energy_dataset['monoarticular_pareto_load_kneeregenrative_energy'],\
                                                                                                     assisted_energy_dataset['monoarticular_pareto_load_kneeactuator_energy'])
 ##############################################################
-efficiency = np.array([0.25,0.50,0.75,1])
+efficiency = np.array([0.25,0.50,0.65,1])
 mean_bi_noload_regen_energy = np.zeros((25,4))
 std_bi_noload_regen_energy = np.zeros((25,4))
 mean_mono_noload_regen_energy = np.zeros((25,4))
@@ -115,8 +115,8 @@ for i in range(4):
 #####################################################################################
 #####################################################################################
 # Processing Data For Adding Mass
-biarticular_exoskeleton_dic = {'m_waist':6, 'm_thigh':1, 'm_shank':0.9, 'motor_max_torque':2, 'motor_inertia':0.000506, 'thigh_com':0.23, 'shank_com':0.18, 'leg_inertia':2.52}
-monoarticular_exoskeleton_dic = {'m_waist':4.5, 'm_thigh':2.5, 'm_shank':0.9, 'motor_max_torque':2, 'motor_inertia':0.000506, 'thigh_com':0.3, 'shank_com':0.18, 'leg_inertia':2.52}
+biarticular_exoskeleton_dic = {'m_waist':4.5, 'm_thigh':1, 'm_shank':0.9, 'motor_max_torque':2, 'motor_inertia':0.000506, 'thigh_com':0.23, 'shank_com':0.18, 'leg_inertia':2.52}
+monoarticular_exoskeleton_dic = {'m_waist':3, 'm_thigh':2.5, 'm_shank':0.9, 'motor_max_torque':2, 'motor_inertia':0.000506, 'thigh_com':0.3, 'shank_com':0.18, 'leg_inertia':2.52}
 biarticular_out = utils.addingmass_metabolics_pareto(unassisted_energy_dataset['noload_metabolics_energy'],bi_noload_metabolics,biarticular_exoskeleton_dic)
 monoarticular_out = utils.addingmass_metabolics_pareto(unassisted_energy_dataset['noload_metabolics_energy'],mono_noload_metabolics,monoarticular_exoskeleton_dic)
 # Metabolic cost reduction after adding mass
@@ -174,7 +174,7 @@ plot_dic = {'x1_data':mean_bi_noload_hip_regen_energy,'x1err_data':std_bi_noload
             }
 plt.subplot(2,2,1)
 utils.paretofront_barplot(plot_dic,indices,loadcond='noload')
-plt.ylabel('regenerable energy (%)')
+plt.ylabel('regenerable energy/\n absolute energy')
 plt.title('biarticular, noload')
 ax = plt.gca()
 plt.tight_layout()
@@ -197,7 +197,7 @@ plot_dic = {'x1_data':mean_bi_loaded_hip_regen_energy,'x1err_data':std_bi_loaded
             }
 plt.subplot(2,2,3)
 utils.paretofront_barplot(plot_dic,indices,loadcond='loaded')
-plt.ylabel('regenerable energy (%)')
+plt.ylabel('regenerable energy/\n absolute energy')
 plt.xlabel('device configuration')
 plt.title('biarticular, loaded')
 ax = plt.gca()
@@ -244,7 +244,7 @@ plot_dic = {'x1_data':mean_bi_noload_metabolics_percent,'x1err_data':std_bi_nolo
           'color_1':mycolors['magenta pink'],'color_2':mycolors['lavender purple']
           }
 fig = plt.figure(num='Pareto Curve: noload mono vs bi',figsize=(10.4, 8.8))
-utils.plot_pareto_avg_curve (plot_dic,loadcond='noload')
+utils.plot_pareto_avg_curve (plot_dic,loadcond='noload',which_label='number')
 plt.xlabel('Metabolic Cost Reduction (%)')
 plt.ylabel('Exoskeleton Energy Consumption (W/kg)')
 ax = plt.gca()
@@ -305,7 +305,7 @@ plot_dic = {'x1_data':mean_bi_noload_metabolics_addedmass_percent,'x1err_data':s
           'color_1':mycolors['burgundy red'],'color_2':mycolors['royal blue']
           }
 fig = plt.figure(num='Pareto Curve: noload mono vs bi',figsize=(10.4, 8.8))
-utils.plot_pareto_avg_curve (plot_dic,loadcond='noload')
+utils.plot_pareto_avg_curve (plot_dic,loadcond='noload',which_label='number')
 plt.xlabel('Metabolic Cost Reduction (%)')
 plt.ylabel('Exoskeleton Energy Consumption (W/kg)')
 ax = plt.gca()
@@ -325,7 +325,7 @@ plot_dic = {'x1_data':mean_bi_noload_metabolics_addedmass_percent,'x1err_data':s
           'legend_1': 'bi non-ideal','legend_2': 'bi ideal'}
 
 fig = plt.figure(num='Pareto Curve: noload bi non-ideal vs ideal',figsize=(10.4, 8.8))
-utils.plot_pareto_avg_curve (plot_dic,loadcond='noload')
+utils.plot_pareto_avg_curve (plot_dic,loadcond='noload',which_label='number')
 plt.xlabel('Metabolic Cost Reduction (%)')
 plt.ylabel('Exoskeleton Energy Consumption (W/kg)')
 ax = plt.gca()
@@ -345,7 +345,7 @@ plot_dic = {'x1_data':mean_mono_noload_metabolics_addedmass_percent,'x1err_data'
           'legend_1': 'mono non-ideal','legend_2': 'mono ideal'}
         
 fig = plt.figure(num='Pareto Curve: noload mono non-ideal vs ideal',figsize=(10.4, 8.8))
-utils.plot_pareto_avg_curve (plot_dic,loadcond='noload')
+utils.plot_pareto_avg_curve (plot_dic,loadcond='noload',which_label='number')
 plt.xlabel('Metabolic Cost Reduction (%)')
 plt.ylabel('Exoskeleton Energy Consumption (W/kg)')
 ax = plt.gca()
@@ -409,7 +409,7 @@ plot_dic = {'x1_data':mean_bi_noload_metabolics_addedmass_percent,'x1err_data':s
           'legend_1': 'bi no-regenrated','legend_2': 'bi regenrated'}
 
 fig = plt.figure(num='Pareto Curve: noload bi non-regenerated vs regenerated',figsize=(10.4, 8.8))
-utils.plot_pareto_avg_curve (plot_dic,loadcond='noload')
+utils.plot_pareto_avg_curve (plot_dic,loadcond='noload',which_label='number')
 plt.xlabel('Metabolic Cost Reduction (%)')
 plt.ylabel('Exoskeleton Energy Consumption (W/kg)')
 ax = plt.gca()

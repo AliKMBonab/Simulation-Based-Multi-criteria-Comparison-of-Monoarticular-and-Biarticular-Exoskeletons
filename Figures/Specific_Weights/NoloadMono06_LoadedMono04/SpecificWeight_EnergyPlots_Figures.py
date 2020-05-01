@@ -45,25 +45,25 @@ noload_mean_toe_off,_,loaded_mean_toe_off,_ = utils.toe_off_avg_std(gl_noload,gl
 # Energy
 noload_mono_metabolics = utils.reduction_calc(unassisted_energy_dataset['noload_metabolics_energy'],assisted_energy_dataset['monoarticular_hip60knee70_noload_metabolics_energy'])
 loaded_mono_metabolics = utils.reduction_calc(unassisted_energy_dataset['loaded_metabolics_energy'],assisted_energy_dataset['monoarticular_hip70knee40_load_metabolics_energy'])
-
-# Mean/std energy percent
+#  Mean/std energy percent
 mean_noload_mono_metabolics, std_noload_mono_metabolics = utils.mean_std_over_subjects(noload_mono_metabolics,ax=0)
 mean_loaded_mono_metabolics, std_loaded_mono_metabolics = utils.mean_std_over_subjects(loaded_mono_metabolics,ax=0)
 # Mean/std energy
 mean_noload_unassist_energy,std_noload_unassist_energy = utils.mean_std_over_subjects(unassisted_energy_dataset['noload_metabolics_energy'],ax=0)
+mean_loaded_unassist_energy,std_loaded_unassist_energy = utils.mean_std_over_subjects(unassisted_energy_dataset['loaded_metabolics_energy'],ax=0)
 mean_noload_mono_energy,std_noload_mono_energy = utils.mean_std_over_subjects(assisted_energy_dataset['monoarticular_hip60knee70_noload_metabolics_energy'],ax=0)
 mean_loaded_mono_energy,std_loaded_mono_energy = utils.mean_std_over_subjects(assisted_energy_dataset['monoarticular_hip70knee40_load_metabolics_energy'],ax=0)
 
 #####################################################################################
 # Plots
 # Monoarticular VS Monoarticular
-names = ['unassist, noload','mono, loaded','mono, noload']
-data = [mean_noload_unassist_energy,mean_loaded_mono_energy,mean_noload_mono_energy]
-err = [std_noload_unassist_energy,std_loaded_mono_energy,std_noload_mono_energy]
+names = ['unassist, noload','unassist, loaded','mono, loaded','mono, noload']
+data = [mean_noload_unassist_energy,mean_loaded_unassist_energy,mean_loaded_mono_energy,mean_noload_mono_energy]
+err = [std_noload_unassist_energy,std_loaded_unassist_energy,std_loaded_mono_energy,std_noload_mono_energy]
 fig, ax = plt.subplots(figsize=(6.4, 4.8))
 barplot = ax.bar(names, data, yerr=err, align='center',color=mycolors['manatee grey'],width=0.45, ecolor='black', capsize=10)
-barplot[1].set_color(mycolors['crimson red'])
-barplot[2].set_color(mycolors['french rose'])
+barplot[1].set_color(mycolors['olympic blue'])
+barplot[2].set_color(mycolors['crimson red'])
 ax.set_ylabel('Metabolic Rate (W/Kg)')
 ax.set_xticks(names)
 ax.set_xticklabels(names)
@@ -72,14 +72,14 @@ fig.savefig('./Figures/Specific_Weights/NoloadMono06_LoadedMono04/Metabolic_Rate
 
 #******************************************************************
 # Metabolic Bar Plot
-# Noload Mono Vs Mono
+# noload Mono Vs Mono
 names = ['mono, noload','mono, loaded']
 data = [mean_noload_mono_metabolics,mean_loaded_mono_metabolics]
 err = [std_noload_mono_metabolics,std_loaded_mono_metabolics]
 fig, ax = plt.subplots(figsize=(6.4, 4.8))
 barplot = ax.bar(names, data, yerr=err, align='center',color=mycolors['manatee grey'],width=0.45, ecolor='black', capsize=10)
-barplot[1].set_color(mycolors['crimson red'])
-barplot[0].set_color(mycolors['french rose'])
+barplot[1].set_color(mycolors['dark purple'])
+barplot[0].set_color(mycolors['crimson red'])
 ax.set_ylabel('Metabolic Change (%)')
 ax.set_xticks(names)
 ax.set_xticklabels(names)
@@ -93,11 +93,11 @@ fig.savefig('./Figures/Specific_Weights/NoloadMono06_LoadedMono04/Metabolic_Perc
 # Metabolic Box Plot
 # Monoarticular
 
-names = ['unassist, loaded','mono, loaded','unassist, noload','mono, noload']
+names = ['unassist, noload','unassist, loaded','mono, loaded','mono, noload']
 x = np.arange(1,len(names)+1,1)
-data = [utils.mean_over_trials(unassisted_energy_dataset['loaded_metabolics_energy']),\
+data = [utils.mean_over_trials(unassisted_energy_dataset['noload_metabolics_energy']),\
+        utils.mean_over_trials(unassisted_energy_dataset['loaded_metabolics_energy']),\
         utils.mean_over_trials(assisted_energy_dataset['monoarticular_hip70knee40_load_metabolics_energy']),\
-        utils.mean_over_trials(unassisted_energy_dataset['noload_metabolics_energy']),\
         utils.mean_over_trials(assisted_energy_dataset['monoarticular_hip60knee70_noload_metabolics_energy'])]
 fig, ax = plt.subplots(figsize=(6.4, 4.8))
 bp = ax.boxplot(data, patch_artist=True)
@@ -113,7 +113,7 @@ fig.savefig('./Figures/Specific_Weights/NoloadMono06_LoadedMono04/Metabolic_Rate
 
 #******************************************************************
 # Actuators Energy Box Plot
-# Monoarticular Vs Monoarticular Noload
+# Monoarticular Vs Monoarticular noload
 names = ['mono hip, noload','mono knee, noload','mono hip, loaded','mono knee, loaded',]
 x = np.arange(1,len(names)+1,1)
 data = [utils.mean_over_trials(assisted_energy_dataset['monoarticular_hip60knee70_noload_hipactuator_energy']),\
@@ -130,3 +130,51 @@ utils.no_top_right(ax)
 fig.tight_layout()
 plt.show()
 fig.savefig('./Figures/Specific_Weights/NoloadMono06_LoadedMono04/Actuator_Energy_BoxPlot.pdf',orientation='landscape',bbox_inches='tight')
+
+#******************************************************************
+# Paper Figure
+# Metabolic Box Plot
+# Monoarticular
+
+names = ['unassist,\nnoload','unassist,\nloaded','mono,\nloaded','mono,\nnoload']
+x = np.arange(1,len(names)+1,1)
+data = [utils.mean_over_trials(unassisted_energy_dataset['noload_metabolics_energy']),\
+        utils.mean_over_trials(unassisted_energy_dataset['loaded_metabolics_energy']),\
+        utils.mean_over_trials(assisted_energy_dataset['monoarticular_hip70knee40_load_metabolics_energy']),\
+        utils.mean_over_trials(assisted_energy_dataset['monoarticular_hip60knee70_noload_metabolics_energy'])]
+fig= plt.figure(figsize=(9.6, 4.8))
+plt.subplot(1,2,1)
+bp = plt.boxplot(data, patch_artist=True)
+ax = plt.gca()
+utils.beautiful_boxplot(bp)
+ax.set_ylabel('Metabolic Rate (W/Kg)')
+ax.set_xticks(x)
+ax.set_ylim((4,10))
+plt.tick_params(axis='both',direction='in')
+ax.set_xticklabels(names)
+utils.no_top_right(ax)
+
+
+#******************************************************************
+# Actuators Energy Box Plot
+# Monoarticular Vs Monoarticular noload
+names = ['mono hip,\nnoload','mono knee,\nnoload','mono hip,\nloaded','mono knee,\nloaded',]
+x = np.arange(1,len(names)+1,1)
+data = [utils.mean_over_trials(assisted_energy_dataset['monoarticular_hip60knee70_noload_hipactuator_energy']),\
+        utils.mean_over_trials(assisted_energy_dataset['monoarticular_hip60knee70_noload_kneeactuator_energy']),\
+        utils.mean_over_trials(assisted_energy_dataset['monoarticular_hip70knee40_load_hipactuator_energy']),\
+        utils.mean_over_trials(assisted_energy_dataset['monoarticular_hip70knee40_load_kneeactuator_energy'])]
+plt.subplot(1,2,2)
+bp = plt.boxplot(data, patch_artist=True)
+ax = plt.gca()
+utils.beautiful_boxplot(bp)
+ax.set_ylabel('Actuators Absolute\nPower (W/Kg)')
+ax.set_xticks(x)
+ax.set_ylim((0.6,1.6))
+plt.tick_params(axis='both',direction='in')
+ax.set_xticklabels(names)
+utils.no_top_right(ax)
+fig.tight_layout(h_pad=-1, w_pad=-1.5)
+fig.subplots_adjust(top=0.98, bottom=0.075, left=0.100, right=0.975,hspace=0.35,wspace=0.15)
+fig.savefig('./Figures/Specific_Weights/NoloadMono06_LoadedMono04/PaperFigure_BoxPlot.pdf',orientation='landscape',bbox_inches='tight')
+plt.show()
