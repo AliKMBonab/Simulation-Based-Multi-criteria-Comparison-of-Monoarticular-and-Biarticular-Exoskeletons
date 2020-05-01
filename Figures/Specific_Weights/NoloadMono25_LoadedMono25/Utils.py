@@ -19,6 +19,7 @@ from perimysium import postprocessing as pp
 from perimysium import dataman
 import pathlib
 from sklearn import metrics
+from Colors import colors as mycolors
 #######################################################################
 #######################################################################
 # Data saving and reading related functions
@@ -694,7 +695,7 @@ def plot_joint_muscle_exo (nrows,ncols,plot_dic,color_dic,
             ax.set_xlabel('gait cycle (%)')
         elif ncols==4 and i in [4,5,6,7]:
             ax.set_xlabel('gait cycle (%)')
-        if ncols==2 and i in [0,1,2,3]:
+        if ncols==2 and i in [0,2]:
             ax.set_ylabel(ylabel)
         elif ncols==3 and i in [0,3,6]:
             ax.set_ylabel(ylabel)
@@ -756,8 +757,6 @@ def plot_gait_cycle_phase(mean_dic,std_dic,avg_toeoff,loadcond):
         ax.spines["left"].set_visible(False)
         ax.spines["top"].set_visible(False)
         
-
-
 ######################################################################
 ######################################################################
 # Data Processing related functions for Pareto Simulations
@@ -1297,7 +1296,7 @@ def fix_data_shape(phase_index_1,phase_index_2):
     # final return           
     return [phase_index_1],[phase_index_2]
   
-def profiles_rmse(data_1,data_2,toe_off_1,toe_off_2,phase='all',which_comparison='pareto vs pareto',avg_within_trials=True):
+def profiles_rmse(data_1,data_2,toe_off_1,toe_off_2,phase='all',which_comparison='pareto vs pareto',avg_within_trials=True,return_subjects=False):
     '''
     profiles_rmse function extract root mean square error between two selected profiles.\n
     ** toe_off shall be imported as a toe_off vector of all subjects and trials.\n
@@ -1317,6 +1316,7 @@ def profiles_rmse(data_1,data_2,toe_off_1,toe_off_2,phase='all',which_comparison
     -number of subject*trials = 21\n
     -number of pareto simulations = 25\n
     - data shape in 0 axis (rows) = 1000\n
+    -return_subject has been developed just for ideal versus ideal case
     '''
     
     if which_comparison == 'pareto vs pareto':
@@ -1388,14 +1388,17 @@ def profiles_rmse(data_1,data_2,toe_off_1,toe_off_2,phase='all',which_comparison
                 idx = np.where(~mask,np.arange(mask.shape[1]),0)
                 selected_data_2[mask] = selected_data_2[np.nonzero(mask)[0], idx[mask]]
             if np.isnan(selected_data_2).all() == True or np.isnan(selected_data_1).any() == True:
-                total_rmse[c] = np.nan
+                total_rmse[i] = np.nan
             else:
-                total_rmse[c] = np.sqrt(metrics.mean_squared_error(selected_data_1,selected_data_2))
-            total_rmse[i] = np.sqrt(metrics.mean_squared_error(selected_data_1,selected_data_2))
-        avg,std = mean_std_over_subjects(total_rmse,avg_trials=avg_within_trials,ax=0)
-    return avg,std
+                total_rmse[i] = np.sqrt(metrics.mean_squared_error(selected_data_1,selected_data_2))
+        if return_subjects == True:
+            avg = mean_over_trials(total_rmse,ax=1)
+            return avg
+        else:
+            avg,std = mean_std_over_subjects(total_rmse,avg_trials=avg_within_trials,ax=0)
+            return avg,std
 
-def profiles_all_phases_rmse(data_1,data_2,toe_off_1,toe_off_2,which_comparison='pareto vs pareto',avg_within_trials=True):
+def profiles_all_phases_rmse(data_1,data_2,toe_off_1,toe_off_2,which_comparison='pareto vs pareto',avg_within_trials=True,return_subjects=False):
     '''
     profiles_rmse function extract root mean square error between two selected profiles.\n
     ** toe_off shall be imported as a toe_off vector of all subjects and trials.\n
@@ -1412,13 +1415,32 @@ def profiles_all_phases_rmse(data_1,data_2,toe_off_1,toe_off_2,which_comparison=
     - ideal vs ideal\n
     '''
     gait_phases = ['all','loading response','mid stance','terminal stance','pre swing','initial swing','mid swing','terminal swing']
-    all_phases_avg = np.zeros((25,len(gait_phases)))
-    all_phases_std = np.zeros((25,len(gait_phases)))
+    if which_comparison=='pareto vs pareto' or which_comparison=='pareto vs ideal':
+        all_phases_avg = np.zeros((25,len(gait_phases)))
+        all_phases_std = np.zeros((25,len(gait_phases)))
+    else:
+        if return_subjects == False:
+            all_phases_avg = np.zeros((len(gait_phases)))
+            all_phases_std = np.zeros((len(gait_phases)))
+        else:
+            all_phases_avg = np.zeros((7,len(gait_phases)))
+            all_phases_std = np.zeros((7,len(gait_phases)))
     for i,phase in enumerate(gait_phases):
-        avg,std = profiles_rmse(data_1,data_2,toe_off_1,toe_off_2,phase=phase,which_comparison= which_comparison,avg_within_trials=True)
-        all_phases_avg[:,i]=avg
-        all_phases_std[:,i]=std
-    return all_phases_avg,all_phases_std
+        out = profiles_rmse(data_1,data_2,toe_off_1,toe_off_2,phase=phase,\
+                                which_comparison= which_comparison,avg_within_trials=True,return_subjects=return_subjects)
+        if which_comparison=='pareto vs pareto' or which_comparison=='pareto vs ideal':
+            all_phases_avg[:,i]=out[0]
+            all_phases_std[:,i]=out[1]
+        else:
+            if return_subjects == False:
+                all_phases_avg[i]=out[0]
+                all_phases_std[i]=out[1]
+            else:
+                all_phases_avg[:,i]=out[0]
+    if return_subjects == False:
+        return all_phases_avg,all_phases_std
+    else:
+        return all_phases_avg
 
 def modified_augmentation_factor(analysis_dict,regen_effect=False,normalize_AF = False):
     '''
@@ -1466,6 +1488,7 @@ def modified_augmentation_factor(analysis_dict,regen_effect=False,normalize_AF =
             exo_inertia.append(0)
     if regen_effect == True:
         alpha = analysis_dict['regen_efficiency']
+        positive_power_W = positive_power_W + alpha*negative_power_W
     # mass and inertia effect calculation
     # order: foot,shank,thigh,waist
     mass_effect = 14.8*2*exo_mass[3]+5.6*2*exo_mass[2]+5.6*2*exo_mass[1]+3.2*2*exo_mass[0]
@@ -1473,7 +1496,7 @@ def modified_augmentation_factor(analysis_dict,regen_effect=False,normalize_AF =
     # dissipated power calculation
     if negative_power > positive_power:
         if regen_effect == True:
-            p_dissipation = alpha*(negative_power_W-positive_power_W)
+            p_dissipation = (negative_power_W-positive_power_W)
         else:
             p_dissipation = negative_power_W-positive_power_W
     else:
@@ -1485,7 +1508,7 @@ def modified_augmentation_factor(analysis_dict,regen_effect=False,normalize_AF =
     else:
         return modified_AF
     
-def specific_weights_modified_AF(analysis_dict,regen_effect=False,normalize_AF=False,avg_trials=True,return_sub_means=False):        
+def specific_weights_modified_AF(analysis_dict,regen_effect=False,normalize_AF=False,avg_trials=True,return_sub_means=False,regeneration_efficiency = 0.65):        
     '''
     specific_weights_modified_AF calculate the modified augmentation factor for a set of simulations
     with specific configuration of the exoskeleton.\n
@@ -1494,13 +1517,13 @@ def specific_weights_modified_AF(analysis_dict,regen_effect=False,normalize_AF=F
     negative_power = analysis_dict['negative_power']
     exo_mass = analysis_dict['exo_mass']
     exo_inertia = analysis_dict['exo_inertia']
-    regeneration_efficiency = 0.65
     gl = analysis_dict['gl']
     subjects_modified_AF = np.zeros(positive_power.shape[0])
     for i,key in enumerate(gl.keys()):
         AF_analysis_dict = {'positive_power':positive_power[i],
                             'negative_power':negative_power[i],
                             'exo_mass':exo_mass,
+                            'exo_inertia':exo_inertia,
                             'gl':gl[key],
                             'regen_efficiency':regeneration_efficiency}
         subjects_modified_AF[i] = modified_augmentation_factor(analysis_dict=AF_analysis_dict,regen_effect=regen_effect,normalize_AF=normalize_AF)
@@ -1512,7 +1535,39 @@ def specific_weights_modified_AF(analysis_dict,regen_effect=False,normalize_AF=F
     elif return_sub_means==False:
         avg,std = mean_std_over_subjects(subjects_modified_AF,avg_trials=avg_trials,ax=0)
         return avg,std
-          
+
+def rmse_barplots(plot_dic,ncols=3,nrows=1,nplots=3):
+    phase_name = ['total gait\n cycle','loading\n response','mid\n stance','terminal\n stance','pre\nswing',\
+                  'initial\n swing','mid\n swing','terminal\n swing']
+    x_position = np.arange(0,len(phase_name),1)
+    width = 0.30
+    color_1 = plot_dic['color_1']
+    color_2 = plot_dic['color_2']
+    if 'y_ticks' not in plot_dic:
+        y_ticks = [0,0.2,0.4,0.6,0.8,1,1.2]
+    else:
+        y_ticks = plot_dic['y_ticks']
+    for i in range(nplots):
+        if i == 2:
+            color_1 = mycolors['mint']
+            color_2 = mycolors['pale blue']
+        ax = plt.subplot(nrows,ncols,i+1)
+        plt.bar(x_position-width/2,plot_dic['mean_1{}'.format(i+1)],width=width,alpha=0.75,color=color_1,\
+                yerr=plot_dic['std_1{}'.format(i+1)],ecolor=[0.09,0.09,0.09],capsize=5,align='center')
+        plt.bar(x_position+width/2,plot_dic['mean_2{}'.format(i+1)],width=width,alpha=0.75,color=color_2,\
+                yerr=plot_dic['std_2{}'.format(i+1)],ecolor=[0.09,0.09,0.09],capsize=5,align='center')
+        plt.ylabel('RMSE (W/kg)')
+        ax.set_yticks(y_ticks)
+        ax.set_xticks(x_position)
+        ax.set_xticklabels(phase_name)
+        ax.set_title(plot_dic['title_{}'.format(i+1)])
+        plt.tick_params(axis='both',direction='in')
+        no_top_right(ax)
+        ax.set_ylim(bottom=-0.01)
+        if i == 2:
+            plt.legend(['hip joint muscles','knee joint muscles'],loc='best',frameon=True)      
+        elif i == 1:
+            plt.legend(['hip actuator','knee actuator'],loc='best',frameon=True)  
 ######################################################################
 # Plot related functions for Pareto Simulations
 

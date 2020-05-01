@@ -37,11 +37,11 @@ files = enumerate(glob.iglob(directory), 1)
 unassisted_energy_dataset = {pathlib.PurePath(f[1]).stem: np.loadtxt(f[1], delimiter=',') for f in files}
 # gls
 gl_noload = {'noload_subject{}_trial{}'.format(i,j): utils.construct_gl_mass_side(subjectno=i,trialno=j,loadcond='noload') for i in subjects for j in trials_num}
-gl_loaded = {'loaded_subject{}_trial{}'.format(i,j): utils.construct_gl_mass_side(subjectno=i,trialno=j,loadcond='loaded') for i in subjects for j in trials_num}
+gl_noload = {'noload_subject{}_trial{}'.format(i,j): utils.construct_gl_mass_side(subjectno=i,trialno=j,loadcond='noload') for i in subjects for j in trials_num}
 #####################################################################################
 # Processing Data
 # toe-off
-noload_mean_toe_off,_,loaded_mean_toe_off,_ = utils.toe_off_avg_std(gl_noload,gl_loaded)
+noload_mean_toe_off,_,noload_mean_toe_off,_ = utils.toe_off_avg_std(gl_noload,gl_noload)
 # Energy
 noload_bi_metabolics = utils.reduction_calc(unassisted_energy_dataset['noload_metabolics_energy'],assisted_energy_dataset['biarticular_hip50knee60_noload_metabolics_energy'])
 noload_mono_metabolics = utils.reduction_calc(unassisted_energy_dataset['noload_metabolics_energy'],assisted_energy_dataset['monoarticular_hip60knee70_noload_metabolics_energy'])
@@ -128,3 +128,50 @@ utils.no_top_right(ax)
 fig.tight_layout()
 plt.show()
 fig.savefig('./Figures/Specific_Weights/NoloadMono06_NoloadBi12/Actuator_Energy_BoxPlot.pdf',orientation='landscape',bbox_inches='tight')
+
+#******************************************************************
+# Paper Figure
+# Metabolic Box Plot
+# Biarticular
+
+names = ['unassist, noload','mono, noload','bi, noload']
+x = np.arange(1,len(names)+1,1)
+data = [utils.mean_over_trials(unassisted_energy_dataset['noload_metabolics_energy']),\
+        utils.mean_over_trials(assisted_energy_dataset['monoarticular_hip60knee70_noload_metabolics_energy']),\
+        utils.mean_over_trials(assisted_energy_dataset['biarticular_hip50knee60_noload_metabolics_energy'])]
+fig= plt.figure(figsize=(9.6, 4.8))
+plt.subplot(1,2,1)
+bp = plt.boxplot(data, patch_artist=True)
+ax = plt.gca()
+utils.beautiful_boxplot(bp)
+ax.set_ylabel('Metabolic Rate (W/Kg)')
+ax.set_xticks(x)
+ax.set_ylim((4,8))
+plt.tick_params(axis='both',direction='in')
+ax.set_xticklabels(names)
+utils.no_top_right(ax)
+
+
+#******************************************************************
+# Actuators Energy Box Plot
+# Biarticular Vs Monoarticular noload
+names = ['bi hip,\nnoload','bi knee,\nnoload','mono hip,\nnoload','mono knee,\nnoload',]
+x = np.arange(1,len(names)+1,1)
+data = [utils.mean_over_trials(assisted_energy_dataset['biarticular_hip50knee60_noload_hipactuator_energy']),\
+        utils.mean_over_trials(assisted_energy_dataset['biarticular_hip50knee60_noload_kneeactuator_energy']),\
+        utils.mean_over_trials(assisted_energy_dataset['monoarticular_hip60knee70_noload_hipactuator_energy']),\
+        utils.mean_over_trials(assisted_energy_dataset['monoarticular_hip60knee70_noload_kneeactuator_energy'])]
+plt.subplot(1,2,2)
+bp = plt.boxplot(data, patch_artist=True)
+ax = plt.gca()
+utils.beautiful_boxplot(bp)
+ax.set_ylabel('Actuators Absolute\nPower (W/Kg)')
+ax.set_xticks(x)
+ax.set_ylim((0.6,2))
+plt.tick_params(axis='both',direction='in')
+ax.set_xticklabels(names)
+utils.no_top_right(ax)
+fig.tight_layout(h_pad=-1, w_pad=-1.5)
+fig.subplots_adjust(top=0.98, bottom=0.075, left=0.100, right=0.975,hspace=0.35,wspace=0.15)
+fig.savefig('./Figures/Specific_Weights/NoloadMono06_NoloadBi12/PaperFigure_BoxPlot.pdf',orientation='landscape',bbox_inches='tight')
+plt.show()
