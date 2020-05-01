@@ -103,7 +103,6 @@ proc_mono_loaded_energy = proc_mono_loaded_hip_energy + proc_mono_loaded_knee_en
 proc_mono_noload_hip_energy= np.reshape(assisted_energy_dataset['monoarticular_pareto_noload_processed_hipactuator_energy'],(25,21),order='F')
 proc_mono_noload_knee_energy= np.reshape(assisted_energy_dataset['monoarticular_pareto_noload_processed_kneeactuator_energy'],(25,21),order='F')
 proc_mono_noload_energy = proc_mono_noload_hip_energy + proc_mono_noload_knee_energy
-
 # metabolics cost reduction percents
 proc_bi_loaded_metabolics_percent = utils.pareto_metabolics_reduction(assisted_energy_dataset['biarticular_pareto_load_processed_metabolics_energy'],unassisted_energy_dataset['loaded_metabolics_processed_energy'])
 proc_bi_noload_metabolics_percent = utils.pareto_metabolics_reduction(assisted_energy_dataset['biarticular_pareto_noload_processed_metabolics_energy'],unassisted_energy_dataset['noload_metabolics_processed_energy'])

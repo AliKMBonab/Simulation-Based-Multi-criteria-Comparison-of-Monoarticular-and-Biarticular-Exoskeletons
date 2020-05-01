@@ -97,34 +97,39 @@ x = np.arange(1,len(names)+1,1)
 data = [utils.mean_over_trials(unassisted_energy_dataset['loaded_metabolics_energy']),\
         utils.mean_over_trials(assisted_energy_dataset['monoarticular_hip70knee40_load_metabolics_energy']),\
         utils.mean_over_trials(assisted_energy_dataset['biarticular_hip40knee70_load_metabolics_energy'])]
-fig, ax = plt.subplots(figsize=(6.4, 4.8))
-bp = ax.boxplot(data, patch_artist=True)
+fig= plt.figure(figsize=(9.6, 4.8))
+plt.subplot(1,2,1)
+bp = plt.boxplot(data, patch_artist=True)
+ax = plt.gca()
 utils.beautiful_boxplot(bp)
 ax.set_ylabel('Metabolic Rate (W/Kg)')
 ax.set_xticks(x)
+ax.set_ylim((6,10))
+plt.tick_params(axis='both',direction='in')
 ax.set_xticklabels(names)
 utils.no_top_right(ax)
-fig.tight_layout()
-plt.show()
-fig.savefig('./Figures/Specific_Weights/LoadedMono04_LoadedBi16/Metabolic_Rate_BoxPlot.pdf',orientation='landscape',bbox_inches='tight')
 
 
 #******************************************************************
 # Actuators Energy Box Plot
 # Biarticular Vs Monoarticular loaded
-names = ['bi hip, loaded','bi knee, loaded','mono hip, loaded','mono knee, loaded',]
+names = ['bi hip,\nloaded','bi knee,\nloaded','mono hip,\nloaded','mono knee,\nloaded',]
 x = np.arange(1,len(names)+1,1)
 data = [utils.mean_over_trials(assisted_energy_dataset['biarticular_hip40knee70_load_hipactuator_energy']),\
         utils.mean_over_trials(assisted_energy_dataset['biarticular_hip40knee70_load_kneeactuator_energy']),\
         utils.mean_over_trials(assisted_energy_dataset['monoarticular_hip70knee40_load_hipactuator_energy']),\
         utils.mean_over_trials(assisted_energy_dataset['monoarticular_hip70knee40_load_kneeactuator_energy'])]
-fig, ax = plt.subplots(figsize=(6.4, 4.8))
-bp = ax.boxplot(data, patch_artist=True)
+plt.subplot(1,2,2)
+bp = plt.boxplot(data, patch_artist=True)
+ax = plt.gca()
 utils.beautiful_boxplot(bp)
-ax.set_ylabel('Actuator Energy Rate (W/Kg)')
+ax.set_ylabel('Actuators Absolute\nPower (W/Kg)')
 ax.set_xticks(x)
+ax.set_ylim((0.6,2))
+plt.tick_params(axis='both',direction='in')
 ax.set_xticklabels(names)
 utils.no_top_right(ax)
-fig.tight_layout()
+fig.tight_layout(h_pad=-1, w_pad=-1.5)
+fig.subplots_adjust(top=0.98, bottom=0.075, left=0.100, right=0.975,hspace=0.35,wspace=0.15)
+fig.savefig('./Figures/Specific_Weights/LoadedMono04_LoadedBi16/PaperFigure_BoxPlot.pdf',orientation='landscape',bbox_inches='tight')
 plt.show()
-fig.savefig('./Figures/Specific_Weights/LoadedMono04_LoadedBi16/Actuator_Energy_BoxPlot.pdf',orientation='landscape',bbox_inches='tight')

@@ -172,7 +172,7 @@ std_mono_noload_regen_paretofront = utils.manual_paretofront(std_mono_noload_met
 
 #####################################################################################
 #####################################################################################
-#TODO: complete this table
+# Table: Ideal vs maximum constrained
 bi_loaded_indices_table = np.subtract(np.flip(bi_loaded_indices),1)
 mono_loaded_indices_table = np.subtract(np.flip(mono_loaded_indices),1)
 bi_noload_indices_table = np.subtract(np.flip(bi_noload_indices),1)
