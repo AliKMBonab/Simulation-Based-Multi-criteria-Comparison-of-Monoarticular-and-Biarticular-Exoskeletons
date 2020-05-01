@@ -81,22 +81,22 @@ mono_noload_regen_energy = -mono_noload_hip_regen_energy - mono_noload_knee_rege
 
 # mean & std actuators regenrative energy
 # noload bi
-mean_bi_noload_hip_regen_energy, std_bi_noload_hip_regen_energy = utils.pareto_avg_std_energy(-assisted_energy_dataset['biarticular_pareto_noload_hipregenrative_energy']+\
+mean_bi_noload_hip_regen_energy, std_bi_noload_hip_regen_energy = utils.pareto_avg_std_energy(-0.65*assisted_energy_dataset['biarticular_pareto_noload_hipregenrative_energy']+\
                                                                                                   assisted_energy_dataset['biarticular_pareto_noload_hipactuator_energy'],reshape=True)
-mean_bi_noload_knee_regen_energy, std_bi_noload_knee_regen_energy = utils.pareto_avg_std_energy(-assisted_energy_dataset['biarticular_pareto_noload_kneeregenrative_energy']+\
+mean_bi_noload_knee_regen_energy, std_bi_noload_knee_regen_energy = utils.pareto_avg_std_energy(-0.65*assisted_energy_dataset['biarticular_pareto_noload_kneeregenrative_energy']+\
                                                                                                     assisted_energy_dataset['biarticular_pareto_noload_kneeactuator_energy'],reshape=True)
-mean_bi_noload_regen_energy, std_bi_noload_regen_energy = utils.pareto_avg_std_energy(-assisted_energy_dataset['biarticular_pareto_noload_kneeregenrative_energy']-\
-                                                                                          assisted_energy_dataset['biarticular_pareto_noload_hipregenrative_energy']+\
+mean_bi_noload_regen_energy, std_bi_noload_regen_energy = utils.pareto_avg_std_energy(-0.65*assisted_energy_dataset['biarticular_pareto_noload_kneeregenrative_energy']-\
+                                                                                          0.65*assisted_energy_dataset['biarticular_pareto_noload_hipregenrative_energy']+\
                                                                                           assisted_energy_dataset['biarticular_pareto_noload_kneeactuator_energy']+\
                                                                                           assisted_energy_dataset['biarticular_pareto_noload_hipactuator_energy'],reshape=True)
 
 # noload mono
-mean_mono_noload_hip_regen_energy, std_mono_noload_hip_regen_energy = utils.pareto_avg_std_energy(-assisted_energy_dataset['monoarticular_pareto_noload_hipregenrative_energy']+\
+mean_mono_noload_hip_regen_energy, std_mono_noload_hip_regen_energy = utils.pareto_avg_std_energy(-0.65*assisted_energy_dataset['monoarticular_pareto_noload_hipregenrative_energy']+\
                                                                                                   assisted_energy_dataset['monoarticular_pareto_noload_hipactuator_energy'],reshape=True)
-mean_mono_noload_knee_regen_energy, std_mono_noload_knee_regen_energy = utils.pareto_avg_std_energy(-assisted_energy_dataset['monoarticular_pareto_noload_kneeregenrative_energy']+\
+mean_mono_noload_knee_regen_energy, std_mono_noload_knee_regen_energy = utils.pareto_avg_std_energy(-0.65*assisted_energy_dataset['monoarticular_pareto_noload_kneeregenrative_energy']+\
                                                                                                     assisted_energy_dataset['monoarticular_pareto_noload_kneeactuator_energy'],reshape=True)
-mean_mono_noload_regen_energy, std_mono_noload_regen_energy = utils.pareto_avg_std_energy(-assisted_energy_dataset['monoarticular_pareto_noload_kneeregenrative_energy']-\
-                                                                                          assisted_energy_dataset['monoarticular_pareto_noload_hipregenrative_energy']+\
+mean_mono_noload_regen_energy, std_mono_noload_regen_energy = utils.pareto_avg_std_energy(-0.65*assisted_energy_dataset['monoarticular_pareto_noload_kneeregenrative_energy']-\
+                                                                                          0.65*assisted_energy_dataset['monoarticular_pareto_noload_hipregenrative_energy']+\
                                                                                           assisted_energy_dataset['monoarticular_pareto_noload_kneeactuator_energy']+\
                                                                                           assisted_energy_dataset['monoarticular_pareto_noload_hipactuator_energy'],reshape=True)
 
@@ -171,7 +171,7 @@ mean_bi_noload_regen_paretofront = utils.manual_paretofront(mean_bi_noload_metab
 std_bi_noload_regen_paretofront = utils.manual_paretofront(std_bi_noload_metabolics_percent,std_bi_noload_regen_energy,bi_noload_indices)
 
 # noload monoarticular with regeneration
-mono_noload_indices = np.array([25,24,20,19,15,14,13,12,11,1])
+mono_noload_indices = np.array([25,24,20,19,15,14,13,12,11])
 mean_mono_noload_regen_paretofront = utils.manual_paretofront(mean_mono_noload_metabolics_percent,mean_mono_noload_regen_energy,mono_noload_indices)
 std_mono_noload_regen_paretofront = utils.manual_paretofront(std_mono_noload_metabolics_percent,std_mono_noload_regen_energy,mono_noload_indices)
 
