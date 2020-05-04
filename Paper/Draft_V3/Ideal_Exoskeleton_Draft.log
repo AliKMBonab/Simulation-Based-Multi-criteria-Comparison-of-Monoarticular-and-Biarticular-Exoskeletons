@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.21 (MiKTeX 2.9.7380 64-bit) (preloaded format=pdflatex 2020.4.9)  4 MAY 2020 04:31
+This is pdfTeX, Version 3.14159265-2.6-1.40.21 (MiKTeX 2.9.7380 64-bit) (preloaded format=pdflatex 2020.4.9)  4 MAY 2020 18:27
 entering extended mode
 **./Ideal_Exoskeleton_Draft.tex
 (Ideal_Exoskeleton_Draft.tex
@@ -917,38 +917,39 @@ AddingMass_Pareto.pdf  used on input line 677.
  [27 <./Figures/Pareto_Mass_Regenration_Figures/PaperFigure_Pareto_Comparison.p
 df>] [28 <./Figures/Pareto_Mass_Regenration_Figures/PaperFigure_AddingMass_Pare
 to.pdf>] [29] [30]
-[31] (Ideal_Exoskeleton_Draft.bbl [32] ("E:\MiKTeX 2.9\tex/latex/ucs\uni-32.def
-"
+[31] (Ideal_Exoskeleton_Draft.bbl [32] [33]
+("E:\MiKTeX 2.9\tex/latex/ucs\uni-32.def"
 File: uni-32.def 2013/05/13 UCS: Unicode data U+2000..U+20FF
-) [33]
+) [34]
 Package microtype Info: Loading generic protrusion settings for font family
 (microtype)             `cmtt' (encoding: OT1).
 (microtype)             For optimal results, create family-specific settings.
 (microtype)             See the microtype manual for details.
- ("E:\MiKTeX 2.9\tex/latex/ucs\uni-0.def"
+
+("E:\MiKTeX 2.9\tex/latex/ucs\uni-0.def"
 File: uni-0.def 2013/05/13 UCS: Unicode data U+0000..U+00FF
 )
 ("E:\MiKTeX 2.9\tex/latex/ucs\uni-33.def"
 File: uni-33.def 2013/05/13 UCS: Unicode data U+2100..U+21FF
-) [34] [35] [36] [37] [38] [39]
-[40] [41]) 
+) [35] [36] [37] [38] [39] [40]
+[41]) 
 AED: lastpage setting LastPage
 [42]
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 767.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 767.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 776.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 776.
  (Ideal_Exoskeleton_Draft.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 767.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 767.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 776.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 776.
 Package rerunfilecheck Info: File `Ideal_Exoskeleton_Draft.out' has not changed
 .
 (rerunfilecheck)             Checksum: D41D8CD98F00B204E9800998ECF8427E;0.
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 767.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 776.
  ) 
 Here is how much of TeX's memory you used:
- 13860 strings out of 492478
- 204945 string characters out of 3137227
- 342649 words of memory out of 3000000
- 17558 multiletter control sequences out of 15000+200000
+ 13866 strings out of 492478
+ 205029 string characters out of 3137227
+ 342820 words of memory out of 3000000
+ 17561 multiletter control sequences out of 15000+200000
  13233 words of font info for 84 fonts, out of 3000000 for 9000
  1141 hyphenation exceptions out of 8191
  41i,16n,50p,1692b,600s stack positions out of 5000i,500n,10000p,200000b,50000s
@@ -968,9 +969,9 @@ fonts/type1/public/amsfonts/cm/cmsy7.pfb><E:/MiKTeX 2.9/fonts/type1/public/amsf
 onts/cm/cmti10.pfb><E:/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmti7.pfb><E:/
 MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmti9.pfb><E:/MiKTeX 2.9/fonts/type1/
 public/amsfonts/cm/cmtt10.pfb>
-Output written on Ideal_Exoskeleton_Draft.pdf (42 pages, 7219708 bytes).
+Output written on Ideal_Exoskeleton_Draft.pdf (42 pages, 7227141 bytes).
 PDF statistics:
- 1660 PDF objects out of 1728 (max. 8388607)
- 273 named destinations out of 1000 (max. 500000)
+ 1673 PDF objects out of 1728 (max. 8388607)
+ 276 named destinations out of 1000 (max. 500000)
  19035 words of extra memory for PDF output out of 20736 (max. 10000000)
 
