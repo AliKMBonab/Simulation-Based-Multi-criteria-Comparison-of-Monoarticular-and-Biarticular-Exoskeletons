@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.21 (MiKTeX 2.9.7380 64-bit) (preloaded format=pdflatex 2020.4.9)  30 APR 2020 21:23
+This is pdfTeX, Version 3.14159265-2.6-1.40.21 (MiKTeX 2.9.7380 64-bit) (preloaded format=pdflatex 2020.4.9)  4 MAY 2020 04:31
 entering extended mode
 **./Ideal_Exoskeleton_Draft.tex
 (Ideal_Exoskeleton_Draft.tex
@@ -740,45 +740,45 @@ File: mt-msb.cfg 2005/06/01 v1.0 microtype config. file: AMS symbols (b) (RS)
 
 {C:/Users/T.a/AppData/Local/MiKTeX/2.9/pdftex/config/pdftex.map}] [2] [3] [4] [
 5]
-<./Figures/Cartoons/Biarticular_Exo_Mechanism.pdf, id=292, 599.23875pt x 558.36
+<./Figures/Cartoons/Biarticular_Exo_Mechanism.pdf, id=291, 599.23875pt x 558.36
 203pt>
 File: ./Figures/Cartoons/Biarticular_Exo_Mechanism.pdf Graphic file (type pdf)
 <use ./Figures/Cartoons/Biarticular_Exo_Mechanism.pdf>
 Package pdftex.def Info: ./Figures/Cartoons/Biarticular_Exo_Mechanism.pdf  used
- on input line 264.
+ on input line 263.
 (pdftex.def)             Requested size: 144.54pt x 134.67418pt.
-<./Figures/Cartoons/Monoarticular_Exo_Mechanism.pdf, id=293, 599.24377pt x 558.
+<./Figures/Cartoons/Monoarticular_Exo_Mechanism.pdf, id=292, 599.24377pt x 558.
 35701pt>
 File: ./Figures/Cartoons/Monoarticular_Exo_Mechanism.pdf Graphic file (type pdf
 )
 <use ./Figures/Cartoons/Monoarticular_Exo_Mechanism.pdf>
 Package pdftex.def Info: ./Figures/Cartoons/Monoarticular_Exo_Mechanism.pdf  us
-ed on input line 267.
+ed on input line 266.
 (pdftex.def)             Requested size: 144.54pt x 134.67296pt.
  [6 <./Figures/Cartoons/Biarticular_Exo_Mechanism.pdf> <./Figures/Cartoons/Mono
 articular_Exo_Mechanism.pdf>] [7]
-<./Figures/Cartoons/OpenSim.pdf, id=407, 1195.01462pt x 845.0471pt>
+<./Figures/Cartoons/OpenSim.pdf, id=406, 1195.01462pt x 845.0471pt>
 File: ./Figures/Cartoons/OpenSim.pdf Graphic file (type pdf)
 <use ./Figures/Cartoons/OpenSim.pdf>
-Package pdftex.def Info: ./Figures/Cartoons/OpenSim.pdf  used on input line 363
+Package pdftex.def Info: ./Figures/Cartoons/OpenSim.pdf  used on input line 362
 .
 (pdftex.def)             Requested size: 379.4175pt x 268.29303pt.
  [8 <./Figures/Cartoons/OpenSim.pdf>]
-<./Figures/Cartoons/Biarticular_Exo_Assignment.pdf, id=453, 182.18062pt x 196.7
+<./Figures/Cartoons/Biarticular_Exo_Assignment.pdf, id=452, 182.18062pt x 196.7
 35pt>
 File: ./Figures/Cartoons/Biarticular_Exo_Assignment.pdf Graphic file (type pdf)
 
 <use ./Figures/Cartoons/Biarticular_Exo_Assignment.pdf>
 Package pdftex.def Info: ./Figures/Cartoons/Biarticular_Exo_Assignment.pdf  use
-d on input line 385.
+d on input line 384.
 (pdftex.def)             Requested size: 144.54pt x 156.09135pt.
-<./Figures/Cartoons/Monoarticular_Exo_Assignment.pdf, id=454, 180.675pt x 200.4
+<./Figures/Cartoons/Monoarticular_Exo_Assignment.pdf, id=453, 180.675pt x 200.4
 1576pt>
 File: ./Figures/Cartoons/Monoarticular_Exo_Assignment.pdf Graphic file (type pd
 f)
 <use ./Figures/Cartoons/Monoarticular_Exo_Assignment.pdf>
 Package pdftex.def Info: ./Figures/Cartoons/Monoarticular_Exo_Assignment.pdf  u
-sed on input line 388.
+sed on input line 387.
 (pdftex.def)             Requested size: 144.54pt x 160.33282pt.
 
 
@@ -787,139 +787,140 @@ LaTeX Warning: `!h' float specifier changed to `!ht'.
 [9] [10 <./Figures/Cartoons/Biarticular_Exo_Assignment.pdf> <./Figures/Cartoons
 /Monoarticular_Exo_Assignment.pdf>]
 Package hyperref Info: bookmark level for unknown algorithm defaults to 0 on in
-put line 428.
- [11] [12] [13] [14]
-<./Figures/Ideal_Exo_MonovsBi_Figures/Paper_Figure_Energy_BoxPlot.pdf, id=627, 
-853.10596pt x 594.07959pt>
+put line 424.
+ [11] [12]
+<./Figures/Ideal_Exo_MonovsBi_Figures/Paper_Figure_Energy_BoxPlot.pdf, id=595, 
+849.59283pt x 590.56645pt>
 File: ./Figures/Ideal_Exo_MonovsBi_Figures/Paper_Figure_Energy_BoxPlot.pdf Grap
 hic file (type pdf)
 <use ./Figures/Ideal_Exo_MonovsBi_Figures/Paper_Figure_Energy_BoxPlot.pdf>
 Package pdftex.def Info: ./Figures/Ideal_Exo_MonovsBi_Figures/Paper_Figure_Ener
-gy_BoxPlot.pdf  used on input line 521.
-(pdftex.def)             Requested size: 379.4175pt x 264.21501pt.
- [15]
-<./Figures/Ideal_Exo_MonovsBi_Figures/PaperFigure_Exoskeletons_Speed.pdf, id=64
-4, 885.84859pt x 510.1745pt>
+gy_BoxPlot.pdf  used on input line 466.
+(pdftex.def)             Requested size: 379.4175pt x 263.74292pt.
+ [13] [14 <./Figures/Ideal_Exo_MonovsBi_Figures/Paper_Figure_Energy_BoxPlot.pdf
+>]
+<./Figures/Ideal_Exo_MonovsBi_Figures/PaperFigure_Exoskeletons_Speed.pdf, id=66
+9, 885.84859pt x 510.1745pt>
 File: ./Figures/Ideal_Exo_MonovsBi_Figures/PaperFigure_Exoskeletons_Speed.pdf G
 raphic file (type pdf)
 <use ./Figures/Ideal_Exo_MonovsBi_Figures/PaperFigure_Exoskeletons_Speed.pdf>
 Package pdftex.def Info: ./Figures/Ideal_Exo_MonovsBi_Figures/PaperFigure_Exosk
-eletons_Speed.pdf  used on input line 534.
+eletons_Speed.pdf  used on input line 479.
 (pdftex.def)             Requested size: 379.4175pt x 218.50665pt.
 <./Figures/Ideal_Exo_MonovsBi_Figures/PaperFigure_Exoskeletons_Torque.pdf, id=6
-51, 885.84859pt x 697.14003pt>
+76, 885.84859pt x 697.14003pt>
 File: ./Figures/Ideal_Exo_MonovsBi_Figures/PaperFigure_Exoskeletons_Torque.pdf 
 Graphic file (type pdf)
 <use ./Figures/Ideal_Exo_MonovsBi_Figures/PaperFigure_Exoskeletons_Torque.pdf>
 Package pdftex.def Info: ./Figures/Ideal_Exo_MonovsBi_Figures/PaperFigure_Exosk
-eletons_Torque.pdf  used on input line 543.
+eletons_Torque.pdf  used on input line 488.
 (pdftex.def)             Requested size: 379.4175pt x 298.5836pt.
- [16 <./Figures/Ideal_Exo_MonovsBi_Figures/Paper_Figure_Energy_BoxPlot.pdf>]
-<./Figures/Ideal_Exo_MonovsBi_Figures/PaperFigure_Exoskeletons_Power.pdf, id=71
-1, 885.84859pt x 697.14003pt>
+ [15 <./Figures/Ideal_Exo_MonovsBi_Figures/PaperFigure_Exoskeletons_Speed.pdf>]
+<./Figures/Ideal_Exo_MonovsBi_Figures/PaperFigure_Exoskeletons_Power.pdf, id=72
+6, 885.84859pt x 697.14003pt>
 File: ./Figures/Ideal_Exo_MonovsBi_Figures/PaperFigure_Exoskeletons_Power.pdf G
 raphic file (type pdf)
 <use ./Figures/Ideal_Exo_MonovsBi_Figures/PaperFigure_Exoskeletons_Power.pdf>
 Package pdftex.def Info: ./Figures/Ideal_Exo_MonovsBi_Figures/PaperFigure_Exosk
-eletons_Power.pdf  used on input line 553.
+eletons_Power.pdf  used on input line 499.
 (pdftex.def)             Requested size: 379.4175pt x 298.5836pt.
- [17 <./Figures/Ideal_Exo_MonovsBi_Figures/PaperFigure_Exoskeletons_Speed.pdf>]
-<./Figures/Cartoons/Saggital_Leg_Biarticular_Muscles.pdf, id=760, 658.46pt x 59
+ [16 <./Figures/Ideal_Exo_MonovsBi_Figures/PaperFigure_Exoskeletons_Torque.pdf>
+]
+<./Figures/Cartoons/Saggital_Leg_Biarticular_Muscles.pdf, id=776, 658.46pt x 59
 7.50829pt>
 File: ./Figures/Cartoons/Saggital_Leg_Biarticular_Muscles.pdf Graphic file (typ
 e pdf)
 <use ./Figures/Cartoons/Saggital_Leg_Biarticular_Muscles.pdf>
 Package pdftex.def Info: ./Figures/Cartoons/Saggital_Leg_Biarticular_Muscles.pd
-f  used on input line 565.
+f  used on input line 511.
 (pdftex.def)             Requested size: 144.54pt x 131.16048pt.
-<./Figures/Cartoons/Saggital_Leg_Monoarticular_Muscles.pdf, id=761, 658.46pt x 
+<./Figures/Cartoons/Saggital_Leg_Monoarticular_Muscles.pdf, id=777, 658.46pt x 
 597.50829pt>
 File: ./Figures/Cartoons/Saggital_Leg_Monoarticular_Muscles.pdf Graphic file (t
 ype pdf)
 <use ./Figures/Cartoons/Saggital_Leg_Monoarticular_Muscles.pdf>
 Package pdftex.def Info: ./Figures/Cartoons/Saggital_Leg_Monoarticular_Muscles.
-pdf  used on input line 568.
+pdf  used on input line 514.
 (pdftex.def)             Requested size: 144.54pt x 131.16048pt.
 <./Figures/Ideal_Exo_MonovsBi_Figures/PaperFigure_Biarticular_MuscleActivation.
-pdf, id=762, 599.54207pt x 483.87651pt>
+pdf, id=778, 599.54207pt x 483.87651pt>
 File: ./Figures/Ideal_Exo_MonovsBi_Figures/PaperFigure_Biarticular_MuscleActiva
 tion.pdf Graphic file (type pdf)
 <use ./Figures/Ideal_Exo_MonovsBi_Figures/PaperFigure_Biarticular_MuscleActivat
 ion.pdf>
 Package pdftex.def Info: ./Figures/Ideal_Exo_MonovsBi_Figures/PaperFigure_Biart
-icular_MuscleActivation.pdf  used on input line 575.
+icular_MuscleActivation.pdf  used on input line 521.
 (pdftex.def)             Requested size: 379.4175pt x 306.21712pt.
- [18 <./Figures/Ideal_Exo_MonovsBi_Figures/PaperFigure_Exoskeletons_Torque.pdf>
-] [19 <./Figures/Ideal_Exo_MonovsBi_Figures/PaperFigure_Exoskeletons_Power.pdf>
- <./Figures/Cartoons/Saggital_Leg_Biarticular_Muscles.pdf> <./Figures/Cartoons/
-Saggital_Leg_Monoarticular_Muscles.pdf>] [20 <./Figures/Ideal_Exo_MonovsBi_Figu
-res/PaperFigure_Biarticular_MuscleActivation.pdf>]
-<./Figures/Pareto_Simulations_Figures/PaperFigure_Main_Pareto.pdf, id=954, 874.
+ [17 <./Figures/Ideal_Exo_MonovsBi_Figures/PaperFigure_Exoskeletons_Power.pdf>]
+ [18 <./Figures/Cartoons/Saggital_Leg_Biarticular_Muscles.pdf> <./Figures/Carto
+ons/Saggital_Leg_Monoarticular_Muscles.pdf>] [19 <./Figures/Ideal_Exo_MonovsBi_
+Figures/PaperFigure_Biarticular_MuscleActivation.pdf>]
+<./Figures/Pareto_Simulations_Figures/PaperFigure_Main_Pareto.pdf, id=929, 874.
 69595pt x 670.73872pt>
 File: ./Figures/Pareto_Simulations_Figures/PaperFigure_Main_Pareto.pdf Graphic 
 file (type pdf)
 <use ./Figures/Pareto_Simulations_Figures/PaperFigure_Main_Pareto.pdf>
 Package pdftex.def Info: ./Figures/Pareto_Simulations_Figures/PaperFigure_Main_
-Pareto.pdf  used on input line 595.
+Pareto.pdf  used on input line 541.
 (pdftex.def)             Requested size: 379.4175pt x 290.93999pt.
 <./Figures/Pareto_Simulations_Figures/PaperFigure_Paretofront_EnergyBarPlot.pdf
-, id=955, 868.31273pt x 670.73872pt>
+, id=930, 868.31273pt x 670.73872pt>
 File: ./Figures/Pareto_Simulations_Figures/PaperFigure_Paretofront_EnergyBarPlo
 t.pdf Graphic file (type pdf)
 <use ./Figures/Pareto_Simulations_Figures/PaperFigure_Paretofront_EnergyBarPlot
 .pdf>
 Package pdftex.def Info: ./Figures/Pareto_Simulations_Figures/PaperFigure_Paret
-ofront_EnergyBarPlot.pdf  used on input line 602.
+ofront_EnergyBarPlot.pdf  used on input line 548.
 (pdftex.def)             Requested size: 379.4175pt x 293.08926pt.
- [21] [22 <./Figures/Pareto_Simulations_Figures/PaperFigure_Main_Pareto.pdf>]
+ [20 <./Figures/Pareto_Simulations_Figures/PaperFigure_Main_Pareto.pdf>] [21 <.
+/Figures/Pareto_Simulations_Figures/PaperFigure_Paretofront_EnergyBarPlot.pdf>]
 <./Figures/Pareto_Simulations_Figures/PaperFigure_Paretofront_TorqueProfiles.pd
-f, id=1036, 996.99724pt x 697.96231pt>
+f, id=1048, 998.14214pt x 697.96231pt>
 File: ./Figures/Pareto_Simulations_Figures/PaperFigure_Paretofront_TorqueProfil
 es.pdf Graphic file (type pdf)
 <use ./Figures/Pareto_Simulations_Figures/PaperFigure_Paretofront_TorqueProfile
 s.pdf>
 Package pdftex.def Info: ./Figures/Pareto_Simulations_Figures/PaperFigure_Paret
-ofront_TorqueProfiles.pdf  used on input line 645.
-(pdftex.def)             Requested size: 379.4175pt x 265.62248pt.
- [23 <./Figures/Pareto_Simulations_Figures/PaperFigure_Paretofront_EnergyBarPlo
-t.pdf>]
+ofront_TorqueProfiles.pdf  used on input line 591.
+(pdftex.def)             Requested size: 379.4175pt x 265.31363pt.
 <./Figures/Pareto_Simulations_Figures/PaperFigure_Paretofront_PowerProfiles.pdf
-, id=1087, 996.99724pt x 697.96231pt>
+, id=1049, 998.14214pt x 697.96231pt>
 File: ./Figures/Pareto_Simulations_Figures/PaperFigure_Paretofront_PowerProfile
 s.pdf Graphic file (type pdf)
 <use ./Figures/Pareto_Simulations_Figures/PaperFigure_Paretofront_PowerProfiles
 .pdf>
 Package pdftex.def Info: ./Figures/Pareto_Simulations_Figures/PaperFigure_Paret
-ofront_PowerProfiles.pdf  used on input line 654.
-(pdftex.def)             Requested size: 379.4175pt x 265.62248pt.
- [24]
-<./Figures/Pareto_Mass_Regenration_Figures/PaperFigure_AddingMass_Pareto.pdf, i
-d=1093, 874.69595pt x 709.1949pt>
-File: ./Figures/Pareto_Mass_Regenration_Figures/PaperFigure_AddingMass_Pareto.p
-df Graphic file (type pdf)
-<use ./Figures/Pareto_Mass_Regenration_Figures/PaperFigure_AddingMass_Pareto.pd
-f>
-Package pdftex.def Info: ./Figures/Pareto_Mass_Regenration_Figures/PaperFigure_
-AddingMass_Pareto.pdf  used on input line 665.
-(pdftex.def)             Requested size: 379.4175pt x 307.62076pt.
+ofront_PowerProfiles.pdf  used on input line 601.
+(pdftex.def)             Requested size: 379.4175pt x 265.31363pt.
+ [22] [23 <./Figures/Pareto_Simulations_Figures/PaperFigure_Paretofront_TorqueP
+rofiles.pdf>] [24 <./Figures/Pareto_Simulations_Figures/PaperFigure_Paretofront
+_PowerProfiles.pdf>] [25]
 <./Figures/Pareto_Mass_Regenration_Figures/PaperFigure_Pareto_Comparison.pdf, i
-d=1094, 1001.16846pt x 826.50322pt>
+d=1211, 1001.16846pt x 826.50322pt>
 File: ./Figures/Pareto_Mass_Regenration_Figures/PaperFigure_Pareto_Comparison.p
 df Graphic file (type pdf)
 <use ./Figures/Pareto_Mass_Regenration_Figures/PaperFigure_Pareto_Comparison.pd
 f>
 Package pdftex.def Info: ./Figures/Pareto_Mass_Regenration_Figures/PaperFigure_
-Pareto_Comparison.pdf  used on input line 672.
+Pareto_Comparison.pdf  used on input line 668.
 (pdftex.def)             Requested size: 379.4175pt x 313.2169pt.
- [25 <./Figures/Pareto_Simulations_Figures/PaperFigure_Paretofront_TorqueProfil
-es.pdf>] [26 <./Figures/Pareto_Simulations_Figures/PaperFigure_Paretofront_Powe
-rProfiles.pdf>] [27 <./Figures/Pareto_Mass_Regenration_Figures/PaperFigure_Addi
-ngMass_Pareto.pdf>] [28 <./Figures/Pareto_Mass_Regenration_Figures/PaperFigure_
-Pareto_Comparison.pdf>] [29]
-(Ideal_Exoskeleton_Draft.bbl [30] ("E:\MiKTeX 2.9\tex/latex/ucs\uni-32.def"
+ [26]
+<./Figures/Pareto_Mass_Regenration_Figures/PaperFigure_AddingMass_Pareto.pdf, i
+d=1227, 874.69595pt x 709.1949pt>
+File: ./Figures/Pareto_Mass_Regenration_Figures/PaperFigure_AddingMass_Pareto.p
+df Graphic file (type pdf)
+<use ./Figures/Pareto_Mass_Regenration_Figures/PaperFigure_AddingMass_Pareto.pd
+f>
+Package pdftex.def Info: ./Figures/Pareto_Mass_Regenration_Figures/PaperFigure_
+AddingMass_Pareto.pdf  used on input line 677.
+(pdftex.def)             Requested size: 379.4175pt x 307.62076pt.
+ [27 <./Figures/Pareto_Mass_Regenration_Figures/PaperFigure_Pareto_Comparison.p
+df>] [28 <./Figures/Pareto_Mass_Regenration_Figures/PaperFigure_AddingMass_Pare
+to.pdf>] [29] [30]
+[31] (Ideal_Exoskeleton_Draft.bbl [32] ("E:\MiKTeX 2.9\tex/latex/ucs\uni-32.def
+"
 File: uni-32.def 2013/05/13 UCS: Unicode data U+2000..U+20FF
-)
-[31]
+) [33]
 Package microtype Info: Loading generic protrusion settings for font family
 (microtype)             `cmtt' (encoding: OT1).
 (microtype)             For optimal results, create family-specific settings.
@@ -929,25 +930,25 @@ File: uni-0.def 2013/05/13 UCS: Unicode data U+0000..U+00FF
 )
 ("E:\MiKTeX 2.9\tex/latex/ucs\uni-33.def"
 File: uni-33.def 2013/05/13 UCS: Unicode data U+2100..U+21FF
-) [32] [33] [34] [35] [36] [37]
-[38]) 
+) [34] [35] [36] [37] [38] [39]
+[40] [41]) 
 AED: lastpage setting LastPage
-[39]
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 752.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 752.
+[42]
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 767.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 767.
  (Ideal_Exoskeleton_Draft.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 752.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 752.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 767.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 767.
 Package rerunfilecheck Info: File `Ideal_Exoskeleton_Draft.out' has not changed
 .
 (rerunfilecheck)             Checksum: D41D8CD98F00B204E9800998ECF8427E;0.
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 752.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 767.
  ) 
 Here is how much of TeX's memory you used:
- 13828 strings out of 492478
- 204706 string characters out of 3137227
- 340645 words of memory out of 3000000
- 17547 multiletter control sequences out of 15000+200000
+ 13860 strings out of 492478
+ 204945 string characters out of 3137227
+ 342649 words of memory out of 3000000
+ 17558 multiletter control sequences out of 15000+200000
  13233 words of font info for 84 fonts, out of 3000000 for 9000
  1141 hyphenation exceptions out of 8191
  41i,16n,50p,1692b,600s stack positions out of 5000i,500n,10000p,200000b,50000s
@@ -967,9 +968,9 @@ fonts/type1/public/amsfonts/cm/cmsy7.pfb><E:/MiKTeX 2.9/fonts/type1/public/amsf
 onts/cm/cmti10.pfb><E:/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmti7.pfb><E:/
 MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmti9.pfb><E:/MiKTeX 2.9/fonts/type1/
 public/amsfonts/cm/cmtt10.pfb>
-Output written on Ideal_Exoskeleton_Draft.pdf (39 pages, 7202753 bytes).
+Output written on Ideal_Exoskeleton_Draft.pdf (42 pages, 7219708 bytes).
 PDF statistics:
- 1599 PDF objects out of 1728 (max. 8388607)
- 252 named destinations out of 1000 (max. 500000)
+ 1660 PDF objects out of 1728 (max. 8388607)
+ 273 named destinations out of 1000 (max. 500000)
  19035 words of extra memory for PDF output out of 20736 (max. 10000000)
 

@@ -212,8 +212,7 @@ Volkan Patoglu\textsuperscript{1}
 \section*{Abstract}
 
 % Use "Eq" instead of "Equation" for equation citations.
-\section*{\textbf{Introduction}}
-\section*{\textbf{Introduction}}
+\section*{Introduction}
 The versatility and bipedalism of human locomotion are both unique\cite{1} and the most important characteristics of humans among the mammalian mobility types. While bipedal locomotion has a low energy cost of transport\cite{1}, the human versatile musculoskeletal system is not perfectly appropriate for performing all the tasks \cite{2}. For instance, among all movement tasks, two important tasks for human locomotion are running and walking, and it has been proven that running is considerably less efficient than walking \cite{3,4}.\\
 Bipedal locomotion can also lose its efficiency through aging, disease and injury, which can profoundly affect the quality of life \cite{7} due to a loss of independence and mobility. It has been shown that static and dynamic strength \cite{8,9,10}, force development rate \cite{11,12}, prolongation of twitch contraction\cite{9,13}, and passive stiffness\cite{14,15} of the healthy elderly people's muscles have been remarkably changed compared to those of young, healthy people and consequence of these changes is the weakening the performance of gait \cite{16}.\\
 Along with aging, disease and injury are other primary causes of inefficient human locomotion . One of the most important injuries is spinal cord injuries (SCI), which considerably affect the human ability to perform movement tasks \cite{17}. Among all possible diseases causing gait variability, a hemiparetic walking is one of the most and major issues patients face after stroke \cite{18,19,20,21}. A stroke can have a serious effect on motor cells and pathways of the central nervous system \cite{19} which can remain after stroke for a long time, restricting patients from reaching normal speed, safe and economical gait\cite{22}; leading to inability on generating desired muscle contraction\cite{19}, and generally impaired muscular control\cite{23}. Loss of muscle strength\cite{24}, reduced ankle dorsiflexion, and knee flexion \cite{25,26} are some typical effects of stoke leading to a high cost of transportation on the patient.\\
@@ -254,7 +253,7 @@ This proposed method can provide average optima points for each configuration of
 The paper is organized as follows: Dynamic Modeling section presents the kinematics and dynamics of the proposed biarticular and the monoarticular exoskeletons mechanism. Musculoskeletal Simulation then addressed the modeling of these assistive devices in OpenSim, simulations procedure, and then Pareto optimization subsection dedicated to explaining the proposed method in detail and its implementation; simulations validation procedure and the results statistical analyses explanation comes after the Pareto optimization simulations subsection. Results and their discussions are provided in the Results and Discussion section mainly separated into two main subsections, including exoskeletons results in maximum and more moderate performances; study limitation and performance metrics are also provided in this section. Finally, this paper is concluded with Conclusions and Future Work section, which also presents future research directions.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section*{\textbf{Kinematic Modeling}}
+\section*{Kinematic Modeling}
 % TODO: This section needs to be written more professionally
 The biarticular exoskeleton was designed to assist hip and knee joint. The exoskeleton has been inspired by biarticular muscles and the aim of the design was keeping the weight in proximal joint (Hip) while delivering the required power to distal joint (Knee). The parallelogram mechanism has been purposed to accomplish this goal and take advantage of biarticular muscles biological features in the exoskeleton.  The purposed exoskeleton was shown in figure \ref{Fig_Exos_Kinematics_Model}\subref{Fig_Biarticular_Exo_Mechanism}.
 
@@ -347,7 +346,7 @@ Rewriting the equations more clearly, we can express the torque mapping explicit
 This relation between two exoskeleton has been used to verify the modeling of the exoskeleton through musculoskeletal simulation framework.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section*{\textbf{Musculoskeletal Simulation}}
+\section*{Musculoskeletal Simulation}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection*{Musculoskeletal Model}
 The exoskeletons have been studied through musculoskeletal simulations by conducting the simulations of the seven subjects walking normally and while carrying a 38kg load on the torso at their chosen speed. The data that has been used in this study was experimentally collected and processed by Dembia et.al. \cite{93} and their experimental protocol was approved by the Stanford University Institutional Review Board \cite{93}.\\
@@ -370,7 +369,7 @@ The OpenSim solves the muscle redundancy problem to track experimentally measure
 J = \sum_{i\in nMuscles} a_{i}^{2} + \sum_{i \in nReserves} (\frac{\tau_{r,i}}{w_{r,i}})^2
 \end{equation}
 With the knowledge of the OpenSim neural control algorithm, we used the adjusted model and kinematics provided by Dembia et al.\cite{93} instead of reproducing all data from the beginning of the simulation procedure which also helped us to ease the verification of the simulations procedure thanks to \cite{93} for verified simulations data.\\
-\textbf{Metabolic Model.} To calculate the estimation of the instantaneous metabolic power of subjects, Umberger \cite{105} muscle energetic model which was modified by Uchida et al. \cite{106}  were employed in which average power consumption of a muscle during a gait cycle was calculated using Eq.\ref{Eqn_avg_muscle_power} \cite{106}.\\
+\paragraph*{Metabolic Model.} To calculate the estimation of the instantaneous metabolic power of subjects, Umberger \cite{105} muscle energetic model which was modified by Uchida et al. \cite{106}  were employed in which average power consumption of a muscle during a gait cycle was calculated using Eq.\ref{Eqn_avg_muscle_power} \cite{106}.\\
 \begin{equation}\label{Eqn_avg_muscle_power}
 	P_{avg} = \frac{m}{t_1 - t_0}\int_{t_0}^{t_1} \dot{E(t)} dt
 \end{equation}
@@ -400,9 +399,7 @@ Monoarticular exoskeleton (figure \ref{Fig_Exos_Model_Opensim} \subref{Fig_Mono_
 \tau^{hip}_{Monoarticular} = \tau^{torso/femur}\\
 \tau^{knee}_{Monoarticular} = \tau^{femur/tibia}
 \end{align}
-\newline
-\newline
-\textbf{Computed Muscle Control adjusted objective function.} To investigate the performance of the assistive devices and their effect on human musculoskeletal system through OpenSim simulation framework we used the CMC algorithm. Computed Muscle Control algorithm objective function depends on the sum of squared muscle activation and reserve actuators, which compensates for modeled passive structures and potential muscle weakness\cite{93}:
+\paragraph*{Computed Muscle Control adjusted objective function.} To investigate the performance of the assistive devices and their effect on human musculoskeletal system through OpenSim simulation framework we used the CMC algorithm. Computed Muscle Control algorithm objective function depends on the sum of squared muscle activation and reserve actuators, which compensates for modeled passive structures and potential muscle weakness\cite{93}:
 \begin{equation}\label{Eqn_CMC_Normal_Obj_Func}
 J = \sum_{i\in nMuscles} a_{i}^{2} + \sum_{i \in nReserves} (\frac{\tau_{r,i}}{w_{r,i}})^2
 \end{equation}
@@ -411,8 +408,7 @@ Where $w_i$ determines the weight of reserve actuators which is generally select
 	J = \sum_{i\in nMuscles} a_{i}^{2} + \sum_{i \in nExo} \left(\frac{\tau_{exo,i}}{w_{exo,i}}\right)^{2} +  \sum_{i \in nReserves} \left(\frac{\tau_{r,i}}{w_{r,i}}\right)^2
 \end{equation}
 In the adjusted objective function, $w_{exo,i}$ is torque actuator weights which is named optimal force in OpenSim \cite{93} penalizing the usage of torque actuators. By selecting a large number, penalization of the actuators will be insignificant and they will be selected for actuating the joint between two bodies assigned for torque actuator and if we select a small optimal force, the optimizer will highly penalize the usage of exoskeleton actuators.To study each configuration of the exoskeleton in their maximum performance, the assigned torque actuator's optimal force was selected as 1000 N.m enabling the optimizer to use the assistive actuators as much as possible during a gait cycle simulation.\\
-\vspace{5mm}
-\textbf{Metabolics and actuators energy calculation.} Similar to the unassisted procedure, the instantaneous metabolic power of the subjects was computed using the energetic model of Uchida et al. \cite{106} and then metabolic energy of subjects were derived by integration of the metabolic power over the gait cycle. In order to compute the energy consumption of the assistive actuators, the power profile of the actuators were obtained and their absolute power profiles were integrated over the gait cycle and divided to the subjects mass. Similar to the energy consumption of the exoskeleton procedure, the negative energy or regeneratable energy through a gait cycle were calculated by obtaining the negative power profile and integrated over the gait cycle and normalized to the mass of the subject.\\
+\paragraph*{Metabolics and actuators energy calculation.} Similar to the unassisted procedure, the instantaneous metabolic power of the subjects was computed using the energetic model of Uchida et al. \cite{106} and then metabolic energy of subjects were derived by integration of the metabolic power over the gait cycle. In order to compute the energy consumption of the assistive actuators, the power profile of the actuators were obtained and their absolute power profiles were integrated over the gait cycle and divided to the subjects mass. Similar to the energy consumption of the exoskeleton procedure, the negative energy or regeneratable energy through a gait cycle were calculated by obtaining the negative power profile and integrated over the gait cycle and normalized to the mass of the subject.\\
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection*{Pareto Simulations}
 The optimization stage of the Computed Muscle Control (CMC) algorithm uses the weighted sum of squares to solve muscles and assigned actuators redundancy to select a set of actuation with the lowest cost for tracking the kinematics of the dynamic model of the subject \cite{92}. To investigate the ideal assistive devices maximum effect on the subjects metabolic power consumption regardless of their energy expenditure, large weights were assigned to assistive actuator.\\
@@ -421,7 +417,7 @@ Pareto method integrates all optimization criteria in its procedure and construc
 One of the acceptable Pareto front is a discrete set of Pareto-optima points obtained by constructing a single objective function by integrating objectives and optimizing the single cost function throughout the specific range of values of the parameters used to combine the cost functions into a single objective function \cite{108}.\\
 The pareto optimization method has been used by M. L. Handford and M. Srinivasan\cite{111,127} to study robotic lower limb prostheses by simultaneously optimizing the metabolic and prosthesis cost rate. \\
 
-\textbf{The workflow of the Pareto-simulations.} To accomplish the simulations of the Pareto-optimization in the OpenSim framework, we constrained the peak torque of assistive actuators constraining the objective function mentioned in Eq \ref{Eqn_CMC_Assisted_Obj_Func} throughout a specific range from high to low providable torque throughout a gait cycle changing the solution of the optimizer for muscles and actuator redundancy problem. This variation over the discrete range of maximum providable torque resulting in different points on the optimization objectives space and by filtering points, we achieved to Pareto front for each configuration of the exoskeleton.\\
+\paragraph*{The workflow of the Pareto-simulations.} To perform the simulations of the Pareto-optimization in the OpenSim framework, we constrained the peak torque of assistive actuators constraining the objective function mentioned in Eq \ref{Eqn_CMC_Assisted_Obj_Func} throughout a specific range from high to low providable torque throughout a gait cycle changing the solution of the optimizer for muscles and actuator redundancy problem. This variation over the discrete range of maximum providable torque resulting in different points on the optimization objectives space and by filtering points, we achieved to Pareto front for each configuration of the exoskeleton.\\
 For the biarticular and monoarticular exoskeletons in both \textit{loaded} and \textit{noload} conditions, the maximum torque of the actuators were varied between 30 N.m and 70 N.m. For performing the simulations, the constraint of the hip actuator was fixed and the constraint of the knee was varied; after simulating all of the exoskeletons with a fixed hip constraint and varying knee constraint, the constraint of the hip actuator was changed for performing the next iteration of the simulations. The algorithm has been shown the following pseudo code.\\
 
 \begin{algorithm}\label{Algorithm_Pareto_simulation}
@@ -437,58 +433,7 @@ For the biarticular and monoarticular exoskeletons in both \textit{loaded} and \
 		\EndFor
 	\end{algorithmic}
 \end{algorithm}
-\textbf{Inertial properties of the exoskeletons effect on metabolic rate.} One of the main challenges with designing the mobile exoskeletons is the effect of the mass and inertia, grounded on the extremities of the subjects, on the metabolic rate of the subjects. The effect of mass and inertia on the metabolic cost has been studied through several literatures \cite{133,134} and shown that metabolic rate of the subject would change considerably by adding mass and inertia \cite{133,134,135}.\\
-The proposed exoskeleton in this studies have a remarkable difference from the inertial properties due to their kinematic design and it will result in different effect on the metabolic rate of the subjects.\\
-Since the current neural control algorithm of the OpenSim is not able to simulate any variations in the musculoskeletal model, which has not been captured by experimental data, we simulated the effect of the mass and inertia offline using the metabolic model of the Browning et al.\cite{133}. This study proposed a linear model for the effect of adding mass and inertia on each segment of lower limbs by capturing and analyzing these effects experimentally. In the study accomplished by Browning et al.\cite{133}, subjects were walking at 1.25 m/s without carrying any heavy load on their torso which is similar to the data captured from the subjects in the walking with \textit{\textit{noload}} at their self-selected speed\cite{93}. This qualitative match between the data and experimental protocols of Browning et al. and Dembia et al enabling us to use the developed model of \cite{133}  to study the effect of mass and inertia added by assistive devices through offline simulations.\\
-The mass and inertia of the proposed biarticular and monoarticular exoskeletons affect the waist, thigh and shank segments.As it is discussed in the Kinematic Modeling section, the biarticular exoskeleton, unlike monoarticular one, is designed to deliver the assistance distally to the knee joint.
-It enables designers to attach actuation module to the waist instead of thigh meaning that the main difference between inertial properties of two exoskeletons will be on the attached mass on the waist and shank segments nevertheless the reflected inertia of the actuation module will be reflect on the actuated joint regardless of its grounded segment in both exoskeletons.\\
-For the purpose of conducting numerical simulations of the inertial properties of the exoskeletons effect on the subjects metabolic rate, we assigned two identical masses and the center of masses measured from the hip and knee joints for the links attached to the thigh and shank respectively. Additionally,a typical and identical actuation module inertia and mass has been assigned for both configurations of the exoskeleton.\\
-In order to study the effect of the inertia in the pareto simulations, the maximum achievable torque of the actuator has been set to 2 N.m which can be provided by MaxonMotor EC90 Flat 260W and the required transmission ratio is calculated by diving the peak torque at joint level to peak torque of the actuator and then reflected inertia has been calculated using Eqn.\ref{Eqn_reflected_inertia}.\\
-\begin{equation}\label{Eqn_reflected_inertia}
-	\begin{aligned}
-	R &= \frac{\tau_{max,jont level}}{\tau_{max,actuator}}\\
-	I_{reflected} &= I_{actuator}\times R^{2}
-	\end{aligned}
-\end{equation}
-The inertia of the moving segments (i.e., thigh and shank segments) have been computed by considering the distal mass effect on the inertia, which is different for each configuration of the exoskeletons, reflected inertia of the actuation module and the leg inertia provided by \cite{133} which is calculated about center of rotation of the leg in the body frame. The Eqn.\ref{Eqn_segment_inertia} represents the inertia calculation of a segment.
-\begin{equation}\label{Eqn_segment_inertia}
-\begin{aligned}
-I_{Exo,segment} &= I_{reflected} + m\times COM^{2}\\
-I_{\textit{loaded}\;leg} &= I_{Exo,segment} + I_{\textit{\textit{noload}}\;leg}
-\end{aligned}
-\end{equation}
-The typical mass, center of mass and inertia that have been used for numerical simulations are represented in Table \ref{Table_Exokeletons_Mass_Inerta}. These values are mostly in match with the mechanical properties of the biarticular and monoarticular exoskeletons designed in our lab.\\
-\begin{table}[ht]
-	\renewcommand{\arraystretch}{1.2}
-	\begin{adjustwidth}{-1in}{0in}
-		\caption{\small{\textbf{Mass and inertia properties of two typical exoskeletons.}}}
-	\begin{tabular}{c!{\vline width 0.2pt}c!{\vline width 0.2pt}c!{\vline width 0.2pt}c!{\vline width 0.2pt}c!{\vline width 0.2pt}c!{\vline width 0.2pt}c}
-		\toprule
-		 \multirow{2}{*}{\textbf{configuration}} & \textbf{Waist}   & \multicolumn{2}{ c!{\vline width 0.2pt} }{\textbf{thigh}} & \multicolumn{2}{ c!{\vline width 0.2pt} }{\textbf{shank}} & \textbf{actuator} \\  \cmidrule{2-7}
-		  &  Mass ($kg$)& mass ($kg$) & COM ($m$)& mass ($kg$) & COM ($m$)& inertia ($kg.m^2$) \\ \midrule[0.5pt]
-		  \textbf{Biarticular} &  6 &1& 0.23 &0.9&0.18&$5.06\times10^{-4}$\\ \midrule[0.2pt]
-		  \textbf{Monoarticular} & 4.5 &2.5& 0.30 &0.9&0.18&$5.06\times10^{-4}$\\
-		  \bottomrule
-	\end{tabular}
-	\label{Table_Exokeletons_Mass_Inerta}
-	\end{adjustwidth}
-\end{table}
-The metabolic model proposed by Browning et al.\cite{133} is calculating the metabolic rate of the subject with \textit{loaded} segment, however, Since we were interested in the effect of inertial properties of exoskeleton on metabolic rate change, not metabolic rate, we used the model by subtracting the metabolic rate of the subject walking without the additional mass. The equations of the final model that has been used for analyzing the effect of exoskeleton mass and inertia on the metabolic rate is provided in Eqn.\ref{Eqn_AddingMass_MetabolicRate} and \ref{Eqn_AddingInertia_MetabolicRate} respectively.
-\begin{equation}\label{Eqn_AddingMass_MetabolicRate}
-\begin{aligned}
-\Delta MC_{Waist} &= 0.045\times m_{Waist}\\
-\Delta MC_{Thigh} &= 0.075\times m_{Thigh}\\
-\Delta MC_{Shank} &= 0.076\times m_{Shank}
-\end{aligned}
-\end{equation}
-\begin{equation}\label{Eqn_AddingInertia_MetabolicRate}
-\begin{aligned}
-I_{ratio} &= \frac{I_{Exo,segment} + I_{un\textit{loaded}\;leg}}{I_{un\textit{loaded}\;leg}}\\
-\Delta MC_{Thigh} &= ((-0.74 + (1.81\times I_{Thigh,ratio}))\times MC_{unassisted})-MC_{unassisted}\\
-\Delta MC_{Shank} &= ((0.63749 + (0.40916\times I_{Shank,ratio}))\times MC_{unassisted})-MC_{unassisted}
-\end{aligned}
-\end{equation}
-The effect of the exoskeleton mass and inertia has on metabolic cost has been considered on the pareto curves and filtered to obtain the pareto front with the effect of the exoskeleton inertial properties on metabolic expenditure.
+
 %TODO: how they are added to the paretocurves and how they are filtered.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection*{Validation of Simulations}
@@ -509,7 +454,7 @@ Finally, some of the muscular activations of the lower limb key muscles were ext
 To conduct methodical comparisons among scenarios with the discussed metrics, we employed statistical analyses. Since the simulations were performed on seven subjects with three trials in five different scenarios, repeated measures analysis of variance (ANOVA) and Tukey Post-hoc were applied to test the statistically significant difference between the selected metrics and scenarios.  Additionally, for the pareto simulations, the statistical analysis has been performed for the specific points selected from the pareto front for further investigation, nevertheless, standard deviation of all points on pareto front has been explicitly plotted for both criteria. We used a significance level of 0.05 and SPSS \cite{spss} for performing the tests. Same as \cite{93}, to remove the hierarchical structure from the data, they were averaged over the trials for each subject-scenario pair. However, the time-dependent data are averaged over all subjects and their trials and represented by their mean and standard deviation.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section*{\textbf{Results and Discussion}}
+\section*{Results and Discussion}
 %TODO: The results are changed by averaging within trials for each subject and getting overal average for all averaged subjects
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection*{Ideal Exoskeletons Results}
@@ -545,6 +490,7 @@ According to the jacobian between these two devices expressed in Eqn. \ref{Mono_
 	\caption{{\small\textbf{Assistive devices torque profiles compared to joint and muscles generated moment.} The device actuator torque for subjects carrying heavy load (dark blue) and without any load (blue), net joint moment profile generated by unassisted muscles for \textit{loaded} (black) and \textit{noload} (green) conditions, and the generated moment by assisted muscles for \textit{loaded} (dark rose red) and \textit{noload} (rose red) conditions are shown for each actuator of the devices. The curves are averaged over 7 subjects with 3 trials and normalized by subject mass; shaded regions around the mean profile indicate standard deviation of the profile.}}
 	\label{Fig_IdealExo_Torque}
 \end{figure*}
+
 This antagonism is more significant on the knee joint than hip during the mid-stance phase to the mid-swing phase, with the highest opposition on the start of the pre-swing phase. The hip joint has significant actuator and muscle torque opposition during the pre-swing to terminal swing phases meaning unlike the knee joint in which major portion of antagonism happens during the stance phase; the hip is getting into muscle and actuator torque contraction during swing phase. \\
 The torque profiles represented in figure \ref{Fig_IdealExo_Torque} indicate that the loading subject with a heavy load does not result in substantial changes in the torque profiles of the assistive devices. The main changes between \textit{loaded} and \textit{noload} conditions are the timing and magnitude of the profiles, which is due to the change of the joints kinematics and kinetics.
 Nevertheless, the standard deviation of assistive devices and assisted muscles generated torques are considerably greater in the \textit{loaded} condition, and it is more evident in the knee joint where the net joint moment has a remarkable deviation during the stance phase. This high within-subject deviation of torque profiles indicates that the assistance of subjects carrying heavy load requires the subject-specific design of the exoskeletons \cite{2}.\\
@@ -594,7 +540,7 @@ The study has been accomplished by constraining the peak torque the assistive ac
 	\centering
 	\includegraphics[width=\linewidth]{Pareto_Simulations_Figures/PaperFigure_Main_Pareto.pdf}
 	\vspace{1mm}
-	\caption{{\small\textbf{Optimal trade-offs between metabolic cost reduction and device energy consumption.} The numbering on each marker denotes results from different peak torque constraints. The hip and knee constraints are numbered from 1 to 5 in which 1 to 5 stand for 70 N.m to 30 N.m respectively, and each marker, which stands for a specific configuration of a device, is numbered by iterations of hip and knee constraints numbers. The optima points on Paretofronts are resulted from averaging over 7 subjects.}}
+	\caption{{\small\textbf{Optimal trade-offs between metabolic cost reduction and device energy consumption.} The label on each marker is denoted to results from different peak torque constraints. The hip and knee constraints are labeled from {\it A} to {\it E} and {\it a} to {\it e} respectively. The {\it A, a} to {\it E, e} labels represent for 70 N.m to 30 N.m constraints respectively, and each marker, which stands for a specific configuration of a device, is labeled by the hip and knee constraints labels. The optima points on Paretofronts are resulted from averaging over 7 subjects.}}
 	\label{Fig_Main_Paretofronts}
 \end{figure*}
 \begin{figure*}[ht]   
@@ -644,38 +590,107 @@ The detailed analysis of the monoarticular device show that both actuators of th
 	\centering
 	\includegraphics[width=\linewidth]{Pareto_Simulations_Figures/PaperFigure_Paretofront_TorqueProfiles.pdf}
 	\vspace{1mm}
-	\caption{{\small\textbf{Optimal assistive devices torque profiles compared to joint moments.} Each line represents the torque profile of a different optimal device defined in the color bar. The hip and knee constraints are numbered from 1 to 5 in which 1 to 5 stand for 70 N.m to 30 N.m, respectively, and the configuration of the optimal device has been specified by the number of each line that is computed by multiplication of hip and knee constraints numbers. The curves are averaged over 7 subjects with 3 trials normalized by subject mass.}}
+	\caption{{\small\textbf{Optimal assistive devices torque profiles compared to joint moments.}Each line represents the torque profile of a different optimal device defined in the color bar. The label on each marker is denoted to results from different peak torque constraints. The hip and knee constraints are labeled from {\it A} to {\it E} and {\it a} to {\it e} respectively. The {\it A, a} to {\it E, e} labels represent for 70 N.m to 30 N.m constraints respectively, and each marker, which stands for a specific configuration of a device, is labeled by the hip and knee constraints labels. The profiles are averaged over 7 subjects with 3 trials normalized by subject mass.}}
 	\label{Fig_Paretofronts_Torque_Profiles}
 \end{figure*}
 The torque profiles of constrained optimal devices slightly differed from the net joint moment of the hip, and the knee joints and the general torque trajectories of these actuators were mostly similar to the torque profiles of the devices with ideal actuators. The ideal and constrained torque profiles of biarticular hip actuators had mostly magnitude differences during mid-stance and terminal-stance to terminal-swing phases. In contrast to the hip actuator, the knee actuator has practically the same profile with the ideal knee actuator during the swing phase, but the path and magnitude of the knee actuator were mostly different from the ideal device. This comparison between the ideal and constrained devices is mostly valid when subjects were walking without carrying any load, and the only difference was the magnitude of the constrained profiles.\\
-Both actuators of the constrained monoarticular device have different profiles with the ideal device. The hip actuators had a significant magnitude difference during the load response phase, and most of the optimal constrained hip actuators were saturated during mid-stance and terminal stance phases, which was affecting the trajectory as well. The difference between hip actuators became highly significant during pre-swing to mid-swing phases, where the torque trajectories of the constrained hip actuator were not only different from the ideal actuator but also there was high variation among optimal constrained actuators. The monoarticular knee had more resemblance to the ideal knee actuator torque profile where they had practically identical profiles during the swing phase, and the difference between them was the higher torque magnitude during the mid-stance and lower magnitude during the pre-swing phases. Unlike the biarticular exoskeleton, where the load condition had only effect on the magnitude of the profiles, and there was a close similarity between the torque trajectories in \textit{loaded} and \textit{noload} conditions, the hip actuator torque of the monoarticular device assisting the subjects walking without carrying any load had considerable differences with the \textit{loaded} condition device. These two profiles had two mostly different trajectories and magnitudes during all phases of a gait cycle, and their differences are more unambiguous during load response to mid-swing phases.\\
+Both actuators of the constrained monoarticular device have different profiles with the ideal device. The hip actuators had a significant magnitude difference during the load response phase, and most of the optimal constrained hip actuators were saturated during mid-stance and terminal stance phases, which was affecting the trajectory as well. The difference between hip actuators became highly significant during pre-swing to mid-swing phases, where the torque trajectories of the constrained hip actuator were not only different from the ideal actuator but also there was high variation among optimal constrained actuators. The monoarticular knee had more resemblance to the ideal knee actuator torque profile where they had practically identical profiles during the swing phase, and the difference between them was the higher torque magnitude during the mid-stance and lower magnitude during the pre-swing phases.\\
+Unlike the biarticular exoskeleton, where the load condition had only effect on the magnitude of the profiles, and there was a close similarity between the torque trajectories in \textit{loaded} and \textit{noload} conditions, the hip actuator torque of the monoarticular device assisting the subjects walking without carrying any load had considerable differences with the \textit{loaded} condition device. These two profiles had two mostly different trajectories and magnitudes during all phases of a gait cycle, and their differences are more unambiguous during load response to mid-swing phases.\\
 \begin{figure*}[ht]   
 	\centering
 	\includegraphics[width=\linewidth]{Pareto_Simulations_Figures/PaperFigure_Paretofront_PowerProfiles.pdf}
 	\vspace{1mm}
-		\caption{{\small\textbf{Optimal assistive devices power profiles compared to joint power.} Each line represents the power profile of a different optimal device defined in the color bar. The hip and knee constraints are numbered from 1 to 5 in which 1 to 5 stand for 70 N.m to 30 N.m, respectively, and the configuration of the optimal device has been specified by the number of each line that is computed by multiplication of hip and knee constraints numbers. The curves are averaged over 7 subjects with 3 trials normalized by subject mass.}}
+		\caption{{\small\textbf{Optimal assistive devices power profiles compared to joint power.} Each line represents the power profile of a different optimal device defined in the color bar. The label on each marker is denoted to results from different peak torque constraints. The hip and knee constraints are labeled from {\it A} to {\it E} and {\it a} to {\it e} respectively. The {\it A, a} to {\it E, e} labels represent for 70 N.m to 30 N.m constraints respectively, and each marker, which stands for a specific configuration of a device, is labeled by the hip and knee constraints labels. The profiles are averaged over 7 subjects with 3 trials normalized by subject mass.}}
 	\label{Fig_Paretofronts_Power_Profiles}
 \end{figure*}
+\vspace{2mm}
 The restrained biarticular and monoarticular devices had a resemblance to the ideal devices similar to the torque profiles similarity to ideal profiles. The biarticular hip actuator has mostly a similar power trajectory for the hip in both load conditions with considerably lower magnitude for all optimal devices where this magnitude difference is more substantial during mid-stance and initial swing to mid-swing phases; while the knee actuator has a high correlation with the ideal actuator, the loading response and mid-stance phases of the constrained knee actuator is different with the ideal actuator like the torque profile. The constrained monoarticular hip actuator has a high variation within optimal devices, and most of the optimal configurations have their unique power profile; nevertheless, the optimal devices with the highest peak torque limitations have a close resemblance to the ideal device. In contrast to the hip actuators, the power trajectories of the knee actuator in both load conditions were similar to the ideal device with a difference during pre-swing to mid-swing phases where the peak power consumption occurs about the toe-off in the constrained knee actuators.\\
 The power and torque profiles of optimal biarticular and monoarticular devices revealing that although the optimal monoarticular exoskeletons have a lower energy consumption comparing to the optimal biarticular devices, the variation of the torque and power profiles within optimal configurations of the monoarticular device is higher than biarticular devices and load condition of the subjects can considerably affect the profiles of assistive actuators. These variations within optimal monoarticular devices indicate that achieving a generalized design and control policies for assisting subjects in different load conditions and different actuation and battery life limitations would be genuinely challenging with monoarticular exoskeletons.\\
 
 \subsection*{Mass, inertia and regeneration effects}
-\begin{figure*}[ht]   
-	\centering
-	\includegraphics[width=\linewidth]{Pareto_Mass_Regenration_Figures/PaperFigure_AddingMass_Pareto.pdf}
-	\vspace{1mm}
-	\caption{{\small\textbf{Optimal assistive devices power profiles compared to joint power.} }}
-	\label{Fig_Paretofronts_Mass_Regeneration_Effect}
-\end{figure*}
+\paragraph*{Inertial properties of the exoskeletons effect on metabolic rate.} 
+One of the main challenges with designing the mobile exoskeletons is the effect of the mass and inertia, grounded on the extremities of the subjects, on the metabolic rate of the subjects. The effect of mass and inertia on the metabolic cost has been studied through several literatures \cite{133,134} and it is shown that the metabolic rate of the subject would change considerably by adding mass and inertia \cite{133,134,135}.\\
+The proposed exoskeletons in this study have a remarkably different inertial properties due to their kinematic design that will result in different effect on the metabolic energy consumption of the subjects. Since the current neural control algorithm of the OpenSim is not able to simulate any variations in the musculoskeletal model\cite{92}, which has not been captured by experimental data, we simulated the effect of the mass and inertia offline using the model proposed by Browning et al.\cite{133} for the effect of the mass and inertia on the metabolic cost of subjects.\\
+The study, accomplished by Browning et al.\cite{133}, proposed a linear model for the effect of adding mass and inertia on each segment of lower limbs by capturing and analyzing the effect of adding mass to different segments of lower extremity and their inertia on the metabolic energy expenditure of the subjects experimentally. In this study, subjects were walking at 1.25 m/s without carrying any heavy load on their torso which is similar to the data captured from the subjects in the walking with \textit{\textit{noload}} at their self-selected speed\cite{93}. This qualitative match between the data and experimental protocols of Browning et al. and Dembia et al enabling us to use the developed model of \cite{133}  to study the effect of mass and inertia added by assistive devices through offline simulations for the subjects walking at free speed without carrying any external load (i.e.{\it noload} condition).\\
+The mass and inertia of the proposed biarticular and monoarticular exoskeletons affect the waist, thigh and shank segments.As it is discussed in the Kinematic Modeling section, the biarticular exoskeleton, unlike monoarticular one, is designed to deliver the assistance distally to the knee joint.
+It enables designers to attach actuation module to the waist instead of thigh meaning that the main difference between inertial properties of two exoskeletons will be on the attached mass on the waist and shank segments nevertheless the reflected inertia of the actuation module will be reflect on the actuated joint regardless of its grounded segment in both exoskeletons.\\
+For the purpose of conducting numerical simulations of the inertial properties of the exoskeletons effect on the subjects metabolic rate, we assigned two identical masses and the center of masses measured from the hip \textcolor{red}{??} joint for the links attached to the thigh and shank. Additionally,a typical and identical actuation module inertia and mass has been assigned for both configurations of the exoskeleton.\\
+In order to study the effect of the inertia in the pareto simulations, the maximum achievable torque of the actuator has been set to 2 N.m which can be provided by MaxonMotor EC90 Flat 260W and the required transmission ratio is calculated by diving the peak torque at joint level to peak torque of the actuator and then reflected inertia has been calculated using Eqn.\ref{Eqn_reflected_inertia}.\\
+\begin{equation}\label{Eqn_reflected_inertia}
+\begin{aligned}
+R &= \frac{\tau_{max,jont level}}{\tau_{max,actuator}}\\
+I_{reflected} &= I_{actuator}\times R^{2}
+\end{aligned}
+\end{equation}
+The total inertia of the moving segments (i.e., thigh and shank segments) have been computed by considering the distal mass effect on the inertia, reflected inertia of the actuation modulem and the leg inertia provided by \cite{133} which is calculated about the hip joint in the body frame. The Eqn.\ref{Eqn_segment_inertia} represents the inertia calculation of the moving segment.
+\begin{equation}\label{Eqn_segment_inertia}
+\begin{aligned}
+I_{Exo,segment} &= I_{reflected} + m\times COM^{2}\\
+I_{\textit{loaded}\;leg} &= I_{Exo,segment} + I_{\textit{\textit{noload}}\;leg}
+\end{aligned}
+\end{equation}
+The typical mass, the center of mass, and inertia that have been used for numerical simulations are represented in Table \ref{Table_Exokeletons_Mass_Inerta}. The mass of each segment is within range of exoskeletons' weight studied by Mooney et al.\cite{41} for calculating the augmentation factor and the center of mass of the segments were mostly chosen based on the mean length of thigh and shank segments\cite{136} under the assumption of unity distribution of link weight.\\ 
+\begin{table}[ht]
+	\renewcommand{\arraystretch}{1.2}
+	\begin{adjustwidth}{-1in}{0in}
+		\caption{\small{\textbf{Mass and inertia properties of two typical exoskeletons.}}}
+		\begin{tabular}{c!{\vline width 0.2pt}c!{\vline width 0.2pt}c!{\vline width 0.2pt}c!{\vline width 0.2pt}c!{\vline width 0.2pt}c!{\vline width 0.2pt}c}
+			\toprule
+			\multirow{2}{*}{\textbf{configuration}} & \textbf{Waist}   & \multicolumn{2}{ c!{\vline width 0.2pt} }{\textbf{thigh}} & \multicolumn{2}{ c!{\vline width 0.2pt} }{\textbf{shank}} & \textbf{actuator} \\  \cmidrule{2-7}
+			&  Mass ($kg$)& mass ($kg$) & COM ($m$)& mass ($kg$) & COM ($m$)& inertia ($kg.m^2$) \\ \midrule[0.5pt]
+			\textbf{Biarticular} &  4.5 &1& 0.23 &0.9&0.18 + $l_{thigh}$&$5.06\times10^{-4}$\\ \midrule[0.2pt]
+			\textbf{Monoarticular} & 3 &2.5& 0.30 &0.9&0.18 + $l_{thigh}$&$5.06\times10^{-4}$\\
+			\bottomrule
+		\end{tabular}
+		\label{Table_Exokeletons_Mass_Inerta}
+	\end{adjustwidth}
+\end{table}
+The metabolic model proposed by Browning et al.\cite{133} calculates the metabolic rate of the subject with loaded segment; however, Since we were interested in the effect of inertial properties of exoskeleton on metabolic rate change, not metabolic rate, we used the model by subtracting the metabolic rate of the subject walking without the additional mass. The equations of the final model that has been used for analyzing the effect of exoskeleton mass and inertia on the metabolic rate is provided in Eqn.\ref{Eqn_AddingMass_MetabolicRate} and \ref{Eqn_AddingInertia_MetabolicRate} respectively.
+\begin{equation}\label{Eqn_AddingMass_MetabolicRate}
+\begin{aligned}
+\Delta MC_{Waist} &= 0.045\times m_{Waist}\\
+\Delta MC_{Thigh} &= 0.075\times m_{Thigh}\\
+\Delta MC_{Shank} &= 0.076\times m_{Shank}
+\end{aligned}
+\end{equation}
+\begin{equation}\label{Eqn_AddingInertia_MetabolicRate}
+\begin{aligned}
+I_{ratio} &= \frac{I_{Exo,segment} + I_{un\textit{loaded}\;leg}}{I_{un\textit{loaded}\;leg}}\\
+\Delta MC_{Thigh} &= ((-0.74 + (1.81\times I_{Thigh,ratio}))\times MC_{unassisted})-MC_{unassisted}\\
+\Delta MC_{Shank} &= ((0.63749 + (0.40916\times I_{Shank,ratio}))\times MC_{unassisted})-MC_{unassisted}
+\end{aligned}
+\end{equation}
+The effect of the exoskeleton mass and inertia has on metabolic cost has been considered on the pareto curves and filtered to obtain the pareto front with the effect of the exoskeleton inertial properties on metabolic expenditure.\\
+\paragraph*{Regeneration effect on devices power consumption.} The significant energy requirement of the untethered exoskeletons and the finite energy density of the power source of these devices constrain their assisting duration and make them remarkably dependent on their battery life \cite{140}. The review published by Young and Ferris \cite {36} reported that the maximum functioning duration of portable exoskeletons is 5 hours indicating several recharging requirements in a day. Harvesting the dissipated energy of assistive devices can address this issue on the mobile exoskeletons and help users to be more independent by prolonging the device battery life \cite{140,141,142}. The regenerating and harvesting energy has been utilized in different assistive devices to improve the efficiency of the device that has been excellently reviewed in several review papers \cite{140,141,142}.\\
+The regeneratable power of the optimal exoskeletons can be acquired by capturing the negative power profiles of assistive actuators and obtaining the dissipated energy from the negative power profile. This dissipated energy was normalized by the mass and gait duration of each subject and trial and reported by averaging within trials of each subject. Although the maximum efficiency of harvesting dissipated power is ranged between 30\% to 37\% for the lower limb assistive devices \cite{140}, the MIT cheetah custom design \cite{144,145} and the biomechanical energy harvester developed by Donelan et al. \cite{143} reported and experimentally verified 63\% regeneration efficiency. Hence, we selected 65\% as energy harvesting efficiency for the analyzed exoskeletons which is the maximum efficiency that has been reported for regeneration. The regeneration effect on the simulated configurations of devices and their optimal trade-off has been studied by subtracting the regenerable power from the total power consumption of devices. This analysis has been performed on the subjects walking at free speed without carrying any external load to conduct some further investigations on the effect of devices inertial properties and regeneration on both metabolic and device power consumption.\\
 \begin{figure*}[ht]   
 	\centering
 	\includegraphics[width=\linewidth]{Pareto_Mass_Regenration_Figures/PaperFigure_Pareto_Comparison.pdf}
 	\vspace{1mm}
-	\caption{{\small\textbf{Optimal assistive devices power profiles compared to joint power.}}}
+	\caption{{\small\textbf{Pareto front of devices in ideal condition and under regeneration and device mass and inertia effects.} The label on each marker is denoted to results from different peak torque constraints. The hip and knee constraints are labeled from {\it A} to {\it E} and {\it a} to {\it e} respectively. The {\it A, a} to {\it E, e} labels represent for 70 N.m to 30 N.m constraints respectively, and each marker, which stands for a specific configuration of a device, is labeled by the hip and knee constraints labels. The optima points on Paretofronts are resulted from averaging over 7 subjects walking in {\it noload} condition.}}
 	\label{Fig_Paretofronts_Mass_Regeneration_Effect_Comparison}
 \end{figure*}
+\vspace{2mm}
+The effect of devices inertial properties on the simulated devices are remarkable, and this effect changes most of the devices on the optimal trade-off curve, as represented in figure \ref{Fig_Paretofronts_Mass_Regeneration_Effect_Comparison}.  The highest peak torque in both monoarticular and biarticular exoskeletons are 60 N.m for the knee and 50 N.m for the hip joint. Since the inertia of devices was getting affected by altering the peak torque, results indicating that the reflected inertia have a considerable effect on the optimality of the devices and power consumption of exoskeletons with high peak torque is not efficient in comparison to the amount of metabolic cost reduction they provide.\\ 
+\begin{figure*}[t]   
+	\centering
+	\includegraphics[width=\linewidth]{Pareto_Mass_Regenration_Figures/PaperFigure_AddingMass_Pareto.pdf}
+	\vspace{1mm}
+	\caption{{\small\textbf{The comparison of the pareto fronts of devices in different metabolic and device power expenditure conditions.} The biarticular and monoarticular exoskeletons have been compared in (a)ideal condition, (b)under devices mass/inertia effect on metabolic energy consumption, (c)under dissipated energy regeneration effect on power consumption of devices, and (d)under the effect of (b) and (c). The optima points on Paretofronts are resulted from averaging over 7 subjects walking in {\it noload} condition.}}
+	\label{Fig_Paretofronts_Mass_Regeneration_Effect}
+\end{figure*}
+While the biarticular exoskeleton showed better performance than monoarticular when the exoskeletons inertial properties were considered ( Fig. \ref{Fig_Paretofronts_Mass_Regeneration_Effect}), the slope of Pareto front for both exoskeletons indicates that devices with higher torque capacity will not make a considerable change on the amount of assist that device can provide to the subjects due to the inertia and this effect can be seen more obviously for the monoarticular device.\\
+The energy harvesting had a remarkably positive effect on the devices, and it enabled some new configurations in both devices to become optimal in the amount of power consumption for delivered assistance, as shown in figure \ref{Fig_Paretofronts_Mass_Regeneration_Effect_Comparison}and \ref{Fig_Paretofronts_Mass_Regeneration_Effect}. The changes in Pareto front of biarticular and monoarticular exoskeletons show that regenerating the dissipated power of devices can profoundly reduce the required power for actuating the exoskeleton. This energy requirement reduction enables the battery and mechanical designers to reduce the load on the musculoskeletal system of subjects, which causes metabolic energy consumption increase in the individual being assisted and requires the device to compensate for this increase ahead of providing assistance to the subject. Finally, analyzing both exoskeletons with inertia and mass and regeneration effect reveals that the exoskeletons have dramatically different performance than the ideal devices, as shown in figure \ref{Fig_Paretofronts_Mass_Regeneration_Effect_Comparison}  for subjects in {\it noload} condition. Unlike the ideal optimal trade-off, the biarticular device shows superior performance than the monoarticular exoskeleton (Fig. \ref{Fig_Paretofronts_Mass_Regeneration_Effect}), and the exoskeletons under regeneration and mass and inertia effect have different optimal configurations than ideal condition.\\
+The analyses accomplished for the effect of regeneration and devices inertial characteristics on the performance of assistive devices can provide a qualitative perspective for the mechatronic systems designers on designing assistive devices. The general outcome of these analyses shows that selecting an actuator with high torque density is essential to reduce the reflected inertia effect of gear train on the energy expenditure of subjects. The active inertia compensation methods by designing a controller also can be helpful in reducing the impact of inertia on the metabolic expenditure increase of subjects, which has been used by \cite{148} for controlling one degree of freedom knee exoskeleton to compensate its inertia; however, this method comes with some coupled stability issues \cite{146,147,148} that need to be addressed while designing the controller.\\
+The results  also showed that keeping the actuator mass near to proximal joints and assisting the joint of interest distally has a considerable impact on the metabolic power consumption of subjects. As we discussed previously, this mechanical design conclusion has already been studied on the human musculoskeletal system, and it is shown the biarticular muscles enable human musculoskeletal structure to keep muscle volume near to trunk and transfer energy to the distal joints to reduce the inertia and mass of the leg. Consequently, the bio-inspired biarticular and multiarticular configurations of the assistive devices can provide a promising improvement in their performance.\\
+Although assistive design with highly effective regeneration requires system-level optimization and complicating the design of assistive devices \cite{140}, even a qualitative comparison between devices with and without regeneration shows a remarkable difference in energy consumption. This implies the necessity of regeneration, especially for untethered devices, to improve their independence and their operation duration.\\
 \subsection*{Case Study}
-We conducted four different case studies to get more insight into the performance of two assistive devices in a particular load condition or an assistive device in two different load conditions with the same effect on the metabolic energy expenditure or the same energy consumption of assistive actuators. Investigating these specific configurations of the optimal devices helps us understand how the profiles of devices with the same performances are changing in a load condition and what their effect is on muscle coordination. These cases can help to clarify the effect of load condition on an assistive device profiles, and their muscles and how a particular device will be affected by loading assisted subjects with a heavy load.
+We conducted four different case studies to get more insight into the performance of assistive devices that include studying both assistive devices in a particular load condition or an assistive device in two different load conditions with the same effect on the metabolic energy expenditure or the same energy consumption of assistive actuators. Investigating these specific configurations of the optimal devices helped us to understand how the profiles of devices with the same performances are changing in a load condition more systematically. These cases can clarify the effect of load condition on an assistive device profiles, and their muscles and how a particular device will be affected by loading assisted subjects with a heavy load.
+\paragraph*{Modified Augmentation Factor.}In the case studies, we need to have a more systematic analysis of the performance of devices that can be employed for both {\it loaded} and {\it noload} conditions. Consequently, we used augmentation factor \cite{41} with some primary modifications.\\
+The augmentation factor (AF) was developed by Mooney et al. \cite{41} to address the limitations of the performance index introduced by Sawicki and Ferris \cite{149} to measure the relationship between the device applied positive power and change in metabolic power consumption. The augmentation factor established to estimate metabolic power change due to carrying the exoskeleton which balances between the mean positive power, resulting in a metabolic improvement and net dissipated power and device weights, causing metabolic detriment.\\
+Although the augmentation factor resolves the previous performance metrics difficulties and introduces a general factor for estimating the performance of assistive devices, it does not account for the effect of inertia caused by the actuation unit and attached masses in moving segments. The study accomplished by Browning et al. \cite{133} and our analysis on the effect of inertia and mass on the metabolic power change in the previous section showed the importance of the inertia effect on the metabolic burden of subjects indicating the essence of including this factor for any performance measurement of exoskeletons. Additionally, since the developed augmentation factor considers the positive mechanical power of exoskeletons as the only cause of metabolic improvement, it cannot account for any regeneration effect on the performance of devices.\\
+The modified augmentation factor (MAF) has been introduced to address these two central issues on the augmentation factor. In order to include the inertia effect on the augmentation factor, we adopted the model developed by Browning et al. \cite {133} for estimating the metabolic power ratio change due to inertia ratio change of subjects walking while wearing weights on their lower limbs to subject walking without any load. Then, we performed some simple algebraic manipulations to obtain the device location factor ($\gamma_{i}$) for the applied inertia to each segment.
+\paragraph*{Root mean square error of profile in gait phases.}
 \subsubsection*{Case 1: Devices Performance in \textit{\textit{noload}} Condition} 
 \subsubsection*{Case 2: Devices Performance in \textit{\textit{loaded}} Condition} 
 \subsubsection*{Case 3: Biarticular Exoskeleton Performance} 
@@ -703,27 +718,27 @@ Simulations outcomes are beneficial as a prior information to assist the subject
 % Include only the SI item label in the paragraph heading. Use the \nameref{label} command to cite SI items in the text.
 \paragraph*{S1 Fig.}
 \label{S1_Fig}
-{\bf Bold the title sentence.} Add descriptive text after the title of the item (optional).
+{\bf Phases of subjects gait in \textit{noload} and \textit{noload} conditions.}
 
 \paragraph*{S2 Fig.}
 \label{S2_Fig}
-{\bf Lorem ipsum.} Maecenas convallis mauris sit amet sem ultrices gravida. Etiam eget sapien nibh. Sed ac ipsum eget enim egestas ullamcorper nec euismod ligula. Curabitur fringilla pulvinar lectus consectetur pellentesque.
+{\bf Lorem ipsum.}
 
 \paragraph*{S1 File.}
 \label{S1_File}
-{\bf Lorem ipsum.}  Maecenas convallis mauris sit amet sem ultrices gravida. Etiam eget sapien nibh. Sed ac ipsum eget enim egestas ullamcorper nec euismod ligula. Curabitur fringilla pulvinar lectus consectetur pellentesque.
+{\bf Lorem ipsum.}
 
 \paragraph*{S1 Video.}
 \label{S1_Video}
-{\bf Lorem ipsum.}  Maecenas convallis mauris sit amet sem ultrices gravida. Etiam eget sapien nibh. Sed ac ipsum eget enim egestas ullamcorper nec euismod ligula. Curabitur fringilla pulvinar lectus consectetur pellentesque.
+{\bf Lorem ipsum.}
 
 \paragraph*{S1 Appendix.}
 \label{S1_Appendix}
-{\bf Lorem ipsum.} Maecenas convallis mauris sit amet sem ultrices gravida. Etiam eget sapien nibh. Sed ac ipsum eget enim egestas ullamcorper nec euismod ligula. Curabitur fringilla pulvinar lectus consectetur pellentesque.
+{\bf Lorem ipsum.}
 
 \paragraph*{S1 Table.}
 \label{S1_Table}
-{\bf Lorem ipsum.} Maecenas convallis mauris sit amet sem ultrices gravida. Etiam eget sapien nibh. Sed ac ipsum eget enim egestas ullamcorper nec euismod ligula. Curabitur fringilla pulvinar lectus consectetur pellentesque.
+{\bf Lorem ipsum.}
 
 \section*{\textbf{Acknowledgments}}
 We sincerely thank OpenSim community for their help during this research; especially, we thank Thomas Uchida, Dimitar Stanev, and James Dunne for answering most of our questions about the OpenSim.
