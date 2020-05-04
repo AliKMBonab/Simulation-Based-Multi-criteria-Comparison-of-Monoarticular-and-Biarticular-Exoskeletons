@@ -2,7 +2,7 @@ This is BibTeX, Version 0.99d (MiKTeX 2.9.7380 64-bit)
 Capacity: max_strings=200000, hash_size=200000, hash_prime=170003
 The top-level auxiliary file: Ideal_Exoskeleton_Draft.aux
 The style file: plos2015.bst
-Illegal, another \bibstyle command---line 252 of file Ideal_Exoskeleton_Draft.aux
+Illegal, another \bibstyle command---line 286 of file Ideal_Exoskeleton_Draft.aux
  : \bibstyle
  :          {plos2015.bst}
 I'm skipping whatever remains of this command
@@ -57,45 +57,47 @@ You can't pop an empty literal stack for entry 69
 while executing---line 1875 of file plos2015.bst
 Warning--empty chapter in 72
 Warning--there's a month but no year in spss
-You've used 128 entries,
+Warning--empty chapter in 146
+Warning--empty pages in 146
+You've used 139 entries,
             3058 wiz_defined-function locations,
-            1501 strings with 36227 characters,
-and the built_in function-call counts, 229273 in all, are:
-= -- 29847
-> -- 1684
-< -- 14
-+ -- 1228
-- -- 421
-* -- 19069
-:= -- 24801
-add.period$ -- 580
-call.type$ -- 128
-change.case$ -- 28
+            1571 strings with 38853 characters,
+and the built_in function-call counts, 247804 in all, are:
+= -- 32281
+> -- 1828
+< -- 15
++ -- 1334
+- -- 457
+* -- 20585
+:= -- 26799
+add.period$ -- 630
+call.type$ -- 139
+change.case$ -- 32
 chr.to.int$ -- 0
-cite$ -- 135
-duplicate$ -- 20516
-empty$ -- 21453
-format.name$ -- 533
-if$ -- 53805
+cite$ -- 148
+duplicate$ -- 22260
+empty$ -- 23169
+format.name$ -- 578
+if$ -- 58158
 int.to.chr$ -- 0
-int.to.str$ -- 128
-missing$ -- 1159
-newline$ -- 732
-num.names$ -- 132
-pop$ -- 1795
+int.to.str$ -- 139
+missing$ -- 1257
+newline$ -- 794
+num.names$ -- 143
+pop$ -- 1949
 preamble$ -- 1
 purify$ -- 0
 quote$ -- 0
-skip$ -- 1992
+skip$ -- 2168
 stack$ -- 0
-substring$ -- 43107
-swap$ -- 3078
-text.length$ -- 14
+substring$ -- 46438
+swap$ -- 3344
+text.length$ -- 15
 text.prefix$ -- 0
 top$ -- 0
 type$ -- 0
-warning$ -- 7
-while$ -- 1170
-width$ -- 131
-write$ -- 1585
+warning$ -- 9
+while$ -- 1272
+width$ -- 142
+write$ -- 1720
 (There were 9 error messages)

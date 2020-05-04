@@ -730,6 +730,24 @@ Das I, Dennis J.
 \newblock SIAM Journal on Optimization. 1998;8(3):631--657.
 \newblock doi:{10.1137/S1052623496307510}.
 
+\bibitem{131}
+Huang TwP, Kuo AD.
+\newblock Mechanics and energetics of load carriage during human walking.
+\newblock Journal of Experimental Biology. 2014;217(4):605--613.
+\newblock doi:{10.1242/jeb.091587}.
+
+\bibitem{132}
+Silder A, Delp SL, Besier T.
+\newblock {Men and women adopt similar walking mechanics and muscle activation
+  patterns during load carriage}.
+\newblock Journal of Biomechanics. 2013;46(14):2522--2528.
+\newblock doi:{10.1016/j.jbiomech.2013.06.020}.
+
+\bibitem{spss}
+{IBM Corp }. IBM SPSS Statistics for Windows;.
+\newblock Available from:
+  \url{https://www.ibm.com/analytics/spss-statistics-software}.
+
 \bibitem{133}
 Browning RC, Modica JR, Kram R, Goswami A.
 \newblock The effects of adding mass to the legs on the energetics and
@@ -748,23 +766,77 @@ Soule RG, Goldman RF.
 \newblock Journal of Applied Physiology. 1969;27(5):687--690.
 \newblock doi:{10.1152/jappl.1969.27.5.687}.
 
-\bibitem{131}
-Huang TwP, Kuo AD.
-\newblock Mechanics and energetics of load carriage during human walking.
-\newblock Journal of Experimental Biology. 2014;217(4):605--613.
-\newblock doi:{10.1242/jeb.091587}.
+\bibitem{136}
+[de Leva] P.
+\newblock Adjustments to Zatsiorsky-Seluyanov's segment inertia parameters.
+\newblock Journal of Biomechanics. 1996;29(9):1223 -- 1230.
+\newblock doi:{https://doi.org/10.1016/0021-9290(95)00178-6}.
 
-\bibitem{132}
-Silder A, Delp SL, Besier T.
-\newblock {Men and women adopt similar walking mechanics and muscle activation
-  patterns during load carriage}.
-\newblock Journal of Biomechanics. 2013;46(14):2522--2528.
-\newblock doi:{10.1016/j.jbiomech.2013.06.020}.
+\bibitem{140}
+Laschowski B, McPhee J, Andrysek J.
+\newblock {Lower-Limb Prostheses and Exoskeletons With Energy Regeneration:
+  Mechatronic Design and Optimization Review}.
+\newblock Journal of Mechanisms and Robotics. 2019;11(4).
+\newblock doi:{10.1115/1.4043460}.
 
-\bibitem{spss}
-{IBM Corp }. IBM SPSS Statistics for Windows;.
-\newblock Available from:
-  \url{https://www.ibm.com/analytics/spss-statistics-software}.
+\bibitem{141}
+Schertzer E, Riemer R.
+\newblock {Harvesting biomechanical energy or carrying batteries? An evaluation
+  method based on a comparison of metabolic power}.
+\newblock Journal of NeuroEngineering and Rehabilitation. 2015;12(1):1--12.
+\newblock doi:{10.1186/s12984-015-0023-7}.
+
+\bibitem{142}
+Riemer R, Shapiro A.
+\newblock {Biomechanical energy harvesting from human motion: Theory, state of
+  the art, design guidelines, and future directions}.
+\newblock Journal of NeuroEngineering and Rehabilitation. 2011;8(1):1--13.
+\newblock doi:{10.1186/1743-0003-8-22}.
+
+\bibitem{144}
+{Seok} S, {Wang} A, {Meng Yee Chuah}, {Otten} D, {Lang} J, {Kim} S.
+\newblock Design principles for highly efficient quadrupeds and implementation
+  on the MIT Cheetah robot.
+\newblock In: 2013 IEEE International Conference on Robotics and Automation;
+  2013. p. 3307--3312.
+
+\bibitem{145}
+{Seok} S, {Wang} A, {Chuah} MY, {Hyun} DJ, {Lee} J, {Otten} DM, et~al.
+\newblock Design Principles for Energy-Efficient Legged Locomotion and
+  Implementation on the MIT Cheetah Robot.
+\newblock IEEE/ASME Transactions on Mechatronics. 2015;20(3):1117--1129.
+
+\bibitem{143}
+Donelan JM, Li Q, Naing V, Hoffer JA, Weber DJ, Kuo AD.
+\newblock Biomechanical Energy Harvesting: Generating Electricity During
+  Walking with Minimal User Effort.
+\newblock Science. 2008;319(5864):807--810.
+\newblock doi:{10.1126/science.1149860}.
+
+\bibitem{148}
+Aguirre-Ollinger G, Colgate JE, Peshkin MA, Goswami A.
+\newblock {Design of an active one-degree-of-freedom lower-limb exoskeleton
+  with inertia compensation}.
+\newblock International Journal of Robotics Research. 2011;30(4):486--499.
+\newblock doi:{10.1177/0278364910385730}.
+
+\bibitem{146}
+Colgate E.
+\newblock In: The Interaction of Robots with Passive Environments: Application
+  to Force Feedback Control. Springer-Verlag; 1989.
+
+\bibitem{147}
+COLGATE JE, HOGAN N.
+\newblock Robust control of dynamically interacting systems.
+\newblock International Journal of Control. 1988;48(1):65--88.
+\newblock doi:{10.1080/00207178808906161}.
+
+\bibitem{149}
+Sawicki GS, Ferris DP.
+\newblock Mechanics and energetics of level walking with powered ankle
+  exoskeletons.
+\newblock Journal of Experimental Biology. 2008;211(9):1402--1413.
+\newblock doi:{10.1242/jeb.009241}.
 
 \bibitem{114}
 Jackson RW, Collins SH.
