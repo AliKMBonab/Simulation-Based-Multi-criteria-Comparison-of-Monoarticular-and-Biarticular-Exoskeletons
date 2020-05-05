@@ -130,8 +130,8 @@ plot_dic = {'mean_11':mean_rmse_hip_actuator_torque,'mean_12':mean_rmse_hip_actu
             'std_11':std_rmse_hip_actuator_torque,'std_12':std_rmse_hip_actuator_power,
             'std_13':std_rmse_hip_musclesmoment,'std_21':std_rmse_knee_actuator_torque,
             'std_22':std_rmse_knee_actuator_power,'std_23':std_rmse_knee_musclesmoment,
-            'color_2':mycolors['pastel blue'],'color_1':mycolors['deep space sparkle'],'title_1':'assistive actuators\n torque error',
-            'title_2':'assistive actuators\n power error','title_3':'assisted muscles\n moment error',
+            'color_2':mycolors['pastel blue'],'color_1':mycolors['deep space sparkle'],'title_1':'assistive actuators\n torque profiles RMSE',
+            'title_2':'assistive actuators\n power profiles RMSE','title_3':'assisted muscles generated\n moment profiles RMSE',
             'y_ticks': [-0.05,0.2,0.4,0.6,0.8,1,1.2,1.4,1.6]}
 fig = plt.figure(num='RMSE',figsize=(20.8, 6.4))
 utils.rmse_barplots(plot_dic=plot_dic)
@@ -289,7 +289,7 @@ plot_dic={
 'plot_titles' : ['loaded biarticular hip joint','loaded monoarticular hip joint','loaded biarticular knee joint','loaded monoarticular knee joint']
 }
 # plot
-fig = plt.figure(num='Loaded Knee Speed',figsize=(9.4, 6.8))
+fig01 = plt.figure(num='Paper figure',figsize=(9.4, 6.8))
 utils.plot_joint_muscle_exo(nrows=2,ncols=2,plot_dic=plot_dic,color_dic=monovsbi_color_dic,\
                             thirdplot=True,ylabel=' flexion/extension\n(N-m/kg)',y_ticks=np.arange(-2,3,1))
 fig.tight_layout()
@@ -302,13 +302,20 @@ plot_dic={
 'plot_titles' : ['loaded biarticular hip joint','loaded monoarticular hip joint','loaded biarticular knee joint','loaded monoarticular knee joint']
 }
 # plot
-fig = plt.figure(num='Loaded Knee Speed',figsize=(9.4, 6.8))
+fig02 = plt.figure(num='Paper figure',figsize=(9.4, 6.8))
 utils.plot_joint_muscle_exo(nrows=2,ncols=2,plot_dic=plot_dic,color_dic=monovsbi_color_dic,\
                             thirdplot=False,ylabel=' flexion/extension\n(W/kg)',y_ticks=np.arange(-2,4,1))
 fig.tight_layout(h_pad=-1, w_pad=-1.5)
 fig.subplots_adjust(top=0.98, bottom=0.075, left=0.100, right=0.975,hspace=0.25,wspace=0.15)
 plt.show()
 fig.savefig('./Figures/Specific_Weights/LoadedMono04_LoadedBi16/PaperFigure_PowerProfiles.pdf',orientation='landscape',bbox_inches='tight')
+
+# combination
+fig = plt.figure()
+plot1 = fig01.getroot()
+plot2 = fig02.getroot()
+fig.append([plot1, plot2])
+plt.show()
 
 #******************************************************************************************************************************
 #******************************************************************************************************************************
