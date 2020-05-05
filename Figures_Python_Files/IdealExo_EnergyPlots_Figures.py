@@ -76,6 +76,77 @@ mean_loaded_bi_hip_energy,std_loaded_bi_hip_energy = utils.mean_std_over_subject
 mean_loaded_bi_knee_energy,std_loaded_bi_knee_energy = utils.mean_std_over_subjects(assisted_energy_dataset['biarticular_ideal_loaded_kneeactuator_energy'],ax=0)
 mean_loaded_mono_hip_energy,std_loaded_mono_hip_energy = utils.mean_std_over_subjects(assisted_energy_dataset['monoarticular_ideal_loaded_hipactuator_energy'],ax=0)
 mean_loaded_mono_knee_energy,std_loaded_mono_knee_energy = utils.mean_std_over_subjects(assisted_energy_dataset['monoarticular_ideal_loaded_kneeactuator_energy'],ax=0)
+#####################################################################################
+# writing data to csv for statistical analyses
+# general columns 
+subjects = np.array(['subject05','subject07','subject09','subject10','subject11','subject12','subject14'])
+loaded_unassist_col = np.repeat(np.array('loaded unassist'),7)
+loaded_biarticular_col = np.repeat(np.array('loaded biarticular'),7)
+loaded_monoarticular_col = np.repeat(np.array('loaded monoarticular'),7)
+noload_unassist_col = np.repeat(np.array('noload unassist'),7)
+noload_biarticular_col = np.repeat(np.array('noload biarticular'),7)
+noload_monoarticular_col = np.repeat(np.array('noload monoarticular'),7)
+
+# establishing dataset for metabolic rate
+headers = ['subjects','assistance','metabolic rate']
+subject_col = np.tile(subjects,6)
+assistance_col = np.concatenate((loaded_unassist_col,loaded_monoarticular_col,loaded_biarticular_col,
+                                 noload_unassist_col,noload_monoarticular_col,noload_biarticular_col),axis=0)
+metabolic_rate_data = np.concatenate((utils.mean_over_trials(unassisted_energy_dataset['loaded_metabolics_energy'],ax=0),\
+                                      utils.mean_over_trials(assisted_energy_dataset['monoarticular_ideal_loaded_metabolics_energy'],ax=0),\
+                                      utils.mean_over_trials(assisted_energy_dataset['biarticular_ideal_loaded_metabolics_energy'],ax=0),\
+                                      utils.mean_over_trials(unassisted_energy_dataset['noload_metabolics_energy'],ax=0),\
+                                      utils.mean_over_trials(assisted_energy_dataset['monoarticular_ideal_noload_metabolics_energy'],ax=0),\
+                                      utils.mean_over_trials(assisted_energy_dataset['biarticular_ideal_noload_metabolics_energy'],ax=0)),axis=0)
+final_dataset = np.transpose(np.array([subject_col,assistance_col,metabolic_rate_data]))
+with open(r'.\Statistics\Ideal\MetabolicRate_Dataset.csv', 'wb') as f:
+  f.write(bytes(utils.listToString(headers)+'\n','UTF-8'))
+  np.savetxt(f, final_dataset, fmt='%s', delimiter=",")
+
+#****************************************************************
+#establishing dataset for assistive actuators average total power 
+headers = ['subjects','assistive actuator','avg total power']
+loaded_biarticular_hip_col = np.repeat(np.array('loaded biarticular hip actuator'),7)
+loaded_monoarticular_hip_col = np.repeat(np.array('loaded monoarticular hip actuator'),7)
+loaded_biarticular_knee_col = np.repeat(np.array('loaded biarticular knee actuator'),7)
+loaded_monoarticular_knee_col = np.repeat(np.array('loaded monoarticular knee actuator'),7)
+noload_biarticular_hip_col = np.repeat(np.array('noload biarticular hip actuator'),7)
+noload_monoarticular_hip_col = np.repeat(np.array('noload monoarticular hip actuator'),7)
+noload_biarticular_knee_col = np.repeat(np.array('noload biarticular knee actuator'),7)
+noload_monoarticular_knee_col = np.repeat(np.array('noload monoarticular knee actuator'),7)
+subject_col = np.tile(subjects,8)
+assistive_actuators_col = np.concatenate((loaded_biarticular_hip_col,loaded_biarticular_knee_col,loaded_monoarticular_hip_col,loaded_monoarticular_knee_col,
+                                          noload_biarticular_hip_col,noload_biarticular_knee_col,noload_monoarticular_hip_col,noload_monoarticular_knee_col),axis=0)
+assistive_actuators_avg_totalpower_data = np.concatenate((utils.mean_over_trials(assisted_energy_dataset['biarticular_ideal_loaded_hipactuator_energy'],ax=0),\
+                                                        utils.mean_over_trials(assisted_energy_dataset['biarticular_ideal_loaded_kneeactuator_energy'],ax=0),\
+                                                        utils.mean_over_trials(assisted_energy_dataset['monoarticular_ideal_loaded_hipactuator_energy'],ax=0),\
+                                                        utils.mean_over_trials(assisted_energy_dataset['monoarticular_ideal_loaded_kneeactuator_energy'],ax=0),\
+                                                        utils.mean_over_trials(assisted_energy_dataset['biarticular_ideal_noload_hipactuator_energy'],ax=0),\
+                                                        utils.mean_over_trials(assisted_energy_dataset['biarticular_ideal_noload_kneeactuator_energy'],ax=0),\
+                                                        utils.mean_over_trials(assisted_energy_dataset['monoarticular_ideal_noload_hipactuator_energy'],ax=0),\
+                                                        utils.mean_over_trials(assisted_energy_dataset['monoarticular_ideal_noload_kneeactuator_energy'],ax=0)),axis=0)
+final_dataset = np.transpose(np.array([subject_col,assistive_actuators_col,assistive_actuators_avg_totalpower_data]))
+with open(r'.\Statistics\Ideal\ActuatorsAvgPower_Dataset.csv', 'wb') as f:
+  f.write(bytes(utils.listToString(headers)+'\n','UTF-8'))
+  np.savetxt(f, final_dataset, fmt='%s', delimiter=",")
+#####################################################################################
+# gait phases
+# Processing Data
+# toe-off
+mean_noload_toe_off,_,mean_loaded_toe_off,_,noload_toe_off,loaded_toe_off = utils.toe_off_avg_std(gl_noload,gl_loaded,subjects=True)
+mean_loaded_gaitcycle, std_loaded_gaitcycle = utils.mean_std_gaitcycle_phases(loaded_toe_off)
+mean_noload_gaitcycle, std_noload_gaitcycle = utils.mean_std_gaitcycle_phases(noload_toe_off)
+
+fig = plt.figure(num='gait cycles',figsize=(12.8, 9.6))
+plt.subplot(211)
+utils.plot_gait_cycle_phase(mean_loaded_gaitcycle, std_loaded_gaitcycle,mean_loaded_toe_off,loadcond='loaded')
+plt.subplot(212)
+utils.plot_gait_cycle_phase(mean_noload_gaitcycle, std_noload_gaitcycle,mean_noload_toe_off,loadcond='noload')
+plt.xlabel('gait cycle (%)')
+fig.tight_layout(h_pad=-1, w_pad=-1.5)
+fig.subplots_adjust(top=0.98, bottom=0.075, left=0.100, right=0.975,hspace=0.25,wspace=0.15)
+fig.savefig('./Figures/Ideal/Gait_Cycle_Phases.pdf',orientation='landscape',bbox_inches='tight')
+plt.show()
 
 #####################################################################################
 cellText = np.array([[mean_noload_bi_hip_energy,mean_noload_bi_knee_energy, mean_noload_bi_energy,mean_noload_bi_metabolics,\
@@ -310,6 +381,7 @@ data = [utils.mean_over_trials(unassisted_energy_dataset['loaded_metabolics_ener
 fig, ax = plt.subplots(nrows=2,ncols=2,figsize=(12.6,15.8))
 bp = ax[0,0].boxplot(data, patch_artist=True)
 utils.beautiful_boxplot(bp)
+ax[0,0].tick_params(axis='both',direction='in')
 ax[0,0].set_ylabel('Metabolic Rate (W/Kg)')
 ax[0,0].set_xticks(x)
 ax[0,0].set_yticks([5,6,7,8,9,10])
@@ -324,6 +396,7 @@ data = [utils.mean_over_trials(unassisted_energy_dataset['loaded_metabolics_ener
         utils.mean_over_trials(assisted_energy_dataset['monoarticular_ideal_loaded_metabolics_energy'],ax=0),utils.mean_over_trials(assisted_energy_dataset['monoarticular_ideal_noload_metabolics_energy'],ax=0)]
 bp = ax[0,1].boxplot(data, patch_artist=True)
 utils.beautiful_boxplot(bp)
+ax[0,1].tick_params(axis='both',direction='in')
 ax[0,1].set_ylabel('Metabolic Rate (W/Kg)')
 ax[0,1].set_xticks(x)
 ax[0,1].set_yticks([5,6,7,8,9,10])
@@ -338,6 +411,7 @@ data = [utils.mean_over_trials(assisted_energy_dataset['biarticular_ideal_loaded
         utils.mean_over_trials(assisted_energy_dataset['biarticular_ideal_noload_hipactuator_energy'],ax=0),utils.mean_over_trials(assisted_energy_dataset['biarticular_ideal_noload_kneeactuator_energy'],ax=0)]
 bp = ax[1,0].boxplot(data, patch_artist=True)
 utils.beautiful_boxplot(bp)
+ax[1,0].tick_params(axis='both',direction='in')
 ax[1,0].set_ylabel('Actuator Energy (J/Kg)')
 ax[1,0].set_xticks(x)
 ax[1,0].set_yticks([0.5,1,1.5,2,2.5,3])
@@ -352,6 +426,7 @@ data = [utils.mean_over_trials(assisted_energy_dataset['monoarticular_ideal_load
         utils.mean_over_trials(assisted_energy_dataset['monoarticular_ideal_noload_hipactuator_energy'],ax=0),utils.mean_over_trials(assisted_energy_dataset['monoarticular_ideal_noload_kneeactuator_energy'],ax=0)]
 bp = ax[1,1].boxplot(data, patch_artist=True)
 utils.beautiful_boxplot(bp)
+ax[1,1].tick_params(axis='both',direction='in')
 ax[1,1].set_ylabel('Actuator Energy (J/Kg)')
 ax[1,1].set_xticks(x)
 ax[1,1].set_yticks([0.5,1,1.5,2,2.5,3])
@@ -362,22 +437,3 @@ fig.tight_layout(h_pad=-1, w_pad=-1.5)
 fig.subplots_adjust(top=0.98, bottom=0.075, left=0.100, right=0.975,hspace=0.25,wspace=0.15)
 plt.show()
 fig.savefig('./Figures/Ideal/Paper_Figure_Energy_BoxPlot.pdf',orientation='landscape',bbox_inches='tight')
-#####################################################################################
-# Processing Data
-# toe-off
-mean_noload_toe_off,_,mean_loaded_toe_off,_,noload_toe_off,loaded_toe_off = utils.toe_off_avg_std(gl_noload,gl_loaded,subjects=True)
-mean_loaded_gaitcycle, std_loaded_gaitcycle = utils.mean_std_gaitcycle_phases(loaded_toe_off)
-mean_noload_gaitcycle, std_noload_gaitcycle = utils.mean_std_gaitcycle_phases(noload_toe_off)
-
-#####################################################################################
-# gait phases
-fig = plt.figure(num='gait cycles',figsize=(12.8, 9.6))
-plt.subplot(211)
-utils.plot_gait_cycle_phase(mean_loaded_gaitcycle, std_loaded_gaitcycle,mean_loaded_toe_off,loadcond='loaded')
-plt.subplot(212)
-utils.plot_gait_cycle_phase(mean_noload_gaitcycle, std_noload_gaitcycle,mean_noload_toe_off,loadcond='noload')
-plt.xlabel('gait cycle (%)')
-fig.tight_layout(h_pad=-1, w_pad=-1.5)
-fig.subplots_adjust(top=0.98, bottom=0.075, left=0.100, right=0.975,hspace=0.25,wspace=0.15)
-fig.savefig('./Figures/Ideal/Gait_Cycle_Phases.pdf',orientation='landscape',bbox_inches='tight')
-plt.show()
