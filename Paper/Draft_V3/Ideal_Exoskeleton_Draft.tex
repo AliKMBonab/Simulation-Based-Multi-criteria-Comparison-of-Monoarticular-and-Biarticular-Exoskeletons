@@ -585,7 +585,7 @@ The performance of devices under peak torque limitation and its comparison with 
 \end{table}
 The biarticular and monoarticular exoskeletons are showing practically similar performance in assisting subjects with and without load. Nevertheless, analyzing the energy consumption of the devices on the Pareto front reveal that the monoarticular device considerably affected by the load condition of subjects in which the performance of monoarticular exoskeleton became practically identical with the biarticular device when subjects were \textit{loaded} whereas the monoarticular device had superior performance in \textit{noload} condition.\\
 The detailed analysis of the monoarticular device show that both actuators of this device were affected by loading subjects with a heavy load (figure \ref{Fig_Main_Paretofronts} and \ref{Fig_Paretofronts_Actuators_EnergyBarPlot}), and unlike the \textit{noload} condition where knee actuator energy consumption was dominant to the hip in all optimal devices, loading subjects increased the amount of mechanical work of performed by the hip. In contrast, the energy consumption of the biarticular knee and hip actuators was not affected noticeably by loading subjects as figure \ref{Fig_Paretofronts_Actuators_EnergyBarPlot} representing the energy consumption of optimal devices.Additionally, the optimal configurations of the biarticular exoskeleton are mostly similar in the subjects walking while carrying a heavy load and walking normally, whereas monoarticular exoskeleton has different configurations in both load conditions. The practically similar configurations and the performance of the biarticular exoskeleton in both load conditions can facilitate designing a biarticular device and and developing a generic controller to assist the subjects in different  load conditions.\\
-\subsection*{Optimal device torque and power profiles }
+\subsubsection*{Optimal device torque and power profiles }
 \begin{figure*}[ht]   
 	\centering
 	\includegraphics[width=\linewidth]{Pareto_Simulations_Figures/PaperFigure_Paretofront_TorqueProfiles.pdf}
@@ -607,7 +607,7 @@ Unlike the biarticular exoskeleton, where the load condition had only effect on 
 The restrained biarticular and monoarticular devices had a resemblance to the ideal devices similar to the torque profiles similarity to ideal profiles. The biarticular hip actuator has mostly a similar power trajectory for the hip in both load conditions with considerably lower magnitude for all optimal devices where this magnitude difference is more substantial during mid-stance and initial swing to mid-swing phases; while the knee actuator has a high correlation with the ideal actuator, the loading response and mid-stance phases of the constrained knee actuator is different with the ideal actuator like the torque profile. The constrained monoarticular hip actuator has a high variation within optimal devices, and most of the optimal configurations have their unique power profile; nevertheless, the optimal devices with the highest peak torque limitations have a close resemblance to the ideal device. In contrast to the hip actuators, the power trajectories of the knee actuator in both load conditions were similar to the ideal device with a difference during pre-swing to mid-swing phases where the peak power consumption occurs about the toe-off in the constrained knee actuators.\\
 The power and torque profiles of optimal biarticular and monoarticular devices revealing that although the optimal monoarticular exoskeletons have a lower energy consumption comparing to the optimal biarticular devices, the variation of the torque and power profiles within optimal configurations of the monoarticular device is higher than biarticular devices and load condition of the subjects can considerably affect the profiles of assistive actuators. These variations within optimal monoarticular devices indicate that achieving a generalized design and control policies for assisting subjects in different load conditions and different actuation and battery life limitations would be genuinely challenging with monoarticular exoskeletons.\\
 
-\subsection*{Mass, inertia and regeneration effects}
+\subsubsection*{Mass, inertia and regeneration effects}
 \paragraph*{Inertial properties of the exoskeletons effect on metabolic rate.} 
 One of the main challenges with designing the mobile exoskeletons is the effect of the mass and inertia, grounded on the extremities of the subjects, on the metabolic rate of the subjects. The effect of mass and inertia on the metabolic cost has been studied through several literatures \cite{133,134} and it is shown that the metabolic rate of the subject would change considerably by adding mass and inertia \cite{133,134,135}.\\
 The proposed exoskeletons in this study have a remarkably different inertial properties due to their kinematic design that will result in different effect on the metabolic energy consumption of the subjects. Since the current neural control algorithm of the OpenSim is not able to simulate any variations in the musculoskeletal model\cite{92}, which has not been captured by experimental data, we simulated the effect of the mass and inertia offline using the model proposed by Browning et al.\cite{133} for the effect of the mass and inertia on the metabolic cost of subjects.\\
@@ -672,7 +672,7 @@ The regeneratable power of the optimal exoskeletons can be acquired by capturing
 \end{figure*}
 \vspace{2mm}
 The effect of devices inertial properties on the simulated devices are remarkable, and this effect changes most of the devices on the optimal trade-off curve, as represented in figure \ref{Fig_Paretofronts_Mass_Regeneration_Effect_Comparison}.  The highest peak torque in both monoarticular and biarticular exoskeletons are 60 N.m for the knee and 50 N.m for the hip joint. Since the inertia of devices was getting affected by altering the peak torque, results indicating that the reflected inertia have a considerable effect on the optimality of the devices and power consumption of exoskeletons with high peak torque is not efficient in comparison to the amount of metabolic cost reduction they provide.\\ 
-\begin{figure*}[t]   
+\begin{figure*}[ht]   
 	\centering
 	\includegraphics[width=\linewidth]{Pareto_Mass_Regenration_Figures/PaperFigure_AddingMass_Pareto.pdf}
 	\vspace{1mm}
@@ -693,15 +693,46 @@ The modified augmentation factor (MAF) has been introduced to address this centr
 \begin{equation}\label{Eqn_Inertia_Factor}
 	\gamma_{i} = \frac{A_i\times m_{subjects}\times MC_{unloaded}}{I_{unloaded}} \qquad i \in \{1,2,3\}
 \end{equation}
-In this inertia position factor represented in Eqn.\eqref{Eqn_Inertia_Factor},$A_i$ is the multiplier of $I_{ratio}$ in Browning models for foot, thigh and shank segments and $I_{unloaded}$,$m_{subjects}$, and $MC_{unloaded}$ are the inertia of leg without any external load, mean weight of subjects, and metabolic rate of subjects walking without any load on their segments respectively which were obtained from the \cite{133} models and plots. The modified augmentation factor (MAF) has been obtained by adding the effect of inertia on the metabolic detriment part of this factor, and it can be expressed as Eqn.\eqref{Eqn_MAF}.
+In this inertia position factor represented in Eqn.\eqref{Eqn_Inertia_Factor}, $A_i$ is the multiplier of $I_{ratio}$ in Browning models for foot, thigh and shank segments and $I_{unloaded}$, $m_{subjects}$, and $MC_{unloaded}$ are the inertia of leg without any external load, mean weight of subjects, and metabolic rate of subjects walking without any load on their segments respectively which were obtained from the \cite{133} models and plots. The modified augmentation factor (MAF) has been obtained by adding the effect of inertia on the metabolic detriment part of this factor, and it can be expressed as Eqn.\eqref{Eqn_MAF}.
 \begin{align}
 	MAF &= \frac{p^{+}+p^{disp}}{\eta}-\sum_{i=1}^{4}\beta_{i}m_{i}-\sum_{j=1}^{3}\gamma_{j}I_{j}\label{Eqn_MAF}\\
 	p^{disp} &= \alpha(p^{-}-p^{+}) \qquad \alpha = \left\{\begin{array}{ll}1\quad p^{+}<p^{-}\\0\quad p^{+}\geq p^{-}\end{array}\right.\label{Eqn_disp_power}
 \end{align}
-Where $p^{+}$, $p^{-}$, and $p^{disp}$ is representing mean positive, negative, and dissipated power that is calculated through Eqn.\eqref{Eqn_disp_power}. The $\beta_i$ in MAF stands for the device mass location factor which is 14.8, 5.6, 5.6, and 3.3 $W/kg$ from the foot to waist respectively \cite{41,133} and $gamma_j$ is representing device inertia location factor which is 47.22, 27.78, and 125.07 $W/{kg.m^2}$ from the foot to thigh respectively. Consistent with augmentation factor procedure \cite{41}, MAF uses muscle-tendon efficiency,$\eta = 0.41$ to convert the mechanical assistive power to metabolic power determined empirically by Sawicki and Ferris\cite{149} and Malcolm et al.\cite{40}.
-\paragraph*{Root mean square error of profile in gait phases.}
-\subsubsection*{Case 1: Devices Performance in \textit{\textit{noload}} Condition} 
-\subsubsection*{Case 2: Devices Performance in \textit{\textit{loaded}} Condition} 
+Where $p^{+}$, $p^{-}$, and $p^{disp}$ is representing mean positive, negative, and dissipated power that is calculated through Eqn.\eqref{Eqn_disp_power}. The $\beta_i$ in MAF stands for the device mass location factor which is 14.8, 5.6, 5.6, and 3.3 $W/kg$ from the foot to waist respectively \cite{41,133} and $gamma_j$ is representing device inertia location factor which is 47.22, 27.78, and 125.07 $W/{kg.m^2}$ from the foot to thigh respectively. Consistent with augmentation factor procedure \cite{41}, MAF uses muscle-tendon efficiency,$\eta = 0.41$ to convert the mechanical assistive power to metabolic power determined empirically by Sawicki and Ferris\cite{149} and Malcolm et al.\cite{40}. Finally, we normalized modified augmentation factor by the weight of each subject and averaged over the trails for each subject to reduce the deviation of this factor within subjects.
+\paragraph*{Root mean square error of profile in gait phases.} Thus far, any comparison between the two power, torque, or speed profiles was a qualitative comparison. However, establishing a quantitative comparison between two selected profiles can be a more informative and systematic comparison. To this end, phases of a general gait cycle were adopted from \cite{150} and customized for each subject and trial according to their toe-off timing, as it is represented in figure in \nameref{S1_Fig}. Then, the gait cycle of each subject and trial was partitioned to its phases, and we used the root mean square error (RMSE) method to compute the difference between two profiles in each phase of the gait cycle, and the calculated differences for each phase were averaged within trials for each subject.
+\subsubsection*{Case 1: Devices Performance in \textit{\textit{loaded}} Condition}
+It is shown that the optimal trade-offs of both exoskeletons are practically the same for {\it loaded} condition, and due to this issue, we selected two devices on Pareto front that have almost the same performance in metabolic cost reduction and power consumption. The chosen device for monoarticular has 70 N.m hip peak torque and 40 N.m knee peak torque, which is represented by $Ad$ on Pareto front ( figure \ref{Fig_Main_Paretofronts}) and the peak torques of the biarticular device are 40, and 70 N.m on hip and knee respectively represented with $Da$ on the Pareto front. As can be inferred from the configurations of devices, although these two devices have the same performance on defined objectives, they have a completely different arrangement on hip and knee actuators.
+\begin{figure*}[ht]   
+	\centering
+	\includegraphics[width=\linewidth]{Case_Studies/LoadedMono04_LoadedBi16/PaperFigure_BoxPlot.pdf}
+	\vspace{1mm}
+	\caption{\small{\textbf{Assistive devices and metabolic power.} The power consumptions of assistive devices and their effect on whole-body metabolic rate of the subjects walking at self-selected speed while carrying a heavy load.}}
+	\label{Fig_Case01_Energy_Plot}
+\end{figure*}
+The metabolic rate of assisted subjects with biarticular and monoarticular devices shows that there is no significant difference between the amount of assistance delivered by these devices, which was expected from the Pareto front. While the total power consumption of these two devices are practically identical on the Pareto front, the figure \ref{Fig_Case01_Energy_Plot} shows different performance on the actuators of these exoskeletons and the reason embedded on their different configurations of actuators.
+\begin{figure*}[ht]   
+	\centering
+	\includegraphics[width=\linewidth]{Case_Studies/LoadedMono04_LoadedBi16/PaperFigure_TorqueProfiles.pdf}
+	\vspace{1mm}
+	\caption{\small{\textbf{torque profile.} explain.}}
+	\label{Fig_Case01_Torque_Profiles}
+\end{figure*}
+\begin{figure*}[ht]   
+	\centering
+	\includegraphics[width=\linewidth]{Case_Studies/LoadedMono04_LoadedBi16/PaperFigure_PowerProfiles.pdf}
+	\vspace{1mm}
+	\caption{\small{\textbf{power profile.} explain.}}
+	\label{Fig_Case01_Power_Profiles}
+\end{figure*}
+\begin{figure*}[ht]   
+	\centering
+	\includegraphics[width=\linewidth]{Case_Studies/LoadedMono04_LoadedBi16/RMSE.pdf}
+	\vspace{1mm}
+	\caption{\small{\textbf{power profile.} explain.}}
+	\label{Fig_Case01_RMSE}
+\end{figure*}
+
+\subsubsection*{Case 2: Devices Performance in \textit{\textit{noload}} Condition} 
 \subsubsection*{Case 3: Biarticular Exoskeleton Performance} 
 \subsubsection*{Case 4: Monoarticular Exoskeleton Performance}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

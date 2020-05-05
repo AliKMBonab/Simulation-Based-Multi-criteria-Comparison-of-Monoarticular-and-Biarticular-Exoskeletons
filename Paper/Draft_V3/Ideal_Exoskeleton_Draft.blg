@@ -2,7 +2,7 @@ This is BibTeX, Version 0.99d (MiKTeX 2.9.7380 64-bit)
 Capacity: max_strings=200000, hash_size=200000, hash_prime=170003
 The top-level auxiliary file: Ideal_Exoskeleton_Draft.aux
 The style file: plos2015.bst
-Illegal, another \bibstyle command---line 286 of file Ideal_Exoskeleton_Draft.aux
+Illegal, another \bibstyle command---line 300 of file Ideal_Exoskeleton_Draft.aux
  : \bibstyle
  :          {plos2015.bst}
 I'm skipping whatever remains of this command
@@ -59,45 +59,45 @@ Warning--empty chapter in 72
 Warning--there's a month but no year in spss
 Warning--empty chapter in 146
 Warning--empty pages in 146
-You've used 139 entries,
+You've used 140 entries,
             3058 wiz_defined-function locations,
-            1571 strings with 38853 characters,
-and the built_in function-call counts, 247804 in all, are:
-= -- 32281
-> -- 1828
+            1577 strings with 39224 characters,
+and the built_in function-call counts, 251699 in all, are:
+= -- 32776
+> -- 1856
 < -- 15
-+ -- 1334
-- -- 457
-* -- 20585
-:= -- 26799
-add.period$ -- 630
-call.type$ -- 139
++ -- 1349
+- -- 464
+* -- 20945
+:= -- 27214
+add.period$ -- 635
+call.type$ -- 140
 change.case$ -- 32
 chr.to.int$ -- 0
-cite$ -- 148
-duplicate$ -- 22260
-empty$ -- 23169
-format.name$ -- 578
-if$ -- 58158
+cite$ -- 149
+duplicate$ -- 22538
+empty$ -- 23544
+format.name$ -- 586
+if$ -- 59060
 int.to.chr$ -- 0
-int.to.str$ -- 139
-missing$ -- 1257
-newline$ -- 794
-num.names$ -- 143
-pop$ -- 1949
+int.to.str$ -- 140
+missing$ -- 1269
+newline$ -- 800
+num.names$ -- 144
+pop$ -- 1964
 preamble$ -- 1
 purify$ -- 0
 quote$ -- 0
-skip$ -- 2168
+skip$ -- 2191
 stack$ -- 0
-substring$ -- 46438
-swap$ -- 3344
+substring$ -- 47331
+swap$ -- 3372
 text.length$ -- 15
 text.prefix$ -- 0
 top$ -- 0
 type$ -- 0
 warning$ -- 9
-while$ -- 1272
-width$ -- 142
-write$ -- 1720
+while$ -- 1284
+width$ -- 143
+write$ -- 1733
 (There were 9 error messages)
