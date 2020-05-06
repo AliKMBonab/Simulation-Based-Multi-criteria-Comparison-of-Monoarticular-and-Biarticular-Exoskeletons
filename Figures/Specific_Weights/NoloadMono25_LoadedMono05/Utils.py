@@ -1273,11 +1273,11 @@ def fix_data_shape(phase_index_1,phase_index_2):
         
         if phase_index_2[0] == 0 :  # secondary condition #1
                 
-            phase_index_2 = np.arange(phase_index_2,phase_index_2[-1]+(len(phase_index_1) - len(phase_index_2))+1,1) 
+            phase_index_2 = np.arange(phase_index_2[0],phase_index_2[-1]+(len(phase_index_1) - len(phase_index_2))+1,1) 
                 
         elif phase_index_2[-1] == 999 : # secondary condition #2
             
-            phase_index_2 = np.arange(phase_index_2-(len(phase_index_1) - len(phase_index_2)),phase_index_2[-1]+1,1) 
+            phase_index_2 = np.arange(phase_index_2[0]-(len(phase_index_1) - len(phase_index_2)),phase_index_2[-1]+1,1) 
                 
             if any(phase_index_2<0):
                 raise Exception('wrong list of indices')
@@ -1373,8 +1373,11 @@ def profiles_rmse(data_1,data_2,toe_off_1,toe_off_2,phase='all',which_comparison
             for j in range(25):
                 phase_index_1 = phase_correspond_data(phase,toe_off_1[i])
                 phase_index_2 = phase_correspond_data(phase,toe_off_2[i])
+                # fixing issue of list length difference
+                if len(phase_index_1[0]) != len(phase_index_2[0]):
+                    phase_index_1,phase_index_2 = fix_data_shape(phase_index_1[0],phase_index_2[0])
                 selected_data_1 = np.take(data_1[:,c],phase_index_1,axis=0)
-                selected_data_2 = np.take(data_2[:,i],phase_index_2,axis=0)
+                selected_data_2 = np.take(data_2[:,c],phase_index_2,axis=0)
                 if np.isnan(selected_data_1).any() == True:
                     mask = np.isnan(selected_data_1)
                     idx = np.where(~mask,np.arange(mask.shape[1]),0)
@@ -1395,6 +1398,9 @@ def profiles_rmse(data_1,data_2,toe_off_1,toe_off_2,phase='all',which_comparison
         for i in range(21):
             phase_index_1 = phase_correspond_data(phase,toe_off_1[i])
             phase_index_2 = phase_correspond_data(phase,toe_off_2[i])
+            # fixing issue of list length difference
+            if len(phase_index_1[0]) != len(phase_index_2[0]):
+                phase_index_1,phase_index_2 = fix_data_shape(phase_index_1[0],phase_index_2[0])
             selected_data_1 = np.take(data_1[:,i],phase_index_1,axis=0)
             selected_data_2 = np.take(data_2[:,i],phase_index_2,axis=0)
             if np.isnan(selected_data_1).any() == True:
