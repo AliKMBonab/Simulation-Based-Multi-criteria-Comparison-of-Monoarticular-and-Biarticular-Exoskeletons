@@ -115,14 +115,14 @@ mean_mono_loaded_kneemuscles_moment,std_mono_loaded_kneemuscles_moment = utils.m
 #####################################################################################
 # rmse and tables
 # torque difference
-mean_rmse_hip_actuator_torque,std_rmse_hip_actuator_torque = utils.profiles_all_phases_rmse(mono_noload_hip_torque,mono_loaded_hip_torque,noload_toe_off,noload_toe_off,which_comparison='ideal vs ideal')
-mean_rmse_knee_actuator_torque,std_rmse_knee_actuator_torque = utils.profiles_all_phases_rmse(mono_noload_knee_torque,mono_loaded_knee_torque,noload_toe_off,noload_toe_off,which_comparison='ideal vs ideal')
+mean_rmse_hip_actuator_torque,std_rmse_hip_actuator_torque = utils.profiles_all_phases_rmse(mono_noload_hip_torque,mono_loaded_hip_torque,noload_toe_off,loaded_toe_off,which_comparison='ideal vs ideal')
+mean_rmse_knee_actuator_torque,std_rmse_knee_actuator_torque = utils.profiles_all_phases_rmse(mono_noload_knee_torque,mono_loaded_knee_torque,noload_toe_off,loaded_toe_off,which_comparison='ideal vs ideal')
 # power difference
-mean_rmse_hip_actuator_power,std_rmse_hip_actuator_power = utils.profiles_all_phases_rmse(mono_noload_hip_power,mono_loaded_hip_power,noload_toe_off,noload_toe_off,which_comparison='ideal vs ideal')
-mean_rmse_knee_actuator_power,std_rmse_knee_actuator_power = utils.profiles_all_phases_rmse(mono_noload_knee_power,mono_loaded_knee_power,noload_toe_off,noload_toe_off,which_comparison='ideal vs ideal')
+mean_rmse_hip_actuator_power,std_rmse_hip_actuator_power = utils.profiles_all_phases_rmse(mono_noload_hip_power,mono_loaded_hip_power,noload_toe_off,loaded_toe_off,which_comparison='ideal vs ideal')
+mean_rmse_knee_actuator_power,std_rmse_knee_actuator_power = utils.profiles_all_phases_rmse(mono_noload_knee_power,mono_loaded_knee_power,noload_toe_off,loaded_toe_off,which_comparison='ideal vs ideal')
 # muscles moment difference
-mean_rmse_hip_musclesmoment,std_rmse_hip_musclesmoment = utils.profiles_all_phases_rmse(mono_noload_hipmuscles_moment,mono_loaded_hipmuscles_moment,noload_toe_off,noload_toe_off,which_comparison='ideal vs ideal')
-mean_rmse_knee_musclesmoment,std_rmse_knee_musclesmoment = utils.profiles_all_phases_rmse(mono_noload_kneemuscles_moment,mono_loaded_kneemuscles_moment,noload_toe_off,noload_toe_off,which_comparison='ideal vs ideal')
+mean_rmse_hip_musclesmoment,std_rmse_hip_musclesmoment = utils.profiles_all_phases_rmse(mono_noload_hipmuscles_moment,mono_loaded_hipmuscles_moment,noload_toe_off,loaded_toe_off,which_comparison='ideal vs ideal')
+mean_rmse_knee_musclesmoment,std_rmse_knee_musclesmoment = utils.profiles_all_phases_rmse(mono_noload_kneemuscles_moment,mono_loaded_kneemuscles_moment,noload_toe_off,loaded_toe_off,which_comparison='ideal vs ideal')
 # RMSE plot       
 plot_dic = {'mean_11':mean_rmse_hip_actuator_torque,'mean_12':mean_rmse_hip_actuator_power,
             'mean_13':mean_rmse_hip_musclesmoment,'mean_21':mean_rmse_knee_actuator_torque,
@@ -146,12 +146,12 @@ thigh_length = 0.52 # m
 motor_max_torque = 2  # N-m/Kg
 motor_inertia = 0.000506  # kg.m^2
 mono_thigh_com=0.30 # m
-mono_thigh_com=0.23 # m
+mono_thigh_com=0.30 # m
 shank_com=0.18 # m
 
 # mass of segments
-mono_noload_m_waist = 2*4.5
-mono_noload_m_thigh = 2*1
+mono_noload_m_waist = 2*3
+mono_noload_m_thigh = 2*2.5
 mono_noload_m_shank = 2*0.9
 mono_loaded_m_waist = 2*3
 mono_loaded_m_thigh = 2*2.5
@@ -212,66 +212,78 @@ plt.show()
 # hip joint moment plot dictionaries
 mono_noload_hip_musclesmoment_dic = {'pgc':gait_cycle,'avg':utils.smooth(mean_mono_noload_hipmuscles_moment,3),'label':'noload muscles',
                         'std':utils.smooth(std_mono_noload_hipmuscles_moment,3),'avg_toeoff':noload_mean_toe_off}
-mono_loaded_hip_musclesmoment_dic = {'pgc':gait_cycle,'avg':utils.smooth(mean_mono_loaded_hipmuscles_moment,3),'label':'noload muscles',
-                        'std':utils.smooth(std_mono_loaded_hipmuscles_moment,3),'avg_toeoff':noload_mean_toe_off}
+mono_loaded_hip_musclesmoment_dic = {'pgc':gait_cycle,'avg':utils.smooth(mean_mono_loaded_hipmuscles_moment,3),'label':'loaded muscles',
+                        'std':utils.smooth(std_mono_loaded_hipmuscles_moment,3),'avg_toeoff':loaded_mean_toe_off}
 unassist_noload_hip_musclesmoment_dic = {'pgc':gait_cycle,'avg':utils.smooth(unassist_dataset['mean_norm_noload_hipmuscles_moment'],3),'label':'noload joint',
                         'std':utils.smooth(unassist_dataset['std_norm_noload_hipmuscles_moment'],3),'avg_toeoff':noload_mean_toe_off}
+unassist_loaded_hip_musclesmoment_dic = {'pgc':gait_cycle,'avg':utils.smooth(unassist_dataset['mean_norm_loaded_hipmuscles_moment'],3),'label':'noload joint',
+                        'std':utils.smooth(unassist_dataset['std_norm_loaded_hipmuscles_moment'],3),'avg_toeoff':loaded_mean_toe_off}
 
 # knee joint moment plot dictionaries
 mono_noload_knee_musclesmoment_dic = {'pgc':gait_cycle,'avg':utils.smooth(mean_mono_noload_kneemuscles_moment,3),'label':'noload muscles',
                         'std':utils.smooth(std_mono_noload_kneemuscles_moment,3),'avg_toeoff':noload_mean_toe_off}
-mono_loaded_knee_musclesmoment_dic = {'pgc':gait_cycle,'avg':utils.smooth(mean_mono_loaded_kneemuscles_moment,3),'label':'noload muscles',
-                        'std':utils.smooth(std_mono_loaded_kneemuscles_moment,3),'avg_toeoff':noload_mean_toe_off}
+mono_loaded_knee_musclesmoment_dic = {'pgc':gait_cycle,'avg':utils.smooth(mean_mono_loaded_kneemuscles_moment,3),'label':'loaded muscles',
+                        'std':utils.smooth(std_mono_loaded_kneemuscles_moment,3),'avg_toeoff':loaded_mean_toe_off}
 unassist_noload_knee_musclesmoment_dic = {'pgc':gait_cycle,'avg':utils.smooth(unassist_dataset['mean_norm_noload_kneemuscles_moment'],3),'label':'noload joint',
                         'std':utils.smooth(unassist_dataset['std_norm_noload_kneemuscles_moment'],3),'avg_toeoff':noload_mean_toe_off}
+unassist_loaded_knee_musclesmoment_dic = {'pgc':gait_cycle,'avg':utils.smooth(unassist_dataset['mean_norm_loaded_kneemuscles_moment'],3),'label':'noload joint',
+                        'std':utils.smooth(unassist_dataset['std_norm_loaded_kneemuscles_moment'],3),'avg_toeoff':loaded_mean_toe_off}
 
 # hip actuator torque plot dictionaries
 mono_noload_hip_torque_dic= {'pgc':gait_cycle,'avg':utils.smooth(mean_mono_noload_hip_torque,3),'label':'noload actuator',
                         'std':utils.smooth(std_mono_noload_hip_torque,3),'avg_toeoff':noload_mean_toe_off}
-mono_loaded_hip_torque_dic = {'pgc':gait_cycle,'avg':utils.smooth(mean_mono_loaded_hip_torque,3),'label':'noload actuator',
-                        'std':utils.smooth(std_mono_loaded_hip_torque,3),'avg_toeoff':noload_mean_toe_off}
+mono_loaded_hip_torque_dic = {'pgc':gait_cycle,'avg':utils.smooth(mean_mono_loaded_hip_torque,3),'label':'loaded actuator',
+                        'std':utils.smooth(std_mono_loaded_hip_torque,3),'avg_toeoff':loaded_mean_toe_off}
 
 # knee actuator torque plot dictionaries
 mono_noload_knee_torque_dic= {'pgc':gait_cycle,'avg':utils.smooth(mean_mono_noload_knee_torque,3),'label':'noload actuator',
                         'std':utils.smooth(std_mono_noload_knee_torque,3),'avg_toeoff':noload_mean_toe_off}
-mono_loaded_knee_torque_dic = {'pgc':gait_cycle,'avg':utils.smooth(mean_mono_loaded_knee_torque,3),'label':'noload actuator',
-                        'std':utils.smooth(std_mono_loaded_knee_torque,3),'avg_toeoff':noload_mean_toe_off}
+mono_loaded_knee_torque_dic = {'pgc':gait_cycle,'avg':utils.smooth(mean_mono_loaded_knee_torque,3),'label':'loaded actuator',
+                        'std':utils.smooth(std_mono_loaded_knee_torque,3),'avg_toeoff':loaded_mean_toe_off}
 
 # joint power plot dictionaries
 noload_hip_power_dic = {'pgc':gait_cycle,'avg':utils.smooth(rra_dataset['mean_norm_noload_hipjoint_power'],3),'label':'noload joint',
                         'std':utils.smooth(rra_dataset['std_norm_noload_hipjoint_power'],3),'avg_toeoff':noload_mean_toe_off}
 noload_knee_power_dic = {'pgc':gait_cycle,'avg':utils.smooth(rra_dataset['mean_norm_noload_kneejoint_power'],3),'label':'noload joint',
                         'std':utils.smooth(rra_dataset['std_norm_noload_kneejoint_power'],3),'avg_toeoff':noload_mean_toe_off}
+loaded_hip_power_dic = {'pgc':gait_cycle,'avg':utils.smooth(rra_dataset['mean_norm_loaded_hipjoint_power'],3),'label':'noload joint',
+                        'std':utils.smooth(rra_dataset['std_norm_loaded_hipjoint_power'],3),'avg_toeoff':loaded_mean_toe_off}
+loaded_knee_power_dic = {'pgc':gait_cycle,'avg':utils.smooth(rra_dataset['mean_norm_loaded_kneejoint_power'],3),'label':'noload joint',
+                        'std':utils.smooth(rra_dataset['std_norm_loaded_kneejoint_power'],3),'avg_toeoff':loaded_mean_toe_off}
 
 # hip actuator power plot dictionaries
 mono_noload_hip_power_dic= {'pgc':gait_cycle,'avg':utils.smooth(mean_mono_noload_hip_power,3),'label':'noload actuator',
                         'std':utils.smooth(std_mono_noload_hip_power,3),'avg_toeoff':noload_mean_toe_off}
-mono_loaded_hip_power_dic = {'pgc':gait_cycle,'avg':utils.smooth(mean_mono_loaded_hip_power,3),'label':'noload actuator',
-                        'std':utils.smooth(std_mono_loaded_hip_power,3),'avg_toeoff':noload_mean_toe_off}
+mono_loaded_hip_power_dic = {'pgc':gait_cycle,'avg':utils.smooth(mean_mono_loaded_hip_power,3),'label':'loaded actuator',
+                        'std':utils.smooth(std_mono_loaded_hip_power,3),'avg_toeoff':loaded_mean_toe_off}
 
 # knee actuator power plot dictionaries
 mono_noload_knee_power_dic= {'pgc':gait_cycle,'avg':utils.smooth(mean_mono_noload_knee_power,3),'label':'noload actuator',
                         'std':utils.smooth(std_mono_noload_knee_power,3),'avg_toeoff':noload_mean_toe_off}
-mono_loaded_knee_power_dic = {'pgc':gait_cycle,'avg':utils.smooth(mean_mono_loaded_knee_power,3),'label':'noload actuator',
-                        'std':utils.smooth(std_mono_loaded_knee_power,3),'avg_toeoff':noload_mean_toe_off}
+mono_loaded_knee_power_dic = {'pgc':gait_cycle,'avg':utils.smooth(mean_mono_loaded_knee_power,3),'label':'loaded actuator',
+                        'std':utils.smooth(std_mono_loaded_knee_power,3),'avg_toeoff':loaded_mean_toe_off}
 
 # joint speed plot dictionaries
 noload_hip_speed_dic = {'pgc':gait_cycle,'avg':utils.smooth(rra_dataset['mean_noload_hipjoint_speed'],3),'label':'noload joint',
                         'std':utils.smooth(rra_dataset['std_noload_hipjoint_speed'],3),'avg_toeoff':noload_mean_toe_off}
 noload_knee_speed_dic = {'pgc':gait_cycle,'avg':utils.smooth(rra_dataset['mean_noload_kneejoint_speed'],3),'label':'noload joint',
                         'std':utils.smooth(rra_dataset['std_noload_kneejoint_speed'],3),'avg_toeoff':noload_mean_toe_off}
+loaded_hip_speed_dic = {'pgc':gait_cycle,'avg':utils.smooth(rra_dataset['mean_loaded_hipjoint_speed'],3),'label':'noload joint',
+                        'std':utils.smooth(rra_dataset['std_loaded_hipjoint_speed'],3),'avg_toeoff':loaded_mean_toe_off}
+loaded_knee_speed_dic = {'pgc':gait_cycle,'avg':utils.smooth(rra_dataset['mean_loaded_kneejoint_speed'],3),'label':'noload joint',
+                        'std':utils.smooth(rra_dataset['std_loaded_kneejoint_speed'],3),'avg_toeoff':loaded_mean_toe_off}
 
 # hip actuator speed plot dictionaries
 mono_noload_hip_speed_dic= {'pgc':gait_cycle,'avg':utils.smooth(mean_mono_noload_hip_speed,3),'label':'noload actuator',
                         'std':utils.smooth(std_mono_noload_hip_speed,3),'avg_toeoff':noload_mean_toe_off}
-mono_loaded_hip_speed_dic = {'pgc':gait_cycle,'avg':utils.smooth(mean_mono_loaded_hip_speed,3),'label':'noload actuator',
-                        'std':utils.smooth(std_mono_loaded_hip_speed,3),'avg_toeoff':noload_mean_toe_off}
+mono_loaded_hip_speed_dic = {'pgc':gait_cycle,'avg':utils.smooth(mean_mono_loaded_hip_speed,3),'label':'loaded actuator',
+                        'std':utils.smooth(std_mono_loaded_hip_speed,3),'avg_toeoff':loaded_mean_toe_off}
 
 # knee actuator speed plot dictionaries
 mono_noload_knee_speed_dic= {'pgc':gait_cycle,'avg':utils.smooth(mean_mono_noload_knee_speed,3),'label':'noload actuator',
                         'std':utils.smooth(std_mono_noload_knee_speed,3),'avg_toeoff':noload_mean_toe_off}
-mono_loaded_knee_speed_dic = {'pgc':gait_cycle,'avg':utils.smooth(mean_mono_loaded_knee_speed,3),'label':'noload actuator',
-                        'std':utils.smooth(std_mono_loaded_knee_speed,3),'avg_toeoff':noload_mean_toe_off}
+mono_loaded_knee_speed_dic = {'pgc':gait_cycle,'avg':utils.smooth(mean_mono_loaded_knee_speed,3),'label':'loaded actuator',
+                        'std':utils.smooth(std_mono_loaded_knee_speed,3),'avg_toeoff':loaded_mean_toe_off}
 
 #####################################################################################
 # Paper figure
@@ -284,7 +296,7 @@ monovsmono_color_dic = {
 }
 
 plot_dic={
-'plot_1_list' : [unassist_noload_hip_musclesmoment_dic,unassist_noload_hip_musclesmoment_dic,unassist_noload_knee_musclesmoment_dic,unassist_noload_knee_musclesmoment_dic],
+'plot_1_list' : [unassist_noload_hip_musclesmoment_dic,unassist_loaded_hip_musclesmoment_dic,unassist_noload_knee_musclesmoment_dic,unassist_loaded_knee_musclesmoment_dic],
 'plot_2_list' : [mono_noload_hip_torque_dic,mono_loaded_hip_torque_dic,mono_noload_knee_torque_dic,mono_loaded_knee_torque_dic],
 'plot_3_list' : [mono_noload_hip_musclesmoment_dic, mono_loaded_hip_musclesmoment_dic,mono_noload_knee_musclesmoment_dic, mono_loaded_knee_musclesmoment_dic],
 'plot_titles' : ['noload monoarticular hip joint','loaded monoarticular hip joint','noload monoarticular knee joint','loaded monoarticular knee joint']
@@ -298,7 +310,7 @@ plt.show()
 fig.savefig('./Figures/Specific_Weights/NoloadMono25_LoadedMono05/PaperFigure_TorqueProfiles.pdf',orientation='landscape',bbox_inches='tight')
 
 plot_dic={
-'plot_1_list' : [noload_hip_power_dic,noload_hip_power_dic,noload_knee_power_dic,noload_knee_power_dic],
+'plot_1_list' : [noload_hip_power_dic,loaded_hip_power_dic,noload_knee_power_dic,loaded_knee_power_dic],
 'plot_2_list' : [mono_noload_hip_power_dic,mono_loaded_hip_power_dic,mono_noload_knee_power_dic,mono_loaded_knee_power_dic],
 'plot_titles' : ['noload monoarticular hip joint','loaded monoarticular hip joint','noload monoarticular knee joint','loaded monoarticular knee joint']
 }
@@ -331,7 +343,7 @@ monovsmono_color_dic = {
 # hip joint moment figure
 # required dictionary
 plot_dic={
-'plot_1_list' : [unassist_noload_hip_musclesmoment_dic,unassist_noload_hip_musclesmoment_dic],
+'plot_1_list' : [unassist_noload_hip_musclesmoment_dic,unassist_loaded_hip_musclesmoment_dic],
 'plot_3_list' : [mono_noload_hip_musclesmoment_dic, mono_loaded_hip_musclesmoment_dic],
 'plot_2_list' : [mono_noload_hip_torque_dic,mono_loaded_hip_torque_dic],
 'plot_titles' : ['noload monoarticular hip joint','loaded monoarticular hip joint']
@@ -347,7 +359,7 @@ plt.show()
 # knee joint moment figure
 # required dictionary
 plot_dic={
-'plot_1_list' : [unassist_noload_knee_musclesmoment_dic,unassist_noload_knee_musclesmoment_dic],
+'plot_1_list' : [unassist_noload_knee_musclesmoment_dic,unassist_loaded_knee_musclesmoment_dic],
 'plot_3_list' : [mono_noload_knee_musclesmoment_dic,mono_loaded_knee_musclesmoment_dic],
 'plot_2_list' : [mono_noload_knee_torque_dic,mono_loaded_knee_torque_dic],
 'plot_titles' : ['noload monoarticular knee joint','loaded monoarticular knee joint']
@@ -363,7 +375,7 @@ fig.savefig('./Figures/Specific_Weights/NoloadMono25_LoadedMono05/Exoskeletons_K
 # hip joint power figure
 # required dictionary
 plot_dic={
-'plot_1_list' : [noload_hip_power_dic,noload_hip_power_dic],
+'plot_1_list' : [noload_hip_power_dic,loaded_hip_power_dic],
 'plot_2_list' : [mono_noload_hip_power_dic,mono_loaded_hip_power_dic],
 'plot_titles' : ['noload monoarticular hip joint','loaded monoarticular hip joint']
 }
@@ -379,7 +391,7 @@ plt.show()
 # knee joint power figure
 # required dictionary
 plot_dic={
-'plot_1_list' : [noload_knee_power_dic,noload_knee_power_dic],
+'plot_1_list' : [noload_knee_power_dic,loaded_knee_power_dic],
 'plot_2_list' : [mono_noload_knee_power_dic,mono_loaded_knee_power_dic],
 'plot_titles' : ['noload monoarticular knee joint','loaded monoarticular knee joint']
 }
@@ -395,7 +407,7 @@ fig.savefig('./Figures/Specific_Weights/NoloadMono25_LoadedMono05/Exoskeletons_K
 # hip joint speed figure
 # required dictionary
 plot_dic={
-'plot_1_list' : [noload_hip_speed_dic,noload_hip_speed_dic],
+'plot_1_list' : [noload_hip_speed_dic,loaded_hip_speed_dic],
 'plot_2_list' : [mono_noload_hip_speed_dic,mono_loaded_hip_speed_dic],
 'plot_titles' : ['noload monoarticular hip joint','loaded monoarticular hip joint']
 }
@@ -411,7 +423,7 @@ plt.show()
 # knee joint speed figure
 # required dictionary
 plot_dic={
-'plot_1_list' : [noload_knee_speed_dic,noload_knee_speed_dic],
+'plot_1_list' : [noload_knee_speed_dic,loaded_knee_speed_dic],
 'plot_2_list' : [mono_noload_knee_speed_dic,mono_loaded_knee_speed_dic],
 'plot_titles' : ['noload monoarticular knee joint','loaded monoarticular knee joint']
 }

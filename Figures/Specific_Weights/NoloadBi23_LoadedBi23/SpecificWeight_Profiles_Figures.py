@@ -115,14 +115,14 @@ mean_bi_loaded_kneemuscles_moment,std_bi_loaded_kneemuscles_moment = utils.mean_
 #####################################################################################
 # rmse and tables
 # torque difference
-mean_rmse_hip_actuator_torque,std_rmse_hip_actuator_torque = utils.profiles_all_phases_rmse(bi_noload_hip_torque,bi_loaded_hip_torque,noload_toe_off,noload_toe_off,which_comparison='ideal vs ideal')
-mean_rmse_knee_actuator_torque,std_rmse_knee_actuator_torque = utils.profiles_all_phases_rmse(bi_noload_knee_torque,bi_loaded_knee_torque,noload_toe_off,noload_toe_off,which_comparison='ideal vs ideal')
+mean_rmse_hip_actuator_torque,std_rmse_hip_actuator_torque = utils.profiles_all_phases_rmse(bi_noload_hip_torque,bi_loaded_hip_torque,noload_toe_off,loaded_toe_off,which_comparison='ideal vs ideal')
+mean_rmse_knee_actuator_torque,std_rmse_knee_actuator_torque = utils.profiles_all_phases_rmse(bi_noload_knee_torque,bi_loaded_knee_torque,noload_toe_off,loaded_toe_off,which_comparison='ideal vs ideal')
 # power difference
-mean_rmse_hip_actuator_power,std_rmse_hip_actuator_power = utils.profiles_all_phases_rmse(bi_noload_hip_power,bi_loaded_hip_power,noload_toe_off,noload_toe_off,which_comparison='ideal vs ideal')
-mean_rmse_knee_actuator_power,std_rmse_knee_actuator_power = utils.profiles_all_phases_rmse(bi_noload_knee_power,bi_loaded_knee_power,noload_toe_off,noload_toe_off,which_comparison='ideal vs ideal')
+mean_rmse_hip_actuator_power,std_rmse_hip_actuator_power = utils.profiles_all_phases_rmse(bi_noload_hip_power,bi_loaded_hip_power,noload_toe_off,loaded_toe_off,which_comparison='ideal vs ideal')
+mean_rmse_knee_actuator_power,std_rmse_knee_actuator_power = utils.profiles_all_phases_rmse(bi_noload_knee_power,bi_loaded_knee_power,noload_toe_off,loaded_toe_off,which_comparison='ideal vs ideal')
 # muscles moment difference
-mean_rmse_hip_musclesmoment,std_rmse_hip_musclesmoment = utils.profiles_all_phases_rmse(bi_noload_hipmuscles_moment,bi_loaded_hipmuscles_moment,noload_toe_off,noload_toe_off,which_comparison='ideal vs ideal')
-mean_rmse_knee_musclesmoment,std_rmse_knee_musclesmoment = utils.profiles_all_phases_rmse(bi_noload_kneemuscles_moment,bi_loaded_kneemuscles_moment,noload_toe_off,noload_toe_off,which_comparison='ideal vs ideal')
+mean_rmse_hip_musclesmoment,std_rmse_hip_musclesmoment = utils.profiles_all_phases_rmse(bi_noload_hipmuscles_moment,bi_loaded_hipmuscles_moment,noload_toe_off,loaded_toe_off,which_comparison='ideal vs ideal')
+mean_rmse_knee_musclesmoment,std_rmse_knee_musclesmoment = utils.profiles_all_phases_rmse(bi_noload_kneemuscles_moment,bi_loaded_kneemuscles_moment,noload_toe_off,loaded_toe_off,which_comparison='ideal vs ideal')
 # RMSE plot       
 plot_dic = {'mean_11':mean_rmse_hip_actuator_torque,'mean_12':mean_rmse_hip_actuator_power,
             'mean_13':mean_rmse_hip_musclesmoment,'mean_21':mean_rmse_knee_actuator_torque,
@@ -153,8 +153,8 @@ shank_com=0.18 # m
 bi_noload_m_waist = 2*4.5
 bi_noload_m_thigh = 2*1
 bi_noload_m_shank = 2*0.9
-bi_loaded_m_waist = 2*3
-bi_loaded_m_thigh = 2*2.5
+bi_loaded_m_waist = 2*4.5
+bi_loaded_m_thigh = 2*1
 bi_loaded_m_shank = 2*0.9
 
 # Gear Ratio max_needed_torque/motor_max_torque
@@ -168,7 +168,7 @@ bi_loaded_hip_ratio = bi_loaded_hip_weight/motor_max_torque
 bi_loaded_knee_ratio = bi_loaded_knee_weight/motor_max_torque
 
 # I = motor_inertia*(ratio^2) + segment_mass*(segment_com^2)
-bi_loaded_I_thigh = motor_inertia*(bi_loaded_hip_ratio**2)+ ((mono_thigh_com**2)*bi_loaded_m_thigh)
+bi_loaded_I_thigh = motor_inertia*(bi_loaded_hip_ratio**2)+ ((bi_thigh_com**2)*bi_loaded_m_thigh)
 bi_loaded_I_shank =motor_inertia*(bi_loaded_knee_ratio**2) + (((thigh_length+shank_com)**2)*bi_loaded_m_shank)
 bi_noload_I_thigh = motor_inertia*(bi_noload_hip_ratio**2)+ ((bi_thigh_com**2)*bi_noload_m_thigh)
 bi_noload_I_shank =motor_inertia*(bi_noload_knee_ratio**2) + (((thigh_length+shank_com)**2)*bi_noload_m_shank)
@@ -194,7 +194,7 @@ cellText = [[bi_noload_hip_weight,bi_noload_knee_weight,bi_noload_hip_ratio,bi_n
             mean_bi_noload_modified_AF,std_bi_noload_modified_AF,mean_bi_noload_regen_modified_AF,std_bi_noload_regen_modified_AF],\
             [bi_loaded_hip_weight,bi_loaded_knee_weight,bi_loaded_hip_ratio,bi_loaded_knee_ratio,bi_loaded_I_thigh,bi_loaded_I_shank,\
             mean_bi_loaded_modified_AF,std_bi_loaded_modified_AF,mean_bi_loaded_regen_modified_AF,std_bi_loaded_regen_modified_AF]]
-rows = ['biarticular','monoarticular']
+rows = ['noload','loaded']
 columns = ['hip actuator\npeak torque','knee actuator\n peak torque',
            'hip actuator\n gear ratio','knee actuator\n gear ratio',
            'thigh inertia','shank inertia','Mean Modified AF','Std Modified AF','Mean Modified AF\n+regeneration','Std Modified AF\n+regeneration']
