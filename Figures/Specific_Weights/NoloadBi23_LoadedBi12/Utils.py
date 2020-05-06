@@ -217,18 +217,23 @@ def construct_gl_mass_side(subjectno,trialno,loadcond):
                                 right_strike= data['footstrike_right_leg'],
                                 right_toeoff= data['toeoff_time_right_leg'])
     return gl,mass,side
+# IMPORTANT: Linear mixed model is to strict test, so we will perform repeated measures tests.
+# Therefore, we need to represent data without averaging over trials. To pervent changing codes,
+# we defined mean_over_trials function that just returning input data
+#def mean_over_trials(data,ax=1):
+#    subjects = np.array([0,3,6,9,12,15,18])
+#    data_shape = data.shape[0]
+#    avg = np.zeros(int(data_shape/3))
+#    c = 0
+#    for i in subjects:
+#        avg[c] = np.nanmean(data[i:i+3])
+#        c+=1
+#    return avg
 
 def mean_over_trials(data,ax=1):
-    subjects = np.array([0,3,6,9,12,15,18])
-    data_shape = data.shape[0]
-    avg = np.zeros(int(data_shape/3))
-    c = 0
-    for i in subjects:
-        avg[c] = np.nanmean(data[i:i+3])
-        c+=1
-    return avg
+    return data[~np.isnan(data)]
 
-def mean_std_over_subjects(data,avg_trials=True,ax=1):
+def mean_std_over_subjects(data,avg_trials=False,ax=1):
     if avg_trials == True:
         data = mean_over_trials(data,ax=ax)
     mean = np.nanmean(data,axis=ax)
@@ -588,6 +593,8 @@ def plot_shaded_avg(plot_dic,toeoff_color='xkcd:medium grey',toeoff_alpha=1.0,
         load = plot_dic['load']
         if load == 'noload':
             plt.axvline(avg_toeoff, lw=lw, color='xkcd:shamrock green', zorder=0, alpha=toeoff_alpha) #vertical line
+        elif load == 'loaded':
+            plt.axvline(avg_toeoff, lw=lw, color='grey', zorder=0, alpha=toeoff_alpha) #vertical line
     else:
         plt.axvline(avg_toeoff, lw=lw, color=toeoff_color, zorder=0, alpha=toeoff_alpha) #vertical line
 
@@ -665,6 +672,16 @@ def plot_joint_muscle_exo (nrows,ncols,plot_dic,color_dic,
     #plot
     for i in range(nplots):
         ax = plt.subplot(nrows,ncols,i+1)
+        if 'loaded' in plot_titles[i]:
+            plot_1_list[i]['load'] = 'loaded'
+            plot_2_list[i]['load'] = 'loaded'
+            if thirdplot == True:
+                plot_3_list[i]['load'] = 'loaded'
+        elif 'noload' in  plot_titles[i]:
+            plot_1_list[i]['load'] = 'noload'
+            plot_2_list[i]['load'] = 'noload'
+            if thirdplot == True:
+                plot_3_list[i]['load'] = 'noload'
         plot_shaded_avg(plot_dic=plot_1_list[i],color=color_1_list[i])
         plot_shaded_avg(plot_dic=plot_2_list[i],color=color_2_list[i])
         if thirdplot == True:
@@ -732,27 +749,27 @@ def plot_gait_cycle_phase(mean_dic,std_dic,avg_toeoff,loadcond):
     y = [2.95,3.05,2.95,3.05,2.95,3.05,2.95]
     iterations = np.arange(0,len(phases),1)
     if loadcond == 'loaded':
-        color='k'
+        color=[186/255, 202/255, 202/255]
+        txt_color = 'k'
     elif loadcond == 'noload':
-        color = 'xkcd:shamrock green'
+        color = [80/255, 200/255, 120/255]
+        txt_color = [1/255, 121/255, 111/255]
     for i in iterations:
-        bottom = y[i]
+        bottom = y[i]+0.04
         left = mean_dic['avg_'+phases[i]+'_start']
         width = mean_dic['avg_'+phases[i]+'_end'] - mean_dic['avg_'+phases[i]+'_start']
-        plt.axvline(avg_toeoff, lw=2, color=color, zorder=0, alpha=0.5) #vertical line
-        rect1 = plt.Rectangle((left,bottom), width, height=0.05,facecolor=color, alpha=0.3,linewidth=0)
-        rect2 = plt.Rectangle((left,bottom), width, height=-0.05,facecolor=color, alpha=0.3,linewidth=0)
-        plt.plot(mean_dic['avg_'+phases[i]+'_start'], y[i], marker='|',color=color,markersize=50)
-        plt.errorbar(mean_dic['avg_'+phases[i]+'_start'], y[i], yerr=None, xerr=std_dic['std_'+phases[i]+'_start'],color=color,capsize=50,alpha=0.5,fmt='None')
-        plt.plot(mean_dic['avg_'+phases[i]+'_end'], y[i], marker='|',color=color,markersize=50)
-        plt.errorbar(mean_dic['avg_'+phases[i]+'_end'], y[i], yerr=None, xerr=std_dic['std_'+phases[i]+'_end'],color=color,capsize=50,alpha=0.5,fmt='None')
-        plt.text(left+(width)/2, y[i], str(phase_name[i]), ha='center', va='center',color=color)
-        plt.xlim((-2,110))
+        rect1 = plt.Rectangle((left,bottom), width, height=-0.08,facecolor=color, alpha=0.6,linewidth=0)
+        plt.errorbar(mean_dic['avg_'+phases[i]+'_start'], y[i], yerr=None, xerr=std_dic['std_'+phases[i]+'_start'],
+                    capsize=50,alpha=0.8,fmt='|',markersize=100,color=txt_color,mfc=txt_color)
+        plt.errorbar(mean_dic['avg_'+phases[i]+'_end'], y[i], yerr=None, xerr=std_dic['std_'+phases[i]+'_end'],
+                     capsize=50,alpha=0.8,fmt='|',markersize=100,color=txt_color,mfc=txt_color)
+        plt.axvline(avg_toeoff, lw=2, color=txt_color, zorder=0, alpha=0.8) #vertical line
+        plt.text(left+(width)/2, y[i], str(phase_name[i]), ha='center', va='center',color=txt_color)
+        plt.xlim((-0.01,110))
         plt.xticks([0,10,20,30,40,50,60,70,80,90,100,110])
         plt.yticks([])
         ax = plt.gca()
         ax.add_patch(rect1)
-        ax.add_patch(rect2)
         ax.spines["right"].set_visible(False)
         ax.spines["left"].set_visible(False)
         ax.spines["top"].set_visible(False)
@@ -982,7 +999,7 @@ def pareto_metabolics_reduction(assist_data,unassist_data,simulation_num=25,subj
     
 def pareto_avg_std_energy(data,simulation_num=25,subject_num=7,trial_num=3,
                           reshape=True,filter_data = True,delete_subject=None,
-                          avg_within_subjects=True,*args,**kwargs):
+                          avg_within_subjects=False,*args,**kwargs):
     if reshape == True:
         reshaped_data = np.reshape(data,(simulation_num,subject_num*trial_num),order='F')
     else:
@@ -995,7 +1012,8 @@ def pareto_avg_std_energy(data,simulation_num=25,subject_num=7,trial_num=3,
     else:
         length = 0
     if avg_within_subjects == True:
-        subject_avg,_ = pareto_avg_std_within_subjects(final_data,reshape=False,subject_num=7-length)
+        #subject_avg,_ = pareto_avg_std_within_subjects(final_data,reshape=False,subject_num=7-length)
+        subject_avg = final_data
         avg = np.nanmean(subject_avg,axis=1)
         std = np.nanstd(subject_avg,axis=1)
     else:
@@ -1486,9 +1504,6 @@ def modified_augmentation_factor(analysis_dict,regen_effect=False,normalize_AF =
         print('3 items are expected for the inertia list.\n considering last {} terms as zero.'.format(3-len(exo_inertia)))
         for i in range(3-len(exo_inertia)):
             exo_inertia.append(0)
-    if regen_effect == True:
-        alpha = analysis_dict['regen_efficiency']
-        positive_power_W = positive_power_W + alpha*negative_power_W
     # mass and inertia effect calculation
     # order: foot,shank,thigh,waist
     mass_effect = 14.8*2*exo_mass[3]+5.6*2*exo_mass[2]+5.6*2*exo_mass[1]+3.2*2*exo_mass[0]
@@ -1496,7 +1511,9 @@ def modified_augmentation_factor(analysis_dict,regen_effect=False,normalize_AF =
     # dissipated power calculation
     if negative_power > positive_power:
         if regen_effect == True:
-            p_dissipation = (negative_power_W-positive_power_W)
+            alpha = 1-analysis_dict['regen_efficiency']
+            p_dissipation = negative_power_W-positive_power_W
+            p_dissipation = alpha*p_dissipation
         else:
             p_dissipation = negative_power_W-positive_power_W
     else:
@@ -1568,6 +1585,7 @@ def rmse_barplots(plot_dic,ncols=3,nrows=1,nplots=3):
             plt.legend(['hip joint muscles','knee joint muscles'],loc='best',frameon=True)      
         elif i == 1:
             plt.legend(['hip actuator','knee actuator'],loc='best',frameon=True)  
+
 ######################################################################
 # Plot related functions for Pareto Simulations
 
