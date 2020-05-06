@@ -74,7 +74,7 @@ with open(r'.\Statistics\Specific_Weights\LoadedMono01_LoadedBi11\MetabolicRate_
 
 #****************************************************************
 #establishing dataset for assistive actuators average total power 
-headers = ['subjects','assistive actuator','avg total power']
+headers = ['subjects','assistive actuator','avg total power 01','avg total power 02','avg total power 03']
 biarticular_hip_col = np.repeat(np.array('biarticular hip actuator'),7)
 monoarticular_hip_col = np.repeat(np.array('monoarticular hip actuator'),7)
 biarticular_knee_col = np.repeat(np.array('biarticular knee actuator'),7)
