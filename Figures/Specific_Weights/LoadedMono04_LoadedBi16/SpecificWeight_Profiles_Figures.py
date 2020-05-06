@@ -289,7 +289,7 @@ plot_dic={
 'plot_titles' : ['loaded biarticular hip joint','loaded monoarticular hip joint','loaded biarticular knee joint','loaded monoarticular knee joint']
 }
 # plot
-fig01 = plt.figure(num='Paper figure',figsize=(9.4, 6.8))
+fig = plt.figure(num='Paper figure',figsize=(9.4, 6.8))
 utils.plot_joint_muscle_exo(nrows=2,ncols=2,plot_dic=plot_dic,color_dic=monovsbi_color_dic,\
                             thirdplot=True,ylabel=' flexion/extension\n(N-m/kg)',y_ticks=np.arange(-2,3,1))
 fig.tight_layout()
@@ -302,21 +302,13 @@ plot_dic={
 'plot_titles' : ['loaded biarticular hip joint','loaded monoarticular hip joint','loaded biarticular knee joint','loaded monoarticular knee joint']
 }
 # plot
-fig02 = plt.figure(num='Paper figure',figsize=(9.4, 6.8))
+fig = plt.figure(num='Paper figure',figsize=(9.4, 6.8))
 utils.plot_joint_muscle_exo(nrows=2,ncols=2,plot_dic=plot_dic,color_dic=monovsbi_color_dic,\
                             thirdplot=False,ylabel=' flexion/extension\n(W/kg)',y_ticks=np.arange(-2,4,1))
 fig.tight_layout(h_pad=-1, w_pad=-1.5)
 fig.subplots_adjust(top=0.98, bottom=0.075, left=0.100, right=0.975,hspace=0.25,wspace=0.15)
 plt.show()
 fig.savefig('./Figures/Specific_Weights/LoadedMono04_LoadedBi16/PaperFigure_PowerProfiles.pdf',orientation='landscape',bbox_inches='tight')
-
-# combination
-fig = plt.figure()
-plot1 = fig01.getroot()
-plot2 = fig02.getroot()
-fig.append([plot1, plot2])
-plt.show()
-
 #******************************************************************************************************************************
 #******************************************************************************************************************************
 # defualt color dictionary
