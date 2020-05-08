@@ -323,6 +323,27 @@ fig.subplots_adjust(top=0.98, bottom=0.075, left=0.100, right=0.975,hspace=0.25,
 plt.show()
 fig.savefig('./Figures/Specific_Weights/NoloadMono06_LoadedMono04/PaperFigure_PowerProfiles.pdf',orientation='landscape',bbox_inches='tight')
 
+# nested subplot for merging two paper figures
+plot_dic_1={
+'plot_1_list' : [unassist_noload_hip_musclesmoment_dic,unassist_loaded_hip_musclesmoment_dic,unassist_noload_knee_musclesmoment_dic,unassist_loaded_knee_musclesmoment_dic],
+'plot_2_list' : [mono_noload_hip_torque_dic,mono_loaded_hip_torque_dic,mono_noload_knee_torque_dic,mono_loaded_knee_torque_dic],
+'plot_3_list' : [mono_noload_hip_musclesmoment_dic, mono_loaded_hip_musclesmoment_dic,mono_noload_knee_musclesmoment_dic, mono_loaded_knee_musclesmoment_dic],
+'plot_titles' : ['noload monoarticular hip joint','loaded monoarticular hip joint','noload monoarticular knee joint','loaded monoarticular knee joint'],
+'y_ticks': [-2,-1,0,1,2], 'y_label':'flexion/extension\nmoment (N-m/kg)','general_title':'Devices torque profiles','thirdplot':True
+}
+plot_dic_2={
+'plot_1_list' : [noload_hip_power_dic,loaded_hip_power_dic,noload_knee_power_dic,loaded_knee_power_dic],
+'plot_2_list' : [mono_noload_hip_power_dic,mono_loaded_hip_power_dic,mono_noload_knee_power_dic,mono_loaded_knee_power_dic],
+'plot_titles' : ['noload monoarticular hip joint','loaded monoarticular hip joint','noload monoarticular knee joint','loaded monoarticular knee joint'],
+'y_ticks': [-3,-2,-1,0,1,2,3], 'y_label':'flexion/extension\npower (W/kg)','general_title':'Devices power profiles','thirdplot':False
+}
+fig = plt.figure(num='Main Paper figure',figsize=(12.8, 16.8))
+utils.nested_plots(fig,plot_dic_1,plot_dic_2,monovsmono_color_dic,monovsmono_color_dic)
+fig.tight_layout(h_pad=-1, w_pad=-1.5)
+fig.subplots_adjust(top=0.98, bottom=0.075, left=0.100, right=0.975,hspace=0.25,wspace=0.30)
+plt.show()
+fig.savefig('./Figures/Specific_Weights/NoloadMono06_LoadedMono04/PaperFigure_Profiles.pdf',orientation='landscape',bbox_inches='tight')
+
 #******************************************************************************************************************************
 #******************************************************************************************************************************
 # defualt color dictionary
