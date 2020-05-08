@@ -310,6 +310,7 @@ fig.tight_layout(h_pad=-1, w_pad=-1.5)
 fig.subplots_adjust(top=0.98, bottom=0.075, left=0.100, right=0.975,hspace=0.25,wspace=0.15)
 plt.show()
 fig.savefig('./Figures/Specific_Weights/LoadedMono04_LoadedBi16/PaperFigure_PowerProfiles.pdf',orientation='landscape',bbox_inches='tight')
+
 # nested subplot for merging two paper figures
 plot_dic_1={
 'plot_1_list' : [unassist_loaded_hip_musclesmoment_dic,unassist_loaded_hip_musclesmoment_dic,unassist_loaded_knee_musclesmoment_dic,unassist_loaded_knee_musclesmoment_dic],
@@ -329,8 +330,7 @@ utils.nested_plots(fig,plot_dic_1,plot_dic_2,monovsbi_color_dic,monovsbi_color_d
 fig.tight_layout(h_pad=-1, w_pad=-1.5)
 fig.subplots_adjust(top=0.98, bottom=0.075, left=0.100, right=0.975,hspace=0.25,wspace=0.30)
 plt.show()
-fig.savefig('./Figures/Specific_Weights/LoadedMono04_LoadedBi16/PaperFigure_Profiles.pdf',orientation='landscape',bbox_inches='tight')
-     
+fig.savefig('./Figures/Specific_Weights/LoadedMono04_LoadedBi16/PaperFigure_Profiles.pdf',orientation='landscape',bbox_inches='tight')   
 #******************************************************************************************************************************
 #******************************************************************************************************************************
 # defualt color dictionary
