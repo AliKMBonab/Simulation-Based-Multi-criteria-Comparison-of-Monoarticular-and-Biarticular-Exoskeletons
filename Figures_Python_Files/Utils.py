@@ -20,6 +20,7 @@ from perimysium import dataman
 import pathlib
 from sklearn import metrics
 from Colors import colors as mycolors
+import matplotlib.gridspec as gridspec
 #######################################################################
 #######################################################################
 # Data saving and reading related functions
@@ -576,7 +577,7 @@ def no_top_right(ax):
     ax.yaxis.set_ticks_position('left')
     ax.xaxis.set_ticks_position('bottom')
 
-def plot_shaded_avg(plot_dic,toeoff_color='xkcd:medium grey',toeoff_alpha=1.0,
+def plot_shaded_avg(plot_dic,ax_vs_plt='plt',ax=None,toeoff_color='xkcd:medium grey',toeoff_alpha=1.0,
     lw=2.0,ls='-',alpha=0.35,fill_std=True,fill_lw=0,*args, **kwargs):
 
     pgc = plot_dic['pgc']
@@ -584,23 +585,27 @@ def plot_shaded_avg(plot_dic,toeoff_color='xkcd:medium grey',toeoff_alpha=1.0,
     std= plot_dic['std']
     label = plot_dic['label']
     avg_toeoff = plot_dic['avg_toeoff']
-    
-    #axes setting
-    plt.xticks([0,20,40,60,80,100])
-    plt.xlim([0,100])
+    if ax_vs_plt == 'plt':
+        plot = plt
+        plot.xticks([0,20,40,60,80,100])
+        plot.xlim([0,100])  
+    elif ax_vs_plt == 'ax':
+        plot = ax
+        plot.set_xticks([0,20,40,60,80,100])
+        plot.set_xlim([0,100])  
     # plot
     if 'load' in plot_dic:
         load = plot_dic['load']
         if load == 'noload':
-            plt.axvline(avg_toeoff, lw=lw, color='xkcd:shamrock green', zorder=0, alpha=toeoff_alpha) #vertical line
+            plot.axvline(avg_toeoff, lw=lw, color='xkcd:shamrock green', zorder=0, alpha=toeoff_alpha) #vertical line
         elif load == 'loaded':
-            plt.axvline(avg_toeoff, lw=lw, color='grey', zorder=0, alpha=toeoff_alpha) #vertical line
+            plot.axvline(avg_toeoff, lw=lw, color='grey', zorder=0, alpha=toeoff_alpha) #vertical line
     else:
-        plt.axvline(avg_toeoff, lw=lw, color=toeoff_color, zorder=0, alpha=toeoff_alpha) #vertical line
+        plot.axvline(avg_toeoff, lw=lw, color=toeoff_color, zorder=0, alpha=toeoff_alpha) #vertical line
 
-    plt.axhline(0, lw=lw, color='grey', zorder=0, alpha=0.75) # horizontal line
-    plt.fill_between(pgc, avg + std, avg - std, alpha=alpha,linewidth=fill_lw, *args, **kwargs) # shaded std
-    return plt.plot(pgc, avg, *args, lw=lw, ls=ls, label=label, **kwargs) # mean
+    plot.axhline(0, lw=lw, color='grey', zorder=0, alpha=0.75) # horizontal line
+    plot.fill_between(pgc, avg + std, avg - std, alpha=alpha,linewidth=fill_lw, *args, **kwargs) # shaded std
+    return plot.plot(pgc, avg, *args, lw=lw, ls=ls, label=label, **kwargs) # mean
 
 def plot_muscles_avg(plot_dic,toeoff_color='xkcd:medium grey',
                      toeoff_alpha=1.0,row_num=3,col_num=3,
@@ -773,7 +778,88 @@ def plot_gait_cycle_phase(mean_dic,std_dic,avg_toeoff,loadcond):
         ax.spines["right"].set_visible(False)
         ax.spines["left"].set_visible(False)
         ax.spines["top"].set_visible(False)
-        
+
+def nested_plots (fig,plot_dic_1,plot_dic_2,color_dic_1,color_dic_2,nrows=2,ncols=2,legend_loc=[0],
+                           subplot_legend=False):
+    '''Note: please note that since it is in the for loop, if some data is
+    needed to plot several times it should be repeated in the lists.  '''
+    # plots outer layer
+    outer_rows = 1
+    outer_cols = 2
+    ext = []
+    height_ratios = [4,4]
+    width_ratios = [6,6]
+    outer = gridspec.GridSpec(outer_rows, outer_cols, figure=fig,
+                             top=0.98, bottom=0.075, left=0.100, right=0.975,hspace=0.25,wspace=0.30)
+    for j in range(2):
+        inner = gridspec.GridSpecFromSubplotSpec(nrows, ncols,subplot_spec=outer[j],hspace=0.25,wspace=0.30,
+                                height_ratios=height_ratios,width_ratios=width_ratios)
+        # reading data
+        if j == 0:
+            plot_1_list = plot_dic_1['plot_1_list']
+            plot_2_list = plot_dic_1['plot_2_list']
+            color_1_list = color_dic_1['color_1_list']
+            color_2_list = color_dic_1['color_2_list']
+            plot_titles = plot_dic_1['plot_titles']
+            general_title_1 = plot_dic_1['general_title']
+            y_ticks = plot_dic_1['y_ticks']
+            y_label = plot_dic_1['y_label']
+            thirdplot = plot_dic_1['thirdplot']
+            if thirdplot == True:
+                color_3_list = color_dic_1['color_3_list']
+                plot_3_list = plot_dic_1['plot_3_list']
+        else:
+            plot_1_list = plot_dic_2['plot_1_list']
+            plot_2_list = plot_dic_2['plot_2_list']
+            color_1_list = color_dic_2['color_1_list']
+            color_2_list = color_dic_2['color_2_list']
+            plot_titles = plot_dic_2['plot_titles']
+            general_title_2 = plot_dic_2['general_title']
+            y_ticks = plot_dic_2['y_ticks']
+            y_label = plot_dic_2['y_label']
+            thirdplot = plot_dic_2['thirdplot']
+            if thirdplot == True:
+                color_3_list = color_dic_2['color_3_list']
+                plot_3_list = plot_dic_2['plot_3_list']
+        for i in range(ncols*nrows):
+            ax = plt.Subplot(fig, inner[i])
+            # this part resolve issue with the toe off color
+            if 'loaded' in plot_titles[i]:
+                plot_1_list[i]['load'] = 'loaded'
+                plot_2_list[i]['load'] = 'loaded'
+                if thirdplot == True:
+                    plot_3_list[i]['load'] = 'loaded'
+            elif 'noload' in  plot_titles[i]:
+                plot_1_list[i]['load'] = 'noload'
+                plot_2_list[i]['load'] = 'noload'
+                if thirdplot == True:
+                    plot_3_list[i]['load'] = 'noload'
+            # plotting the data and related operations
+            plot_shaded_avg(plot_dic=plot_1_list[i],color=color_1_list[i],ax_vs_plt='ax',ax=ax)
+            plot_shaded_avg(plot_dic=plot_2_list[i],color=color_2_list[i],ax_vs_plt='ax',ax=ax)
+            if thirdplot == True:
+                plot_shaded_avg(plot_dic=plot_3_list[i],color=color_3_list[i],ax_vs_plt='ax',ax=ax)
+            ax.set_yticks(y_ticks)
+            ax.set_title(plot_titles[i])
+            ax.tick_params(axis='both',direction='in')
+            no_top_right(ax)
+            if i in legend_loc:
+                ax.legend(loc='best',frameon=False)
+            if ncols==2 and i in [2,3]:
+                ax.set_xlabel('gait cycle (%)')
+            if ncols==2 and i in [0,2]:
+                ax.set_ylabel(y_label)
+            # save the axes bounding boxes for later use
+            if i in range(2):
+                ext.append([ax.get_window_extent().x0, ax.get_window_extent().width ])
+            fig.add_subplot(ax)
+    inv = fig.transFigure.inverted()
+    width_left = ext[0][0]+(ext[1][0]+ext[1][1]-ext[0][0])/2.
+    left_center = inv.transform( (width_left, 1) )
+    width_right = ext[2][0]+(ext[3][0]+ext[3][1]-ext[2][0])/2.
+    right_center = inv.transform( (width_right, 1) )
+    fig.text(left_center[0],1.05,general_title_1, va="top", ha="center", size=14)
+    fig.text(right_center[0],1.05,general_title_2, va="top", ha="center", size=14)
 ######################################################################
 ######################################################################
 # Data Processing related functions for Pareto Simulations
