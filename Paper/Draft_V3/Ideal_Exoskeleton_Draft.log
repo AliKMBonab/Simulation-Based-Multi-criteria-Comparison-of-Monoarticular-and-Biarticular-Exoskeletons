@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.21 (MiKTeX 2.9.7380 64-bit) (preloaded format=pdflatex 2020.4.9)  7 MAY 2020 23:16
+This is pdfTeX, Version 3.14159265-2.6-1.40.21 (MiKTeX 2.9.7380 64-bit) (preloaded format=pdflatex 2020.4.9)  10 MAY 2020 04:22
 entering extended mode
 **./Ideal_Exoskeleton_Draft.tex
 (Ideal_Exoskeleton_Draft.tex
@@ -926,93 +926,151 @@ Package pdftex.def Info: ./Figures/Case_Studies/LoadedMono04_LoadedBi16/PaperFi
 gure_BoxPlot.pdf  used on input line 707.
 (pdftex.def)             Requested size: 379.4175pt x 204.6912pt.
  [30]
-<./Figures/Case_Studies/LoadedMono04_LoadedBi16/PaperFigure_PowerProfiles.pdf, 
-id=1422, 661.7081pt x 501.32971pt>
-File: ./Figures/Case_Studies/LoadedMono04_LoadedBi16/PaperFigure_PowerProfiles.
-pdf Graphic file (type pdf)
-<use ./Figures/Case_Studies/LoadedMono04_LoadedBi16/PaperFigure_PowerProfiles.p
-df>
+<./Figures/Case_Studies/LoadedMono04_LoadedBi16/PaperFigure_Profiles.pdf, id=14
+22, 886.94435pt x 612.85536pt>
+File: ./Figures/Case_Studies/LoadedMono04_LoadedBi16/PaperFigure_Profiles.pdf G
+raphic file (type pdf)
+<use ./Figures/Case_Studies/LoadedMono04_LoadedBi16/PaperFigure_Profiles.pdf>
 Package pdftex.def Info: ./Figures/Case_Studies/LoadedMono04_LoadedBi16/PaperFi
-gure_PowerProfiles.pdf  used on input line 716.
-(pdftex.def)             Requested size: 180.67499pt x 136.88312pt.
-<./Figures/Case_Studies/LoadedMono04_LoadedBi16/PaperFigure_TorqueProfiles.pdf,
- id=1423, 671.2447pt x 483.87651pt>
-File: ./Figures/Case_Studies/LoadedMono04_LoadedBi16/PaperFigure_TorqueProfiles
-.pdf Graphic file (type pdf)
-<use ./Figures/Case_Studies/LoadedMono04_LoadedBi16/PaperFigure_TorqueProfiles.
-pdf>
-Package pdftex.def Info: ./Figures/Case_Studies/LoadedMono04_LoadedBi16/PaperFi
-gure_TorqueProfiles.pdf  used on input line 719.
-(pdftex.def)             Requested size: 180.67499pt x 130.24231pt.
-File: ./Figures/Case_Studies/LoadedMono04_LoadedBi16/PaperFigure_TorqueProfiles
-.pdf Graphic file (type pdf)
-<use ./Figures/Case_Studies/LoadedMono04_LoadedBi16/PaperFigure_TorqueProfiles.
-pdf>
-Package pdftex.def Info: ./Figures/Case_Studies/LoadedMono04_LoadedBi16/PaperFi
-gure_TorqueProfiles.pdf  used on input line 726.
-(pdftex.def)             Requested size: 379.4175pt x 273.51625pt.
-File: ./Figures/Case_Studies/LoadedMono04_LoadedBi16/PaperFigure_PowerProfiles.
-pdf Graphic file (type pdf)
-<use ./Figures/Case_Studies/LoadedMono04_LoadedBi16/PaperFigure_PowerProfiles.p
-df>
-Package pdftex.def Info: ./Figures/Case_Studies/LoadedMono04_LoadedBi16/PaperFi
-gure_PowerProfiles.pdf  used on input line 733.
-(pdftex.def)             Requested size: 379.4175pt x 287.45914pt.
-<./Figures/Case_Studies/LoadedMono04_LoadedBi16/RMSE.pdf, id=1424, 1369.35344pt
+gure_Profiles.pdf  used on input line 715.
+(pdftex.def)             Requested size: 379.4175pt x 262.16672pt.
+<./Figures/Case_Studies/LoadedMono04_LoadedBi16/RMSE.pdf, id=1423, 1369.35344pt
  x 486.17787pt>
 File: ./Figures/Case_Studies/LoadedMono04_LoadedBi16/RMSE.pdf Graphic file (typ
 e pdf)
 <use ./Figures/Case_Studies/LoadedMono04_LoadedBi16/RMSE.pdf>
 Package pdftex.def Info: ./Figures/Case_Studies/LoadedMono04_LoadedBi16/RMSE.pd
-f  used on input line 740.
+f  used on input line 722.
 (pdftex.def)             Requested size: 379.4175pt x 134.70453pt.
 
-[31 <./Figures/Case_Studies/LoadedMono04_LoadedBi16/PaperFigure_BoxPlot.pdf> <.
-/Figures/Case_Studies/LoadedMono04_LoadedBi16/PaperFigure_PowerProfiles.pdf
+[31 <./Figures/Case_Studies/LoadedMono04_LoadedBi16/PaperFigure_BoxPlot.pdf>]
+[32 <./Figures/Case_Studies/LoadedMono04_LoadedBi16/PaperFigure_Profiles.pdf>]
+[33 <./Figures/Case_Studies/LoadedMono04_LoadedBi16/RMSE.pdf>]
+<./Figures/Case_Studies/NoloadMono06_NoloadBi12/PaperFigure_BoxPlot.pdf, id=158
+2, 654.72406pt x 356.65947pt>
+File: ./Figures/Case_Studies/NoloadMono06_NoloadBi12/PaperFigure_BoxPlot.pdf Gr
+aphic file (type pdf)
+<use ./Figures/Case_Studies/NoloadMono06_NoloadBi12/PaperFigure_BoxPlot.pdf>
+Package pdftex.def Info: ./Figures/Case_Studies/NoloadMono06_NoloadBi12/PaperFi
+gure_BoxPlot.pdf  used on input line 739.
+(pdftex.def)             Requested size: 379.4175pt x 206.68303pt.
+<./Figures/Case_Studies/NoloadMono06_NoloadBi12/PaperFigure_Profiles.pdf, id=15
+83, 886.91298pt x 612.85536pt>
+File: ./Figures/Case_Studies/NoloadMono06_NoloadBi12/PaperFigure_Profiles.pdf G
+raphic file (type pdf)
+<use ./Figures/Case_Studies/NoloadMono06_NoloadBi12/PaperFigure_Profiles.pdf>
+Package pdftex.def Info: ./Figures/Case_Studies/NoloadMono06_NoloadBi12/PaperFi
+gure_Profiles.pdf  used on input line 746.
+(pdftex.def)             Requested size: 379.4175pt x 262.17607pt.
+<./Figures/Case_Studies/NoloadMono06_NoloadBi12/RMSE.pdf, id=1584, 1362.97021pt
+ x 486.17787pt>
+File: ./Figures/Case_Studies/NoloadMono06_NoloadBi12/RMSE.pdf Graphic file (typ
+e pdf)
+<use ./Figures/Case_Studies/NoloadMono06_NoloadBi12/RMSE.pdf>
+Package pdftex.def Info: ./Figures/Case_Studies/NoloadMono06_NoloadBi12/RMSE.pd
+f  used on input line 753.
+(pdftex.def)             Requested size: 379.4175pt x 135.34251pt.
+ [34 <./Figures/Case_Studies/NoloadMono06_NoloadBi12/PaperFigure_BoxPlot.pdf>] 
+[35 <./Figures/Case_Studies/NoloadMono06_NoloadBi12/PaperFigure_Profiles.pdf>]
+<./Figures/Case_Studies/NoloadBi23_LoadedBi12/PaperFigure_BoxPlot.pdf, id=1689,
+ 651.52473pt x 356.65947pt>
+File: ./Figures/Case_Studies/NoloadBi23_LoadedBi12/PaperFigure_BoxPlot.pdf Grap
+hic file (type pdf)
+<use ./Figures/Case_Studies/NoloadBi23_LoadedBi12/PaperFigure_BoxPlot.pdf>
+Package pdftex.def Info: ./Figures/Case_Studies/NoloadBi23_LoadedBi12/PaperFigu
+re_BoxPlot.pdf  used on input line 767.
+(pdftex.def)             Requested size: 379.4175pt x 207.70616pt.
+<./Figures/Case_Studies/NoloadBi23_LoadedBi23/PaperFigure_BoxPlot.pdf, id=1690,
+ 651.52473pt x 356.65947pt>
+File: ./Figures/Case_Studies/NoloadBi23_LoadedBi23/PaperFigure_BoxPlot.pdf Grap
+hic file (type pdf)
+<use ./Figures/Case_Studies/NoloadBi23_LoadedBi23/PaperFigure_BoxPlot.pdf>
+Package pdftex.def Info: ./Figures/Case_Studies/NoloadBi23_LoadedBi23/PaperFigu
+re_BoxPlot.pdf  used on input line 770.
+(pdftex.def)             Requested size: 379.4175pt x 207.70616pt.
 
-pdfTeX warning: pdflatex.exe (file ./Figures/Case_Studies/LoadedMono04_LoadedBi
-16/PaperFigure_PowerProfiles.pdf): PDF inclusion: multiple pdfs with page group
- included in a single page
-> <./Figures/Case_Studies/LoadedMono04_LoadedBi16/PaperFigure_TorqueProfiles.pd
-f
+Overfull \hbox (3.33333pt too wide) in paragraph at lines 767--772
+ [][] 
+ []
 
-pdfTeX warning: pdflatex.exe (file ./Figures/Case_Studies/LoadedMono04_LoadedBi
-16/PaperFigure_TorqueProfiles.pdf): PDF inclusion: multiple pdfs with page grou
-p included in a single page
->] [32] [33] [34 <./Figures/Case_Studies/LoadedMono04_LoadedBi16/RMSE.pdf>]
-[35] (Ideal_Exoskeleton_Draft.bbl [36] ("E:\MiKTeX 2.9\tex/latex/ucs\uni-32.def
-"
+
+Overfull \hbox (3.33333pt too wide) in paragraph at lines 767--772
+ [][] 
+ []
+
+<./Figures/Case_Studies/NoloadBi23_LoadedBi12/RMSE.pdf, id=1691, 1362.97021pt x
+ 486.17787pt>
+File: ./Figures/Case_Studies/NoloadBi23_LoadedBi12/RMSE.pdf Graphic file (type 
+pdf)
+<use ./Figures/Case_Studies/NoloadBi23_LoadedBi12/RMSE.pdf>
+Package pdftex.def Info: ./Figures/Case_Studies/NoloadBi23_LoadedBi12/RMSE.pdf 
+ used on input line 778.
+(pdftex.def)             Requested size: 379.4175pt x 135.34251pt.
+<./Figures/Case_Studies/NoloadBi23_LoadedBi23/RMSE.pdf, id=1692, 1362.97021pt x
+ 486.17787pt>
+File: ./Figures/Case_Studies/NoloadBi23_LoadedBi23/RMSE.pdf Graphic file (type 
+pdf)
+<use ./Figures/Case_Studies/NoloadBi23_LoadedBi23/RMSE.pdf>
+Package pdftex.def Info: ./Figures/Case_Studies/NoloadBi23_LoadedBi23/RMSE.pdf 
+ used on input line 781.
+(pdftex.def)             Requested size: 379.4175pt x 135.34251pt.
+
+Overfull \hbox (3.33333pt too wide) in paragraph at lines 778--783
+ [][] 
+ []
+
+
+Overfull \hbox (3.33333pt too wide) in paragraph at lines 778--783
+ [][] 
+ []
+
+[36 <./Figures/Case_Studies/NoloadMono06_NoloadBi12/RMSE.pdf>] [37 <./Figures/C
+ase_Studies/NoloadBi23_LoadedBi12/PaperFigure_BoxPlot.pdf> <./Figures/Case_Stud
+ies/NoloadBi23_LoadedBi23/PaperFigure_BoxPlot.pdf
+
+pdfTeX warning: pdflatex.exe (file ./Figures/Case_Studies/NoloadBi23_LoadedBi23
+/PaperFigure_BoxPlot.pdf): PDF inclusion: multiple pdfs with page group include
+d in a single page
+>] [38 <./Figures/Case_Studies/NoloadBi23_LoadedBi12/RMSE.pdf> <./Figures/Case_
+Studies/NoloadBi23_LoadedBi23/RMSE.pdf
+
+pdfTeX warning: pdflatex.exe (file ./Figures/Case_Studies/NoloadBi23_LoadedBi23
+/RMSE.pdf): PDF inclusion: multiple pdfs with page group included in a single p
+age
+>] [39] (Ideal_Exoskeleton_Draft.bbl [40] [41]
+("E:\MiKTeX 2.9\tex/latex/ucs\uni-32.def"
 File: uni-32.def 2013/05/13 UCS: Unicode data U+2000..U+20FF
-) [37]
+)
 Package microtype Info: Loading generic protrusion settings for font family
 (microtype)             `cmtt' (encoding: OT1).
 (microtype)             For optimal results, create family-specific settings.
 (microtype)             See the microtype manual for details.
- ("E:\MiKTeX 2.9\tex/latex/ucs\uni-0.def"
+ [42]
+("E:\MiKTeX 2.9\tex/latex/ucs\uni-0.def"
 File: uni-0.def 2013/05/13 UCS: Unicode data U+0000..U+00FF
 )
 ("E:\MiKTeX 2.9\tex/latex/ucs\uni-33.def"
 File: uni-33.def 2013/05/13 UCS: Unicode data U+2100..U+21FF
-) [38] [39] [40] [41] [42] [43]
-[44] [45]) 
+) [43] [44] [45] [46] [47] [48]
+[49]) 
 AED: lastpage setting LastPage
-[46]
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 819.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 819.
+[50] [51]
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 858.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 858.
  (Ideal_Exoskeleton_Draft.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 819.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 819.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 858.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 858.
 Package rerunfilecheck Info: File `Ideal_Exoskeleton_Draft.out' has not changed
 .
 (rerunfilecheck)             Checksum: D41D8CD98F00B204E9800998ECF8427E;0.
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 819.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 858.
  ) 
 Here is how much of TeX's memory you used:
- 13944 strings out of 492478
- 207425 string characters out of 3137227
- 343608 words of memory out of 3000000
- 17615 multiletter control sequences out of 15000+200000
- 16036 words of font info for 95 fonts, out of 3000000 for 9000
+ 14000 strings out of 492478
+ 210217 string characters out of 3137227
+ 346231 words of memory out of 3000000
+ 17652 multiletter control sequences out of 15000+200000
+ 16195 words of font info for 97 fonts, out of 3000000 for 9000
  1141 hyphenation exceptions out of 8191
  41i,16n,50p,1692b,600s stack positions out of 5000i,500n,10000p,200000b,50000s
  <C:\Users\T.a\AppData\Local\MiKTeX\2.9\fonts/pk/ljfour/jknappen/ec/dpi600\tc
@@ -1032,9 +1090,9 @@ onts/cm/cmsy7.pfb><E:/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmti10.pfb><E:/
 MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmti7.pfb><E:/MiKTeX 2.9/fonts/type1/
 public/amsfonts/cm/cmti9.pfb><E:/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmtt
 10.pfb>
-Output written on Ideal_Exoskeleton_Draft.pdf (46 pages, 7802386 bytes).
+Output written on Ideal_Exoskeleton_Draft.pdf (51 pages, 8634127 bytes).
 PDF statistics:
- 1882 PDF objects out of 2073 (max. 8388607)
- 288 named destinations out of 1000 (max. 500000)
- 19567 words of extra memory for PDF output out of 20736 (max. 10000000)
+ 2231 PDF objects out of 2487 (max. 8388607)
+ 298 named destinations out of 1000 (max. 500000)
+ 19597 words of extra memory for PDF output out of 20736 (max. 10000000)
 
