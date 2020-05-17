@@ -45,8 +45,8 @@ print('\n\n rra files have been extracted.')
                 and ideal exoskeletons simulations data and confirm modeling and simulations
 """
 loads = ['noload','loaded']
-middle = ['metabolics','ninemuscles','hip','knee','metabolics_processed']
-suffixes = ['energy','activation','musclesmoment','musclesmoment','energy']
+middle = ['metabolics','ninemuscles','hip','knee','metabolics_processed','muscles_metabolic']
+suffixes = ['energy','activation','musclesmoment','musclesmoment','energy','rate']
 #***************************
 print('Section 02:\t extracting UnAssist Subjects related files: Metabolic Energy, Muscles Activation, Hip and Knee Muscles Moment.\n')
 #***************************
@@ -71,12 +71,12 @@ middle =['hipactuator','kneeactuator','hipactuator','kneeactuator',\
          'hipactuator','kneeactuator','hipactuator','kneeactuator',\
          'hipactuator','kneeactuator','metabolics','ninemuscles',\
          'hip','knee','processed_hipactuator','processed_kneeactuator',\
-         'processed_hipactuator','processed_kneeactuator','processed_metabolics','hip','knee']
+         'processed_hipactuator','processed_kneeactuator','processed_metabolics','hip','knee','muscles']
 suffixes = ['torque','torque','power','power','speed','speed',\
             'energy','energy','regenrative_energy','regenrative_energy',\
             'energy','activation','musclesmoment','musclesmoment',\
             'energy','energy','regenrative_energy','regenrative_energy',\
-            'energy','musclespower','musclespower']
+            'energy','musclespower','musclespower','metabolic_rate']
 #***************************
 print('Section 03:\t extracting Ideal exoskeletons related files: Actuators Data, Muscles Activation, Muscles Moment, Metabolic Energy.\n')
 #***************************
@@ -106,12 +106,13 @@ middle =['hipactuator','kneeactuator','hipactuator','kneeactuator',\
          'processed_hipactuator','processed_kneeactuator',\
          'processed_metabolics','metabolics','hipregenrative','kneeregenrative',\
          'hipregenrative','kneeregenrative','hip_max','knee_max',\
-        'hip_mean','knee_mean','hip_mean','knee_mean','unsimulated']
+        'hip_mean','knee_mean','hip_mean','knee_mean','hipjoint','kneejoint','muscles','unsimulated']
 suffixes = ['torque','torque','power','power',\
             'energy','energy','energy',\
             'energy','energy','energy','power',\
             'energy','energy','frompower_energy','frompower_energy',\
-            'power','power','positive_power','positive_power','negative_power','negative_power','unsimulated']
+            'power','power','positive_power','positive_power','negative_power','negative_power',\
+            'kinematics','kinematics','metabolic_rate','unsimulated']
 #***************************
 print('Section 04:\t extracting Pareto exoskeletons related files: Actuators Data, Muscles Activation, Muscles Moment, Metabolic Energy.\n')
 #***************************
