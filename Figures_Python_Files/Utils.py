@@ -1715,7 +1715,8 @@ def errorbar_3D(x,y,z,x_err,y_err,z_err,color,marker='_',lw=2):
         ax.plot([x[i], x[i]], [y[i]+y_err[i], y[i]-y_err[i]], [z[i], z[i]], marker=marker,color=color,lw=lw)
         ax.plot([x[i], x[i]], [y[i], y[i]], [z[i]+z_err[i], z[i]-z_err[i]], marker=marker,color=color,lw=lw)
 
-def plot_pareto_avg_curve (plot_dic,loadcond,legend_loc=0,label_on=True,which_label='alphabet',errbar_on=True,line=False,*args, **kwargs):
+def plot_pareto_avg_curve (plot_dic,loadcond,legend_loc=0,label_on=True,which_label='alphabet',
+                            errbar_on=True,line=False,third_plot=False,*args, **kwargs):
     '''plotting avg and std subplots for combinations of weights.\n
     -labels: needs to be provided by user otherwise data will be labeled from 1 to 25 automatically.
              labeling is True (i.e. label_on=True) by default.\n
@@ -1734,6 +1735,12 @@ def plot_pareto_avg_curve (plot_dic,loadcond,legend_loc=0,label_on=True,which_la
     y2err_data = plot_dic['y2err_data']
     color_1 = plot_dic['color_1']
     color_2 = plot_dic['color_2']
+    if third_plot == True:
+        x3_data = plot_dic['x3_data']
+        y3_data = plot_dic['y3_data']
+        x3err_data = plot_dic['x3err_data']
+        y3err_data = plot_dic['y3err_data']
+        color_3 = plot_dic['color_3']
     # handle labels
     if 'label_1' and 'label_2' not in plot_dic:
         if which_label == 'alphabet':
@@ -1745,12 +1752,20 @@ def plot_pareto_avg_curve (plot_dic,loadcond,legend_loc=0,label_on=True,which_la
             for i in ['A','B','C','D','E']:
                 for j in ['a','b','c','d','e']:
                     label_2.append('{}{}'.format(i,j))
+            if third_plot == True:
+                label_3 =[]
+                for i in ['A','B','C','D','E']:
+                    for j in ['a','b','c','d','e']:
+                        label_3.append('{}{}'.format(i,j))
         elif which_label == 'number':
             label_1 = np.arange(1,26,1)
             label_2 = np.arange(1,26,1)
+            label_3 = np.arange(1,26,1)
     else:
         label_1 = plot_dic['label_1']
         label_2 = plot_dic['label_2']
+        if third_plot == True:
+            label_3 = plot_dic['label_3']
     # handle legends
     if 'legend_1' and 'legend_2' not in plot_dic:
         legend_1 = 'biarticular,{}'.format(loadcond)
@@ -1758,22 +1773,32 @@ def plot_pareto_avg_curve (plot_dic,loadcond,legend_loc=0,label_on=True,which_la
     else:
         legend_1 = plot_dic['legend_1']
         legend_2 = plot_dic['legend_2']
+        if third_plot == True:
+            legend_3 = plot_dic['legend_3']
     # main plot
     plt.scatter(x1_data,y1_data,marker="o",color=color_1,label=legend_1,*args, **kwargs)
     plt.scatter(x2_data,y2_data,marker="v",color=color_2,label=legend_2,*args, **kwargs)
+    if third_plot == True:
+        plt.scatter(x3_data,y3_data,marker="P",color=color_3,label=legend_3,*args, **kwargs)
     if errbar_on == True:
         plt.errorbar(x1_data,y1_data,xerr=x1err_data,yerr=y1err_data,fmt='o',ecolor=color_1,alpha=0.15)
         plt.errorbar(x2_data,y2_data,xerr=x2err_data,yerr=y2err_data,fmt='v',ecolor=color_2,alpha=0.15)
+        if third_plot == True:
+            plt.errorbar(x3_data,y3_data,xerr=x3err_data,yerr=y3err_data,fmt='P',ecolor=color_3,alpha=0.15)
     if label_on == True:
         label_datapoints(x1_data,y1_data,label_1,*args, **kwargs)
         label_datapoints(x2_data,y2_data,label_2,ha='left',*args, **kwargs)
+        if third_plot == True:
+            label_datapoints(x3_data,y3_data,label_3,ha='left',*args, **kwargs)
     if line == True:
         plt.plot(x1_data[~np.isnan(x1_data)],y1_data[~np.isnan(y1_data)],ls='-',lw=1,color=color_1)
-        plt.plot(x2_data[~np.isnan(x2_data)],y2_data[~np.isnan(y2_data)],ls='-',lw=1,color=color_2)       
-    
+        plt.plot(x2_data[~np.isnan(x2_data)],y2_data[~np.isnan(y2_data)],ls='-',lw=1,color=color_2) 
+        if third_plot == True:
+            plt.plot(x3_data[~np.isnan(x3_data)],y3_data[~np.isnan(y3_data)],ls='-',lw=1,color=color_3)       
+
 def plot_pareto_curve_subjects (nrows,ncols,nplot,plot_dic,loadcond,\
                                 line=False,legend_loc=[0],labels=None,\
-                                label_on=True,alpha=1,*args, **kwargs):
+                                label_on=True,third_plot=False,alpha=1,*args, **kwargs):
     x1_data = plot_dic['x1_data']
     x2_data = plot_dic['x2_data']
     y1_data = plot_dic['y1_data']
@@ -1782,6 +1807,10 @@ def plot_pareto_curve_subjects (nrows,ncols,nplot,plot_dic,loadcond,\
     color_2 = plot_dic['color_2']
     ylabel = plot_dic ['ylabel']
     xlabel = plot_dic ['xlabel']
+    if third_plot == True:
+        x3_data = plot_dic['x3_data']
+        y3_data = plot_dic['y3_data']
+        color_3 = plot_dic['color_3']
     # handle labels
     if labels == None:
         labels=[]
@@ -1802,17 +1831,25 @@ def plot_pareto_curve_subjects (nrows,ncols,nplot,plot_dic,loadcond,\
     else:
         legend_1 = plot_dic['legend_1']
         legend_2 = plot_dic['legend_2']
+        if third_plot == True:
+            legend_3 = plot_dic['legend_3']
     # main plots
     for i in range(nplot):
         ax = plt.subplot(nrows,ncols,i+1)
         plt.scatter(x1_data[:,i],y1_data[:,i],marker="o",color=color_1,label=legend_1,alpha=1,*args, **kwargs)
         plt.scatter(x2_data[:,i],y2_data[:,i],marker="v",color=color_2,label=legend_2,alpha=1,*args, **kwargs)
+        if third_plot == True:
+            plt.scatter(x2_data[:,i],y2_data[:,i],marker="P",color=color_3,label=legend_3,alpha=1,*args, **kwargs)
         if label_on == True:
             label_datapoints(x1_data[:,i],y1_data[:,i],labels,*args, **kwargs)
             label_datapoints(x2_data[:,i],y2_data[:,i],labels,ha='left',*args, **kwargs)
+            if third_plot == True:
+                label_datapoints(x3_data[:,i],y3_data[:,i],labels,ha='left',*args, **kwargs)
         if line == True:
             plt.plot(x1_data[~np.isnan(x1_data)],y1_data[~np.isnan(y1_data)],ls='-',lw=1,color=color_1)
-            plt.plot(x2_data[~np.isnan(x2_data)],y2_data[~np.isnan(y2_data)],ls='-',lw=1,color=color_2)       
+            plt.plot(x2_data[~np.isnan(x2_data)],y2_data[~np.isnan(y2_data)],ls='-',lw=1,color=color_2)    
+            if third_plot == True:
+                plt.plot(x3_data[~np.isnan(x3_data)],y3_data[~np.isnan(y3_data)],ls='-',lw=1,color=color_3)
         plt.title(plot_titles[i])
         no_top_right(ax)
         if i in legend_loc:
