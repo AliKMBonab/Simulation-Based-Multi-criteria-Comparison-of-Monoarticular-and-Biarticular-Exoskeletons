@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.21 (MiKTeX 2.9.7380 64-bit) (preloaded format=pdflatex 2020.4.9)  14 MAY 2020 04:14
+This is pdfTeX, Version 3.14159265-2.6-1.40.21 (MiKTeX 2.9.7380 64-bit) (preloaded format=pdflatex 2020.4.9)  15 MAY 2020 04:25
 entering extended mode
 **./Ideal_Exoskeleton_Draft.tex
 (Ideal_Exoskeleton_Draft.tex
@@ -740,403 +740,410 @@ File: mt-msb.cfg 2005/06/01 v1.0 microtype config. file: AMS symbols (b) (RS)
 
 {C:/Users/T.a/AppData/Local/MiKTeX/2.9/pdftex/config/pdftex.map}] [2] [3] [4] [
 5]
-<./Figures/Cartoons/Biarticular_Exo_Mechanism.pdf, id=291, 599.23875pt x 558.36
+<./Figures/Cartoons/Biarticular_Exo_Mechanism.pdf, id=295, 599.23875pt x 558.36
 203pt>
 File: ./Figures/Cartoons/Biarticular_Exo_Mechanism.pdf Graphic file (type pdf)
 <use ./Figures/Cartoons/Biarticular_Exo_Mechanism.pdf>
 Package pdftex.def Info: ./Figures/Cartoons/Biarticular_Exo_Mechanism.pdf  used
- on input line 263.
+ on input line 266.
 (pdftex.def)             Requested size: 144.54pt x 134.67418pt.
-<./Figures/Cartoons/Monoarticular_Exo_Mechanism.pdf, id=292, 599.24377pt x 558.
+<./Figures/Cartoons/Monoarticular_Exo_Mechanism.pdf, id=296, 599.24377pt x 558.
 35701pt>
 File: ./Figures/Cartoons/Monoarticular_Exo_Mechanism.pdf Graphic file (type pdf
 )
 <use ./Figures/Cartoons/Monoarticular_Exo_Mechanism.pdf>
 Package pdftex.def Info: ./Figures/Cartoons/Monoarticular_Exo_Mechanism.pdf  us
-ed on input line 266.
+ed on input line 269.
 (pdftex.def)             Requested size: 144.54pt x 134.67296pt.
- [6 <./Figures/Cartoons/Biarticular_Exo_Mechanism.pdf> <./Figures/Cartoons/Mono
-articular_Exo_Mechanism.pdf>] [7]
-<./Figures/Cartoons/OpenSim.pdf, id=406, 1195.01462pt x 845.0471pt>
+
+
+LaTeX Warning: `!h' float specifier changed to `!ht'.
+
+[6] [7 <./Figures/Cartoons/Biarticular_Exo_Mechanism.pdf> <./Figures/Cartoons/M
+onoarticular_Exo_Mechanism.pdf>]
+<./Figures/Cartoons/OpenSim.pdf, id=405, 1195.01462pt x 845.0471pt>
 File: ./Figures/Cartoons/OpenSim.pdf Graphic file (type pdf)
 <use ./Figures/Cartoons/OpenSim.pdf>
-Package pdftex.def Info: ./Figures/Cartoons/OpenSim.pdf  used on input line 362
+Package pdftex.def Info: ./Figures/Cartoons/OpenSim.pdf  used on input line 366
 .
 (pdftex.def)             Requested size: 379.4175pt x 268.29303pt.
- [8 <./Figures/Cartoons/OpenSim.pdf>]
-<./Figures/Cartoons/Biarticular_Exo_Assignment.pdf, id=452, 182.18062pt x 196.7
+ [8] [9 <./Figures/Cartoons/OpenSim.pdf>]
+<./Figures/Cartoons/Biarticular_Exo_Assignment.pdf, id=466, 182.18062pt x 196.7
 35pt>
 File: ./Figures/Cartoons/Biarticular_Exo_Assignment.pdf Graphic file (type pdf)
 
 <use ./Figures/Cartoons/Biarticular_Exo_Assignment.pdf>
 Package pdftex.def Info: ./Figures/Cartoons/Biarticular_Exo_Assignment.pdf  use
-d on input line 384.
+d on input line 388.
 (pdftex.def)             Requested size: 144.54pt x 156.09135pt.
-<./Figures/Cartoons/Monoarticular_Exo_Assignment.pdf, id=453, 180.675pt x 200.4
+<./Figures/Cartoons/Monoarticular_Exo_Assignment.pdf, id=467, 180.675pt x 200.4
 1576pt>
 File: ./Figures/Cartoons/Monoarticular_Exo_Assignment.pdf Graphic file (type pd
 f)
 <use ./Figures/Cartoons/Monoarticular_Exo_Assignment.pdf>
 Package pdftex.def Info: ./Figures/Cartoons/Monoarticular_Exo_Assignment.pdf  u
-sed on input line 387.
+sed on input line 391.
 (pdftex.def)             Requested size: 144.54pt x 160.33282pt.
 
-
-LaTeX Warning: `!h' float specifier changed to `!ht'.
-
-[9] [10 <./Figures/Cartoons/Biarticular_Exo_Assignment.pdf> <./Figures/Cartoons
-/Monoarticular_Exo_Assignment.pdf>]
+[10 <./Figures/Cartoons/Biarticular_Exo_Assignment.pdf> <./Figures/Cartoons/Mon
+oarticular_Exo_Assignment.pdf>] [11]
 Package hyperref Info: bookmark level for unknown algorithm defaults to 0 on in
-put line 424.
- [11] [12]
-<./Figures/Ideal_Exo_MonovsBi_Figures/Paper_Figure_Energy_BoxPlot.pdf, id=595, 
-843.26923pt x 709.57344pt>
+put line 429.
+ [12] [13]
+<./Figures/Ideal_Exo_MonovsBi_Figures/Paper_Figure_Energy_BoxPlot.pdf, id=605, 
+843.26923pt x 709.57295pt>
 File: ./Figures/Ideal_Exo_MonovsBi_Figures/Paper_Figure_Energy_BoxPlot.pdf Grap
 hic file (type pdf)
 <use ./Figures/Ideal_Exo_MonovsBi_Figures/Paper_Figure_Energy_BoxPlot.pdf>
 Package pdftex.def Info: ./Figures/Ideal_Exo_MonovsBi_Figures/Paper_Figure_Ener
-gy_BoxPlot.pdf  used on input line 466.
-(pdftex.def)             Requested size: 379.4175pt x 319.26178pt.
- [13] [14 <./Figures/Ideal_Exo_MonovsBi_Figures/Paper_Figure_Energy_BoxPlot.pdf
->]
-<./Figures/Ideal_Exo_MonovsBi_Figures/PaperFigure_Exoskeletons_Speed.pdf, id=67
-0, 885.84859pt x 510.1745pt>
+gy_BoxPlot.pdf  used on input line 470.
+(pdftex.def)             Requested size: 379.4175pt x 319.26157pt.
+ [14]
+<./Figures/Ideal_Exo_MonovsBi_Figures/PaperFigure_Exoskeletons_Speed.pdf, id=62
+2, 885.84859pt x 510.1745pt>
 File: ./Figures/Ideal_Exo_MonovsBi_Figures/PaperFigure_Exoskeletons_Speed.pdf G
 raphic file (type pdf)
 <use ./Figures/Ideal_Exo_MonovsBi_Figures/PaperFigure_Exoskeletons_Speed.pdf>
 Package pdftex.def Info: ./Figures/Ideal_Exo_MonovsBi_Figures/PaperFigure_Exosk
-eletons_Speed.pdf  used on input line 479.
+eletons_Speed.pdf  used on input line 483.
 (pdftex.def)             Requested size: 379.4175pt x 218.50665pt.
-<./Figures/Ideal_Exo_MonovsBi_Figures/PaperFigure_Exoskeletons_Torque.pdf, id=6
-77, 885.84859pt x 697.14003pt>
+ [15 <./Figures/Ideal_Exo_MonovsBi_Figures/Paper_Figure_Energy_BoxPlot.pdf>]
+<./Figures/Ideal_Exo_MonovsBi_Figures/PaperFigure_Exoskeletons_Torque.pdf, id=7
+16, 885.84859pt x 697.14003pt>
 File: ./Figures/Ideal_Exo_MonovsBi_Figures/PaperFigure_Exoskeletons_Torque.pdf 
 Graphic file (type pdf)
 <use ./Figures/Ideal_Exo_MonovsBi_Figures/PaperFigure_Exoskeletons_Torque.pdf>
 Package pdftex.def Info: ./Figures/Ideal_Exo_MonovsBi_Figures/PaperFigure_Exosk
-eletons_Torque.pdf  used on input line 488.
+eletons_Torque.pdf  used on input line 492.
 (pdftex.def)             Requested size: 379.4175pt x 298.5836pt.
- [15 <./Figures/Ideal_Exo_MonovsBi_Figures/PaperFigure_Exoskeletons_Speed.pdf>]
-<./Figures/Ideal_Exo_MonovsBi_Figures/PaperFigure_Exoskeletons_Power.pdf, id=72
-8, 885.84859pt x 697.14003pt>
+<./Figures/Ideal_Exo_MonovsBi_Figures/PaperFigure_Exoskeletons_Power.pdf, id=71
+9, 885.84859pt x 697.14003pt>
 File: ./Figures/Ideal_Exo_MonovsBi_Figures/PaperFigure_Exoskeletons_Power.pdf G
 raphic file (type pdf)
 <use ./Figures/Ideal_Exo_MonovsBi_Figures/PaperFigure_Exoskeletons_Power.pdf>
 Package pdftex.def Info: ./Figures/Ideal_Exo_MonovsBi_Figures/PaperFigure_Exosk
-eletons_Power.pdf  used on input line 499.
+eletons_Power.pdf  used on input line 503.
 (pdftex.def)             Requested size: 379.4175pt x 298.5836pt.
- [16 <./Figures/Ideal_Exo_MonovsBi_Figures/PaperFigure_Exoskeletons_Torque.pdf>
-]
-<./Figures/Cartoons/Saggital_Leg_Biarticular_Muscles.pdf, id=778, 658.46pt x 59
+ [16 <./Figures/Ideal_Exo_MonovsBi_Figures/PaperFigure_Exoskeletons_Speed.pdf>]
+<./Figures/Cartoons/Saggital_Leg_Biarticular_Muscles.pdf, id=768, 658.46pt x 59
 7.50829pt>
 File: ./Figures/Cartoons/Saggital_Leg_Biarticular_Muscles.pdf Graphic file (typ
 e pdf)
 <use ./Figures/Cartoons/Saggital_Leg_Biarticular_Muscles.pdf>
 Package pdftex.def Info: ./Figures/Cartoons/Saggital_Leg_Biarticular_Muscles.pd
-f  used on input line 511.
+f  used on input line 515.
 (pdftex.def)             Requested size: 144.54pt x 131.16048pt.
-<./Figures/Cartoons/Saggital_Leg_Monoarticular_Muscles.pdf, id=779, 658.46pt x 
+<./Figures/Cartoons/Saggital_Leg_Monoarticular_Muscles.pdf, id=769, 658.46pt x 
 597.50829pt>
 File: ./Figures/Cartoons/Saggital_Leg_Monoarticular_Muscles.pdf Graphic file (t
 ype pdf)
 <use ./Figures/Cartoons/Saggital_Leg_Monoarticular_Muscles.pdf>
 Package pdftex.def Info: ./Figures/Cartoons/Saggital_Leg_Monoarticular_Muscles.
-pdf  used on input line 514.
+pdf  used on input line 518.
 (pdftex.def)             Requested size: 144.54pt x 131.16048pt.
 <./Figures/Ideal_Exo_MonovsBi_Figures/PaperFigure_Biarticular_MuscleActivation.
-pdf, id=780, 599.54207pt x 483.87651pt>
+pdf, id=770, 599.54207pt x 483.87651pt>
 File: ./Figures/Ideal_Exo_MonovsBi_Figures/PaperFigure_Biarticular_MuscleActiva
 tion.pdf Graphic file (type pdf)
 <use ./Figures/Ideal_Exo_MonovsBi_Figures/PaperFigure_Biarticular_MuscleActivat
 ion.pdf>
 Package pdftex.def Info: ./Figures/Ideal_Exo_MonovsBi_Figures/PaperFigure_Biart
-icular_MuscleActivation.pdf  used on input line 521.
+icular_MuscleActivation.pdf  used on input line 525.
 (pdftex.def)             Requested size: 379.4175pt x 306.21712pt.
- [17 <./Figures/Ideal_Exo_MonovsBi_Figures/PaperFigure_Exoskeletons_Power.pdf>]
- [18 <./Figures/Cartoons/Saggital_Leg_Biarticular_Muscles.pdf> <./Figures/Carto
-ons/Saggital_Leg_Monoarticular_Muscles.pdf>] [19 <./Figures/Ideal_Exo_MonovsBi_
-Figures/PaperFigure_Biarticular_MuscleActivation.pdf>]
-<./Figures/Pareto_Simulations_Figures/PaperFigure_Main_Pareto.pdf, id=931, 874.
+ [17 <./Figures/Ideal_Exo_MonovsBi_Figures/PaperFigure_Exoskeletons_Torque.pdf>
+] [18 <./Figures/Ideal_Exo_MonovsBi_Figures/PaperFigure_Exoskeletons_Power.pdf>
+ <./Figures/Cartoons/Saggital_Leg_Biarticular_Muscles.pdf> <./Figures/Cartoons/
+Saggital_Leg_Monoarticular_Muscles.pdf>] [19 <./Figures/Ideal_Exo_MonovsBi_Figu
+res/PaperFigure_Biarticular_MuscleActivation.pdf>]
+<./Figures/Pareto_Simulations_Figures/PaperFigure_Main_Pareto.pdf, id=962, 874.
 69595pt x 670.73872pt>
 File: ./Figures/Pareto_Simulations_Figures/PaperFigure_Main_Pareto.pdf Graphic 
 file (type pdf)
 <use ./Figures/Pareto_Simulations_Figures/PaperFigure_Main_Pareto.pdf>
 Package pdftex.def Info: ./Figures/Pareto_Simulations_Figures/PaperFigure_Main_
-Pareto.pdf  used on input line 541.
+Pareto.pdf  used on input line 545.
 (pdftex.def)             Requested size: 379.4175pt x 290.93999pt.
 <./Figures/Pareto_Simulations_Figures/PaperFigure_Paretofront_EnergyBarPlot.pdf
-, id=932, 868.31273pt x 670.73872pt>
+, id=963, 868.31273pt x 670.73872pt>
 File: ./Figures/Pareto_Simulations_Figures/PaperFigure_Paretofront_EnergyBarPlo
 t.pdf Graphic file (type pdf)
 <use ./Figures/Pareto_Simulations_Figures/PaperFigure_Paretofront_EnergyBarPlot
 .pdf>
 Package pdftex.def Info: ./Figures/Pareto_Simulations_Figures/PaperFigure_Paret
-ofront_EnergyBarPlot.pdf  used on input line 548.
+ofront_EnergyBarPlot.pdf  used on input line 552.
 (pdftex.def)             Requested size: 379.4175pt x 293.08926pt.
- [20 <./Figures/Pareto_Simulations_Figures/PaperFigure_Main_Pareto.pdf>] [21 <.
-/Figures/Pareto_Simulations_Figures/PaperFigure_Paretofront_EnergyBarPlot.pdf>]
+ [20] [21 <./Figures/Pareto_Simulations_Figures/PaperFigure_Main_Pareto.pdf>]
 <./Figures/Pareto_Simulations_Figures/PaperFigure_Paretofront_TorqueProfiles.pd
-f, id=1050, 998.14214pt x 697.96231pt>
+f, id=1041, 998.14214pt x 697.96231pt>
 File: ./Figures/Pareto_Simulations_Figures/PaperFigure_Paretofront_TorqueProfil
 es.pdf Graphic file (type pdf)
 <use ./Figures/Pareto_Simulations_Figures/PaperFigure_Paretofront_TorqueProfile
 s.pdf>
 Package pdftex.def Info: ./Figures/Pareto_Simulations_Figures/PaperFigure_Paret
-ofront_TorqueProfiles.pdf  used on input line 591.
+ofront_TorqueProfiles.pdf  used on input line 595.
 (pdftex.def)             Requested size: 379.4175pt x 265.31363pt.
- [22]
+ [22 <./Figures/Pareto_Simulations_Figures/PaperFigure_Paretofront_EnergyBarPlo
+t.pdf>]
 <./Figures/Pareto_Simulations_Figures/PaperFigure_Paretofront_PowerProfiles.pdf
-, id=1057, 998.14214pt x 697.96231pt>
+, id=1089, 998.14214pt x 697.96231pt>
 File: ./Figures/Pareto_Simulations_Figures/PaperFigure_Paretofront_PowerProfile
 s.pdf Graphic file (type pdf)
 <use ./Figures/Pareto_Simulations_Figures/PaperFigure_Paretofront_PowerProfiles
 .pdf>
 Package pdftex.def Info: ./Figures/Pareto_Simulations_Figures/PaperFigure_Paret
-ofront_PowerProfiles.pdf  used on input line 601.
+ofront_PowerProfiles.pdf  used on input line 605.
 (pdftex.def)             Requested size: 379.4175pt x 265.31363pt.
- [23 <./Figures/Pareto_Simulations_Figures/PaperFigure_Paretofront_TorqueProfil
-es.pdf>] [24 <./Figures/Pareto_Simulations_Figures/PaperFigure_Paretofront_Powe
-rProfiles.pdf>] [25]
+ [23] [24 <./Figures/Pareto_Simulations_Figures/PaperFigure_Paretofront_TorqueP
+rofiles.pdf>] [25 <./Figures/Pareto_Simulations_Figures/PaperFigure_Paretofront
+_PowerProfiles.pdf>] [26]
 <./Figures/Pareto_Mass_Regenration_Figures/PaperFigure_Pareto_Comparison.pdf, i
-d=1213, 1001.16846pt x 826.50322pt>
+d=1252, 1001.16846pt x 826.50322pt>
 File: ./Figures/Pareto_Mass_Regenration_Figures/PaperFigure_Pareto_Comparison.p
 df Graphic file (type pdf)
 <use ./Figures/Pareto_Mass_Regenration_Figures/PaperFigure_Pareto_Comparison.pd
 f>
 Package pdftex.def Info: ./Figures/Pareto_Mass_Regenration_Figures/PaperFigure_
-Pareto_Comparison.pdf  used on input line 668.
+Pareto_Comparison.pdf  used on input line 673.
 (pdftex.def)             Requested size: 379.4175pt x 313.2169pt.
- [26]
 <./Figures/Pareto_Mass_Regenration_Figures/PaperFigure_AddingMass_Pareto.pdf, i
-d=1228, 874.69595pt x 709.1949pt>
+d=1254, 874.69595pt x 709.1949pt>
 File: ./Figures/Pareto_Mass_Regenration_Figures/PaperFigure_AddingMass_Pareto.p
 df Graphic file (type pdf)
 <use ./Figures/Pareto_Mass_Regenration_Figures/PaperFigure_AddingMass_Pareto.pd
 f>
 Package pdftex.def Info: ./Figures/Pareto_Mass_Regenration_Figures/PaperFigure_
-AddingMass_Pareto.pdf  used on input line 677.
+AddingMass_Pareto.pdf  used on input line 682.
 (pdftex.def)             Requested size: 379.4175pt x 307.62076pt.
- [27 <./Figures/Pareto_Mass_Regenration_Figures/PaperFigure_Pareto_Comparison.p
-df>] [28 <./Figures/Pareto_Mass_Regenration_Figures/PaperFigure_AddingMass_Pare
-to.pdf>] [29]
-<./Figures/Case_Studies/LoadedMono04_LoadedBi16/PaperFigure_BoxPlot.pdf, id=140
-8, 661.1074pt x 356.65947pt>
+ [27] [28 <./Figures/Pareto_Mass_Regenration_Figures/PaperFigure_Pareto_Compari
+son.pdf>] [29 <./Figures/Pareto_Mass_Regenration_Figures/PaperFigure_AddingMass
+_Pareto.pdf>]
+<./Figures/Case_Studies/PaperFigure_Selected_Configurations.pdf, id=1419, 874.6
+9583pt x 670.73872pt>
+File: ./Figures/Case_Studies/PaperFigure_Selected_Configurations.pdf Graphic fi
+le (type pdf)
+<use ./Figures/Case_Studies/PaperFigure_Selected_Configurations.pdf>
+Package pdftex.def Info: ./Figures/Case_Studies/PaperFigure_Selected_Configurat
+ions.pdf  used on input line 697.
+(pdftex.def)             Requested size: 379.4175pt x 290.93999pt.
+ [30 <./Figures/Case_Studies/PaperFigure_Selected_Configurations.pdf>] [31]
+<./Figures/Case_Studies/LoadedMono04_LoadedBi16/PaperFigure_BoxPlot.pdf, id=234
+4, 661.1074pt x 356.65947pt>
 File: ./Figures/Case_Studies/LoadedMono04_LoadedBi16/PaperFigure_BoxPlot.pdf Gr
 aphic file (type pdf)
 <use ./Figures/Case_Studies/LoadedMono04_LoadedBi16/PaperFigure_BoxPlot.pdf>
 Package pdftex.def Info: ./Figures/Case_Studies/LoadedMono04_LoadedBi16/PaperFi
-gure_BoxPlot.pdf  used on input line 707.
+gure_BoxPlot.pdf  used on input line 720.
 (pdftex.def)             Requested size: 379.4175pt x 204.6912pt.
- [30]
-<./Figures/Case_Studies/LoadedMono04_LoadedBi16/PaperFigure_Profiles.pdf, id=14
-23, 886.94435pt x 612.85536pt>
+<./Figures/Case_Studies/LoadedMono04_LoadedBi16/PaperFigure_Profiles.pdf, id=23
+46, 886.94435pt x 612.85536pt>
 File: ./Figures/Case_Studies/LoadedMono04_LoadedBi16/PaperFigure_Profiles.pdf G
 raphic file (type pdf)
 <use ./Figures/Case_Studies/LoadedMono04_LoadedBi16/PaperFigure_Profiles.pdf>
 Package pdftex.def Info: ./Figures/Case_Studies/LoadedMono04_LoadedBi16/PaperFi
-gure_Profiles.pdf  used on input line 715.
+gure_Profiles.pdf  used on input line 728.
 (pdftex.def)             Requested size: 379.4175pt x 262.16672pt.
-<./Figures/Case_Studies/LoadedMono04_LoadedBi16/RMSE.pdf, id=1424, 1369.35344pt
+<./Figures/Case_Studies/LoadedMono04_LoadedBi16/RMSE.pdf, id=2347, 1369.35344pt
  x 486.17787pt>
 File: ./Figures/Case_Studies/LoadedMono04_LoadedBi16/RMSE.pdf Graphic file (typ
 e pdf)
 <use ./Figures/Case_Studies/LoadedMono04_LoadedBi16/RMSE.pdf>
 Package pdftex.def Info: ./Figures/Case_Studies/LoadedMono04_LoadedBi16/RMSE.pd
-f  used on input line 722.
+f  used on input line 735.
 (pdftex.def)             Requested size: 379.4175pt x 134.70453pt.
-
-[31 <./Figures/Case_Studies/LoadedMono04_LoadedBi16/PaperFigure_BoxPlot.pdf>]
-[32 <./Figures/Case_Studies/LoadedMono04_LoadedBi16/PaperFigure_Profiles.pdf>]
-[33 <./Figures/Case_Studies/LoadedMono04_LoadedBi16/RMSE.pdf>]
-<./Figures/Case_Studies/NoloadMono06_NoloadBi12/PaperFigure_BoxPlot.pdf, id=158
-3, 654.72406pt x 356.65947pt>
+ [32 <./Figures/Case_Studies/LoadedMono04_LoadedBi16/PaperFigure_BoxPlot.pdf>] 
+[33 <./Figures/Case_Studies/LoadedMono04_LoadedBi16/PaperFigure_Profiles.pdf>] 
+[34 <./Figures/Case_Studies/LoadedMono04_LoadedBi16/RMSE.pdf>]
+<./Figures/Case_Studies/NoloadMono06_NoloadBi12/PaperFigure_BoxPlot.pdf, id=250
+7, 654.72406pt x 356.65947pt>
 File: ./Figures/Case_Studies/NoloadMono06_NoloadBi12/PaperFigure_BoxPlot.pdf Gr
 aphic file (type pdf)
 <use ./Figures/Case_Studies/NoloadMono06_NoloadBi12/PaperFigure_BoxPlot.pdf>
 Package pdftex.def Info: ./Figures/Case_Studies/NoloadMono06_NoloadBi12/PaperFi
-gure_BoxPlot.pdf  used on input line 739.
+gure_BoxPlot.pdf  used on input line 752.
 (pdftex.def)             Requested size: 379.4175pt x 206.68303pt.
-<./Figures/Case_Studies/NoloadMono06_NoloadBi12/PaperFigure_Profiles.pdf, id=15
-84, 886.91298pt x 612.85536pt>
+<./Figures/Case_Studies/NoloadMono06_NoloadBi12/PaperFigure_Profiles.pdf, id=25
+08, 886.91298pt x 612.85536pt>
 File: ./Figures/Case_Studies/NoloadMono06_NoloadBi12/PaperFigure_Profiles.pdf G
 raphic file (type pdf)
 <use ./Figures/Case_Studies/NoloadMono06_NoloadBi12/PaperFigure_Profiles.pdf>
 Package pdftex.def Info: ./Figures/Case_Studies/NoloadMono06_NoloadBi12/PaperFi
-gure_Profiles.pdf  used on input line 746.
+gure_Profiles.pdf  used on input line 759.
 (pdftex.def)             Requested size: 379.4175pt x 262.17607pt.
-<./Figures/Case_Studies/NoloadMono06_NoloadBi12/RMSE.pdf, id=1585, 1362.97021pt
+<./Figures/Case_Studies/NoloadMono06_NoloadBi12/RMSE.pdf, id=2509, 1362.97021pt
  x 486.17787pt>
 File: ./Figures/Case_Studies/NoloadMono06_NoloadBi12/RMSE.pdf Graphic file (typ
 e pdf)
 <use ./Figures/Case_Studies/NoloadMono06_NoloadBi12/RMSE.pdf>
 Package pdftex.def Info: ./Figures/Case_Studies/NoloadMono06_NoloadBi12/RMSE.pd
-f  used on input line 753.
+f  used on input line 766.
 (pdftex.def)             Requested size: 379.4175pt x 135.34251pt.
- [34 <./Figures/Case_Studies/NoloadMono06_NoloadBi12/PaperFigure_BoxPlot.pdf>] 
-[35 <./Figures/Case_Studies/NoloadMono06_NoloadBi12/PaperFigure_Profiles.pdf>] 
-[36 <./Figures/Case_Studies/NoloadMono06_NoloadBi12/RMSE.pdf>]
-<./Figures/Case_Studies/NoloadBi23_LoadedBi12/PaperFigure_BoxPlot.pdf, id=1752,
+ [35] [36 <./Figures/Case_Studies/NoloadMono06_NoloadBi12/PaperFigure_BoxPlot.p
+df>]
+<./Figures/Case_Studies/NoloadBi23_LoadedBi12/PaperFigure_BoxPlot.pdf, id=2566,
  651.52473pt x 356.65947pt>
 File: ./Figures/Case_Studies/NoloadBi23_LoadedBi12/PaperFigure_BoxPlot.pdf Grap
 hic file (type pdf)
 <use ./Figures/Case_Studies/NoloadBi23_LoadedBi12/PaperFigure_BoxPlot.pdf>
 Package pdftex.def Info: ./Figures/Case_Studies/NoloadBi23_LoadedBi12/PaperFigu
-re_BoxPlot.pdf  used on input line 768.
+re_BoxPlot.pdf  used on input line 781.
 (pdftex.def)             Requested size: 379.4175pt x 207.70616pt.
-<./Figures/Case_Studies/NoloadBi23_LoadedBi23/PaperFigure_BoxPlot.pdf, id=1753,
+<./Figures/Case_Studies/NoloadBi23_LoadedBi23/PaperFigure_BoxPlot.pdf, id=2567,
  651.52473pt x 356.65947pt>
 File: ./Figures/Case_Studies/NoloadBi23_LoadedBi23/PaperFigure_BoxPlot.pdf Grap
 hic file (type pdf)
 <use ./Figures/Case_Studies/NoloadBi23_LoadedBi23/PaperFigure_BoxPlot.pdf>
 Package pdftex.def Info: ./Figures/Case_Studies/NoloadBi23_LoadedBi23/PaperFigu
-re_BoxPlot.pdf  used on input line 771.
+re_BoxPlot.pdf  used on input line 784.
 (pdftex.def)             Requested size: 379.4175pt x 207.70616pt.
 
-Overfull \hbox (3.33333pt too wide) in paragraph at lines 768--773
+Overfull \hbox (3.33333pt too wide) in paragraph at lines 781--786
  [][] 
  []
 
 
-Overfull \hbox (3.33333pt too wide) in paragraph at lines 768--773
+Overfull \hbox (3.33333pt too wide) in paragraph at lines 781--786
  [][] 
  []
 
-<./Figures/Case_Studies/NoloadBi23_LoadedBi12/RMSE.pdf, id=1754, 1362.97021pt x
+<./Figures/Case_Studies/NoloadBi23_LoadedBi12/RMSE.pdf, id=2568, 1362.97021pt x
  486.17787pt>
 File: ./Figures/Case_Studies/NoloadBi23_LoadedBi12/RMSE.pdf Graphic file (type 
 pdf)
 <use ./Figures/Case_Studies/NoloadBi23_LoadedBi12/RMSE.pdf>
 Package pdftex.def Info: ./Figures/Case_Studies/NoloadBi23_LoadedBi12/RMSE.pdf 
- used on input line 779.
+ used on input line 792.
 (pdftex.def)             Requested size: 379.4175pt x 135.34251pt.
-<./Figures/Case_Studies/NoloadBi23_LoadedBi23/RMSE.pdf, id=1755, 1362.97021pt x
+<./Figures/Case_Studies/NoloadBi23_LoadedBi23/RMSE.pdf, id=2569, 1362.97021pt x
  486.17787pt>
 File: ./Figures/Case_Studies/NoloadBi23_LoadedBi23/RMSE.pdf Graphic file (type 
 pdf)
 <use ./Figures/Case_Studies/NoloadBi23_LoadedBi23/RMSE.pdf>
 Package pdftex.def Info: ./Figures/Case_Studies/NoloadBi23_LoadedBi23/RMSE.pdf 
- used on input line 782.
+ used on input line 795.
 (pdftex.def)             Requested size: 379.4175pt x 135.34251pt.
 
-Overfull \hbox (3.33333pt too wide) in paragraph at lines 779--784
+Overfull \hbox (3.33333pt too wide) in paragraph at lines 792--797
  [][] 
  []
 
 
-Overfull \hbox (3.33333pt too wide) in paragraph at lines 779--784
+Overfull \hbox (3.33333pt too wide) in paragraph at lines 792--797
  [][] 
  []
 
-[37]
-<./Figures/Case_Studies/NoloadMono25_LoadedMono05/PaperFigure_BoxPlot.pdf, id=1
-779, 651.52473pt x 356.65947pt>
+[37 <./Figures/Case_Studies/NoloadMono06_NoloadBi12/PaperFigure_Profiles.pdf>]
+[38 <./Figures/Case_Studies/NoloadMono06_NoloadBi12/RMSE.pdf>] [39 <./Figures/C
+ase_Studies/NoloadBi23_LoadedBi12/PaperFigure_BoxPlot.pdf> <./Figures/Case_Stud
+ies/NoloadBi23_LoadedBi23/PaperFigure_BoxPlot.pdf
+
+pdfTeX warning: pdflatex.exe (file ./Figures/Case_Studies/NoloadBi23_LoadedBi23
+/PaperFigure_BoxPlot.pdf): PDF inclusion: multiple pdfs with page group include
+d in a single page
+>]
+<./Figures/Case_Studies/NoloadMono25_LoadedMono05/PaperFigure_BoxPlot.pdf, id=2
+789, 651.52473pt x 356.65947pt>
 File: ./Figures/Case_Studies/NoloadMono25_LoadedMono05/PaperFigure_BoxPlot.pdf 
 Graphic file (type pdf)
 <use ./Figures/Case_Studies/NoloadMono25_LoadedMono05/PaperFigure_BoxPlot.pdf>
 Package pdftex.def Info: ./Figures/Case_Studies/NoloadMono25_LoadedMono05/Paper
-Figure_BoxPlot.pdf  used on input line 795.
+Figure_BoxPlot.pdf  used on input line 809.
 (pdftex.def)             Requested size: 379.4175pt x 207.70616pt.
-<./Figures/Case_Studies/NoloadMono25_LoadedMono25/PaperFigure_BoxPlot.pdf, id=1
-780, 651.52473pt x 356.65947pt>
+<./Figures/Case_Studies/NoloadMono25_LoadedMono25/PaperFigure_BoxPlot.pdf, id=2
+790, 651.52473pt x 356.65947pt>
 File: ./Figures/Case_Studies/NoloadMono25_LoadedMono25/PaperFigure_BoxPlot.pdf 
 Graphic file (type pdf)
 <use ./Figures/Case_Studies/NoloadMono25_LoadedMono25/PaperFigure_BoxPlot.pdf>
 Package pdftex.def Info: ./Figures/Case_Studies/NoloadMono25_LoadedMono25/Paper
-Figure_BoxPlot.pdf  used on input line 798.
+Figure_BoxPlot.pdf  used on input line 812.
 (pdftex.def)             Requested size: 379.4175pt x 207.70616pt.
 
-Overfull \hbox (3.33333pt too wide) in paragraph at lines 795--800
+Overfull \hbox (3.33333pt too wide) in paragraph at lines 809--814
  [][] 
  []
 
 
-Overfull \hbox (3.33333pt too wide) in paragraph at lines 795--800
+Overfull \hbox (3.33333pt too wide) in paragraph at lines 809--814
  [][] 
  []
 
-<./Figures/Case_Studies/NoloadMono25_LoadedMono05/RMSE.pdf, id=1781, 1362.97021
+<./Figures/Case_Studies/NoloadMono25_LoadedMono05/RMSE.pdf, id=2791, 1362.97021
 pt x 486.17787pt>
 File: ./Figures/Case_Studies/NoloadMono25_LoadedMono05/RMSE.pdf Graphic file (t
 ype pdf)
 <use ./Figures/Case_Studies/NoloadMono25_LoadedMono05/RMSE.pdf>
 Package pdftex.def Info: ./Figures/Case_Studies/NoloadMono25_LoadedMono05/RMSE.
-pdf  used on input line 806.
+pdf  used on input line 820.
 (pdftex.def)             Requested size: 379.4175pt x 135.34251pt.
-<./Figures/Case_Studies/NoloadMono25_LoadedMono25/RMSE.pdf, id=1782, 1362.97021
+<./Figures/Case_Studies/NoloadMono25_LoadedMono25/RMSE.pdf, id=2792, 1362.97021
 pt x 486.17787pt>
 File: ./Figures/Case_Studies/NoloadMono25_LoadedMono25/RMSE.pdf Graphic file (t
 ype pdf)
 <use ./Figures/Case_Studies/NoloadMono25_LoadedMono25/RMSE.pdf>
 Package pdftex.def Info: ./Figures/Case_Studies/NoloadMono25_LoadedMono25/RMSE.
-pdf  used on input line 809.
+pdf  used on input line 823.
 (pdftex.def)             Requested size: 379.4175pt x 135.34251pt.
 
-Overfull \hbox (3.33333pt too wide) in paragraph at lines 806--811
+Overfull \hbox (3.33333pt too wide) in paragraph at lines 820--825
  [][] 
  []
 
 
-Overfull \hbox (3.33333pt too wide) in paragraph at lines 806--811
+Overfull \hbox (3.33333pt too wide) in paragraph at lines 820--825
  [][] 
  []
 
-[38 <./Figures/Case_Studies/NoloadBi23_LoadedBi12/PaperFigure_BoxPlot.pdf> <./F
-igures/Case_Studies/NoloadBi23_LoadedBi23/PaperFigure_BoxPlot.pdf
-
-pdfTeX warning: pdflatex.exe (file ./Figures/Case_Studies/NoloadBi23_LoadedBi23
-/PaperFigure_BoxPlot.pdf): PDF inclusion: multiple pdfs with page group include
-d in a single page
->] [39 <./Figures/Case_Studies/NoloadBi23_LoadedBi12/RMSE.pdf> <./Figures/Case_
-Studies/NoloadBi23_LoadedBi23/RMSE.pdf
+[40 <./Figures/Case_Studies/NoloadBi23_LoadedBi12/RMSE.pdf> <./Figures/Case_Stu
+dies/NoloadBi23_LoadedBi23/RMSE.pdf
 
 pdfTeX warning: pdflatex.exe (file ./Figures/Case_Studies/NoloadBi23_LoadedBi23
 /RMSE.pdf): PDF inclusion: multiple pdfs with page group included in a single p
 age
->] [40 <./Figures/Case_Studies/NoloadMono25_LoadedMono05/PaperFigure_BoxPlot.pd
+>] [41 <./Figures/Case_Studies/NoloadMono25_LoadedMono05/PaperFigure_BoxPlot.pd
 f> <./Figures/Case_Studies/NoloadMono25_LoadedMono25/PaperFigure_BoxPlot.pdf
 
 pdfTeX warning: pdflatex.exe (file ./Figures/Case_Studies/NoloadMono25_LoadedMo
 no25/PaperFigure_BoxPlot.pdf): PDF inclusion: multiple pdfs with page group inc
 luded in a single page
->] [41 <./Figures/Case_Studies/NoloadMono25_LoadedMono05/RMSE.pdf> <./Figures/C
+>] [42 <./Figures/Case_Studies/NoloadMono25_LoadedMono05/RMSE.pdf> <./Figures/C
 ase_Studies/NoloadMono25_LoadedMono25/RMSE.pdf
 
 pdfTeX warning: pdflatex.exe (file ./Figures/Case_Studies/NoloadMono25_LoadedMo
 no25/RMSE.pdf): PDF inclusion: multiple pdfs with page group included in a sing
 le page
->] [42] [43] (Ideal_Exoskeleton_Draft.bbl [44]
+>] [43] [44] (Ideal_Exoskeleton_Draft.bbl [45] [46]
 ("E:\MiKTeX 2.9\tex/latex/ucs\uni-32.def"
 File: uni-32.def 2013/05/13 UCS: Unicode data U+2000..U+20FF
-) [45]
+)
 Package microtype Info: Loading generic protrusion settings for font family
 (microtype)             `cmtt' (encoding: OT1).
 (microtype)             For optimal results, create family-specific settings.
 (microtype)             See the microtype manual for details.
-
+ [47]
 ("E:\MiKTeX 2.9\tex/latex/ucs\uni-0.def"
 File: uni-0.def 2013/05/13 UCS: Unicode data U+0000..U+00FF
-) [46]
+)
 ("E:\MiKTeX 2.9\tex/latex/ucs\uni-33.def"
 File: uni-33.def 2013/05/13 UCS: Unicode data U+2100..U+21FF
-) [47] [48] [49] [50] [51] [52]
-[53]) 
+) [48] [49] [50] [51] [52] [53]
+[54]) 
 AED: lastpage setting LastPage
-[54]
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 882.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 882.
+[55] [56]
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 896.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 896.
  (Ideal_Exoskeleton_Draft.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 882.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 882.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 896.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 896.
 Package rerunfilecheck Info: File `Ideal_Exoskeleton_Draft.out' has not changed
 .
 (rerunfilecheck)             Checksum: D41D8CD98F00B204E9800998ECF8427E;0.
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 882.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 896.
  ) 
 Here is how much of TeX's memory you used:
- 14049 strings out of 492478
- 212391 string characters out of 3137227
- 346057 words of memory out of 3000000
- 17680 multiletter control sequences out of 15000+200000
- 16735 words of font info for 102 fonts, out of 3000000 for 9000
+ 14059 strings out of 492478
+ 212863 string characters out of 3137227
+ 347369 words of memory out of 3000000
+ 17686 multiletter control sequences out of 15000+200000
+ 16627 words of font info for 101 fonts, out of 3000000 for 9000
  1141 hyphenation exceptions out of 8191
  41i,16n,50p,1692b,600s stack positions out of 5000i,500n,10000p,200000b,50000s
  <C:\Users\T.a\AppData\Local\MiKTeX\2.9\fonts/pk/ljfour/jknappen/ec/dpi600\tc
@@ -1156,9 +1163,9 @@ onts/cm/cmsy7.pfb><E:/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmti10.pfb><E:/
 MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmti7.pfb><E:/MiKTeX 2.9/fonts/type1/
 public/amsfonts/cm/cmti9.pfb><E:/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmtt
 10.pfb>
-Output written on Ideal_Exoskeleton_Draft.pdf (54 pages, 8934266 bytes).
+Output written on Ideal_Exoskeleton_Draft.pdf (56 pages, 9707294 bytes).
 PDF statistics:
- 2444 PDF objects out of 2487 (max. 8388607)
- 305 named destinations out of 1000 (max. 500000)
- 19617 words of extra memory for PDF output out of 20736 (max. 10000000)
+ 3375 PDF objects out of 3580 (max. 8388607)
+ 308 named destinations out of 1000 (max. 500000)
+ 19622 words of extra memory for PDF output out of 20736 (max. 10000000)
 
