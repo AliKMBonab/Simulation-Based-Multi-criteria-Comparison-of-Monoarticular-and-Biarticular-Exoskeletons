@@ -129,7 +129,7 @@ mean_mono_loaded_regen_energy, std_mono_loaded_regen_energy = utils.pareto_avg_s
 biarticular_exoskeleton_dic = {'m_waist':4.5, 'm_thigh':1, 'm_shank':0.9, 'motor_max_torque':2, 'motor_inertia':0.000506, 'thigh_com':0.23, 'shank_com':0.18, 'leg_inertia':2.52}
 monoarticular_exoskeleton_dic = {'m_waist':3, 'm_thigh':2.5, 'm_shank':0.9, 'motor_max_torque':2, 'motor_inertia':0.000506, 'thigh_com':0.3, 'shank_com':0.18, 'leg_inertia':2.52}
 monoarticular_actuator_near_waist_exoskeleton_dic = {'m_waist':3, 'm_thigh':2.5, 'm_shank':0.9, 'motor_max_torque':2, 'motor_inertia':0.000506, 'thigh_com':0.18, 'shank_com':0.18, 'leg_inertia':2.52}
-monoarticular_actuator_on_shank_exoskeleton_dic = {'m_waist':3, 'm_thigh':1, 'm_shank':0.9+1.5, 'motor_max_torque':2, 'motor_inertia':0.000506, 'thigh_com':0.23, 'shank_com':0.22, 'leg_inertia':2.52}
+monoarticular_actuator_on_shank_exoskeleton_dic = {'m_waist':3, 'm_thigh':1, 'm_shank':0.9+1.5, 'motor_max_torque':2, 'motor_inertia':0.000506, 'thigh_com':0.23, 'shank_com':0.13, 'leg_inertia':2.52}
 
 biarticular_out = utils.addingmass_metabolics_pareto(unassisted_energy_dataset['noload_metabolics_energy'],bi_noload_metabolics,biarticular_exoskeleton_dic)
 monoarticular_out = utils.addingmass_metabolics_pareto(unassisted_energy_dataset['noload_metabolics_energy'],mono_noload_metabolics,monoarticular_exoskeleton_dic)
