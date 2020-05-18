@@ -194,6 +194,28 @@ def metabolic_energy_fcn(Subject_Dic):
     return metabolic_energy/subject_mass
 
 
+def muscles_metabolic_rate(Subject_Dic):
+    muscles_name = ['add_brev','add_long','add_mag3','add_mag4','add_mag2','add_mag1','bifemlh','bifemsh','ext_dig',\
+                    'ext_hal','flex_dig','flex_hal','lat_gas','med_gas','glut_max1','glut_max2','glut_max3','glut_med1',\
+                    'glut_med2','glut_med3','glut_min1','glut_min2','glut_min3','grac','iliacus','per_brev','per_long',\
+                    'peri','psoas','rect_fem','sar','semimem','semiten','soleus','tfl','tib_ant','tib_post','vas_int',\
+                    'vas_lat','vas_med']
+    metabolic_power_data_dir = Subject_Dic["Directory"]
+    gl = Subject_Dic["gl"]
+    subject_mass = Subject_Dic["Subject_Mass"]
+    musclesmetabolic_dataset = np.zeros(len(muscles_name))
+    metabolic_power_data = dataman.storage2numpy(metabolic_power_data_dir)
+    time = metabolic_power_data['time']
+    for i,muscle in enumerate(muscles_name):
+        metabolic_power_muscle_r = metabolic_power_data['metabolic_power_{}_r'.format(muscle)]
+        metabolic_power_muscle_l = metabolic_power_data['metabolic_power_{}_l'.format(muscle)]
+        metabolic_rate_r = pp.avg_over_gait_cycle(time, metabolic_power_muscle_r,cycle_duration=gl.cycle_end-gl.cycle_start,cycle_start=gl.cycle_start)
+        metabolic_rate_l = pp.avg_over_gait_cycle(time, metabolic_power_muscle_l,cycle_duration=gl.cycle_end-gl.cycle_start,cycle_start=gl.cycle_start)
+        muscle_metabolic_rate = (metabolic_rate_r + metabolic_rate_l) /subject_mass
+        musclesmetabolic_dataset[i] = muscle_metabolic_rate
+    return musclesmetabolic_dataset
+
+
 def metabolic_energy_reduction(data,unassist_data):
     reduction = np.zeros(len(data))
     for i in range(len(data)):
@@ -201,10 +223,10 @@ def metabolic_energy_reduction(data,unassist_data):
     return reduction
 
 
-def group_muscles_activation(Subject_Dic,use_dir=True,whichgroup='nine',loadcond='noload'):
+def group_muscles_activation(Subject_Dic,use_dir=True,whichgroup='nine',loadcond='noload',integrate=False,activation=True):
     """This function returns the activation of the set of muscles that will be determined by user.
-       The user can select "hip, knee, and nine" which are standing for set of hip and knee muscles and 
-       set of nine important muscles in lower exterimity.
+       The user can select "hip, knee, nine, and both" which are standing for set of hip, knee muscles, 
+       set of nine important muscles in lower exterimity, and all muscles respectively.
      """
     if whichgroup == 'hip':
     # The name of muscles contributing on hip flexion and extension
@@ -240,20 +262,38 @@ def group_muscles_activation(Subject_Dic,use_dir=True,whichgroup='nine',loadcond
     else:
         data_dir = Directory
     muscles_activation = np.zeros([1000,len(muscles_name)])
+    muscles_activation_area = np.zeros(len(muscles_name))
     gait_cycle = np.linspace(0,100,1000)
     data = dataman.storage2numpy(data_dir)
     time = data['time']
-    c = 0
-    for muscle in muscles_name:
-        muscle_r_activation = data[muscle+'_r'+'activation']
-        muscle_l_activation = data[muscle+'_l'+'activation']
-        gpc_r, shifted_muscle_r_activation = pp.data_by_pgc(time,muscle_r_activation,gl,side='right')
-        gpc_l, shifted_muscle_l_activation = pp.data_by_pgc(time,muscle_l_activation,gl,side='left')
-        muscle_r_activation = np.interp(gait_cycle,gpc_r,shifted_muscle_r_activation, left=np.nan, right=np.nan)
-        muscle_l_activation = np.interp(gait_cycle,gpc_l,shifted_muscle_l_activation, left=np.nan, right=np.nan)
-        muscles_activation[:,c]=nanmean([muscle_r_activation,muscle_l_activation],axis=0)
-        c+=1
-    return muscles_activation
+    if activation == True:
+        c = 0
+        for muscle in muscles_name:
+            muscle_r_activation = data[muscle+'_r'+'activation']
+            muscle_l_activation = data[muscle+'_l'+'activation']
+            gpc_r, shifted_muscle_r_activation = pp.data_by_pgc(time,muscle_r_activation,gl,side='right')
+            gpc_l, shifted_muscle_l_activation = pp.data_by_pgc(time,muscle_l_activation,gl,side='left')
+            muscle_r_activation = np.interp(gait_cycle,gpc_r,shifted_muscle_r_activation, left=np.nan, right=np.nan)
+            muscle_l_activation = np.interp(gait_cycle,gpc_l,shifted_muscle_l_activation, left=np.nan, right=np.nan)
+            muscles_activation[:,c]=nanmean([muscle_r_activation,muscle_l_activation],axis=0)
+            c+=1
+    if integrate == True:
+        c = 0
+        for muscle in muscles_name:
+            muscle_r_activation = data[muscle+'_r'+'activation']
+            muscle_l_activation = data[muscle+'_l'+'activation']
+            muscle_r_activation_area = pp.avg_over_gait_cycle(time,muscle_r_activation,cycle_duration=gl.cycle_end-gl.cycle_start,cycle_start=gl.cycle_start)
+            muscle_l_activation_area = pp.avg_over_gait_cycle(time,muscle_l_activation,cycle_duration=gl.cycle_end-gl.cycle_start,cycle_start=gl.cycle_start)
+            muscles_activation_area[c]= muscle_r_activation_area + muscle_l_activation_area
+            c+=1
+    if activation == True and integrate == True:
+        return muscles_activation,muscles_activation_area
+    elif activation == True and integrate == False:
+        return muscles_activation
+    elif activation == False and integrate == True:
+        return muscles_activation_area
+    else:
+        raise Exception('Wrong conditions.')
 
 
 def muscles_power(Subject_Moment_Dic,Subject_Speed_Dic,raw_data=False):
@@ -277,8 +317,7 @@ def muscles_power(Subject_Moment_Dic,Subject_Speed_Dic,raw_data=False):
         return musclespower_u_r,musclespower_u_l
     else:
         return musclespower
-    
-    
+     
 ################################################################# 
 # Metabolic and actuators energy calculation using their processed data
 #****************************************************************
@@ -469,7 +508,7 @@ def metabolic_energy_mass_added_pareto(unassisted_metabolic,InertialProp_Dic,cal
 #####################################################################################
 # Functions related to pareto data
 #****************************************************************
-def pareto_data_extraction(Subject_Dic,loadcond='noload',calculatenergy=True):
+def pareto_data_extraction(Subject_Dic,loadcond='noload',calculatenergy=True,calc_musclesmetabolics=True):
     """This function is designed to get the configuration and optimal force that has been used to perform
     simulations and reporting most of the needed data. This function calculates the following data:
     
@@ -497,6 +536,8 @@ def pareto_data_extraction(Subject_Dic,loadcond='noload',calculatenergy=True):
     elif 'noloaded/Subject12_NoLoaded_Dataset' in Directory :
         print('trial number has been changed to get match with simulation files in subject 12 noloaded')
         TrialNo = '05'
+    whichgroup = 'both'
+    musclesnum = 40
     optimal_force = 1000
     hip_list = [70/1000,60/1000,50/1000,40/1000,30/1000]
     knee_list = [70/1000,60/1000,50/1000,40/1000,30/1000]
@@ -521,15 +562,20 @@ def pareto_data_extraction(Subject_Dic,loadcond='noload',calculatenergy=True):
     MetabolicEnergy_FromPower_Data = np.zeros(len(hip_list)*len(knee_list))
     HipActuator_Torque_Data = np.zeros([1000,len(hip_list)*len(knee_list)])
     KneeActuator_Torque_Data = np.zeros([1000,len(hip_list)*len(knee_list)])
+    HipJoint_Kinematics_Data = np.zeros([1000,len(hip_list)*len(knee_list)])
+    KneeJoint_Kinematics_Data = np.zeros([1000,len(hip_list)*len(knee_list)])
     HipActuator_Power_Data = np.zeros([1000,len(hip_list)*len(knee_list)])
     KneeActuator_Power_Data = np.zeros([1000,len(hip_list)*len(knee_list)])
     Metabolics_Power_Data = np.zeros([1000,len(hip_list)*len(knee_list)])
+    MusclesMetabolic_Data = np.zeros([len(hip_list)*len(knee_list),musclesnum])
     c = 0
     # Following part extracts the data for a subject
     for hip_max_control in hip_list:
         for knee_max_control in knee_list:
             # Directory of each .sto files
             actuator_torque_data_dir= '../subject{}/{}/H{}K{}/loadedwalking_subject{}_{}_free_trial{}_cmc_Actuation_force.sto'\
+            .format(SubjectNo,Directory,int(hip_max_control*optimal_force),int(knee_max_control*optimal_force),SubjectNo,loadcond,TrialNo)
+            joint_kinematics_dir = '../subject{}/{}/H{}K{}/loadedwalking_subject{}_{}_free_trial{}_cmc_Kinematics_q.sto'\
             .format(SubjectNo,Directory,int(hip_max_control*optimal_force),int(knee_max_control*optimal_force),SubjectNo,loadcond,TrialNo)
             actuator_power_data_dir= '../subject{}/{}/H{}K{}/loadedwalking_subject{}_{}_free_trial{}_cmc_Actuation_power.sto'\
             .format(SubjectNo,Directory,int(hip_max_control*optimal_force),int(knee_max_control*optimal_force),SubjectNo,loadcond,TrialNo)
@@ -542,6 +588,8 @@ def pareto_data_extraction(Subject_Dic,loadcond='noload',calculatenergy=True):
                 unsimulated.append('Subject{}_{}_H{}K{}'.format(SubjectNo,Directory,int(hip_max_control*optimal_force),int(knee_max_control*optimal_force)))
                 hip_actuator_torque = np.ones(1000)*(np.nan)
                 knee_actuator_torque = np.ones(1000)*(np.nan)
+                hip_joint_kinematics = np.ones(1000)*(np.nan)
+                knee_joint_kinematics = np.ones(1000)*(np.nan)
                 hip_actuator_power = np.ones(1000)*(np.nan)
                 knee_actuator_power = np.ones(1000)*(np.nan)
                 metabolic_power = np.ones(1000)*(np.nan)
@@ -552,6 +600,7 @@ def pareto_data_extraction(Subject_Dic,loadcond='noload',calculatenergy=True):
                     Regen_KneeActuatorEnergy_Data[c] = np.nan
                     HipActuator_MaxPower_Data[c]  = np.nan
                     KneeActuator_MaxPower_Data[c] = np.nan
+                    MusclesMetabolic_Data[c,:] = np.nan
                     HipActuator_Positive_MeanPower_Data[c]  = np.nan
                     KneeActuator_Positive_MeanPower_Data[c] = np.nan
                     HipActuator_Negative_MeanPower_Data[c]  = np.nan
@@ -585,6 +634,16 @@ def pareto_data_extraction(Subject_Dic,loadcond='noload',calculatenergy=True):
                                     "Left_Parameter":'Knee_Left_Actuator',
                                                 "gl": gl}
                 knee_actuator_power = data_extraction(Subject_Dic=data_extraction_dic)
+                data_extraction_dic = {"Directory":joint_kinematics_dir,
+                                    "Right_Parameter":'hip_flexion_r',
+                                    "Left_Parameter":'hip_flexion_l',
+                                                "gl": gl}
+                hip_joint_kinematics = data_extraction(Subject_Dic=data_extraction_dic)
+                data_extraction_dic = {"Directory":joint_kinematics_dir,
+                                    "Right_Parameter":'knee_angle_r',
+                                    "Left_Parameter":'knee_angle_l',
+                                                "gl": gl}
+                knee_joint_kinematics = data_extraction(Subject_Dic=data_extraction_dic)
                 # Energy calculations
                 if calculatenergy == True:
                     energy_dic = {"Directory":actuator_power_data_dir,
@@ -637,9 +696,17 @@ def pareto_data_extraction(Subject_Dic,loadcond='noload',calculatenergy=True):
                     Regen_KneeActuatorEnergy_FromPower_Data[c] = knee_actuator_energy_from_power[1]
                     MetabolicEnergy_FromPower_Data[c] = metabolic_energy_from_power
                     Metabolics_Power_Data[:,c] = metabolic_power
+                if calc_musclesmetabolics == True:
+                    energy_dic = {"Directory":metabolic_power_data_dir,
+                                        "gl": gl,
+                              "Subject_Mass": subject_mass}
+                    muscles_metabolics = muscles_metabolic_rate(energy_dic)
+                    MusclesMetabolic_Data[c,:] = muscles_metabolics
             # Storing the processed data into specificed numpy ndarrays
             HipActuator_Torque_Data[:,c]  = hip_actuator_torque
             KneeActuator_Torque_Data[:,c] = knee_actuator_torque
+            HipJoint_Kinematics_Data[:,c]  = hip_joint_kinematics
+            KneeJoint_Kinematics_Data[:,c] = knee_joint_kinematics
             HipActuator_Power_Data[:,c]   = hip_actuator_power
             KneeActuator_Power_Data[:,c]  = knee_actuator_power
             # update counter
@@ -651,7 +718,8 @@ def pareto_data_extraction(Subject_Dic,loadcond='noload',calculatenergy=True):
            Regen_HipActuatorEnergy_FromPower_Data,Regen_KneeActuatorEnergy_FromPower_Data,\
            HipActuator_MaxPower_Data,KneeActuator_MaxPower_Data,\
            HipActuator_Positive_MeanPower_Data,KneeActuator_Positive_MeanPower_Data,\
-           HipActuator_Negative_MeanPower_Data,KneeActuator_Negative_MeanPower_Data
+           HipActuator_Negative_MeanPower_Data,KneeActuator_Negative_MeanPower_Data,\
+           HipJoint_Kinematics_Data,KneeJoint_Kinematics_Data,MusclesMetabolic_Data
 
 
 def pareto_data_subjects(configuration,loadcond='noload'):
@@ -702,10 +770,12 @@ def pareto_data_subjects(configuration,loadcond='noload'):
     MetabolicEnergy_fromPower_Data = np.zeros(len(subjects)*len(trials_num)*len(hip_list)*len(knee_list))
     HipActuator_Torque_Data = np.zeros([1000,len(subjects)*len(trials_num)*len(hip_list)*len(knee_list)])
     KneeActuator_Torque_Data = np.zeros([1000,len(subjects)*len(trials_num)*len(hip_list)*len(knee_list)])
+    HipJoint_Kinematics_Data = np.zeros([1000,len(subjects)*len(trials_num)*len(hip_list)*len(knee_list)])
+    KneeJoint_Kinematics_Data = np.zeros([1000,len(subjects)*len(trials_num)*len(hip_list)*len(knee_list)])
     HipActuator_Power_Data = np.zeros([1000,len(subjects)*len(trials_num)*len(hip_list)*len(knee_list)])
     KneeActuator_Power_Data = np.zeros([1000,len(subjects)*len(trials_num)*len(hip_list)*len(knee_list)])
     Metabolic_Power_Data = np.zeros([1000,len(subjects)*len(trials_num)*len(hip_list)*len(knee_list)])
-    
+    MusclesMetabolic_Data = np.zeros([len(subjects)*len(trials_num)*len(hip_list)*len(knee_list),40])
     c = 0
     for i in subjects:
         for j in trials_num:
@@ -728,12 +798,15 @@ def pareto_data_subjects(configuration,loadcond='noload'):
             knee_energy,metabolics_energy,hip_energy_frompower,knee_energy_frompower,\
             metabolics_energy_frompower,metabolic_power,unsuccessful,regen_hip_energy,regen_knee_energy,\
             regen_hip_energy_frompower, regen_knee_energy_frompower,hip_maxpower,knee_maxpower,\
-            hip_meanpower_pos,knee_meanpower_pos,hip_meanpower_neg,knee_meanpower_neg= \
+            hip_meanpower_pos,knee_meanpower_pos,hip_meanpower_neg,knee_meanpower_neg,\
+            hip_joint_kinematics,knee_joint_kinematics,muscles_metabolic= \
             pareto_data_extraction(Subject_Dictionary,loadcond=loadcond)
             # saving data into initialized variables
             unsimulated.append(unsuccessful)
             HipActuator_Torque_Data[:,c:c+len(hip_list)*len(knee_list)]  = hip_torque
             KneeActuator_Torque_Data[:,c:c+len(hip_list)*len(knee_list)] = knee_torque
+            HipJoint_Kinematics_Data[:,c:c+len(hip_list)*len(knee_list)]  = hip_joint_kinematics
+            KneeJoint_Kinematics_Data[:,c:c+len(hip_list)*len(knee_list)] = knee_joint_kinematics
             HipActuator_Power_Data[:,c:c+len(hip_list)*len(knee_list)]   = hip_power
             KneeActuator_Power_Data[:,c:c+len(hip_list)*len(knee_list)]  = knee_power
             HipActuatorEnergy_Data[c:c+len(hip_list)*len(knee_list)]     = hip_energy
@@ -753,6 +826,7 @@ def pareto_data_subjects(configuration,loadcond='noload'):
             Regen_HipActuatorEnergy_fromPower_Data[c:c+len(hip_list)*len(knee_list)]     = regen_hip_energy_frompower
             Regen_KneeActuatorEnergy_fromPower_Data[c:c+len(hip_list)*len(knee_list)]    = regen_knee_energy_frompower
             MetabolicEnergy_fromPower_Data[c:c+len(hip_list)*len(knee_list)]       = metabolics_energy
+            MusclesMetabolic_Data[c:c+len(hip_list)*len(knee_list),:] = muscles_metabolic
             c+=len(hip_list)*len(knee_list)
     return HipActuator_Torque_Data,KneeActuator_Torque_Data,HipActuator_Power_Data,KneeActuator_Power_Data,\
             HipActuatorEnergy_Data,KneeActuatorEnergy_Data,MetabolicEnergy_Data,\
@@ -760,8 +834,10 @@ def pareto_data_subjects(configuration,loadcond='noload'):
             Metabolic_Power_Data,Regen_HipActuatorEnergy_Data,Regen_KneeActuatorEnergy_Data,\
             Regen_HipActuatorEnergy_fromPower_Data,Regen_KneeActuatorEnergy_fromPower_Data,\
             HipActuator_MaxPower_Data,KneeActuator_MaxPower_Data,\
-           HipActuator_Positive_MeanPower_Data,KneeActuator_Positive_MeanPower_Data,\
-           HipActuator_Negative_MeanPower_Data,KneeActuator_Negative_MeanPower_Data,unsimulated
+            HipActuator_Positive_MeanPower_Data,KneeActuator_Positive_MeanPower_Data,\
+            HipActuator_Negative_MeanPower_Data,KneeActuator_Negative_MeanPower_Data,\
+            HipJoint_Kinematics_Data,KneeJoint_Kinematics_Data,MusclesMetabolic_Data,\
+            unsimulated
 #####################################################################################
 # Functions related to data extraction which will be used for extracting RRA data, Unassisted subjects
 # data and finally data for the specific weights. This data extraction functions include muscles moment,
@@ -1264,7 +1340,8 @@ def idealdevice_data_extraction(Subject_Dic,loadcond='noload',calculatenergy=Tru
             hip_proc_actuator_regen_energy,knee_proc_actuator_regen_energy
 
 
-def unassist_idealdevice_data_subjects(configuration,loadcond='noload',metabolicrate=True,musclesmoment=True,musclesactivation=True,regenergy=False):
+def unassist_idealdevice_data_subjects(configuration,loadcond='noload',metabolicrate=True,musclesmoment=True,
+                                        musclesactivation=True,regenergy=False,musclesmetabolic=True):
     """This function generalize the specific_weight_data_extraction for all subjects and additionally it provides muscles activation
     and muscles generated moment.
     -Default setting for muscle activation is nine representitive muscles of the lower extermity. It can be changed to knee/hip/both.
@@ -1278,6 +1355,7 @@ def unassist_idealdevice_data_subjects(configuration,loadcond='noload',metabolic
     trials_num = ['01','02','03']
     whichgroup='nine'
     musclesgroup = 9
+    muscles_num = 40
     # initialization
     KneeActuatorEnergy_Data = np.zeros(len(subjects)*len(trials_num))
     HipActuatorEnergy_Data = np.zeros(len(subjects)*len(trials_num))
@@ -1301,8 +1379,10 @@ def unassist_idealdevice_data_subjects(configuration,loadcond='noload',metabolic
     HipMusclePower_Data = np.zeros([1000,len(subjects)*len(trials_num)])
     KneeMusclePower_Data = np.zeros([1000,len(subjects)*len(trials_num)])
     MuscleActivation_Data = np.zeros([1000,len(subjects)*len(trials_num)*musclesgroup])
+    Muscles_Metabolic_Data = np.zeros([len(subjects)*len(trials_num),muscles_num])
     c = 0
     c_m = 0
+    c_ma = 0
     for i in subjects:
         for j in trials_num:
             # subject/trial/directory construction
@@ -1347,7 +1427,7 @@ def unassist_idealdevice_data_subjects(configuration,loadcond='noload',metabolic
             if musclesactivation == True:
                 muscles_activation = group_muscles_activation(Subject_Dictionary,whichgroup=whichgroup,loadcond=loadcond)
                 MuscleActivation_Data[:,c_m:c_m+musclesgroup] = muscles_activation
-                c_m+=musclesgroup
+                c_m += musclesgroup
             if musclesmoment == True:
                 actuator_speed_data_dir= '../subject{}/{}/Cycle{}/loadedwalking_subject{}_{}_free_trial{}_cmc_Kinematics_u.sto'\
                                         .format(i,files_dir,j,i,loadcond,trial)
@@ -1393,6 +1473,10 @@ def unassist_idealdevice_data_subjects(configuration,loadcond='noload',metabolic
                 MetabolicEnergy_Proc_Data[c] = metabolic_proc_energy
                 MetabolicEnergy_Data[c] = metabolic_energy
             c+=1
+            if musclesmetabolic == True:
+                muscles_metabolic = muscles_metabolic_rate(energy_dic)
+                Muscles_Metabolic_Data[c_ma:c_ma+muscles_num,:] = muscles_metabolic
+                c_ma += muscles_num
     if configuration != 'UnAssist':
         return HipActuator_Torque_Data,KneeActuator_Torque_Data,HipActuator_Power_Data,KneeActuator_Power_Data,\
             HipActuator_Speed_Data,KneeActuator_Speed_Data,HipActuatorEnergy_Data,KneeActuatorEnergy_Data,\
@@ -1400,9 +1484,9 @@ def unassist_idealdevice_data_subjects(configuration,loadcond='noload',metabolic
             HipMuscleMoment_Data,KneeMuscleMoment_Data,\
             HipActuatorEnergy_Proc_Data,KneeActuatorEnergy_Proc_Data,\
             Regen_HipActuatorEnergy_Proc_Data,Regen_KneeActuatorEnergy_Proc_Data,MetabolicEnergy_Proc_Data,\
-            HipMusclePower_Data,KneeMusclePower_Data
+            HipMusclePower_Data,KneeMusclePower_Data,Muscles_Metabolic_Data
     else:
-        return MetabolicEnergy_Data,MuscleActivation_Data,HipMuscleMoment_Data,KneeMuscleMoment_Data,MetabolicEnergy_Proc_Data
+        return MetabolicEnergy_Data,MuscleActivation_Data,HipMuscleMoment_Data,KneeMuscleMoment_Data,MetabolicEnergy_Proc_Data,Muscles_Metabolic_Data
 #####################################################################################
 #####################################################################################
 # TODO reserve/residual forces and pErr control.
