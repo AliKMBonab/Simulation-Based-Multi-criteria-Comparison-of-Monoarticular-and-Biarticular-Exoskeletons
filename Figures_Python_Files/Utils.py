@@ -2138,3 +2138,180 @@ def paretofront_barplot(plot_dic,indices,loadcond):
     for i in reversed(indices):
         indices_str.append(label[i-1])
     plt.xticks(index + bar_width / 2,indices_str )
+
+######################################################################
+# Plot and analyses related functions for muscles metabolic rate and stiffness
+def muscles_whisker_bar_plot(data_1,data_2,data_3=None,data_4=None,
+                             which_muscles='all',which_plot='whisker',
+                             nrows=5,ncols=8,xticklabel=['noload','loaded']):
+    """This function has been developed to study the metabolic rate of each muscle
+
+    Arguments:\n
+        data_1 {numpy ndarray} -- [first dataset]\n
+        data_2 {numpy ndarray} -- [second dataset]\n
+    \n
+    Keyword Arguments:\n
+        data_3 {numpy ndarray} -- [third dataset (optional)] (default: {None})\n
+        data_4 {numpy ndarray} -- [fourth dataset (optional)] (default: {None})\n
+        which_muscles {str} -- [list of interested muscles] (default: {'all'})\n
+        which_plot {str} -- [bar plot or whisker plot] (default: {'whisker'})\n
+        nrows {int} -- [number of rows] (default: {6})\n
+        ncols {int} -- [number of columns] (default: {8})\n
+        xticklabel {list} -- [label of each x ticks] (default: {['noload','loaded']})
+    """
+    muscles_name = ['add_brev','add_long','add_mag3','add_mag4','add_mag2','add_mag1','bifemlh','bifemsh','ext_dig',\
+                    'ext_hal','flex_dig','flex_hal','lat_gas','med_gas','glut_max1','glut_max2','glut_max3','glut_med1',\
+                    'glut_med2','glut_med3','glut_min1','glut_min2','glut_min3','grac','iliacus','per_brev','per_long',\
+                    'peri','psoas','rect_fem','sar','semimem','semiten','soleus','tfl','tib_ant','tib_post','vas_int',\
+                    'vas_lat','vas_med']
+    # handling the selected muscles and concatenating datasets
+    if which_muscles == 'all':
+        names = muscles_name
+        c=0
+        if data_3 == None and data_4 == None:
+            data = np.zeros([data_1.shape[0],len(muscles_name)*2])
+            for i in range(len(muscles_name)):
+                data[:,c] = data_1[:,i]
+                data[:,c+1] = data_2[:,i]
+                c+=2
+        elif data_3 != None and data_4 != None:
+            data = np.zeros([data_1.shape[0],len(muscles_name)*4])
+            for i in range(len(muscles_name)):
+                data[:,c] = data_1[:,i]
+                data[:,c+1] = data_2[:,i]
+                data[:,c+2] = data_3[:,i]
+                data[:,c+3] = data_4[:,i]
+                c+=4
+        elif data_3 != None and data_4 == None:
+            data = np.zeros([data_1.shape[0],len(muscles_name)*3])
+            for i in range(len(muscles_name)):
+                data[:,c] = data_1[:,i]
+                data[:,c+1] = data_2[:,i]
+                data[:,c+2] = data_3[:,i]
+                c+=3
+        elif data_3 == None and data_4 != None:
+            data = np.zeros([data_1.shape[0],len(muscles_name)*3])
+            for i in range(len(muscles_name)):
+                data[:,c] = data_1[:,i]
+                data[:,c+1] = data_2[:,i]
+                data[:,c+2] = data_4[:,i]
+                c+=3
+    # if selected muscles need to be plotted 
+    else:
+        names = which_muscles
+        c = 0
+        data_1_cropped = np.zeros([data_1.shape[0],len(which_muscles)])
+        data_2_cropped = np.zeros([data_2.shape[0],len(which_muscles)])
+        data_3_cropped = np.zeros([data_3.shape[0],len(which_muscles)])
+        data_4_cropped = np.zeros([data_4.shape[0],len(which_muscles)])
+        if data_3 == None and data_4 == None:
+            for i,m in enumerate(muscles_name):
+                if m in which_muscles:
+                    data_1_cropped[:,c] = data_1[:,i]
+                    data_2_cropped[:,c] = data_2[:,i]
+                    c+=1
+        elif data_3 != None and data_4 == None:
+            for i,m in enumerate(muscles_name):
+                if m in which_muscles:
+                    data_1_cropped[:,c] = data_1[:,i]
+                    data_2_cropped[:,c] = data_2[:,i]
+                    data_3_cropped[:,c] = data_3[:,i]
+                    c+=1
+        elif data_3 == None and data_4 != None:
+            for i,m in enumerate(muscles_name):
+                if m in which_muscles:
+                    data_1_cropped[:,c] = data_1[:,i]
+                    data_2_cropped[:,c] = data_2[:,i]
+                    data_4_cropped[:,c] = data_4[:,i]
+                    c+=1
+        elif data_3 != None and data_4 != None:
+            for i,m in enumerate(muscles_name):
+                if m in which_muscles:
+                    data_1_cropped[:,c] = data_1[:,i]
+                    data_2_cropped[:,c] = data_2[:,i]
+                    data_3_cropped[:,c] = data_3[:,i]
+                    data_4_cropped[:,c] = data_4[:,i] 
+                    c+=1   
+        c=0
+        if data_3 == None and data_4 == None:
+            data = np.zeros([data_1_cropped.shape[0],len(which_muscles)*2])
+            for i in range(len(which_muscles)):
+                data[:,c] = data_1_cropped[:,i]
+                data[:,c+1] = data_2_cropped[:,i]
+                c+=2
+        elif data_3 != None and data_4 != None:
+            data = np.zeros([data_1_cropped.shape[0],len(which_muscles)*4])
+            for i in range(len(which_muscles)):
+                data[:,c] = data_1_cropped[:,i]
+                data[:,c+1] = data_2_cropped[:,i]
+                data[:,c+2] = data_3_cropped[:,i]
+                data[:,c+3] = data_4_cropped[:,i]
+                c+=4
+        elif data_3 != None and data_4 == None:
+            data = np.zeros([data_1_cropped.shape[0],len(which_muscles)*3])
+            for i in range(len(which_muscles)):
+                data[:,c] = data_1_cropped[:,i]
+                data[:,c+1] = data_2_cropped[:,i]
+                data[:,c+2] = data_3_cropped[:,i]
+                c+=3
+        elif data_3 == None and data_4 != None:
+            data = np.zeros([data_1_cropped.shape[0],len(which_muscles)*3])
+            for i in range(len(which_muscles)):
+                data[:,c] = data_1_cropped[:,i]
+                data[:,c+1] = data_2_cropped[:,i]
+                data[:,c+2] = data_4_cropped[:,i]
+                c+=3
+    # box plots
+    c=0
+    if which_plot.lower() == 'whisker':
+        for i in range(len(names)):
+            ax = plt.subplot(nrows,ncols,i+1)
+            if data_3 == None and data_4 == None:
+                x = [1,2]
+                bp = plt.boxplot([data[:,c],data[:,c+1]], patch_artist=True)
+                c+=2
+            elif data_3 != None and data_4 != None:
+                x = [1,2,3,4]
+                bp = plt.boxplot(data[:,c:c+3], patch_artist=True)
+                c+=4
+            elif (data_3 != None | data_4 != None) and not (data_3 != None and data_4 != None):
+                x = [1,2,3]
+                bp = plt.boxplot(data[:,c:c+2], patch_artist=True)
+                c+=3
+            beautiful_boxplot(bp)
+            ax.set_xticks(x)
+            ax.set_title(names[i])
+            ax.set_xticklabels(xticklabel)
+            no_top_right(ax)
+            plt.tight_layout()
+    else:
+        for i in range(names):
+            ax = plt.subplot(nrows,ncols,i+1)
+            if data_3 == None and data_4 == None:
+                bp = plt.bar(xticklabel, np.nanmean(data[:,c:c+1],axis=0), yerr=np.nanstd(data[c:c+1],axis=0),\
+                             align='center',color=mycolors['manatee grey'],width=0.35, ecolor='black', capsize=10)
+                bp[0].set_color(mycolors['pastel blue'])
+                bp[1].set_color(mycolors['deep space sparkle'])
+                c+=2
+            elif data_3 != None and data_4 != None:
+                bp = plt.bar(xticklabel, np.nanmean(data[:,c:c+3],axis=0), yerr=np.nanstd(data[c:c+1],axis=0),\
+                             align='center',color=mycolors['manatee grey'],width=0.35, ecolor='black', capsize=10)
+                bp[0].set_color(mycolors['pastel blue'])
+                bp[1].set_color(mycolors['deep space sparkle'])
+                bp[2].set_color(mycolors['crimson red'])
+                bp[3].set_color(mycolors['olympic blue'])
+                c+=4
+            elif (data_3 != None | data_4 != None) and not (data_3 != None and data_4 != None):
+                bp = plt.bar(xticklabel, np.nanmean(data[:,c:c+2],axis=0), yerr=np.nanstd(data[c:c+1],axis=0),\
+                             align='center',color=mycolors['manatee grey'],width=0.35, ecolor='black', capsize=10)
+                bp[0].set_color(mycolors['pastel blue'])
+                bp[1].set_color(mycolors['deep space sparkle'])
+                bp[2].set_color(mycolors['crimson red'])
+                c+=3
+            beautiful_boxplot(bp)
+            ax.set_xticks(x)
+            ax.set_title(names[i])
+            ax.set_xticklabels(xticklabel)
+            no_top_right(ax)
+            plt.tight_layout()
+

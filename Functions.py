@@ -1022,7 +1022,7 @@ def specific_weight_data_subjects(configuration,HipWeight,KneeWeight,loadcond='n
                                "subject_mass":subject_mass}
             if regenergy == False:
                 hip_torque,knee_torque,hip_power,knee_power,hip_speed,\
-                knee_speed,hip_energy,knee_energy,metabolics_energy,
+                knee_speed,hip_energy,knee_energy,metabolics_energy,\
                 hip_maximum_power,hip_avg_positive_power,hip_avg_negative_power,\
                 knee_maximum_power,knee_avg_positive_power,knee_avg_negative_power = \
                 specific_weight_data_extraction(Subject_Dictionary,Hip_Weight=HipWeight,Knee_Weight=KneeWeight,loadcond=loadcond)
@@ -1472,11 +1472,10 @@ def unassist_idealdevice_data_subjects(configuration,loadcond='noload',metabolic
                 _,metabolic_proc_energy = metabolic_energy_instant_power(energy_dic)
                 MetabolicEnergy_Proc_Data[c] = metabolic_proc_energy
                 MetabolicEnergy_Data[c] = metabolic_energy
-            c+=1
             if musclesmetabolic == True:
                 muscles_metabolic = muscles_metabolic_rate(energy_dic)
-                Muscles_Metabolic_Data[c_ma:c_ma+muscles_num,:] = muscles_metabolic
-                c_ma += muscles_num
+                Muscles_Metabolic_Data[c,:] = muscles_metabolic
+            c+=1
     if configuration != 'UnAssist':
         return HipActuator_Torque_Data,KneeActuator_Torque_Data,HipActuator_Power_Data,KneeActuator_Power_Data,\
             HipActuator_Speed_Data,KneeActuator_Speed_Data,HipActuatorEnergy_Data,KneeActuatorEnergy_Data,\

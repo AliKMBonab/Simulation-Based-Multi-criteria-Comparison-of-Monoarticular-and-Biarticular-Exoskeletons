@@ -24,15 +24,19 @@ trials_num = ['01','02','03']
 gait_cycle = np.linspace(0,100,1000)
 #####################################################################################
 # Reading CSV files into a dictionary and constructing gls
+rra_dataset = utils.csv2numpy('./Data/RRA/rra_final_data.csv') 
 # muscles moment dataset
-directory = 'D:/Ali.K.M.Bonab/Walking_Mass_Inertia_Effect/Data/Data/Unassist/*_musclesmoment.csv'
+directory = './Data/Unassist/*_musclesmoment.csv'
 files = enumerate(glob.iglob(directory), 1)
 musclesmoment_dataset = {pathlib.PurePath(f[1]).stem: np.loadtxt(f[1], delimiter=',') for f in files}
 # muscles activation dataset
-directory = 'D:/Ali.K.M.Bonab/Walking_Mass_Inertia_Effect/Data/Data/Unassist/*_activation.csv'
+directory = './Data/Unassist/*_activation.csv'
 files = enumerate(glob.iglob(directory), 1)
 musclesactivation_dataset = {pathlib.PurePath(f[1]).stem: np.loadtxt(f[1], delimiter=',') for f in files}
-
+# muscles metabolic rate
+directory = './Data/Unassist/*_metabolic_rate.csv'
+files = enumerate(glob.iglob(directory), 1)
+musclesmetabolicrate_dataset = {pathlib.PurePath(f[1]).stem: np.loadtxt(f[1], delimiter=',') for f in files}
 # gls
 gl_noload = {'noload_subject{}_trial{}'.format(i,j): utils.construct_gl_mass_side(subjectno=i,trialno=j,loadcond='noload') for i in subjects for j in trials_num}
 gl_loaded = {'loaded_subject{}_trial{}'.format(i,j): utils.construct_gl_mass_side(subjectno=i,trialno=j,loadcond='loaded') for i in subjects for j in trials_num}
@@ -133,3 +137,12 @@ plt.legend(loc='best',frameon=False)
 plt.show()
 fig.tight_layout()
 fig.savefig('./Figures/Unassist/NineMusclesActivation.pdf',orientation='landscape',bbox_inches='tight')
+
+#*****************************
+
+fig = plt.figure(num='Muscles Activation',figsize=(16.8, 13.6))
+utils.muscles_whisker_bar_plot(musclesmetabolicrate_dataset['noload_muscles_metabolic_rate'],musclesmetabolicrate_dataset['loaded_muscles_metabolic_rate'] )
+plt.legend(loc='best',frameon=False)
+plt.show()
+fig.tight_layout()
+fig.savefig('./Figures/Unassist/MusclesMetabolicRate.pdf',orientation='landscape',bbox_inches='tight')
