@@ -25,14 +25,14 @@ trials_num = ['01','02','03']
 gait_cycle = np.linspace(0,100,1000)
 #####################################################################################
 # Reading CSV files into a dictionary and constructing gls
-rra_dataset = utils.csv2numpy('D:/Ali.K.M.Bonab/Walking_Mass_Inertia_Effect/Data/Data/RRA/rra_final_data.csv') 
-unassist_dataset = utils.csv2numpy('D:/Ali.K.M.Bonab/Walking_Mass_Inertia_Effect/Data/Data/Unassist/unassist_final_data.csv') 
+rra_dataset = utils.csv2numpy('./Data/RRA/rra_final_data.csv') 
+unassist_dataset = utils.csv2numpy('./Data/Unassist/unassist_final_data.csv') 
 # assisted subjects energy dataset
-directory = 'D:/Ali.K.M.Bonab/Walking_Mass_Inertia_Effect/Data/Data/Ideal/*_energy.csv'
+directory = './Data/Ideal/*_energy.csv'
 files = enumerate(glob.iglob(directory), 1)
 assisted_energy_dataset = {pathlib.PurePath(f[1]).stem: np.loadtxt(f[1], delimiter=',') for f in files}
 # unassisted subjects energy dataset
-directory = 'D:/Ali.K.M.Bonab/Walking_Mass_Inertia_Effect/Data/Data/Unassist/*_energy.csv'
+directory = './Data/Unassist/*_energy.csv'
 files = enumerate(glob.iglob(directory), 1)
 unassisted_energy_dataset = {pathlib.PurePath(f[1]).stem: np.loadtxt(f[1], delimiter=',') for f in files}
 # gls
@@ -380,7 +380,7 @@ names = ['unassist,\n loaded','bi, loaded','unassist,\n noload','bi, noload']
 x = np.arange(1,len(names)+1,1)
 data = [utils.mean_over_trials(unassisted_energy_dataset['loaded_metabolics_energy'],ax=0),utils.mean_over_trials(unassisted_energy_dataset['noload_metabolics_energy'],ax=0),\
         utils.mean_over_trials(assisted_energy_dataset['biarticular_ideal_loaded_metabolics_energy'],ax=0),utils.mean_over_trials(assisted_energy_dataset['biarticular_ideal_noload_metabolics_energy'],ax=0)]
-fig, ax = plt.subplots(nrows=2,ncols=2,figsize=(12.6,15.8))
+fig, ax = plt.subplots(nrows=3,ncols=2,figsize=(12.5,20.8))
 bp = ax[0,0].boxplot(data, patch_artist=True)
 utils.beautiful_boxplot(bp)
 ax[0,0].tick_params(axis='both',direction='in')
@@ -414,11 +414,11 @@ data = [utils.mean_over_trials(assisted_energy_dataset['biarticular_ideal_loaded
 bp = ax[1,0].boxplot(data, patch_artist=True)
 utils.beautiful_boxplot(bp)
 ax[1,0].tick_params(axis='both',direction='in')
-ax[1,0].set_ylabel('Actuator Energy (J/Kg)')
+ax[1,0].set_ylabel('Actuator Power (W/Kg)')
 ax[1,0].set_xticks(x)
 ax[1,0].set_yticks([0.5,1,1.5,2,2.5,3])
 ax[1,0].set_xticklabels(names)
-ax[1,0].set_title('biarticular, actutors energy')
+ax[1,0].set_title('biarticular, actutors power')
 utils.no_top_right(ax[1,0])
 
 # Monoarticular Loaded Vs Noload
@@ -429,13 +429,42 @@ data = [utils.mean_over_trials(assisted_energy_dataset['monoarticular_ideal_load
 bp = ax[1,1].boxplot(data, patch_artist=True)
 utils.beautiful_boxplot(bp)
 ax[1,1].tick_params(axis='both',direction='in')
-ax[1,1].set_ylabel('Actuator Energy (J/Kg)')
+ax[1,1].set_ylabel('Actuator Power (W/Kg)')
 ax[1,1].set_xticks(x)
 ax[1,1].set_yticks([0.5,1,1.5,2,2.5,3])
 ax[1,1].set_xticklabels(names)
-ax[1,1].set_title('monoarticular, actuators energy')
+ax[1,1].set_title('monoarticular, actuators power')
 utils.no_top_right(ax[1,1])
+# Loaded Biarticular Vs Monoarticular
+names = ['bi hip,\n loaded','bi knee,\n loaded','mono hip,\n loaded','mono knee,\n loaded']
+x = np.arange(1,len(names)+1,1)
+data = [utils.mean_over_trials(assisted_energy_dataset['biarticular_ideal_loaded_hipactuator_energy'],ax=0),utils.mean_over_trials(assisted_energy_dataset['biarticular_ideal_loaded_kneeactuator_energy'],ax=0),\
+        utils.mean_over_trials(assisted_energy_dataset['monoarticular_ideal_loaded_hipactuator_energy'],ax=0),utils.mean_over_trials(assisted_energy_dataset['monoarticular_ideal_loaded_kneeactuator_energy'],ax=0)]
+bp = ax[2,0].boxplot(data, patch_artist=True)
+utils.beautiful_boxplot(bp)
+ax[2,0].tick_params(axis='both',direction='in')
+ax[2,0].set_ylabel('Actuator Power (W/Kg)')
+ax[2,0].set_xticks(x)
+ax[2,0].set_yticks([0.5,1,1.5,2,2.5,3])
+ax[2,0].set_xticklabels(names)
+ax[2,0].set_title('actutors power, loaded condition')
+utils.no_top_right(ax[2,0])
+
+# Noload Biarticular Vs Monoarticular
+names = ['bi hip,\n noload','bi knee,\n noload','mono hip,\n noload','mono knee,\n noload']
+x = np.arange(1,len(names)+1,1)
+data = [utils.mean_over_trials(assisted_energy_dataset['biarticular_ideal_noload_hipactuator_energy'],ax=0),utils.mean_over_trials(assisted_energy_dataset['biarticular_ideal_noload_kneeactuator_energy'],ax=0),\
+        utils.mean_over_trials(assisted_energy_dataset['monoarticular_ideal_noload_hipactuator_energy'],ax=0),utils.mean_over_trials(assisted_energy_dataset['monoarticular_ideal_noload_kneeactuator_energy'],ax=0)]
+bp = ax[2,1].boxplot(data, patch_artist=True)
+utils.beautiful_boxplot(bp)
+ax[2,1].tick_params(axis='both',direction='in')
+ax[2,1].set_ylabel('Actuator Power (W/Kg)')
+ax[2,1].set_xticks(x)
+ax[2,1].set_yticks([0.5,1,1.5,2,2.5,3])
+ax[2,1].set_xticklabels(names)
+ax[2,1].set_title('actuators power, noload conditon')
+utils.no_top_right(ax[2,1])
 fig.tight_layout(h_pad=-1, w_pad=-1.5)
-fig.subplots_adjust(top=0.98, bottom=0.075, left=0.100, right=0.975,hspace=0.25,wspace=0.15)
+fig.subplots_adjust(top=0.95, bottom=0.075, left=0.100, right=0.975,hspace=0.40,wspace=0.20)
 plt.show()
 fig.savefig('./Figures/Ideal/Paper_Figure_Energy_BoxPlot.pdf',orientation='landscape',bbox_inches='tight')
