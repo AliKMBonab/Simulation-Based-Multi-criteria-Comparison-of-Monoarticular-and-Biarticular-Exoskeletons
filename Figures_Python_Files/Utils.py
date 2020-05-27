@@ -95,7 +95,10 @@ def csv2numpy(datname):
     # making list of headers seperated by ','
     column_name = line.split(',')
     # eleminating last column name which is '\n'
-    column_name.pop()
+    if column_name[-1] == '\n':
+        column_name.pop()
+    elif '\n' in column_name[-1]:
+        column_name[-1] = column_name[-1].replace('\n','')
     f.close()
     data = np.genfromtxt(datname,delimiter= ',', names=column_name,skip_header=1)
     return data
@@ -2315,3 +2318,84 @@ def muscles_whisker_bar_plot(data_1,data_2,data_3=None,data_4=None,
             no_top_right(ax)
             plt.tight_layout()
 
+def plot_stiffness(plot_dic,load_condition,kinematics_ticks,moment_ticks,ax1,ax2,ax3):
+    """
+    This function has been developed to simultaneously plot moment, kinematics, and stiffness\n
+
+    Arguments:
+        plot_dic {[dict]} -- [loaded_toe_off,noload_toe_off,kinematics,kinematics_std,moment,moment_std,color,toe_off_color,label]
+        load_condition {[str]} -- ['noload','loaded']
+        ** label needs to be general and suffices will be added automatically.
+    """
+    # general required dataset
+    gait_cycle = np.linspace(0,100,1000)
+    if load_condition == 'loaded':
+        toe_off = plot_dic['loaded_toe_off']
+        index = pp.nearest_index(gait_cycle,toe_off)
+    elif load_condition == 'noload':
+        toe_off = plot_dic['noload_toe_off']
+        index = pp.nearest_index(gait_cycle,toe_off)
+    # first plot dataset
+    kinematics = plot_dic['kinematics']
+    moment = plot_dic['moment']
+    kinematics_std = plot_dic['kinematics_std']
+    moment_std = plot_dic['moment_std']
+    color = plot_dic['color']
+    toe_off_color = plot_dic['toe_off_color']
+    label = plot_dic['label']
+    # grids
+    # general conditions
+    ax1.tick_params(axis='both',direction='in')
+    ax2.tick_params(axis='both',direction='in')
+    ax3.tick_params(axis='both',direction='in')
+    # plots
+    #stiffness plot
+    ax1.plot(kinematics,moment,lw=2,color=color,label=label+', {}'.format(load_condition))
+    ax1.hlines(moment[index],np.min(kinematics_ticks),np.max(kinematics_ticks),color=toe_off_color,lw=2,alpha=0.5)
+    ax1.vlines(kinematics[index],np.min(moment_ticks),np.max(moment_ticks),color=toe_off_color,lw=2,alpha=0.5)
+    ax1.hlines(0,np.min(kinematics_ticks),np.max(kinematics_ticks),ls=':',color=mycolors['teal'],lw=1.5,alpha=0.25)
+    ax1.vlines(0,np.min(moment_ticks),np.max(moment_ticks),ls=':',color=mycolors['teal'],lw=1.5,alpha=0.25)
+    
+    no_top_right(ax1)
+    ax1.set_xticks(kinematics_ticks)
+    ax1.set_yticks(moment_ticks)
+    ax1.set_xlim([np.floor(np.min(kinematics_ticks)),np.ceil(np.max(kinematics_ticks))])
+    ax1.set_ylim([np.floor(np.min(moment_ticks)),np.ceil(np.max(moment_ticks))])
+    ax1.set_xlabel('angle (deg)')
+    ax1.set_ylabel('moment (N.m)')
+    ax1.set_title('stiffness')
+    ax1.legend(loc='best',frameon=False)
+
+    # moment plot
+    ax2.fill_between(gait_cycle, moment + moment_std, moment - moment_std, alpha=0.5,linewidth=0.1,color=color) # shaded std
+    ax2.plot(gait_cycle,moment, lw=2,color=color,label=label+' moment,{}'.format(load_condition)) # mean
+    ax2.axvline(toe_off,np.min(moment_ticks),np.max(moment_ticks), lw=2, color=toe_off_color, zorder=0, alpha=0.5) #vertical line
+    ax2.axhline(0,0,100, lw=2, color='grey', zorder=0, alpha=0.75) # horizontal line
+    ax2.set_xticks([0,10,20,30,40,50,60,70,80,90,100])
+    ax2.set_xlim([0,100])
+    ax2.set_yticks(moment_ticks)
+    ax2.set_ylim([np.floor(np.min(moment_ticks)),np.ceil(np.max(moment_ticks))])
+    ax2.set_xlabel('gait cycle (%)')
+    ax2.set_ylabel('moment (N.m)')
+    ax2.set_title('moment')
+    #ax2.legend(loc='best',frameon=False)
+
+    no_top_right(ax2)
+    # moment plot
+    ax3.fill_between(gait_cycle, kinematics + kinematics_std, kinematics - kinematics_std, alpha=0.5,linewidth=0.1,color=color) # shaded std
+    ax3.plot(gait_cycle,kinematics, lw=2,color=color,label=label+' kinematics,{}'.format(load_condition)) # mean
+    ax3.axvline(toe_off,np.min(kinematics_ticks),np.max(kinematics_ticks), lw=2, color=toe_off_color, zorder=0, alpha=0.5) #vertical line
+    ax3.axhline(0,0,100, lw=2, color='grey', zorder=0, alpha=0.75) # horizontal line
+    ax3.set_xticks([0,10,20,30,40,50,60,70,80,90,100])
+    ax3.set_xlim([0,100])
+    ax3.set_yticks(kinematics_ticks)
+    ax3.set_ylim([np.floor(np.min(kinematics_ticks)),np.ceil(np.max(kinematics_ticks))])
+    ax3.set_xlabel('gait cycle (%)')
+    ax3.set_ylabel('kinematics (deg)')
+    ax3.set_title('kinematics')
+    #ax3.legend(loc='best',frameon=False)
+    no_top_right(ax3)
+    # final adjustments and settings
+    plt.tight_layout()
+    
+    

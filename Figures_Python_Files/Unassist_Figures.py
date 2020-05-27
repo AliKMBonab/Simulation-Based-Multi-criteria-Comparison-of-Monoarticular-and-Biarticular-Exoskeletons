@@ -49,11 +49,23 @@ normal_loaded_hipmuscles_moment = utils.normalize_direction_data(musclesmoment_d
 normal_noload_hipmuscles_moment = utils.normalize_direction_data(musclesmoment_dataset['noload_hip_musclesmoment'],gl_noload,direction=True)
 mean_norm_loaded_hipmuscles_moment,std_norm_loaded_hipmuscles_moment = utils.mean_std_over_subjects(normal_loaded_hipmuscles_moment,avg_trials=False)
 mean_norm_noload_hipmuscles_moment,std_norm_noload_hipmuscles_moment = utils.mean_std_over_subjects(normal_noload_hipmuscles_moment,avg_trials=False)
+# not normalized
+loaded_hipmuscles_moment = utils.normalize_direction_data(musclesmoment_dataset['loaded_hip_musclesmoment'],gl_noload,normalize=False,direction=True)
+noload_hipmuscles_moment = utils.normalize_direction_data(musclesmoment_dataset['noload_hip_musclesmoment'],gl_noload,normalize=False,direction=True)
+mean_loaded_hipmuscles_moment,std_loaded_hipmuscles_moment = utils.mean_std_over_subjects(loaded_hipmuscles_moment,avg_trials=False)
+mean_noload_hipmuscles_moment,std_noload_hipmuscles_moment = utils.mean_std_over_subjects(noload_hipmuscles_moment,avg_trials=False)
+
 # knee muscles moment
 normal_loaded_kneemuscles_moment = utils.normalize_direction_data(musclesmoment_dataset['loaded_knee_musclesmoment'],gl_noload,direction=True)
 normal_noload_kneemuscles_moment = utils.normalize_direction_data(musclesmoment_dataset['noload_knee_musclesmoment'],gl_noload,direction=True)
 mean_norm_loaded_kneemuscles_moment,std_norm_loaded_kneemuscles_moment = utils.mean_std_over_subjects(normal_loaded_kneemuscles_moment,avg_trials=False)
 mean_norm_noload_kneemuscles_moment,std_norm_noload_kneemuscles_moment = utils.mean_std_over_subjects(normal_noload_kneemuscles_moment,avg_trials=False)
+# not normalized
+loaded_kneemuscles_moment = utils.normalize_direction_data(musclesmoment_dataset['loaded_knee_musclesmoment'],gl_noload,normalize=False,direction=True)
+noload_kneemuscles_moment = utils.normalize_direction_data(musclesmoment_dataset['noload_knee_musclesmoment'],gl_noload,normalize=False,direction=True)
+mean_loaded_kneemuscles_moment,std_loaded_kneemuscles_moment = utils.mean_std_over_subjects(loaded_kneemuscles_moment,avg_trials=False)
+mean_noload_kneemuscles_moment,std_noload_kneemuscles_moment = utils.mean_std_over_subjects(noload_kneemuscles_moment,avg_trials=False)
+
 # muscles activation
 normal_loaded_muscles_activation = utils.normalize_direction_data(musclesactivation_dataset['loaded_ninemuscles_activation'],gl_noload,direction=False,normalize=False)
 normal_noload_muscles_activation = utils.normalize_direction_data(musclesactivation_dataset['noload_ninemuscles_activation'],gl_noload,direction=False,normalize=False)
@@ -139,10 +151,57 @@ fig.tight_layout()
 fig.savefig('./Figures/Unassist/NineMusclesActivation.pdf',orientation='landscape',bbox_inches='tight')
 
 #*****************************
+# muscles metabolic rate figure
+#fig = plt.figure(num='Muscles Metabolic Rate',figsize=(16.8, 13.6))
+#utils.muscles_whisker_bar_plot(musclesmetabolicrate_dataset['noload_muscles_metabolic_rate'],musclesmetabolicrate_dataset['loaded_muscles_metabolic_rate'] )
+#plt.legend(loc='best',frameon=False)
+#plt.show()
+#fig.tight_layout()
+#fig.savefig('./Figures/Unassist/MusclesMetabolicRate.pdf',orientation='landscape',bbox_inches='tight')
 
-fig = plt.figure(num='Muscles Activation',figsize=(16.8, 13.6))
-utils.muscles_whisker_bar_plot(musclesmetabolicrate_dataset['noload_muscles_metabolic_rate'],musclesmetabolicrate_dataset['loaded_muscles_metabolic_rate'] )
-plt.legend(loc='best',frameon=False)
+# hip joint stiffness
+fig = plt.figure(num='Hip Joint Stiffness',figsize=(12, 10))
+gridsize = (3, 2)
+ax1 = plt.subplot2grid(gridsize, (0, 0), colspan=2, rowspan=2) # stiffness plot
+ax2 = plt.subplot2grid(gridsize, (2, 0)) # kinematics plot
+ax3 = plt.subplot2grid(gridsize, (2, 1)) # moment plot
+# hip loaded case
+hip_stiffness_plot_dic = {'loaded_toe_off':loaded_mean_toe_off,'noload_toe_off':noload_mean_toe_off,'kinematics':utils.smooth(rra_dataset['mean_loaded_hipjoint_kinematics'],5),
+                          'kinematics_std':utils.smooth(rra_dataset['std_loaded_hipjoint_kinematics'],5),'moment':utils.smooth(mean_loaded_hipmuscles_moment,5),
+                          'moment_std':utils.smooth(std_loaded_hipmuscles_moment,5),'color':'k','toe_off_color':'grey','label':'hip joint'}
+utils.plot_stiffness(plot_dic = hip_stiffness_plot_dic, load_condition='loaded',\
+                     kinematics_ticks=[-20,-10,0,10,20,30,40,50],moment_ticks=[-80,-40,0,40,80,120],ax1=ax1,ax2=ax2,ax3=ax3)
+# hip noload case
+hip_stiffness_plot_dic = {'loaded_toe_off':loaded_mean_toe_off,'noload_toe_off':noload_mean_toe_off,'kinematics':utils.smooth(rra_dataset['mean_noload_hipjoint_kinematics'],5),
+                          'kinematics_std':utils.smooth(rra_dataset['std_noload_hipjoint_kinematics'],5),'moment':utils.smooth(mean_noload_hipmuscles_moment,5),
+                          'moment_std':utils.smooth(std_noload_hipmuscles_moment,5),'color':'xkcd:irish green','toe_off_color':'xkcd:shamrock green','label':'hip joint'}
+utils.plot_stiffness(plot_dic = hip_stiffness_plot_dic, load_condition='noload',
+kinematics_ticks=[-20,-10,0,10,20,30,40,50],moment_ticks=[-80,-40,0,40,80,120],ax1=ax1,ax2=ax2,ax3=ax3)
+fig.tight_layout(h_pad=-1, w_pad=-1.5)
+fig.subplots_adjust(top=0.98, bottom=0.075, left=0.100, right=0.975,hspace=0.45,wspace=0.15)
 plt.show()
-fig.tight_layout()
-fig.savefig('./Figures/Unassist/MusclesMetabolicRate.pdf',orientation='landscape',bbox_inches='tight')
+fig.savefig('./Figures/Unassist/HipJointStiffness.pdf',orientation='landscape',bbox_inches='tight')
+
+
+# knee joint stiffness
+fig = plt.figure(num='Knee Joint Stiffness',figsize=(12, 10))
+gridsize = (3, 2)
+ax1 = plt.subplot2grid(gridsize, (0, 0), colspan=2, rowspan=2) # stiffness plot
+ax2 = plt.subplot2grid(gridsize, (2, 0)) # kinematics plot
+ax3 = plt.subplot2grid(gridsize, (2, 1)) # moment plot
+# hip loaded case
+hip_stiffness_plot_dic = {'loaded_toe_off':loaded_mean_toe_off,'noload_toe_off':noload_mean_toe_off,'kinematics':utils.smooth(rra_dataset['mean_loaded_kneejoint_kinematics'],5),
+                          'kinematics_std':utils.smooth(rra_dataset['std_loaded_kneejoint_kinematics'],5),'moment':utils.smooth(mean_loaded_kneemuscles_moment,5),
+                          'moment_std':utils.smooth(std_loaded_kneemuscles_moment,5),'color':'k','toe_off_color':'grey','label':'hip joint'}
+utils.plot_stiffness(plot_dic = hip_stiffness_plot_dic, load_condition='loaded',\
+                     kinematics_ticks=[0,10,20,30,40,50,60,70,80],moment_ticks=[-60,-30,0,30,60,90],ax1=ax1,ax2=ax2,ax3=ax3)
+# hip noload case
+hip_stiffness_plot_dic = {'loaded_toe_off':loaded_mean_toe_off,'noload_toe_off':noload_mean_toe_off,'kinematics':utils.smooth(rra_dataset['mean_noload_kneejoint_kinematics'],5),
+                          'kinematics_std':utils.smooth(rra_dataset['std_noload_kneejoint_kinematics'],5),'moment':utils.smooth(mean_noload_kneemuscles_moment,5),
+                          'moment_std':utils.smooth(std_noload_kneemuscles_moment,5),'color':'xkcd:irish green','toe_off_color':'xkcd:shamrock green','label':'hip joint'}
+utils.plot_stiffness(plot_dic = hip_stiffness_plot_dic, load_condition='noload',
+kinematics_ticks=[0,10,20,30,40,50,60,70,80],moment_ticks=[-60,-30,0,30,60,90],ax1=ax1,ax2=ax2,ax3=ax3)
+fig.tight_layout(h_pad=-1, w_pad=-1.5)
+fig.subplots_adjust(top=0.98, bottom=0.075, left=0.100, right=0.975,hspace=0.45,wspace=0.15)
+plt.show()
+fig.savefig('./Figures/Unassist/KneeJointStiffness.pdf',orientation='landscape',bbox_inches='tight')
