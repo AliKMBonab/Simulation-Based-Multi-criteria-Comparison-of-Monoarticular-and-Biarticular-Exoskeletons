@@ -95,7 +95,10 @@ def csv2numpy(datname):
     # making list of headers seperated by ','
     column_name = line.split(',')
     # eleminating last column name which is '\n'
-    column_name.pop()
+    if column_name[-1] == '\n':
+        column_name.pop()
+    elif '\n' in column_name[-1]:
+        column_name[-1] = column_name[-1].replace('\n','')
     f.close()
     data = np.genfromtxt(datname,delimiter= ',', names=column_name,skip_header=1)
     return data
@@ -2138,3 +2141,261 @@ def paretofront_barplot(plot_dic,indices,loadcond):
     for i in reversed(indices):
         indices_str.append(label[i-1])
     plt.xticks(index + bar_width / 2,indices_str )
+
+######################################################################
+# Plot and analyses related functions for muscles metabolic rate and stiffness
+def muscles_whisker_bar_plot(data_1,data_2,data_3=None,data_4=None,
+                             which_muscles='all',which_plot='whisker',
+                             nrows=5,ncols=8,xticklabel=['noload','loaded']):
+    """This function has been developed to study the metabolic rate of each muscle
+
+    Arguments:\n
+        data_1 {numpy ndarray} -- [first dataset]\n
+        data_2 {numpy ndarray} -- [second dataset]\n
+    \n
+    Keyword Arguments:\n
+        data_3 {numpy ndarray} -- [third dataset (optional)] (default: {None})\n
+        data_4 {numpy ndarray} -- [fourth dataset (optional)] (default: {None})\n
+        which_muscles {str} -- [list of interested muscles] (default: {'all'})\n
+        which_plot {str} -- [bar plot or whisker plot] (default: {'whisker'})\n
+        nrows {int} -- [number of rows] (default: {6})\n
+        ncols {int} -- [number of columns] (default: {8})\n
+        xticklabel {list} -- [label of each x ticks] (default: {['noload','loaded']})
+    """
+    muscles_name = ['add_brev','add_long','add_mag3','add_mag4','add_mag2','add_mag1','bifemlh','bifemsh','ext_dig',\
+                    'ext_hal','flex_dig','flex_hal','lat_gas','med_gas','glut_max1','glut_max2','glut_max3','glut_med1',\
+                    'glut_med2','glut_med3','glut_min1','glut_min2','glut_min3','grac','iliacus','per_brev','per_long',\
+                    'peri','psoas','rect_fem','sar','semimem','semiten','soleus','tfl','tib_ant','tib_post','vas_int',\
+                    'vas_lat','vas_med']
+    # handling the selected muscles and concatenating datasets
+    if which_muscles == 'all':
+        names = muscles_name
+        c=0
+        if data_3 == None and data_4 == None:
+            data = np.zeros([data_1.shape[0],len(muscles_name)*2])
+            for i in range(len(muscles_name)):
+                data[:,c] = data_1[:,i]
+                data[:,c+1] = data_2[:,i]
+                c+=2
+        elif data_3 != None and data_4 != None:
+            data = np.zeros([data_1.shape[0],len(muscles_name)*4])
+            for i in range(len(muscles_name)):
+                data[:,c] = data_1[:,i]
+                data[:,c+1] = data_2[:,i]
+                data[:,c+2] = data_3[:,i]
+                data[:,c+3] = data_4[:,i]
+                c+=4
+        elif data_3 != None and data_4 == None:
+            data = np.zeros([data_1.shape[0],len(muscles_name)*3])
+            for i in range(len(muscles_name)):
+                data[:,c] = data_1[:,i]
+                data[:,c+1] = data_2[:,i]
+                data[:,c+2] = data_3[:,i]
+                c+=3
+        elif data_3 == None and data_4 != None:
+            data = np.zeros([data_1.shape[0],len(muscles_name)*3])
+            for i in range(len(muscles_name)):
+                data[:,c] = data_1[:,i]
+                data[:,c+1] = data_2[:,i]
+                data[:,c+2] = data_4[:,i]
+                c+=3
+    # if selected muscles need to be plotted 
+    else:
+        names = which_muscles
+        c = 0
+        data_1_cropped = np.zeros([data_1.shape[0],len(which_muscles)])
+        data_2_cropped = np.zeros([data_2.shape[0],len(which_muscles)])
+        data_3_cropped = np.zeros([data_3.shape[0],len(which_muscles)])
+        data_4_cropped = np.zeros([data_4.shape[0],len(which_muscles)])
+        if data_3 == None and data_4 == None:
+            for i,m in enumerate(muscles_name):
+                if m in which_muscles:
+                    data_1_cropped[:,c] = data_1[:,i]
+                    data_2_cropped[:,c] = data_2[:,i]
+                    c+=1
+        elif data_3 != None and data_4 == None:
+            for i,m in enumerate(muscles_name):
+                if m in which_muscles:
+                    data_1_cropped[:,c] = data_1[:,i]
+                    data_2_cropped[:,c] = data_2[:,i]
+                    data_3_cropped[:,c] = data_3[:,i]
+                    c+=1
+        elif data_3 == None and data_4 != None:
+            for i,m in enumerate(muscles_name):
+                if m in which_muscles:
+                    data_1_cropped[:,c] = data_1[:,i]
+                    data_2_cropped[:,c] = data_2[:,i]
+                    data_4_cropped[:,c] = data_4[:,i]
+                    c+=1
+        elif data_3 != None and data_4 != None:
+            for i,m in enumerate(muscles_name):
+                if m in which_muscles:
+                    data_1_cropped[:,c] = data_1[:,i]
+                    data_2_cropped[:,c] = data_2[:,i]
+                    data_3_cropped[:,c] = data_3[:,i]
+                    data_4_cropped[:,c] = data_4[:,i] 
+                    c+=1   
+        c=0
+        if data_3 == None and data_4 == None:
+            data = np.zeros([data_1_cropped.shape[0],len(which_muscles)*2])
+            for i in range(len(which_muscles)):
+                data[:,c] = data_1_cropped[:,i]
+                data[:,c+1] = data_2_cropped[:,i]
+                c+=2
+        elif data_3 != None and data_4 != None:
+            data = np.zeros([data_1_cropped.shape[0],len(which_muscles)*4])
+            for i in range(len(which_muscles)):
+                data[:,c] = data_1_cropped[:,i]
+                data[:,c+1] = data_2_cropped[:,i]
+                data[:,c+2] = data_3_cropped[:,i]
+                data[:,c+3] = data_4_cropped[:,i]
+                c+=4
+        elif data_3 != None and data_4 == None:
+            data = np.zeros([data_1_cropped.shape[0],len(which_muscles)*3])
+            for i in range(len(which_muscles)):
+                data[:,c] = data_1_cropped[:,i]
+                data[:,c+1] = data_2_cropped[:,i]
+                data[:,c+2] = data_3_cropped[:,i]
+                c+=3
+        elif data_3 == None and data_4 != None:
+            data = np.zeros([data_1_cropped.shape[0],len(which_muscles)*3])
+            for i in range(len(which_muscles)):
+                data[:,c] = data_1_cropped[:,i]
+                data[:,c+1] = data_2_cropped[:,i]
+                data[:,c+2] = data_4_cropped[:,i]
+                c+=3
+    # box plots
+    c=0
+    if which_plot.lower() == 'whisker':
+        for i in range(len(names)):
+            ax = plt.subplot(nrows,ncols,i+1)
+            if data_3 == None and data_4 == None:
+                x = [1,2]
+                bp = plt.boxplot([data[:,c],data[:,c+1]], patch_artist=True)
+                c+=2
+            elif data_3 != None and data_4 != None:
+                x = [1,2,3,4]
+                bp = plt.boxplot(data[:,c:c+3], patch_artist=True)
+                c+=4
+            elif (data_3 != None | data_4 != None) and not (data_3 != None and data_4 != None):
+                x = [1,2,3]
+                bp = plt.boxplot(data[:,c:c+2], patch_artist=True)
+                c+=3
+            beautiful_boxplot(bp)
+            ax.set_xticks(x)
+            ax.set_title(names[i])
+            ax.set_xticklabels(xticklabel)
+            no_top_right(ax)
+            plt.tight_layout()
+    else:
+        for i in range(names):
+            ax = plt.subplot(nrows,ncols,i+1)
+            if data_3 == None and data_4 == None:
+                bp = plt.bar(xticklabel, np.nanmean(data[:,c:c+1],axis=0), yerr=np.nanstd(data[c:c+1],axis=0),\
+                             align='center',color=mycolors['manatee grey'],width=0.35, ecolor='black', capsize=10)
+                bp[0].set_color(mycolors['pastel blue'])
+                bp[1].set_color(mycolors['deep space sparkle'])
+                c+=2
+            elif data_3 != None and data_4 != None:
+                bp = plt.bar(xticklabel, np.nanmean(data[:,c:c+3],axis=0), yerr=np.nanstd(data[c:c+1],axis=0),\
+                             align='center',color=mycolors['manatee grey'],width=0.35, ecolor='black', capsize=10)
+                bp[0].set_color(mycolors['pastel blue'])
+                bp[1].set_color(mycolors['deep space sparkle'])
+                bp[2].set_color(mycolors['crimson red'])
+                bp[3].set_color(mycolors['olympic blue'])
+                c+=4
+            elif (data_3 != None | data_4 != None) and not (data_3 != None and data_4 != None):
+                bp = plt.bar(xticklabel, np.nanmean(data[:,c:c+2],axis=0), yerr=np.nanstd(data[c:c+1],axis=0),\
+                             align='center',color=mycolors['manatee grey'],width=0.35, ecolor='black', capsize=10)
+                bp[0].set_color(mycolors['pastel blue'])
+                bp[1].set_color(mycolors['deep space sparkle'])
+                bp[2].set_color(mycolors['crimson red'])
+                c+=3
+            beautiful_boxplot(bp)
+            ax.set_xticks(x)
+            ax.set_title(names[i])
+            ax.set_xticklabels(xticklabel)
+            no_top_right(ax)
+            plt.tight_layout()
+
+def plot_stiffness(plot_dic,load_condition,kinematics_ticks,moment_ticks,ax1,ax2,ax3):
+    """
+    This function has been developed to simultaneously plot moment, kinematics, and stiffness\n
+
+    Arguments:
+        plot_dic {[dict]} -- [loaded_toe_off,noload_toe_off,kinematics,kinematics_std,moment,moment_std,color,toe_off_color,label]
+        load_condition {[str]} -- ['noload','loaded']
+        ** label needs to be general and suffices will be added automatically.
+    """
+    # general required dataset
+    gait_cycle = np.linspace(0,100,1000)
+    if load_condition == 'loaded':
+        toe_off = plot_dic['loaded_toe_off']
+        index = pp.nearest_index(gait_cycle,toe_off)
+    elif load_condition == 'noload':
+        toe_off = plot_dic['noload_toe_off']
+        index = pp.nearest_index(gait_cycle,toe_off)
+    # first plot dataset
+    kinematics = plot_dic['kinematics']
+    moment = plot_dic['moment']
+    kinematics_std = plot_dic['kinematics_std']
+    moment_std = plot_dic['moment_std']
+    color = plot_dic['color']
+    toe_off_color = plot_dic['toe_off_color']
+    label = plot_dic['label']
+    # grids
+    # general conditions
+    ax1.tick_params(axis='both',direction='in')
+    ax2.tick_params(axis='both',direction='in')
+    ax3.tick_params(axis='both',direction='in')
+    # plots
+    #stiffness plot
+    ax1.plot(kinematics,moment,lw=2,color=color,label=label+', {}'.format(load_condition))
+    ax1.hlines(moment[index],np.min(kinematics_ticks),np.max(kinematics_ticks),color=toe_off_color,lw=2,alpha=0.5)
+    ax1.vlines(kinematics[index],np.min(moment_ticks),np.max(moment_ticks),color=toe_off_color,lw=2,alpha=0.5)
+    ax1.hlines(0,np.min(kinematics_ticks),np.max(kinematics_ticks),ls=':',color=mycolors['teal'],lw=1.5,alpha=0.25)
+    ax1.vlines(0,np.min(moment_ticks),np.max(moment_ticks),ls=':',color=mycolors['teal'],lw=1.5,alpha=0.25)
+    
+    no_top_right(ax1)
+    ax1.set_xticks(kinematics_ticks)
+    ax1.set_yticks(moment_ticks)
+    ax1.set_xlim([np.floor(np.min(kinematics_ticks)),np.ceil(np.max(kinematics_ticks))])
+    ax1.set_ylim([np.floor(np.min(moment_ticks)),np.ceil(np.max(moment_ticks))])
+    ax1.set_xlabel('angle (deg)')
+    ax1.set_ylabel('moment (N.m)')
+    ax1.set_title('stiffness')
+    ax1.legend(loc='best',frameon=False)
+
+    # moment plot
+    ax2.fill_between(gait_cycle, moment + moment_std, moment - moment_std, alpha=0.5,linewidth=0.1,color=color) # shaded std
+    ax2.plot(gait_cycle,moment, lw=2,color=color,label=label+' moment,{}'.format(load_condition)) # mean
+    ax2.axvline(toe_off,np.min(moment_ticks),np.max(moment_ticks), lw=2, color=toe_off_color, zorder=0, alpha=0.5) #vertical line
+    ax2.axhline(0,0,100, lw=2, color='grey', zorder=0, alpha=0.75) # horizontal line
+    ax2.set_xticks([0,10,20,30,40,50,60,70,80,90,100])
+    ax2.set_xlim([0,100])
+    ax2.set_yticks(moment_ticks)
+    ax2.set_ylim([np.floor(np.min(moment_ticks)),np.ceil(np.max(moment_ticks))])
+    ax2.set_xlabel('gait cycle (%)')
+    ax2.set_ylabel('moment (N.m)')
+    ax2.set_title('moment')
+    #ax2.legend(loc='best',frameon=False)
+
+    no_top_right(ax2)
+    # moment plot
+    ax3.fill_between(gait_cycle, kinematics + kinematics_std, kinematics - kinematics_std, alpha=0.5,linewidth=0.1,color=color) # shaded std
+    ax3.plot(gait_cycle,kinematics, lw=2,color=color,label=label+' kinematics,{}'.format(load_condition)) # mean
+    ax3.axvline(toe_off,np.min(kinematics_ticks),np.max(kinematics_ticks), lw=2, color=toe_off_color, zorder=0, alpha=0.5) #vertical line
+    ax3.axhline(0,0,100, lw=2, color='grey', zorder=0, alpha=0.75) # horizontal line
+    ax3.set_xticks([0,10,20,30,40,50,60,70,80,90,100])
+    ax3.set_xlim([0,100])
+    ax3.set_yticks(kinematics_ticks)
+    ax3.set_ylim([np.floor(np.min(kinematics_ticks)),np.ceil(np.max(kinematics_ticks))])
+    ax3.set_xlabel('gait cycle (%)')
+    ax3.set_ylabel('kinematics (deg)')
+    ax3.set_title('kinematics')
+    #ax3.legend(loc='best',frameon=False)
+    no_top_right(ax3)
+    # final adjustments and settings
+    plt.tight_layout()
+    
+    
