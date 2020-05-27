@@ -35,6 +35,15 @@ assisted_energy_dataset = {pathlib.PurePath(f[1]).stem: np.loadtxt(f[1], delimit
 directory = './Data/Unassist/*_energy.csv'
 files = enumerate(glob.iglob(directory), 1)
 unassisted_energy_dataset = {pathlib.PurePath(f[1]).stem: np.loadtxt(f[1], delimiter=',') for f in files}
+# unassist muscles metabolic rate
+directory = './Data/Unassist/*_metabolic_rate.csv'
+files = enumerate(glob.iglob(directory), 1)
+unassist_musclesmetabolicrate_dataset = {pathlib.PurePath(f[1]).stem: np.loadtxt(f[1], delimiter=',') for f in files}
+# assisted muscles metabolic rate
+directory = './Data/Ideal/*_metabolic_rate.csv'
+files = enumerate(glob.iglob(directory), 1)
+assisted_musclesmetabolicrate_dataset = {pathlib.PurePath(f[1]).stem: np.loadtxt(f[1], delimiter=',') for f in files}
+
 # gls
 gl_noload = {'noload_subject{}_trial{}'.format(i,j): utils.construct_gl_mass_side(subjectno=i,trialno=j,loadcond='noload') for i in subjects for j in trials_num}
 gl_loaded = {'loaded_subject{}_trial{}'.format(i,j): utils.construct_gl_mass_side(subjectno=i,trialno=j,loadcond='loaded') for i in subjects for j in trials_num}
@@ -77,6 +86,72 @@ mean_loaded_bi_knee_energy,std_loaded_bi_knee_energy = utils.mean_std_over_subje
 mean_loaded_mono_hip_energy,std_loaded_mono_hip_energy = utils.mean_std_over_subjects(assisted_energy_dataset['monoarticular_ideal_loaded_hipactuator_energy'],ax=0)
 mean_loaded_mono_knee_energy,std_loaded_mono_knee_energy = utils.mean_std_over_subjects(assisted_energy_dataset['monoarticular_ideal_loaded_kneeactuator_energy'],ax=0)
 #####################################################################################
+# Plots
+# muscles metabolic rate figure
+# noload mono vs bi
+fig = plt.figure(num='Muscles Metabolic Rate',figsize=(20, 20))
+utils.muscles_whisker_bar_plot(unassist_musclesmetabolicrate_dataset['noload_muscles_metabolic_rate'],assisted_musclesmetabolicrate_dataset['monoarticular_ideal_noload_muscles_metabolic_rate'],
+                               assisted_musclesmetabolicrate_dataset['biarticular_ideal_noload_muscles_metabolic_rate'],xticklabel=['unassist','mono','bi'] )
+plt.legend(loc='best',frameon=False)
+plt.show()
+fig.tight_layout()
+fig.tight_layout(h_pad=-1, w_pad=-1.5)
+fig.subplots_adjust(top=0.98, bottom=0.075, left=0.100, right=0.975,hspace=0.45,wspace=0.40)
+fig.savefig('./Figures/Ideal/MusclesMetabolicRate_Noload_MonoVsBi.pdf',orientation='landscape',bbox_inches='tight')
+
+# loaded mono vs bi
+fig = plt.figure(num='Muscles Metabolic Rate',figsize=(20, 20))
+utils.muscles_whisker_bar_plot(unassist_musclesmetabolicrate_dataset['loaded_muscles_metabolic_rate'],assisted_musclesmetabolicrate_dataset['monoarticular_ideal_loaded_muscles_metabolic_rate'],
+                               assisted_musclesmetabolicrate_dataset['biarticular_ideal_loaded_muscles_metabolic_rate'],xticklabel=['unassist','mono','bi'])
+plt.legend(loc='best',frameon=False)
+plt.show()
+fig.tight_layout()
+fig.tight_layout(h_pad=-1, w_pad=-1.5)
+fig.subplots_adjust(top=0.98, bottom=0.075, left=0.100, right=0.975,hspace=0.45,wspace=0.40)
+fig.savefig('./Figures/Ideal/MusclesMetabolicRate_Loaded_MonoVsBi.pdf',orientation='landscape',bbox_inches='tight')
+
+# bi loaded vs noload
+fig = plt.figure(num='Muscles Metabolic Rate',figsize=(20, 20))
+utils.muscles_whisker_bar_plot(unassist_musclesmetabolicrate_dataset['loaded_muscles_metabolic_rate'],unassist_musclesmetabolicrate_dataset['noload_muscles_metabolic_rate'],
+                                assisted_musclesmetabolicrate_dataset['biarticular_ideal_loaded_muscles_metabolic_rate'],
+                                assisted_musclesmetabolicrate_dataset['biarticular_ideal_noload_muscles_metabolic_rate'],xticklabel=['unassist,\nloaded','unassist,\nnoload','bi,loaded','bi,noload'])
+plt.legend(loc='best',frameon=False)
+plt.show()
+fig.tight_layout()
+fig.tight_layout(h_pad=-1, w_pad=-1.5)
+fig.subplots_adjust(top=0.98, bottom=0.075, left=0.100, right=0.975,hspace=0.45,wspace=0.40)
+fig.savefig('./Figures/Ideal/MusclesMetabolicRate_Bi_LoadedVsNoload.pdf',orientation='landscape',bbox_inches='tight')
+
+# mono loaded vs noload
+fig = plt.figure(num='Muscles Metabolic Rate',figsize=(20, 20))
+utils.muscles_whisker_bar_plot(unassist_musclesmetabolicrate_dataset['loaded_muscles_metabolic_rate'],unassist_musclesmetabolicrate_dataset['noload_muscles_metabolic_rate'],
+                                assisted_musclesmetabolicrate_dataset['monoarticular_ideal_loaded_muscles_metabolic_rate'],
+                                assisted_musclesmetabolicrate_dataset['monoarticular_ideal_noload_muscles_metabolic_rate'],xticklabel=['unassist,\nloaded','unassist,\nnoload','mono,loaded','mono,noload'])
+plt.legend(loc='best',frameon=False)
+plt.show()
+fig.tight_layout()
+fig.tight_layout(h_pad=-1, w_pad=-1.5)
+fig.subplots_adjust(top=0.98, bottom=0.075, left=0.100, right=0.975,hspace=0.45,wspace=0.40)
+fig.savefig('./Figures/Ideal/MusclesMetabolicRate_Mono_LoadedVsNoload.pdf',orientation='landscape',bbox_inches='tight')
+
+
+#####################################################################################
+# writing data to csv for adding the ideal exoskeletons on the paretofronts
+headers = ['mean_noload_bi_hip_energy','std_noload_bi_hip_energy','mean_noload_bi_knee_energy','std_noload_bi_knee_energy',\
+           'mean_noload_mono_hip_energy','std_noload_mono_hip_energy','mean_noload_mono_knee_energy','std_noload_mono_knee_energy',\
+           'mean_loaded_bi_hip_energy','std_loaded_bi_hip_energy','mean_loaded_bi_knee_energy','std_loaded_bi_knee_energy',\
+           'mean_loaded_mono_hip_energy','std_loaded_mono_hip_energy','mean_loaded_mono_knee_energy','std_loaded_mono_knee_energy',\
+           'mean_noload_bi_metabolics', 'std_noload_bi_metabolics','mean_noload_mono_metabolics', 'std_noload_mono_metabolics',\
+           'mean_loaded_bi_metabolics', 'std_loaded_bi_metabolics','mean_loaded_mono_metabolics', 'std_loaded_mono_metabolics']
+dataset = [mean_noload_bi_hip_energy,std_noload_bi_hip_energy,mean_noload_bi_knee_energy,std_noload_bi_knee_energy,\
+           mean_noload_mono_hip_energy,std_noload_mono_hip_energy,mean_noload_mono_knee_energy,std_noload_mono_knee_energy,\
+           mean_loaded_bi_hip_energy,std_loaded_bi_hip_energy,mean_loaded_bi_knee_energy,std_loaded_bi_knee_energy,\
+           mean_loaded_mono_hip_energy,std_loaded_mono_hip_energy,mean_loaded_mono_knee_energy,std_loaded_mono_knee_energy,\
+           mean_noload_bi_metabolics, std_noload_bi_metabolics,mean_noload_mono_metabolics, std_noload_mono_metabolics,\
+           mean_loaded_bi_metabolics, std_loaded_bi_metabolics,mean_loaded_mono_metabolics, std_loaded_mono_metabolics]
+with open(r'.\Data\Ideal\ideal_exos_dataset.csv', 'wb') as f:
+  f.write(bytes(utils.listToString(headers)+'\n','UTF-8'))
+  np.savetxt(f, dataset, fmt='%s', delimiter=",")
 # writing data to csv for statistical analyses
 # general columns 
 subjects = np.array(['subject05','subject07','subject09','subject10','subject11','subject12','subject14'])
