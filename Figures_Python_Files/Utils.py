@@ -536,7 +536,7 @@ def resize(axes):
 
 def autolabel(rects,text=None,label_value=True):
     """Attach a text label above each bar"""
-    if text == None:
+    if text is None:
         subs = ['05','07','09','10','11','12','14']
         text = ['S{}'.format(i) for i in subs ]
     for rect in rects:
@@ -666,7 +666,7 @@ def plot_joint_muscle_exo (nrows,ncols,plot_dic,color_dic,
                            subplot_legend=False,fig=None,thirdplot=True,y_ticks = [-2,-1,0,1,2]):
     '''Note: please note that since it is in the for loop, if some data is
     needed to plot several times it should be repeated in the lists.  '''
-    if nplots == None:
+    if nplots is None:
         nplots = ncols*nrows
     # reading data
     plot_1_list = plot_dic['plot_1_list']
@@ -1815,7 +1815,7 @@ def plot_pareto_curve_subjects (nrows,ncols,nplot,plot_dic,loadcond,\
         y3_data = plot_dic['y3_data']
         color_3 = plot_dic['color_3']
     # handle labels
-    if labels == None:
+    if labels is None:
         labels=[]
         for i in ['A','B','C','D','E']:
             for j in ['a','b','c','d','e']:
@@ -1961,7 +1961,7 @@ def plot_pareto_comparison(plot_dic,loadcond,compare,labels=None,legend_loc=[0],
     else:
         raise   Exception('comparison case is not valid.')
     # handle labels
-    if labels == None:
+    if labels is None:
         label=[]
         for i in ['A','B','C','D','E']:
             for j in ['a','b','c','d','e']:
@@ -2146,7 +2146,8 @@ def paretofront_barplot(plot_dic,indices,loadcond):
 # Plot and analyses related functions for muscles metabolic rate and stiffness
 def muscles_whisker_bar_plot(data_1,data_2,data_3=None,data_4=None,
                              which_muscles='all',which_plot='whisker',
-                             nrows=5,ncols=8,xticklabel=['noload','loaded']):
+                             nrows=5,ncols=8,xticklabel=['noload','loaded'],
+                             threebar_color_2=mycolors['olympic blue'],threebar_color_3=mycolors['crimson red']):
     """This function has been developed to study the metabolic rate of each muscle
 
     Arguments:\n
@@ -2171,13 +2172,13 @@ def muscles_whisker_bar_plot(data_1,data_2,data_3=None,data_4=None,
     if which_muscles == 'all':
         names = muscles_name
         c=0
-        if data_3 == None and data_4 == None:
+        if data_3.all() is None and data_4.all() is None:
             data = np.zeros([data_1.shape[0],len(muscles_name)*2])
             for i in range(len(muscles_name)):
                 data[:,c] = data_1[:,i]
                 data[:,c+1] = data_2[:,i]
                 c+=2
-        elif data_3 != None and data_4 != None:
+        elif data_3 is  not None and data_4 is  not None:
             data = np.zeros([data_1.shape[0],len(muscles_name)*4])
             for i in range(len(muscles_name)):
                 data[:,c] = data_1[:,i]
@@ -2185,14 +2186,14 @@ def muscles_whisker_bar_plot(data_1,data_2,data_3=None,data_4=None,
                 data[:,c+2] = data_3[:,i]
                 data[:,c+3] = data_4[:,i]
                 c+=4
-        elif data_3 != None and data_4 == None:
+        elif data_3 is  not None and data_4 is None:
             data = np.zeros([data_1.shape[0],len(muscles_name)*3])
             for i in range(len(muscles_name)):
                 data[:,c] = data_1[:,i]
                 data[:,c+1] = data_2[:,i]
                 data[:,c+2] = data_3[:,i]
                 c+=3
-        elif data_3 == None and data_4 != None:
+        elif data_3 is None and data_4 is  not None:
             data = np.zeros([data_1.shape[0],len(muscles_name)*3])
             for i in range(len(muscles_name)):
                 data[:,c] = data_1[:,i]
@@ -2207,27 +2208,27 @@ def muscles_whisker_bar_plot(data_1,data_2,data_3=None,data_4=None,
         data_2_cropped = np.zeros([data_2.shape[0],len(which_muscles)])
         data_3_cropped = np.zeros([data_3.shape[0],len(which_muscles)])
         data_4_cropped = np.zeros([data_4.shape[0],len(which_muscles)])
-        if data_3 == None and data_4 == None:
+        if data_3 is None and data_4 is None:
             for i,m in enumerate(muscles_name):
                 if m in which_muscles:
                     data_1_cropped[:,c] = data_1[:,i]
                     data_2_cropped[:,c] = data_2[:,i]
                     c+=1
-        elif data_3 != None and data_4 == None:
+        elif data_3 is  not None and data_4 is None:
             for i,m in enumerate(muscles_name):
                 if m in which_muscles:
                     data_1_cropped[:,c] = data_1[:,i]
                     data_2_cropped[:,c] = data_2[:,i]
                     data_3_cropped[:,c] = data_3[:,i]
                     c+=1
-        elif data_3 == None and data_4 != None:
+        elif data_3 is None and data_4 is  not None:
             for i,m in enumerate(muscles_name):
                 if m in which_muscles:
                     data_1_cropped[:,c] = data_1[:,i]
                     data_2_cropped[:,c] = data_2[:,i]
                     data_4_cropped[:,c] = data_4[:,i]
                     c+=1
-        elif data_3 != None and data_4 != None:
+        elif data_3 is  not None and data_4 is  not None:
             for i,m in enumerate(muscles_name):
                 if m in which_muscles:
                     data_1_cropped[:,c] = data_1[:,i]
@@ -2236,13 +2237,13 @@ def muscles_whisker_bar_plot(data_1,data_2,data_3=None,data_4=None,
                     data_4_cropped[:,c] = data_4[:,i] 
                     c+=1   
         c=0
-        if data_3 == None and data_4 == None:
+        if data_3 is None and data_4 is None:
             data = np.zeros([data_1_cropped.shape[0],len(which_muscles)*2])
             for i in range(len(which_muscles)):
                 data[:,c] = data_1_cropped[:,i]
                 data[:,c+1] = data_2_cropped[:,i]
                 c+=2
-        elif data_3 != None and data_4 != None:
+        elif data_3 is not None and data_4 is not None:
             data = np.zeros([data_1_cropped.shape[0],len(which_muscles)*4])
             for i in range(len(which_muscles)):
                 data[:,c] = data_1_cropped[:,i]
@@ -2250,14 +2251,14 @@ def muscles_whisker_bar_plot(data_1,data_2,data_3=None,data_4=None,
                 data[:,c+2] = data_3_cropped[:,i]
                 data[:,c+3] = data_4_cropped[:,i]
                 c+=4
-        elif data_3 != None and data_4 == None:
+        elif data_3 is not None and data_4 is None:
             data = np.zeros([data_1_cropped.shape[0],len(which_muscles)*3])
             for i in range(len(which_muscles)):
                 data[:,c] = data_1_cropped[:,i]
                 data[:,c+1] = data_2_cropped[:,i]
                 data[:,c+2] = data_3_cropped[:,i]
                 c+=3
-        elif data_3 == None and data_4 != None:
+        elif data_3 is None and data_4 is not None:
             data = np.zeros([data_1_cropped.shape[0],len(which_muscles)*3])
             for i in range(len(which_muscles)):
                 data[:,c] = data_1_cropped[:,i]
@@ -2269,17 +2270,17 @@ def muscles_whisker_bar_plot(data_1,data_2,data_3=None,data_4=None,
     if which_plot.lower() == 'whisker':
         for i in range(len(names)):
             ax = plt.subplot(nrows,ncols,i+1)
-            if data_3 == None and data_4 == None:
+            if data_3 is None and data_4 is None:
                 x = [1,2]
                 bp = plt.boxplot([data[:,c],data[:,c+1]], patch_artist=True)
                 c+=2
-            elif data_3 != None and data_4 != None:
+            elif data_3 is not None and data_4 is not None:
                 x = [1,2,3,4]
-                bp = plt.boxplot(data[:,c:c+3], patch_artist=True)
+                bp = plt.boxplot(data[:,[c,c+1,c+2,c+3]], patch_artist=True)
                 c+=4
-            elif (data_3 != None | data_4 != None) and not (data_3 != None and data_4 != None):
+            elif (data_3 is not None or data_4 is not None) and not (data_3 is  not None and data_4 is not None):
                 x = [1,2,3]
-                bp = plt.boxplot(data[:,c:c+2], patch_artist=True)
+                bp = plt.boxplot(data[:,[c,c+1,c+2]], patch_artist=True)
                 c+=3
             beautiful_boxplot(bp)
             ax.set_xticks(x)
@@ -2288,31 +2289,32 @@ def muscles_whisker_bar_plot(data_1,data_2,data_3=None,data_4=None,
             no_top_right(ax)
             plt.tight_layout()
     else:
-        for i in range(names):
+        for i in range(len(names)):
             ax = plt.subplot(nrows,ncols,i+1)
-            if data_3 == None and data_4 == None:
-                bp = plt.bar(xticklabel, np.nanmean(data[:,c:c+1],axis=0), yerr=np.nanstd(data[c:c+1],axis=0),\
+            x = np.arange(1,len(xticklabel)+1,1)
+            width = 0.35
+            if data_3 is None and data_4 is None:
+                bp = plt.bar(x, np.nanmean(data[:,[c,c+1]],axis=0), yerr=np.nanstd(data[:,[c,c+1]],axis=0),\
                              align='center',color=mycolors['manatee grey'],width=0.35, ecolor='black', capsize=10)
                 bp[0].set_color(mycolors['pastel blue'])
                 bp[1].set_color(mycolors['deep space sparkle'])
                 c+=2
-            elif data_3 != None and data_4 != None:
-                bp = plt.bar(xticklabel, np.nanmean(data[:,c:c+3],axis=0), yerr=np.nanstd(data[c:c+1],axis=0),\
+            elif data_3 is  not None and data_4 is  not None:
+                bp = plt.bar(x, np.nanmean(data[:,[c,c+3]],axis=0), yerr=np.nanstd(data[:,[c,c+3]],axis=0),\
                              align='center',color=mycolors['manatee grey'],width=0.35, ecolor='black', capsize=10)
                 bp[0].set_color(mycolors['pastel blue'])
                 bp[1].set_color(mycolors['deep space sparkle'])
                 bp[2].set_color(mycolors['crimson red'])
                 bp[3].set_color(mycolors['olympic blue'])
                 c+=4
-            elif (data_3 != None | data_4 != None) and not (data_3 != None and data_4 != None):
-                bp = plt.bar(xticklabel, np.nanmean(data[:,c:c+2],axis=0), yerr=np.nanstd(data[c:c+1],axis=0),\
+            elif (data_3 is  not None | data_4 is  not None) and not (data_3 is  not None and data_4 is  not None):
+                bp = plt.bar(x, np.nanmean(data[:,[c,c+2]],axis=0), yerr=np.nanstd(data[:,[c,c+2]],axis=0),\
                              align='center',color=mycolors['manatee grey'],width=0.35, ecolor='black', capsize=10)
-                bp[0].set_color(mycolors['pastel blue'])
-                bp[1].set_color(mycolors['deep space sparkle'])
-                bp[2].set_color(mycolors['crimson red'])
+                bp[0].set_color(mycolors['grey'])
+                bp[1].set_color(threebar_color_2)
+                bp[2].set_color(threebar_color_3)
                 c+=3
-            beautiful_boxplot(bp)
-            ax.set_xticks(x)
+            ax.set_xticks(np.arange(1,len(xticklabel)+1,1))
             ax.set_title(names[i])
             ax.set_xticklabels(xticklabel)
             no_top_right(ax)
