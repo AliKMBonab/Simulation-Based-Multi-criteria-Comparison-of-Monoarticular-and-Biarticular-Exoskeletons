@@ -2172,7 +2172,7 @@ def muscles_whisker_bar_plot(data_1,data_2,data_3=None,data_4=None,
     if which_muscles == 'all':
         names = muscles_name
         c=0
-        if data_3.all() is None and data_4.all() is None:
+        if data_3 is None and data_4 is None:
             data = np.zeros([data_1.shape[0],len(muscles_name)*2])
             for i in range(len(muscles_name)):
                 data[:,c] = data_1[:,i]
@@ -2373,7 +2373,7 @@ def plot_stiffness(plot_dic,load_condition,kinematics_ticks,moment_ticks,ax1,ax2
     ax2.plot(gait_cycle,moment, lw=2,color=color,label=label+' moment,{}'.format(load_condition)) # mean
     ax2.axvline(toe_off,np.min(moment_ticks),np.max(moment_ticks), lw=2, color=toe_off_color, zorder=0, alpha=0.5) #vertical line
     ax2.axhline(0,0,100, lw=2, color='grey', zorder=0, alpha=0.75) # horizontal line
-    ax2.set_xticks([0,10,20,30,40,50,60,70,80,90,100])
+    ax2.set_xticks([20,40,60,80,100])
     ax2.set_xlim([0,100])
     ax2.set_yticks(moment_ticks)
     ax2.set_ylim([np.floor(np.min(moment_ticks)),np.ceil(np.max(moment_ticks))])
@@ -2388,7 +2388,7 @@ def plot_stiffness(plot_dic,load_condition,kinematics_ticks,moment_ticks,ax1,ax2
     ax3.plot(gait_cycle,kinematics, lw=2,color=color,label=label+' kinematics,{}'.format(load_condition)) # mean
     ax3.axvline(toe_off,np.min(kinematics_ticks),np.max(kinematics_ticks), lw=2, color=toe_off_color, zorder=0, alpha=0.5) #vertical line
     ax3.axhline(0,0,100, lw=2, color='grey', zorder=0, alpha=0.75) # horizontal line
-    ax3.set_xticks([0,10,20,30,40,50,60,70,80,90,100])
+    ax3.set_xticks([20,40,60,80,100])
     ax3.set_xlim([0,100])
     ax3.set_yticks(kinematics_ticks)
     ax3.set_ylim([np.floor(np.min(kinematics_ticks)),np.ceil(np.max(kinematics_ticks))])

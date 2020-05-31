@@ -26,38 +26,39 @@ gait_cycle = np.linspace(0,100,1000)
 plt.rcParams.update({'font.size': 12})
 #####################################################################################
 # Reading CSV files into a dictionary and constructing gls
-rra_dataset = utils.csv2numpy('D:/Ali.K.M.Bonab/Walking_Mass_Inertia_Effect/Data/Data/RRA/rra_final_data.csv') 
-unassist_dataset = utils.csv2numpy('D:/Ali.K.M.Bonab/Walking_Mass_Inertia_Effect/Data/Data/Unassist/unassist_final_data.csv') 
+rra_dataset = utils.csv2numpy('./Data/RRA/rra_final_data.csv') 
+unassist_dataset = utils.csv2numpy('./Data/Unassist/unassist_final_data.csv') 
+stiffness_dataset = utils.csv2numpy('./Data/Unassist/unassist_stiffness_data.csv') 
 # ideal exo torque dataset
-directory = 'D:/Ali.K.M.Bonab/Walking_Mass_Inertia_Effect/Data/Data/Ideal/*_torque.csv'
+directory = './Data/Ideal/*_torque.csv'
 files = enumerate(glob.iglob(directory), 1)
 exo_torque_dataset = {pathlib.PurePath(f[1]).stem: np.loadtxt(f[1], delimiter=',') for f in files}
 # ideal exo power dataset
-directory = 'D:/Ali.K.M.Bonab/Walking_Mass_Inertia_Effect/Data/Data/Ideal/*_power.csv'
+directory = './Data/Ideal/*_power.csv'
 files = enumerate(glob.iglob(directory), 1)
 exo_power_dataset = {pathlib.PurePath(f[1]).stem: np.loadtxt(f[1], delimiter=',') for f in files}
 # ideal exo speed dataset
-directory = 'D:/Ali.K.M.Bonab/Walking_Mass_Inertia_Effect/Data/Data/Ideal/*_speed.csv'
+directory = './Data/Ideal/*_speed.csv'
 files = enumerate(glob.iglob(directory), 1)
 exo_speed_dataset = {pathlib.PurePath(f[1]).stem: np.loadtxt(f[1], delimiter=',') for f in files}
 # muscles moment dataset
-directory = 'D:/Ali.K.M.Bonab/Walking_Mass_Inertia_Effect/Data/Data/Ideal/*_musclesmoment.csv'
+directory = './Data/Ideal/*_musclesmoment.csv'
 files = enumerate(glob.iglob(directory), 1)
 musclesmoment_dataset = {pathlib.PurePath(f[1]).stem: np.loadtxt(f[1], delimiter=',') for f in files}
 # muscles power dataset
-directory = 'D:/Ali.K.M.Bonab/Walking_Mass_Inertia_Effect/Data/Data/Ideal/*_musclespower.csv'
+directory = './Data/Ideal/*_musclespower.csv'
 files = enumerate(glob.iglob(directory), 1)
 musclespower_dataset = {pathlib.PurePath(f[1]).stem: np.loadtxt(f[1], delimiter=',') for f in files}
 # assisted subjects muscles activation dataset
-directory = 'D:/Ali.K.M.Bonab/Walking_Mass_Inertia_Effect/Data/Data/Ideal/*_activation.csv'
+directory = './Data/Ideal/*_activation.csv'
 files = enumerate(glob.iglob(directory), 1)
 musclesactivation_dataset = {pathlib.PurePath(f[1]).stem: np.loadtxt(f[1], delimiter=',') for f in files}
 # assisted subjects energy dataset
-directory = 'D:/Ali.K.M.Bonab/Walking_Mass_Inertia_Effect/Data/Data/Ideal/*_energy.csv'
+directory = './Data/Ideal/*_energy.csv'
 files = enumerate(glob.iglob(directory), 1)
 assisted_energy_dataset = {pathlib.PurePath(f[1]).stem: np.loadtxt(f[1], delimiter=',') for f in files}
 # unassisted subjects energy dataset
-directory = 'D:/Ali.K.M.Bonab/Walking_Mass_Inertia_Effect/Data/Data/Unassist/*_energy.csv'
+directory = './Data/Unassist/*_energy.csv'
 files = enumerate(glob.iglob(directory), 1)
 unassisted_energy_dataset = {pathlib.PurePath(f[1]).stem: np.loadtxt(f[1], delimiter=',') for f in files}
 # gls

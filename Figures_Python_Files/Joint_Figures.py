@@ -25,19 +25,19 @@ gait_cycle = np.linspace(0,100,1000)
 #####################################################################################
 # Reading CSV files into a dictionary and constructing gls
 # joint moment dataset
-directory = 'D:\Ali.K.M.Bonab\Walking_Mass_Inertia_Effect\Data\Data\RRA\*_torque.csv'
+directory = '.\Data\RRA\*_torque.csv'
 files = enumerate(glob.iglob(directory), 1)
 jointmoment_dataset = {pathlib.PurePath(f[1]).stem: np.loadtxt(f[1], delimiter=',') for f in files}
 # joint power dataset
-directory = 'D:\Ali.K.M.Bonab\Walking_Mass_Inertia_Effect\Data\Data\RRA\*_power.csv'
+directory = '.\Data\RRA\*_power.csv'
 files = enumerate(glob.iglob(directory), 1)
 jointpower_dataset = {pathlib.PurePath(f[1]).stem: np.loadtxt(f[1], delimiter=',') for f in files}
 # joint speed dataset
-directory = 'D:\Ali.K.M.Bonab\Walking_Mass_Inertia_Effect\Data\Data\RRA\*_speed.csv'
+directory = '.\Data\RRA\*_speed.csv'
 files = enumerate(glob.iglob(directory), 1)
 jointspeed_dataset = {pathlib.PurePath(f[1]).stem: np.loadtxt(f[1], delimiter=',') for f in files}
 # joint kinematics dataset
-directory = 'D:\Ali.K.M.Bonab\Walking_Mass_Inertia_Effect\Data\Data\RRA\*_kinematics.csv'
+directory = '.\Data\RRA\*_kinematics.csv'
 files = enumerate(glob.iglob(directory), 1)
 jointkinematics_dataset = {pathlib.PurePath(f[1]).stem: np.loadtxt(f[1], delimiter=',') for f in files}
 # gls
@@ -87,6 +87,12 @@ loaded_kneejoint_kinematics = utils.normalize_direction_data(jointkinematics_dat
 noload_kneejoint_kinematics = utils.normalize_direction_data(jointkinematics_dataset['noload_kneejoint_kinematics'],gl_noload,normalize=False,direction=False)
 mean_loaded_kneejoint_kinematics,std_loaded_kneejoint_kinematics = utils.mean_std_over_subjects(loaded_kneejoint_kinematics)
 mean_noload_kneejoint_kinematics,std_noload_kneejoint_kinematics = utils.mean_std_over_subjects(noload_kneejoint_kinematics)
+# biarticular knee actuator kinematics
+loaded_bi_kneeactuator_kinematics = utils.normalize_direction_data(jointkinematics_dataset['loaded_hipjoint_kinematics']-jointkinematics_dataset['loaded_kneejoint_kinematics'],gl_noload,normalize=False,direction=False)
+noload_bi_kneeactuator_kinematics = utils.normalize_direction_data(jointkinematics_dataset['noload_hipjoint_kinematics']-jointkinematics_dataset['noload_kneejoint_kinematics'],gl_noload,normalize=False,direction=False)
+mean_loaded_bi_kneeactuator_kinematics,std_loaded_bi_kneeactuator_kinematics = utils.mean_std_over_subjects(loaded_bi_kneeactuator_kinematics)
+mean_noload_bi_kneeactuator_kinematics,std_noload_bi_kneeactuator_kinematics = utils.mean_std_over_subjects(noload_bi_kneeactuator_kinematics)
+
 #####################################################################################
 # Write final data to csv file.
 # TODO: optimize data saving method.
@@ -98,7 +104,8 @@ Headers = ['mean_norm_loaded_hipjoint_moment','std_norm_loaded_hipjoint_moment',
             'mean_norm_noload_hipjoint_moment','std_norm_noload_hipjoint_moment','mean_norm_noload_kneejoint_moment','std_norm_noload_kneejoint_moment',\
            'mean_norm_noload_hipjoint_power','std_norm_noload_hipjoint_power','mean_norm_noload_kneejoint_power','std_norm_noload_kneejoint_power',\
             'mean_noload_hipjoint_speed','std_noload_hipjoint_speed','mean_noload_kneejoint_speed','std_noload_kneejoint_speed',\
-            'mean_noload_hipjoint_kinematics','std_noload_hipjoint_kinematics','mean_noload_kneejoint_kinematics','std_noload_kneejoint_kinematics']
+            'mean_noload_hipjoint_kinematics','std_noload_hipjoint_kinematics','mean_noload_kneejoint_kinematics','std_noload_kneejoint_kinematics',\
+            'mean_loaded_bi_kneeactuator_kinematics','std_loaded_bi_kneeactuator_kinematics','mean_noload_bi_kneeactuator_kinematics','std_noload_bi_kneeactuator_kinematics']
 # Dataset
 Data =[mean_norm_loaded_hipjoint_moment,std_norm_loaded_hipjoint_moment,mean_norm_loaded_kneejoint_moment,std_norm_loaded_kneejoint_moment,\
             mean_norm_loaded_hipjoint_power,std_norm_loaded_hipjoint_power,mean_norm_loaded_kneejoint_power,std_norm_loaded_kneejoint_power,\
@@ -107,7 +114,8 @@ Data =[mean_norm_loaded_hipjoint_moment,std_norm_loaded_hipjoint_moment,mean_nor
             mean_norm_noload_hipjoint_moment,std_norm_noload_hipjoint_moment,mean_norm_noload_kneejoint_moment,std_norm_noload_kneejoint_moment,\
             mean_norm_noload_hipjoint_power,std_norm_noload_hipjoint_power,mean_norm_noload_kneejoint_power,std_norm_noload_kneejoint_power,\
             mean_noload_hipjoint_speed,std_noload_hipjoint_speed,mean_noload_kneejoint_speed,std_noload_kneejoint_speed,\
-            mean_noload_hipjoint_kinematics,std_noload_hipjoint_kinematics,mean_noload_kneejoint_kinematics,std_noload_kneejoint_kinematics]
+            mean_noload_hipjoint_kinematics,std_noload_hipjoint_kinematics,mean_noload_kneejoint_kinematics,std_noload_kneejoint_kinematics,\
+            mean_loaded_bi_kneeactuator_kinematics,std_loaded_bi_kneeactuator_kinematics,mean_noload_bi_kneeactuator_kinematics,std_noload_bi_kneeactuator_kinematics]
 # List of numpy vectors to a numpy ndarray and save to csv file
 Data = utils.vec2mat(Data)
 with open(r'.\Data\RRA\rra_final_data.csv', 'wb') as f:
