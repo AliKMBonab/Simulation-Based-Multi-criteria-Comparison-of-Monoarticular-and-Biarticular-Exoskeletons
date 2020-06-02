@@ -146,11 +146,11 @@ suffixes = ['torque','torque','power','power',\
             'regenerative_energy','regenerative_energy',\
             'power','power','max_power','max_power','avg_positive_power','avg_positive_power',\
             'avg_negative_power','avg_negative_power']
-HWs = {'mono_load':[70,70,70,30],'bi_load':[70,50,50,40,30],'mono_noload':[70,60,50,30],'bi_noload':[70,50,30,30]}
-KWs = {'mono_load':[70,40,30,30],'bi_load':[70,70,60,70,50],'mono_noload':[70,70,30,30],'bi_noload':[70,60,70,50]}
+HWs = {'mono_load':[30,40,50,60,70,70,70,70,70],'bi_load':[30,30,30,30,30,40,40,50,50,50,60,70],'mono_noload':[30,40,50,50,50,60,60,60,70,70],'bi_noload':[30,30,30,30,30,40,40,40,50,50,50,70]}
+KWs = {'mono_load':[30,30,30,30,30,40,50,60,70],'bi_load':[30,40,50,60,70,60,70,50,60,70,70,70],'mono_noload':[30,30,30,40,50,50,60,70,60,70],'bi_noload':[30,40,50,60,70,40,50,60,50,60,70,70]}
 labeling = ['mono','bi']
 #***************************
-print('Section 04:\t extracting Specific Weights of Pareto exoskeletons related files: Actuators Data, Muscles Activation, Muscles Moment, Metabolic Energy.\n')
+print('Section 05:\t extracting Specific Weights of Pareto exoskeletons related files: Actuators Data, Muscles Activation, Muscles Moment, Metabolic Energy.\n')
 #***************************
 y = input('Specific weights data extraction? (y,n):  ')
 if  y.lower() == 'y':
@@ -163,4 +163,34 @@ if  y.lower() == 'y':
                 out= fcns.specific_weight_data_subjects(configuration=configs[i],HipWeight=HW[j],KneeWeight=KW[j],loadcond=load_type,regenergy=True)
                 for k in range(len(out)):
                     np.savetxt('./Data/Specific_Weights/{}_hip{}knee{}_{}_{}_{}.csv'.format(config_names[i],HW[j],KW[j],load_type,middle[k],suffixes[k]), out[k], fmt='%s', delimiter=',')
-                    
+
+#####################################################################################
+#####################################################################################
+"""Section 06:
+                reaction forces dataset
+"""
+print('\n')
+loads = ['loaded']
+#configs = [None,'Monoarticular','Biarticular','Monoarticular','Biarticular']
+#config_names = ['unassist','monoarticular_ideal','biarticular_ideal','monoarticular_paretofront','biarticular_paretofront']
+#cases = ['Unassist','Ideal','Ideal','Paretofront','Paretofront']
+
+configs = ['Monoarticular','Biarticular']
+config_names = ['monoarticular_paretofront','biarticular_paretofront']
+cases = ['Paretofront','Paretofront']
+cases_dir = ['Pareto','Pareto']
+#***************************
+print('Section 06:\t extracting reaction forces')
+#***************************
+y = input('reaction forces data extraction? (y,n):  ')
+if  y.lower() == 'y':
+    print('reaction forces biarticular/monoarticular loaded/noload files are getting extracted the file.\n')
+    for load_type in loads:
+        if load_type == 'noload':
+            joint_name = ['back','hip','knee','ankle']
+        else:
+            joint_name = ['back','duct_tape','hip','knee','ankle']
+        for i in range(len(configs)):
+            out = fcns.extract_reaction_forces(loadcondition=load_type,case=cases[i].lower(),\
+                                               joints=joint_name,device=configs[i],force_or_moment='moment')
+            np.savetxt('./Data/{}/{}_{}_reaction_moments.csv'.format(cases_dir[i],config_names[i],load_type), out, fmt='%s', delimiter=',')
