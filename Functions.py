@@ -1562,6 +1562,16 @@ def reaction_forces_name_const(joint,force_or_moment = 'moment',expressed_frame 
                             for side in ['r','l']\
                             for force in force_list]
         return reaction_force_name
+    elif joint == 'patellofemoral':
+        joint_names = 'patellofemoral'
+        if expressed_frame == None:
+            expressed_frame = 'ground'
+        if applied_body == None:
+            applied_body = 'patella'
+        reaction_force_name = ['{}_{}_on_{}_{}_in_{}_{}'.format(joint_names,side,applied_body,side,expressed_frame,force)
+                            for side in ['r','l']\
+                            for force in force_list]
+        return reaction_force_name
     
 def extract_reaction_forces(loadcondition,case,joints,device=None,force_or_moment='moment'):
     # general subjects and trials lists 
@@ -1579,7 +1589,7 @@ def extract_reaction_forces(loadcondition,case,joints,device=None,force_or_momen
         if device == None:
             raise Exception('please determine the device.')
     # joint list check
-    joint_check_list = ['back','duct_tape','hip','knee','ankle']
+    joint_check_list = ['back','duct_tape','hip','knee','patellofemoral','ankle']
     if all(elem in joint_check_list for elem in joints) == False:
         raise Exception('error in joint list')
     # hip and knee weights for pareto fronts
