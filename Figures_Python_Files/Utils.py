@@ -306,7 +306,8 @@ def reduction_calc(data1,data2):
         reduction[i] = (((data1[i]-data2[i])*100)/data1[i])
     return reduction
 
-def outliers_modified_z_score(ys,threshold = 3):
+# never used
+# def outliers_modified_z_score(ys,threshold = 3):
     '''
     The Z-score, or standard score, is a way of describing a data point
     in terms of its relationship to the mean and standard deviation of
@@ -2144,6 +2145,7 @@ def paretofront_barplot(plot_dic,indices,loadcond):
 
 ######################################################################
 # Plot and analyses related functions for muscles metabolic rate and stiffness
+
 def muscles_whisker_bar_plot(data_1,data_2,data_3=None,data_4=None,
                              which_muscles='all',which_plot='whisker',
                              nrows=5,ncols=8,xticklabel=['noload','loaded'],
@@ -2172,7 +2174,7 @@ def muscles_whisker_bar_plot(data_1,data_2,data_3=None,data_4=None,
     if which_muscles == 'all':
         names = muscles_name
         c=0
-        if data_3.all() is None and data_4.all() is None:
+        if data_3 is None and data_4 is None:
             data = np.zeros([data_1.shape[0],len(muscles_name)*2])
             for i in range(len(muscles_name)):
                 data[:,c] = data_1[:,i]
@@ -2186,7 +2188,7 @@ def muscles_whisker_bar_plot(data_1,data_2,data_3=None,data_4=None,
                 data[:,c+2] = data_3[:,i]
                 data[:,c+3] = data_4[:,i]
                 c+=4
-        elif data_3 is  not None and data_4 is None:
+        elif data_3 is not None and data_4 is None:
             data = np.zeros([data_1.shape[0],len(muscles_name)*3])
             for i in range(len(muscles_name)):
                 data[:,c] = data_1[:,i]
@@ -2399,5 +2401,48 @@ def plot_stiffness(plot_dic,load_condition,kinematics_ticks,moment_ticks,ax1,ax2
     no_top_right(ax3)
     # final adjustments and settings
     plt.tight_layout()
+
+def plot_pareto_muscles_metabolicrate(plot_dic,configuration):
+    print('test')
+######################################################################
+# Plot and analyses related functions for reaction forces
+def clasify_data(data,loadcondition,forces_name=['Mx','My','Mz']):
+    """
+    The data extraction was defined based on iteration of joint, subject, trial, and force.
+    To classify data to each joint and force components, this function has been defined.
+    Note:
+        This function returns a dictionary contains force components of joints
+    Args:
+        data ([type]): [description]
+        joint_name ([str]): [description]
+        forces_name (list, optional): Defaults to ['Mx','My','Mz'].
+    """
+    subject_num = 7
+    trial_num = 3
+    if len(forces_name) < 3:
+        raise Exception('force names parametere should has 3 components.')
+    # joints
+    if loadcondition.lower() == 'loaded':
+        joints_name=['back','duct_tape','hip','knee','patellofemoral','ankle']
+    elif loadcondition.lower() == 'noload':
+        joints_name=['back','hip','knee','patellofemoral','ankle']
     
+    # sorting dataset
+    output_dataset_dic = {}
+    c = 0
+    for j in joints_name:
+        force_1 = np.zeros((data.shape[0],subject_num*trial_num))
+        force_2 = np.zeros((data.shape[0],subject_num*trial_num))
+        force_3 = np.zeros((data.shape[0],subject_num*trial_num))
+        for i in range(subject_num*trial_num):
+            force_1[:,i] = data[:,c]
+            force_2[:,i] = data[:,c+1]
+            force_3[:,i] = data[:,c+2]
+            c+=3 # number of force componenet
+        output_dataset_dic['{}_joint_{}'.format(j,forces_name[0])] = force_1
+        output_dataset_dic['{}_joint_{}'.format(j,forces_name[1])] = force_2
+        output_dataset_dic['{}_joint_{}'.format(j,forces_name[2])] = force_3
+    return output_dataset_dic
+            
+
     

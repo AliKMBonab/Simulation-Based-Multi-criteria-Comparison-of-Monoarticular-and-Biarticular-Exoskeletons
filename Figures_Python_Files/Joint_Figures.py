@@ -25,19 +25,19 @@ gait_cycle = np.linspace(0,100,1000)
 #####################################################################################
 # Reading CSV files into a dictionary and constructing gls
 # joint moment dataset
-directory = 'D:\Ali.K.M.Bonab\Walking_Mass_Inertia_Effect\Data\Data\RRA\*_torque.csv'
+directory = '.\Data\RRA\*_torque.csv'
 files = enumerate(glob.iglob(directory), 1)
 jointmoment_dataset = {pathlib.PurePath(f[1]).stem: np.loadtxt(f[1], delimiter=',') for f in files}
 # joint power dataset
-directory = 'D:\Ali.K.M.Bonab\Walking_Mass_Inertia_Effect\Data\Data\RRA\*_power.csv'
+directory = '.\Data\RRA\*_power.csv'
 files = enumerate(glob.iglob(directory), 1)
 jointpower_dataset = {pathlib.PurePath(f[1]).stem: np.loadtxt(f[1], delimiter=',') for f in files}
 # joint speed dataset
-directory = 'D:\Ali.K.M.Bonab\Walking_Mass_Inertia_Effect\Data\Data\RRA\*_speed.csv'
+directory = '.\Data\RRA\*_speed.csv'
 files = enumerate(glob.iglob(directory), 1)
 jointspeed_dataset = {pathlib.PurePath(f[1]).stem: np.loadtxt(f[1], delimiter=',') for f in files}
 # joint kinematics dataset
-directory = 'D:\Ali.K.M.Bonab\Walking_Mass_Inertia_Effect\Data\Data\RRA\*_kinematics.csv'
+directory = '.\Data\RRA\*_kinematics.csv'
 files = enumerate(glob.iglob(directory), 1)
 jointkinematics_dataset = {pathlib.PurePath(f[1]).stem: np.loadtxt(f[1], delimiter=',') for f in files}
 # gls
@@ -157,7 +157,6 @@ knee_kinematics_noload_plot_dic = {'pgc':gait_cycle,'avg':utils.smooth(mean_nolo
                         'std':utils.smooth(std_noload_kneejoint_kinematics,3),'avg_toeoff':noload_mean_toe_off}
 
 #*****************************
-
 # hip joint moment figure
 fig, ax = plt.subplots(num='Hip Joint Moment',figsize=(6.4, 4.8))
 utils.plot_shaded_avg(plot_dic=hip_moment_loaded_plot_dic,color='k')
