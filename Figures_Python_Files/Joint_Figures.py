@@ -87,6 +87,12 @@ loaded_kneejoint_kinematics = utils.normalize_direction_data(jointkinematics_dat
 noload_kneejoint_kinematics = utils.normalize_direction_data(jointkinematics_dataset['noload_kneejoint_kinematics'],gl_noload,normalize=False,direction=False)
 mean_loaded_kneejoint_kinematics,std_loaded_kneejoint_kinematics = utils.mean_std_over_subjects(loaded_kneejoint_kinematics)
 mean_noload_kneejoint_kinematics,std_noload_kneejoint_kinematics = utils.mean_std_over_subjects(noload_kneejoint_kinematics)
+# biarticular knee actuator kinematics
+loaded_bi_kneeactuator_kinematics = utils.normalize_direction_data(jointkinematics_dataset['loaded_hipjoint_kinematics']-jointkinematics_dataset['loaded_kneejoint_kinematics'],gl_noload,normalize=False,direction=False)
+noload_bi_kneeactuator_kinematics = utils.normalize_direction_data(jointkinematics_dataset['noload_hipjoint_kinematics']-jointkinematics_dataset['noload_kneejoint_kinematics'],gl_noload,normalize=False,direction=False)
+mean_loaded_bi_kneeactuator_kinematics,std_loaded_bi_kneeactuator_kinematics = utils.mean_std_over_subjects(loaded_bi_kneeactuator_kinematics)
+mean_noload_bi_kneeactuator_kinematics,std_noload_bi_kneeactuator_kinematics = utils.mean_std_over_subjects(noload_bi_kneeactuator_kinematics)
+
 #####################################################################################
 # Write final data to csv file.
 # TODO: optimize data saving method.
@@ -98,7 +104,8 @@ Headers = ['mean_norm_loaded_hipjoint_moment','std_norm_loaded_hipjoint_moment',
             'mean_norm_noload_hipjoint_moment','std_norm_noload_hipjoint_moment','mean_norm_noload_kneejoint_moment','std_norm_noload_kneejoint_moment',\
            'mean_norm_noload_hipjoint_power','std_norm_noload_hipjoint_power','mean_norm_noload_kneejoint_power','std_norm_noload_kneejoint_power',\
             'mean_noload_hipjoint_speed','std_noload_hipjoint_speed','mean_noload_kneejoint_speed','std_noload_kneejoint_speed',\
-            'mean_noload_hipjoint_kinematics','std_noload_hipjoint_kinematics','mean_noload_kneejoint_kinematics','std_noload_kneejoint_kinematics']
+            'mean_noload_hipjoint_kinematics','std_noload_hipjoint_kinematics','mean_noload_kneejoint_kinematics','std_noload_kneejoint_kinematics',\
+            'mean_loaded_bi_kneeactuator_kinematics','std_loaded_bi_kneeactuator_kinematics','mean_noload_bi_kneeactuator_kinematics','std_noload_bi_kneeactuator_kinematics']
 # Dataset
 Data =[mean_norm_loaded_hipjoint_moment,std_norm_loaded_hipjoint_moment,mean_norm_loaded_kneejoint_moment,std_norm_loaded_kneejoint_moment,\
             mean_norm_loaded_hipjoint_power,std_norm_loaded_hipjoint_power,mean_norm_loaded_kneejoint_power,std_norm_loaded_kneejoint_power,\
@@ -107,7 +114,8 @@ Data =[mean_norm_loaded_hipjoint_moment,std_norm_loaded_hipjoint_moment,mean_nor
             mean_norm_noload_hipjoint_moment,std_norm_noload_hipjoint_moment,mean_norm_noload_kneejoint_moment,std_norm_noload_kneejoint_moment,\
             mean_norm_noload_hipjoint_power,std_norm_noload_hipjoint_power,mean_norm_noload_kneejoint_power,std_norm_noload_kneejoint_power,\
             mean_noload_hipjoint_speed,std_noload_hipjoint_speed,mean_noload_kneejoint_speed,std_noload_kneejoint_speed,\
-            mean_noload_hipjoint_kinematics,std_noload_hipjoint_kinematics,mean_noload_kneejoint_kinematics,std_noload_kneejoint_kinematics]
+            mean_noload_hipjoint_kinematics,std_noload_hipjoint_kinematics,mean_noload_kneejoint_kinematics,std_noload_kneejoint_kinematics,\
+            mean_loaded_bi_kneeactuator_kinematics,std_loaded_bi_kneeactuator_kinematics,mean_noload_bi_kneeactuator_kinematics,std_noload_bi_kneeactuator_kinematics]
 # List of numpy vectors to a numpy ndarray and save to csv file
 Data = utils.vec2mat(Data)
 with open(r'.\Data\RRA\rra_final_data.csv', 'wb') as f:
@@ -157,6 +165,7 @@ knee_kinematics_noload_plot_dic = {'pgc':gait_cycle,'avg':utils.smooth(mean_nolo
                         'std':utils.smooth(std_noload_kneejoint_kinematics,3),'avg_toeoff':noload_mean_toe_off}
 
 #*****************************
+
 # hip joint moment figure
 fig, ax = plt.subplots(num='Hip Joint Moment',figsize=(6.4, 4.8))
 utils.plot_shaded_avg(plot_dic=hip_moment_loaded_plot_dic,color='k')

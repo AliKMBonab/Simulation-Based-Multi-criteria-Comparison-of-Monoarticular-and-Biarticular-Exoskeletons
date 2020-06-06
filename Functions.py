@@ -1486,6 +1486,7 @@ def unassist_idealdevice_data_subjects(configuration,loadcond='noload',metabolic
             HipMusclePower_Data,KneeMusclePower_Data,Muscles_Metabolic_Data
     else:
         return MetabolicEnergy_Data,MuscleActivation_Data,HipMuscleMoment_Data,KneeMuscleMoment_Data,MetabolicEnergy_Proc_Data,Muscles_Metabolic_Data
+
 #####################################################################################
 #####################################################################################
 # Reaction force analysis

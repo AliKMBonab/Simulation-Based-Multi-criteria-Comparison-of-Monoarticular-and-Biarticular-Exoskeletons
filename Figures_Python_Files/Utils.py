@@ -2402,8 +2402,102 @@ def plot_stiffness(plot_dic,load_condition,kinematics_ticks,moment_ticks,ax1,ax2
     # final adjustments and settings
     plt.tight_layout()
 
-def plot_pareto_muscles_metabolicrate(plot_dic,configuration):
-    print('test')
+def pareto_muscles_metabolic_reduction(dataset,unassist_dataset):
+    """
+    This function arranges the pareto dataset and calculates the metabolic
+    reduction of each muscle and returns their within subject mean and std for all simulations.
+    Args:
+        dataset ([ndarray]): [pareto dataset]
+        unassist_dataset ([ndarray]): [unassist dataset related to the dataset]
+
+    Returns:
+        [ndarray]: [mean and std of muscles for all pareto simulations]
+    """
+    simulation_num = 25
+    subject_num = 7
+    trial_num = 3
+    mean_muscle_group_reduction = np.zeros([simulation_num,40])
+    std_muscle_group_reduction = np.zeros([simulation_num,40])
+    for i in range(simulation_num):
+        c = np.arange(i,(subject_num*trial_num*simulation_num)-(simulation_num-i)+1,simulation_num)
+        selected_group = dataset[c,:]
+        muscle_group_reduction_percent = np.true_divide((np.subtract(unassist_dataset,selected_group))*100,unassist_dataset)
+        mean_muscle_group_reduction[i,:] = np.nanmean(muscle_group_reduction_percent,axis=0)
+        std_muscle_group_reduction[i,:] = np.nanstd(muscle_group_reduction_percent,axis=0)
+    return mean_muscle_group_reduction,std_muscle_group_reduction
+
+def manual_filter_muscles_metabolicrate(dataset,indices):
+    paretofront_dataset = np.zeros([len(indices),dataset.shape[1]])
+    indices = [elem-1 for elem in indices]
+    c=0
+    for i in indices:
+        paretofront_dataset[c,:] = dataset[i,:]
+        c+=1
+    return paretofront_dataset
+
+def paretofront_plot_muscles_metabolics(plot_dic,nrows=6,ncols=7,which_muscles='all',xlabels=False,
+                                        xlabel_loc=[35,36,37,38,39,40,41],ylabel_loc=[0,7,14,21,28,35],
+                                        legend_loc=[0],xytext=(0,0),ha='right',*args, **kwargs):
+    # initialization
+    muscles_name = ['add_brev','add_long','add_mag3','add_mag4','add_mag2','add_mag1','bifemlh','bifemsh','ext_dig',\
+                    'ext_hal','flex_dig','flex_hal','lat_gas','med_gas','glut_max1','glut_max2','glut_max3','glut_med1',\
+                    'glut_med2','glut_med3','glut_min1','glut_min2','glut_min3','grac','iliacus','per_brev','per_long',\
+                    'peri','psoas','rect_fem','sar','semimem','semiten','soleus','tfl','tib_ant','tib_post','vas_int',\
+                    'vas_lat','vas_med']
+    avg = plot_dic['mean_data']
+    std = plot_dic['std_data']
+    label = plot_dic['label']
+    weights = plot_dic['weights']
+    color = plot_dic['color']
+    # paretofront weights
+    weights = [item-1 for item in weights]
+    # generating all names
+    all_weights_name = []
+    for i in ['A','B','C','D','E']:
+        for j in ['a','b','c','d','e']:
+            all_weights_name.append('{}{}'.format(i,j))
+    # selecting names related to paretofront weights
+    selected_weights_name = []
+    for i,name in enumerate(all_weights_name):
+        if i in weights:
+            selected_weights_name.append(name)
+    selected_weights_name = selected_weights_name[::-1]
+    # handle selected muscles
+    if which_muscles != 'all':
+        cropped_avg = np.zeros([25,len(which_muscles)])
+        cropped_std = np.zeros([25,len(which_muscles)])
+        c=0
+        for i, muscle_name in enumerate(muscle_name):
+            if muscle_name in which_muscles:
+                cropped_avg[:,c] = avg[:,i]
+                cropped_std[:,c] = std[:,i]
+        muscles_name = which_muscles
+        avg = cropped_avg
+        std = cropped_std
+    # plot
+    for i in range(len(muscles_name)):
+        ax = plt.subplot(nrows,ncols,i+1)
+        x  = np.arange(0,len(weights),1,dtype=np.float64)
+        y = avg[:,i]
+        ax.fill_between(x, avg[:,i] + std[:,i], avg[:,i] - std[:,i], alpha=0.20,linewidth=1,color=color) # shaded std
+        ax.plot(x, avg[:,i], lw=2, label=label, color=color) # mean
+        ax.scatter(x,avg[:,i],marker='o',color=color,lw=0.5)
+        label_datapoints(x,avg[:,i],selected_weights_name,xytext=xytext,ha=ha,fontsize=8)
+        ax.set_xticks(x)
+        if xlabels == True:
+            ax.set_xticklabels(selected_weights_name,rotation=0)
+        else:
+            empty_string_labels = ['']*len(x)
+            ax.set_xticklabels(empty_string_labels)
+        ax.tick_params(axis='both',direction='in')
+        ax.set_title(muscles_name[i])
+        no_top_right(ax)
+        if i in xlabel_loc:
+            ax.set_xlabel('weights')
+        if i in ylabel_loc:
+            ax.set_ylabel('metabolic rate\nreduction (%)')
+        if i in legend_loc:
+            ax.legend(loc='best',frameon=False)      
 ######################################################################
 # Plot and analyses related functions for reaction forces
 def clasify_data(data,loadcondition,forces_name=['Mx','My','Mz']):

@@ -96,6 +96,19 @@ with open(r'.\Data\Unassist\unassist_final_data.csv', 'wb') as f:
   f.write(bytes(utils.listToString(Headers)+'\n','UTF-8'))
   np.savetxt(f, Data, fmt='%s', delimiter=",")
 #####################################################################################
+# moment dataset without normalizing for stiffness plots
+Headers = ['mean_loaded_hipmuscles_moment','std_loaded_hipmuscles_moment','mean_noload_hipmuscles_moment','std_noload_hipmuscles_moment',\
+       'mean_loaded_kneemuscles_moment','std_loaded_kneemuscles_moment','mean_noload_kneemuscles_moment','std_noload_kneemuscles_moment']
+# Dataset
+Data =[mean_loaded_hipmuscles_moment,std_loaded_hipmuscles_moment,mean_noload_hipmuscles_moment,std_noload_hipmuscles_moment,\
+       mean_loaded_kneemuscles_moment,std_loaded_kneemuscles_moment,mean_noload_kneemuscles_moment,std_noload_kneemuscles_moment]
+# List of numpy vectors to a numpy ndarray and save to csv file
+Data = utils.vec2mat(Data,matrix_cols=9,num_matrix=4)
+with open(r'.\Data\Unassist\unassist_stiffness_data.csv', 'wb') as f:
+  f.write(bytes(utils.listToString(Headers)+'\n','UTF-8'))
+  np.savetxt(f, Data, fmt='%s', delimiter=",")
+#####################################################################################
+
 # Plots
 # hip joint moment plot dictionaries
 hip_moment_loaded_plot_dic = {'pgc':gait_cycle,'avg':utils.smooth(mean_norm_loaded_hipmuscles_moment,3),'label':'Loaded',
@@ -171,6 +184,7 @@ fig.tight_layout(h_pad=-1, w_pad=-1.5)
 fig.subplots_adjust(top=0.98, bottom=0.075, left=0.100, right=0.975,hspace=0.45,wspace=0.40)
 fig.savefig('./Figures/Unassist/MusclesMetabolicRate_BarPlot.pdf',orientation='landscape',bbox_inches='tight')
 
+#*****************************
 # hip joint stiffness
 fig = plt.figure(num='Hip Joint Stiffness',figsize=(12, 10))
 gridsize = (3, 2)
@@ -194,24 +208,24 @@ fig.subplots_adjust(top=0.98, bottom=0.075, left=0.100, right=0.975,hspace=0.45,
 plt.show()
 fig.savefig('./Figures/Unassist/HipJointStiffness.pdf',orientation='landscape',bbox_inches='tight')
 
-
+#*****************************
 # knee joint stiffness
 fig = plt.figure(num='Knee Joint Stiffness',figsize=(12, 10))
 gridsize = (3, 2)
 ax1 = plt.subplot2grid(gridsize, (0, 0), colspan=2, rowspan=2) # stiffness plot
 ax2 = plt.subplot2grid(gridsize, (2, 0)) # kinematics plot
 ax3 = plt.subplot2grid(gridsize, (2, 1)) # moment plot
-# hip loaded case
-hip_stiffness_plot_dic = {'loaded_toe_off':loaded_mean_toe_off,'noload_toe_off':noload_mean_toe_off,'kinematics':utils.smooth(rra_dataset['mean_loaded_kneejoint_kinematics'],5),
+# knee loaded case
+knee_stiffness_plot_dic = {'loaded_toe_off':loaded_mean_toe_off,'noload_toe_off':noload_mean_toe_off,'kinematics':utils.smooth(rra_dataset['mean_loaded_kneejoint_kinematics'],5),
                           'kinematics_std':utils.smooth(rra_dataset['std_loaded_kneejoint_kinematics'],5),'moment':utils.smooth(mean_loaded_kneemuscles_moment,5),
                           'moment_std':utils.smooth(std_loaded_kneemuscles_moment,5),'color':'k','toe_off_color':'grey','label':'hip joint'}
-utils.plot_stiffness(plot_dic = hip_stiffness_plot_dic, load_condition='loaded',\
+utils.plot_stiffness(plot_dic = knee_stiffness_plot_dic, load_condition='loaded',\
                      kinematics_ticks=[0,10,20,30,40,50,60,70,80],moment_ticks=[-60,-30,0,30,60,90],ax1=ax1,ax2=ax2,ax3=ax3)
-# hip noload case
-hip_stiffness_plot_dic = {'loaded_toe_off':loaded_mean_toe_off,'noload_toe_off':noload_mean_toe_off,'kinematics':utils.smooth(rra_dataset['mean_noload_kneejoint_kinematics'],5),
+# knee noload case
+knee_stiffness_plot_dic = {'loaded_toe_off':loaded_mean_toe_off,'noload_toe_off':noload_mean_toe_off,'kinematics':utils.smooth(rra_dataset['mean_noload_kneejoint_kinematics'],5),
                           'kinematics_std':utils.smooth(rra_dataset['std_noload_kneejoint_kinematics'],5),'moment':utils.smooth(mean_noload_kneemuscles_moment,5),
                           'moment_std':utils.smooth(std_noload_kneemuscles_moment,5),'color':'xkcd:irish green','toe_off_color':'xkcd:shamrock green','label':'hip joint'}
-utils.plot_stiffness(plot_dic = hip_stiffness_plot_dic, load_condition='noload',
+utils.plot_stiffness(plot_dic = knee_stiffness_plot_dic, load_condition='noload',
 kinematics_ticks=[0,10,20,30,40,50,60,70,80],moment_ticks=[-60,-30,0,30,60,90],ax1=ax1,ax2=ax2,ax3=ax3)
 fig.tight_layout(h_pad=-1, w_pad=-1.5)
 fig.subplots_adjust(top=0.98, bottom=0.075, left=0.100, right=0.975,hspace=0.45,wspace=0.15)
