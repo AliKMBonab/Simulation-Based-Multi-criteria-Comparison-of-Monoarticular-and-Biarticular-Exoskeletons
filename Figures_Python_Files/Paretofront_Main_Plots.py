@@ -27,22 +27,23 @@ trials_num = ['01','02','03']
 gait_cycle = np.linspace(0,100,1000)
 #####################################################################################
 # Reading CSV files into a dictionary and constructing gls
-rra_dataset = utils.csv2numpy('D:/Ali.K.M.Bonab/Walking_Mass_Inertia_Effect/Data/Data/RRA/rra_final_data.csv') 
-unassist_dataset = utils.csv2numpy('D:/Ali.K.M.Bonab/Walking_Mass_Inertia_Effect/Data/Data/Unassist/unassist_final_data.csv') 
+ideal_dataset = utils.csv2numpy('./Data/Ideal/ideal_exos_dataset.csv') 
+rra_dataset = utils.csv2numpy('./Data/RRA/rra_final_data.csv') 
+unassist_dataset = utils.csv2numpy('./Data/Unassist/unassist_final_data.csv') 
 # pareto exo torque dataset
-directory = 'D:/Ali.K.M.Bonab/Walking_Mass_Inertia_Effect/Data/Data/Pareto/*_torque.csv'
+directory = './Data/Pareto/*_torque.csv'
 files = enumerate(glob.iglob(directory), 1)
 exo_torque_dataset = {pathlib.PurePath(f[1]).stem: np.loadtxt(f[1], delimiter=',') for f in files}
 # pareto exo power dataset
-directory = 'D:/Ali.K.M.Bonab/Walking_Mass_Inertia_Effect/Data/Data/Pareto/*_power.csv'
+directory = './Data/Pareto/*_power.csv'
 files = enumerate(glob.iglob(directory), 1)
 exo_power_dataset = {pathlib.PurePath(f[1]).stem: np.loadtxt(f[1], delimiter=',') for f in files}
 # pareto exo energy dataset
-directory = 'D:/Ali.K.M.Bonab/Walking_Mass_Inertia_Effect/Data/Data/Pareto/*_energy.csv'
+directory = './Data/Pareto/*_energy.csv'
 files = enumerate(glob.iglob(directory), 1)
 assisted_energy_dataset = {pathlib.PurePath(f[1]).stem: np.loadtxt(f[1], delimiter=',') for f in files}
 # unassist energy dataset
-directory = 'D:/Ali.K.M.Bonab/Walking_Mass_Inertia_Effect/Data/Data/Unassist/*_energy.csv'
+directory = './Data/Unassist/*_energy.csv'
 files = enumerate(glob.iglob(directory), 1)
 unassisted_energy_dataset = {pathlib.PurePath(f[1]).stem: np.loadtxt(f[1], delimiter=',') for f in files}
 # gls
@@ -233,16 +234,20 @@ plot_dic = {'x1_data':mean_bi_loaded_paretofront[:,0],'x1err_data':std_bi_loaded
           'x2_data':mean_mono_loaded_paretofront[:,0],'x2err_data':std_mono_loaded_paretofront[:,0],
           'y1_data':mean_bi_loaded_paretofront[:,1],'y1err_data':std_bi_loaded_paretofront[:,1],
           'y2_data':mean_mono_loaded_paretofront[:,1],'y2err_data':std_mono_loaded_paretofront[:,1],
-          'color_1':mycolors['crimson red'],'color_2':mycolors['dark purple']
+          'color_1':mycolors['crimson red'],'color_2':mycolors['dark purple'],
+          'x1_ideal': ideal_dataset['mean_loaded_bi_metabolics'],'x1err_ideal': ideal_dataset['std_loaded_bi_metabolics'],
+          'x2_ideal': ideal_dataset['mean_loaded_mono_metabolics'],'x2err_ideal': ideal_dataset['std_loaded_mono_metabolics'],
+          'y1_ideal': ideal_dataset['mean_loaded_bi_energy'],'y1err_ideal': ideal_dataset['std_loaded_bi_energy'],
+          'y2_ideal': ideal_dataset['mean_loaded_mono_energy'],'y2err_ideal': ideal_dataset['std_loaded_mono_energy'],
           }
 fig, axes = plt.subplots(nrows=2,ncols=2,num='PaperFigure_Paretofront',figsize=(12.8, 9.6))
 plt.subplot(2,2,1)
-utils.plot_pareto_avg_curve (plot_dic,loadcond='loaded',line=True)
+utils.plot_pareto_avg_curve (plot_dic,loadcond='loaded',line=True,ideal_configs=True)
 plt.ylabel('Exoskeleton Energy\n Consumption (W/kg)')
 plt.title('loaded: mono. vs bi.')
 ax = plt.gca()
 ax.set_xticks([5, 10, 15, 20, 25, 30])
-ax.set_yticks([1, 1.5, 2, 2.5, 3.2])
+ax.set_yticks([1, 1.5, 2, 2.5, 3, 3.5])
 plt.tick_params(axis='both',direction='in')
 utils.no_top_right(ax)
 plt.legend(loc='best',frameon=False)
@@ -253,15 +258,19 @@ plot_dic = {'x1_data':mean_bi_noload_paretofront[:,0],'x1err_data':std_bi_noload
           'x2_data':mean_mono_noload_paretofront[:,0],'x2err_data':std_mono_noload_paretofront[:,0],
           'y1_data':mean_bi_noload_paretofront[:,1],'y1err_data':std_bi_noload_paretofront[:,1],
           'y2_data':mean_mono_noload_paretofront[:,1],'y2err_data':std_mono_noload_paretofront[:,1],
-          'color_1':mycolors['magenta pink'],'color_2':mycolors['lavender purple']
+          'color_1':mycolors['magenta pink'],'color_2':mycolors['lavender purple'],
+          'x1_ideal': ideal_dataset['mean_noload_bi_metabolics'],'x1err_ideal': ideal_dataset['std_noload_bi_metabolics'],
+          'x2_ideal': ideal_dataset['mean_noload_mono_metabolics'],'x2err_ideal': ideal_dataset['std_noload_mono_metabolics'],
+          'y1_ideal': ideal_dataset['mean_noload_bi_energy'],'y1err_ideal': ideal_dataset['std_noload_bi_energy'],
+          'y2_ideal': ideal_dataset['mean_noload_mono_energy'],'y2err_ideal': ideal_dataset['std_noload_mono_energy']
           }
 plt.subplot(2,2,2)
-utils.plot_pareto_avg_curve (plot_dic,loadcond='noload',line=True)
+utils.plot_pareto_avg_curve (plot_dic,loadcond='noload',line=True,ideal_configs=True)
 plt.title('noload: mono. vs bi.')
 plt.tick_params(axis='both',direction='in')
 ax = plt.gca()
 ax.set_xticks([5, 10, 15, 20, 25, 30])
-ax.set_yticks([1, 1.5, 2, 2.5, 3.2])
+ax.set_yticks([1, 1.5, 2, 2.5, 3, 3.5])
 utils.no_top_right(ax)
 plt.legend(loc='best',frameon=False)
 
@@ -272,16 +281,20 @@ plot_dic = {'x1_data':mean_bi_loaded_paretofront[:,0],'x1err_data':std_bi_loaded
           'y1_data':mean_bi_loaded_paretofront[:,1],'y1err_data':std_bi_loaded_paretofront[:,1],
           'y2_data':mean_bi_noload_paretofront[:,1],'y2err_data':std_bi_noload_paretofront[:,1],
           'color_1':mycolors['crimson red'],'color_2':mycolors['olympic blue'],
-          'legend_1':'loaded biarticular','legend_2':'noload biarticular'
+          'legend_1':'loaded biarticular','legend_2':'noload biarticular',
+          'x1_ideal': ideal_dataset['mean_loaded_bi_metabolics'],'x1err_ideal': ideal_dataset['std_loaded_bi_metabolics'],
+          'x2_ideal': ideal_dataset['mean_noload_bi_metabolics'],'x2err_ideal': ideal_dataset['std_noload_bi_metabolics'],
+          'y1_ideal': ideal_dataset['mean_loaded_bi_energy'],'y1err_ideal': ideal_dataset['std_loaded_bi_energy'],
+          'y2_ideal': ideal_dataset['mean_noload_bi_energy'],'y2err_ideal': ideal_dataset['std_noload_bi_energy']
           }
 plt.subplot(2,2,3)
-utils.plot_pareto_avg_curve (plot_dic,loadcond='loaded',line=True)
+utils.plot_pareto_avg_curve (plot_dic,loadcond='loaded',line=True,ideal_configs=True)
 plt.title('biarticular: loaded vs noload')
 plt.ylabel('Exoskeleton Energy\n Consumption (W/kg)')
 plt.tick_params(axis='both',direction='in')
 ax = plt.gca()
 ax.set_xticks([5, 10, 15, 20, 25, 30])
-ax.set_yticks([1, 1.5, 2, 2.5, 3.2])
+ax.set_yticks([1, 1.5, 2, 2.5, 3, 3.5])
 ax.set_xlabel('metabolic cost\nreduction (%)')
 utils.no_top_right(ax)
 plt.legend(loc='best',frameon=False)
@@ -293,15 +306,19 @@ plot_dic = {'x1_data':mean_mono_loaded_paretofront[:,0],'x1err_data':std_mono_lo
           'y1_data':mean_mono_loaded_paretofront[:,1],'y1err_data':std_mono_loaded_paretofront[:,1],
           'y2_data':mean_mono_noload_paretofront[:,1],'y2err_data':std_mono_noload_paretofront[:,1],
           'color_1':mycolors['crimson red'],'color_2':mycolors['olympic blue'],
-          'legend_1':'loaded monoarticular','legend_2':'noload monoarticular'
+          'legend_1':'loaded monoarticular','legend_2':'noload monoarticular',
+          'x1_ideal': ideal_dataset['mean_loaded_mono_metabolics'],'x1err_ideal': ideal_dataset['std_loaded_mono_metabolics'],
+          'x2_ideal': ideal_dataset['mean_noload_mono_metabolics'],'x2err_ideal': ideal_dataset['std_noload_mono_metabolics'],
+          'y1_ideal': ideal_dataset['mean_loaded_mono_energy'],'y1err_ideal': ideal_dataset['std_loaded_mono_energy'],
+          'y2_ideal': ideal_dataset['mean_noload_mono_energy'],'y2err_ideal': ideal_dataset['std_noload_mono_energy']
           }
 plt.subplot(2,2,4)
-utils.plot_pareto_avg_curve (plot_dic,loadcond='loaded',line=True)
+utils.plot_pareto_avg_curve (plot_dic,loadcond='loaded',line=True,ideal_configs=True)
 plt.title('monoarticular: loaded vs noload')
 plt.tick_params(axis='both',direction='in')
 ax = plt.gca()
 ax.set_xticks([5, 10, 15, 20, 25, 30])
-ax.set_yticks([1, 1.5, 2, 2.5, 3.2])
+ax.set_yticks([1, 1.5, 2, 2.5, 3, 3.5])
 ax.set_xlabel('metabolic cost\nreduction (%)')
 utils.no_top_right(ax)
 plt.legend(loc='best',frameon=False)

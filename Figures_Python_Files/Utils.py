@@ -21,6 +21,7 @@ import pathlib
 from sklearn import metrics
 from Colors import colors as mycolors
 import matplotlib.gridspec as gridspec
+from mpl_toolkits.axes_grid1 import make_axes_locatable
 #######################################################################
 #######################################################################
 # Data saving and reading related functions
@@ -341,6 +342,15 @@ def outliers_iqr(ys):
     idx = np.where((ys > upper_bound) | (ys < lower_bound),True,False)
     return idx
 
+def actuators_energy_contribution(hip_actuator,knee_actuator):
+        hip_contribution = np.true_divide(hip_actuator*100,(hip_actuator+knee_actuator))
+        knee_contribution = np.true_divide(knee_actuator*100,(hip_actuator+knee_actuator))
+        mean_hip_contribution = np.nanmean(hip_contribution)
+        mean_knee_contribution = np.nanmean(knee_contribution)
+        std_hip_contribution = np.nanstd(hip_contribution)
+        std_knee_contribution = np.nanstd(knee_contribution)
+        return mean_hip_contribution, std_hip_contribution, mean_knee_contribution, std_knee_contribution
+    
 ######################################################################
 # Mass and inertia effect functions
 
@@ -1720,7 +1730,7 @@ def errorbar_3D(x,y,z,x_err,y_err,z_err,color,marker='_',lw=2):
         ax.plot([x[i], x[i]], [y[i], y[i]], [z[i]+z_err[i], z[i]-z_err[i]], marker=marker,color=color,lw=lw)
 
 def plot_pareto_avg_curve (plot_dic,loadcond,legend_loc=0,label_on=True,which_label='alphabet',
-                            errbar_on=True,line=False,third_plot=False,*args, **kwargs):
+                            errbar_on=True,line=False,third_plot=False,ideal_configs=False,*args, **kwargs):
     '''plotting avg and std subplots for combinations of weights.\n
     -labels: needs to be provided by user otherwise data will be labeled from 1 to 25 automatically.
              labeling is True (i.e. label_on=True) by default.\n
@@ -1745,6 +1755,16 @@ def plot_pareto_avg_curve (plot_dic,loadcond,legend_loc=0,label_on=True,which_la
         x3err_data = plot_dic['x3err_data']
         y3err_data = plot_dic['y3err_data']
         color_3 = plot_dic['color_3']
+    if ideal_configs == True:
+        x1_ideal = plot_dic['x1_ideal']
+        x2_ideal = plot_dic['x2_ideal']
+        y1_ideal = plot_dic['y1_ideal']
+        y2_ideal = plot_dic['y2_ideal']
+        x1err_ideal = plot_dic['x1err_ideal']
+        x2err_ideal = plot_dic['x2err_ideal']
+        y1err_ideal = plot_dic['y1err_ideal']
+        y2err_ideal = plot_dic['y2err_ideal']
+        
     # handle labels
     if 'label_1' and 'label_2' not in plot_dic:
         if which_label == 'alphabet':
@@ -1798,7 +1818,15 @@ def plot_pareto_avg_curve (plot_dic,loadcond,legend_loc=0,label_on=True,which_la
         plt.plot(x1_data[~np.isnan(x1_data)],y1_data[~np.isnan(y1_data)],ls='-',lw=1,color=color_1)
         plt.plot(x2_data[~np.isnan(x2_data)],y2_data[~np.isnan(y2_data)],ls='-',lw=1,color=color_2) 
         if third_plot == True:
-            plt.plot(x3_data[~np.isnan(x3_data)],y3_data[~np.isnan(y3_data)],ls='-',lw=1,color=color_3)       
+            plt.plot(x3_data[~np.isnan(x3_data)],y3_data[~np.isnan(y3_data)],ls='-',lw=1,color=color_3)     
+    # ideal points adding
+    if ideal_configs == True:
+          plt.scatter(x1_ideal,y1_ideal,marker='X',color=color_1,*args, **kwargs)
+          plt.scatter(x2_ideal,y2_ideal,marker='X',color=color_2,*args, **kwargs)
+          plt.annotate('ideal', (x1_ideal,y1_ideal),textcoords="offset points",xytext=(0,0),ha='right',fontsize=10)
+          plt.annotate('ideal', (x2_ideal,y2_ideal),textcoords="offset points",xytext=(0,0),ha='left',fontsize=10)
+          plt.errorbar(x1_ideal,y1_ideal,xerr=x1err_ideal,yerr=y1err_ideal,fmt='X',ecolor=color_1,alpha=0.15)
+          plt.errorbar(x2_ideal,y2_ideal,xerr=x2err_ideal,yerr=y2err_ideal,fmt='X',ecolor=color_2,alpha=0.15)
 
 def plot_pareto_curve_subjects (nrows,ncols,nplot,plot_dic,loadcond,\
                                 line=False,legend_loc=[0],labels=None,\
@@ -2004,7 +2032,9 @@ def plot_pareto_comparison(plot_dic,loadcond,compare,labels=None,legend_loc=[0],
             ax.set_ylabel(ylabel)
         plt.tight_layout()
 
-def plot_paretofront_profile_changes(plot_dic,colormap,toeoff_color,include_colorbar=True,xlabel=False,ylabel=None,lw=1.75,*args,**kwargs):
+def plot_paretofront_profile_changes(plot_dic,colormap,toeoff_color,
+                                     include_colorbar=True,xlabel=False,ylabel=None,
+                                     add_ideal_profile=False,lw=1.75,*args,**kwargs):
     joint_data = plot_dic['joint_data']
     data = plot_dic['data']
     indices = plot_dic['indices']
@@ -2015,7 +2045,14 @@ def plot_paretofront_profile_changes(plot_dic,colormap,toeoff_color,include_colo
     plt.xticks([0,20,40,60,80,100])
     plt.xlim([0,100])
     # plotting joint profile
-    plt.plot(gpc,joint_data, *args, lw=3,ls='--',color=joint_color,label='Joint', **kwargs)
+    plt.plot(gpc,joint_data, *args, lw=3,ls='--',color=joint_color,label='joint', **kwargs)
+    # plotting ideal device profile
+    if add_ideal_profile == True:
+        ideal_data = plot_dic['ideal_data']
+        ideal_color = plot_dic['ideal_color']
+        plt.plot(gpc,ideal_data, *args, lw=3,ls='--',color=ideal_color,label='ideal device',alpha=0.75, **kwargs)
+    # legend
+    plt.legend(loc='best',frameon=False)
     # toe-off and zero lines
     plt.axvline(avg_toeoff, lw=2, color=toeoff_color, zorder=0, alpha=0.5) #vertical line
     plt.axhline(0, lw=2, color='grey', zorder=0, alpha=0.75) # horizontal line
@@ -2028,8 +2065,15 @@ def plot_paretofront_profile_changes(plot_dic,colormap,toeoff_color,include_colo
     for i in range(data.shape[1]):
         plt.plot(gpc, data[:,i], c=cmap(i),*args,lw=lw,**kwargs)
     # plot the colorbar
+    ax = plt.gca()
+    no_top_right(ax)
+    divider = make_axes_locatable(ax)
+    if include_colorbar == False:
+        cax = divider.append_axes("left", size="3%", pad=0.5)
+        cax.axis('off')
     if include_colorbar == True:
-        cbar = plt.colorbar(sm,ticks=np.arange(1,len(indices)+1,1),aspect=80)
+        cax = divider.append_axes("right", size="3%", pad=0.5)
+        cbar = plt.colorbar(sm,ticks=np.arange(1,len(indices)+1,1),cax=cax,aspect=80)
         label=[]
         for i in ['A','B','C','D','E']:
             for j in ['a','b','c','d','e']:
@@ -2039,16 +2083,16 @@ def plot_paretofront_profile_changes(plot_dic,colormap,toeoff_color,include_colo
             indices_str.append(label[i-1])
         cbar.set_ticklabels(indices_str)
         cbar.outline.set_visible(False)
+    
     #title
-    plt.title(title)
+    ax.set_title(title)
     #beauty plot
-    ax = plt.gca()
     no_top_right(ax)
     plt.tick_params(axis='both',direction='in')
     if xlabel== True:
-        plt.xlabel('gait cycle (%)')
+        ax.set_xlabel('gait cycle (%)')
     if ylabel != None:
-        plt.ylabel(ylabel)
+        ax.set_ylabel(ylabel)
     
 def plot3D_pareto_avg_curve (plot_dic,loadcond,legend_loc=0,label_on=True,errbar_on=True,line=False,*args, **kwargs):
     '''plotting avg and std subplots for combinations of weights.\n
