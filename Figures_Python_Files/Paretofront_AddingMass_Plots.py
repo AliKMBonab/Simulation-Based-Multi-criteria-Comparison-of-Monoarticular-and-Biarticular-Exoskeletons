@@ -148,8 +148,7 @@ mono_noload_energy_regen_Paretofront = utils.paretofront_subjects(monoarticular_
 #####################################################################################
 # indices
 bi_noload_indices = np.array([25,24,23,22,21,19,18,17,13,12,11,1])
-mono_noload_indices = np.array([25,24,20,15,12,11,7,2,6,1])
-
+mono_noload_indices = np.array([25,20,15,14,13,8,7,6,2,1])
 # regenerated
 bi_noload_regen_indices = np.array([25,24,23,22,21,19,18,17,16,13,12,11,6,1])
 mono_noload_regen_indices = np.array([25,24,20,15,10,5,4,1])

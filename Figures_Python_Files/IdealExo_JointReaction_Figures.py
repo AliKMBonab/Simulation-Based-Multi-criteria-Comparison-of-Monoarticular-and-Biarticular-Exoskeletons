@@ -155,6 +155,29 @@ mean_mono_loaded_ankle_RMz,std_mono_loaded_ankle_RMz = utils.mean_std_over_subje
 mean_mono_noload_ankle_RMz,std_mono_noload_ankle_RMz = utils.mean_std_over_subjects(mono_noload_ankle_RMz,avg_trials=False)
 
 #####################################################################################
+# Write final data to csv file.
+# TODO: optimize data saving method.
+# Headers
+Headers = ['mean_bi_loaded_back_RMz','std_bi_loaded_back_RMz','mean_mono_loaded_back_RMz','std_mono_loaded_back_RMz',\
+           'mean_bi_noload_back_RMz','std_bi_noload_back_RMz','mean_mono_noload_back_RMz','std_mono_noload_back_RMz',\
+           'mean_bi_loaded_knee_RMz','std_bi_loaded_knee_RMz','mean_mono_loaded_knee_RMz','std_mono_loaded_knee_RMz',\
+           'mean_bi_noload_knee_RMz','std_bi_noload_knee_RMz','mean_mono_noload_knee_RMz','std_mono_noload_knee_RMz',\
+           'mean_bi_loaded_patellofemoral_RMz','std_bi_loaded_patellofemoral_RMz','mean_mono_loaded_patellofemoral_RMz','std_mono_loaded_patellofemoral_RMz',\
+           'mean_bi_noload_patellofemoral_RMz','std_bi_noload_patellofemoral_RMz','mean_mono_noload_patellofemoral_RMz','std_mono_noload_patellofemoral_RMz']
+# Dataset
+Data =[mean_bi_loaded_back_RMz,std_bi_loaded_back_RMz,mean_mono_loaded_back_RMz,std_mono_loaded_back_RMz,\
+       mean_bi_noload_back_RMz,std_bi_noload_back_RMz,mean_mono_noload_back_RMz,std_mono_noload_back_RMz,\
+       mean_bi_loaded_knee_RMz,std_bi_loaded_knee_RMz,mean_mono_loaded_knee_RMz,std_mono_loaded_knee_RMz,\
+       mean_bi_noload_knee_RMz,std_bi_noload_knee_RMz,mean_mono_noload_knee_RMz,std_mono_noload_knee_RMz,\
+       mean_bi_loaded_patellofemoral_RMz,std_bi_loaded_patellofemoral_RMz,mean_mono_loaded_patellofemoral_RMz,std_mono_loaded_patellofemoral_RMz,\
+       mean_bi_noload_patellofemoral_RMz,std_bi_noload_patellofemoral_RMz,mean_mono_noload_patellofemoral_RMz,std_mono_noload_patellofemoral_RMz]
+# List of numpy vectors to a numpy ndarray and save to csv file
+Data = utils.vec2mat(Data)
+with open(r'.\Data\Ideal\jrf_ideal_exo_data.csv', 'wb') as f:
+  f.write(bytes(utils.listToString(Headers)+'\n','UTF-8'))
+  np.savetxt(f, Data, fmt='%s', delimiter=",")
+
+#####################################################################################
 # back joint reaction moment plot dictionaries
 bi_loaded_back_RMz_dic = {'pgc':gait_cycle,'avg':utils.smooth(mean_bi_loaded_back_RMz,9),'label':'loaded assisted joint',
                         'std':utils.smooth(std_bi_loaded_back_RMz,9),'avg_toeoff':loaded_mean_toe_off}

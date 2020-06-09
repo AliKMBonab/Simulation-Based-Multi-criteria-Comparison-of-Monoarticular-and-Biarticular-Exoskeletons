@@ -2032,9 +2032,9 @@ def plot_pareto_comparison(plot_dic,loadcond,compare,labels=None,legend_loc=[0],
             ax.set_ylabel(ylabel)
         plt.tight_layout()
 
-def plot_paretofront_profile_changes(plot_dic,colormap,toeoff_color,
+def plot_paretofront_profile_changes(plot_dic,colormap,toeoff_color,adjust_axes=False,
                                      include_colorbar=True,xlabel=False,ylabel=None,
-                                     add_ideal_profile=False,lw=1.75,*args,**kwargs):
+                                     add_ideal_profile=False,add_joint_profile=True,lw=1.75,*args,**kwargs):
     joint_data = plot_dic['joint_data']
     data = plot_dic['data']
     indices = plot_dic['indices']
@@ -2045,7 +2045,8 @@ def plot_paretofront_profile_changes(plot_dic,colormap,toeoff_color,
     plt.xticks([0,20,40,60,80,100])
     plt.xlim([0,100])
     # plotting joint profile
-    plt.plot(gpc,joint_data, *args, lw=3,ls='--',color=joint_color,label='joint', **kwargs)
+    if add_joint_profile == True:
+        plt.plot(gpc,joint_data, *args, lw=3,ls='--',color=joint_color,label='joint', **kwargs)
     # plotting ideal device profile
     if add_ideal_profile == True:
         ideal_data = plot_dic['ideal_data']
@@ -2069,9 +2070,12 @@ def plot_paretofront_profile_changes(plot_dic,colormap,toeoff_color,
     no_top_right(ax)
     divider = make_axes_locatable(ax)
     if include_colorbar == False:
-        cax = divider.append_axes("left", size="3%", pad=0.5)
+        cax = divider.append_axes("left", size="1%", pad=0.5)
         cax.axis('off')
     if include_colorbar == True:
+        if adjust_axes == True:
+            cax = divider.append_axes("left", size="1%", pad=0.5)
+            cax.axis('off')
         cax = divider.append_axes("right", size="3%", pad=0.5)
         cbar = plt.colorbar(sm,ticks=np.arange(1,len(indices)+1,1),cax=cax,aspect=80)
         label=[]
@@ -2581,7 +2585,7 @@ def paretofront_plot_muscles_metabolics(plot_dic,nrows=6,ncols=7,which_muscles='
             ax.legend(loc='best',frameon=False)      
 ######################################################################
 # Plot and analyses related functions for reaction forces
-def clasify_data(data,loadcondition,forces_name=['Mx','My','Mz']):
+def clasify_data(data,loadcondition,pareto=False,device=None,forces_name=['Mx','My','Mz']):
     """
     The data extraction was defined based on iteration of joint, subject, trial, and force.
     To classify data to each joint and force components, this function has been defined.
@@ -2617,7 +2621,41 @@ def clasify_data(data,loadcondition,forces_name=['Mx','My','Mz']):
         output_dataset_dic['{}_joint_{}'.format(j,forces_name[0])] = force_1
         output_dataset_dic['{}_joint_{}'.format(j,forces_name[1])] = force_2
         output_dataset_dic['{}_joint_{}'.format(j,forces_name[2])] = force_3
+    # handling paretofront dataset
+    if pareto == True:
+        if device.lower() == 'biarticular' and loadcondition == 'loaded':
+            # biarticular/loaded
+            hip_weight = [30,30,30,30,30,40,40,50,50,50,60,70]
+            knee_weight = [30,40,50,60,70,60,70,50,60,70,70,70]
+        elif device.lower() == 'biarticular' and loadcondition == 'noload':
+            # biarticular/noload
+            hip_weight = [30,30,30,30,30,40,40,40,50,50,50,70]
+            knee_weight = [30,40,50,60,70,40,50,60,50,60,70,70]
+        elif device.lower() == 'monoarticular' and loadcondition == 'loaded':
+            # monoarticular/loaded
+            hip_weight = [30,40,50,60,70,70,70,70,70]
+            knee_weight = [30,30,30,30,30,40,50,60,70]  
+        elif device.lower() == 'monoarticular' and loadcondition == 'noload':  
+            # monoarticular/noload
+            hip_weight = [30,40,50,50,50,60,60,60,70,70]
+            knee_weight = [30,30,30,40,50,50,60,70,60,70]
+        # sorting dataset
+        simulation_num = len(hip_weight)
+        output_dataset_dic = {}
+        c = 0
+        for j in joints_name:
+            force_1 = np.zeros((data.shape[0],subject_num*trial_num*simulation_num))
+            force_2 = np.zeros((data.shape[0],subject_num*trial_num*simulation_num))
+            force_3 = np.zeros((data.shape[0],subject_num*trial_num*simulation_num))
+            for i in range(subject_num*trial_num*simulation_num):
+                force_1[:,i] = data[:,c]
+                force_2[:,i] = data[:,c+1]
+                force_3[:,i] = data[:,c+2]
+                c+=3 # number of force componenet
+            output_dataset_dic['{}_joint_{}'.format(j,forces_name[0])] = force_1
+            output_dataset_dic['{}_joint_{}'.format(j,forces_name[1])] = force_2
+            output_dataset_dic['{}_joint_{}'.format(j,forces_name[2])] = force_3
+    # out force set  
     return output_dataset_dic
             
-
     

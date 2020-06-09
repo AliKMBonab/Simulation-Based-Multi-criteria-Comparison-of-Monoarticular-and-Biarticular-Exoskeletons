@@ -112,10 +112,9 @@ mean_mono_loaded_regen_energy, std_mono_loaded_regen_energy = utils.pareto_avg_s
 # Paretofront data
 # indices
 bi_loaded_indices = np.array([25,24,23,22,21,17,16,13,12,11,6,1])
-mono_loaded_indices = np.array([25,20,19,15,10,5,9,4,3,2,1])
+mono_loaded_indices = np.array([25,20,15,10,5,4,3,2,1])
 bi_noload_indices = np.array([25,24,23,22,21,19,18,17,13,12,11,1])
-mono_noload_indices = np.array([25,24,20,15,12,11,7,2,6,1])
-
+mono_noload_indices = np.array([25,20,15,14,13,8,7,6,2,1])
 # regenerated
 bi_loaded_regen_indices = np.array([25,24,23,22,21,17,13,12,11,6,1])
 mono_loaded_regen_indices = np.array([25,20,19,15,10,5,9,4,3,2,1])
