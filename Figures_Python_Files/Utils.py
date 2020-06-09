@@ -21,6 +21,7 @@ import pathlib
 from sklearn import metrics
 from Colors import colors as mycolors
 import matplotlib.gridspec as gridspec
+from mpl_toolkits.axes_grid1 import make_axes_locatable
 #######################################################################
 #######################################################################
 # Data saving and reading related functions
@@ -306,7 +307,8 @@ def reduction_calc(data1,data2):
         reduction[i] = (((data1[i]-data2[i])*100)/data1[i])
     return reduction
 
-def outliers_modified_z_score(ys,threshold = 3):
+# never used
+# def outliers_modified_z_score(ys,threshold = 3):
     '''
     The Z-score, or standard score, is a way of describing a data point
     in terms of its relationship to the mean and standard deviation of
@@ -340,6 +342,15 @@ def outliers_iqr(ys):
     idx = np.where((ys > upper_bound) | (ys < lower_bound),True,False)
     return idx
 
+def actuators_energy_contribution(hip_actuator,knee_actuator):
+        hip_contribution = np.true_divide(hip_actuator*100,(hip_actuator+knee_actuator))
+        knee_contribution = np.true_divide(knee_actuator*100,(hip_actuator+knee_actuator))
+        mean_hip_contribution = np.nanmean(hip_contribution)
+        mean_knee_contribution = np.nanmean(knee_contribution)
+        std_hip_contribution = np.nanstd(hip_contribution)
+        std_knee_contribution = np.nanstd(knee_contribution)
+        return mean_hip_contribution, std_hip_contribution, mean_knee_contribution, std_knee_contribution
+    
 ######################################################################
 # Mass and inertia effect functions
 
@@ -1719,7 +1730,7 @@ def errorbar_3D(x,y,z,x_err,y_err,z_err,color,marker='_',lw=2):
         ax.plot([x[i], x[i]], [y[i], y[i]], [z[i]+z_err[i], z[i]-z_err[i]], marker=marker,color=color,lw=lw)
 
 def plot_pareto_avg_curve (plot_dic,loadcond,legend_loc=0,label_on=True,which_label='alphabet',
-                            errbar_on=True,line=False,third_plot=False,*args, **kwargs):
+                            errbar_on=True,line=False,third_plot=False,ideal_configs=False,*args, **kwargs):
     '''plotting avg and std subplots for combinations of weights.\n
     -labels: needs to be provided by user otherwise data will be labeled from 1 to 25 automatically.
              labeling is True (i.e. label_on=True) by default.\n
@@ -1744,6 +1755,16 @@ def plot_pareto_avg_curve (plot_dic,loadcond,legend_loc=0,label_on=True,which_la
         x3err_data = plot_dic['x3err_data']
         y3err_data = plot_dic['y3err_data']
         color_3 = plot_dic['color_3']
+    if ideal_configs == True:
+        x1_ideal = plot_dic['x1_ideal']
+        x2_ideal = plot_dic['x2_ideal']
+        y1_ideal = plot_dic['y1_ideal']
+        y2_ideal = plot_dic['y2_ideal']
+        x1err_ideal = plot_dic['x1err_ideal']
+        x2err_ideal = plot_dic['x2err_ideal']
+        y1err_ideal = plot_dic['y1err_ideal']
+        y2err_ideal = plot_dic['y2err_ideal']
+        
     # handle labels
     if 'label_1' and 'label_2' not in plot_dic:
         if which_label == 'alphabet':
@@ -1797,7 +1818,15 @@ def plot_pareto_avg_curve (plot_dic,loadcond,legend_loc=0,label_on=True,which_la
         plt.plot(x1_data[~np.isnan(x1_data)],y1_data[~np.isnan(y1_data)],ls='-',lw=1,color=color_1)
         plt.plot(x2_data[~np.isnan(x2_data)],y2_data[~np.isnan(y2_data)],ls='-',lw=1,color=color_2) 
         if third_plot == True:
-            plt.plot(x3_data[~np.isnan(x3_data)],y3_data[~np.isnan(y3_data)],ls='-',lw=1,color=color_3)       
+            plt.plot(x3_data[~np.isnan(x3_data)],y3_data[~np.isnan(y3_data)],ls='-',lw=1,color=color_3)     
+    # ideal points adding
+    if ideal_configs == True:
+          plt.scatter(x1_ideal,y1_ideal,marker='X',color=color_1,*args, **kwargs)
+          plt.scatter(x2_ideal,y2_ideal,marker='X',color=color_2,*args, **kwargs)
+          plt.annotate('ideal', (x1_ideal,y1_ideal),textcoords="offset points",xytext=(0,0),ha='right',fontsize=10)
+          plt.annotate('ideal', (x2_ideal,y2_ideal),textcoords="offset points",xytext=(0,0),ha='left',fontsize=10)
+          plt.errorbar(x1_ideal,y1_ideal,xerr=x1err_ideal,yerr=y1err_ideal,fmt='X',ecolor=color_1,alpha=0.15)
+          plt.errorbar(x2_ideal,y2_ideal,xerr=x2err_ideal,yerr=y2err_ideal,fmt='X',ecolor=color_2,alpha=0.15)
 
 def plot_pareto_curve_subjects (nrows,ncols,nplot,plot_dic,loadcond,\
                                 line=False,legend_loc=[0],labels=None,\
@@ -2027,8 +2056,15 @@ def plot_paretofront_profile_changes(plot_dic,colormap,toeoff_color,include_colo
     for i in range(data.shape[1]):
         plt.plot(gpc, data[:,i], c=cmap(i),*args,lw=lw,**kwargs)
     # plot the colorbar
+    ax = plt.gca()
+    no_top_right(ax)
+    divider = make_axes_locatable(ax)
+    if include_colorbar == False:
+        cax = divider.append_axes("left", size="3%", pad=0.5)
+        cax.axis('off')
     if include_colorbar == True:
-        cbar = plt.colorbar(sm,ticks=np.arange(1,len(indices)+1,1),aspect=80)
+        cax = divider.append_axes("right", size="3%", pad=0.5)
+        cbar = plt.colorbar(sm,ticks=np.arange(1,len(indices)+1,1),cax=cax,aspect=80)
         label=[]
         for i in ['A','B','C','D','E']:
             for j in ['a','b','c','d','e']:
@@ -2039,15 +2075,14 @@ def plot_paretofront_profile_changes(plot_dic,colormap,toeoff_color,include_colo
         cbar.set_ticklabels(indices_str)
         cbar.outline.set_visible(False)
     #title
-    plt.title(title)
+    ax.set_title(title)
     #beauty plot
-    ax = plt.gca()
     no_top_right(ax)
     plt.tick_params(axis='both',direction='in')
     if xlabel== True:
-        plt.xlabel('gait cycle (%)')
+        ax.set_xlabel('gait cycle (%)')
     if ylabel != None:
-        plt.ylabel(ylabel)
+        ax.set_ylabel(ylabel)
     
 def plot3D_pareto_avg_curve (plot_dic,loadcond,legend_loc=0,label_on=True,errbar_on=True,line=False,*args, **kwargs):
     '''plotting avg and std subplots for combinations of weights.\n
@@ -2144,6 +2179,7 @@ def paretofront_barplot(plot_dic,indices,loadcond):
 
 ######################################################################
 # Plot and analyses related functions for muscles metabolic rate and stiffness
+
 def muscles_whisker_bar_plot(data_1,data_2,data_3=None,data_4=None,
                              which_muscles='all',which_plot='whisker',
                              nrows=5,ncols=8,xticklabel=['noload','loaded'],
@@ -2186,7 +2222,7 @@ def muscles_whisker_bar_plot(data_1,data_2,data_3=None,data_4=None,
                 data[:,c+2] = data_3[:,i]
                 data[:,c+3] = data_4[:,i]
                 c+=4
-        elif data_3 is  not None and data_4 is None:
+        elif data_3 is not None and data_4 is None:
             data = np.zeros([data_1.shape[0],len(muscles_name)*3])
             for i in range(len(muscles_name)):
                 data[:,c] = data_1[:,i]
@@ -2373,7 +2409,7 @@ def plot_stiffness(plot_dic,load_condition,kinematics_ticks,moment_ticks,ax1,ax2
     ax2.plot(gait_cycle,moment, lw=2,color=color,label=label+' moment,{}'.format(load_condition)) # mean
     ax2.axvline(toe_off,np.min(moment_ticks),np.max(moment_ticks), lw=2, color=toe_off_color, zorder=0, alpha=0.5) #vertical line
     ax2.axhline(0,0,100, lw=2, color='grey', zorder=0, alpha=0.75) # horizontal line
-    ax2.set_xticks([20,40,60,80,100])
+    ax2.set_xticks([0,10,20,30,40,50,60,70,80,90,100])
     ax2.set_xlim([0,100])
     ax2.set_yticks(moment_ticks)
     ax2.set_ylim([np.floor(np.min(moment_ticks)),np.ceil(np.max(moment_ticks))])
@@ -2388,7 +2424,7 @@ def plot_stiffness(plot_dic,load_condition,kinematics_ticks,moment_ticks,ax1,ax2
     ax3.plot(gait_cycle,kinematics, lw=2,color=color,label=label+' kinematics,{}'.format(load_condition)) # mean
     ax3.axvline(toe_off,np.min(kinematics_ticks),np.max(kinematics_ticks), lw=2, color=toe_off_color, zorder=0, alpha=0.5) #vertical line
     ax3.axhline(0,0,100, lw=2, color='grey', zorder=0, alpha=0.75) # horizontal line
-    ax3.set_xticks([20,40,60,80,100])
+    ax3.set_xticks([0,10,20,30,40,50,60,70,80,90,100])
     ax3.set_xlim([0,100])
     ax3.set_yticks(kinematics_ticks)
     ax3.set_ylim([np.floor(np.min(kinematics_ticks)),np.ceil(np.max(kinematics_ticks))])
@@ -2399,5 +2435,142 @@ def plot_stiffness(plot_dic,load_condition,kinematics_ticks,moment_ticks,ax1,ax2
     no_top_right(ax3)
     # final adjustments and settings
     plt.tight_layout()
+
+def pareto_muscles_metabolic_reduction(dataset,unassist_dataset):
+    """
+    This function arranges the pareto dataset and calculates the metabolic
+    reduction of each muscle and returns their within subject mean and std for all simulations.
+    Args:
+        dataset ([ndarray]): [pareto dataset]
+        unassist_dataset ([ndarray]): [unassist dataset related to the dataset]
+
+    Returns:
+        [ndarray]: [mean and std of muscles for all pareto simulations]
+    """
+    simulation_num = 25
+    subject_num = 7
+    trial_num = 3
+    mean_muscle_group_reduction = np.zeros([simulation_num,40])
+    std_muscle_group_reduction = np.zeros([simulation_num,40])
+    for i in range(simulation_num):
+        c = np.arange(i,(subject_num*trial_num*simulation_num)-(simulation_num-i)+1,simulation_num)
+        selected_group = dataset[c,:]
+        muscle_group_reduction_percent = np.true_divide((np.subtract(unassist_dataset,selected_group))*100,unassist_dataset)
+        mean_muscle_group_reduction[i,:] = np.nanmean(muscle_group_reduction_percent,axis=0)
+        std_muscle_group_reduction[i,:] = np.nanstd(muscle_group_reduction_percent,axis=0)
+    return mean_muscle_group_reduction,std_muscle_group_reduction
+
+def manual_filter_muscles_metabolicrate(dataset,indices):
+    paretofront_dataset = np.zeros([len(indices),dataset.shape[1]])
+    indices = [elem-1 for elem in indices]
+    c=0
+    for i in indices:
+        paretofront_dataset[c,:] = dataset[i,:]
+        c+=1
+    return paretofront_dataset
+
+def paretofront_plot_muscles_metabolics(plot_dic,nrows=6,ncols=7,which_muscles='all',xlabels=False,
+                                        xlabel_loc=[35,36,37,38,39,40,41],ylabel_loc=[0,7,14,21,28,35],
+                                        legend_loc=[0],xytext=(0,0),ha='right',*args, **kwargs):
+    # initialization
+    muscles_name = ['add_brev','add_long','add_mag3','add_mag4','add_mag2','add_mag1','bifemlh','bifemsh','ext_dig',\
+                    'ext_hal','flex_dig','flex_hal','lat_gas','med_gas','glut_max1','glut_max2','glut_max3','glut_med1',\
+                    'glut_med2','glut_med3','glut_min1','glut_min2','glut_min3','grac','iliacus','per_brev','per_long',\
+                    'peri','psoas','rect_fem','sar','semimem','semiten','soleus','tfl','tib_ant','tib_post','vas_int',\
+                    'vas_lat','vas_med']
+    avg = plot_dic['mean_data']
+    std = plot_dic['std_data']
+    label = plot_dic['label']
+    weights = plot_dic['weights']
+    color = plot_dic['color']
+    # paretofront weights
+    weights = [item-1 for item in weights]
+    # generating all names
+    all_weights_name = []
+    for i in ['A','B','C','D','E']:
+        for j in ['a','b','c','d','e']:
+            all_weights_name.append('{}{}'.format(i,j))
+    # selecting names related to paretofront weights
+    selected_weights_name = []
+    for i,name in enumerate(all_weights_name):
+        if i in weights:
+            selected_weights_name.append(name)
+    selected_weights_name = selected_weights_name[::-1]
+    # handle selected muscles
+    if which_muscles != 'all':
+        cropped_avg = np.zeros([25,len(which_muscles)])
+        cropped_std = np.zeros([25,len(which_muscles)])
+        c=0
+        for i, muscle_name in enumerate(muscle_name):
+            if muscle_name in which_muscles:
+                cropped_avg[:,c] = avg[:,i]
+                cropped_std[:,c] = std[:,i]
+        muscles_name = which_muscles
+        avg = cropped_avg
+        std = cropped_std
+    # plot
+    for i in range(len(muscles_name)):
+        ax = plt.subplot(nrows,ncols,i+1)
+        x  = np.arange(0,len(weights),1,dtype=np.float64)
+        y = avg[:,i]
+        ax.fill_between(x, avg[:,i] + std[:,i], avg[:,i] - std[:,i], alpha=0.20,linewidth=1,color=color) # shaded std
+        ax.plot(x, avg[:,i], lw=2, label=label, color=color) # mean
+        ax.scatter(x,avg[:,i],marker='o',color=color,lw=0.5)
+        label_datapoints(x,avg[:,i],selected_weights_name,xytext=xytext,ha=ha,fontsize=8)
+        ax.set_xticks(x)
+        if xlabels == True:
+            ax.set_xticklabels(selected_weights_name,rotation=0)
+        else:
+            empty_string_labels = ['']*len(x)
+            ax.set_xticklabels(empty_string_labels)
+        ax.tick_params(axis='both',direction='in')
+        ax.set_title(muscles_name[i])
+        no_top_right(ax)
+        if i in xlabel_loc:
+            ax.set_xlabel('weights')
+        if i in ylabel_loc:
+            ax.set_ylabel('metabolic rate\nreduction (%)')
+        if i in legend_loc:
+            ax.legend(loc='best',frameon=False)      
+######################################################################
+# Plot and analyses related functions for reaction forces
+def clasify_data(data,loadcondition,forces_name=['Mx','My','Mz']):
+    """
+    The data extraction was defined based on iteration of joint, subject, trial, and force.
+    To classify data to each joint and force components, this function has been defined.
+    Note:
+        This function returns a dictionary contains force components of joints
+    Args:
+        data ([type]): [description]
+        joint_name ([str]): [description]
+        forces_name (list, optional): Defaults to ['Mx','My','Mz'].
+    """
+    subject_num = 7
+    trial_num = 3
+    if len(forces_name) < 3:
+        raise Exception('force names parametere should has 3 components.')
+    # joints
+    if loadcondition.lower() == 'loaded':
+        joints_name=['back','duct_tape','hip','knee','patellofemoral','ankle']
+    elif loadcondition.lower() == 'noload':
+        joints_name=['back','hip','knee','patellofemoral','ankle']
     
+    # sorting dataset
+    output_dataset_dic = {}
+    c = 0
+    for j in joints_name:
+        force_1 = np.zeros((data.shape[0],subject_num*trial_num))
+        force_2 = np.zeros((data.shape[0],subject_num*trial_num))
+        force_3 = np.zeros((data.shape[0],subject_num*trial_num))
+        for i in range(subject_num*trial_num):
+            force_1[:,i] = data[:,c]
+            force_2[:,i] = data[:,c+1]
+            force_3[:,i] = data[:,c+2]
+            c+=3 # number of force componenet
+        output_dataset_dic['{}_joint_{}'.format(j,forces_name[0])] = force_1
+        output_dataset_dic['{}_joint_{}'.format(j,forces_name[1])] = force_2
+        output_dataset_dic['{}_joint_{}'.format(j,forces_name[2])] = force_3
+    return output_dataset_dic
+            
+
     

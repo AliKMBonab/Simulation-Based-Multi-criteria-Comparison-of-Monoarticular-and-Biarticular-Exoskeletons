@@ -184,6 +184,7 @@ fig.tight_layout(h_pad=-1, w_pad=-1.5)
 fig.subplots_adjust(top=0.98, bottom=0.075, left=0.100, right=0.975,hspace=0.45,wspace=0.40)
 fig.savefig('./Figures/Unassist/MusclesMetabolicRate_BarPlot.pdf',orientation='landscape',bbox_inches='tight')
 
+#*****************************
 # hip joint stiffness
 fig = plt.figure(num='Hip Joint Stiffness',figsize=(12, 10))
 gridsize = (3, 2)
@@ -207,7 +208,7 @@ fig.subplots_adjust(top=0.98, bottom=0.075, left=0.100, right=0.975,hspace=0.45,
 plt.show()
 fig.savefig('./Figures/Unassist/HipJointStiffness.pdf',orientation='landscape',bbox_inches='tight')
 
-
+#*****************************
 # knee joint stiffness
 fig = plt.figure(num='Knee Joint Stiffness',figsize=(12, 10))
 gridsize = (3, 2)
