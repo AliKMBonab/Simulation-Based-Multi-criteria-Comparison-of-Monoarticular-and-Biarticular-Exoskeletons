@@ -101,6 +101,12 @@ mean_mono_noload_knee_torque, std_mono_noload_knee_torque = utils.pareto_profile
 
 #####################################################################################
 # Paretofront
+# indices
+bi_loaded_indices = np.array([25,24,23,22,21,17,16,13,12,11,6,1])
+mono_loaded_indices = np.array([25,20,19,15,10,5,9,4,3,2,1])
+bi_noload_indices = np.array([25,24,23,22,21,19,18,17,13,12,11,1])
+mono_noload_indices = np.array([25,24,20,15,12,11,7,2,6,1])
+
 bi_loaded_metabolics_percent_Paretofront,\
 bi_loaded_energy_Paretofront = utils.paretofront_subjects(bi_loaded_metabolics_energy,bi_loaded_energy,unassist_loaded_metabolics_energy)
 bi_noload_metabolics_percent_Paretofront,\
@@ -111,28 +117,24 @@ mono_noload_metabolics_percent_Paretofront,\
 mono_noload_energy_Paretofront = utils.paretofront_subjects(mono_noload_metabolics_energy,mono_noload_energy,unassist_noload_metabolics_energy)
 
 # loaded biarticular
-bi_loaded_indices = np.array([25,24,23,22,21,17,16,13,12,11,6,1])
 mean_bi_loaded_hip_torque_paretofront = utils.manual_paretofront_profiles(mean_bi_loaded_hip_torque,bi_loaded_indices)
 mean_bi_loaded_knee_torque_paretofront = utils.manual_paretofront_profiles(mean_bi_loaded_knee_torque,bi_loaded_indices)
 mean_bi_loaded_hip_power_paretofront = utils.manual_paretofront_profiles(mean_bi_loaded_hip_power,bi_loaded_indices)
 mean_bi_loaded_knee_power_paretofront = utils.manual_paretofront_profiles(mean_bi_loaded_knee_power,bi_loaded_indices)
 
 # loaded monoarticular
-mono_loaded_indices = np.array([25,20,15,10,5,4,3,2,1])
 mean_mono_loaded_hip_torque_paretofront = utils.manual_paretofront_profiles(mean_mono_loaded_hip_torque,mono_loaded_indices)
 mean_mono_loaded_knee_torque_paretofront = utils.manual_paretofront_profiles(mean_mono_loaded_knee_torque,mono_loaded_indices)
 mean_mono_loaded_hip_power_paretofront = utils.manual_paretofront_profiles(mean_mono_loaded_hip_power,mono_loaded_indices)
 mean_mono_loaded_knee_power_paretofront = utils.manual_paretofront_profiles(mean_mono_loaded_knee_power,mono_loaded_indices)
 
 # noload biarticular
-bi_noload_indices = np.array([25,24,23,22,21,19,18,17,13,12,11,1])
 mean_bi_noload_hip_torque_paretofront = utils.manual_paretofront_profiles(mean_bi_noload_hip_torque,bi_noload_indices)
 mean_bi_noload_knee_torque_paretofront = utils.manual_paretofront_profiles(mean_bi_noload_knee_torque,bi_noload_indices)
 mean_bi_noload_hip_power_paretofront = utils.manual_paretofront_profiles(mean_bi_noload_hip_power,bi_noload_indices)
 mean_bi_noload_knee_power_paretofront = utils.manual_paretofront_profiles(mean_bi_noload_knee_power,bi_noload_indices)
 
 # noload monoarticular
-mono_noload_indices = np.array([25,20,15,14,13,8,7,6,2,1])
 mean_mono_noload_hip_torque_paretofront = utils.manual_paretofront_profiles(mean_mono_noload_hip_torque,mono_noload_indices)
 mean_mono_noload_knee_torque_paretofront = utils.manual_paretofront_profiles(mean_mono_noload_knee_torque,mono_noload_indices)
 mean_mono_noload_hip_power_paretofront = utils.manual_paretofront_profiles(mean_mono_noload_hip_power,mono_noload_indices)
