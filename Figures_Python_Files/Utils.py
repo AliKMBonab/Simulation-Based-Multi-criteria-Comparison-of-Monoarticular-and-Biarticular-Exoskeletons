@@ -2187,6 +2187,43 @@ def paretofront_barplot(plot_dic,indices,loadcond):
         indices_str.append(label[i-1])
     plt.xticks(index + bar_width / 2,indices_str )
 
+def plot_regeneration_efficiency(plot_dic,ideal_color=None,line=True,errbar_on=True,label_on=True,*args, **kwargs):
+    x_values = plot_dic['x_values']
+    y_values = plot_dic['y_values']
+    xerr_values = plot_dic['x_values']
+    yerr_values = plot_dic['y_values']
+    legends = plot_dic['legends']
+    weights = plot_dic['weights']
+    if ideal_color == None:
+        colors = ['lightgray','darkgrey','dimgrey','black','steelblue']
+    else:
+        colors = ['lightgray','darkgrey','dimgrey','black']
+        colors.insert(0,ideal_color)
+    markers = ['o','v','P','X','*']
+    c=0
+    for i in range(x_values.shape[1]):
+        # paretofront weights
+        weight = [item-1 for item in weights[:,i]]
+        # generating all names
+        all_weights_name = []
+        for k in ['A','B','C','D','E']:
+            for j in ['a','b','c','d','e']:
+                all_weights_name.append('{}{}'.format(k,j))
+        # selecting names related to paretofront weights
+        selected_weights_name = []
+        for k,name in enumerate(all_weights_name):
+            if k in weight:
+                selected_weights_name.append(name)
+        selected_weights_name = selected_weights_name[::-1]
+        # main plot
+        plt.scatter(x_values[:,i],y_values[:,i],marker=markers[i],color=colors[i],label=legends[i],*args, **kwargs)
+        if errbar_on == False:
+            plt.errorbar(x_values[:,i],y_values[:,i],xerr=xerr_values[:,i],yerr=xerr_values[:,i],fmt=markers[i],ecolor=colors[i],alpha=0.15)
+        if label_on == False and i == 0:
+            label_datapoints(x_values[:,i],y_values[:,i],all_weights_name,*args, **kwargs)
+        if line == True:
+            plt.plot(x_values[~np.isnan(x_values[:,i]),i],y_values[~np.isnan(y_values[:,i]),i],ls='-',lw=1,color=colors[i])
+            
 ######################################################################
 # Plot and analyses related functions for muscles metabolic rate and stiffness
 
