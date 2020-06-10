@@ -37,6 +37,10 @@ musclesactivation_dataset = {pathlib.PurePath(f[1]).stem: np.loadtxt(f[1], delim
 directory = './Data/Unassist/*_metabolic_rate.csv'
 files = enumerate(glob.iglob(directory), 1)
 musclesmetabolicrate_dataset = {pathlib.PurePath(f[1]).stem: np.loadtxt(f[1], delimiter=',') for f in files}
+# total metabolic rate
+directory = './Data/Unassist/*_energy.csv'
+files = enumerate(glob.iglob(directory), 1)
+total_metabolicrate_dataset = {pathlib.PurePath(f[1]).stem: np.loadtxt(f[1], delimiter=',') for f in files}
 # gls
 gl_noload = {'noload_subject{}_trial{}'.format(i,j): utils.construct_gl_mass_side(subjectno=i,trialno=j,loadcond='noload') for i in subjects for j in trials_num}
 gl_loaded = {'loaded_subject{}_trial{}'.format(i,j): utils.construct_gl_mass_side(subjectno=i,trialno=j,loadcond='loaded') for i in subjects for j in trials_num}
@@ -168,21 +172,39 @@ fig.savefig('./Figures/Unassist/NineMusclesActivation.pdf',orientation='landscap
 fig = plt.figure(num='Muscles Metabolic Rate',figsize=(16.8, 13.6))
 utils.muscles_whisker_bar_plot(musclesmetabolicrate_dataset['noload_muscles_metabolic_rate'],musclesmetabolicrate_dataset['loaded_muscles_metabolic_rate'] )
 plt.legend(loc='best',frameon=False)
-plt.show()
-fig.tight_layout()
 fig.tight_layout(h_pad=-1, w_pad=-1.5)
 fig.subplots_adjust(top=0.98, bottom=0.075, left=0.100, right=0.975,hspace=0.45,wspace=0.40)
 fig.savefig('./Figures/Unassist/MusclesMetabolicRate.pdf',orientation='landscape',bbox_inches='tight')
+plt.show()
 
 # muscles metabolic rate figure
 fig = plt.figure(num='Muscles Metabolic Rate',figsize=(25, 25))
 utils.muscles_whisker_bar_plot(musclesmetabolicrate_dataset['noload_muscles_metabolic_rate'],musclesmetabolicrate_dataset['loaded_muscles_metabolic_rate'],which_plot='bar' )
 plt.legend(loc='best',frameon=False)
-plt.show()
-fig.tight_layout()
 fig.tight_layout(h_pad=-1, w_pad=-1.5)
 fig.subplots_adjust(top=0.98, bottom=0.075, left=0.100, right=0.975,hspace=0.45,wspace=0.40)
 fig.savefig('./Figures/Unassist/MusclesMetabolicRate_BarPlot.pdf',orientation='landscape',bbox_inches='tight')
+plt.show()
+
+# muscles contribution on metabolic rate wrt noload unassist metabolic rate
+fig = plt.figure(num='Muscles Metabolic Rate',figsize=(9.6, 16.8))
+utils.muscles_metabolics_contribution(musclesmetabolicrate_dataset['loaded_muscles_metabolic_rate'],total_metabolicrate_dataset['noload_metabolics_energy'],
+                                      musclesmetabolicrate_dataset['noload_muscles_metabolic_rate'],total_metabolicrate_dataset['noload_metabolics_energy'],
+                                      xticks=[0,2,4,6,8,10])
+plt.legend(loc='best',frameon=False)
+plt.title('Muscles contribution change by loading subjects')
+fig.tight_layout(h_pad=-1, w_pad=-1.5)
+fig.savefig('./Figures/Unassist/MusclesMetabolic_Contribution_WRT_noload.pdf',orientation='landscape',bbox_inches='tight')
+plt.show()
+# muscles contribution on metabolic rate
+fig = plt.figure(num='Muscles Metabolic Rate',figsize=(9.6, 16.8))
+utils.muscles_metabolics_contribution(musclesmetabolicrate_dataset['loaded_muscles_metabolic_rate'],total_metabolicrate_dataset['loaded_metabolics_energy'],
+                                      musclesmetabolicrate_dataset['noload_muscles_metabolic_rate'],total_metabolicrate_dataset['noload_metabolics_energy'])
+plt.legend(loc='best',frameon=False)
+plt.title('Muscles contributions in different load condition')
+fig.tight_layout(h_pad=-1, w_pad=-1.5)
+fig.savefig('./Figures/Unassist/MusclesMetabolic_Contribution.pdf',orientation='landscape',bbox_inches='tight')
+plt.show()
 
 #*****************************
 # hip joint stiffness
