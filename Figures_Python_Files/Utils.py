@@ -2228,8 +2228,8 @@ def plot_regeneration_efficiency(plot_dic,ideal_color=None,line=True,errbar_on=T
         if line == True:
             plt.plot(x_values[~np.isnan(x_values[:,i]),i],y_values[~np.isnan(y_values[:,i]),i],ls='-',lw=1,color=colors[i])
             
-######################################################################
-# Plot and analyses related functions for muscles metabolic rate and stiffness
+#################################################################################################
+# Plot and analyses related functions for muscles metabolic rate, stiffness, and reaction forces
 
 def muscles_whisker_bar_plot(data_1,data_2,data_3=None,data_4=None,
                              which_muscles='all',which_plot='whisker',
@@ -2583,8 +2583,7 @@ def paretofront_plot_muscles_metabolics(plot_dic,nrows=6,ncols=7,which_muscles='
             ax.set_ylabel('metabolic rate\nreduction (%)')
         if i in legend_loc:
             ax.legend(loc='best',frameon=False)      
-######################################################################
-# Plot and analyses related functions for reaction forces
+
 def clasify_data(data,loadcondition,pareto=False,device=None,forces_name=['Mx','My','Mz']):
     """
     The data extraction was defined based on iteration of joint, subject, trial, and force.
@@ -2658,4 +2657,33 @@ def clasify_data(data,loadcondition,pareto=False,device=None,forces_name=['Mx','
     # out force set  
     return output_dataset_dic
             
-    
+def muscles_metabolics_contribution(muscles_metabolics_loaded,total_metabolics_loaded,
+                                    muscles_metabolics_noload,total_metabolics_noload,
+                                    xticks=[0,2,4,6,8]):
+    # calculate the percentage
+    muscles_contribution_loaded = np.zeros((muscles_metabolics_loaded.shape[0],muscles_metabolics_loaded.shape[1]))
+    muscles_contribution_noload = np.zeros((muscles_metabolics_noload.shape[0],muscles_metabolics_noload.shape[1]))
+    for i in range(muscles_metabolics_loaded.shape[1]):
+        muscles_contribution_loaded[:,i] = np.true_divide(muscles_metabolics_loaded[:,i],total_metabolics_loaded)*100
+        muscles_contribution_noload[:,i] = np.true_divide(muscles_metabolics_noload[:,i],total_metabolics_noload)*100
+    # mean and std of muscles' percentage
+    mean_muscles_contribution_loaded = np.nanmean(muscles_contribution_loaded,axis=0)
+    std_muscles_contribution_loaded = np.nanstd(muscles_contribution_loaded,axis=0)
+    mean_muscles_contribution_noload = np.nanmean(muscles_contribution_noload,axis=0)
+    std_muscles_contribution_noload = np.nanstd(muscles_contribution_noload,axis=0)
+    # plot these contributions
+    from Muscles_Group import muscle_group_name
+    width = 0.80
+    muscles_number = np.arange(1,2*(mean_muscles_contribution_loaded.shape[0])+1,2)
+    plt.barh(muscles_number-width/2,mean_muscles_contribution_loaded,height=width,xerr=std_muscles_contribution_loaded,
+            ecolor='silver',capsize=2,color='dimgray',label='loaded',edgecolor='k',lw=1)
+    plt.barh(muscles_number+width/2,mean_muscles_contribution_noload,height=width,xerr=std_muscles_contribution_noload,
+            ecolor='mediumaquamarine',capsize=2,color='green',label='noload',edgecolor='k',lw=1)
+    plt.yticks(muscles_number,muscle_group_name['all_muscles'])
+    plt.xticks(xticks)
+    plt.xlim([min(xticks),max(xticks)])
+    plt.ylim([muscles_number[0]-1,muscles_number[-1]+1])
+    plt.grid(b=True,axis='x',which='major',ls='--',alpha=0.5)
+    plt.grid(b=True,axis='x',which='minor',ls='--',alpha=0.25)
+    ax = plt.gca()
+    no_top_right(ax)

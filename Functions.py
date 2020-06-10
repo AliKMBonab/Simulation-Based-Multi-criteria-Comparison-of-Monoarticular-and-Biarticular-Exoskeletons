@@ -1687,12 +1687,6 @@ def extract_reaction_forces(loadcondition,case,joints,device=None,force_or_momen
                                     c+=1
     return dataset
 
-                      
-
-                    
-
-                    
-
 #####################################################################################
 #####################################################################################
 # TODO reserve/residual forces and pErr control.
