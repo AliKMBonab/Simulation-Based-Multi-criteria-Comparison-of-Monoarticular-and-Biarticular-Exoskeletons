@@ -2506,7 +2506,7 @@ def pareto_muscles_metabolic_reduction(dataset,unassist_dataset):
     for i in range(simulation_num):
         c = np.arange(i,(subject_num*trial_num*simulation_num)-(simulation_num-i)+1,simulation_num)
         selected_group = dataset[c,:]
-        muscle_group_reduction_percent = np.true_divide((np.subtract(unassist_dataset,selected_group))*100,unassist_dataset)
+        muscle_group_reduction_percent = np.true_divide((unassist_dataset-selected_group)*100,unassist_dataset)
         mean_muscle_group_reduction[i,:] = np.nanmean(muscle_group_reduction_percent,axis=0)
         std_muscle_group_reduction[i,:] = np.nanstd(muscle_group_reduction_percent,axis=0)
     return mean_muscle_group_reduction,std_muscle_group_reduction
