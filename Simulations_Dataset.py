@@ -192,5 +192,5 @@ if  y.lower() == 'y':
             joint_name = ['back','duct_tape','hip','knee','patellofemoral','ankle']
         for i in range(len(configs)):
             out = fcns.extract_reaction_forces(loadcondition=load_type,case=cases[i].lower(),\
-                                               joints=joint_name,device=configs[i],force_or_moment='moment')
-            np.savetxt('./Data/{}/{}_{}_reaction_moments.csv'.format(cases_dir[i],config_names[i],load_type), out, fmt='%s', delimiter=',')
+                                               joints=joint_name,device=configs[i],force_or_moment='body force')
+            np.savetxt('./Data/{}/{}_{}_reaction_forces.csv'.format(cases_dir[i],config_names[i],load_type), out, fmt='%s', delimiter=',')

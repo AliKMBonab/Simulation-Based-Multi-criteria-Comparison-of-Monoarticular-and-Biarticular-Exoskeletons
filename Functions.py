@@ -1575,6 +1575,22 @@ def reaction_forces_name_const(joint,force_or_moment = 'moment',expressed_frame 
         return reaction_force_name
     
 def extract_reaction_forces(loadcondition,case,joints,device=None,force_or_moment='moment'):
+    """[summary]
+
+    Args:
+        loadcondition ([type]): [description]
+        case ([type]): [description]
+        joints ([type]): [description]
+        device ([type], optional): [description]. Defaults to None.
+        force_or_moment (str, optional): [description]. Defaults to 'moment'.
+
+    Raises:
+        Exception: [description]
+        Exception: [description]
+
+    Returns:
+        [type]: [description]
+    """
     # general subjects and trials lists 
     subjects = ['05','07','09','10','11','12','14']
     trials = ['01','02','03']
