@@ -172,17 +172,15 @@ if  y.lower() == 'y':
 print('\n')
 loads = ['loaded','noload']
 configs = [None,'Monoarticular','Biarticular','Monoarticular','Biarticular']
+#configs = [None]
 config_names = ['unassist','monoarticular_ideal','biarticular_ideal','monoarticular_paretofront','biarticular_paretofront']
 cases = ['Unassist','Ideal','Ideal','Paretofront','Paretofront']
 cases_dir = ['Unassist','Ideal','Ideal','Pareto','Pareto']
-#configs = ['Monoarticular','Biarticular']
-#config_names = ['monoarticular_paretofront','biarticular_paretofront']
-#cases = ['Paretofront','Paretofront']
-#cases_dir = ['Pareto','Pareto']
 #***************************
-print('Section 06:\t extracting reaction forces')
+print('Section 06:\t extracting reaction forces.\n')
 #***************************
 y = input('reaction forces data extraction? (y,n):  ')
+print('\n')
 if  y.lower() == 'y':
     print('reaction forces biarticular/monoarticular loaded/noload files are getting extracted the file.\n')
     for load_type in loads:

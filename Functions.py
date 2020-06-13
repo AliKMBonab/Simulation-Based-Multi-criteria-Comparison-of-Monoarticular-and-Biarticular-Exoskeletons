@@ -1490,6 +1490,43 @@ def unassist_idealdevice_data_subjects(configuration,loadcond='noload',metabolic
 #####################################################################################
 #####################################################################################
 # Reaction force analysis
+def data_extraction_reactionforce(Subject_Dic,raw_data=False):
+    """
+    This function has been developed to extract and modify data of the reaction forces.
+    To be complete
+    """
+    # Reading Required Data
+    adjustment_required_list = ['ankle_r_on_talus_r_in_ground_fz','ankle_l_on_talus_l_in_ground_fz',
+                                'ankle_r_on_talus_r_in_ground_mx','ankle_l_on_talus_l_in_ground_mx',
+                                'ankle_r_on_talus_r_in_ground_my','ankle_l_on_talus_l_in_ground_my',
+                                'patellofemoral_r_on_patella_r_in_ground_fz','patellofemoral_l_on_patella_l_in_ground_fz',
+                                'patellofemoral_r_on_patella_r_in_ground_mx','patellofemoral_l_on_patella_l_in_ground_mx',
+                                'patellofemoral_r_on_patella_r_in_ground_my','patellofemoral_l_on_patella_l_in_ground_my',
+                                'walker_knee_r_on_tibia_r_in_ground_fz','walker_knee_l_on_tibia_l_in_ground_fz',
+                                'walker_knee_r_on_tibia_r_in_ground_mx','walker_knee_l_on_tibia_l_in_ground_mx',
+                                'walker_knee_r_on_tibia_r_in_ground_my','walker_knee_l_on_tibia_l_in_ground_my',
+                                'hip_r_on_femur_r_in_ground_fz','hip_l_on_femur_l_in_ground_fz']
+    directory = Subject_Dic["Directory"]
+    right_param = Subject_Dic["Right_Parameter"]
+    left_param = Subject_Dic["Left_Parameter"]
+    gl = Subject_Dic["gl"]
+    gait_cycle = np.linspace(0,100,1000)
+    numpy_data = dataman.storage2numpy(directory)
+    time = numpy_data['time']
+    right_data = numpy_data[right_param]
+    left_data = numpy_data[left_param]
+    if right_param and left_param in adjustment_required_list:
+        left_data = -left_data
+    gpc_r, shifted_right_data = pp.data_by_pgc(time,right_data,gl,side='right')
+    gpc_l, shifted_left_data  = pp.data_by_pgc(time,left_data,gl,side='left')
+    interperted_right_data = np.interp(gait_cycle,gpc_r,shifted_right_data, left=np.nan, right=np.nan)
+    interperted_left_data  = np.interp(gait_cycle,gpc_l,shifted_left_data, left=np.nan, right=np.nan)
+    final_data = nanmean([interperted_right_data,interperted_left_data],axis=0)
+    if raw_data == False:
+        return final_data
+    else:
+        return right_data,left_data,time
+
 def reaction_forces_name_const(joint,force_or_moment = 'moment',expressed_frame = None, applied_body = None):
     """
     This function establish the proper names for extracting reaction forces
@@ -1656,7 +1693,7 @@ def extract_reaction_forces(loadcondition,case,joints,device=None,force_or_momen
                                            "Right_Parameter":reaction_forces_list[n],
                                             "Left_Parameter":reaction_forces_list[n],
                                                         "gl": gl}
-                            data = data_extraction(Subject_Dic=subject_directory,raw_data=False)
+                            data = data_extraction_reactionforce(Subject_Dic=subject_directory,raw_data=False)
                             dataset[:,c] = data
                             c+=1
                     else:
@@ -1665,7 +1702,7 @@ def extract_reaction_forces(loadcondition,case,joints,device=None,force_or_momen
                                         "Right_Parameter":reaction_forces_list[n],
                                             "Left_Parameter":reaction_forces_list[n+3],
                                                         "gl": gl}
-                            data = data_extraction(Subject_Dic=subject_directory,raw_data=False)
+                            data = data_extraction_reactionforce(Subject_Dic=subject_directory,raw_data=False)
                             dataset[:,c] = data
                             c+=1
                 elif case == 'paretofront':
@@ -1689,7 +1726,7 @@ def extract_reaction_forces(loadcondition,case,joints,device=None,force_or_momen
                                                 "Right_Parameter":reaction_forces_list[n],
                                                     "Left_Parameter":reaction_forces_list[n],
                                                                 "gl": gl}
-                                    data = data_extraction(Subject_Dic=subject_directory,raw_data=False)
+                                    data = data_extraction_reactionforce(Subject_Dic=subject_directory,raw_data=False)
                                     dataset[:,c] = data
                                     c+=1
                             else:
@@ -1698,7 +1735,7 @@ def extract_reaction_forces(loadcondition,case,joints,device=None,force_or_momen
                                                 "Right_Parameter":reaction_forces_list[n],
                                                     "Left_Parameter":reaction_forces_list[n+3],
                                                                 "gl": gl}
-                                    data = data_extraction(Subject_Dic=subject_directory,raw_data=False)
+                                    data = data_extraction_reactionforce(Subject_Dic=subject_directory,raw_data=False)
                                     dataset[:,c] = data
                                     c+=1
     return dataset
