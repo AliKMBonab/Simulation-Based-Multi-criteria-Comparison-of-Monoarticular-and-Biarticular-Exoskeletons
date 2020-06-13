@@ -151,6 +151,17 @@ noload_patellofemoraljoint_RFz = utils.normalize_direction_data(noload_reaction_
 mean_loaded_patellofemoraljoint_RFz,std_loaded_patellofemoraljoint_RFz = utils.mean_std_over_subjects(loaded_patellofemoraljoint_RFz)
 mean_noload_patellofemoraljoint_RFz,std_noload_patellofemoraljoint_RFz = utils.mean_std_over_subjects(noload_patellofemoraljoint_RFz)
 # ankle joint reaction moment
+#Mx
+loaded_anklejoint_RMx = utils.normalize_direction_data(loaded_reaction_moment_dictionary['ankle_joint_Mx'],gl_noload,direction=False)
+noload_anklejoint_RMx = utils.normalize_direction_data(noload_reaction_moment_dictionary['ankle_joint_Mx'],gl_noload,direction=False)
+mean_loaded_anklejoint_RMx,std_loaded_anklejoint_RMx = utils.mean_std_over_subjects(loaded_anklejoint_RMx)
+mean_noload_anklejoint_RMx,std_noload_anklejoint_RMx = utils.mean_std_over_subjects(noload_anklejoint_RMx)
+#My
+loaded_anklejoint_RMy = utils.normalize_direction_data(loaded_reaction_moment_dictionary['ankle_joint_My'],gl_noload,direction=False)
+noload_anklejoint_RMy = utils.normalize_direction_data(noload_reaction_moment_dictionary['ankle_joint_My'],gl_noload,direction=False)
+mean_loaded_anklejoint_RMy,std_loaded_anklejoint_RMy = utils.mean_std_over_subjects(loaded_anklejoint_RMy)
+mean_noload_anklejoint_RMy,std_noload_anklejoint_RMy = utils.mean_std_over_subjects(noload_anklejoint_RMy)
+#Mz
 loaded_anklejoint_RMz = utils.normalize_direction_data(loaded_reaction_moment_dictionary['ankle_joint_Mz'],gl_noload,direction=False)
 noload_anklejoint_RMz = utils.normalize_direction_data(noload_reaction_moment_dictionary['ankle_joint_Mz'],gl_noload,direction=False)
 mean_loaded_anklejoint_RMz,std_loaded_anklejoint_RMz = utils.mean_std_over_subjects(loaded_anklejoint_RMz)
@@ -176,7 +187,8 @@ mean_noload_anklejoint_RFz,std_noload_anklejoint_RFz = utils.mean_std_over_subje
 # TODO: optimize data saving method.
 # Reaction Moment
 # Headers
-Headers = [ 'mean_loaded_backjoint_RMz','std_loaded_backjoint_RMz','mean_noload_backjoint_RMz','std_noload_backjoint_RMz',\
+Headers = [# Moments
+            'mean_loaded_backjoint_RMz','std_loaded_backjoint_RMz','mean_noload_backjoint_RMz','std_noload_backjoint_RMz',\
             'mean_loaded_duct_tape_joint_RMz','std_loaded_duct_tape_joint_RMz',\
             'mean_loaded_hipjoint_RMz','std_loaded_hipjoint_RMz','mean_noload_hipjoint_RMz','std_noload_hipjoint_RMz',\
             'mean_loaded_kneejoint_RMx','std_loaded_kneejoint_RMx','mean_noload_kneejoint_RMx','std_noload_kneejoint_RMx',\
@@ -185,9 +197,26 @@ Headers = [ 'mean_loaded_backjoint_RMz','std_loaded_backjoint_RMz','mean_noload_
             'mean_loaded_patellofemoraljoint_RMx','std_loaded_patellofemoraljoint_RMx','mean_noload_patellofemoraljoint_RMx','std_noload_patellofemoraljoint_RMx',\
             'mean_loaded_patellofemoraljoint_RMy','std_loaded_patellofemoraljoint_RMy','mean_noload_patellofemoraljoint_RMy','std_noload_patellofemoraljoint_RMy',\
             'mean_loaded_patellofemoraljoint_RMz','std_loaded_patellofemoraljoint_RMz','mean_noload_patellofemoraljoint_RMz','std_noload_patellofemoraljoint_RMz',\
-            'mean_loaded_anklejoint_RMz','std_loaded_anklejoint_RMz','mean_noload_anklejoint_RMz','std_noload_anklejoint_RMz']
+            'mean_loaded_anklejoint_RMx','std_loaded_anklejoint_RMx','mean_noload_anklejoint_RMx','std_noload_anklejoint_RMx',\
+            'mean_loaded_anklejoint_RMy','std_loaded_anklejoint_RMy','mean_noload_anklejoint_RMy','std_noload_anklejoint_RMy',\
+            'mean_loaded_anklejoint_RMz','std_loaded_anklejoint_RMz','mean_noload_anklejoint_RMz','std_noload_anklejoint_RMz',\
+            # Forces
+            'mean_loaded_backjoint_RFz','std_loaded_backjoint_RFz','mean_noload_backjoint_RFz','std_noload_backjoint_RFz',\
+            'mean_loaded_hipjoint_RFx','std_loaded_hipjoint_RFx','mean_noload_hipjoint_RFx','std_noload_hipjoint_RFx',\
+            'mean_loaded_hipjoint_RFy','std_loaded_hipjoint_RFy','mean_noload_hipjoint_RFy','std_noload_hipjoint_RFy',\
+            'mean_loaded_hipjoint_RFz','std_loaded_hipjoint_RFz','mean_noload_hipjoint_RFz','std_noload_hipjoint_RFz',\
+            'mean_loaded_kneejoint_RFx','std_loaded_kneejoint_RFx','mean_noload_kneejoint_RFx','std_noload_kneejoint_RFx',\
+            'mean_loaded_kneejoint_RFy','std_loaded_kneejoint_RFy','mean_noload_kneejoint_RFy','std_noload_kneejoint_RFy',\
+            'mean_loaded_kneejoint_RFz','std_loaded_kneejoint_RFz','mean_noload_kneejoint_RFz','std_noload_kneejoint_RFz',\
+            'mean_loaded_patellofemoraljoint_RFx','std_loaded_patellofemoraljoint_RFx','mean_noload_patellofemoraljoint_RFx','std_noload_patellofemoraljoint_RFx',\
+            'mean_loaded_patellofemoraljoint_RFy','std_loaded_patellofemoraljoint_RFy','mean_noload_patellofemoraljoint_RFy','std_noload_patellofemoraljoint_RFy',\
+            'mean_loaded_patellofemoraljoint_RFz','std_loaded_patellofemoraljoint_RFz','mean_noload_patellofemoraljoint_RFz','std_noload_patellofemoraljoint_RFz',\
+            'mean_loaded_anklejoint_RFx','std_loaded_anklejoint_RFx','mean_noload_anklejoint_RFx','std_noload_anklejoint_RFx',\
+            'mean_loaded_anklejoint_RFy','std_loaded_anklejoint_RFy','mean_noload_anklejoint_RFy','std_noload_anklejoint_RFy',\
+            'mean_loaded_anklejoint_RFz','std_loaded_anklejoint_RFz','mean_noload_anklejoint_RFz','std_noload_anklejoint_RFz']
 # Dataset
-Data =[mean_loaded_backjoint_RMz,std_loaded_backjoint_RMz,mean_noload_backjoint_RMz,std_noload_backjoint_RMz,\
+Data =[# Moments
+      mean_loaded_backjoint_RMz,std_loaded_backjoint_RMz,mean_noload_backjoint_RMz,std_noload_backjoint_RMz,\
       mean_loaded_duct_tape_joint_RMz,std_loaded_duct_tape_joint_RMz,\
       mean_loaded_hipjoint_RMz,std_loaded_hipjoint_RMz,mean_noload_hipjoint_RMz,std_noload_hipjoint_RMz,\
       mean_loaded_kneejoint_RMx,std_loaded_kneejoint_RMx,mean_noload_kneejoint_RMx,std_noload_kneejoint_RMx,\
@@ -196,27 +225,11 @@ Data =[mean_loaded_backjoint_RMz,std_loaded_backjoint_RMz,mean_noload_backjoint_
       mean_loaded_patellofemoraljoint_RMx,std_loaded_patellofemoraljoint_RMx,mean_noload_patellofemoraljoint_RMx,std_noload_patellofemoraljoint_RMx,\
       mean_loaded_patellofemoraljoint_RMy,std_loaded_patellofemoraljoint_RMy,mean_noload_patellofemoraljoint_RMy,std_noload_patellofemoraljoint_RMy,\
       mean_loaded_patellofemoraljoint_RMz,std_loaded_patellofemoraljoint_RMz,mean_noload_patellofemoraljoint_RMz,std_noload_patellofemoraljoint_RMz,\
-      mean_loaded_anklejoint_RMz,std_loaded_anklejoint_RMz,mean_noload_anklejoint_RMz,std_noload_anklejoint_RMz]
-# List of numpy vectors to a numpy ndarray and save to csv file
-Data = utils.vec2mat(Data)
-with open(r'.\Data\RRA\jrm_final_data.csv', 'wb') as f:
-  f.write(bytes(utils.listToString(Headers)+'\n','UTF-8'))
-  np.savetxt(f, Data, fmt='%s', delimiter=",")
-
-# Reaction Force
-# Headers
-Headers = [ 'mean_loaded_backjoint_RMz','std_loaded_backjoint_RMz','mean_noload_backjoint_RMz','std_noload_backjoint_RMz',\
-            'mean_loaded_duct_tape_joint_RMz','std_loaded_duct_tape_joint_RMz',\
-            'mean_loaded_hipjoint_RMz','std_loaded_hipjoint_RMz','mean_noload_hipjoint_RMz','std_noload_hipjoint_RMz',\
-            'mean_loaded_kneejoint_RMx','std_loaded_kneejoint_RMx','mean_noload_kneejoint_RMx','std_noload_kneejoint_RMx',\
-            'mean_loaded_kneejoint_RMy','std_loaded_kneejoint_RMy','mean_noload_kneejoint_RMy','std_noload_kneejoint_RMy',\
-            'mean_loaded_kneejoint_RMz','std_loaded_kneejoint_RMz','mean_noload_kneejoint_RMz','std_noload_kneejoint_RMz',\
-            'mean_loaded_patellofemoraljoint_RMx','std_loaded_patellofemoraljoint_RMx','mean_noload_patellofemoraljoint_RMx','std_noload_patellofemoraljoint_RMx',\
-            'mean_loaded_patellofemoraljoint_RMy','std_loaded_patellofemoraljoint_RMy','mean_noload_patellofemoraljoint_RMy','std_noload_patellofemoraljoint_RMy',\
-            'mean_loaded_patellofemoraljoint_RMz','std_loaded_patellofemoraljoint_RMz','mean_noload_patellofemoraljoint_RMz','std_noload_patellofemoraljoint_RMz',\
-            'mean_loaded_anklejoint_RMz','std_loaded_anklejoint_RMz','mean_noload_anklejoint_RMz','std_noload_anklejoint_RMz']
-# Dataset
-Data =[mean_loaded_backjoint_RFz,std_loaded_backjoint_RFz,mean_noload_backjoint_RFz,std_noload_backjoint_RFz,\
+      mean_loaded_anklejoint_RMx,std_loaded_anklejoint_RMx,mean_noload_anklejoint_RMx,std_noload_anklejoint_RMx,\
+      mean_loaded_anklejoint_RMy,std_loaded_anklejoint_RMy,mean_noload_anklejoint_RMy,std_noload_anklejoint_RMy,\
+      mean_loaded_anklejoint_RMz,std_loaded_anklejoint_RMz,mean_noload_anklejoint_RMz,std_noload_anklejoint_RMz,\
+      # Forces
+      mean_loaded_backjoint_RFz,std_loaded_backjoint_RFz,mean_noload_backjoint_RFz,std_noload_backjoint_RFz,\
       mean_loaded_hipjoint_RFx,std_loaded_hipjoint_RFx,mean_noload_hipjoint_RFx,std_noload_hipjoint_RFx,\
       mean_loaded_hipjoint_RFy,std_loaded_hipjoint_RFy,mean_noload_hipjoint_RFy,std_noload_hipjoint_RFy,\
       mean_loaded_hipjoint_RFz,std_loaded_hipjoint_RFz,mean_noload_hipjoint_RFz,std_noload_hipjoint_RFz,\
@@ -290,10 +303,10 @@ knee_joint_RMz_loaded_plot_dic = {'pgc':gait_cycle,'avg':utils.smooth(mean_loade
 knee_joint_RMz_noload_plot_dic = {'pgc':gait_cycle,'avg':utils.smooth(mean_noload_kneejoint_RMz,9),'label':'Noload',
                         'std':utils.smooth(std_noload_kneejoint_RMz,9),'avg_toeoff':noload_mean_toe_off}
 #Fx
-knee_joint_RFx_loaded_plot_dic = {'pgc':gait_cycle,'avg':utils.smooth(mean_loaded_kneejoint_RMx,9),'label':'Loaded',
-                        'std':utils.smooth(std_loaded_kneejoint_RMx,9),'avg_toeoff':loaded_mean_toe_off}
-knee_joint_RFx_noload_plot_dic = {'pgc':gait_cycle,'avg':utils.smooth(mean_noload_kneejoint_RMx,9),'label':'Noload',
-                        'std':utils.smooth(std_noload_kneejoint_RMx,9),'avg_toeoff':noload_mean_toe_off}
+knee_joint_RFx_loaded_plot_dic = {'pgc':gait_cycle,'avg':utils.smooth(mean_loaded_kneejoint_RFx,9),'label':'Loaded',
+                        'std':utils.smooth(std_loaded_kneejoint_RFx,9),'avg_toeoff':loaded_mean_toe_off}
+knee_joint_RFx_noload_plot_dic = {'pgc':gait_cycle,'avg':utils.smooth(mean_noload_kneejoint_RFx,9),'label':'Noload',
+                        'std':utils.smooth(std_noload_kneejoint_RFx,9),'avg_toeoff':noload_mean_toe_off}
 #Fy
 knee_joint_RFy_loaded_plot_dic = {'pgc':gait_cycle,'avg':utils.smooth(mean_loaded_kneejoint_RFy,9),'label':'Loaded',
                         'std':utils.smooth(std_loaded_kneejoint_RFy,9),'avg_toeoff':loaded_mean_toe_off}
@@ -333,11 +346,22 @@ patellofemoral_joint_RFy_noload_plot_dic = {'pgc':gait_cycle,'avg':utils.smooth(
                         'std':utils.smooth(std_noload_patellofemoraljoint_RFy,9),'avg_toeoff':noload_mean_toe_off}
 #Fz
 patellofemoral_joint_RFz_loaded_plot_dic = {'pgc':gait_cycle,'avg':utils.smooth(mean_loaded_patellofemoraljoint_RFz,9),'label':'Loaded',
-                        'std':utils.smooth(std_loaded_patellofemoraljoint_RMz,9),'avg_toeoff':loaded_mean_toe_off}
+                        'std':utils.smooth(std_loaded_patellofemoraljoint_RFz,9),'avg_toeoff':loaded_mean_toe_off}
 patellofemoral_joint_RFz_noload_plot_dic = {'pgc':gait_cycle,'avg':utils.smooth(mean_noload_patellofemoraljoint_RFz,9),'label':'Noload',
                         'std':utils.smooth(std_noload_patellofemoraljoint_RFz,9),'avg_toeoff':noload_mean_toe_off}
 
 # ankle joint reaction moment plot dictionaries
+#Mx
+ankle_joint_RMx_loaded_plot_dic = {'pgc':gait_cycle,'avg':utils.smooth(mean_loaded_anklejoint_RMx,9),'label':'Loaded',
+                        'std':utils.smooth(std_loaded_anklejoint_RMx,9),'avg_toeoff':loaded_mean_toe_off}
+ankle_joint_RMx_noload_plot_dic = {'pgc':gait_cycle,'avg':utils.smooth(mean_noload_anklejoint_RMx,9),'label':'Noload',
+                        'std':utils.smooth(std_noload_anklejoint_RMx,9),'avg_toeoff':noload_mean_toe_off}
+#My
+ankle_joint_RMy_loaded_plot_dic = {'pgc':gait_cycle,'avg':utils.smooth(mean_loaded_anklejoint_RMy,9),'label':'Loaded',
+                        'std':utils.smooth(std_loaded_anklejoint_RMy,9),'avg_toeoff':loaded_mean_toe_off}
+ankle_joint_RMy_noload_plot_dic = {'pgc':gait_cycle,'avg':utils.smooth(mean_noload_anklejoint_RMy,9),'label':'Noload',
+                        'std':utils.smooth(std_noload_anklejoint_RMy,9),'avg_toeoff':noload_mean_toe_off}
+#Mz
 ankle_joint_RMz_loaded_plot_dic = {'pgc':gait_cycle,'avg':utils.smooth(mean_loaded_anklejoint_RMz,9),'label':'Loaded',
                         'std':utils.smooth(std_loaded_anklejoint_RMz,9),'avg_toeoff':loaded_mean_toe_off}
 ankle_joint_RMz_noload_plot_dic = {'pgc':gait_cycle,'avg':utils.smooth(mean_noload_anklejoint_RMz,9),'label':'Noload',
@@ -599,7 +623,32 @@ fig.tight_layout(h_pad=-4.0, w_pad=-4.0)
 fig.savefig('./Figures/JRF/JRF_PatellofemoralJoint_ReactionForce_Z.pdf',orientation='landscape',bbox_inches='tight')
 
 # ankle joint reaction moment figure
-fig, ax = plt.subplots(num='Ankle Joint Reaction Moment',figsize=(6.4, 4.8))
+# Mx
+fig, ax = plt.subplots(num='Ankle Joint Reaction Moment X',figsize=(6.4, 4.8))
+utils.plot_shaded_avg(plot_dic=ankle_joint_RMx_loaded_plot_dic,color='k')
+utils.plot_shaded_avg(plot_dic=ankle_joint_RMx_noload_plot_dic,toeoff_color='xkcd:shamrock green',color='xkcd:irish green')
+plt.legend(loc='best',frameon=False)
+#plt.ylim((-1,2))
+plt.xlabel('gait cycle (%)')
+plt.ylabel('joint reaction moment (N-m/kg)')
+utils.no_top_right(ax)
+plt.show()
+fig.tight_layout(h_pad=-4.0, w_pad=-4.0)
+fig.savefig('./Figures/JRF/JRF_AnkleJoint_ReactionMoment_X.pdf',orientation='landscape',bbox_inches='tight')
+# My
+fig, ax = plt.subplots(num='Ankle Joint Reaction Moment Y',figsize=(6.4, 4.8))
+utils.plot_shaded_avg(plot_dic=ankle_joint_RMy_loaded_plot_dic,color='k')
+utils.plot_shaded_avg(plot_dic=ankle_joint_RMy_noload_plot_dic,toeoff_color='xkcd:shamrock green',color='xkcd:irish green')
+plt.legend(loc='best',frameon=False)
+#plt.ylim((-1,2))
+plt.xlabel('gait cycle (%)')
+plt.ylabel('joint reaction moment (N-m/kg)')
+utils.no_top_right(ax)
+plt.show()
+fig.tight_layout(h_pad=-4.0, w_pad=-4.0)
+fig.savefig('./Figures/JRF/JRF_AnkleJoint_ReactionMoment_Y.pdf',orientation='landscape',bbox_inches='tight')
+# Mz
+fig, ax = plt.subplots(num='Ankle Joint Reaction Moment Z',figsize=(6.4, 4.8))
 utils.plot_shaded_avg(plot_dic=ankle_joint_RMz_loaded_plot_dic,color='k')
 utils.plot_shaded_avg(plot_dic=ankle_joint_RMz_noload_plot_dic,toeoff_color='xkcd:shamrock green',color='xkcd:irish green')
 plt.legend(loc='best',frameon=False)
@@ -609,7 +658,7 @@ plt.ylabel('joint reaction moment (N-m/kg)')
 utils.no_top_right(ax)
 plt.show()
 fig.tight_layout(h_pad=-4.0, w_pad=-4.0)
-fig.savefig('./Figures/JRF/JRF_AnkleJoint_ReactionMoment.pdf',orientation='landscape',bbox_inches='tight')
+fig.savefig('./Figures/JRF/JRF_AnkleJoint_ReactionMoment_Z.pdf',orientation='landscape',bbox_inches='tight')
 # Fx
 fig, ax = plt.subplots(num='Ankle Joint Reaction Force Fx',figsize=(6.4, 4.8))
 utils.plot_shaded_avg(plot_dic=ankle_joint_RFx_loaded_plot_dic,color='k')

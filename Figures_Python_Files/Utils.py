@@ -2687,3 +2687,6 @@ def muscles_metabolics_contribution(muscles_metabolics_loaded,total_metabolics_l
     plt.grid(b=True,axis='x',which='minor',ls='--',alpha=0.25)
     ax = plt.gca()
     no_top_right(ax)
+
+def joints_quassi_stiffness(data,joint):
+    pass
