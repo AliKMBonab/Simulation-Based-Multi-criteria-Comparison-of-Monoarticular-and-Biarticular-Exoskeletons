@@ -674,9 +674,7 @@ def plot_muscles_avg(plot_dic,toeoff_color='xkcd:medium grey',
         
 def plot_joint_muscle_exo (nrows,ncols,plot_dic,color_dic,
                            ylabel,nplots=None,legend_loc=[0,1],
-                           subplot_legend=False,fig=None,thirdplot=True,
-                           y_ticks = [-2,-1,0,1,2],remove_subplot_loc=None,
-                           xlabel_loc=None,ylabel_loc=None):
+                           subplot_legend=False,fig=None,thirdplot=True,y_ticks = [-2,-1,0,1,2]):
     '''Note: please note that since it is in the for loop, if some data is
     needed to plot several times it should be repeated in the lists.  '''
     if nplots is None:
@@ -727,50 +725,36 @@ def plot_joint_muscle_exo (nrows,ncols,plot_dic,color_dic,
             plt.figlegend(handles=handle2,labels=label2, bbox_to_anchor=(pos.x0+0.05, pos.y0+0.05,  pos.width / 1.5, pos.height / 1.5))
         elif i in legend_loc and subplot_legend == False:
             plt.legend(loc='best',frameon=False)
-        if xlabel_loc != None:
-            if i in xlabel_loc:
-                ax.set_xlabel('gait cycle (%)')
-        else:
-            if ncols==2 and i in [2,3]:
-                ax.set_xlabel('gait cycle (%)')
-            elif ncols==3 and i in [7,6]:
-                ax.set_xlabel('gait cycle (%)')
-            elif ncols==4 and i in [4,5,6,7]:
-                ax.set_xlabel('gait cycle (%)')
-        if ylabel_loc != None:
-            if i in ylabel_loc:
-                ax.set_ylabel(ylabel)
-        else:
-            if ncols==2 and i in [0,2]:
-                ax.set_ylabel(ylabel)
-            elif ncols==3 and i in [0,3,6]:
-                ax.set_ylabel(ylabel)
-            elif ncols==4 and i in [0,4]:
-                ax.set_ylabel(ylabel)
-        if remove_subplot_loc != None:
-            if i in remove_subplot_loc:
+        if ncols==2 and i in [2,3]:
+            ax.set_xlabel('gait cycle (%)')
+        elif ncols==3 and i in [7,6]:
+            ax.set_xlabel('gait cycle (%)')
+        elif ncols==4 and i in [4,5,6,7]:
+            ax.set_xlabel('gait cycle (%)')
+        if ncols==2 and i in [0,2]:
+            ax.set_ylabel(ylabel)
+        elif ncols==3 and i in [0,3,6]:
+            ax.set_ylabel(ylabel)
+        elif ncols==4 and i in [0,4]:
+            ax.set_ylabel(ylabel)
+        if ncols==3 :
+            if i not in [7,6,5]:
                 labels = [item.get_text() for item in ax.get_xticklabels()]
                 empty_string_labels = ['']*len(labels)
                 ax.set_xticklabels(empty_string_labels)
-        else:
-            if ncols==3 :
-                if i not in [7,6,5]:
-                    labels = [item.get_text() for item in ax.get_xticklabels()]
-                    empty_string_labels = ['']*len(labels)
-                    ax.set_xticklabels(empty_string_labels)
-                if i not in [0,3,6]:
-                    labels = [item.get_text() for item in ax.get_yticklabels()]
-                    empty_string_labels = ['']*len(labels)
-                    ax.set_yticklabels(empty_string_labels)
-            elif ncols==4:
-                if i in [0,1,2,3]:
-                    labels = [item.get_text() for item in ax.get_xticklabels()]
-                    empty_string_labels = ['']*len(labels)
-                    ax.set_xticklabels(empty_string_labels)
-                if i not in [0,4]:
-                    labels = [item.get_text() for item in ax.get_yticklabels()]
-                    empty_string_labels = ['']*len(labels)
-                    ax.set_yticklabels(empty_string_labels)
+            if i not in [0,3,6]:
+                labels = [item.get_text() for item in ax.get_yticklabels()]
+                empty_string_labels = ['']*len(labels)
+                ax.set_yticklabels(empty_string_labels)
+        elif ncols==4:
+            if i in [0,1,2,3]:
+                labels = [item.get_text() for item in ax.get_xticklabels()]
+                empty_string_labels = ['']*len(labels)
+                ax.set_xticklabels(empty_string_labels)
+            if i not in [0,4]:
+                labels = [item.get_text() for item in ax.get_yticklabels()]
+                empty_string_labels = ['']*len(labels)
+                ax.set_yticklabels(empty_string_labels)
 
 def plot_gait_cycle_phase(mean_dic,std_dic,avg_toeoff,loadcond):
     '''

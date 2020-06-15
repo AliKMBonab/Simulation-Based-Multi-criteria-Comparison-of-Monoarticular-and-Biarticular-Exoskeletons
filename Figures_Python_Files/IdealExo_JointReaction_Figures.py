@@ -320,19 +320,103 @@ mean_mono_noload_ankle_RFz,std_mono_noload_ankle_RFz = utils.mean_std_over_subje
 # Write final data to csv file.
 # TODO: optimize data saving method.
 # Headers
-Headers = ['mean_bi_loaded_back_RMz','std_bi_loaded_back_RMz','mean_mono_loaded_back_RMz','std_mono_loaded_back_RMz',\
-           'mean_bi_noload_back_RMz','std_bi_noload_back_RMz','mean_mono_noload_back_RMz','std_mono_noload_back_RMz',\
+Headers = ['mean_bi_loaded_back_RMz,std_bi_loaded_back_RMz','mean_mono_loaded_back_RMz','std_mono_loaded_back_RMz',\
+           'mean_bi_noload_back_RMz,std_bi_noload_back_RMz','mean_mono_noload_back_RMz','std_mono_noload_back_RMz',\
+            # hip joint
+           'mean_bi_loaded_hip_RFx','std_bi_loaded_hip_RFx','mean_mono_loaded_hip_RFx','std_mono_loaded_hip_RFx',\
+           'mean_bi_noload_hip_RFx','std_bi_noload_hip_RFx','mean_mono_noload_hip_RFx','std_mono_noload_hip_RFx',\
+           'mean_bi_loaded_hip_RFy','std_bi_loaded_hip_RFy','mean_mono_loaded_hip_RFy','std_mono_loaded_hip_RFy',\
+           'mean_bi_noload_hip_RFy','std_bi_noload_hip_RFy','mean_mono_noload_hip_RFy','std_mono_noload_hip_RFy',\
+           'mean_bi_loaded_hip_RFz','std_bi_loaded_hip_RFz','mean_mono_loaded_hip_RFz','std_mono_loaded_hip_RFz',\
+           'mean_bi_noload_hip_RFz','std_bi_noload_hip_RFz','mean_mono_noload_hip_RFz','std_mono_noload_hip_RFz',\
+            # knee joint
+           'mean_bi_loaded_knee_RFx','std_bi_loaded_knee_RFx','mean_mono_loaded_knee_RFx','std_mono_loaded_knee_RFx',\
+           'mean_bi_noload_knee_RFx','std_bi_noload_knee_RFx','mean_mono_noload_knee_RFx','std_mono_noload_knee_RFx',\
+           'mean_bi_loaded_knee_RFy','std_bi_loaded_knee_RFy','mean_mono_loaded_knee_RFy','std_mono_loaded_knee_RFy',\
+           'mean_bi_noload_knee_RFy','std_bi_noload_knee_RFy','mean_mono_noload_knee_RFy','std_mono_noload_knee_RFy',\
+           'mean_bi_loaded_knee_RFz','std_bi_loaded_knee_RFz','mean_mono_loaded_knee_RFz','std_mono_loaded_knee_RFz',\
+           'mean_bi_noload_knee_RFz','std_bi_noload_knee_RFz','mean_mono_noload_knee_RFz','std_mono_noload_knee_RFz',\
+           'mean_bi_loaded_knee_RMx','std_bi_loaded_knee_RMx','mean_mono_loaded_knee_RMx','std_mono_loaded_knee_RMx',\
+           'mean_bi_noload_knee_RMx','std_bi_noload_knee_RMx','mean_mono_noload_knee_RMx','std_mono_noload_knee_RMx',\
+           'mean_bi_loaded_knee_RMy','std_bi_loaded_knee_RMy','mean_mono_loaded_knee_RMy','std_mono_loaded_knee_RMy',\
+           'mean_bi_noload_knee_RMy','std_bi_noload_knee_RMy','mean_mono_noload_knee_RMy','std_mono_noload_knee_RMy',\
            'mean_bi_loaded_knee_RMz','std_bi_loaded_knee_RMz','mean_mono_loaded_knee_RMz','std_mono_loaded_knee_RMz',\
            'mean_bi_noload_knee_RMz','std_bi_noload_knee_RMz','mean_mono_noload_knee_RMz','std_mono_noload_knee_RMz',\
+            # patellofemoral
+           'mean_bi_loaded_patellofemoral_RFx','std_bi_loaded_patellofemoral_RFx','mean_mono_loaded_patellofemoral_RFx','std_mono_loaded_patellofemoral_RFx',\
+           'mean_bi_noload_patellofemoral_RFx','std_bi_noload_patellofemoral_RFx','mean_mono_noload_patellofemoral_RFx','std_mono_noload_patellofemoral_RFx',\
+           'mean_bi_loaded_patellofemoral_RFy','std_bi_loaded_patellofemoral_RFy','mean_mono_loaded_patellofemoral_RFy','std_mono_loaded_patellofemoral_RFy',\
+           'mean_bi_noload_patellofemoral_RFy','std_bi_noload_patellofemoral_RFy','mean_mono_noload_patellofemoral_RFy','std_mono_noload_patellofemoral_RFy',\
+           'mean_bi_loaded_patellofemoral_RFz','std_bi_loaded_patellofemoral_RFz','mean_mono_loaded_patellofemoral_RFz','std_mono_loaded_patellofemoral_RFz',\
+           'mean_bi_noload_patellofemoral_RFz','std_bi_noload_patellofemoral_RFz','mean_mono_noload_patellofemoral_RFz','std_mono_noload_patellofemoral_RFz',\
+           'mean_bi_loaded_patellofemoral_RMx','std_bi_loaded_patellofemoral_RMx','mean_mono_loaded_patellofemoral_RMx','std_mono_loaded_patellofemoral_RMx',\
+           'mean_bi_noload_patellofemoral_RMx','std_bi_noload_patellofemoral_RMx','mean_mono_noload_patellofemoral_RMx','std_mono_noload_patellofemoral_RMx',\
+           'mean_bi_loaded_patellofemoral_RMy','std_bi_loaded_patellofemoral_RMy','mean_mono_loaded_patellofemoral_RMy','std_mono_loaded_patellofemoral_RMy',\
+           'mean_bi_noload_patellofemoral_RMy','std_bi_noload_patellofemoral_RMy','mean_mono_noload_patellofemoral_RMy','std_mono_noload_patellofemoral_RMy',\
            'mean_bi_loaded_patellofemoral_RMz','std_bi_loaded_patellofemoral_RMz','mean_mono_loaded_patellofemoral_RMz','std_mono_loaded_patellofemoral_RMz',\
-           'mean_bi_noload_patellofemoral_RMz','std_bi_noload_patellofemoral_RMz','mean_mono_noload_patellofemoral_RMz','std_mono_noload_patellofemoral_RMz']
+           'mean_bi_noload_patellofemoral_RMz','std_bi_noload_patellofemoral_RMz','mean_mono_noload_patellofemoral_RMz','std_mono_noload_patellofemoral_RMz',\
+            # ankle
+           'mean_bi_loaded_ankle_RFx','std_bi_loaded_ankle_RFx','mean_mono_loaded_ankle_RFx','std_mono_loaded_ankle_RFx',\
+           'mean_bi_noload_ankle_RFx','std_bi_noload_ankle_RFx','mean_mono_noload_ankle_RFx','std_mono_noload_ankle_RFx',\
+           'mean_bi_loaded_ankle_RFy','std_bi_loaded_ankle_RFy','mean_mono_loaded_ankle_RFy','std_mono_loaded_ankle_RFy',\
+           'mean_bi_noload_ankle_RFy','std_bi_noload_ankle_RFy','mean_mono_noload_ankle_RFy','std_mono_noload_ankle_RFy',\
+           'mean_bi_loaded_ankle_RFz','std_bi_loaded_ankle_RFz','mean_mono_loaded_ankle_RFz','std_mono_loaded_ankle_RFz',\
+           'mean_bi_noload_ankle_RFz','std_bi_noload_ankle_RFz','mean_mono_noload_ankle_RFz','std_mono_noload_ankle_RFz',\
+           'mean_bi_loaded_ankle_RMx','std_bi_loaded_ankle_RMx','mean_mono_loaded_ankle_RMx','std_mono_loaded_ankle_RMx',\
+           'mean_bi_noload_ankle_RMx','std_bi_noload_ankle_RMx','mean_mono_noload_ankle_RMx','std_mono_noload_ankle_RMx',\
+           'mean_bi_loaded_ankle_RMy','std_bi_loaded_ankle_RMy','mean_mono_loaded_ankle_RMy','std_mono_loaded_ankle_RMy',\
+           'mean_bi_noload_ankle_RMy','std_bi_noload_ankle_RMy','mean_mono_noload_ankle_RMy','std_mono_noload_ankle_RMy',\
+           'mean_bi_loaded_ankle_RMz','std_bi_loaded_ankle_RMz','mean_mono_loaded_ankle_RMz','std_mono_loaded_ankle_RMz',\
+           'mean_bi_noload_ankle_RMz','std_bi_noload_ankle_RMz','mean_mono_noload_ankle_RMz','std_mono_noload_ankle_RMz']
 # Dataset
 Data =[mean_bi_loaded_back_RMz,std_bi_loaded_back_RMz,mean_mono_loaded_back_RMz,std_mono_loaded_back_RMz,\
-       mean_bi_noload_back_RMz,std_bi_noload_back_RMz,mean_mono_noload_back_RMz,std_mono_noload_back_RMz,\
-       mean_bi_loaded_knee_RMz,std_bi_loaded_knee_RMz,mean_mono_loaded_knee_RMz,std_mono_loaded_knee_RMz,\
-       mean_bi_noload_knee_RMz,std_bi_noload_knee_RMz,mean_mono_noload_knee_RMz,std_mono_noload_knee_RMz,\
-       mean_bi_loaded_patellofemoral_RMz,std_bi_loaded_patellofemoral_RMz,mean_mono_loaded_patellofemoral_RMz,std_mono_loaded_patellofemoral_RMz,\
-       mean_bi_noload_patellofemoral_RMz,std_bi_noload_patellofemoral_RMz,mean_mono_noload_patellofemoral_RMz,std_mono_noload_patellofemoral_RMz]
+           mean_bi_noload_back_RMz,std_bi_noload_back_RMz,mean_mono_noload_back_RMz,std_mono_noload_back_RMz,\
+            # hip joint
+           mean_bi_loaded_hip_RFx,std_bi_loaded_hip_RFx,mean_mono_loaded_hip_RFx,std_mono_loaded_hip_RFx,\
+           mean_bi_noload_hip_RFx,std_bi_noload_hip_RFx,mean_mono_noload_hip_RFx,std_mono_noload_hip_RFx,\
+           mean_bi_loaded_hip_RFy,std_bi_loaded_hip_RFy,mean_mono_loaded_hip_RFy,std_mono_loaded_hip_RFy,\
+           mean_bi_noload_hip_RFy,std_bi_noload_hip_RFy,mean_mono_noload_hip_RFy,std_mono_noload_hip_RFy,\
+           mean_bi_loaded_hip_RFz,std_bi_loaded_hip_RFz,mean_mono_loaded_hip_RFz,std_mono_loaded_hip_RFz,\
+           mean_bi_noload_hip_RFz,std_bi_noload_hip_RFz,mean_mono_noload_hip_RFz,std_mono_noload_hip_RFz,\
+            # knee joint
+           mean_bi_loaded_knee_RFx,std_bi_loaded_knee_RFx,mean_mono_loaded_knee_RFx,std_mono_loaded_knee_RFx,\
+           mean_bi_noload_knee_RFx,std_bi_noload_knee_RFx,mean_mono_noload_knee_RFx,std_mono_noload_knee_RFx,\
+           mean_bi_loaded_knee_RFy,std_bi_loaded_knee_RFy,mean_mono_loaded_knee_RFy,std_mono_loaded_knee_RFy,\
+           mean_bi_noload_knee_RFy,std_bi_noload_knee_RFy,mean_mono_noload_knee_RFy,std_mono_noload_knee_RFy,\
+           mean_bi_loaded_knee_RFz,std_bi_loaded_knee_RFz,mean_mono_loaded_knee_RFz,std_mono_loaded_knee_RFz,\
+           mean_bi_noload_knee_RFz,std_bi_noload_knee_RFz,mean_mono_noload_knee_RFz,std_mono_noload_knee_RFz,\
+           mean_bi_loaded_knee_RMx,std_bi_loaded_knee_RMx,mean_mono_loaded_knee_RMx,std_mono_loaded_knee_RMx,\
+           mean_bi_noload_knee_RMx,std_bi_noload_knee_RMx,mean_mono_noload_knee_RMx,std_mono_noload_knee_RMx,\
+           mean_bi_loaded_knee_RMy,std_bi_loaded_knee_RMy,mean_mono_loaded_knee_RMy,std_mono_loaded_knee_RMy,\
+           mean_bi_noload_knee_RMy,std_bi_noload_knee_RMy,mean_mono_noload_knee_RMy,std_mono_noload_knee_RMy,\
+           mean_bi_loaded_knee_RMz,std_bi_loaded_knee_RMz,mean_mono_loaded_knee_RMz,std_mono_loaded_knee_RMz,\
+           mean_bi_noload_knee_RMz,std_bi_noload_knee_RMz,mean_mono_noload_knee_RMz,std_mono_noload_knee_RMz,\
+            # patellofemoral
+           mean_bi_loaded_patellofemoral_RFx,std_bi_loaded_patellofemoral_RFx,mean_mono_loaded_patellofemoral_RFx,std_mono_loaded_patellofemoral_RFx,\
+           mean_bi_noload_patellofemoral_RFx,std_bi_noload_patellofemoral_RFx,mean_mono_noload_patellofemoral_RFx,std_mono_noload_patellofemoral_RFx,\
+           mean_bi_loaded_patellofemoral_RFy,std_bi_loaded_patellofemoral_RFy,mean_mono_loaded_patellofemoral_RFy,std_mono_loaded_patellofemoral_RFy,\
+           mean_bi_noload_patellofemoral_RFy,std_bi_noload_patellofemoral_RFy,mean_mono_noload_patellofemoral_RFy,std_mono_noload_patellofemoral_RFy,\
+           mean_bi_loaded_patellofemoral_RFz,std_bi_loaded_patellofemoral_RFz,mean_mono_loaded_patellofemoral_RFz,std_mono_loaded_patellofemoral_RFz,\
+           mean_bi_noload_patellofemoral_RFz,std_bi_noload_patellofemoral_RFz,mean_mono_noload_patellofemoral_RFz,std_mono_noload_patellofemoral_RFz,\
+           mean_bi_loaded_patellofemoral_RMx,std_bi_loaded_patellofemoral_RMx,mean_mono_loaded_patellofemoral_RMx,std_mono_loaded_patellofemoral_RMx,\
+           mean_bi_noload_patellofemoral_RMx,std_bi_noload_patellofemoral_RMx,mean_mono_noload_patellofemoral_RMx,std_mono_noload_patellofemoral_RMx,\
+           mean_bi_loaded_patellofemoral_RMy,std_bi_loaded_patellofemoral_RMy,mean_mono_loaded_patellofemoral_RMy,std_mono_loaded_patellofemoral_RMy,\
+           mean_bi_noload_patellofemoral_RMy,std_bi_noload_patellofemoral_RMy,mean_mono_noload_patellofemoral_RMy,std_mono_noload_patellofemoral_RMy,\
+           mean_bi_loaded_patellofemoral_RMz,std_bi_loaded_patellofemoral_RMz,mean_mono_loaded_patellofemoral_RMz,std_mono_loaded_patellofemoral_RMz,\
+           mean_bi_noload_patellofemoral_RMz,std_bi_noload_patellofemoral_RMz,mean_mono_noload_patellofemoral_RMz,std_mono_noload_patellofemoral_RMz,\
+            # ankle
+           mean_bi_loaded_ankle_RFx,std_bi_loaded_ankle_RFx,mean_mono_loaded_ankle_RFx,std_mono_loaded_ankle_RFx,\
+           mean_bi_noload_ankle_RFx,std_bi_noload_ankle_RFx,mean_mono_noload_ankle_RFx,std_mono_noload_ankle_RFx,\
+           mean_bi_loaded_ankle_RFy,std_bi_loaded_ankle_RFy,mean_mono_loaded_ankle_RFy,std_mono_loaded_ankle_RFy,\
+           mean_bi_noload_ankle_RFy,std_bi_noload_ankle_RFy,mean_mono_noload_ankle_RFy,std_mono_noload_ankle_RFy,\
+           mean_bi_loaded_ankle_RFz,std_bi_loaded_ankle_RFz,mean_mono_loaded_ankle_RFz,std_mono_loaded_ankle_RFz,\
+           mean_bi_noload_ankle_RFz,std_bi_noload_ankle_RFz,mean_mono_noload_ankle_RFz,std_mono_noload_ankle_RFz,\
+           mean_bi_loaded_ankle_RMx,std_bi_loaded_ankle_RMx,mean_mono_loaded_ankle_RMx,std_mono_loaded_ankle_RMx,\
+           mean_bi_noload_ankle_RMx,std_bi_noload_ankle_RMx,mean_mono_noload_ankle_RMx,std_mono_noload_ankle_RMx,\
+           mean_bi_loaded_ankle_RMy,std_bi_loaded_ankle_RMy,mean_mono_loaded_ankle_RMy,std_mono_loaded_ankle_RMy,\
+           mean_bi_noload_ankle_RMy,std_bi_noload_ankle_RMy,mean_mono_noload_ankle_RMy,std_mono_noload_ankle_RMy,\
+           mean_bi_loaded_ankle_RMz,std_bi_loaded_ankle_RMz,mean_mono_loaded_ankle_RMz,std_mono_loaded_ankle_RMz,\
+           mean_bi_noload_ankle_RMz,std_bi_noload_ankle_RMz,mean_mono_noload_ankle_RMz,std_mono_noload_ankle_RMz]
 # List of numpy vectors to a numpy ndarray and save to csv file
 Data = utils.vec2mat(Data)
 with open(r'.\Data\Ideal\jrf_ideal_exo_data.csv', 'wb') as f:
@@ -676,7 +760,7 @@ monovsbi_color_dic = {
 'color_3_list' : [mycolors['cyan blue'],mycolors['olympic blue'],mycolors['cyan blue'],mycolors['olympic blue']],
 'color_2_list' : [mycolors['crimson red'],mycolors['french rose'],mycolors['crimson red'],mycolors['french rose']]
 }
-
+'''
 # ***************************
 # back joint moment figure
 # required dictionary
@@ -1131,41 +1215,115 @@ utils.plot_joint_muscle_exo(nrows=2,ncols=2,plot_dic=plot_dic,thirdplot=False,
 fig.tight_layout()
 fig.savefig('./Figures/Ideal/JRF/Ankle_Joint_ReactionForce_Fz.pdf',orientation='landscape',bbox_inches='tight')
 plt.show()
-
+'''
 ########################################################################################################################################
-# Knee and Patellofemoral RMz comparison
+default_color_dic = {
+'color_1_list' : ['k','xkcd:irish green','k','xkcd:irish green','k','xkcd:irish green'],
+'color_2_list' : [mycolors['cyan blue'],mycolors['olympic blue'],mycolors['cyan blue'],mycolors['olympic blue'],mycolors['cyan blue'],mycolors['olympic blue']],
+'color_3_list' : [mycolors['crimson red'],mycolors['french rose'],mycolors['crimson red'],mycolors['french rose'],mycolors['crimson red'],mycolors['french rose']]
+}
+# Knee and Patellofemoral moment comparison
 # Knee Joint
 # required dictionary
 plot_dic={
-'plot_1_list' : [unassist_loaded_knee_RMz_dic,unassist_noload_knee_RMz_dic],
-'plot_2_list' : [bi_loaded_knee_RMz_dic,bi_noload_knee_RMz_dic],
-'plot_3_list' : [mono_loaded_knee_RMz_dic,mono_noload_knee_RMz_dic],
-'plot_titles' : ['loaded knee joint (Mz)','noload knee joint (Mz)']
+'plot_1_list' : [unassist_loaded_knee_RMx_dic,unassist_noload_knee_RMx_dic,\
+                 unassist_loaded_knee_RMy_dic,unassist_noload_knee_RMy_dic,\
+                 unassist_loaded_knee_RMz_dic,unassist_noload_knee_RMz_dic,],
+'plot_2_list' : [bi_loaded_knee_RMx_dic,bi_noload_knee_RMx_dic,\
+                 bi_loaded_knee_RMy_dic,bi_noload_knee_RMy_dic,\
+                 bi_loaded_knee_RMz_dic,bi_noload_knee_RMz_dic],
+'plot_3_list' : [mono_loaded_knee_RMx_dic,mono_noload_knee_RMx_dic,\
+                 mono_loaded_knee_RMy_dic,mono_noload_knee_RMy_dic,\
+                 mono_loaded_knee_RMz_dic,mono_noload_knee_RMz_dic],
+'plot_titles' : ['loaded knee joint (Mx)','noload knee joint (Mx)',\
+                 'loaded knee joint (My)','noload knee joint (My)',\
+                 'loaded knee joint (Mz)','noload knee joint (Mz)']
 }
 # plot
 fig = plt.figure(num='Loaded Knee Reaction Moment Comparison',figsize=(8.4, 4.8))
-utils.plot_joint_muscle_exo(nrows=1,ncols=2,plot_dic=plot_dic,thirdplot=True,
-                            color_dic=monovsbi_color_dic,ylabel='knee reaction\n moment (N-m/kg)',
-                            y_ticks = [0,-0.2,-0.4,-0.6])
+utils.plot_joint_muscle_exo(nrows=3,ncols=2,plot_dic=plot_dic,thirdplot=True,
+                            color_dic=default_color_dic,ylabel='reaction\n moment (N-m/kg)',
+                            y_ticks = [-0.6,-0.3,0,0.3,0.6],xlabel_loc=[4,5],ylabel_loc=[0,2,4])
 fig.tight_layout(h_pad=-1, w_pad=-1.5)
 fig.subplots_adjust(top=0.95, bottom=0.075, left=0.100, right=0.975,hspace=0.40,wspace=0.20)
-fig.savefig('./Figures/Ideal/JRF/Knee_Joint_ReactionMoment_Mz_Comparison.pdf',orientation='landscape',bbox_inches='tight')
+fig.savefig('./Figures/Ideal/JRF/Knee_Joint_ReactionMoment_Comparison.pdf',orientation='landscape',bbox_inches='tight')
 plt.show()
 
 # Patellofemoral Joint
 # required dictionary
 plot_dic={
-'plot_1_list' : [unassist_loaded_patellofemoral_RMz_dic,unassist_noload_patellofemoral_RMz_dic],
-'plot_2_list' : [bi_loaded_patellofemoral_RMz_dic,bi_noload_patellofemoral_RMz_dic],
-'plot_3_list' : [mono_loaded_patellofemoral_RMz_dic,mono_noload_patellofemoral_RMz_dic],
-'plot_titles' : ['loaded patellofemoral joint (Mz)','noload patellofemoral joint (Mz)']
+'plot_1_list' : [unassist_loaded_patellofemoral_RMx_dic,unassist_noload_patellofemoral_RMx_dic,\
+                 unassist_loaded_patellofemoral_RMy_dic,unassist_noload_patellofemoral_RMy_dic,\
+                 unassist_loaded_patellofemoral_RMz_dic,unassist_noload_patellofemoral_RMz_dic],
+'plot_2_list' : [bi_loaded_patellofemoral_RMx_dic,bi_noload_patellofemoral_RMx_dic,\
+                 bi_loaded_patellofemoral_RMy_dic,bi_noload_patellofemoral_RMy_dic,\
+                 bi_loaded_patellofemoral_RMz_dic,bi_noload_patellofemoral_RMz_dic],
+'plot_3_list' : [mono_loaded_patellofemoral_RMx_dic,mono_noload_patellofemoral_RMx_dic,\
+                 mono_loaded_patellofemoral_RMy_dic,mono_noload_patellofemoral_RMy_dic,\
+                 mono_loaded_patellofemoral_RMz_dic,mono_noload_patellofemoral_RMz_dic],
+'plot_titles' : ['loaded patellofemoral joint (Mx)','noload patellofemoral joint (Mx)',\
+                 'loaded patellofemoral joint (My)','noload patellofemoral joint (My)',\
+                 'loaded patellofemoral joint (Mz)','noload patellofemoral joint (Mz)']
 }
 # plot
 fig = plt.figure(num='Loaded Patellofemoral Reaction Moment Comparison',figsize=(8.4, 4.8))
-utils.plot_joint_muscle_exo(nrows=1,ncols=2,plot_dic=plot_dic,thirdplot=True,
-                            color_dic=monovsbi_color_dic,ylabel='patellofemoral reaction\n moment (N-m/kg)',
-                            y_ticks = [0,-0.5,-1])
+utils.plot_joint_muscle_exo(nrows=3,ncols=2,plot_dic=plot_dic,thirdplot=True,
+                            color_dic=default_color_dic,ylabel='reaction\n moment (N-m/kg)',
+                            y_ticks = [-0.5,0,0.5],xlabel_loc=[4,5],ylabel_loc=[0,2,4])
 fig.tight_layout(h_pad=-1, w_pad=-1.5)
 fig.subplots_adjust(top=0.95, bottom=0.075, left=0.100, right=0.975,hspace=0.40,wspace=0.20)
-fig.savefig('./Figures/Ideal/JRF/Patellofemoral_Joint_ReactionMoment_Mz_Comparison.pdf',orientation='landscape',bbox_inches='tight')
+fig.savefig('./Figures/Ideal/JRF/Patellofemoral_Joint_ReactionMoment_Comparison.pdf',orientation='landscape',bbox_inches='tight')
+plt.show()
+#*******************************************************************************************************************
+# Knee and Patellofemoral force comparison
+# Knee Joint
+# required dictionary
+plot_dic={
+'plot_1_list' : [unassist_loaded_knee_RFx_dic,unassist_noload_knee_RFx_dic,\
+                 unassist_loaded_knee_RFy_dic,unassist_noload_knee_RFy_dic,\
+                 unassist_loaded_knee_RFz_dic,unassist_noload_knee_RFz_dic,],
+'plot_2_list' : [bi_loaded_knee_RFx_dic,bi_noload_knee_RFx_dic,\
+                 bi_loaded_knee_RFy_dic,bi_noload_knee_RFy_dic,\
+                 bi_loaded_knee_RFz_dic,bi_noload_knee_RFz_dic],
+'plot_3_list' : [mono_loaded_knee_RFx_dic,mono_noload_knee_RFx_dic,\
+                 mono_loaded_knee_RFy_dic,mono_noload_knee_RFy_dic,\
+                 mono_loaded_knee_RFz_dic,mono_noload_knee_RFz_dic],
+'plot_titles' : ['loaded knee joint (Fx)','noload knee joint (Fx)',\
+                 'loaded knee joint (Fy)','noload knee joint (Fy)',\
+                 'loaded knee joint (Fz)','noload knee joint (Fz)']
+}
+# plot
+fig = plt.figure(num='Loaded Knee Reaction Force Comparison',figsize=(8.4, 4.8))
+utils.plot_joint_muscle_exo(nrows=3,ncols=2,plot_dic=plot_dic,thirdplot=True,
+                            color_dic=default_color_dic,ylabel='reaction\n force (N/kg)',
+                            y_ticks = [-0.6,-0.3,0,0.3,0.6],xlabel_loc=[4,5],ylabel_loc=[0,2,4])
+fig.tight_layout(h_pad=-1, w_pad=-1.5)
+fig.subplots_adjust(top=0.95, bottom=0.075, left=0.100, right=0.975,hspace=0.40,wspace=0.20)
+fig.savefig('./Figures/Ideal/JRF/Knee_Joint_ReactionForce_Comparison.pdf',orientation='landscape',bbox_inches='tight')
+plt.show()
+
+# Patellofemoral Joint
+# required dictionary
+plot_dic={
+'plot_1_list' : [unassist_loaded_patellofemoral_RFx_dic,unassist_noload_patellofemoral_RFx_dic,\
+                 unassist_loaded_patellofemoral_RFy_dic,unassist_noload_patellofemoral_RFy_dic,\
+                 unassist_loaded_patellofemoral_RFz_dic,unassist_noload_patellofemoral_RFz_dic],
+'plot_2_list' : [bi_loaded_patellofemoral_RFx_dic,bi_noload_patellofemoral_RFx_dic,\
+                 bi_loaded_patellofemoral_RFy_dic,bi_noload_patellofemoral_RFy_dic,\
+                 bi_loaded_patellofemoral_RFz_dic,bi_noload_patellofemoral_RFz_dic],
+'plot_3_list' : [mono_loaded_patellofemoral_RFx_dic,mono_noload_patellofemoral_RFx_dic,\
+                 mono_loaded_patellofemoral_RFy_dic,mono_noload_patellofemoral_RFy_dic,\
+                 mono_loaded_patellofemoral_RFz_dic,mono_noload_patellofemoral_RFz_dic],
+'plot_titles' : ['loaded patellofemoral joint (Fx)','noload patellofemoral joint (Fx)',\
+                 'loaded patellofemoral joint (Fy)','noload patellofemoral joint (Fy)',\
+                 'loaded patellofemoral joint (Fz)','noload patellofemoral joint (Fz)']
+}
+# plot
+fig = plt.figure(num='Loaded Patellofemoral Reaction Force Comparison',figsize=(8.4, 4.8))
+utils.plot_joint_muscle_exo(nrows=3,ncols=2,plot_dic=plot_dic,thirdplot=True,
+                            color_dic=default_color_dic,ylabel='reaction\n force (N/kg)',
+                            y_ticks = [-0.5,0,0.5],xlabel_loc=[4,5],ylabel_loc=[0,2,4])
+fig.tight_layout(h_pad=-1, w_pad=-1.5)
+fig.subplots_adjust(top=0.95, bottom=0.075, left=0.100, right=0.975,hspace=0.40,wspace=0.20)
+fig.savefig('./Figures/Ideal/JRF/Patellofemoral_Joint_ReactionForce_Comparison.pdf',orientation='landscape',bbox_inches='tight')
 plt.show()
