@@ -2423,7 +2423,8 @@ def muscles_whisker_bar_plot(data_1,data_2,data_3=None,data_4=None,
             no_top_right(ax)
             plt.tight_layout()
 
-def plot_stiffness(plot_dic,load_condition,kinematics_ticks,moment_ticks,ax1,ax2,ax3):
+def plot_stiffness(plot_dic,load_condition,kinematics_ticks,moment_ticks,
+                   ax1,ax2,ax3,joint=None,plot_phases=True,plot_fitted_line=True):
     """
     This function has been developed to simultaneously plot moment, kinematics, and stiffness\n
 
@@ -2437,9 +2438,11 @@ def plot_stiffness(plot_dic,load_condition,kinematics_ticks,moment_ticks,ax1,ax2
     if load_condition == 'loaded':
         toe_off = plot_dic['loaded_toe_off']
         index = pp.nearest_index(gait_cycle,toe_off)
+        phase_colors = ['dimgray','silver']
     elif load_condition == 'noload':
         toe_off = plot_dic['noload_toe_off']
         index = pp.nearest_index(gait_cycle,toe_off)
+        phase_colors = ['teal','turquoise']
     # first plot dataset
     kinematics = plot_dic['kinematics']
     moment = plot_dic['moment']
@@ -2448,6 +2451,19 @@ def plot_stiffness(plot_dic,load_condition,kinematics_ticks,moment_ticks,ax1,ax2
     color = plot_dic['color']
     toe_off_color = plot_dic['toe_off_color']
     label = plot_dic['label']
+    # stiffness
+    if plot_phases == True:
+        phases_kinematics = plot_dic['phases_kinematics']
+        phases_moment = plot_dic['phases_moment']
+    if plot_fitted_line == True:
+        phase_fitted_lines = plot_dic['phases_fitted_line']
+    # phases
+    if joint == 'knee':
+        phase_list = ['knee_flexion','knee_extension']
+    elif joint == 'hip':
+        phase_list = ['hip_flexion','hip_extension']
+    markers = ['o','P']
+    phase_name = ['flexion','extension']
     # grids
     # general conditions
     ax1.tick_params(axis='both',direction='in')
@@ -2460,13 +2476,21 @@ def plot_stiffness(plot_dic,load_condition,kinematics_ticks,moment_ticks,ax1,ax2
     ax1.vlines(kinematics[index],np.min(moment_ticks),np.max(moment_ticks),color=toe_off_color,lw=2,alpha=0.5)
     ax1.hlines(0,np.min(kinematics_ticks),np.max(kinematics_ticks),ls=':',color=mycolors['teal'],lw=1.5,alpha=0.25)
     ax1.vlines(0,np.min(moment_ticks),np.max(moment_ticks),ls=':',color=mycolors['teal'],lw=1.5,alpha=0.25)
-    
+    if plot_phases == True:
+        for i,phase in enumerate(phase_list):
+            idx = np.arange(0,int(np.round(phases_kinematics['{}'.format(phase)].shape[0])),int(np.round(phases_kinematics['{}'.format(phase)].shape[0]/15)))
+            phase_k = np.take(phases_kinematics['{}'.format(phase)],idx)
+            phase_m = np.take(phases_moment['{}'.format(phase)],idx)
+            ax1.plot(phase_k,phase_m,marker=markers[i],c=phase_colors[i],markersize=8,linestyle='None',alpha=0.75)
+            if plot_fitted_line == True:
+                ax1.plot(phases_kinematics['{}'.format(phase)],phase_fitted_lines['{}'.format(phase)],label=phase_name[i],lw=2.5,color=phase_colors[i])
+            
     no_top_right(ax1)
     ax1.set_xticks(kinematics_ticks)
     ax1.set_yticks(moment_ticks)
-    ax1.set_xlim([np.floor(np.min(kinematics_ticks)),np.ceil(np.max(kinematics_ticks))])
-    ax1.set_ylim([np.floor(np.min(moment_ticks)),np.ceil(np.max(moment_ticks))])
-    ax1.set_xlabel('angle (deg)')
+    ax1.set_xlim([np.min(kinematics_ticks),np.max(kinematics_ticks)])
+    ax1.set_ylim([np.min(moment_ticks),np.max(moment_ticks)])
+    ax1.set_xlabel('angle (rad)')
     ax1.set_ylabel('moment (N.m)')
     ax1.set_title('stiffness')
     ax1.legend(loc='best',frameon=False)
@@ -2479,7 +2503,7 @@ def plot_stiffness(plot_dic,load_condition,kinematics_ticks,moment_ticks,ax1,ax2
     ax2.set_xticks([0,10,20,30,40,50,60,70,80,90,100])
     ax2.set_xlim([0,100])
     ax2.set_yticks(moment_ticks)
-    ax2.set_ylim([np.floor(np.min(moment_ticks)),np.ceil(np.max(moment_ticks))])
+    ax2.set_ylim([np.min(moment_ticks),np.max(moment_ticks)])
     ax2.set_xlabel('gait cycle (%)')
     ax2.set_ylabel('moment (N.m)')
     ax2.set_title('moment')
@@ -2494,9 +2518,9 @@ def plot_stiffness(plot_dic,load_condition,kinematics_ticks,moment_ticks,ax1,ax2
     ax3.set_xticks([0,10,20,30,40,50,60,70,80,90,100])
     ax3.set_xlim([0,100])
     ax3.set_yticks(kinematics_ticks)
-    ax3.set_ylim([np.floor(np.min(kinematics_ticks)),np.ceil(np.max(kinematics_ticks))])
+    ax3.set_ylim([np.min(kinematics_ticks),np.max(kinematics_ticks)])
     ax3.set_xlabel('gait cycle (%)')
-    ax3.set_ylabel('kinematics (deg)')
+    ax3.set_ylabel('kinematics (rad)')
     ax3.set_title('kinematics')
     #ax3.legend(loc='best',frameon=False)
     no_top_right(ax3)
@@ -2704,5 +2728,148 @@ def muscles_metabolics_contribution(muscles_metabolics_loaded,total_metabolics_l
     ax = plt.gca()
     no_top_right(ax)
 
-def joints_quassi_stiffness(data,joint):
-    pass
+def joints_linear_phases_indices(toe_off,phase):
+    """
+    calculates the indices of linear phases for each joints.\n
+    Phase:\n\t
+        'knee_flexion','knee_total','knee_extension','hip_flexion','hip_extension','hip_total'
+    """
+    if phase not in ['knee_flexion','knee_total','knee_extension','hip_flexion','hip_extension','hip_total']:
+        raise Exception('input phase is not supported. Please change your phase.')
+    gait_cycle = np.linspace(0,100,1000)
+    toe_off_diff = toe_off-60
+    if phase == 'knee_flexion': # from initial contact to the maximum flexion of the first arc.
+        phase_start = 0 + toe_off_diff
+        phase_end = 15 + toe_off_diff
+        if phase_start < 0:
+            indices_1 = np.where((gait_cycle >= 0) & (gait_cycle <= phase_end))
+            indices_2 = np.where((gait_cycle >= 100+toe_off_diff) & (gait_cycle <= 100))
+            index = np.concatenate((indices_1[0],indices_2[0]), axis=0)
+            return [index]
+        else:
+            index = np.where((gait_cycle >= phase_start) & (gait_cycle <= phase_end))
+            return index
+    elif phase == 'knee_extension': # from maximum flexion in first arc to end of extension of the second arc.
+        phase_start = 15 + toe_off_diff
+        phase_end = 40 + toe_off_diff
+        index = np.where((gait_cycle >= phase_start) & (gait_cycle <= phase_end))
+        return index
+    elif phase == 'knee_total': # from the initial contact to end of extension of the second arc.
+        phase_start = 0 + toe_off_diff
+        phase_end = 40 + toe_off_diff
+        if phase_start < 0:
+            indices_1 = np.where((gait_cycle >= 0) & (gait_cycle <= phase_end))
+            indices_2 = np.where((gait_cycle >= 100+toe_off_diff) & (gait_cycle <= 100))
+            index = np.concatenate((indices_1[0],indices_2[0]), axis=0)
+            return [index]
+        else:
+            index = np.where((gait_cycle >= phase_start) & (gait_cycle <= phase_end))
+            return index
+    elif phase == 'hip_flexion': # from the extension onset to maximum extension.
+        phase_start = 32 + toe_off_diff
+        phase_end = 50 + toe_off_diff
+        index = np.where((gait_cycle >= phase_start) & (gait_cycle <= phase_end))
+        return index
+    elif phase == 'hip_extension': # from the maximum extension to initial swing.
+        phase_start = 50 + toe_off_diff
+        phase_end = 70 + toe_off_diff
+        index = np.where((gait_cycle >= phase_start) & (gait_cycle <= phase_end))
+        return index
+    elif phase == 'hip_total': # from the extension onset to initial swing.
+        phase_start = 32 + toe_off_diff
+        phase_end = 70 + toe_off_diff
+        index = np.where((gait_cycle >= phase_start) & (gait_cycle <= phase_end))
+        return index
+
+def quasi_stiffness(angle,moment,toe_off,phase):
+    """
+    Note:
+    np.polynomial.polynomial.polyfit:
+    p(x) = c[0] + c[1]*x
+    c[1]: quassi stiffness
+    """
+    idx = joints_linear_phases_indices(toe_off=toe_off,phase=phase)
+    linear_angle = np.take(angle,idx,axis=0)
+    linear_moment = np.take(moment,idx,axis=0)
+    coefficient = np.polynomial.polynomial.polyfit(x=linear_angle[0,~np.isnan(linear_angle[0,:])],\
+                                             y=linear_moment[0,~np.isnan(linear_moment[0,:])],deg=1)
+    predicted_moment = np.polynomial.polynomial.polyval(linear_angle[0,~np.isnan(linear_angle[0,:])],coefficient)
+    Rsquare = metrics.r2_score(np.transpose(linear_moment[0,~np.isnan(linear_moment[0,:])]), predicted_moment)
+    return coefficient, Rsquare
+    
+def calculate_quasi_stiffness(angle,moment,toe_off,joint,modify_toe_off = False):
+    # initial check conditions
+    if joint == 'knee':
+        phase_list = ['knee_flexion','knee_total','knee_extension']
+    elif joint == 'hip':
+        phase_list = ['hip_flexion','hip_extension','hip_total']
+    else:
+        raise Exception('The input joint is not supported.')
+    if angle.shape[1] != moment.shape[1]:
+        raise Exception('There is no pairwise data to compute the stiffness')
+    # initialization
+    stiffness_dictionary = dict()
+    R_square_dictionary = dict()
+    bias_dictionary =dict()
+    stiffness = np.zeros([len(phase_list),angle.shape[1]])
+    Rsquares = np.zeros([len(phase_list),angle.shape[1]])
+    bias = np.zeros([len(phase_list),angle.shape[1]])
+    # fix toe off data shape for pareto simulations
+    if modify_toe_off == True:
+        toe_off = np.repeat(toe_off,25)
+    # calculate the stiffness for selected phases of a joint
+    for k,phase in enumerate(phase_list):
+        for i in range(angle.shape[1]):
+            coefficient, R2 = quasi_stiffness(angle=np.deg2rad(angle[:,i]),moment=moment[:,i],toe_off=toe_off[i],phase=phase)
+            bias[k,i] = coefficient[0]
+            stiffness[k,i] = coefficient[1]
+            Rsquares[k,i] = R2
+    for i,phase in enumerate(phase_list):
+        # calculate mean and std
+        mean_stiffness, std_stiffness = mean_std_over_subjects(stiffness[i,:],ax=0)
+        mean_R_square, std_R_square = mean_std_over_subjects(Rsquares[i,:],ax=0)
+        mean_bias, std_bias = mean_std_over_subjects(bias[i,:],ax=0)
+        # save data
+        stiffness_dictionary['{}_stiffness'.format(phase)] = stiffness[i,:]
+        R_square_dictionary['{}_R_square'.format(phase)] = Rsquares[i,:]
+        bias_dictionary['{}_bias'.format(phase)] = bias[i,:]
+        # mean
+        stiffness_dictionary['mean_{}_stiffness'.format(phase)] = mean_stiffness
+        R_square_dictionary['mean_{}_R_square'.format(phase)] = mean_R_square
+        bias_dictionary['mean_{}_bias'.format(phase)] = mean_bias
+        # std
+        stiffness_dictionary['std_{}_stiffness'.format(phase)] = std_stiffness
+        R_square_dictionary['std_{}_R_square'.format(phase)] = std_R_square
+        bias_dictionary['std_{}_bias'.format(phase)] = std_bias
+        # return dictionaries
+    return stiffness_dictionary, R_square_dictionary, bias_dictionary
+
+def mean_linear_phases(mean_angle,mean_moment,mean_toe_off,joint,joint_mean_bias,joint_mean_stiffness):
+    """
+    angle is in radian
+    the input stiffness is either N-m/rad.kg or N-m/rad
+    """
+    if joint == 'knee':
+        phase_list = ['knee_flexion','knee_extension']
+    elif joint == 'hip':
+        phase_list = ['hip_flexion','hip_extension']
+    else:
+        raise Exception('The input joint is not supported.')
+    linear_angle_dict = dict()
+    linear_moment_dict = dict()
+    fitted_line_dict = dict()
+    for phase in phase_list:
+        idx = joints_linear_phases_indices(mean_toe_off,phase)
+        angle = np.take(np.deg2rad(mean_angle),idx,axis=0)
+        moment = np.take(mean_moment,idx,axis=0)
+        stiffness = joint_mean_stiffness['mean_{}_stiffness'.format(phase)]
+        bias = joint_mean_bias['mean_{}_bias'.format(phase)]
+        predicted_moment = np.polynomial.polynomial.polyval(angle,np.array([bias,stiffness]))
+        # save to dictionary
+        linear_angle_dict['{}'.format(phase)] = angle[0,:]
+        linear_moment_dict['{}'.format(phase)] = moment[0,:]
+        fitted_line_dict['{}'.format(phase)] = predicted_moment[0,:]
+    return linear_angle_dict, linear_moment_dict, fitted_line_dict
+
+
+        
