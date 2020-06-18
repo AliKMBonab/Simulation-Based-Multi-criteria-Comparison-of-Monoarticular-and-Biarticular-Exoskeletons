@@ -2032,7 +2032,9 @@ def plot_pareto_comparison(plot_dic,loadcond,compare,labels=None,legend_loc=[0],
             ax.set_ylabel(ylabel)
         plt.tight_layout()
 
-def plot_paretofront_profile_changes(plot_dic,colormap,toeoff_color,include_colorbar=True,xlabel=False,ylabel=None,lw=1.75,*args,**kwargs):
+def plot_paretofront_profile_changes(plot_dic,colormap,toeoff_color,adjust_axes=False,
+                                     include_colorbar=True,xlabel=False,ylabel=None,
+                                     add_ideal_profile=False,add_joint_profile=True,lw=1.75,*args,**kwargs):
     joint_data = plot_dic['joint_data']
     data = plot_dic['data']
     indices = plot_dic['indices']
@@ -2043,7 +2045,15 @@ def plot_paretofront_profile_changes(plot_dic,colormap,toeoff_color,include_colo
     plt.xticks([0,20,40,60,80,100])
     plt.xlim([0,100])
     # plotting joint profile
-    plt.plot(gpc,joint_data, *args, lw=3,ls='--',color=joint_color,label='Joint', **kwargs)
+    if add_joint_profile == True:
+        plt.plot(gpc,joint_data, *args, lw=3,ls='--',color=joint_color,label='joint', **kwargs)
+    # plotting ideal device profile
+    if add_ideal_profile == True:
+        ideal_data = plot_dic['ideal_data']
+        ideal_color = plot_dic['ideal_color']
+        plt.plot(gpc,ideal_data, *args, lw=3,ls='--',color=ideal_color,label='ideal device',alpha=0.75, **kwargs)
+    # legend
+    plt.legend(loc='best',frameon=False)
     # toe-off and zero lines
     plt.axvline(avg_toeoff, lw=2, color=toeoff_color, zorder=0, alpha=0.5) #vertical line
     plt.axhline(0, lw=2, color='grey', zorder=0, alpha=0.75) # horizontal line
@@ -2060,9 +2070,12 @@ def plot_paretofront_profile_changes(plot_dic,colormap,toeoff_color,include_colo
     no_top_right(ax)
     divider = make_axes_locatable(ax)
     if include_colorbar == False:
-        cax = divider.append_axes("left", size="3%", pad=0.5)
+        cax = divider.append_axes("left", size="1%", pad=0.5)
         cax.axis('off')
     if include_colorbar == True:
+        if adjust_axes == True:
+            cax = divider.append_axes("left", size="1%", pad=0.5)
+            cax.axis('off')
         cax = divider.append_axes("right", size="3%", pad=0.5)
         cbar = plt.colorbar(sm,ticks=np.arange(1,len(indices)+1,1),cax=cax,aspect=80)
         label=[]
@@ -2074,6 +2087,7 @@ def plot_paretofront_profile_changes(plot_dic,colormap,toeoff_color,include_colo
             indices_str.append(label[i-1])
         cbar.set_ticklabels(indices_str)
         cbar.outline.set_visible(False)
+    
     #title
     ax.set_title(title)
     #beauty plot
@@ -2177,8 +2191,45 @@ def paretofront_barplot(plot_dic,indices,loadcond):
         indices_str.append(label[i-1])
     plt.xticks(index + bar_width / 2,indices_str )
 
-######################################################################
-# Plot and analyses related functions for muscles metabolic rate and stiffness
+def plot_regeneration_efficiency(plot_dic,ideal_color=None,line=True,errbar_on=True,label_on=True,*args, **kwargs):
+    x_values = plot_dic['x_values']
+    y_values = plot_dic['y_values']
+    xerr_values = plot_dic['x_values']
+    yerr_values = plot_dic['y_values']
+    legends = plot_dic['legends']
+    weights = plot_dic['weights']
+    if ideal_color == None:
+        colors = ['lightgray','darkgrey','dimgrey','black','steelblue']
+    else:
+        colors = ['lightgray','darkgrey','dimgrey','black']
+        colors.insert(0,ideal_color)
+    markers = ['o','v','P','X','*']
+    c=0
+    for i in range(x_values.shape[1]):
+        # paretofront weights
+        weight = [item-1 for item in weights[:,i]]
+        # generating all names
+        all_weights_name = []
+        for k in ['A','B','C','D','E']:
+            for j in ['a','b','c','d','e']:
+                all_weights_name.append('{}{}'.format(k,j))
+        # selecting names related to paretofront weights
+        selected_weights_name = []
+        for k,name in enumerate(all_weights_name):
+            if k in weight:
+                selected_weights_name.append(name)
+        selected_weights_name = selected_weights_name[::-1]
+        # main plot
+        plt.scatter(x_values[:,i],y_values[:,i],marker=markers[i],color=colors[i],label=legends[i],*args, **kwargs)
+        if errbar_on == False:
+            plt.errorbar(x_values[:,i],y_values[:,i],xerr=xerr_values[:,i],yerr=xerr_values[:,i],fmt=markers[i],ecolor=colors[i],alpha=0.15)
+        if label_on == False and i == 0:
+            label_datapoints(x_values[:,i],y_values[:,i],all_weights_name,*args, **kwargs)
+        if line == True:
+            plt.plot(x_values[~np.isnan(x_values[:,i]),i],y_values[~np.isnan(y_values[:,i]),i],ls='-',lw=1,color=colors[i])
+            
+#################################################################################################
+# Plot and analyses related functions for muscles metabolic rate, stiffness, and reaction forces
 
 def muscles_whisker_bar_plot(data_1,data_2,data_3=None,data_4=None,
                              which_muscles='all',which_plot='whisker',
@@ -2455,7 +2506,7 @@ def pareto_muscles_metabolic_reduction(dataset,unassist_dataset):
     for i in range(simulation_num):
         c = np.arange(i,(subject_num*trial_num*simulation_num)-(simulation_num-i)+1,simulation_num)
         selected_group = dataset[c,:]
-        muscle_group_reduction_percent = np.true_divide((np.subtract(unassist_dataset,selected_group))*100,unassist_dataset)
+        muscle_group_reduction_percent = np.true_divide((unassist_dataset-selected_group)*100,unassist_dataset)
         mean_muscle_group_reduction[i,:] = np.nanmean(muscle_group_reduction_percent,axis=0)
         std_muscle_group_reduction[i,:] = np.nanstd(muscle_group_reduction_percent,axis=0)
     return mean_muscle_group_reduction,std_muscle_group_reduction
@@ -2532,9 +2583,8 @@ def paretofront_plot_muscles_metabolics(plot_dic,nrows=6,ncols=7,which_muscles='
             ax.set_ylabel('metabolic rate\nreduction (%)')
         if i in legend_loc:
             ax.legend(loc='best',frameon=False)      
-######################################################################
-# Plot and analyses related functions for reaction forces
-def clasify_data(data,loadcondition,forces_name=['Mx','My','Mz']):
+
+def clasify_data(data,loadcondition,pareto=False,device=None,forces_name=['Mx','My','Mz']):
     """
     The data extraction was defined based on iteration of joint, subject, trial, and force.
     To classify data to each joint and force components, this function has been defined.
@@ -2570,7 +2620,73 @@ def clasify_data(data,loadcondition,forces_name=['Mx','My','Mz']):
         output_dataset_dic['{}_joint_{}'.format(j,forces_name[0])] = force_1
         output_dataset_dic['{}_joint_{}'.format(j,forces_name[1])] = force_2
         output_dataset_dic['{}_joint_{}'.format(j,forces_name[2])] = force_3
+    # handling paretofront dataset
+    if pareto == True:
+        if device.lower() == 'biarticular' and loadcondition == 'loaded':
+            # biarticular/loaded
+            hip_weight = [30,30,30,30,30,40,40,50,50,50,60,70]
+            knee_weight = [30,40,50,60,70,60,70,50,60,70,70,70]
+        elif device.lower() == 'biarticular' and loadcondition == 'noload':
+            # biarticular/noload
+            hip_weight = [30,30,30,30,30,40,40,40,50,50,50,70]
+            knee_weight = [30,40,50,60,70,40,50,60,50,60,70,70]
+        elif device.lower() == 'monoarticular' and loadcondition == 'loaded':
+            # monoarticular/loaded
+            hip_weight = [30,40,50,60,70,70,70,70,70]
+            knee_weight = [30,30,30,30,30,40,50,60,70]  
+        elif device.lower() == 'monoarticular' and loadcondition == 'noload':  
+            # monoarticular/noload
+            hip_weight = [30,40,50,50,50,60,60,60,70,70]
+            knee_weight = [30,30,30,40,50,50,60,70,60,70]
+        # sorting dataset
+        simulation_num = len(hip_weight)
+        output_dataset_dic = {}
+        c = 0
+        for j in joints_name:
+            force_1 = np.zeros((data.shape[0],subject_num*trial_num*simulation_num))
+            force_2 = np.zeros((data.shape[0],subject_num*trial_num*simulation_num))
+            force_3 = np.zeros((data.shape[0],subject_num*trial_num*simulation_num))
+            for i in range(subject_num*trial_num*simulation_num):
+                force_1[:,i] = data[:,c]
+                force_2[:,i] = data[:,c+1]
+                force_3[:,i] = data[:,c+2]
+                c+=3 # number of force componenet
+            output_dataset_dic['{}_joint_{}'.format(j,forces_name[0])] = force_1
+            output_dataset_dic['{}_joint_{}'.format(j,forces_name[1])] = force_2
+            output_dataset_dic['{}_joint_{}'.format(j,forces_name[2])] = force_3
+    # out force set  
     return output_dataset_dic
             
+def muscles_metabolics_contribution(muscles_metabolics_loaded,total_metabolics_loaded,
+                                    muscles_metabolics_noload,total_metabolics_noload,
+                                    xticks=[0,2,4,6,8]):
+    # calculate the percentage
+    muscles_contribution_loaded = np.zeros((muscles_metabolics_loaded.shape[0],muscles_metabolics_loaded.shape[1]))
+    muscles_contribution_noload = np.zeros((muscles_metabolics_noload.shape[0],muscles_metabolics_noload.shape[1]))
+    for i in range(muscles_metabolics_loaded.shape[1]):
+        muscles_contribution_loaded[:,i] = np.true_divide(muscles_metabolics_loaded[:,i],total_metabolics_loaded)*100
+        muscles_contribution_noload[:,i] = np.true_divide(muscles_metabolics_noload[:,i],total_metabolics_noload)*100
+    # mean and std of muscles' percentage
+    mean_muscles_contribution_loaded = np.nanmean(muscles_contribution_loaded,axis=0)
+    std_muscles_contribution_loaded = np.nanstd(muscles_contribution_loaded,axis=0)
+    mean_muscles_contribution_noload = np.nanmean(muscles_contribution_noload,axis=0)
+    std_muscles_contribution_noload = np.nanstd(muscles_contribution_noload,axis=0)
+    # plot these contributions
+    from Muscles_Group import muscle_group_name
+    width = 0.80
+    muscles_number = np.arange(1,2*(mean_muscles_contribution_loaded.shape[0])+1,2)
+    plt.barh(muscles_number-width/2,mean_muscles_contribution_loaded,height=width,xerr=std_muscles_contribution_loaded,
+            ecolor='silver',capsize=2,color='dimgray',label='loaded',edgecolor='k',lw=1)
+    plt.barh(muscles_number+width/2,mean_muscles_contribution_noload,height=width,xerr=std_muscles_contribution_noload,
+            ecolor='mediumaquamarine',capsize=2,color='green',label='noload',edgecolor='k',lw=1)
+    plt.yticks(muscles_number,muscle_group_name['all_muscles'])
+    plt.xticks(xticks)
+    plt.xlim([min(xticks),max(xticks)])
+    plt.ylim([muscles_number[0]-1,muscles_number[-1]+1])
+    plt.grid(b=True,axis='x',which='major',ls='--',alpha=0.5)
+    plt.grid(b=True,axis='x',which='minor',ls='--',alpha=0.25)
+    ax = plt.gca()
+    no_top_right(ax)
 
-    
+def joints_quassi_stiffness(data,joint):
+    pass
