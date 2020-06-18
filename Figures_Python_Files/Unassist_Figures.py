@@ -90,27 +90,6 @@ loaded_kneejoint_kinematics = utils.normalize_direction_data(jointkinematics_dat
 noload_kneejoint_kinematics = utils.normalize_direction_data(jointkinematics_dataset['noload_kneejoint_kinematics'],gl_noload,normalize=False,direction=False)
 mean_loaded_kneejoint_kinematics,std_loaded_kneejoint_kinematics = utils.mean_std_over_subjects(loaded_kneejoint_kinematics)
 mean_noload_kneejoint_kinematics,std_noload_kneejoint_kinematics = utils.mean_std_over_subjects(noload_kneejoint_kinematics)
-#############################################################################################
-# Stiffness analysis
-# hip joint stiffness
-hip_loaded_stiffness_dict, hip_loaded_Rsquare_dict, hip_loaded_bias_dict = utils.calculate_quasi_stiffness(angle=loaded_hipjoint_kinematics,moment=loaded_hipmuscles_moment,toe_off=subjects_loaded_toe_off,joint='hip')
-hip_noload_stiffness_dict, hip_noload_Rsquare_dict, hip_noload_bias_dict = utils.calculate_quasi_stiffness(angle=noload_hipjoint_kinematics,moment=noload_hipmuscles_moment,toe_off=subjects_noload_toe_off,joint='hip')
-# knee joint stiffness
-knee_loaded_stiffness_dict, knee_loaded_Rsquare_dict, knee_loaded_bias_dict = utils.calculate_quasi_stiffness(angle=loaded_kneejoint_kinematics,moment=loaded_kneemuscles_moment,toe_off=subjects_loaded_toe_off,joint='knee')
-knee_noload_stiffness_dict, knee_noload_Rsquare_dict, knee_noload_bias_dict = utils.calculate_quasi_stiffness(angle=noload_kneejoint_kinematics,moment=noload_kneemuscles_moment,toe_off=subjects_noload_toe_off,joint='knee')
-# dataset for plotting the 
-# hip joint
-hip_loaded_linear_angle_dict,hip_loaded_linear_moment_dict,hip_loaded_fitted_line = utils.mean_linear_phases(mean_loaded_hipjoint_kinematics,mean_loaded_hipmuscles_moment,\
-                                                                                    loaded_mean_toe_off,'hip',hip_loaded_bias_dict,hip_loaded_stiffness_dict)
-hip_noload_linear_angle_dict,hip_noload_linear_moment_dict,hip_noload_fitted_line = utils.mean_linear_phases(mean_noload_hipjoint_kinematics,mean_noload_hipmuscles_moment,\
-                                                                                    noload_mean_toe_off,'hip',hip_noload_bias_dict,hip_noload_stiffness_dict)
-# knee joint
-knee_loaded_linear_angle_dict,knee_loaded_linear_moment_dict,knee_loaded_fitted_line = utils.mean_linear_phases(mean_loaded_kneejoint_kinematics,mean_loaded_kneemuscles_moment,\
-                                                                                    loaded_mean_toe_off,'knee',knee_loaded_bias_dict,knee_loaded_stiffness_dict)
-knee_noload_linear_angle_dict,knee_noload_linear_moment_dict,knee_noload_fitted_line = utils.mean_linear_phases(mean_noload_kneejoint_kinematics,mean_noload_kneemuscles_moment,\
-                                                                                    noload_mean_toe_off,'knee',knee_noload_bias_dict,knee_noload_stiffness_dict)
-# save dataset
-
 #####################################################################################
 # Write final data to csv file.
 # TODO: optimize data saving method.
@@ -143,11 +122,10 @@ Data =[mean_loaded_hipmuscles_moment,std_loaded_hipmuscles_moment,mean_noload_hi
        mean_loaded_kneemuscles_moment,std_loaded_kneemuscles_moment,mean_noload_kneemuscles_moment,std_noload_kneemuscles_moment]
 # List of numpy vectors to a numpy ndarray and save to csv file
 Data = utils.vec2mat(Data,matrix_cols=9,num_matrix=4)
-with open(r'.\Data\Unassist\unassist_stiffness_data.csv', 'wb') as f:
+with open(r'.\Data\Unassist\unassist_unnormalized_moment_data.csv', 'wb') as f:
   f.write(bytes(utils.listToString(Headers)+'\n','UTF-8'))
   np.savetxt(f, Data, fmt='%s', delimiter=",")
 #####################################################################################
-
 # Plots
 # hip joint moment plot dictionaries
 hip_moment_loaded_plot_dic = {'pgc':gait_cycle,'avg':utils.smooth(mean_norm_loaded_hipmuscles_moment,3),'label':'Loaded',
@@ -166,7 +144,6 @@ muscles_activation_noload_plot_dic = {'pgc':gait_cycle,'avg':mean_norm_noload_mu
                                       'label':'noload','std':std_norm_noload_muscles_activation,'avg_toeoff':noload_mean_toe_off}
 
 #*****************************
-'''
 # hip joint moment figure
 fig, ax = plt.subplots(num='Hip Muscles Moment',figsize=(6.4, 4.8))
 utils.plot_shaded_avg(plot_dic=hip_moment_loaded_plot_dic,color='k')
@@ -240,63 +217,3 @@ plt.title('Muscles contributions in different load condition')
 fig.tight_layout(h_pad=-1, w_pad=-1.5)
 fig.savefig('./Figures/Unassist/MusclesMetabolic_Contribution.pdf',orientation='landscape',bbox_inches='tight')
 plt.show()
-'''
-#*****************************
-# joints stiffness
-ax,fig = plt.subplots(nrows=2,ncols=4)
-ax[0,1].boxplot()
-# hip joint stiffness
-fig = plt.figure(num='Hip Joint Stiffness',figsize=(12, 10))
-gridsize = (3, 2)
-ax1 = plt.subplot2grid(gridsize, (0, 0), colspan=2, rowspan=2) # stiffness plot
-ax2 = plt.subplot2grid(gridsize, (2, 0)) # kinematics plot
-ax3 = plt.subplot2grid(gridsize, (2, 1)) # moment plot
-# hip loaded case
-hip_stiffness_plot_dic = {'loaded_toe_off':loaded_mean_toe_off,'noload_toe_off':noload_mean_toe_off,'kinematics':utils.smooth(np.deg2rad(rra_dataset['mean_loaded_hipjoint_kinematics']),5),
-                          'kinematics_std':utils.smooth(np.deg2rad(rra_dataset['std_loaded_hipjoint_kinematics']),5),'moment':utils.smooth(mean_loaded_hipmuscles_moment,5),
-                          'moment_std':utils.smooth(std_loaded_hipmuscles_moment,5),'color':'k','toe_off_color':'grey','label':'hip joint',
-                          'phases_kinematics':hip_loaded_linear_angle_dict,'phases_moment':hip_loaded_linear_moment_dict,'phases_fitted_line':hip_loaded_fitted_line}
-utils.plot_stiffness(plot_dic = hip_stiffness_plot_dic, load_condition='loaded',\
-                     kinematics_ticks=[-0.5,0,0.5,1],moment_ticks=[-80,-40,0,40,80,120],
-                     ax1=ax1,ax2=ax2,ax3=ax3,joint='hip',plot_phases=True,plot_fitted_line=True)
-# hip noload case
-hip_stiffness_plot_dic = {'loaded_toe_off':loaded_mean_toe_off,'noload_toe_off':noload_mean_toe_off,'kinematics':utils.smooth(np.deg2rad(rra_dataset['mean_noload_hipjoint_kinematics']),5),
-                          'kinematics_std':utils.smooth(np.deg2rad(rra_dataset['std_noload_hipjoint_kinematics']),5),'moment':utils.smooth(mean_noload_hipmuscles_moment,5),
-                          'moment_std':utils.smooth(std_noload_hipmuscles_moment,5),'color':'xkcd:irish green','toe_off_color':'xkcd:shamrock green','label':'hip joint',
-                          'phases_kinematics':hip_noload_linear_angle_dict,'phases_moment':hip_noload_linear_moment_dict,'phases_fitted_line':hip_noload_fitted_line}
-utils.plot_stiffness(plot_dic = hip_stiffness_plot_dic, load_condition='noload',
-                     kinematics_ticks=[-0.5,0,0.5,1],moment_ticks=[-80,-40,0,40,80,120],
-                     ax1=ax1,ax2=ax2,ax3=ax3,joint='hip',plot_phases=True,plot_fitted_line=True)
-fig.tight_layout(h_pad=-1, w_pad=-1.5)
-fig.subplots_adjust(top=0.98, bottom=0.075, left=0.100, right=0.975,hspace=0.45,wspace=0.15)
-plt.show()
-fig.savefig('./Figures/Unassist/HipJointStiffness.pdf',orientation='landscape',bbox_inches='tight')
-
-#*****************************
-# knee joint stiffness
-fig = plt.figure(num='Knee Joint Stiffness',figsize=(12, 10))
-gridsize = (3, 2)
-ax1 = plt.subplot2grid(gridsize, (0, 0), colspan=2, rowspan=2) # stiffness plot
-ax2 = plt.subplot2grid(gridsize, (2, 0)) # kinematics plot
-ax3 = plt.subplot2grid(gridsize, (2, 1)) # moment plot
-# knee loaded case
-knee_stiffness_plot_dic = {'loaded_toe_off':loaded_mean_toe_off,'noload_toe_off':noload_mean_toe_off,'kinematics':utils.smooth(np.deg2rad(rra_dataset['mean_loaded_kneejoint_kinematics']),5),
-                          'kinematics_std':utils.smooth(np.deg2rad(rra_dataset['std_loaded_kneejoint_kinematics']),5),'moment':utils.smooth(mean_loaded_kneemuscles_moment,5),
-                          'moment_std':utils.smooth(std_loaded_kneemuscles_moment,5),'color':'k','toe_off_color':'grey','label':'hip joint',
-                          'phases_kinematics':knee_loaded_linear_angle_dict,'phases_moment':knee_loaded_linear_moment_dict,'phases_fitted_line':knee_loaded_fitted_line}
-utils.plot_stiffness(plot_dic = knee_stiffness_plot_dic, load_condition='loaded',\
-                     kinematics_ticks=[0,10,20,30,40,50,60,70,80],moment_ticks=[-1,-0.5,0,0.5,1,1.5,2],
-                     ax1=ax1,ax2=ax2,ax3=ax3,joint='knee',plot_phases=True,plot_fitted_line=True)
-# knee noload case
-knee_stiffness_plot_dic = {'loaded_toe_off':loaded_mean_toe_off,'noload_toe_off':noload_mean_toe_off,'kinematics':utils.smooth(np.deg2rad(rra_dataset['mean_noload_kneejoint_kinematics']),5),
-                          'kinematics_std':utils.smooth(np.deg2rad(rra_dataset['std_noload_kneejoint_kinematics']),5),'moment':utils.smooth(mean_noload_kneemuscles_moment,5),
-                          'moment_std':utils.smooth(std_noload_kneemuscles_moment,5),'color':'xkcd:irish green','toe_off_color':'xkcd:shamrock green','label':'hip joint',
-                          'phases_kinematics':knee_noload_linear_angle_dict,'phases_moment':knee_noload_linear_moment_dict,'phases_fitted_line':knee_noload_fitted_line}
-utils.plot_stiffness(plot_dic = knee_stiffness_plot_dic, load_condition='noload',
-                     kinematics_ticks=[0,0.5,1,1.5],moment_ticks=[-60,-30,0,30,60,90],
-                     ax1=ax1,ax2=ax2,ax3=ax3,joint='knee',plot_phases=True,plot_fitted_line=True)
-fig.tight_layout(h_pad=-1, w_pad=-1.5)
-fig.subplots_adjust(top=0.98, bottom=0.075, left=0.100, right=0.975,hspace=0.45,wspace=0.15)
-plt.show()
-fig.savefig('./Figures/Unassist/KneeJointStiffness.pdf',orientation='landscape',bbox_inches='tight')
-
