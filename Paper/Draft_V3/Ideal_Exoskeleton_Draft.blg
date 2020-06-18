@@ -2,7 +2,7 @@ This is BibTeX, Version 0.99d (MiKTeX 2.9.7380 64-bit)
 Capacity: max_strings=200000, hash_size=200000, hash_prime=170003
 The top-level auxiliary file: Ideal_Exoskeleton_Draft.aux
 The style file: plos2015.bst
-Illegal, another \bibstyle command---line 342 of file Ideal_Exoskeleton_Draft.aux
+Illegal, another \bibstyle command---line 299 of file Ideal_Exoskeleton_Draft.aux
  : \bibstyle
  :          {plos2015.bst}
 I'm skipping whatever remains of this command
@@ -41,7 +41,6 @@ You're missing a field name---line 1228 of file Bibliography.bib
 I'm skipping whatever remains of this entry
 Warning--entry type for "spss" isn't style-file defined
 --line 2033 of file Bibliography.bib
-Warning--I didn't find a database entry for ""
 Reallocating 'glb_str_end' (item size: 4) to 20 items.
 Reallocating 'glb_str_ptr' (item size: 4) to 20 items.
 Reallocating 'global_strs' (item size: 1) to 4000000 items.
