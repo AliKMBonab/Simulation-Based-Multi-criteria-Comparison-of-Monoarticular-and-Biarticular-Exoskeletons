@@ -71,12 +71,13 @@ middle =['hipactuator','kneeactuator','hipactuator','kneeactuator',\
          'hipactuator','kneeactuator','hipactuator','kneeactuator',\
          'hipactuator','kneeactuator','metabolics','ninemuscles',\
          'hip','knee','processed_hipactuator','processed_kneeactuator',\
-         'processed_hipactuator','processed_kneeactuator','processed_metabolics','hip','knee','muscles']
+         'processed_hipactuator','processed_kneeactuator','processed_metabolics',\
+         'hip','knee','muscles','hip','knee']
 suffixes = ['torque','torque','power','power','speed','speed',\
             'energy','energy','regenrative_energy','regenrative_energy',\
             'energy','activation','musclesmoment','musclesmoment',\
             'energy','energy','regenrative_energy','regenrative_energy',\
-            'energy','musclespower','musclespower','metabolic_rate']
+            'energy','musclespower','musclespower','metabolic_rate','kinematics','kinematics']
 #***************************
 print('Section 03:\t extracting Ideal exoskeletons related files: Actuators Data, Muscles Activation, Muscles Moment, Metabolic Energy.\n')
 #***************************

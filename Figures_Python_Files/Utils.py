@@ -342,14 +342,16 @@ def outliers_iqr(ys):
     idx = np.where((ys > upper_bound) | (ys < lower_bound),True,False)
     return idx
 
-def actuators_energy_contribution(hip_actuator,knee_actuator):
-        hip_contribution = np.true_divide(hip_actuator*100,(hip_actuator+knee_actuator))
-        knee_contribution = np.true_divide(knee_actuator*100,(hip_actuator+knee_actuator))
+def actuators_energy_contribution(hip_actuator,knee_actuator,normalization_data=None):
+        if normalization_data is None:
+            normalization_data = hip_actuator + knee_actuator
+        hip_contribution = np.true_divide(hip_actuator*100,(normalization_data))
+        knee_contribution = np.true_divide(knee_actuator*100,(normalization_data))
         mean_hip_contribution = np.nanmean(hip_contribution)
         mean_knee_contribution = np.nanmean(knee_contribution)
         std_hip_contribution = np.nanstd(hip_contribution)
         std_knee_contribution = np.nanstd(knee_contribution)
-        return mean_hip_contribution, std_hip_contribution, mean_knee_contribution, std_knee_contribution
+        return mean_hip_contribution, std_hip_contribution, mean_knee_contribution, std_knee_contribution, hip_contribution, knee_contribution
     
 ######################################################################
 # Mass and inertia effect functions
@@ -2424,7 +2426,7 @@ def muscles_whisker_bar_plot(data_1,data_2,data_3=None,data_4=None,
             plt.tight_layout()
 
 def plot_stiffness(plot_dic,load_condition,kinematics_ticks,moment_ticks,
-                   ax1,ax2,ax3,joint=None,plot_phases=True,plot_fitted_line=True):
+                   ax1,ax2,ax3,joint=None,plot_phases=False,plot_fitted_line=False):
     """
     This function has been developed to simultaneously plot moment, kinematics, and stiffness\n
 
