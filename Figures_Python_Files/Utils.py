@@ -2486,7 +2486,7 @@ def plot_stiffness(plot_dic,load_condition,kinematics_ticks,moment_ticks,
             ax1.plot(phase_k,phase_m,marker=markers[i],c=phase_colors[i],markersize=8,linestyle='None',alpha=0.75)
             if plot_fitted_line == True:
                 ax1.plot(phases_kinematics['{}'.format(phase)],phase_fitted_lines['{}'.format(phase)],label=phase_name[i],lw=2.5,color=phase_colors[i])
-            
+           
     no_top_right(ax1)
     ax1.set_xticks(kinematics_ticks)
     ax1.set_yticks(moment_ticks)
@@ -2828,11 +2828,12 @@ def calculate_quasi_stiffness(angle,moment,toe_off,joint,modify_toe_off = False)
             Rsquares[k,i] = R2
     for i,phase in enumerate(phase_list):
         # calculate mean and std
-        mean_stiffness, std_stiffness = mean_std_over_subjects(stiffness[i,:],ax=0)
+        mean_stiffness, std_stiffness = mean_std_over_subjects(np.abs(stiffness[i,:]),ax=0)
         mean_R_square, std_R_square = mean_std_over_subjects(Rsquares[i,:],ax=0)
         mean_bias, std_bias = mean_std_over_subjects(bias[i,:],ax=0)
         # save data
-        stiffness_dictionary['{}_stiffness'.format(phase)] = stiffness[i,:]
+        stiffness_dictionary['{}_stiffness'.format(phase)] = np.abs(stiffness[i,:])
+        stiffness_dictionary['{}_stiffness_raw'.format(phase)] = stiffness[i,:]
         R_square_dictionary['{}_R_square'.format(phase)] = Rsquares[i,:]
         bias_dictionary['{}_bias'.format(phase)] = bias[i,:]
         # mean
@@ -2864,14 +2865,206 @@ def mean_linear_phases(mean_angle,mean_moment,mean_toe_off,joint,joint_mean_bias
         idx = joints_linear_phases_indices(mean_toe_off,phase)
         angle = np.take(np.deg2rad(mean_angle),idx,axis=0)
         moment = np.take(mean_moment,idx,axis=0)
-        stiffness = joint_mean_stiffness['mean_{}_stiffness'.format(phase)]
+        stiffness = joint_mean_stiffness['{}_stiffness_raw'.format(phase)]
         bias = joint_mean_bias['mean_{}_bias'.format(phase)]
-        predicted_moment = np.polynomial.polynomial.polyval(angle,np.array([bias,stiffness]))
+        mean_stiffness = np.nanmean(stiffness,axis=0)
+        predicted_moment = np.polynomial.polynomial.polyval(angle,np.array([bias,mean_stiffness]))
         # save to dictionary
         linear_angle_dict['{}'.format(phase)] = angle[0,:]
         linear_moment_dict['{}'.format(phase)] = moment[0,:]
         fitted_line_dict['{}'.format(phase)] = predicted_moment[0,:]
     return linear_angle_dict, linear_moment_dict, fitted_line_dict
 
+def recover_unassist_linear_phases(mean_angle,mean_moment,mean_toe_off,stiffness_csv_dataset,bias_csv_dataset,joint,load):
+    linear_angle_dict = dict()
+    linear_moment_dict = dict()
+    fitted_line_dict = dict()
+    for phase in ['extension','flexion']:
+        # indices, moment, and angle
+        idx = joints_linear_phases_indices(mean_toe_off,'{}_{}'.format(joint,phase))
+        angle = np.take(np.deg2rad(mean_angle),idx,axis=0)
+        moment = np.take(mean_moment,idx,axis=0)
+        # stiffness and bias
+        joint_stiffness = stiffness_csv_dataset['{}_{}_{}_stiffness_raw'.format(load,joint,phase)]
+        joint_bias = bias_csv_dataset['{}_{}_{}_bias'.format(load,joint,phase)]
+        mean_joint_stiffness = np.nanmean(joint_stiffness)
+        mean_joint_bias = np.nanmean(joint_bias)
+        # predicted moment
+        predicted_moment = np.polynomial.polynomial.polyval(angle,np.array([mean_joint_bias,mean_joint_stiffness]))
+        # save to dictionary
+        linear_angle_dict['{}_{}'.format(joint,phase)] = angle[0,:]
+        linear_moment_dict['{}_{}'.format(joint,phase)] = moment[0,:]
+        fitted_line_dict['{}_{}'.format(joint,phase)] = predicted_moment[0,:]
+    return linear_angle_dict, linear_moment_dict, fitted_line_dict
 
-        
+def plot_joint_exo_muscles_stiffness(nrows,ncols,plot_dic,color_dic,joint,
+                                ylabel,nplots=None,legend_loc=[0,4],joint_alpha=0.45,device_alpha=0.95,
+                                subplot_legend=False,fig=None,thirdplot=True,
+                                moment_ticks = [-2,-1,0,1,2],kinematics_ticks =[-2,-1,0,1,2],
+                                plot_phases=True,joint_phases=False,plot_fitted_line=True,
+                                remove_subplot_loc=None,xlabel_loc=None,ylabel_loc=None):
+    '''Note: please note that since it is in the for loop, if some data is
+    needed to plot several times it should be repeated in the lists.  '''
+    if nplots is None:
+        nplots = ncols*nrows
+    # reading data
+    # first set
+    kinematic_1_list = plot_dic['kinematic_1_list']
+    moment_1_list = plot_dic['moment_1_list']
+    color_1_list = color_dic['color_1_list']
+    label_1 = plot_dic['label_1']
+    # second set
+    kinematic_2_list = plot_dic['kinematic_2_list']
+    moment_2_list = plot_dic['moment_2_list']
+    color_2_list = color_dic['color_2_list']
+    label_2 = plot_dic['label_2']
+    # linear phases data
+    if plot_phases == True:
+        linear_kinematics_1_list = plot_dic['linear_kinematics_1_list']
+        linear_moment_1_list = plot_dic['linear_moment_1_list']
+        linear_kinematics_2_list = plot_dic['linear_kinematics_2_list']
+        linear_moment_2_list = plot_dic['linear_moment_2_list']
+        if thirdplot == True:
+            linear_kinematics_3_list = plot_dic['linear_kinematics_3_list']
+            linear_moment_3_list = plot_dic['linear_moment_3_list']
+        if plot_fitted_line == True:
+            fitted_line_1_list = plot_dic['fitted_line_1_list']
+            fitted_line_2_list = plot_dic['fitted_line_2_list']
+            if thirdplot == True:
+                fitted_line_3_list = plot_dic['fitted_line_3_list']            
+    # titles
+    plot_titles = plot_dic['plot_titles']
+    # third set
+    if thirdplot == True:
+        color_3_list = color_dic['color_3_list']
+        kinematic_3_list = plot_dic['kinematic_3_list']
+        moment_3_list = plot_dic['moment_3_list']
+        label_3 = plot_dic['label_3']
+    #plot
+    for i in range(nplots):
+        ax = plt.subplot(nrows,ncols,i+1)
+        # joint moment-angle
+        ax.plot(np.deg2rad(kinematic_1_list[i]),moment_1_list[i],lw=2,color=color_1_list[i],label=label_1,alpha=joint_alpha)
+        # device/muscle moment-angle
+        ax.plot(np.deg2rad(kinematic_2_list[i]),moment_2_list[i],lw=2,color=color_2_list[i],label=label_2[i],alpha=device_alpha)
+        if thirdplot == True:
+            # device/muscle moment-angle
+            ax.plot(np.deg2rad(kinematic_3_list[i]),moment_3_list[i],lw=2,color=color_3_list[i],label=label_3,alpha=device_alpha)
+        # zero lines
+        ax.hlines(0,np.min(kinematics_ticks),np.max(kinematics_ticks),ls=':',color=mycolors['teal'],lw=1.5,alpha=0.5)
+        ax.vlines(0,np.min(moment_ticks),np.max(moment_ticks),ls=':',color=mycolors['teal'],lw=1.5,alpha=0.5)
+        # plot linear phases and stiffness line
+        if plot_phases == True:
+            if joint == 'hip':
+                phase_list = ['hip_extension','hip_flexion']
+                phase_name = ['hip extension','hip flexion']
+            elif joint == 'knee':
+                phase_list = ['knee_extension','knee_flexion']
+                phase_name = ['knee extension','knee flexion']
+            markers = ['o','P']
+            phase_colors_1 = ['darkgrey','silver']
+            phase_colors_2 = ['tan','burlywood']
+            # phases plots
+            for j,phase in enumerate(phase_list):
+            # joint moment-angle linear phase
+                if joint_phases == True:
+                    idx_1 = np.arange(0,int(linear_kinematics_1_list[i][phase].shape[0]),int(np.round(linear_kinematics_1_list[i][phase].shape[0]/5)))
+                    phase_k_1 = np.take(linear_kinematics_1_list[i][phase],idx_1)
+                    phase_m_1 = np.take(linear_moment_1_list[i][phase],idx_1)
+                ax.plot(phase_k_1,phase_m_1,marker=markers[j],c=phase_colors_1[j],markersize=6,linestyle='None',alpha=0.65)
+                if plot_fitted_line == True:
+                    ax.plot(linear_kinematics_1_list[i][phase],fitted_line_1_list[i][phase],lw=2,color=phase_colors_1[j],alpha=0.65)
+                # device/muscles moment-angle linear phase
+                if joint_phases == True:
+                    idx_2 = np.arange(0,int(linear_kinematics_2_list[i][phase].shape[0]),int(np.round(linear_kinematics_2_list[i][phase].shape[0]/5)))
+                    phase_k_2 = np.take(linear_kinematics_2_list[i][phase],idx_2)
+                    phase_m_2 = np.take(linear_moment_2_list[i][phase],idx_2)              
+                    ax.plot(phase_k_2,phase_m_2,marker=markers[j],c=phase_colors_2[j],label=phase_name[j],markersize=6,linestyle='None',alpha=0.80)
+                if plot_fitted_line == True:
+                    ax.plot(linear_kinematics_2_list[i][phase],fitted_line_2_list[i][phase],lw=2,color=phase_colors_2[j])
+                # third plot moment-angle linear phase
+                if thirdplot == True:
+                    if joint_phases == True:
+                        idx_3 = np.arange(0,int(linear_kinematics_3_list[i][phase].shape[0]),int(np.round(linear_kinematics_3_list[i][phase].shape[0]/5)))
+                        phase_k_3 = np.take(linear_kinematics_3_list[i][phase],idx_3)
+                        phase_m_3 = np.take(linear_moment_3_list[i][phase],idx_3)
+                        ax.plot(phase_k_3,phase_m_3,marker=markers[j],c=phase_colors_1[j],markersize=6,linestyle='None',alpha=0.75)
+                    if plot_fitted_line == True:
+                        ax.plot(linear_kinematics_3_list[i][phase],fitted_line_3_list[i][phase],lw=2,color=phase_colors_1[j])
+    # set ticks
+        if joint == 'knee':
+            if i in [0,1,2,3]:
+                ax.set_yticks([-2,-1.5,-1,-0.5,0,0.5,1])
+                ax.set_ylim([min([-2,-1.5,-1,-0.5,0,0.5,1]),max([-2,-1.5,-1,-0.5,0,0.5,1])])
+            elif i in [4,5,6,7]:
+                ax.set_yticks([-1,-0.5,0,0.5,1,1.5])
+                ax.set_ylim([min([-1,-0.5,0,0.5,1,1.5]),max([-1,-0.5,0,0.5,1,1.5])])
+        else:
+            ax.set_yticks(moment_ticks)
+            ax.set_ylim([min(moment_ticks),max(moment_ticks)])
+        ax.set_xticks(kinematics_ticks)
+        ax.set_xlim([min(kinematics_ticks),max(kinematics_ticks)])
+        ax.set_title(plot_titles[i])
+        plt.tick_params(axis='both',direction='in')
+        no_top_right(ax)
+        # subplot removing, locating x and y labels, ect.
+        if subplot_legend == True and i == nplots-1:
+            ax_list = fig.axes
+            ax_last = plt.subplot(nrows,ncols,nrows*ncols)
+            ax_last.spines["right"].set_visible(False)
+            ax_last.spines["top"].set_visible(False)
+            ax_last.spines["bottom"].set_visible(False)
+            ax_last.spines["left"].set_visible(False)
+            ax_last.set_xticks([], [])
+            ax_last.set_yticks([], []) 
+            pos = ax_last.get_position()
+            handle1,label1 = ax_list[legend_loc[0]].get_legend_handles_labels()
+            handle2,label2 = ax_list[legend_loc[1]].get_legend_handles_labels()
+            plt.figlegend(handles=handle1,labels=label1, bbox_to_anchor=(pos.x0+0.05, pos.y0-0.05,  pos.width / 1.5, pos.height / 1.5))
+            plt.figlegend(handles=handle2,labels=label2, bbox_to_anchor=(pos.x0+0.05, pos.y0+0.05,  pos.width / 1.5, pos.height / 1.5))
+        elif i in legend_loc and subplot_legend == False:
+            plt.legend(loc='best',frameon=False)
+        if xlabel_loc != None:
+            if i in xlabel_loc:
+                ax.set_xlabel('kinematics (rad)')
+        else:
+            if ncols==2 and i in [2,3]:
+                ax.set_xlabel('kinematics (rad)')
+            elif ncols==3 and i in [7,6]:
+                ax.set_xlabel('kinematics (rad)')
+            elif ncols==4 and i in [4,5,6,7]:
+                ax.set_xlabel('kinematics (rad)')
+        if ylabel_loc != None:
+            if i in ylabel_loc:
+                ax.set_ylabel(ylabel)
+        else:
+            if ncols==2 and i in [0,2]:
+                ax.set_ylabel(ylabel)
+            elif ncols==3 and i in [0,3,6]:
+                ax.set_ylabel(ylabel)
+            elif ncols==4 and i in [0,4]:
+                ax.set_ylabel(ylabel)
+        if remove_subplot_loc != None:
+            if i in remove_subplot_loc:
+                labels = [item.get_text() for item in ax.get_xticklabels()]
+                empty_string_labels = ['']*len(labels)
+                ax.set_xticklabels(empty_string_labels)
+        else:
+            if ncols==3 :
+                if i not in [7,6,5]:
+                    labels = [item.get_text() for item in ax.get_xticklabels()]
+                    empty_string_labels = ['']*len(labels)
+                    ax.set_xticklabels(empty_string_labels)
+                if i not in [0,3,6]:
+                    labels = [item.get_text() for item in ax.get_yticklabels()]
+                    empty_string_labels = ['']*len(labels)
+                    ax.set_yticklabels(empty_string_labels)
+            elif ncols==4:
+                if i in [0,1,2,3]:
+                    labels = [item.get_text() for item in ax.get_xticklabels()]
+                    empty_string_labels = ['']*len(labels)
+                    ax.set_xticklabels(empty_string_labels)
+                if i not in [0,4]:
+                    labels = [item.get_text() for item in ax.get_yticklabels()]
+                    empty_string_labels = ['']*len(labels)
+                    ax.set_yticklabels(empty_string_labels)

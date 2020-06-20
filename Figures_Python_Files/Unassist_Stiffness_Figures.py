@@ -46,8 +46,8 @@ normal_noload_hipmuscles_moment = utils.normalize_direction_data(musclesmoment_d
 mean_norm_loaded_hipmuscles_moment,std_norm_loaded_hipmuscles_moment = utils.mean_std_over_subjects(normal_loaded_hipmuscles_moment,avg_trials=False)
 mean_norm_noload_hipmuscles_moment,std_norm_noload_hipmuscles_moment = utils.mean_std_over_subjects(normal_noload_hipmuscles_moment,avg_trials=False)
 # not normalized
-loaded_hipmuscles_moment = utils.normalize_direction_data(musclesmoment_dataset['loaded_hip_musclesmoment'],gl_noload,normalize=False,direction=True)
-noload_hipmuscles_moment = utils.normalize_direction_data(musclesmoment_dataset['noload_hip_musclesmoment'],gl_noload,normalize=False,direction=True)
+loaded_hipmuscles_moment = utils.normalize_direction_data(musclesmoment_dataset['loaded_hip_musclesmoment'],gl_noload,normalize=True,direction=True)
+noload_hipmuscles_moment = utils.normalize_direction_data(musclesmoment_dataset['noload_hip_musclesmoment'],gl_noload,normalize=True,direction=True)
 mean_loaded_hipmuscles_moment,std_loaded_hipmuscles_moment = utils.mean_std_over_subjects(loaded_hipmuscles_moment,avg_trials=False)
 mean_noload_hipmuscles_moment,std_noload_hipmuscles_moment = utils.mean_std_over_subjects(noload_hipmuscles_moment,avg_trials=False)
 
@@ -57,8 +57,8 @@ normal_noload_kneemuscles_moment = utils.normalize_direction_data(musclesmoment_
 mean_norm_loaded_kneemuscles_moment,std_norm_loaded_kneemuscles_moment = utils.mean_std_over_subjects(normal_loaded_kneemuscles_moment,avg_trials=False)
 mean_norm_noload_kneemuscles_moment,std_norm_noload_kneemuscles_moment = utils.mean_std_over_subjects(normal_noload_kneemuscles_moment,avg_trials=False)
 # not normalized
-loaded_kneemuscles_moment = utils.normalize_direction_data(musclesmoment_dataset['loaded_knee_musclesmoment'],gl_noload,normalize=False,direction=True)
-noload_kneemuscles_moment = utils.normalize_direction_data(musclesmoment_dataset['noload_knee_musclesmoment'],gl_noload,normalize=False,direction=True)
+loaded_kneemuscles_moment = utils.normalize_direction_data(musclesmoment_dataset['loaded_knee_musclesmoment'],gl_noload,normalize=True,direction=True)
+noload_kneemuscles_moment = utils.normalize_direction_data(musclesmoment_dataset['noload_knee_musclesmoment'],gl_noload,normalize=True,direction=True)
 mean_loaded_kneemuscles_moment,std_loaded_kneemuscles_moment = utils.mean_std_over_subjects(loaded_kneemuscles_moment,avg_trials=False)
 mean_noload_kneemuscles_moment,std_noload_kneemuscles_moment = utils.mean_std_over_subjects(noload_kneemuscles_moment,avg_trials=False)
 
@@ -92,22 +92,31 @@ knee_loaded_linear_angle_dict,knee_loaded_linear_moment_dict,knee_loaded_fitted_
 knee_noload_linear_angle_dict,knee_noload_linear_moment_dict,knee_noload_fitted_line = utils.mean_linear_phases(mean_noload_kneejoint_kinematics,mean_noload_kneemuscles_moment,\
                                                                                     noload_mean_toe_off,'knee',knee_noload_bias_dict,knee_noload_stiffness_dict)
 # save dataset
+#***********************************************************************************************
 # stiffness
-Dataset = [hip_loaded_stiffness_dict['hip_extension_stiffness'],hip_loaded_stiffness_dict['hip_flexion_stiffness'],hip_loaded_stiffness_dict['hip_total_stiffness'],\
+Dataset = np.c_[hip_loaded_stiffness_dict['hip_extension_stiffness'],hip_loaded_stiffness_dict['hip_flexion_stiffness'],hip_loaded_stiffness_dict['hip_total_stiffness'],\
            hip_noload_stiffness_dict['hip_extension_stiffness'],hip_noload_stiffness_dict['hip_flexion_stiffness'],hip_noload_stiffness_dict['hip_total_stiffness'],\
            knee_loaded_stiffness_dict['knee_extension_stiffness'],knee_loaded_stiffness_dict['knee_flexion_stiffness'],knee_loaded_stiffness_dict['knee_total_stiffness'],\
-           knee_noload_stiffness_dict['knee_extension_stiffness'],knee_noload_stiffness_dict['knee_flexion_stiffness'],knee_noload_stiffness_dict['knee_total_stiffness']]
+           knee_noload_stiffness_dict['knee_extension_stiffness'],knee_noload_stiffness_dict['knee_flexion_stiffness'],knee_noload_stiffness_dict['knee_total_stiffness'],\
+           hip_loaded_stiffness_dict['hip_extension_stiffness_raw'],hip_loaded_stiffness_dict['hip_flexion_stiffness_raw'],hip_loaded_stiffness_dict['hip_total_stiffness_raw'],\
+           hip_noload_stiffness_dict['hip_extension_stiffness_raw'],hip_noload_stiffness_dict['hip_flexion_stiffness_raw'],hip_noload_stiffness_dict['hip_total_stiffness_raw'],\
+           knee_loaded_stiffness_dict['knee_extension_stiffness_raw'],knee_loaded_stiffness_dict['knee_flexion_stiffness_raw'],knee_loaded_stiffness_dict['knee_total_stiffness_raw'],\
+           knee_noload_stiffness_dict['knee_extension_stiffness_raw'],knee_noload_stiffness_dict['knee_flexion_stiffness_raw'],knee_noload_stiffness_dict['knee_total_stiffness_raw']]
 Headers = ['loaded_hip_extension_stiffness','loaded_hip_flexion_stiffness','loaded_hip_total_stiffness',\
            'noload_hip_extension_stiffness','noload_hip_flexion_stiffness','noload_hip_total_stiffness',\
            'loaded_knee_extension_stiffness','loaded_knee_flexion_stiffness','loaded_knee_total_stiffness',\
-           'noload_knee_extension_stiffness','noload_knee_flexion_stiffness','noload_knee_total_stiffness']
+           'noload_knee_extension_stiffness','noload_knee_flexion_stiffness','noload_knee_total_stiffness',\
+           'loaded_hip_extension_stiffness_raw','loaded_hip_flexion_stiffness_raw','loaded_hip_total_stiffness_raw',\
+           'noload_hip_extension_stiffness_raw','noload_hip_flexion_stiffness_raw','noload_hip_total_stiffness_raw',\
+           'loaded_knee_extension_stiffness_raw','loaded_knee_flexion_stiffness_raw','loaded_knee_total_stiffness_raw',\
+           'noload_knee_extension_stiffness_raw','noload_knee_flexion_stiffness_raw','noload_knee_total_stiffness_raw']
 # List of numpy vectors to a numpy ndarray and save to csv file
 with open(r'.\Data\Unassist\unassist_stiffness_data.csv', 'wb') as f:
   f.write(bytes(utils.listToString(Headers)+'\n','UTF-8'))
   np.savetxt(f, Dataset, fmt='%s', delimiter=",")
 #***********************************************************************************************
 # bias
-Dataset = [hip_loaded_bias_dict['hip_extension_bias'],hip_loaded_bias_dict['hip_flexion_bias'],hip_loaded_bias_dict['hip_total_bias'],\
+Dataset = np.c_[hip_loaded_bias_dict['hip_extension_bias'],hip_loaded_bias_dict['hip_flexion_bias'],hip_loaded_bias_dict['hip_total_bias'],\
            hip_noload_bias_dict['hip_extension_bias'],hip_noload_bias_dict['hip_flexion_bias'],hip_noload_bias_dict['hip_total_bias'],\
            knee_loaded_bias_dict['knee_extension_bias'],knee_loaded_bias_dict['knee_flexion_bias'],knee_loaded_bias_dict['knee_total_bias'],\
            knee_noload_bias_dict['knee_extension_bias'],knee_noload_bias_dict['knee_flexion_bias'],knee_noload_bias_dict['knee_total_bias']]
@@ -141,9 +150,10 @@ x = np.arange(1,len(names)+1,1)
 data = [hip_loaded_stiffness_dict['hip_extension_stiffness'],hip_loaded_stiffness_dict['hip_flexion_stiffness'],hip_loaded_stiffness_dict['hip_total_stiffness']]
 bp = ax[0,0].boxplot(data, patch_artist=True)
 utils.beautiful_boxplot(bp)
-ax[0,0].set_ylabel('Joint Stiffness (N-m/rad)')
+ax[0,0].set_ylabel('Joint Stiffness (N-m/kg-rad)')
 ax[0,0].set_xticks(x)
-ax[0,0].set_yticks([0,100,200,300,400,500,600])
+ax[0,0].set_yticks([0,2,4,6,8,10])
+ax[0,0].set_ylim([0,10])
 ax[0,0].set_xticklabels(names)
 ax[0,0].set_title('hip stiffness, loaded')
 utils.no_top_right(ax[0,0])
@@ -154,8 +164,8 @@ barplot = ax[0,2].bar(names, data, yerr=err, align='center',color='gray',width=0
 barplot[0].set_color('darkgreen')
 barplot[1].set_color('mediumseagreen')
 barplot[2].set_color('lightgreen')
-ax[0,2].set_ylabel('Joint Stiffness (N-m/rad)')
-ax[0,2].set_yticks([0,100,200,300,400,500,600])
+ax[0,2].set_ylabel('Joint Stiffness (N-m/kg-rad)')
+ax[0,2].set_yticks([0,2,4,6,8,10])
 ax[0,2].set_xticks(names)
 ax[0,2].set_xticklabels(names)
 ax[0,2].set_title('hip stiffness, loaded')
@@ -167,9 +177,9 @@ x = np.arange(1,len(names)+1,1)
 data = [hip_noload_stiffness_dict['hip_extension_stiffness'],hip_noload_stiffness_dict['hip_flexion_stiffness'],hip_noload_stiffness_dict['hip_total_stiffness']]
 bp = ax[0,1].boxplot(data, patch_artist=True)
 utils.beautiful_boxplot(bp)
-ax[0,1].set_ylabel('Joint Stiffness (N-m/rad)')
+ax[0,1].set_ylabel('Joint Stiffness (N-m/kg-rad)')
 ax[0,1].set_xticks(x)
-ax[0,1].set_yticks([0,100,200,300,400,500,600])
+ax[0,1].set_yticks([0,2,4,6,8,10])
 ax[0,1].set_xticklabels(names)
 ax[0,1].set_title('hip stiffness, noload')
 utils.no_top_right(ax[0,1])
@@ -180,8 +190,8 @@ barplot = ax[0,3].bar(names, data, yerr=err, align='center',color='gray',width=0
 barplot[0].set_color('darkgreen')
 barplot[1].set_color('mediumseagreen')
 barplot[2].set_color('lightgreen')
-ax[0,3].set_ylabel('Joint Stiffness (N-m/rad)')
-ax[0,3].set_yticks([0,100,200,300,400,500,600])
+ax[0,3].set_ylabel('Joint Stiffness (N-m/kg-rad)')
+ax[0,3].set_yticks([0,2,4,6,8,10])
 ax[0,3].set_xticks(names)
 ax[0,3].set_xticklabels(names)
 ax[0,3].set_title('hip stiffness, noload')
@@ -193,10 +203,10 @@ x = np.arange(1,len(names)+1,1)
 data = [knee_loaded_stiffness_dict['knee_extension_stiffness'],knee_loaded_stiffness_dict['knee_flexion_stiffness'],knee_loaded_stiffness_dict['knee_total_stiffness']]
 bp = ax[1,0].boxplot(data, patch_artist=True)
 utils.beautiful_boxplot(bp)
-ax[1,0].set_ylabel('Joint Stiffness (N-m/rad)')
+ax[1,0].set_ylabel('Joint Stiffness (N-m/kg-rad)')
 ax[1,0].set_xticks(x)
-ax[1,0].set_yticks([100,300,500,700])
-ax[1,0].set_ylim([100,700])
+ax[1,0].set_yticks([0,2,4,6,8,10])
+ax[1,0].set_ylim([0,10])
 ax[1,0].set_xticklabels(names)
 ax[1,0].set_title('knee stiffness, loaded')
 utils.no_top_right(ax[1,0])
@@ -207,8 +217,8 @@ barplot = ax[1,2].bar(names, data, yerr=err, align='center',color='gray',width=0
 barplot[0].set_color('darkgreen')
 barplot[1].set_color('mediumseagreen')
 barplot[2].set_color('lightgreen')
-ax[1,2].set_ylabel('Joint Stiffness (N-m/rad)')
-ax[1,2].set_yticks([100,300,500,700])
+ax[1,2].set_ylabel('Joint Stiffness (N-m/kg-rad)')
+ax[1,2].set_yticks([0,2,4,6,8,10])
 ax[1,2].set_xticks(names)
 ax[1,2].set_xticklabels(names)
 ax[1,2].set_title('knee stiffness, loaded')
@@ -221,10 +231,10 @@ x = np.arange(1,len(names)+1,1)
 data = [knee_noload_stiffness_dict['knee_extension_stiffness'],knee_noload_stiffness_dict['knee_flexion_stiffness'],knee_noload_stiffness_dict['knee_total_stiffness']]
 bp = ax[1,1].boxplot(data, patch_artist=True)
 utils.beautiful_boxplot(bp)
-ax[1,1].set_ylabel('Joint Stiffness (N-m/rad)')
+ax[1,1].set_ylabel('Joint Stiffness (N-m/kg-rad)')
 ax[1,1].set_xticks(x)
-ax[1,1].set_yticks([100,300,500,700])
-ax[1,1].set_ylim([100,700])
+ax[1,1].set_yticks([0,2,4,6,8,10])
+ax[1,1].set_ylim([0,10])
 ax[1,1].set_xticklabels(names)
 ax[1,1].set_title('knee stiffness, noload')
 utils.no_top_right(ax[1,1])
@@ -235,8 +245,8 @@ barplot = ax[1,3].bar(names, data, yerr=err, align='center',color='gray',width=0
 barplot[0].set_color('darkgreen')
 barplot[1].set_color('mediumseagreen')
 barplot[2].set_color('lightgreen')
-ax[1,3].set_ylabel('Joint Stiffness (N-m/rad)')
-ax[1,3].set_yticks([100,300,500,700])
+ax[1,3].set_ylabel('Joint Stiffness (N-m/kg-rad)')
+ax[1,3].set_yticks([0,2,4,6,8,10])
 ax[1,3].set_xticks(names)
 ax[1,3].set_xticklabels(names)
 ax[1,3].set_title('knee stiffness, noload')
@@ -244,7 +254,7 @@ utils.no_top_right(ax[1,3])
 fig.tight_layout(h_pad=-1, w_pad=-1.5)
 fig.subplots_adjust(top=0.95, bottom=0.075, left=0.100, right=0.975,hspace=0.40,wspace=0.25)
 plt.show()
-fig.savefig('./Figures/Ideal/Paper_Figure_Stiffness_Box_Bar_Plot.pdf',orientation='landscape',bbox_inches='tight')
+fig.savefig('./Figures/Unassist/Paper_Figure_Stiffness_Box_Bar_Plot.pdf',orientation='landscape',bbox_inches='tight')
 
 
 #*****************************
@@ -259,7 +269,7 @@ hip_stiffness_plot_dic = {'loaded_toe_off':loaded_mean_toe_off,'noload_toe_off':
                           'moment_std':utils.smooth(std_loaded_hipmuscles_moment,5),'color':'k','toe_off_color':'grey','label':'hip joint',
                           'phases_kinematics':hip_loaded_linear_angle_dict,'phases_moment':hip_loaded_linear_moment_dict,'phases_fitted_line':hip_loaded_fitted_line}
 utils.plot_stiffness(plot_dic = hip_stiffness_plot_dic, load_condition='loaded',\
-                     kinematics_ticks=[-0.5,0,0.5,1],moment_ticks=[-80,-40,0,40,80,120],
+                     kinematics_ticks=[-0.5,0,0.5,1],moment_ticks=[-1,-0.5,0,0.5,1,1.5],
                      ax1=ax1,ax2=ax2,ax3=ax3,joint='hip',plot_phases=True,plot_fitted_line=True)
 # hip noload case
 hip_stiffness_plot_dic = {'loaded_toe_off':loaded_mean_toe_off,'noload_toe_off':noload_mean_toe_off,'kinematics':utils.smooth(np.deg2rad(rra_dataset['mean_noload_hipjoint_kinematics']),5),
@@ -267,7 +277,7 @@ hip_stiffness_plot_dic = {'loaded_toe_off':loaded_mean_toe_off,'noload_toe_off':
                           'moment_std':utils.smooth(std_noload_hipmuscles_moment,5),'color':'xkcd:irish green','toe_off_color':'xkcd:shamrock green','label':'hip joint',
                           'phases_kinematics':hip_noload_linear_angle_dict,'phases_moment':hip_noload_linear_moment_dict,'phases_fitted_line':hip_noload_fitted_line}
 utils.plot_stiffness(plot_dic = hip_stiffness_plot_dic, load_condition='noload',
-                     kinematics_ticks=[-0.5,0,0.5,1],moment_ticks=[-80,-40,0,40,80,120],
+                     kinematics_ticks=[-0.5,0,0.5,1],moment_ticks=[-1,-0.5,0,0.5,1,1.5],
                      ax1=ax1,ax2=ax2,ax3=ax3,joint='hip',plot_phases=True,plot_fitted_line=True)
 fig.tight_layout(h_pad=-1, w_pad=-1.5)
 fig.subplots_adjust(top=0.98, bottom=0.075, left=0.100, right=0.975,hspace=0.45,wspace=0.15)
@@ -287,7 +297,7 @@ knee_stiffness_plot_dic = {'loaded_toe_off':loaded_mean_toe_off,'noload_toe_off'
                           'moment_std':utils.smooth(std_loaded_kneemuscles_moment,5),'color':'k','toe_off_color':'grey','label':'hip joint',
                           'phases_kinematics':knee_loaded_linear_angle_dict,'phases_moment':knee_loaded_linear_moment_dict,'phases_fitted_line':knee_loaded_fitted_line}
 utils.plot_stiffness(plot_dic = knee_stiffness_plot_dic, load_condition='loaded',\
-                     kinematics_ticks=[0,10,20,30,40,50,60,70,80],moment_ticks=[-1,-0.5,0,0.5,1,1.5,2],
+                     kinematics_ticks=[0,10,20,30,40,50,60,70,80],moment_ticks=[-1,-0.5,0,0.5,1,1.5],
                      ax1=ax1,ax2=ax2,ax3=ax3,joint='knee',plot_phases=True,plot_fitted_line=True)
 # knee noload case
 knee_stiffness_plot_dic = {'loaded_toe_off':loaded_mean_toe_off,'noload_toe_off':noload_mean_toe_off,'kinematics':utils.smooth(np.deg2rad(rra_dataset['mean_noload_kneejoint_kinematics']),5),
@@ -295,7 +305,7 @@ knee_stiffness_plot_dic = {'loaded_toe_off':loaded_mean_toe_off,'noload_toe_off'
                           'moment_std':utils.smooth(std_noload_kneemuscles_moment,5),'color':'xkcd:irish green','toe_off_color':'xkcd:shamrock green','label':'hip joint',
                           'phases_kinematics':knee_noload_linear_angle_dict,'phases_moment':knee_noload_linear_moment_dict,'phases_fitted_line':knee_noload_fitted_line}
 utils.plot_stiffness(plot_dic = knee_stiffness_plot_dic, load_condition='noload',
-                     kinematics_ticks=[0,0.5,1,1.5],moment_ticks=[-60,-30,0,30,60,90],
+                     kinematics_ticks=[0,0.5,1,1.5],moment_ticks=[-1,-0.5,0,0.5,1,1.5],
                      ax1=ax1,ax2=ax2,ax3=ax3,joint='knee',plot_phases=True,plot_fitted_line=True)
 fig.tight_layout(h_pad=-1, w_pad=-1.5)
 fig.subplots_adjust(top=0.98, bottom=0.075, left=0.100, right=0.975,hspace=0.45,wspace=0.15)
@@ -325,5 +335,6 @@ table = ax.table(cellText=np.transpose(main_cellText.round(3)),rowLabels=rows,co
 table.scale(1,2)
 table.set_fontsize(15)
 ax.axis('off')
+fig.subplots_adjust(top=0.98, bottom=0.075, left=0.25, right=0.975,hspace=0.45,wspace=0.15)
 fig.savefig('./Figures/Unassist/Stiffness_Table.pdf',orientation='landscape',bbox_inches='tight')
 plt.show()
