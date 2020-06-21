@@ -262,6 +262,61 @@ utils.recover_unassist_linear_phases(rra_dataset['mean_noload_kneejoint_kinemati
                                      noload_mean_toe_off,stiffness_dataset,bias_dataset,joint='knee',load='noload')
 
 ##########################################################################################################################################################
+# muscles dataset
+muscles_mean_cellText = np.c_[bi_loaded_hip_musclesmoment_stiffness_dict['mean_hip_extension_stiffness'],bi_loaded_hip_musclesmoment_stiffness_dict['mean_hip_flexion_stiffness'],bi_loaded_hip_musclesmoment_stiffness_dict['mean_hip_total_stiffness'],\
+                         bi_loaded_hip_musclesmoment_stiffness_dict['std_hip_extension_stiffness'],bi_loaded_hip_musclesmoment_stiffness_dict['std_hip_flexion_stiffness'],bi_loaded_hip_musclesmoment_stiffness_dict['std_hip_total_stiffness'],\
+                         bi_loaded_knee_musclesmoment_stiffness_dict['mean_knee_extension_stiffness'],bi_loaded_knee_musclesmoment_stiffness_dict['mean_knee_flexion_stiffness'],bi_loaded_knee_musclesmoment_stiffness_dict['mean_knee_total_stiffness'],\
+                         bi_loaded_knee_musclesmoment_stiffness_dict['std_knee_extension_stiffness'],bi_loaded_knee_musclesmoment_stiffness_dict['std_knee_flexion_stiffness'],bi_loaded_knee_musclesmoment_stiffness_dict['std_knee_total_stiffness'],\
+                        # monoarticular loaded
+                         mono_loaded_hip_musclesmoment_stiffness_dict['mean_hip_extension_stiffness'],mono_loaded_hip_musclesmoment_stiffness_dict['mean_hip_flexion_stiffness'],mono_loaded_hip_musclesmoment_stiffness_dict['mean_hip_total_stiffness'],\
+                         mono_loaded_hip_musclesmoment_stiffness_dict['std_hip_extension_stiffness'],mono_loaded_hip_musclesmoment_stiffness_dict['std_hip_flexion_stiffness'],mono_loaded_hip_musclesmoment_stiffness_dict['std_hip_total_stiffness'],\
+                         mono_loaded_knee_musclesmoment_stiffness_dict['mean_knee_extension_stiffness'],mono_loaded_knee_musclesmoment_stiffness_dict['mean_knee_flexion_stiffness'],mono_loaded_knee_musclesmoment_stiffness_dict['mean_knee_total_stiffness'],\
+                         mono_loaded_knee_musclesmoment_stiffness_dict['std_knee_extension_stiffness'],mono_loaded_knee_musclesmoment_stiffness_dict['std_knee_flexion_stiffness'],mono_loaded_knee_musclesmoment_stiffness_dict['std_knee_total_stiffness'],\
+                        # biarticular noload
+                         bi_noload_hip_musclesmoment_stiffness_dict['mean_hip_extension_stiffness'],bi_noload_hip_musclesmoment_stiffness_dict['mean_hip_flexion_stiffness'],bi_noload_hip_musclesmoment_stiffness_dict['mean_hip_total_stiffness'],\
+                         bi_noload_hip_musclesmoment_stiffness_dict['std_hip_extension_stiffness'],bi_noload_hip_musclesmoment_stiffness_dict['std_hip_flexion_stiffness'],bi_noload_hip_musclesmoment_stiffness_dict['std_hip_total_stiffness'],\
+                         bi_noload_knee_musclesmoment_stiffness_dict['mean_knee_extension_stiffness'],bi_noload_knee_musclesmoment_stiffness_dict['mean_knee_flexion_stiffness'],bi_noload_knee_musclesmoment_stiffness_dict['mean_knee_total_stiffness'],\
+                         bi_noload_knee_musclesmoment_stiffness_dict['std_knee_extension_stiffness'],bi_noload_knee_musclesmoment_stiffness_dict['std_knee_flexion_stiffness'],bi_noload_knee_musclesmoment_stiffness_dict['std_knee_total_stiffness'],\
+                        # monoarticular noload
+                         mono_noload_hip_musclesmoment_stiffness_dict['mean_hip_extension_stiffness'],mono_noload_hip_musclesmoment_stiffness_dict['mean_hip_flexion_stiffness'],mono_noload_hip_musclesmoment_stiffness_dict['mean_hip_total_stiffness'],\
+                         mono_noload_hip_musclesmoment_stiffness_dict['std_hip_extension_stiffness'],mono_noload_hip_musclesmoment_stiffness_dict['std_hip_flexion_stiffness'],mono_noload_hip_musclesmoment_stiffness_dict['std_hip_total_stiffness'],\
+                         mono_noload_knee_musclesmoment_stiffness_dict['mean_knee_extension_stiffness'],mono_noload_knee_musclesmoment_stiffness_dict['mean_knee_flexion_stiffness'],mono_noload_knee_musclesmoment_stiffness_dict['mean_knee_total_stiffness'],\
+                         mono_noload_knee_musclesmoment_stiffness_dict['std_knee_extension_stiffness'],mono_noload_knee_musclesmoment_stiffness_dict['std_knee_flexion_stiffness'],mono_noload_knee_musclesmoment_stiffness_dict['std_knee_total_stiffness']]
+actuators_mean_cellText =np.c_[bi_loaded_hip_actuator_stiffness_dict['mean_hip_extension_stiffness'],bi_loaded_hip_actuator_stiffness_dict['mean_hip_flexion_stiffness'],bi_loaded_hip_actuator_stiffness_dict['mean_hip_total_stiffness'],\
+                         bi_loaded_hip_actuator_stiffness_dict['std_hip_extension_stiffness'],bi_loaded_hip_actuator_stiffness_dict['std_hip_flexion_stiffness'],bi_loaded_hip_actuator_stiffness_dict['std_hip_total_stiffness'],\
+                         bi_loaded_knee_actuator_stiffness_dict['mean_knee_extension_stiffness'],bi_loaded_knee_actuator_stiffness_dict['mean_knee_flexion_stiffness'],bi_loaded_knee_actuator_stiffness_dict['mean_knee_total_stiffness'],\
+                         bi_loaded_knee_actuator_stiffness_dict['std_knee_extension_stiffness'],bi_loaded_knee_actuator_stiffness_dict['std_knee_flexion_stiffness'],bi_loaded_knee_actuator_stiffness_dict['std_knee_total_stiffness'],\
+                        # monoarticular loaded
+                         mono_loaded_hip_actuator_stiffness_dict['mean_hip_extension_stiffness'],mono_loaded_hip_actuator_stiffness_dict['mean_hip_flexion_stiffness'],mono_loaded_hip_actuator_stiffness_dict['mean_hip_total_stiffness'],\
+                         mono_loaded_hip_actuator_stiffness_dict['std_hip_extension_stiffness'],mono_loaded_hip_actuator_stiffness_dict['std_hip_flexion_stiffness'],mono_loaded_hip_actuator_stiffness_dict['std_hip_total_stiffness'],\
+                         mono_loaded_knee_actuator_stiffness_dict['mean_knee_extension_stiffness'],mono_loaded_knee_actuator_stiffness_dict['mean_knee_flexion_stiffness'],mono_loaded_knee_actuator_stiffness_dict['mean_knee_total_stiffness'],\
+                         mono_loaded_knee_actuator_stiffness_dict['std_knee_extension_stiffness'],mono_loaded_knee_actuator_stiffness_dict['std_knee_flexion_stiffness'],mono_loaded_knee_actuator_stiffness_dict['std_knee_total_stiffness'],\
+                        # biarticular noload
+                         bi_noload_hip_actuator_stiffness_dict['mean_hip_extension_stiffness'],bi_noload_hip_actuator_stiffness_dict['mean_hip_flexion_stiffness'],bi_noload_hip_actuator_stiffness_dict['mean_hip_total_stiffness'],\
+                         bi_noload_hip_actuator_stiffness_dict['std_hip_extension_stiffness'],bi_noload_hip_actuator_stiffness_dict['std_hip_flexion_stiffness'],bi_noload_hip_actuator_stiffness_dict['std_hip_total_stiffness'],\
+                         bi_noload_knee_actuator_stiffness_dict['mean_knee_extension_stiffness'],bi_noload_knee_actuator_stiffness_dict['mean_knee_flexion_stiffness'],bi_noload_knee_actuator_stiffness_dict['mean_knee_total_stiffness'],\
+                         bi_noload_knee_actuator_stiffness_dict['std_knee_extension_stiffness'],bi_noload_knee_actuator_stiffness_dict['std_knee_flexion_stiffness'],bi_noload_knee_actuator_stiffness_dict['std_knee_total_stiffness'],\
+                         # monoarticular noload
+                         mono_noload_hip_actuator_stiffness_dict['mean_hip_extension_stiffness'],mono_noload_hip_actuator_stiffness_dict['mean_hip_flexion_stiffness'],mono_noload_hip_actuator_stiffness_dict['mean_hip_total_stiffness'],\
+                         mono_noload_hip_actuator_stiffness_dict['std_hip_extension_stiffness'],mono_noload_hip_actuator_stiffness_dict['std_hip_flexion_stiffness'],mono_noload_hip_actuator_stiffness_dict['std_hip_total_stiffness'],\
+                         mono_noload_knee_actuator_stiffness_dict['mean_knee_extension_stiffness'],mono_noload_knee_actuator_stiffness_dict['mean_knee_flexion_stiffness'],mono_noload_knee_actuator_stiffness_dict['mean_knee_total_stiffness'],\
+                         mono_noload_knee_actuator_stiffness_dict['std_knee_extension_stiffness'],mono_noload_knee_actuator_stiffness_dict['std_knee_flexion_stiffness'],mono_noload_knee_actuator_stiffness_dict['std_knee_total_stiffness']]
+actuators_header = []
+muscles_header = []
+for load in ['loaded','noload']:
+        for device in ['bi','mono']:
+                for joint in ['hip','knee']:
+                        for data_type in ['mean','std']:
+                                for phase in ['extension','flexion','total']:
+                                        actuators_header.append('{}_{}_{}actuator_{}_{}_stiffness'.format(device,load,joint,data_type,phase))
+                                        muscles_header.append('{}_{}_{}muscles_{}_{}_stiffness'.format(device,load,joint,data_type,phase))
+# save data
+headers = actuators_header + muscles_header
+dataset = np.concatenate((actuators_mean_cellText,muscles_mean_cellText),axis=1)
+with open(r'.\Data\Ideal\ideal_exos_stiffness_dataset.csv', 'wb') as f:
+  f.write(bytes(utils.listToString(headers)+'\n','UTF-8'))
+  np.savetxt(f, dataset, fmt='%s', delimiter=",")                                     
+##########################################################################################################################################################
 # joints stiffness
 fig, ax = plt.subplots(nrows=2,ncols=2,figsize=(12.8, 9.6))
 #*******************************

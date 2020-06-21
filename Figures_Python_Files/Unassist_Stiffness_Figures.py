@@ -115,6 +115,26 @@ with open(r'.\Data\Unassist\unassist_stiffness_data.csv', 'wb') as f:
   f.write(bytes(utils.listToString(Headers)+'\n','UTF-8'))
   np.savetxt(f, Dataset, fmt='%s', delimiter=",")
 #***********************************************************************************************
+mean_cellText = np.c_[hip_loaded_stiffness_dict['mean_hip_extension_stiffness'],hip_loaded_stiffness_dict['mean_hip_flexion_stiffness'],hip_loaded_stiffness_dict['mean_hip_total_stiffness'],\
+           hip_noload_stiffness_dict['mean_hip_extension_stiffness'],hip_noload_stiffness_dict['mean_hip_flexion_stiffness'],hip_noload_stiffness_dict['mean_hip_total_stiffness'],\
+           knee_loaded_stiffness_dict['mean_knee_extension_stiffness'],knee_loaded_stiffness_dict['mean_knee_flexion_stiffness'],knee_loaded_stiffness_dict['mean_knee_total_stiffness'],\
+           knee_noload_stiffness_dict['mean_knee_extension_stiffness'],knee_noload_stiffness_dict['mean_knee_flexion_stiffness'],knee_noload_stiffness_dict['mean_knee_total_stiffness']]
+std_cellText = np.c_[hip_loaded_stiffness_dict['std_hip_extension_stiffness'],hip_loaded_stiffness_dict['std_hip_flexion_stiffness'],hip_loaded_stiffness_dict['std_hip_total_stiffness'],\
+           hip_noload_stiffness_dict['std_hip_extension_stiffness'],hip_noload_stiffness_dict['std_hip_flexion_stiffness'],hip_noload_stiffness_dict['std_hip_total_stiffness'],\
+           knee_loaded_stiffness_dict['std_knee_extension_stiffness'],knee_loaded_stiffness_dict['std_knee_flexion_stiffness'],knee_loaded_stiffness_dict['std_knee_total_stiffness'],\
+           knee_noload_stiffness_dict['std_knee_extension_stiffness'],knee_noload_stiffness_dict['std_knee_flexion_stiffness'],knee_noload_stiffness_dict['std_knee_total_stiffness']]
+Dataset = np.concatenate((mean_cellText,std_cellText),axis=1)
+Headers = []
+for data_type in ['mean','std']:
+      for joint in ['hip','knee']:
+            for load in ['loaded','noload']:
+                  for phase in ['extension','flexion','total']:
+                        Headers.append('{}_{}_{}_{}_stiffness'.format(data_type,load,joint,phase))
+# List of numpy vectors to a numpy ndarray and save to csv file
+with open(r'.\Data\Unassist\unassist_meanstd_stiffness_data.csv', 'wb') as f:
+  f.write(bytes(utils.listToString(Headers)+'\n','UTF-8'))
+  np.savetxt(f, Dataset, fmt='%s', delimiter=",")                       
+#***********************************************************************************************
 # bias
 Dataset = np.c_[hip_loaded_bias_dict['hip_extension_bias'],hip_loaded_bias_dict['hip_flexion_bias'],hip_loaded_bias_dict['hip_total_bias'],\
            hip_noload_bias_dict['hip_extension_bias'],hip_noload_bias_dict['hip_flexion_bias'],hip_noload_bias_dict['hip_total_bias'],\
