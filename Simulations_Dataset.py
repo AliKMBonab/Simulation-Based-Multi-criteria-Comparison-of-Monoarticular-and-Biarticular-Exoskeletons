@@ -140,13 +140,14 @@ middle =['hipactuator','kneeactuator','hipactuator','kneeactuator',\
          'hipactuator','kneeactuator','hipactuator','kneeactuator',\
          'metabolics','ninemuscles','hipmuscles','kneemuscles',\
          'hipactuator','kneeactuator','hipmuscles','kneemuscles',\
-         'hipactuator','kneeactuator','hipactuator','kneeactuator','hipactuator','kneeactuator']
+         'hipactuator','kneeactuator','hipactuator','kneeactuator',\
+         'hipactuator','kneeactuator','hipjoint','kneejoint']
 suffixes = ['torque','torque','power','power',\
             'speed','speed','energy','energy',\
             'energy','activation','moment','moment',\
             'regenerative_energy','regenerative_energy',\
             'power','power','max_power','max_power','avg_positive_power','avg_positive_power',\
-            'avg_negative_power','avg_negative_power']
+            'avg_negative_power','avg_negative_power','kinematics','kinematics']
 HWs = {'mono_load':[30,40,50,60,70,70,70,70,70],'bi_load':[30,30,30,30,30,40,40,50,50,50,60,70],'mono_noload':[30,40,50,50,50,60,60,60,70,70],'bi_noload':[30,30,30,30,30,40,40,40,50,50,50,70]}
 KWs = {'mono_load':[30,30,30,30,30,40,50,60,70],'bi_load':[30,40,50,60,70,60,70,50,60,70,70,70],'mono_noload':[30,30,30,40,50,50,60,70,60,70],'bi_noload':[30,40,50,60,70,40,50,60,50,60,70,70]}
 labeling = ['mono','bi']

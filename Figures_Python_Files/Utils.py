@@ -1846,8 +1846,8 @@ def plot_pareto_avg_curve (plot_dic,loadcond,legend_loc=0,label_on=True,which_la
           plt.errorbar(x1_ideal,y1_ideal,xerr=x1err_ideal,yerr=y1err_ideal,fmt='X',ecolor=color_1,alpha=0.15)
           plt.errorbar(x2_ideal,y2_ideal,xerr=x2err_ideal,yerr=y2err_ideal,fmt='X',ecolor=color_2,alpha=0.15)
 
-def plot_pareto_curve_subjects (nrows,ncols,nplot,plot_dic,loadcond,\
-                                line=False,legend_loc=[0],labels=None,\
+def plot_pareto_curve_subjects (nrows,ncols,nplot,plot_dic,loadcond,
+                                line=False,legend_loc=[0],labels=None,
                                 label_on=True,third_plot=False,alpha=1,*args, **kwargs):
     x1_data = plot_dic['x1_data']
     x2_data = plot_dic['x2_data']
@@ -2793,10 +2793,21 @@ def quasi_stiffness(angle,moment,toe_off,phase):
     idx = joints_linear_phases_indices(toe_off=toe_off,phase=phase)
     linear_angle = np.take(angle,idx,axis=0)
     linear_moment = np.take(moment,idx,axis=0)
-    coefficient = np.polynomial.polynomial.polyfit(x=linear_angle[0,~np.isnan(linear_angle[0,:])],\
-                                             y=linear_moment[0,~np.isnan(linear_moment[0,:])],deg=1)
-    predicted_moment = np.polynomial.polynomial.polyval(linear_angle[0,~np.isnan(linear_angle[0,:])],coefficient)
-    Rsquare = metrics.r2_score(np.transpose(linear_moment[0,~np.isnan(linear_moment[0,:])]), predicted_moment)
+    #fixing the problem of unmatched sizes
+    if linear_angle[0,~np.isnan(linear_angle[0,:])].shape[0] != linear_moment[0,~np.isnan(linear_moment[0,:])].shape[0]:
+        linear_moment_indices = np.arange(0,linear_moment[0,~np.isnan(linear_moment[0,:])].shape[0],1)
+        linear_angle_indices = np.arange(0,linear_angle[0,~np.isnan(linear_angle[0,:])].shape[0],1)
+        linear_angle = np.interp(linear_moment_indices,linear_angle_indices,linear_angle[0,~np.isnan(linear_angle[0,:])])
+        linear_angle = np.expand_dims(linear_angle,axis=0)
+    # fitting
+    if linear_angle[0,~np.isnan(linear_angle[0,:])].size == 0 or linear_moment[0,~np.isnan(linear_moment[0,:])].size == 0:
+        coefficient = np.array([np.nan,np.nan])
+        Rsquare = np.nan
+    else:
+        coefficient = np.polynomial.polynomial.polyfit(x=linear_angle[0,~np.isnan(linear_angle[0,:])],\
+                                                y=linear_moment[0,~np.isnan(linear_moment[0,:])],deg=1)
+        predicted_moment = np.polynomial.polynomial.polyval(linear_angle[0,~np.isnan(linear_angle[0,:])],coefficient)
+        Rsquare = metrics.r2_score(np.transpose(linear_moment[0,~np.isnan(linear_moment[0,:])]), predicted_moment)
     return coefficient, Rsquare
     
 def calculate_quasi_stiffness(angle,moment,toe_off,joint,modify_toe_off = False):
@@ -3068,3 +3079,215 @@ def plot_joint_exo_muscles_stiffness(nrows,ncols,plot_dic,color_dic,joint,
                     labels = [item.get_text() for item in ax.get_yticklabels()]
                     empty_string_labels = ['']*len(labels)
                     ax.set_yticklabels(empty_string_labels)
+
+def paretofront_quasi_stiffness(kinematics_csv,moments_csv,toe_off,device,loadcondition,gl_noload,muscles_actuator):
+    if device.lower() == 'biarticular' and loadcondition == 'loaded':
+        # biarticular/loaded
+        loadcond = 'load'
+        hip_weight = [30,30,30,30,30,40,40,50,50,50,60,70]
+        knee_weight = [30,40,50,60,70,60,70,50,60,70,70,70]
+    elif device.lower() == 'biarticular' and loadcondition == 'noload':
+        # biarticular/noload
+        loadcond = 'noload'
+        hip_weight = [30,30,30,30,30,40,40,40,50,50,50,70]
+        knee_weight = [30,40,50,60,70,40,50,60,50,60,70,70]
+    elif device.lower() == 'monoarticular' and loadcondition == 'loaded':
+        # monoarticular/loaded
+        loadcond = 'load'
+        hip_weight = [30,40,50,60,70,70,70,70,70]
+        knee_weight = [30,30,30,30,30,40,50,60,70]  
+    elif device.lower() == 'monoarticular' and loadcondition == 'noload':  
+        # monoarticular/noload
+        loadcond = 'noload'
+        hip_weight = [30,40,50,50,50,60,60,60,70,70]
+        knee_weight = [30,30,30,40,50,50,60,70,60,70]
+    # iterating on the weights
+    paretofront_stiffness = dict()
+    paretofront_R_square = dict()
+    for joint in ['hip','knee']:
+        for w in range(len(hip_weight)):
+            kinematics = kinematics_csv['{}_hip{}knee{}_{}_{}joint_kinematics'.format(device,hip_weight[w],knee_weight[w],loadcond,joint)]
+            if muscles_actuator == 'muscles':
+                moment = moments_csv['{}_hip{}knee{}_{}_{}muscles_moment'.format(device,hip_weight[w],knee_weight[w],loadcond,joint)]
+            elif muscles_actuator == 'actuator':
+                moment = moments_csv['{}_hip{}knee{}_{}_{}actuator_torque'.format(device,hip_weight[w],knee_weight[w],loadcond,joint)]
+                if joint == 'knee' and device == 'biarticular':
+                    kinematics =  kinematics_csv['{}_hip{}knee{}_{}_{}joint_kinematics'.format(device,hip_weight[w],knee_weight[w],loadcond,joint)]\
+                               -  kinematics_csv['{}_hip{}knee{}_{}_hipjoint_kinematics'.format(device,hip_weight[w],knee_weight[w],loadcond)]
+            # normalize moment
+            moment = normalize_direction_data(moment,gl_noload,direction=False)
+            # calculate the stiffness, and R2 (bias excluded)
+            stiffness_dict, R_square_dict, _ = calculate_quasi_stiffness(kinematics,moment,toe_off,joint)
+            # save them into the dictionary
+            paretofront_stiffness['{}{}_hip{}knee{}_stiffness'.format(joint,muscles_actuator,hip_weight[w],knee_weight[w])] = stiffness_dict
+            paretofront_R_square ['{}{}_hip{}knee{}_R_square'.format(joint,muscles_actuator,hip_weight[w],knee_weight[w])] = R_square_dict
+    return paretofront_stiffness,paretofront_R_square
+
+def plot_paretofront_stiffness(plot_dict,device,loadcondition,joint,muscles_actuator,legends=False):
+    # read data
+    ideal_data = plot_dict['ideal_data']
+    unassist_data = plot_dict['unassist_data']
+    paretofront_dict = plot_dict['paretofront_dict']
+    indices = plot_dict['indices']
+    # select weights
+    if device.lower() == 'biarticular' and loadcondition == 'loaded':
+        # biarticular/loaded
+        loadcond = 'load'
+        device_abr = 'bi'
+        hip_weight = [30,30,30,30,30,40,40,50,50,50,60,70]
+        knee_weight = [30,40,50,60,70,60,70,50,60,70,70,70]
+    elif device.lower() == 'biarticular' and loadcondition == 'noload':
+        # biarticular/noload
+        loadcond = 'noload'
+        device_abr = 'bi'
+        hip_weight = [30,30,30,30,30,40,40,40,50,50,50,70]
+        knee_weight = [30,40,50,60,70,40,50,60,50,60,70,70]
+    elif device.lower() == 'monoarticular' and loadcondition == 'loaded':
+        # monoarticular/loaded
+        loadcond = 'load'
+        device_abr = 'mono'
+        hip_weight = [30,40,50,60,70,70,70,70,70]
+        knee_weight = [30,30,30,30,30,40,50,60,70]  
+    elif device.lower() == 'monoarticular' and loadcondition == 'noload':  
+        # monoarticular/noload
+        loadcond = 'noload'
+        device_abr = 'mono'
+        hip_weight = [30,40,50,50,50,60,60,60,70,70]
+        knee_weight = [30,30,30,40,50,50,60,70,60,70]
+    # main code
+    if muscles_actuator == 'muscles':
+        joint_extension_mean_stiffness = [unassist_data['mean_{}_{}_extension_stiffness'.format(loadcondition,joint)],ideal_data['{}_{}_{}{}_mean_extension_stiffness'.format(device_abr,loadcondition,joint,muscles_actuator)]]
+        joint_extension_std_stiffness = [unassist_data['std_{}_{}_extension_stiffness'.format(loadcondition,joint)],ideal_data['{}_{}_{}{}_std_extension_stiffness'.format(device_abr,loadcondition,joint,muscles_actuator)]]
+        joint_flexion_mean_stiffness = [unassist_data['mean_{}_{}_flexion_stiffness'.format(loadcondition,joint)],ideal_data['{}_{}_{}{}_mean_flexion_stiffness'.format(device_abr,loadcondition,joint,muscles_actuator)]]
+        joint_flexion_std_stiffness = [unassist_data['std_{}_{}_flexion_stiffness'.format(loadcondition,joint)],ideal_data['{}_{}_{}{}_std_flexion_stiffness'.format(device_abr,loadcondition,joint,muscles_actuator)]]
+    else:
+        joint_extension_mean_stiffness = [ideal_data['{}_{}_{}{}_mean_extension_stiffness'.format(device_abr,loadcondition,joint,muscles_actuator)]]
+        joint_extension_std_stiffness = [ideal_data['{}_{}_{}{}_std_extension_stiffness'.format(device_abr,loadcondition,joint,muscles_actuator)]]
+        joint_flexion_mean_stiffness = [ideal_data['{}_{}_{}{}_mean_flexion_stiffness'.format(device_abr,loadcondition,joint,muscles_actuator)]]
+        joint_flexion_std_stiffness = [ideal_data['{}_{}_{}{}_std_flexion_stiffness'.format(device_abr,loadcondition,joint,muscles_actuator)]]
+    # add paretofront data to the lists
+    for w in range(len(hip_weight)):
+        joint_extension_mean_stiffness.append(paretofront_dict['{}{}_hip{}knee{}_stiffness'.format(joint,muscles_actuator,hip_weight[w],knee_weight[w])]['mean_{}_extension_stiffness'.format(joint)])
+        joint_extension_std_stiffness.append(paretofront_dict['{}{}_hip{}knee{}_stiffness'.format(joint,muscles_actuator,hip_weight[w],knee_weight[w])]['std_{}_extension_stiffness'.format(joint)])
+        joint_flexion_mean_stiffness.append(paretofront_dict['{}{}_hip{}knee{}_stiffness'.format(joint,muscles_actuator,hip_weight[w],knee_weight[w])]['mean_{}_flexion_stiffness'.format(joint)])
+        joint_flexion_std_stiffness.append(paretofront_dict['{}{}_hip{}knee{}_stiffness'.format(joint,muscles_actuator,hip_weight[w],knee_weight[w])]['std_{}_flexion_stiffness'.format(joint)])
+    # adjust std
+    joint_extension_std_stiffness = [np.zeros(len(joint_extension_std_stiffness)),joint_extension_std_stiffness]
+    joint_flexion_std_stiffness = [np.zeros(len(joint_flexion_std_stiffness)),joint_flexion_std_stiffness]
+    # plot
+    if muscles_actuator == 'muscles':
+        index = np.arange(0,len(hip_weight)+2,1)
+    else:
+        index = np.arange(0,len(hip_weight)+1,1)
+    bar_width = 0.35
+    opacity = 0.4
+    error_config = {'ecolor': '0.3'}
+    rects1 = plt.barh(index, joint_extension_mean_stiffness, bar_width,
+                    alpha=opacity,
+                    color='b',
+                    xerr=joint_extension_std_stiffness,
+                    error_kw=error_config)
+    if muscles_actuator == 'muscles':
+        rects1[0].set_color('gray')
+        rects1[1].set_color('forestgreen')
+    else:
+        rects1[0].set_color('forestgreen')
+    rects2 = plt.barh(index + bar_width, joint_flexion_mean_stiffness, bar_width,
+                    alpha=opacity,
+                    color='r',
+                    xerr=joint_flexion_std_stiffness,
+                    error_kw=error_config)
+    if muscles_actuator == 'muscles':
+        rects2[0].set_color('silver')
+        rects2[1].set_color('limegreen')
+        if legends == True:
+            plt.legend([rects1[0],rects2[0],rects1[1],rects2[1],rects1[2],rects2[2]],['extension','flexion','extension','flexion','extension','flexion'],frameon=False)
+    else:
+        rects2[0].set_color('limegreen')
+        if legends == True:
+            plt.legend([rects1[0],rects2[0],rects1[1],rects2[1]],['extension','flexion','extension','flexion'],frameon=False)
+    label=[]
+    for i in ['A','B','C','D','E']:
+        for j in ['a','b','c','d','e']:
+            label.append('{}{}'.format(i,j))
+    if muscles_actuator == 'muscles':
+        indices_str = ['unassist','ideal']
+    else:
+        indices_str = ['ideal']
+    for i in reversed(indices):
+        indices_str.append(label[i-1])
+    plt.yticks(index + bar_width / 2,indices_str )
+    plt.tick_params(axis='both',direction='in')
+    ax = plt.gca()
+    no_top_right(ax)
+
+def plot_paretofront_Rsquare(plot_dict,device,loadcondition,joint,muscles_actuator,legends=False):
+    # read data
+    paretofront_dict = plot_dict['paretofront_dict']
+    indices = plot_dict['indices']
+    # select weights
+    if device.lower() == 'biarticular' and loadcondition == 'loaded':
+        # biarticular/loaded
+        loadcond = 'load'
+        device_abr = 'bi'
+        hip_weight = [30,30,30,30,30,40,40,50,50,50,60,70]
+        knee_weight = [30,40,50,60,70,60,70,50,60,70,70,70]
+    elif device.lower() == 'biarticular' and loadcondition == 'noload':
+        # biarticular/noload
+        loadcond = 'noload'
+        device_abr = 'bi'
+        hip_weight = [30,30,30,30,30,40,40,40,50,50,50,70]
+        knee_weight = [30,40,50,60,70,40,50,60,50,60,70,70]
+    elif device.lower() == 'monoarticular' and loadcondition == 'loaded':
+        # monoarticular/loaded
+        loadcond = 'load'
+        device_abr = 'mono'
+        hip_weight = [30,40,50,60,70,70,70,70,70]
+        knee_weight = [30,30,30,30,30,40,50,60,70]  
+    elif device.lower() == 'monoarticular' and loadcondition == 'noload':  
+        # monoarticular/noload
+        loadcond = 'noload'
+        device_abr = 'mono'
+        hip_weight = [30,40,50,50,50,60,60,60,70,70]
+        knee_weight = [30,30,30,40,50,50,60,70,60,70]
+    # main code
+    joint_extension_mean_stiffness = []
+    joint_extension_std_stiffness = []
+    joint_flexion_mean_stiffness = []
+    joint_flexion_std_stiffness = []
+    # add paretofront data to the lists
+    for w in range(len(hip_weight)):
+        joint_extension_mean_stiffness.append(paretofront_dict['{}{}_hip{}knee{}_R_square'.format(joint,muscles_actuator,hip_weight[w],knee_weight[w])]['mean_{}_extension_R_square'.format(joint)])
+        joint_extension_std_stiffness.append(paretofront_dict['{}{}_hip{}knee{}_R_square'.format(joint,muscles_actuator,hip_weight[w],knee_weight[w])]['std_{}_extension_R_square'.format(joint)])
+        joint_flexion_mean_stiffness.append(paretofront_dict['{}{}_hip{}knee{}_R_square'.format(joint,muscles_actuator,hip_weight[w],knee_weight[w])]['mean_{}_flexion_R_square'.format(joint)])
+        joint_flexion_std_stiffness.append(paretofront_dict['{}{}_hip{}knee{}_R_square'.format(joint,muscles_actuator,hip_weight[w],knee_weight[w])]['std_{}_flexion_R_square'.format(joint)])
+    # adjust std
+    joint_extension_std_stiffness = [np.zeros(len(joint_extension_std_stiffness)),joint_extension_std_stiffness]
+    joint_flexion_std_stiffness = [np.zeros(len(joint_flexion_std_stiffness)),joint_flexion_std_stiffness]
+    # plot
+    index = np.arange(0,len(hip_weight),1)
+    bar_width = 0.35
+    opacity = 0.4
+    error_config = {'ecolor': '0.3'}
+    rects1 = plt.barh(index, joint_extension_mean_stiffness, bar_width,
+                    alpha=opacity,
+                    color='b',
+                    xerr=joint_extension_std_stiffness,
+                    error_kw=error_config)
+    rects2 = plt.barh(index + bar_width, joint_flexion_mean_stiffness, bar_width,
+                    alpha=opacity,
+                    color='r',
+                    xerr=joint_flexion_std_stiffness,
+                    error_kw=error_config)
+    label=[]
+    for i in ['A','B','C','D','E']:
+        for j in ['a','b','c','d','e']:
+            label.append('{}{}'.format(i,j))
+        indices_str = []
+    for i in reversed(indices):
+        indices_str.append(label[i-1])
+    plt.yticks(index + bar_width / 2,indices_str )
+    plt.tick_params(axis='both',direction='in')
+    ax = plt.gca()
+    no_top_right(ax)
+    
