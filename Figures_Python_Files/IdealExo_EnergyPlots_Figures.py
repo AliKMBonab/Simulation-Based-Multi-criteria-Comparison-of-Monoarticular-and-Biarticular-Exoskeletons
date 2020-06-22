@@ -142,7 +142,6 @@ fig.tight_layout(h_pad=-1, w_pad=-1.5)
 fig.subplots_adjust(top=0.98, bottom=0.075, left=0.100, right=0.975,hspace=0.45,wspace=0.40)
 fig.savefig('./Figures/Ideal/MusclesMetabolicRate_Mono_LoadedVsNoload.pdf',orientation='landscape',bbox_inches='tight')
 
-
 #####################################################################################
 # writing data to csv for adding the ideal exoskeletons on the paretofronts
 headers = ['mean_noload_bi_hip_energy','std_noload_bi_hip_energy','mean_noload_bi_knee_energy','std_noload_bi_knee_energy',\
@@ -221,22 +220,46 @@ with open(r'.\Statistics\Ideal\ActuatorsAvgPower_Dataset.csv', 'wb') as f:
 #####################################################################################
 # The contribution of the actuators
 #####################################################################################
+# monoarticular versus biarticular
 # bi noload actuators contributions
 mean_bi_noload_hip_contribution, std_bi_noload_hip_contribution,\
-mean_bi_noload_knee_contribution, std_bi_noload_knee_contribution\
+mean_bi_noload_knee_contribution, std_bi_noload_knee_contribution,_,_\
  = utils.actuators_energy_contribution(assisted_energy_dataset['biarticular_ideal_noload_hipactuator_energy'],assisted_energy_dataset['biarticular_ideal_noload_kneeactuator_energy'])
 # mono noload actuators contributions
 mean_mono_noload_hip_contribution, std_mono_noload_hip_contribution,\
-mean_mono_noload_knee_contribution, std_mono_noload_knee_contribution\
- = utils.actuators_energy_contribution(assisted_energy_dataset['monoarticular_ideal_noload_hipactuator_energy'],assisted_energy_dataset['monoarticular_ideal_noload_kneeactuator_energy'])
+mean_mono_noload_knee_contribution, std_mono_noload_knee_contribution,_,_\
+ = utils.actuators_energy_contribution(assisted_energy_dataset['monoarticular_ideal_noload_hipactuator_energy'],assisted_energy_dataset['monoarticular_ideal_noload_kneeactuator_energy'],\
+                                        assisted_energy_dataset['biarticular_ideal_noload_hipactuator_energy']+assisted_energy_dataset['biarticular_ideal_noload_kneeactuator_energy'])
 # bi loaded actuators contributions
 mean_bi_loaded_hip_contribution, std_bi_loaded_hip_contribution,\
-mean_bi_loaded_knee_contribution, std_bi_loaded_knee_contribution\
+mean_bi_loaded_knee_contribution, std_bi_loaded_knee_contribution,_,_\
  = utils.actuators_energy_contribution(assisted_energy_dataset['biarticular_ideal_loaded_hipactuator_energy'],assisted_energy_dataset['biarticular_ideal_loaded_kneeactuator_energy'])
-# mono loaded actuators contributions
+# mono vs bi loaded actuators contributions
 mean_mono_loaded_hip_contribution, std_mono_loaded_hip_contribution,\
-mean_mono_loaded_knee_contribution, std_mono_loaded_knee_contribution\
- = utils.actuators_energy_contribution(assisted_energy_dataset['monoarticular_ideal_loaded_hipactuator_energy'],assisted_energy_dataset['monoarticular_ideal_loaded_kneeactuator_energy'])
+mean_mono_loaded_knee_contribution, std_mono_loaded_knee_contribution,_,_\
+ = utils.actuators_energy_contribution(assisted_energy_dataset['monoarticular_ideal_loaded_hipactuator_energy'],assisted_energy_dataset['monoarticular_ideal_loaded_kneeactuator_energy'],\
+                                        assisted_energy_dataset['biarticular_ideal_loaded_hipactuator_energy']+assisted_energy_dataset['biarticular_ideal_loaded_kneeactuator_energy'])
+#*****************************
+# loaded versus noload
+# bi noload actuators contributions
+mean_bi_2_noload_hip_contribution, std_bi_2_noload_hip_contribution,\
+mean_bi_2_noload_knee_contribution, std_bi_2_noload_knee_contribution,_,_\
+ = utils.actuators_energy_contribution(assisted_energy_dataset['biarticular_ideal_noload_hipactuator_energy'],assisted_energy_dataset['biarticular_ideal_noload_kneeactuator_energy'])
+# mono noload actuators contributions
+mean_mono_2_noload_hip_contribution, std_mono_2_noload_hip_contribution,\
+mean_mono_2_noload_knee_contribution, std_mono_2_noload_knee_contribution,_,_\
+ = utils.actuators_energy_contribution(assisted_energy_dataset['monoarticular_ideal_noload_hipactuator_energy'],assisted_energy_dataset['monoarticular_ideal_noload_kneeactuator_energy'])
+# bi loaded actuators contributions
+mean_bi_2_loaded_hip_contribution, std_bi_2_loaded_hip_contribution,\
+mean_bi_2_loaded_knee_contribution, std_bi_2_loaded_knee_contribution,_,_\
+ = utils.actuators_energy_contribution(assisted_energy_dataset['biarticular_ideal_loaded_hipactuator_energy'],assisted_energy_dataset['biarticular_ideal_loaded_kneeactuator_energy'],\
+                                       assisted_energy_dataset['biarticular_ideal_noload_hipactuator_energy']+assisted_energy_dataset['biarticular_ideal_noload_kneeactuator_energy'])
+# mono vs bi loaded actuators contributions
+mean_mono_2_loaded_hip_contribution, std_mono_2_loaded_hip_contribution,\
+mean_mono_2_loaded_knee_contribution, std_mono_2_loaded_knee_contribution,_,_\
+ = utils.actuators_energy_contribution(assisted_energy_dataset['monoarticular_ideal_loaded_hipactuator_energy'],assisted_energy_dataset['monoarticular_ideal_loaded_kneeactuator_energy'],\
+                                       assisted_energy_dataset['monoarticular_ideal_noload_hipactuator_energy']+assisted_energy_dataset['monoarticular_ideal_noload_kneeactuator_energy'])
+
 # figure
 width = 0.35
 labels= ['hip','knee']
@@ -252,15 +275,15 @@ means_4 = [mean_mono_loaded_hip_contribution,mean_mono_loaded_knee_contribution]
 std_3 = [std_bi_loaded_hip_contribution,std_bi_loaded_knee_contribution]
 std_4 = [std_mono_loaded_hip_contribution,std_mono_loaded_knee_contribution]
 # third bar plot setting
-means_5 = [mean_bi_loaded_hip_contribution,mean_bi_loaded_knee_contribution]
-means_6 = [mean_bi_noload_hip_contribution,mean_bi_noload_knee_contribution]
-std_5 = [std_bi_loaded_hip_contribution,std_bi_loaded_knee_contribution]
-std_6 = [std_bi_noload_hip_contribution,std_bi_noload_knee_contribution]
+means_5 = [mean_bi_2_loaded_hip_contribution,mean_bi_2_loaded_knee_contribution]
+means_6 = [mean_bi_2_noload_hip_contribution,mean_bi_2_noload_knee_contribution]
+std_5 = [std_bi_2_loaded_hip_contribution,std_bi_2_loaded_knee_contribution]
+std_6 = [std_bi_2_noload_hip_contribution,std_bi_2_noload_knee_contribution]
 # fourth bar plot setting
-means_7 = [mean_mono_loaded_hip_contribution,mean_mono_loaded_knee_contribution]
-means_8 = [mean_mono_noload_hip_contribution,mean_mono_noload_knee_contribution]
-std_7 = [std_mono_loaded_hip_contribution,std_mono_loaded_knee_contribution]
-std_8 = [std_mono_noload_hip_contribution,std_mono_noload_knee_contribution]
+means_7 = [mean_mono_2_loaded_hip_contribution,mean_mono_2_loaded_knee_contribution]
+means_8 = [mean_mono_2_noload_hip_contribution,mean_mono_2_noload_knee_contribution]
+std_7 = [std_mono_2_loaded_hip_contribution,std_mono_2_loaded_knee_contribution]
+std_8 = [std_mono_2_noload_hip_contribution,std_mono_2_noload_knee_contribution]
 # plot
 fig,ax = plt.subplots(num='Actuators Contribution',nrows=2,ncols=2,figsize=(12.8, 9.6))
 # noload bi vs mono

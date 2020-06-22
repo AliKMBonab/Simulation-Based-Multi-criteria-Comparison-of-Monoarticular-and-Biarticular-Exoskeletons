@@ -35,6 +35,14 @@ bi_noload_RM_dictionary = utils.clasify_data(pareto_jrf_dataset['biarticular_par
 bi_loaded_RM_dictionary = utils.clasify_data(pareto_jrf_dataset['biarticular_paretofront_loaded_reaction_moments'],loadcondition='loaded',pareto=True,device='biarticular')
 mono_noload_RM_dictionary = utils.clasify_data(pareto_jrf_dataset['monoarticular_paretofront_noload_reaction_moments'],loadcondition='noload',pareto=True,device='monoarticular')
 mono_loaded_RM_dictionary = utils.clasify_data(pareto_jrf_dataset['monoarticular_paretofront_loaded_reaction_moments'],loadcondition='loaded',pareto=True,device='monoarticular')
+# pareto exo force dataset
+directory = './Data/Pareto/*_reaction_forces.csv'
+files = enumerate(glob.iglob(directory), 1)
+pareto_jrf_dataset = {pathlib.PurePath(f[1]).stem: np.loadtxt(f[1], delimiter=',') for f in files}
+bi_noload_RF_dictionary = utils.clasify_data(pareto_jrf_dataset['biarticular_paretofront_noload_reaction_forces'],loadcondition='noload',pareto=True,device='biarticular',forces_name=['Fx','Fy','Fz'])
+bi_loaded_RF_dictionary = utils.clasify_data(pareto_jrf_dataset['biarticular_paretofront_loaded_reaction_forces'],loadcondition='loaded',pareto=True,device='biarticular')
+mono_noload_RF_dictionary = utils.clasify_data(pareto_jrf_dataset['monoarticular_paretofront_noload_reaction_forces'],loadcondition='noload',pareto=True,device='monoarticular')
+mono_loaded_RF_dictionary = utils.clasify_data(pareto_jrf_dataset['monoarticular_paretofront_loaded_reaction_forces'],loadcondition='loaded',pareto=True,device='monoarticular')
 
 # gls
 gl_noload = {'noload_subject{}_trial{}'.format(i,j): utils.construct_gl_mass_side(subjectno=i,trialno=j,loadcond='noload') for i in subjects for j in trials_num}
@@ -56,6 +64,43 @@ mean_bi_noload_back_joint_jrf, std_bi_noload_back_joint_jrf = utils.pareto_profi
 # mono
 mean_mono_loaded_back_joint_jrf, std_mono_loaded_back_joint_jrf = utils.pareto_profiles_avg_std(mono_loaded_RM_dictionary['back_joint_Mz'],gl_noload,simulation_num=len(mono_loaded_indices),change_direction=False)
 mean_mono_noload_back_joint_jrf, std_mono_noload_back_joint_jrf = utils.pareto_profiles_avg_std(mono_noload_RM_dictionary['back_joint_Mz'],gl_noload,simulation_num=len(mono_noload_indices),change_direction=False)
+#******************************
+#  knee joint FX
+# bi
+mean_bi_loaded_knee_joint_jrf_Fx, std_bi_loaded_knee_joint_jrf_Fx = utils.pareto_profiles_avg_std(bi_loaded_RF_dictionary['knee_joint_Fx'],gl_noload,simulation_num=len(bi_loaded_indices),change_direction=False)
+mean_bi_noload_knee_joint_jrf_Fx, std_bi_noload_knee_joint_jrf_Fx = utils.pareto_profiles_avg_std(bi_noload_RF_dictionary['knee_joint_Fx'],gl_noload,simulation_num=len(bi_noload_indices),change_direction=False)
+# mono
+mean_mono_loaded_knee_joint_jrf_Fx, std_mono_loaded_knee_joint_jrf_Fx = utils.pareto_profiles_avg_std(mono_loaded_RF_dictionary['knee_joint_Fx'],gl_noload,simulation_num=len(mono_loaded_indices),change_direction=False)
+mean_mono_noload_knee_joint_jrf_Fx, std_mono_noload_knee_joint_jrf_Fx = utils.pareto_profiles_avg_std(mono_noload_RF_dictionary['knee_joint_Fx'],gl_noload,simulation_num=len(mono_noload_indices),change_direction=False)
+# knee joint FY
+# bi
+mean_bi_loaded_knee_joint_jrf_Fy, std_bi_loaded_knee_joint_jrf_Fy = utils.pareto_profiles_avg_std(bi_loaded_RF_dictionary['knee_joint_Fy'],gl_noload,simulation_num=len(bi_loaded_indices),change_direction=False)
+mean_bi_noload_knee_joint_jrf_Fy, std_bi_noload_knee_joint_jrf_Fy = utils.pareto_profiles_avg_std(bi_noload_RF_dictionary['knee_joint_Fy'],gl_noload,simulation_num=len(bi_noload_indices),change_direction=False)
+# mono
+mean_mono_loaded_knee_joint_jrf_Fy, std_mono_loaded_knee_joint_jrf_Fy = utils.pareto_profiles_avg_std(mono_loaded_RF_dictionary['knee_joint_Fy'],gl_noload,simulation_num=len(mono_loaded_indices),change_direction=False)
+mean_mono_noload_knee_joint_jrf_Fy, std_mono_noload_knee_joint_jrf_Fy = utils.pareto_profiles_avg_std(mono_noload_RF_dictionary['knee_joint_Fy'],gl_noload,simulation_num=len(mono_noload_indices),change_direction=False)
+# knee joint FZ
+# bi
+mean_bi_loaded_knee_joint_jrf_Fz, std_bi_loaded_knee_joint_jrf_Fz = utils.pareto_profiles_avg_std(bi_loaded_RF_dictionary['knee_joint_Fz'],gl_noload,simulation_num=len(bi_loaded_indices),change_direction=False)
+mean_bi_noload_knee_joint_jrf_Fz, std_bi_noload_knee_joint_jrf_Fz = utils.pareto_profiles_avg_std(bi_noload_RF_dictionary['knee_joint_Fz'],gl_noload,simulation_num=len(bi_noload_indices),change_direction=False)
+# mono
+mean_mono_loaded_knee_joint_jrf_Fz, std_mono_loaded_knee_joint_jrf_Fz = utils.pareto_profiles_avg_std(mono_loaded_RF_dictionary['knee_joint_Fz'],gl_noload,simulation_num=len(mono_loaded_indices),change_direction=False)
+mean_mono_noload_knee_joint_jrf_Fz, std_mono_noload_knee_joint_jrf_Fz = utils.pareto_profiles_avg_std(mono_noload_RF_dictionary['knee_joint_Fz'],gl_noload,simulation_num=len(mono_noload_indices),change_direction=False)
+#******************************
+# knee joint MX
+# bi
+mean_bi_loaded_knee_joint_jrf_Mx, std_bi_loaded_knee_joint_jrf_Mx = utils.pareto_profiles_avg_std(bi_loaded_RM_dictionary['knee_joint_Mx'],gl_noload,simulation_num=len(bi_loaded_indices),change_direction=False)
+mean_bi_noload_knee_joint_jrf_Mx, std_bi_noload_knee_joint_jrf_Mx = utils.pareto_profiles_avg_std(bi_noload_RM_dictionary['knee_joint_Mx'],gl_noload,simulation_num=len(bi_noload_indices),change_direction=False)
+# mono
+mean_mono_loaded_knee_joint_jrf_Mx, std_mono_loaded_knee_joint_jrf_Mx = utils.pareto_profiles_avg_std(mono_loaded_RM_dictionary['knee_joint_Mx'],gl_noload,simulation_num=len(mono_loaded_indices),change_direction=False)
+mean_mono_noload_knee_joint_jrf_Mx, std_mono_noload_knee_joint_jrf_Mx = utils.pareto_profiles_avg_std(mono_noload_RM_dictionary['knee_joint_Mx'],gl_noload,simulation_num=len(mono_noload_indices),change_direction=False)
+# knee joint MY
+# bi
+mean_bi_loaded_knee_joint_jrf_My, std_bi_loaded_knee_joint_jrf_My = utils.pareto_profiles_avg_std(bi_loaded_RM_dictionary['knee_joint_My'],gl_noload,simulation_num=len(bi_loaded_indices),change_direction=False)
+mean_bi_noload_knee_joint_jrf_My, std_bi_noload_knee_joint_jrf_My = utils.pareto_profiles_avg_std(bi_noload_RM_dictionary['knee_joint_My'],gl_noload,simulation_num=len(bi_noload_indices),change_direction=False)
+# mono
+mean_mono_loaded_knee_joint_jrf_My, std_mono_loaded_knee_joint_jrf_My = utils.pareto_profiles_avg_std(mono_loaded_RM_dictionary['knee_joint_My'],gl_noload,simulation_num=len(mono_loaded_indices),change_direction=False)
+mean_mono_noload_knee_joint_jrf_My, std_mono_noload_knee_joint_jrf_My = utils.pareto_profiles_avg_std(mono_noload_RM_dictionary['knee_joint_My'],gl_noload,simulation_num=len(mono_noload_indices),change_direction=False)
 # knee joint MZ
 # bi
 mean_bi_loaded_knee_joint_jrf_Mz, std_bi_loaded_knee_joint_jrf_Mz = utils.pareto_profiles_avg_std(bi_loaded_RM_dictionary['knee_joint_Mz'],gl_noload,simulation_num=len(bi_loaded_indices),change_direction=False)
@@ -63,6 +108,44 @@ mean_bi_noload_knee_joint_jrf_Mz, std_bi_noload_knee_joint_jrf_Mz = utils.pareto
 # mono
 mean_mono_loaded_knee_joint_jrf_Mz, std_mono_loaded_knee_joint_jrf_Mz = utils.pareto_profiles_avg_std(mono_loaded_RM_dictionary['knee_joint_Mz'],gl_noload,simulation_num=len(mono_loaded_indices),change_direction=False)
 mean_mono_noload_knee_joint_jrf_Mz, std_mono_noload_knee_joint_jrf_Mz = utils.pareto_profiles_avg_std(mono_noload_RM_dictionary['knee_joint_Mz'],gl_noload,simulation_num=len(mono_noload_indices),change_direction=False)
+#******************************
+# patellofemoral joint FX
+# bi
+mean_bi_loaded_patellofemoral_joint_jrf_Fx, std_bi_loaded_patellofemoral_joint_jrf_Fx = utils.pareto_profiles_avg_std(bi_loaded_RF_dictionary['patellofemoral_joint_Fx'],gl_noload,simulation_num=len(bi_loaded_indices),change_direction=False)
+mean_bi_noload_patellofemoral_joint_jrf_Fx, std_bi_noload_patellofemoral_joint_jrf_Fx = utils.pareto_profiles_avg_std(bi_noload_RF_dictionary['patellofemoral_joint_Fx'],gl_noload,simulation_num=len(bi_noload_indices),change_direction=False)
+# mono
+mean_mono_loaded_patellofemoral_joint_jrf_Fx, std_mono_loaded_patellofemoral_joint_jrf_Fx = utils.pareto_profiles_avg_std(mono_loaded_RF_dictionary['patellofemoral_joint_Fx'],gl_noload,simulation_num=len(mono_loaded_indices),change_direction=False)
+mean_mono_noload_patellofemoral_joint_jrf_Fx, std_mono_noload_patellofemoral_joint_jrf_Fx = utils.pareto_profiles_avg_std(mono_noload_RF_dictionary['patellofemoral_joint_Fx'],gl_noload,simulation_num=len(mono_noload_indices),change_direction=False)
+# patellofemoral joint FY
+# bi
+mean_bi_loaded_patellofemoral_joint_jrf_Fy, std_bi_loaded_patellofemoral_joint_jrf_Fy = utils.pareto_profiles_avg_std(bi_loaded_RF_dictionary['patellofemoral_joint_Fy'],gl_noload,simulation_num=len(bi_loaded_indices),change_direction=False)
+mean_bi_noload_patellofemoral_joint_jrf_Fy, std_bi_noload_patellofemoral_joint_jrf_Fy = utils.pareto_profiles_avg_std(bi_noload_RF_dictionary['patellofemoral_joint_Fy'],gl_noload,simulation_num=len(bi_noload_indices),change_direction=False)
+# mono
+mean_mono_loaded_patellofemoral_joint_jrf_Fy, std_mono_loaded_patellofemoral_joint_jrf_Fy = utils.pareto_profiles_avg_std(mono_loaded_RF_dictionary['patellofemoral_joint_Fy'],gl_noload,simulation_num=len(mono_loaded_indices),change_direction=False)
+mean_mono_noload_patellofemoral_joint_jrf_Fy, std_mono_noload_patellofemoral_joint_jrf_Fy = utils.pareto_profiles_avg_std(mono_noload_RF_dictionary['patellofemoral_joint_Fy'],gl_noload,simulation_num=len(mono_noload_indices),change_direction=False)
+# patellofemoral joint FZ
+# bi
+mean_bi_loaded_patellofemoral_joint_jrf_Fz, std_bi_loaded_patellofemoral_joint_jrf_Fz = utils.pareto_profiles_avg_std(bi_loaded_RF_dictionary['patellofemoral_joint_Fz'],gl_noload,simulation_num=len(bi_loaded_indices),change_direction=False)
+mean_bi_noload_patellofemoral_joint_jrf_Fz, std_bi_noload_patellofemoral_joint_jrf_Fz = utils.pareto_profiles_avg_std(bi_noload_RF_dictionary['patellofemoral_joint_Fz'],gl_noload,simulation_num=len(bi_noload_indices),change_direction=False)
+# mono
+mean_mono_loaded_patellofemoral_joint_jrf_Fz, std_mono_loaded_patellofemoral_joint_jrf_Fz = utils.pareto_profiles_avg_std(mono_loaded_RF_dictionary['patellofemoral_joint_Fz'],gl_noload,simulation_num=len(mono_loaded_indices),change_direction=False)
+mean_mono_noload_patellofemoral_joint_jrf_Fz, std_mono_noload_patellofemoral_joint_jrf_Fz = utils.pareto_profiles_avg_std(mono_noload_RF_dictionary['patellofemoral_joint_Fz'],gl_noload,simulation_num=len(mono_noload_indices),change_direction=False)
+
+#******************************
+# patellofemoral joint MX
+# bi
+mean_bi_loaded_patellofemoral_joint_jrf_Mx, std_bi_loaded_patellofemoral_joint_jrf_Mx = utils.pareto_profiles_avg_std(bi_loaded_RM_dictionary['patellofemoral_joint_Mx'],gl_noload,simulation_num=len(bi_loaded_indices),change_direction=False)
+mean_bi_noload_patellofemoral_joint_jrf_Mx, std_bi_noload_patellofemoral_joint_jrf_Mx = utils.pareto_profiles_avg_std(bi_noload_RM_dictionary['patellofemoral_joint_Mx'],gl_noload,simulation_num=len(bi_noload_indices),change_direction=False)
+# mono
+mean_mono_loaded_patellofemoral_joint_jrf_Mx, std_mono_loaded_patellofemoral_joint_jrf_Mx = utils.pareto_profiles_avg_std(mono_loaded_RM_dictionary['patellofemoral_joint_Mx'],gl_noload,simulation_num=len(mono_loaded_indices),change_direction=False)
+mean_mono_noload_patellofemoral_joint_jrf_Mx, std_mono_noload_patellofemoral_joint_jrf_Mx = utils.pareto_profiles_avg_std(mono_noload_RM_dictionary['patellofemoral_joint_Mx'],gl_noload,simulation_num=len(mono_noload_indices),change_direction=False)
+# patellofemoral joint MY
+# bi
+mean_bi_loaded_patellofemoral_joint_jrf_My, std_bi_loaded_patellofemoral_joint_jrf_My = utils.pareto_profiles_avg_std(bi_loaded_RM_dictionary['patellofemoral_joint_My'],gl_noload,simulation_num=len(bi_loaded_indices),change_direction=False)
+mean_bi_noload_patellofemoral_joint_jrf_My, std_bi_noload_patellofemoral_joint_jrf_My = utils.pareto_profiles_avg_std(bi_noload_RM_dictionary['patellofemoral_joint_My'],gl_noload,simulation_num=len(bi_noload_indices),change_direction=False)
+# mono
+mean_mono_loaded_patellofemoral_joint_jrf_My, std_mono_loaded_patellofemoral_joint_jrf_My = utils.pareto_profiles_avg_std(mono_loaded_RM_dictionary['patellofemoral_joint_My'],gl_noload,simulation_num=len(mono_loaded_indices),change_direction=False)
+mean_mono_noload_patellofemoral_joint_jrf_My, std_mono_noload_patellofemoral_joint_jrf_My = utils.pareto_profiles_avg_std(mono_noload_RM_dictionary['patellofemoral_joint_My'],gl_noload,simulation_num=len(mono_noload_indices),change_direction=False)
 # patellofemoral joint MZ
 # bi
 mean_bi_loaded_patellofemoral_joint_jrf_Mz, std_bi_loaded_patellofemoral_joint_jrf_Mz = utils.pareto_profiles_avg_std(bi_loaded_RM_dictionary['patellofemoral_joint_Mz'],gl_noload,simulation_num=len(bi_loaded_indices),change_direction=False)
