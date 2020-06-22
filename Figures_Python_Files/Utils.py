@@ -342,14 +342,16 @@ def outliers_iqr(ys):
     idx = np.where((ys > upper_bound) | (ys < lower_bound),True,False)
     return idx
 
-def actuators_energy_contribution(hip_actuator,knee_actuator):
-        hip_contribution = np.true_divide(hip_actuator*100,(hip_actuator+knee_actuator))
-        knee_contribution = np.true_divide(knee_actuator*100,(hip_actuator+knee_actuator))
+def actuators_energy_contribution(hip_actuator,knee_actuator,normalization_data=None):
+        if normalization_data is None:
+            normalization_data = hip_actuator + knee_actuator
+        hip_contribution = np.true_divide(hip_actuator*100,(normalization_data))
+        knee_contribution = np.true_divide(knee_actuator*100,(normalization_data))
         mean_hip_contribution = np.nanmean(hip_contribution)
         mean_knee_contribution = np.nanmean(knee_contribution)
         std_hip_contribution = np.nanstd(hip_contribution)
         std_knee_contribution = np.nanstd(knee_contribution)
-        return mean_hip_contribution, std_hip_contribution, mean_knee_contribution, std_knee_contribution
+        return mean_hip_contribution, std_hip_contribution, mean_knee_contribution, std_knee_contribution, hip_contribution, knee_contribution
     
 ######################################################################
 # Mass and inertia effect functions
@@ -674,7 +676,9 @@ def plot_muscles_avg(plot_dic,toeoff_color='xkcd:medium grey',
         
 def plot_joint_muscle_exo (nrows,ncols,plot_dic,color_dic,
                            ylabel,nplots=None,legend_loc=[0,1],
-                           subplot_legend=False,fig=None,thirdplot=True,y_ticks = [-2,-1,0,1,2]):
+                           subplot_legend=False,fig=None,thirdplot=True,
+                           y_ticks = [-2,-1,0,1,2],remove_subplot_loc=None,
+                           xlabel_loc=None,ylabel_loc=None):
     '''Note: please note that since it is in the for loop, if some data is
     needed to plot several times it should be repeated in the lists.  '''
     if nplots is None:
@@ -725,36 +729,50 @@ def plot_joint_muscle_exo (nrows,ncols,plot_dic,color_dic,
             plt.figlegend(handles=handle2,labels=label2, bbox_to_anchor=(pos.x0+0.05, pos.y0+0.05,  pos.width / 1.5, pos.height / 1.5))
         elif i in legend_loc and subplot_legend == False:
             plt.legend(loc='best',frameon=False)
-        if ncols==2 and i in [2,3]:
-            ax.set_xlabel('gait cycle (%)')
-        elif ncols==3 and i in [7,6]:
-            ax.set_xlabel('gait cycle (%)')
-        elif ncols==4 and i in [4,5,6,7]:
-            ax.set_xlabel('gait cycle (%)')
-        if ncols==2 and i in [0,2]:
-            ax.set_ylabel(ylabel)
-        elif ncols==3 and i in [0,3,6]:
-            ax.set_ylabel(ylabel)
-        elif ncols==4 and i in [0,4]:
-            ax.set_ylabel(ylabel)
-        if ncols==3 :
-            if i not in [7,6,5]:
+        if xlabel_loc != None:
+            if i in xlabel_loc:
+                ax.set_xlabel('gait cycle (%)')
+        else:
+            if ncols==2 and i in [2,3]:
+                ax.set_xlabel('gait cycle (%)')
+            elif ncols==3 and i in [7,6]:
+                ax.set_xlabel('gait cycle (%)')
+            elif ncols==4 and i in [4,5,6,7]:
+                ax.set_xlabel('gait cycle (%)')
+        if ylabel_loc != None:
+            if i in ylabel_loc:
+                ax.set_ylabel(ylabel)
+        else:
+            if ncols==2 and i in [0,2]:
+                ax.set_ylabel(ylabel)
+            elif ncols==3 and i in [0,3,6]:
+                ax.set_ylabel(ylabel)
+            elif ncols==4 and i in [0,4]:
+                ax.set_ylabel(ylabel)
+        if remove_subplot_loc != None:
+            if i in remove_subplot_loc:
                 labels = [item.get_text() for item in ax.get_xticklabels()]
                 empty_string_labels = ['']*len(labels)
                 ax.set_xticklabels(empty_string_labels)
-            if i not in [0,3,6]:
-                labels = [item.get_text() for item in ax.get_yticklabels()]
-                empty_string_labels = ['']*len(labels)
-                ax.set_yticklabels(empty_string_labels)
-        elif ncols==4:
-            if i in [0,1,2,3]:
-                labels = [item.get_text() for item in ax.get_xticklabels()]
-                empty_string_labels = ['']*len(labels)
-                ax.set_xticklabels(empty_string_labels)
-            if i not in [0,4]:
-                labels = [item.get_text() for item in ax.get_yticklabels()]
-                empty_string_labels = ['']*len(labels)
-                ax.set_yticklabels(empty_string_labels)
+        else:
+            if ncols==3 :
+                if i not in [7,6,5]:
+                    labels = [item.get_text() for item in ax.get_xticklabels()]
+                    empty_string_labels = ['']*len(labels)
+                    ax.set_xticklabels(empty_string_labels)
+                if i not in [0,3,6]:
+                    labels = [item.get_text() for item in ax.get_yticklabels()]
+                    empty_string_labels = ['']*len(labels)
+                    ax.set_yticklabels(empty_string_labels)
+            elif ncols==4:
+                if i in [0,1,2,3]:
+                    labels = [item.get_text() for item in ax.get_xticklabels()]
+                    empty_string_labels = ['']*len(labels)
+                    ax.set_xticklabels(empty_string_labels)
+                if i not in [0,4]:
+                    labels = [item.get_text() for item in ax.get_yticklabels()]
+                    empty_string_labels = ['']*len(labels)
+                    ax.set_yticklabels(empty_string_labels)
 
 def plot_gait_cycle_phase(mean_dic,std_dic,avg_toeoff,loadcond):
     '''
@@ -1828,8 +1846,8 @@ def plot_pareto_avg_curve (plot_dic,loadcond,legend_loc=0,label_on=True,which_la
           plt.errorbar(x1_ideal,y1_ideal,xerr=x1err_ideal,yerr=y1err_ideal,fmt='X',ecolor=color_1,alpha=0.15)
           plt.errorbar(x2_ideal,y2_ideal,xerr=x2err_ideal,yerr=y2err_ideal,fmt='X',ecolor=color_2,alpha=0.15)
 
-def plot_pareto_curve_subjects (nrows,ncols,nplot,plot_dic,loadcond,\
-                                line=False,legend_loc=[0],labels=None,\
+def plot_pareto_curve_subjects (nrows,ncols,nplot,plot_dic,loadcond,
+                                line=False,legend_loc=[0],labels=None,
                                 label_on=True,third_plot=False,alpha=1,*args, **kwargs):
     x1_data = plot_dic['x1_data']
     x2_data = plot_dic['x2_data']
@@ -2407,7 +2425,8 @@ def muscles_whisker_bar_plot(data_1,data_2,data_3=None,data_4=None,
             no_top_right(ax)
             plt.tight_layout()
 
-def plot_stiffness(plot_dic,load_condition,kinematics_ticks,moment_ticks,ax1,ax2,ax3):
+def plot_stiffness(plot_dic,load_condition,kinematics_ticks,moment_ticks,
+                   ax1,ax2,ax3,joint=None,plot_phases=False,plot_fitted_line=False):
     """
     This function has been developed to simultaneously plot moment, kinematics, and stiffness\n
 
@@ -2421,9 +2440,11 @@ def plot_stiffness(plot_dic,load_condition,kinematics_ticks,moment_ticks,ax1,ax2
     if load_condition == 'loaded':
         toe_off = plot_dic['loaded_toe_off']
         index = pp.nearest_index(gait_cycle,toe_off)
+        phase_colors = ['dimgray','silver']
     elif load_condition == 'noload':
         toe_off = plot_dic['noload_toe_off']
         index = pp.nearest_index(gait_cycle,toe_off)
+        phase_colors = ['teal','turquoise']
     # first plot dataset
     kinematics = plot_dic['kinematics']
     moment = plot_dic['moment']
@@ -2432,6 +2453,19 @@ def plot_stiffness(plot_dic,load_condition,kinematics_ticks,moment_ticks,ax1,ax2
     color = plot_dic['color']
     toe_off_color = plot_dic['toe_off_color']
     label = plot_dic['label']
+    # stiffness
+    if plot_phases == True:
+        phases_kinematics = plot_dic['phases_kinematics']
+        phases_moment = plot_dic['phases_moment']
+    if plot_fitted_line == True:
+        phase_fitted_lines = plot_dic['phases_fitted_line']
+    # phases
+    if joint == 'knee':
+        phase_list = ['knee_flexion','knee_extension']
+    elif joint == 'hip':
+        phase_list = ['hip_flexion','hip_extension']
+    markers = ['o','P']
+    phase_name = ['flexion','extension']
     # grids
     # general conditions
     ax1.tick_params(axis='both',direction='in')
@@ -2444,13 +2478,21 @@ def plot_stiffness(plot_dic,load_condition,kinematics_ticks,moment_ticks,ax1,ax2
     ax1.vlines(kinematics[index],np.min(moment_ticks),np.max(moment_ticks),color=toe_off_color,lw=2,alpha=0.5)
     ax1.hlines(0,np.min(kinematics_ticks),np.max(kinematics_ticks),ls=':',color=mycolors['teal'],lw=1.5,alpha=0.25)
     ax1.vlines(0,np.min(moment_ticks),np.max(moment_ticks),ls=':',color=mycolors['teal'],lw=1.5,alpha=0.25)
-    
+    if plot_phases == True:
+        for i,phase in enumerate(phase_list):
+            idx = np.arange(0,int(np.round(phases_kinematics['{}'.format(phase)].shape[0])),int(np.round(phases_kinematics['{}'.format(phase)].shape[0]/15)))
+            phase_k = np.take(phases_kinematics['{}'.format(phase)],idx)
+            phase_m = np.take(phases_moment['{}'.format(phase)],idx)
+            ax1.plot(phase_k,phase_m,marker=markers[i],c=phase_colors[i],markersize=8,linestyle='None',alpha=0.75)
+            if plot_fitted_line == True:
+                ax1.plot(phases_kinematics['{}'.format(phase)],phase_fitted_lines['{}'.format(phase)],label=phase_name[i],lw=2.5,color=phase_colors[i])
+           
     no_top_right(ax1)
     ax1.set_xticks(kinematics_ticks)
     ax1.set_yticks(moment_ticks)
-    ax1.set_xlim([np.floor(np.min(kinematics_ticks)),np.ceil(np.max(kinematics_ticks))])
-    ax1.set_ylim([np.floor(np.min(moment_ticks)),np.ceil(np.max(moment_ticks))])
-    ax1.set_xlabel('angle (deg)')
+    ax1.set_xlim([np.min(kinematics_ticks),np.max(kinematics_ticks)])
+    ax1.set_ylim([np.min(moment_ticks),np.max(moment_ticks)])
+    ax1.set_xlabel('angle (rad)')
     ax1.set_ylabel('moment (N.m)')
     ax1.set_title('stiffness')
     ax1.legend(loc='best',frameon=False)
@@ -2463,7 +2505,7 @@ def plot_stiffness(plot_dic,load_condition,kinematics_ticks,moment_ticks,ax1,ax2
     ax2.set_xticks([0,10,20,30,40,50,60,70,80,90,100])
     ax2.set_xlim([0,100])
     ax2.set_yticks(moment_ticks)
-    ax2.set_ylim([np.floor(np.min(moment_ticks)),np.ceil(np.max(moment_ticks))])
+    ax2.set_ylim([np.min(moment_ticks),np.max(moment_ticks)])
     ax2.set_xlabel('gait cycle (%)')
     ax2.set_ylabel('moment (N.m)')
     ax2.set_title('moment')
@@ -2478,9 +2520,9 @@ def plot_stiffness(plot_dic,load_condition,kinematics_ticks,moment_ticks,ax1,ax2
     ax3.set_xticks([0,10,20,30,40,50,60,70,80,90,100])
     ax3.set_xlim([0,100])
     ax3.set_yticks(kinematics_ticks)
-    ax3.set_ylim([np.floor(np.min(kinematics_ticks)),np.ceil(np.max(kinematics_ticks))])
+    ax3.set_ylim([np.min(kinematics_ticks),np.max(kinematics_ticks)])
     ax3.set_xlabel('gait cycle (%)')
-    ax3.set_ylabel('kinematics (deg)')
+    ax3.set_ylabel('kinematics (rad)')
     ax3.set_title('kinematics')
     #ax3.legend(loc='best',frameon=False)
     no_top_right(ax3)
@@ -2688,5 +2730,564 @@ def muscles_metabolics_contribution(muscles_metabolics_loaded,total_metabolics_l
     ax = plt.gca()
     no_top_right(ax)
 
-def joints_quassi_stiffness(data,joint):
-    pass
+def joints_linear_phases_indices(toe_off,phase):
+    """
+    calculates the indices of linear phases for each joints.\n
+    Phase:\n\t
+        'knee_flexion','knee_total','knee_extension','hip_flexion','hip_extension','hip_total'
+    """
+    if phase not in ['knee_flexion','knee_total','knee_extension','hip_flexion','hip_extension','hip_total']:
+        raise Exception('input phase is not supported. Please change your phase.')
+    gait_cycle = np.linspace(0,100,1000)
+    toe_off_diff = toe_off-60
+    if phase == 'knee_flexion': # from initial contact to the maximum flexion of the first arc.
+        phase_start = 0 + toe_off_diff
+        phase_end = 15 + toe_off_diff
+        if phase_start < 0:
+            indices_1 = np.where((gait_cycle >= 0) & (gait_cycle <= phase_end))
+            indices_2 = np.where((gait_cycle >= 100+toe_off_diff) & (gait_cycle <= 100))
+            index = np.concatenate((indices_1[0],indices_2[0]), axis=0)
+            return [index]
+        else:
+            index = np.where((gait_cycle >= phase_start) & (gait_cycle <= phase_end))
+            return index
+    elif phase == 'knee_extension': # from maximum flexion in first arc to end of extension of the second arc.
+        phase_start = 15 + toe_off_diff
+        phase_end = 40 + toe_off_diff
+        index = np.where((gait_cycle >= phase_start) & (gait_cycle <= phase_end))
+        return index
+    elif phase == 'knee_total': # from the initial contact to end of extension of the second arc.
+        phase_start = 0 + toe_off_diff
+        phase_end = 40 + toe_off_diff
+        if phase_start < 0:
+            indices_1 = np.where((gait_cycle >= 0) & (gait_cycle <= phase_end))
+            indices_2 = np.where((gait_cycle >= 100+toe_off_diff) & (gait_cycle <= 100))
+            index = np.concatenate((indices_1[0],indices_2[0]), axis=0)
+            return [index]
+        else:
+            index = np.where((gait_cycle >= phase_start) & (gait_cycle <= phase_end))
+            return index
+    elif phase == 'hip_flexion': # from the extension onset to maximum extension.
+        phase_start = 32 + toe_off_diff
+        phase_end = 50 + toe_off_diff
+        index = np.where((gait_cycle >= phase_start) & (gait_cycle <= phase_end))
+        return index
+    elif phase == 'hip_extension': # from the maximum extension to initial swing.
+        phase_start = 50 + toe_off_diff
+        phase_end = 70 + toe_off_diff
+        index = np.where((gait_cycle >= phase_start) & (gait_cycle <= phase_end))
+        return index
+    elif phase == 'hip_total': # from the extension onset to initial swing.
+        phase_start = 32 + toe_off_diff
+        phase_end = 70 + toe_off_diff
+        index = np.where((gait_cycle >= phase_start) & (gait_cycle <= phase_end))
+        return index
+
+def quasi_stiffness(angle,moment,toe_off,phase):
+    """
+    Note:
+    np.polynomial.polynomial.polyfit:
+    p(x) = c[0] + c[1]*x
+    c[1]: quassi stiffness
+    """
+    idx = joints_linear_phases_indices(toe_off=toe_off,phase=phase)
+    linear_angle = np.take(angle,idx,axis=0)
+    linear_moment = np.take(moment,idx,axis=0)
+    #fixing the problem of unmatched sizes
+    if linear_angle[0,~np.isnan(linear_angle[0,:])].shape[0] != linear_moment[0,~np.isnan(linear_moment[0,:])].shape[0]:
+        linear_moment_indices = np.arange(0,linear_moment[0,~np.isnan(linear_moment[0,:])].shape[0],1)
+        linear_angle_indices = np.arange(0,linear_angle[0,~np.isnan(linear_angle[0,:])].shape[0],1)
+        linear_angle = np.interp(linear_moment_indices,linear_angle_indices,linear_angle[0,~np.isnan(linear_angle[0,:])])
+        linear_angle = np.expand_dims(linear_angle,axis=0)
+    # fitting
+    if linear_angle[0,~np.isnan(linear_angle[0,:])].size == 0 or linear_moment[0,~np.isnan(linear_moment[0,:])].size == 0:
+        coefficient = np.array([np.nan,np.nan])
+        Rsquare = np.nan
+    else:
+        coefficient = np.polynomial.polynomial.polyfit(x=linear_angle[0,~np.isnan(linear_angle[0,:])],\
+                                                y=linear_moment[0,~np.isnan(linear_moment[0,:])],deg=1)
+        predicted_moment = np.polynomial.polynomial.polyval(linear_angle[0,~np.isnan(linear_angle[0,:])],coefficient)
+        Rsquare = metrics.r2_score(np.transpose(linear_moment[0,~np.isnan(linear_moment[0,:])]), predicted_moment)
+    return coefficient, Rsquare
+    
+def calculate_quasi_stiffness(angle,moment,toe_off,joint,modify_toe_off = False):
+    # initial check conditions
+    if joint == 'knee':
+        phase_list = ['knee_flexion','knee_total','knee_extension']
+    elif joint == 'hip':
+        phase_list = ['hip_flexion','hip_extension','hip_total']
+    else:
+        raise Exception('The input joint is not supported.')
+    if angle.shape[1] != moment.shape[1]:
+        raise Exception('There is no pairwise data to compute the stiffness')
+    # initialization
+    stiffness_dictionary = dict()
+    R_square_dictionary = dict()
+    bias_dictionary =dict()
+    stiffness = np.zeros([len(phase_list),angle.shape[1]])
+    Rsquares = np.zeros([len(phase_list),angle.shape[1]])
+    bias = np.zeros([len(phase_list),angle.shape[1]])
+    # fix toe off data shape for pareto simulations
+    if modify_toe_off == True:
+        toe_off = np.repeat(toe_off,25)
+    # calculate the stiffness for selected phases of a joint
+    for k,phase in enumerate(phase_list):
+        for i in range(angle.shape[1]):
+            coefficient, R2 = quasi_stiffness(angle=np.deg2rad(angle[:,i]),moment=moment[:,i],toe_off=toe_off[i],phase=phase)
+            bias[k,i] = coefficient[0]
+            stiffness[k,i] = coefficient[1]
+            Rsquares[k,i] = R2
+    for i,phase in enumerate(phase_list):
+        # calculate mean and std
+        mean_stiffness, std_stiffness = mean_std_over_subjects(np.abs(stiffness[i,:]),ax=0)
+        mean_R_square, std_R_square = mean_std_over_subjects(Rsquares[i,:],ax=0)
+        mean_bias, std_bias = mean_std_over_subjects(bias[i,:],ax=0)
+        # save data
+        stiffness_dictionary['{}_stiffness'.format(phase)] = np.abs(stiffness[i,:])
+        stiffness_dictionary['{}_stiffness_raw'.format(phase)] = stiffness[i,:]
+        R_square_dictionary['{}_R_square'.format(phase)] = Rsquares[i,:]
+        bias_dictionary['{}_bias'.format(phase)] = bias[i,:]
+        # mean
+        stiffness_dictionary['mean_{}_stiffness'.format(phase)] = mean_stiffness
+        R_square_dictionary['mean_{}_R_square'.format(phase)] = mean_R_square
+        bias_dictionary['mean_{}_bias'.format(phase)] = mean_bias
+        # std
+        stiffness_dictionary['std_{}_stiffness'.format(phase)] = std_stiffness
+        R_square_dictionary['std_{}_R_square'.format(phase)] = std_R_square
+        bias_dictionary['std_{}_bias'.format(phase)] = std_bias
+        # return dictionaries
+    return stiffness_dictionary, R_square_dictionary, bias_dictionary
+
+def mean_linear_phases(mean_angle,mean_moment,mean_toe_off,joint,joint_mean_bias,joint_mean_stiffness):
+    """
+    angle is in radian
+    the input stiffness is either N-m/rad.kg or N-m/rad
+    """
+    if joint == 'knee':
+        phase_list = ['knee_flexion','knee_extension']
+    elif joint == 'hip':
+        phase_list = ['hip_flexion','hip_extension']
+    else:
+        raise Exception('The input joint is not supported.')
+    linear_angle_dict = dict()
+    linear_moment_dict = dict()
+    fitted_line_dict = dict()
+    for phase in phase_list:
+        idx = joints_linear_phases_indices(mean_toe_off,phase)
+        angle = np.take(np.deg2rad(mean_angle),idx,axis=0)
+        moment = np.take(mean_moment,idx,axis=0)
+        stiffness = joint_mean_stiffness['{}_stiffness_raw'.format(phase)]
+        bias = joint_mean_bias['mean_{}_bias'.format(phase)]
+        mean_stiffness = np.nanmean(stiffness,axis=0)
+        predicted_moment = np.polynomial.polynomial.polyval(angle,np.array([bias,mean_stiffness]))
+        # save to dictionary
+        linear_angle_dict['{}'.format(phase)] = angle[0,:]
+        linear_moment_dict['{}'.format(phase)] = moment[0,:]
+        fitted_line_dict['{}'.format(phase)] = predicted_moment[0,:]
+    return linear_angle_dict, linear_moment_dict, fitted_line_dict
+
+def recover_unassist_linear_phases(mean_angle,mean_moment,mean_toe_off,stiffness_csv_dataset,bias_csv_dataset,joint,load):
+    linear_angle_dict = dict()
+    linear_moment_dict = dict()
+    fitted_line_dict = dict()
+    for phase in ['extension','flexion']:
+        # indices, moment, and angle
+        idx = joints_linear_phases_indices(mean_toe_off,'{}_{}'.format(joint,phase))
+        angle = np.take(np.deg2rad(mean_angle),idx,axis=0)
+        moment = np.take(mean_moment,idx,axis=0)
+        # stiffness and bias
+        joint_stiffness = stiffness_csv_dataset['{}_{}_{}_stiffness_raw'.format(load,joint,phase)]
+        joint_bias = bias_csv_dataset['{}_{}_{}_bias'.format(load,joint,phase)]
+        mean_joint_stiffness = np.nanmean(joint_stiffness)
+        mean_joint_bias = np.nanmean(joint_bias)
+        # predicted moment
+        predicted_moment = np.polynomial.polynomial.polyval(angle,np.array([mean_joint_bias,mean_joint_stiffness]))
+        # save to dictionary
+        linear_angle_dict['{}_{}'.format(joint,phase)] = angle[0,:]
+        linear_moment_dict['{}_{}'.format(joint,phase)] = moment[0,:]
+        fitted_line_dict['{}_{}'.format(joint,phase)] = predicted_moment[0,:]
+    return linear_angle_dict, linear_moment_dict, fitted_line_dict
+
+def plot_joint_exo_muscles_stiffness(nrows,ncols,plot_dic,color_dic,joint,
+                                ylabel,nplots=None,legend_loc=[0,4],joint_alpha=0.45,device_alpha=0.95,
+                                subplot_legend=False,fig=None,thirdplot=True,
+                                moment_ticks = [-2,-1,0,1,2],kinematics_ticks =[-2,-1,0,1,2],
+                                plot_phases=True,joint_phases=False,plot_fitted_line=True,
+                                remove_subplot_loc=None,xlabel_loc=None,ylabel_loc=None):
+    '''Note: please note that since it is in the for loop, if some data is
+    needed to plot several times it should be repeated in the lists.  '''
+    if nplots is None:
+        nplots = ncols*nrows
+    # reading data
+    # first set
+    kinematic_1_list = plot_dic['kinematic_1_list']
+    moment_1_list = plot_dic['moment_1_list']
+    color_1_list = color_dic['color_1_list']
+    label_1 = plot_dic['label_1']
+    # second set
+    kinematic_2_list = plot_dic['kinematic_2_list']
+    moment_2_list = plot_dic['moment_2_list']
+    color_2_list = color_dic['color_2_list']
+    label_2 = plot_dic['label_2']
+    # linear phases data
+    if plot_phases == True:
+        linear_kinematics_1_list = plot_dic['linear_kinematics_1_list']
+        linear_moment_1_list = plot_dic['linear_moment_1_list']
+        linear_kinematics_2_list = plot_dic['linear_kinematics_2_list']
+        linear_moment_2_list = plot_dic['linear_moment_2_list']
+        if thirdplot == True:
+            linear_kinematics_3_list = plot_dic['linear_kinematics_3_list']
+            linear_moment_3_list = plot_dic['linear_moment_3_list']
+        if plot_fitted_line == True:
+            fitted_line_1_list = plot_dic['fitted_line_1_list']
+            fitted_line_2_list = plot_dic['fitted_line_2_list']
+            if thirdplot == True:
+                fitted_line_3_list = plot_dic['fitted_line_3_list']            
+    # titles
+    plot_titles = plot_dic['plot_titles']
+    # third set
+    if thirdplot == True:
+        color_3_list = color_dic['color_3_list']
+        kinematic_3_list = plot_dic['kinematic_3_list']
+        moment_3_list = plot_dic['moment_3_list']
+        label_3 = plot_dic['label_3']
+    #plot
+    for i in range(nplots):
+        ax = plt.subplot(nrows,ncols,i+1)
+        # joint moment-angle
+        ax.plot(np.deg2rad(kinematic_1_list[i]),moment_1_list[i],lw=2,color=color_1_list[i],label=label_1,alpha=joint_alpha)
+        # device/muscle moment-angle
+        ax.plot(np.deg2rad(kinematic_2_list[i]),moment_2_list[i],lw=2,color=color_2_list[i],label=label_2[i],alpha=device_alpha)
+        if thirdplot == True:
+            # device/muscle moment-angle
+            ax.plot(np.deg2rad(kinematic_3_list[i]),moment_3_list[i],lw=2,color=color_3_list[i],label=label_3,alpha=device_alpha)
+        # zero lines
+        ax.hlines(0,np.min(kinematics_ticks),np.max(kinematics_ticks),ls=':',color=mycolors['teal'],lw=1.5,alpha=0.5)
+        ax.vlines(0,np.min(moment_ticks),np.max(moment_ticks),ls=':',color=mycolors['teal'],lw=1.5,alpha=0.5)
+        # plot linear phases and stiffness line
+        if plot_phases == True:
+            if joint == 'hip':
+                phase_list = ['hip_extension','hip_flexion']
+                phase_name = ['hip extension','hip flexion']
+            elif joint == 'knee':
+                phase_list = ['knee_extension','knee_flexion']
+                phase_name = ['knee extension','knee flexion']
+            markers = ['o','P']
+            phase_colors_1 = ['darkgrey','silver']
+            phase_colors_2 = ['tan','burlywood']
+            # phases plots
+            for j,phase in enumerate(phase_list):
+            # joint moment-angle linear phase
+                if joint_phases == True:
+                    idx_1 = np.arange(0,int(linear_kinematics_1_list[i][phase].shape[0]),int(np.round(linear_kinematics_1_list[i][phase].shape[0]/5)))
+                    phase_k_1 = np.take(linear_kinematics_1_list[i][phase],idx_1)
+                    phase_m_1 = np.take(linear_moment_1_list[i][phase],idx_1)
+                ax.plot(phase_k_1,phase_m_1,marker=markers[j],c=phase_colors_1[j],markersize=6,linestyle='None',alpha=0.65)
+                if plot_fitted_line == True:
+                    ax.plot(linear_kinematics_1_list[i][phase],fitted_line_1_list[i][phase],lw=2,color=phase_colors_1[j],alpha=0.65)
+                # device/muscles moment-angle linear phase
+                if joint_phases == True:
+                    idx_2 = np.arange(0,int(linear_kinematics_2_list[i][phase].shape[0]),int(np.round(linear_kinematics_2_list[i][phase].shape[0]/5)))
+                    phase_k_2 = np.take(linear_kinematics_2_list[i][phase],idx_2)
+                    phase_m_2 = np.take(linear_moment_2_list[i][phase],idx_2)              
+                    ax.plot(phase_k_2,phase_m_2,marker=markers[j],c=phase_colors_2[j],label=phase_name[j],markersize=6,linestyle='None',alpha=0.80)
+                if plot_fitted_line == True:
+                    ax.plot(linear_kinematics_2_list[i][phase],fitted_line_2_list[i][phase],lw=2,color=phase_colors_2[j])
+                # third plot moment-angle linear phase
+                if thirdplot == True:
+                    if joint_phases == True:
+                        idx_3 = np.arange(0,int(linear_kinematics_3_list[i][phase].shape[0]),int(np.round(linear_kinematics_3_list[i][phase].shape[0]/5)))
+                        phase_k_3 = np.take(linear_kinematics_3_list[i][phase],idx_3)
+                        phase_m_3 = np.take(linear_moment_3_list[i][phase],idx_3)
+                        ax.plot(phase_k_3,phase_m_3,marker=markers[j],c=phase_colors_1[j],markersize=6,linestyle='None',alpha=0.75)
+                    if plot_fitted_line == True:
+                        ax.plot(linear_kinematics_3_list[i][phase],fitted_line_3_list[i][phase],lw=2,color=phase_colors_1[j])
+    # set ticks
+        if joint == 'knee':
+            if i in [0,1,2,3]:
+                ax.set_yticks([-2,-1.5,-1,-0.5,0,0.5,1])
+                ax.set_ylim([min([-2,-1.5,-1,-0.5,0,0.5,1]),max([-2,-1.5,-1,-0.5,0,0.5,1])])
+            elif i in [4,5,6,7]:
+                ax.set_yticks([-1,-0.5,0,0.5,1,1.5])
+                ax.set_ylim([min([-1,-0.5,0,0.5,1,1.5]),max([-1,-0.5,0,0.5,1,1.5])])
+        else:
+            ax.set_yticks(moment_ticks)
+            ax.set_ylim([min(moment_ticks),max(moment_ticks)])
+        ax.set_xticks(kinematics_ticks)
+        ax.set_xlim([min(kinematics_ticks),max(kinematics_ticks)])
+        ax.set_title(plot_titles[i])
+        plt.tick_params(axis='both',direction='in')
+        no_top_right(ax)
+        # subplot removing, locating x and y labels, ect.
+        if subplot_legend == True and i == nplots-1:
+            ax_list = fig.axes
+            ax_last = plt.subplot(nrows,ncols,nrows*ncols)
+            ax_last.spines["right"].set_visible(False)
+            ax_last.spines["top"].set_visible(False)
+            ax_last.spines["bottom"].set_visible(False)
+            ax_last.spines["left"].set_visible(False)
+            ax_last.set_xticks([], [])
+            ax_last.set_yticks([], []) 
+            pos = ax_last.get_position()
+            handle1,label1 = ax_list[legend_loc[0]].get_legend_handles_labels()
+            handle2,label2 = ax_list[legend_loc[1]].get_legend_handles_labels()
+            plt.figlegend(handles=handle1,labels=label1, bbox_to_anchor=(pos.x0+0.05, pos.y0-0.05,  pos.width / 1.5, pos.height / 1.5))
+            plt.figlegend(handles=handle2,labels=label2, bbox_to_anchor=(pos.x0+0.05, pos.y0+0.05,  pos.width / 1.5, pos.height / 1.5))
+        elif i in legend_loc and subplot_legend == False:
+            plt.legend(loc='best',frameon=False)
+        if xlabel_loc != None:
+            if i in xlabel_loc:
+                ax.set_xlabel('kinematics (rad)')
+        else:
+            if ncols==2 and i in [2,3]:
+                ax.set_xlabel('kinematics (rad)')
+            elif ncols==3 and i in [7,6]:
+                ax.set_xlabel('kinematics (rad)')
+            elif ncols==4 and i in [4,5,6,7]:
+                ax.set_xlabel('kinematics (rad)')
+        if ylabel_loc != None:
+            if i in ylabel_loc:
+                ax.set_ylabel(ylabel)
+        else:
+            if ncols==2 and i in [0,2]:
+                ax.set_ylabel(ylabel)
+            elif ncols==3 and i in [0,3,6]:
+                ax.set_ylabel(ylabel)
+            elif ncols==4 and i in [0,4]:
+                ax.set_ylabel(ylabel)
+        if remove_subplot_loc != None:
+            if i in remove_subplot_loc:
+                labels = [item.get_text() for item in ax.get_xticklabels()]
+                empty_string_labels = ['']*len(labels)
+                ax.set_xticklabels(empty_string_labels)
+        else:
+            if ncols==3 :
+                if i not in [7,6,5]:
+                    labels = [item.get_text() for item in ax.get_xticklabels()]
+                    empty_string_labels = ['']*len(labels)
+                    ax.set_xticklabels(empty_string_labels)
+                if i not in [0,3,6]:
+                    labels = [item.get_text() for item in ax.get_yticklabels()]
+                    empty_string_labels = ['']*len(labels)
+                    ax.set_yticklabels(empty_string_labels)
+            elif ncols==4:
+                if i in [0,1,2,3]:
+                    labels = [item.get_text() for item in ax.get_xticklabels()]
+                    empty_string_labels = ['']*len(labels)
+                    ax.set_xticklabels(empty_string_labels)
+                if i not in [0,4]:
+                    labels = [item.get_text() for item in ax.get_yticklabels()]
+                    empty_string_labels = ['']*len(labels)
+                    ax.set_yticklabels(empty_string_labels)
+
+def paretofront_quasi_stiffness(kinematics_csv,moments_csv,toe_off,device,loadcondition,gl_noload,muscles_actuator):
+    if device.lower() == 'biarticular' and loadcondition == 'loaded':
+        # biarticular/loaded
+        loadcond = 'load'
+        hip_weight = [30,30,30,30,30,40,40,50,50,50,60,70]
+        knee_weight = [30,40,50,60,70,60,70,50,60,70,70,70]
+    elif device.lower() == 'biarticular' and loadcondition == 'noload':
+        # biarticular/noload
+        loadcond = 'noload'
+        hip_weight = [30,30,30,30,30,40,40,40,50,50,50,70]
+        knee_weight = [30,40,50,60,70,40,50,60,50,60,70,70]
+    elif device.lower() == 'monoarticular' and loadcondition == 'loaded':
+        # monoarticular/loaded
+        loadcond = 'load'
+        hip_weight = [30,40,50,60,70,70,70,70,70]
+        knee_weight = [30,30,30,30,30,40,50,60,70]  
+    elif device.lower() == 'monoarticular' and loadcondition == 'noload':  
+        # monoarticular/noload
+        loadcond = 'noload'
+        hip_weight = [30,40,50,50,50,60,60,60,70,70]
+        knee_weight = [30,30,30,40,50,50,60,70,60,70]
+    # iterating on the weights
+    paretofront_stiffness = dict()
+    paretofront_R_square = dict()
+    for joint in ['hip','knee']:
+        for w in range(len(hip_weight)):
+            kinematics = kinematics_csv['{}_hip{}knee{}_{}_{}joint_kinematics'.format(device,hip_weight[w],knee_weight[w],loadcond,joint)]
+            if muscles_actuator == 'muscles':
+                moment = moments_csv['{}_hip{}knee{}_{}_{}muscles_moment'.format(device,hip_weight[w],knee_weight[w],loadcond,joint)]
+            elif muscles_actuator == 'actuator':
+                moment = moments_csv['{}_hip{}knee{}_{}_{}actuator_torque'.format(device,hip_weight[w],knee_weight[w],loadcond,joint)]
+                if joint == 'knee' and device == 'biarticular':
+                    kinematics =  kinematics_csv['{}_hip{}knee{}_{}_{}joint_kinematics'.format(device,hip_weight[w],knee_weight[w],loadcond,joint)]\
+                               -  kinematics_csv['{}_hip{}knee{}_{}_hipjoint_kinematics'.format(device,hip_weight[w],knee_weight[w],loadcond)]
+            # normalize moment
+            moment = normalize_direction_data(moment,gl_noload,direction=False)
+            # calculate the stiffness, and R2 (bias excluded)
+            stiffness_dict, R_square_dict, _ = calculate_quasi_stiffness(kinematics,moment,toe_off,joint)
+            # save them into the dictionary
+            paretofront_stiffness['{}{}_hip{}knee{}_stiffness'.format(joint,muscles_actuator,hip_weight[w],knee_weight[w])] = stiffness_dict
+            paretofront_R_square ['{}{}_hip{}knee{}_R_square'.format(joint,muscles_actuator,hip_weight[w],knee_weight[w])] = R_square_dict
+    return paretofront_stiffness,paretofront_R_square
+
+def plot_paretofront_stiffness(plot_dict,device,loadcondition,joint,muscles_actuator,legends=False):
+    # read data
+    ideal_data = plot_dict['ideal_data']
+    unassist_data = plot_dict['unassist_data']
+    paretofront_dict = plot_dict['paretofront_dict']
+    indices = plot_dict['indices']
+    # select weights
+    if device.lower() == 'biarticular' and loadcondition == 'loaded':
+        # biarticular/loaded
+        loadcond = 'load'
+        device_abr = 'bi'
+        hip_weight = [30,30,30,30,30,40,40,50,50,50,60,70]
+        knee_weight = [30,40,50,60,70,60,70,50,60,70,70,70]
+    elif device.lower() == 'biarticular' and loadcondition == 'noload':
+        # biarticular/noload
+        loadcond = 'noload'
+        device_abr = 'bi'
+        hip_weight = [30,30,30,30,30,40,40,40,50,50,50,70]
+        knee_weight = [30,40,50,60,70,40,50,60,50,60,70,70]
+    elif device.lower() == 'monoarticular' and loadcondition == 'loaded':
+        # monoarticular/loaded
+        loadcond = 'load'
+        device_abr = 'mono'
+        hip_weight = [30,40,50,60,70,70,70,70,70]
+        knee_weight = [30,30,30,30,30,40,50,60,70]  
+    elif device.lower() == 'monoarticular' and loadcondition == 'noload':  
+        # monoarticular/noload
+        loadcond = 'noload'
+        device_abr = 'mono'
+        hip_weight = [30,40,50,50,50,60,60,60,70,70]
+        knee_weight = [30,30,30,40,50,50,60,70,60,70]
+    # main code
+    if muscles_actuator == 'muscles':
+        joint_extension_mean_stiffness = [unassist_data['mean_{}_{}_extension_stiffness'.format(loadcondition,joint)],ideal_data['{}_{}_{}{}_mean_extension_stiffness'.format(device_abr,loadcondition,joint,muscles_actuator)]]
+        joint_extension_std_stiffness = [unassist_data['std_{}_{}_extension_stiffness'.format(loadcondition,joint)],ideal_data['{}_{}_{}{}_std_extension_stiffness'.format(device_abr,loadcondition,joint,muscles_actuator)]]
+        joint_flexion_mean_stiffness = [unassist_data['mean_{}_{}_flexion_stiffness'.format(loadcondition,joint)],ideal_data['{}_{}_{}{}_mean_flexion_stiffness'.format(device_abr,loadcondition,joint,muscles_actuator)]]
+        joint_flexion_std_stiffness = [unassist_data['std_{}_{}_flexion_stiffness'.format(loadcondition,joint)],ideal_data['{}_{}_{}{}_std_flexion_stiffness'.format(device_abr,loadcondition,joint,muscles_actuator)]]
+    else:
+        joint_extension_mean_stiffness = [ideal_data['{}_{}_{}{}_mean_extension_stiffness'.format(device_abr,loadcondition,joint,muscles_actuator)]]
+        joint_extension_std_stiffness = [ideal_data['{}_{}_{}{}_std_extension_stiffness'.format(device_abr,loadcondition,joint,muscles_actuator)]]
+        joint_flexion_mean_stiffness = [ideal_data['{}_{}_{}{}_mean_flexion_stiffness'.format(device_abr,loadcondition,joint,muscles_actuator)]]
+        joint_flexion_std_stiffness = [ideal_data['{}_{}_{}{}_std_flexion_stiffness'.format(device_abr,loadcondition,joint,muscles_actuator)]]
+    # add paretofront data to the lists
+    for w in range(len(hip_weight)):
+        joint_extension_mean_stiffness.append(paretofront_dict['{}{}_hip{}knee{}_stiffness'.format(joint,muscles_actuator,hip_weight[w],knee_weight[w])]['mean_{}_extension_stiffness'.format(joint)])
+        joint_extension_std_stiffness.append(paretofront_dict['{}{}_hip{}knee{}_stiffness'.format(joint,muscles_actuator,hip_weight[w],knee_weight[w])]['std_{}_extension_stiffness'.format(joint)])
+        joint_flexion_mean_stiffness.append(paretofront_dict['{}{}_hip{}knee{}_stiffness'.format(joint,muscles_actuator,hip_weight[w],knee_weight[w])]['mean_{}_flexion_stiffness'.format(joint)])
+        joint_flexion_std_stiffness.append(paretofront_dict['{}{}_hip{}knee{}_stiffness'.format(joint,muscles_actuator,hip_weight[w],knee_weight[w])]['std_{}_flexion_stiffness'.format(joint)])
+    # adjust std
+    joint_extension_std_stiffness = [np.zeros(len(joint_extension_std_stiffness)),joint_extension_std_stiffness]
+    joint_flexion_std_stiffness = [np.zeros(len(joint_flexion_std_stiffness)),joint_flexion_std_stiffness]
+    # plot
+    if muscles_actuator == 'muscles':
+        index = np.arange(0,len(hip_weight)+2,1)
+    else:
+        index = np.arange(0,len(hip_weight)+1,1)
+    bar_width = 0.35
+    opacity = 0.4
+    error_config = {'ecolor': '0.3'}
+    rects1 = plt.barh(index, joint_extension_mean_stiffness, bar_width,
+                    alpha=opacity,
+                    color='b',
+                    xerr=joint_extension_std_stiffness,
+                    error_kw=error_config)
+    if muscles_actuator == 'muscles':
+        rects1[0].set_color('gray')
+        rects1[1].set_color('forestgreen')
+    else:
+        rects1[0].set_color('forestgreen')
+    rects2 = plt.barh(index + bar_width, joint_flexion_mean_stiffness, bar_width,
+                    alpha=opacity,
+                    color='r',
+                    xerr=joint_flexion_std_stiffness,
+                    error_kw=error_config)
+    if muscles_actuator == 'muscles':
+        rects2[0].set_color('silver')
+        rects2[1].set_color('limegreen')
+        if legends == True:
+            plt.legend([rects1[0],rects2[0],rects1[1],rects2[1],rects1[2],rects2[2]],['extension','flexion','extension','flexion','extension','flexion'],frameon=False)
+    else:
+        rects2[0].set_color('limegreen')
+        if legends == True:
+            plt.legend([rects1[0],rects2[0],rects1[1],rects2[1]],['extension','flexion','extension','flexion'],frameon=False)
+    label=[]
+    for i in ['A','B','C','D','E']:
+        for j in ['a','b','c','d','e']:
+            label.append('{}{}'.format(i,j))
+    if muscles_actuator == 'muscles':
+        indices_str = ['unassist','ideal']
+    else:
+        indices_str = ['ideal']
+    for i in reversed(indices):
+        indices_str.append(label[i-1])
+    plt.yticks(index + bar_width / 2,indices_str )
+    plt.tick_params(axis='both',direction='in')
+    ax = plt.gca()
+    no_top_right(ax)
+
+def plot_paretofront_Rsquare(plot_dict,device,loadcondition,joint,muscles_actuator,legends=False):
+    # read data
+    paretofront_dict = plot_dict['paretofront_dict']
+    indices = plot_dict['indices']
+    # select weights
+    if device.lower() == 'biarticular' and loadcondition == 'loaded':
+        # biarticular/loaded
+        loadcond = 'load'
+        device_abr = 'bi'
+        hip_weight = [30,30,30,30,30,40,40,50,50,50,60,70]
+        knee_weight = [30,40,50,60,70,60,70,50,60,70,70,70]
+    elif device.lower() == 'biarticular' and loadcondition == 'noload':
+        # biarticular/noload
+        loadcond = 'noload'
+        device_abr = 'bi'
+        hip_weight = [30,30,30,30,30,40,40,40,50,50,50,70]
+        knee_weight = [30,40,50,60,70,40,50,60,50,60,70,70]
+    elif device.lower() == 'monoarticular' and loadcondition == 'loaded':
+        # monoarticular/loaded
+        loadcond = 'load'
+        device_abr = 'mono'
+        hip_weight = [30,40,50,60,70,70,70,70,70]
+        knee_weight = [30,30,30,30,30,40,50,60,70]  
+    elif device.lower() == 'monoarticular' and loadcondition == 'noload':  
+        # monoarticular/noload
+        loadcond = 'noload'
+        device_abr = 'mono'
+        hip_weight = [30,40,50,50,50,60,60,60,70,70]
+        knee_weight = [30,30,30,40,50,50,60,70,60,70]
+    # main code
+    joint_extension_mean_stiffness = []
+    joint_extension_std_stiffness = []
+    joint_flexion_mean_stiffness = []
+    joint_flexion_std_stiffness = []
+    # add paretofront data to the lists
+    for w in range(len(hip_weight)):
+        joint_extension_mean_stiffness.append(paretofront_dict['{}{}_hip{}knee{}_R_square'.format(joint,muscles_actuator,hip_weight[w],knee_weight[w])]['mean_{}_extension_R_square'.format(joint)])
+        joint_extension_std_stiffness.append(paretofront_dict['{}{}_hip{}knee{}_R_square'.format(joint,muscles_actuator,hip_weight[w],knee_weight[w])]['std_{}_extension_R_square'.format(joint)])
+        joint_flexion_mean_stiffness.append(paretofront_dict['{}{}_hip{}knee{}_R_square'.format(joint,muscles_actuator,hip_weight[w],knee_weight[w])]['mean_{}_flexion_R_square'.format(joint)])
+        joint_flexion_std_stiffness.append(paretofront_dict['{}{}_hip{}knee{}_R_square'.format(joint,muscles_actuator,hip_weight[w],knee_weight[w])]['std_{}_flexion_R_square'.format(joint)])
+    # adjust std
+    joint_extension_std_stiffness = [np.zeros(len(joint_extension_std_stiffness)),joint_extension_std_stiffness]
+    joint_flexion_std_stiffness = [np.zeros(len(joint_flexion_std_stiffness)),joint_flexion_std_stiffness]
+    # plot
+    index = np.arange(0,len(hip_weight),1)
+    bar_width = 0.35
+    opacity = 0.4
+    error_config = {'ecolor': '0.3'}
+    rects1 = plt.barh(index, joint_extension_mean_stiffness, bar_width,
+                    alpha=opacity,
+                    color='b',
+                    xerr=joint_extension_std_stiffness,
+                    error_kw=error_config)
+    rects2 = plt.barh(index + bar_width, joint_flexion_mean_stiffness, bar_width,
+                    alpha=opacity,
+                    color='r',
+                    xerr=joint_flexion_std_stiffness,
+                    error_kw=error_config)
+    label=[]
+    for i in ['A','B','C','D','E']:
+        for j in ['a','b','c','d','e']:
+            label.append('{}{}'.format(i,j))
+        indices_str = []
+    for i in reversed(indices):
+        indices_str.append(label[i-1])
+    plt.yticks(index + bar_width / 2,indices_str )
+    plt.tick_params(axis='both',direction='in')
+    ax = plt.gca()
+    no_top_right(ax)
+    
