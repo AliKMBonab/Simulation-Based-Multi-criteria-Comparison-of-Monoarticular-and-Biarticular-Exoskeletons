@@ -2,10 +2,11 @@ This is BibTeX, Version 0.99d (MiKTeX 2.9.7380 64-bit)
 Capacity: max_strings=200000, hash_size=200000, hash_prime=170003
 The top-level auxiliary file: Ideal_Exoskeleton_Draft.aux
 The style file: plos2015.bst
-Illegal, another \bibstyle command---line 299 of file Ideal_Exoskeleton_Draft.aux
+Illegal, another \bibstyle command---line 317 of file Ideal_Exoskeleton_Draft.aux
  : \bibstyle
  :          {plos2015.bst}
 I'm skipping whatever remains of this command
+Reallocating 'field_info' (item size: 4) to 10406 items.
 Database file #1: Bibliography.bib
 Warning--I'm ignoring 1's extra "doi" field
 --line 16 of file Bibliography.bib
@@ -58,45 +59,45 @@ Warning--empty chapter in 72
 Warning--there's a month but no year in spss
 Warning--empty chapter in 146
 Warning--empty pages in 146
-You've used 140 entries,
+You've used 159 entries,
             3058 wiz_defined-function locations,
-            1577 strings with 39224 characters,
-and the built_in function-call counts, 251699 in all, are:
-= -- 32776
-> -- 1856
-< -- 15
-+ -- 1349
-- -- 464
-* -- 20945
-:= -- 27214
-add.period$ -- 635
-call.type$ -- 140
+            1679 strings with 42820 characters,
+and the built_in function-call counts, 286027 in all, are:
+= -- 37346
+> -- 2096
+< -- 17
++ -- 1516
+- -- 524
+* -- 23773
+:= -- 30892
+add.period$ -- 725
+call.type$ -- 159
 change.case$ -- 32
 chr.to.int$ -- 0
-cite$ -- 149
-duplicate$ -- 22538
-empty$ -- 23544
-format.name$ -- 586
-if$ -- 59060
+cite$ -- 168
+duplicate$ -- 25774
+empty$ -- 26707
+format.name$ -- 665
+if$ -- 67125
 int.to.chr$ -- 0
-int.to.str$ -- 140
-missing$ -- 1269
-newline$ -- 800
-num.names$ -- 144
-pop$ -- 1964
+int.to.str$ -- 159
+missing$ -- 1437
+newline$ -- 910
+num.names$ -- 163
+pop$ -- 2226
 preamble$ -- 1
 purify$ -- 0
 quote$ -- 0
-skip$ -- 2191
+skip$ -- 2489
 stack$ -- 0
-substring$ -- 47331
-swap$ -- 3372
-text.length$ -- 15
+substring$ -- 53669
+swap$ -- 3826
+text.length$ -- 17
 text.prefix$ -- 0
 top$ -- 0
 type$ -- 0
 warning$ -- 9
-while$ -- 1284
-width$ -- 143
-write$ -- 1733
+while$ -- 1468
+width$ -- 162
+write$ -- 1972
 (There were 9 error messages)
