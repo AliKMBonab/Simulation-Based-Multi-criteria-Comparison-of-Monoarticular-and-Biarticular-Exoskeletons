@@ -123,6 +123,7 @@ Data =[mean_loaded_hipmuscles_moment,std_loaded_hipmuscles_moment,mean_noload_hi
 # List of numpy vectors to a numpy ndarray and save to csv file
 Data = utils.vec2mat(Data,matrix_cols=9,num_matrix=4)
 <<<<<<< HEAD
+<<<<<<< HEAD
 with open(r'.\Data\Unassist\unassist_stiffness_data.csv', 'wb') as f:
   f.write(bytes(utils.listToString(Headers)+'\n','UTF-8'))
   np.savetxt(f, Data, fmt='%s', delimiter=",")
@@ -134,6 +135,12 @@ with open(r'.\Data\Unassist\unassist_unnormalized_moment_data.csv', 'wb') as f:
   np.savetxt(f, Data, fmt='%s', delimiter=",")
 #####################################################################################
 >>>>>>> development
+=======
+with open(r'.\Data\Unassist\unassist_unnormalized_moment_data.csv', 'wb') as f:
+  f.write(bytes(utils.listToString(Headers)+'\n','UTF-8'))
+  np.savetxt(f, Data, fmt='%s', delimiter=",")
+#####################################################################################
+>>>>>>> paper
 # Plots
 # hip joint moment plot dictionaries
 hip_moment_loaded_plot_dic = {'pgc':gait_cycle,'avg':utils.smooth(mean_norm_loaded_hipmuscles_moment,3),'label':'Loaded',
@@ -207,6 +214,7 @@ fig.savefig('./Figures/Unassist/MusclesMetabolicRate_BarPlot.pdf',orientation='l
 plt.show()
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 # knee joint stiffness
 fig = plt.figure(num='Knee Joint Stiffness',figsize=(12, 10))
 gridsize = (3, 2)
@@ -226,6 +234,8 @@ knee_stiffness_plot_dic = {'loaded_toe_off':loaded_mean_toe_off,'noload_toe_off'
 utils.plot_stiffness(plot_dic = knee_stiffness_plot_dic, load_condition='noload',
 kinematics_ticks=[0,10,20,30,40,50,60,70,80],moment_ticks=[-60,-30,0,30,60,90],ax1=ax1,ax2=ax2,ax3=ax3)
 =======
+=======
+>>>>>>> paper
 # muscles contribution on metabolic rate wrt noload unassist metabolic rate
 fig = plt.figure(num='Muscles Metabolic Rate',figsize=(9.6, 16.8))
 utils.muscles_metabolics_contribution(musclesmetabolicrate_dataset['loaded_muscles_metabolic_rate'],total_metabolicrate_dataset['noload_metabolics_energy'],
@@ -233,7 +243,10 @@ utils.muscles_metabolics_contribution(musclesmetabolicrate_dataset['loaded_muscl
                                       xticks=[0,2,4,6,8,10])
 plt.legend(loc='best',frameon=False)
 plt.title('Muscles contribution change by loading subjects')
+<<<<<<< HEAD
 >>>>>>> development
+=======
+>>>>>>> paper
 fig.tight_layout(h_pad=-1, w_pad=-1.5)
 fig.savefig('./Figures/Unassist/MusclesMetabolic_Contribution_WRT_noload.pdf',orientation='landscape',bbox_inches='tight')
 plt.show()

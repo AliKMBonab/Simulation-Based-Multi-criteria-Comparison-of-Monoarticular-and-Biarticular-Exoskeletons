@@ -25,20 +25,12 @@ trials_num = ['01','02','03']
 gait_cycle = np.linspace(0,100,1000)
 #####################################################################################
 # Reading CSV files into a dictionary and constructing gls
-rra_dataset = utils.csv2numpy('./Data/RRA/rra_final_data.csv') 
-unassist_dataset = utils.csv2numpy('./Data/Unassist/unassist_final_data.csv') 
+rra_dataset = utils.csv2numpy('D:/Ali.K.M.Bonab/Walking_Mass_Inertia_Effect/Data/Data/RRA/rra_final_data.csv') 
+unassist_dataset = utils.csv2numpy('D:/Ali.K.M.Bonab/Walking_Mass_Inertia_Effect/Data/Data/Unassist/unassist_final_data.csv') 
 # assisted subjects muscles activation dataset
-directory = './Data/Ideal/*_activation.csv'
+directory = 'D:/Ali.K.M.Bonab/Walking_Mass_Inertia_Effect/Data/Data/Ideal/*_activation.csv'
 files = enumerate(glob.iglob(directory), 1)
 musclesactivation_dataset = {pathlib.PurePath(f[1]).stem: np.loadtxt(f[1], delimiter=',') for f in files}
-# unassist muscles metabolic rate
-directory = './Data/Unassist/*_metabolic_rate.csv'
-files = enumerate(glob.iglob(directory), 1)
-unassist_musclesmetabolicrate_dataset = {pathlib.PurePath(f[1]).stem: np.loadtxt(f[1], delimiter=',') for f in files}
-# assisted muscles metabolic rate
-directory = './Data/Ideal/*_metabolic_rate.csv'
-files = enumerate(glob.iglob(directory), 1)
-assisted_musclesmetabolicrate_dataset = {pathlib.PurePath(f[1]).stem: np.loadtxt(f[1], delimiter=',') for f in files}
 # gls
 gl_noload = {'noload_subject{}_trial{}'.format(i,j): utils.construct_gl_mass_side(subjectno=i,trialno=j,loadcond='noload') for i in subjects for j in trials_num}
 gl_loaded = {'loaded_subject{}_trial{}'.format(i,j): utils.construct_gl_mass_side(subjectno=i,trialno=j,loadcond='loaded') for i in subjects for j in trials_num}
@@ -149,51 +141,3 @@ plt.legend(loc='best',frameon=False)
 plt.show()
 fig.tight_layout()
 fig.savefig('./Figures/Ideal/Monoarticular_LoadedVsNoload_MusclesActivation.pdf',orientation='landscape',bbox_inches='tight')
-
-# muscles metabolic rate figure
-# noload mono vs bi
-fig = plt.figure(num='Muscles Metabolic Rate',figsize=(20, 20))
-utils.muscles_whisker_bar_plot(unassist_musclesmetabolicrate_dataset['noload_muscles_metabolic_rate'],assisted_musclesmetabolicrate_dataset['monoarticular_ideal_noload_muscles_metabolic_rate'],
-                               assisted_musclesmetabolicrate_dataset['biarticular_ideal_noload_muscles_metabolic_rate'],xticklabel=['un','mono','bi'] )
-plt.legend(loc='best',frameon=False)
-fig.tight_layout()
-fig.tight_layout(h_pad=-1, w_pad=-1.5)
-fig.subplots_adjust(top=0.98, bottom=0.075, left=0.100, right=0.975,hspace=0.45,wspace=0.40)
-plt.show()
-fig.savefig('./Figures/Ideal/MusclesMetabolicRate_Noload_MonoVsBi.pdf',orientation='landscape',bbox_inches='tight')
-
-# loaded mono vs bi
-fig = plt.figure(num='Muscles Metabolic Rate',figsize=(20, 20))
-utils.muscles_whisker_bar_plot(unassist_musclesmetabolicrate_dataset['loaded_muscles_metabolic_rate'],assisted_musclesmetabolicrate_dataset['monoarticular_ideal_loaded_muscles_metabolic_rate'],
-                               assisted_musclesmetabolicrate_dataset['biarticular_ideal_loaded_muscles_metabolic_rate'],xticklabel=['un','mono','bi'])
-plt.legend(loc='best',frameon=False)
-fig.tight_layout()
-fig.tight_layout(h_pad=-1, w_pad=-1.5)
-fig.subplots_adjust(top=0.98, bottom=0.075, left=0.100, right=0.975,hspace=0.45,wspace=0.40)
-plt.show()
-fig.savefig('./Figures/Ideal/MusclesMetabolicRate_Loaded_MonoVsBi.pdf',orientation='landscape',bbox_inches='tight')
-
-# bi loaded vs noload
-fig = plt.figure(num='Muscles Metabolic Rate',figsize=(25, 25))
-utils.muscles_whisker_bar_plot(unassist_musclesmetabolicrate_dataset['loaded_muscles_metabolic_rate'],unassist_musclesmetabolicrate_dataset['noload_muscles_metabolic_rate'],
-                                assisted_musclesmetabolicrate_dataset['biarticular_ideal_loaded_muscles_metabolic_rate'],
-                                assisted_musclesmetabolicrate_dataset['biarticular_ideal_noload_muscles_metabolic_rate'],xticklabel=['un,\nL','un,\nN','bi,\nL','bi,\nN'])
-plt.legend(loc='best',frameon=False)
-fig.tight_layout()
-fig.tight_layout(h_pad=-1, w_pad=-1.5)
-fig.subplots_adjust(top=0.98, bottom=0.075, left=0.100, right=0.975,hspace=0.65,wspace=0.40)
-plt.show()
-fig.savefig('./Figures/Ideal/MusclesMetabolicRate_Bi_LoadedVsNoload.pdf',orientation='landscape',bbox_inches='tight')
-
-# mono loaded vs noload
-fig = plt.figure(num='Muscles Metabolic Rate',figsize=(25, 25))
-utils.muscles_whisker_bar_plot(unassist_musclesmetabolicrate_dataset['loaded_muscles_metabolic_rate'],unassist_musclesmetabolicrate_dataset['noload_muscles_metabolic_rate'],
-                                assisted_musclesmetabolicrate_dataset['monoarticular_ideal_loaded_muscles_metabolic_rate'],
-                                assisted_musclesmetabolicrate_dataset['monoarticular_ideal_noload_muscles_metabolic_rate'],xticklabel=['un,\nL','un,\nN','mono,\nL','mono,\nN'])
-plt.legend(loc='best',frameon=False)
-fig.tight_layout()
-fig.tight_layout(h_pad=-1, w_pad=-1.5)
-fig.subplots_adjust(top=0.98, bottom=0.075, left=0.100, right=0.975,hspace=0.65,wspace=0.40)
-plt.show()
-fig.savefig('./Figures/Ideal/MusclesMetabolicRate_Mono_LoadedVsNoload.pdf',orientation='landscape',bbox_inches='tight')
-

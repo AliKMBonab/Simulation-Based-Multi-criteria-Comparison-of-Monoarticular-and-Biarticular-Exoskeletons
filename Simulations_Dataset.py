@@ -168,14 +168,15 @@ if  y.lower() == 'y':
 
 #####################################################################################
 #####################################################################################
-<<<<<<< HEAD
-"""Section 05:
+"""Section 06:
                 reaction forces dataset
 """
-loads = ['noload','loaded']
+print('\n')
+loads = ['loaded','noload']
 configs = [None,'Monoarticular','Biarticular','Monoarticular','Biarticular']
 config_names = ['unassist','monoarticular_ideal','biarticular_ideal','monoarticular_paretofront','biarticular_paretofront']
 cases = ['Unassist','Ideal','Ideal','Paretofront','Paretofront']
+<<<<<<< HEAD
 #***************************
 print('Section 04:\t extracting reaction forces')
 =======
@@ -189,26 +190,29 @@ configs = [None,'Monoarticular','Biarticular']
 config_names = ['unassist','monoarticular_ideal','biarticular_ideal','monoarticular_paretofront','biarticular_paretofront']
 cases = ['Unassist','Ideal','Ideal','Paretofront','Paretofront']
 cases_dir = ['Unassist','Ideal','Ideal','Pareto','Pareto']
+=======
+cases_dir = ['Unassist','Ideal','Ideal','Pareto','Pareto']
+#configs = ['Monoarticular','Biarticular']
+#config_names = ['monoarticular_paretofront','biarticular_paretofront']
+#cases = ['Paretofront','Paretofront']
+#cases_dir = ['Pareto','Pareto']
+>>>>>>> paper
 #***************************
 <<<<<<< HEAD
 print('Section 06:\t extracting reaction forces')
+<<<<<<< HEAD
 >>>>>>> development
 =======
 print('Section 06:\t extracting reaction forces.\n')
 >>>>>>> development
+=======
+>>>>>>> paper
 #***************************
 y = input('reaction forces data extraction? (y,n):  ')
 print('\n')
 if  y.lower() == 'y':
     print('reaction forces biarticular/monoarticular loaded/noload files are getting extracted the file.\n')
     for load_type in loads:
-<<<<<<< HEAD
-        for i in range(len(configs)):
-            out = fcns.extract_reaction_forces(loadcondition=load_type,case=cases[i].lower(),\
-                                               joints=['back','duct_tape','hip','knee','ankle'],\
-                                               device=configs[i],force_or_moment='moment')
-            np.savetxt('./Data/{}/{}_{}_reaction_moments.csv'.format(cases[i],config_names[i],load_type), out, fmt='%s', delimiter=',')
-=======
         if load_type == 'noload':
             joint_name = ['back','hip','knee','patellofemoral','ankle']
         else:
@@ -218,8 +222,11 @@ if  y.lower() == 'y':
 <<<<<<< HEAD
                                                joints=joint_name,device=configs[i],force_or_moment='moment')
             np.savetxt('./Data/{}/{}_{}_reaction_moments.csv'.format(cases_dir[i],config_names[i],load_type), out, fmt='%s', delimiter=',')
+<<<<<<< HEAD
 >>>>>>> development
 =======
                                                joints=joint_name,device=configs[i],force_or_moment='body force')
             np.savetxt('./Data/{}/{}_{}_reaction_forces.csv'.format(cases_dir[i],config_names[i],load_type), out, fmt='%s', delimiter=',')
 >>>>>>> development
+=======
+>>>>>>> paper
