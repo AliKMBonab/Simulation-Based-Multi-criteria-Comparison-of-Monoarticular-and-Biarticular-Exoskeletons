@@ -216,6 +216,27 @@ bi_loadedvsnoload_metabolics = utils.reduction_calc(assisted_energy_dataset['bia
 mono_loadedvsnoload_metabolics = utils.reduction_calc(assisted_energy_dataset['monoarticular_ideal_loaded_metabolics_energy'],assisted_energy_dataset['monoarticular_ideal_noload_metabolics_energy'])
 
 #####################################################################################
+# saving profiles dataset
+dataset =np.c_[mean_bi_loaded_hip_torque,std_bi_loaded_hip_torque,mean_bi_noload_hip_torque,std_bi_noload_hip_torque,\
+           mean_bi_loaded_knee_torque,std_bi_loaded_knee_torque,mean_bi_noload_knee_torque,std_bi_noload_knee_torque,\
+           mean_mono_loaded_hip_torque,std_mono_loaded_hip_torque,mean_mono_noload_hip_torque,std_mono_noload_hip_torque,\
+           mean_mono_loaded_knee_torque,std_mono_loaded_knee_torque,mean_mono_noload_knee_torque,std_mono_noload_knee_torque,\
+           mean_bi_loaded_hip_power,std_bi_loaded_hip_power,mean_bi_noload_hip_power,std_bi_noload_hip_power,\
+           mean_bi_loaded_knee_power,std_bi_loaded_knee_power,mean_bi_noload_knee_power,std_bi_noload_knee_power,\
+           mean_mono_loaded_hip_power,std_mono_loaded_hip_power,mean_mono_noload_hip_power,std_mono_noload_hip_power,\
+           mean_mono_loaded_knee_power,std_mono_loaded_knee_power,mean_mono_noload_knee_power,std_mono_noload_knee_power]
+headers = ['mean_bi_loaded_hip_torque','std_bi_loaded_hip_torque','mean_bi_noload_hip_torque','std_bi_noload_hip_torque',\
+           'mean_bi_loaded_knee_torque','std_bi_loaded_knee_torque','mean_bi_noload_knee_torque','std_bi_noload_knee_torque',\
+           'mean_mono_loaded_hip_torque','std_mono_loaded_hip_torque','mean_mono_noload_hip_torque','std_mono_noload_hip_torque',\
+           'mean_mono_loaded_knee_torque','std_mono_loaded_knee_torque','mean_mono_noload_knee_torque','std_mono_noload_knee_torque',\
+           'mean_bi_loaded_hip_power','std_bi_loaded_hip_power','mean_bi_noload_hip_power','std_bi_noload_hip_power',\
+           'mean_bi_loaded_knee_power','std_bi_loaded_knee_power','mean_bi_noload_knee_power','std_bi_noload_knee_power',\
+           'mean_mono_loaded_hip_power','std_mono_loaded_hip_power','mean_mono_noload_hip_power','std_mono_noload_hip_power',\
+           'mean_mono_loaded_knee_power','std_mono_loaded_knee_power','mean_mono_noload_knee_power','std_mono_noload_knee_power']
+with open(r'.\Data\Ideal\ideal_exos_profiles_dataset.csv', 'wb') as f:
+  f.write(bytes(utils.listToString(headers)+'\n','UTF-8'))
+  np.savetxt(f, dataset, fmt='%s', delimiter=",")
+#####################################################################################
 # hip joint moment plot dictionaries
 bi_loaded_hip_musclesmoment_dic = {'pgc':gait_cycle,'avg':utils.smooth(mean_bi_loaded_hipmuscles_moment,3),'label':'loaded muscles',
                         'std':utils.smooth(std_bi_loaded_hipmuscles_moment,3),'avg_toeoff':loaded_mean_toe_off}
