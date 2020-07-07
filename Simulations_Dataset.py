@@ -45,8 +45,8 @@ print('\n\n rra files have been extracted.')
                 and ideal exoskeletons simulations data and confirm modeling and simulations
 """
 loads = ['noload','loaded']
-middle = ['metabolics','ninemuscles','hip','knee','metabolics_processed','muscles_metabolic']
-suffixes = ['energy','activation','musclesmoment','musclesmoment','energy','rate']
+middle = ['metabolics','ninemuscles','hip','knee','metabolics_processed','muscles_metabolic','hip_joint','knee_joint']
+suffixes = ['energy','activation','musclesmoment','musclesmoment','energy','rate','kinematics','kinematics']
 #***************************
 print('Section 02:\t extracting UnAssist Subjects related files: Metabolic Energy, Muscles Activation, Hip and Knee Muscles Moment.\n')
 #***************************
@@ -174,7 +174,7 @@ if  y.lower() == 'y':
 print('\n')
 loads = ['loaded','noload']
 configs = [None,'Monoarticular','Biarticular','Monoarticular','Biarticular']
-#configs = [None]
+configs = [None,'Monoarticular','Biarticular']
 config_names = ['unassist','monoarticular_ideal','biarticular_ideal','monoarticular_paretofront','biarticular_paretofront']
 cases = ['Unassist','Ideal','Ideal','Paretofront','Paretofront']
 cases_dir = ['Unassist','Ideal','Ideal','Pareto','Pareto']
