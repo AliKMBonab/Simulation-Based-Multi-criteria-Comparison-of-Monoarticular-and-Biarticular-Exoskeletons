@@ -881,6 +881,8 @@ def specific_weight_data_extraction(Subject_Dic,Hip_Weight,Knee_Weight,loadcond=
     .format(SubjectNo,Directory,Hip_Weight,Knee_Weight,SubjectNo,loadcond,TrialNo)
     actuator_speed_data_dir= '../subject{}/{}/H{}K{}/loadedwalking_subject{}_{}_free_trial{}_cmc_Actuation_speed.sto'\
     .format(SubjectNo,Directory,Hip_Weight,Knee_Weight,SubjectNo,loadcond,TrialNo)
+    actuator_kinematics_data_dir= '../subject{}/{}/H{}K{}/loadedwalking_subject{}_{}_free_trial{}_cmc_Kinematics_q.sto'\
+    .format(SubjectNo,Directory,Hip_Weight,Knee_Weight,SubjectNo,loadcond,TrialNo)
     metabolic_power_data_dir = '../subject{}/{}/H{}K{}/loadedwalking_subject{}_{}_free_trial{}_cmc_ProbeReporter_probes.sto'\
     .format(SubjectNo,Directory,Hip_Weight,Knee_Weight,SubjectNo,loadcond,TrialNo)
     # if files do not exist
@@ -891,6 +893,8 @@ def specific_weight_data_extraction(Subject_Dic,Hip_Weight,Knee_Weight,loadcond=
         knee_actuator_power = np.ones(1000)*(np.nan)
         hip_actuator_speed = np.ones(1000)*(np.nan)
         knee_actuator_speed = np.ones(1000)*(np.nan)
+        hip_joint_kinematics = np.ones(1000)*(np.nan)
+        knee_joint_kinematics = np.ones(1000)*(np.nan)
         if calculatenergy == True:
             hip_actuator_energy = np.nan
             hip_actuator_regen_energy = np.nan
@@ -935,6 +939,16 @@ def specific_weight_data_extraction(Subject_Dic,Hip_Weight,Knee_Weight,loadcond=
                                     "Left_Parameter":'Knee_Left_Actuator',
                                                 "gl": gl}
         knee_actuator_speed = data_extraction(Subject_Dic=data_extraction_dic)
+        data_extraction_dic = {"Directory":actuator_kinematics_data_dir,
+                                    "Right_Parameter":'hip_flexion_r',
+                                    "Left_Parameter":'hip_flexion_l',
+                                                "gl": gl}
+        hip_joint_kinematics = data_extraction(Subject_Dic=data_extraction_dic)
+        data_extraction_dic = {"Directory":actuator_kinematics_data_dir,
+                                    "Right_Parameter":'knee_angle_r',
+                                    "Left_Parameter":'knee_angle_l',
+                                                "gl": gl}
+        knee_joint_kinematics = data_extraction(Subject_Dic=data_extraction_dic)
         if calculatenergy == True:
                     energy_dic = {"Directory":actuator_power_data_dir,
                             "Right_Parameter":'Hip_Right_Actuator',
@@ -965,11 +979,13 @@ def specific_weight_data_extraction(Subject_Dic,Hip_Weight,Knee_Weight,loadcond=
     if regen_energy == True:
         return hip_actuator_torque,knee_actuator_torque,hip_actuator_power,knee_actuator_power,\
             hip_actuator_speed,knee_actuator_speed,hip_actuator_energy,knee_actuator_energy,metabolic_energy,hip_actuator_regen_energy,knee_actuator_regen_energy,\
-            hip_maximum_power,hip_avg_positive_power,hip_avg_negative_power,knee_maximum_power,knee_avg_positive_power,knee_avg_negative_power
+            hip_maximum_power,hip_avg_positive_power,hip_avg_negative_power,knee_maximum_power,knee_avg_positive_power,knee_avg_negative_power,\
+            hip_joint_kinematics,knee_joint_kinematics
     else:
         return hip_actuator_torque,knee_actuator_torque,hip_actuator_power,knee_actuator_power,\
             hip_actuator_speed,knee_actuator_speed,hip_actuator_energy,knee_actuator_energy,metabolic_energy,\
-            hip_maximum_power,hip_avg_positive_power,hip_avg_negative_power,knee_maximum_power,knee_avg_positive_power,knee_avg_negative_power
+            hip_maximum_power,hip_avg_positive_power,hip_avg_negative_power,knee_maximum_power,knee_avg_positive_power,knee_avg_negative_power,\
+            hip_joint_kinematics,knee_joint_kinematics
 
 
 def specific_weight_data_subjects(configuration,HipWeight,KneeWeight,loadcond='noload',musclesmoment=True,musclesactivation=True,regenergy=False):
@@ -999,6 +1015,8 @@ def specific_weight_data_subjects(configuration,HipWeight,KneeWeight,loadcond='n
     KneeActuator_Power_Data = np.zeros([1000,len(subjects)*len(trials_num)])
     HipActuator_Speed_Data = np.zeros([1000,len(subjects)*len(trials_num)])
     KneeActuator_Speed_Data = np.zeros([1000,len(subjects)*len(trials_num)])
+    HipJoint_Kinematics_Data = np.zeros([1000,len(subjects)*len(trials_num)])
+    KneeJoint_Kinematics_Data = np.zeros([1000,len(subjects)*len(trials_num)])
     HipMuscleMoment_Data = np.zeros([1000,len(subjects)*len(trials_num)])
     KneeMuscleMoment_Data = np.zeros([1000,len(subjects)*len(trials_num)])
     HipMusclePower_Data = np.zeros([1000,len(subjects)*len(trials_num)])
@@ -1024,13 +1042,13 @@ def specific_weight_data_subjects(configuration,HipWeight,KneeWeight,loadcond='n
                 hip_torque,knee_torque,hip_power,knee_power,hip_speed,\
                 knee_speed,hip_energy,knee_energy,metabolics_energy,\
                 hip_maximum_power,hip_avg_positive_power,hip_avg_negative_power,\
-                knee_maximum_power,knee_avg_positive_power,knee_avg_negative_power = \
+                knee_maximum_power,knee_avg_positive_power,knee_avg_negative_power,hip_kinematics,knee_kinematics = \
                 specific_weight_data_extraction(Subject_Dictionary,Hip_Weight=HipWeight,Knee_Weight=KneeWeight,loadcond=loadcond)
             else:
                 hip_torque,knee_torque,hip_power,knee_power,hip_speed,\
                 knee_speed,hip_energy,knee_energy,metabolics_energy,reg_hip_energy,reg_knee_energy,\
                 hip_maximum_power,hip_avg_positive_power,hip_avg_negative_power,\
-                knee_maximum_power,knee_avg_positive_power,knee_avg_negative_power = \
+                knee_maximum_power,knee_avg_positive_power,knee_avg_negative_power,hip_kinematics,knee_kinematics = \
                 specific_weight_data_extraction(Subject_Dictionary,Hip_Weight=HipWeight,Knee_Weight=KneeWeight,loadcond=loadcond,regen_energy=regenergy)
                 Regen_HipActuatorEnergy_Data[c] = reg_hip_energy
                 Regen_KneeActuatorEnergy_Data[c] = reg_knee_energy
@@ -1041,6 +1059,8 @@ def specific_weight_data_subjects(configuration,HipWeight,KneeWeight,loadcond='n
             KneeActuator_Power_Data[:,c]  = knee_power
             HipActuator_Speed_Data[:,c]   = hip_speed
             KneeActuator_Speed_Data[:,c]  = knee_speed
+            HipJoint_Kinematics_Data[:,c]   = hip_kinematics
+            KneeJoint_Kinematics_Data[:,c]  = knee_kinematics
             HipActuatorEnergy_Data[c]     = hip_energy
             KneeActuatorEnergy_Data[c]    = knee_energy
             MetabolicEnergy_Data[c]       = metabolics_energy
@@ -1119,7 +1139,7 @@ def specific_weight_data_subjects(configuration,HipWeight,KneeWeight,loadcond='n
            MetabolicEnergy_Data,MuscleActivation_Data,HipMuscleMoment_Data,KneeMuscleMoment_Data,\
            Regen_HipActuatorEnergy_Data,Regen_KneeActuatorEnergy_Data,HipMusclePower_Data,KneeMusclePower_Data,\
            HipActuator_MaxPower_Data,KneeActuator_MaxPower_Data,HipActuator_AvgPositivePower_Data,KneeActuator_AvgPositivePower_Data,\
-           HipActuator_AvgNegativePower_Data,KneeActuator_AvgNegativePower_Data
+           HipActuator_AvgNegativePower_Data,KneeActuator_AvgNegativePower_Data,HipJoint_Kinematics_Data,KneeJoint_Kinematics_Data
 
 
 def rra_data_extraction(Subject_Dic,loadcond='noload'):
@@ -1275,6 +1295,8 @@ def idealdevice_data_extraction(Subject_Dic,loadcond='noload',calculatenergy=Tru
     .format(SubjectNo,Directory,CycleNo,SubjectNo,loadcond,TrialNo)
     actuator_speed_data_dir= '../subject{}/{}/Cycle{}/loadedwalking_subject{}_{}_free_trial{}_cmc_Actuation_speed.sto'\
     .format(SubjectNo,Directory,CycleNo,SubjectNo,loadcond,TrialNo)
+    actuator_kinematics_data_dir= '../subject{}/{}/Cycle{}/loadedwalking_subject{}_{}_free_trial{}_cmc_Kinematics_q.sto'\
+    .format(SubjectNo,Directory,CycleNo,SubjectNo,loadcond,TrialNo)
     metabolic_power_data_dir = '../subject{}/{}/Cycle{}/loadedwalking_subject{}_{}_free_trial{}_cmc_ProbeReporter_probes.sto'\
     .format(SubjectNo,Directory,CycleNo,SubjectNo,loadcond,TrialNo)
     data_extraction_dic = {"Directory":actuator_torque_data_dir,
@@ -1307,6 +1329,16 @@ def idealdevice_data_extraction(Subject_Dic,loadcond='noload',calculatenergy=Tru
                                   "Left_Parameter":'Knee_Left_Actuator',
                                               "gl": gl}
     knee_actuator_speed = data_extraction(Subject_Dic=data_extraction_dic)
+    data_extraction_dic = {"Directory":actuator_kinematics_data_dir,
+                                 "Right_Parameter":'hip_flexion_r',
+                                  "Left_Parameter":'hip_flexion_l',
+                                              "gl": gl}
+    hip_actuator_kinematics = data_extraction(Subject_Dic=data_extraction_dic)
+    data_extraction_dic = {"Directory":actuator_kinematics_data_dir,
+                                 "Right_Parameter":'knee_angle_r',
+                                  "Left_Parameter":'knee_angle_l',
+                                              "gl": gl}
+    knee_actuator_kinematics = data_extraction(Subject_Dic=data_extraction_dic)
     if calculatenergy == True:
                 energy_dic = {"Directory":actuator_power_data_dir,
                         "Right_Parameter":'Hip_Right_Actuator',
@@ -1332,12 +1364,13 @@ def idealdevice_data_extraction(Subject_Dic,loadcond='noload',calculatenergy=Tru
                      knee_proc_actuator_energy,knee_proc_actuator_regen_energy = actuator_energy_proc_power(Subject_Dic=energy_dic,regen=regen_energy)
     if regen_energy == False:
         return hip_actuator_torque,knee_actuator_torque,hip_actuator_power,knee_actuator_power,\
-            hip_actuator_speed,knee_actuator_speed,hip_actuator_energy,knee_actuator_energy,hip_proc_actuator_energy,knee_proc_actuator_energy
+            hip_actuator_speed,knee_actuator_speed,hip_actuator_energy,knee_actuator_energy,\
+            hip_proc_actuator_energy,knee_proc_actuator_energy,hip_actuator_kinematics,knee_actuator_kinematics
     else:
         return hip_actuator_torque,knee_actuator_torque,hip_actuator_power,knee_actuator_power,\
             hip_actuator_speed,knee_actuator_speed,hip_actuator_energy,knee_actuator_energy,\
             hip_actuator_regen_energy,knee_actuator_regen_energy,hip_proc_actuator_energy,knee_proc_actuator_energy,\
-            hip_proc_actuator_regen_energy,knee_proc_actuator_regen_energy
+            hip_proc_actuator_regen_energy,knee_proc_actuator_regen_energy,hip_actuator_kinematics,knee_actuator_kinematics
 
 
 def unassist_idealdevice_data_subjects(configuration,loadcond='noload',metabolicrate=True,musclesmoment=True,
@@ -1374,6 +1407,8 @@ def unassist_idealdevice_data_subjects(configuration,loadcond='noload',metabolic
     Metabolics_Power_Data = np.zeros([1000,len(subjects)*len(trials_num)])
     HipActuator_Speed_Data = np.zeros([1000,len(subjects)*len(trials_num)])
     KneeActuator_Speed_Data = np.zeros([1000,len(subjects)*len(trials_num)])
+    HipActuator_Kinematics_Data = np.zeros([1000,len(subjects)*len(trials_num)])
+    KneeActuator_Kinematics_Data = np.zeros([1000,len(subjects)*len(trials_num)])
     HipMuscleMoment_Data = np.zeros([1000,len(subjects)*len(trials_num)])
     KneeMuscleMoment_Data = np.zeros([1000,len(subjects)*len(trials_num)])
     HipMusclePower_Data = np.zeros([1000,len(subjects)*len(trials_num)])
@@ -1401,13 +1436,13 @@ def unassist_idealdevice_data_subjects(configuration,loadcond='noload',metabolic
             if configuration !='UnAssist':
                 if regenergy == False:
                     hip_torque,knee_torque,hip_power,knee_power,hip_speed,\
-                    knee_speed,hip_energy,knee_energy,hip_proc_energy,knee_proc_energy = \
-                    idealdevice_data_extraction(Subject_Dictionary,loadcond=loadcond)
+                    knee_speed,hip_energy,knee_energy,hip_proc_energy,knee_proc_energy,\
+                    hip_kinematics,knee_kinematics= idealdevice_data_extraction(Subject_Dictionary,loadcond=loadcond)
                 else:
                     hip_torque,knee_torque,hip_power,knee_power,hip_speed,\
                     knee_speed,hip_energy,knee_energy,hip_regen_energy,knee_regen_energy,\
-                    hip_proc_energy,knee_proc_energy,hip_proc_regen_energy,knee_proc_regen_energy = \
-                    idealdevice_data_extraction(Subject_Dictionary,loadcond=loadcond,regen_energy=regenergy)
+                    hip_proc_energy,knee_proc_energy,hip_proc_regen_energy,knee_proc_regen_energy,\
+                    hip_kinematics,knee_kinematics = idealdevice_data_extraction(Subject_Dictionary,loadcond=loadcond,regen_energy=regenergy)
                     Regen_HipActuatorEnergy_Data[c]     = hip_regen_energy
                     Regen_KneeActuatorEnergy_Data[c]    = knee_regen_energy
                     Regen_HipActuatorEnergy_Proc_Data[c]  = hip_proc_regen_energy
@@ -1420,6 +1455,8 @@ def unassist_idealdevice_data_subjects(configuration,loadcond='noload',metabolic
                 KneeActuator_Power_Data[:,c]  = knee_power
                 HipActuator_Speed_Data[:,c]   = hip_speed
                 KneeActuator_Speed_Data[:,c]  = knee_speed
+                HipActuator_Kinematics_Data[:,c]   = hip_kinematics
+                KneeActuator_Kinematics_Data[:,c]  = knee_kinematics
                 HipActuatorEnergy_Data[c]     = hip_energy
                 KneeActuatorEnergy_Data[c]    = knee_energy
                 HipActuatorEnergy_Proc_Data[c]     = hip_proc_energy
@@ -1483,12 +1520,52 @@ def unassist_idealdevice_data_subjects(configuration,loadcond='noload',metabolic
             HipMuscleMoment_Data,KneeMuscleMoment_Data,\
             HipActuatorEnergy_Proc_Data,KneeActuatorEnergy_Proc_Data,\
             Regen_HipActuatorEnergy_Proc_Data,Regen_KneeActuatorEnergy_Proc_Data,MetabolicEnergy_Proc_Data,\
-            HipMusclePower_Data,KneeMusclePower_Data,Muscles_Metabolic_Data
+            HipMusclePower_Data,KneeMusclePower_Data,Muscles_Metabolic_Data,HipActuator_Kinematics_Data,KneeActuator_Kinematics_Data
     else:
-        return MetabolicEnergy_Data,MuscleActivation_Data,HipMuscleMoment_Data,KneeMuscleMoment_Data,MetabolicEnergy_Proc_Data,Muscles_Metabolic_Data
+        return MetabolicEnergy_Data,MuscleActivation_Data,HipMuscleMoment_Data,\
+               KneeMuscleMoment_Data,MetabolicEnergy_Proc_Data,Muscles_Metabolic_Data,\
+               HipActuator_Kinematics_Data,KneeActuator_Kinematics_Data
+
 #####################################################################################
 #####################################################################################
 # Reaction force analysis
+def data_extraction_reactionforce(Subject_Dic,raw_data=False):
+    """
+    This function has been developed to extract and modify data of the reaction forces.
+    To be complete
+    """
+    # Reading Required Data
+    adjustment_required_list = ['ankle_r_on_talus_r_in_ground_fz','ankle_l_on_talus_l_in_ground_fz',
+                                'ankle_r_on_talus_r_in_ground_mx','ankle_l_on_talus_l_in_ground_mx',
+                                'ankle_r_on_talus_r_in_ground_my','ankle_l_on_talus_l_in_ground_my',
+                                'patellofemoral_r_on_patella_r_in_ground_fz','patellofemoral_l_on_patella_l_in_ground_fz',
+                                'patellofemoral_r_on_patella_r_in_ground_mx','patellofemoral_l_on_patella_l_in_ground_mx',
+                                'patellofemoral_r_on_patella_r_in_ground_my','patellofemoral_l_on_patella_l_in_ground_my',
+                                'walker_knee_r_on_tibia_r_in_ground_fz','walker_knee_l_on_tibia_l_in_ground_fz',
+                                'walker_knee_r_on_tibia_r_in_ground_mx','walker_knee_l_on_tibia_l_in_ground_mx',
+                                'walker_knee_r_on_tibia_r_in_ground_my','walker_knee_l_on_tibia_l_in_ground_my',
+                                'hip_r_on_femur_r_in_ground_fz','hip_l_on_femur_l_in_ground_fz']
+    directory = Subject_Dic["Directory"]
+    right_param = Subject_Dic["Right_Parameter"]
+    left_param = Subject_Dic["Left_Parameter"]
+    gl = Subject_Dic["gl"]
+    gait_cycle = np.linspace(0,100,1000)
+    numpy_data = dataman.storage2numpy(directory)
+    time = numpy_data['time']
+    right_data = numpy_data[right_param]
+    left_data = numpy_data[left_param]
+    if right_param and left_param in adjustment_required_list:
+        left_data = -left_data
+    gpc_r, shifted_right_data = pp.data_by_pgc(time,right_data,gl,side='right')
+    gpc_l, shifted_left_data  = pp.data_by_pgc(time,left_data,gl,side='left')
+    interperted_right_data = np.interp(gait_cycle,gpc_r,shifted_right_data, left=np.nan, right=np.nan)
+    interperted_left_data  = np.interp(gait_cycle,gpc_l,shifted_left_data, left=np.nan, right=np.nan)
+    final_data = nanmean([interperted_right_data,interperted_left_data],axis=0)
+    if raw_data == False:
+        return final_data
+    else:
+        return right_data,left_data,time
+
 def reaction_forces_name_const(joint,force_or_moment = 'moment',expressed_frame = None, applied_body = None):
     """
     This function establish the proper names for extracting reaction forces
@@ -1582,8 +1659,34 @@ def reaction_forces_name_const(joint,force_or_moment = 'moment',expressed_frame 
                             for side in ['r','l']\
                             for force in force_list]
         return reaction_force_name
+    elif joint == 'patellofemoral':
+        joint_names = 'patellofemoral'
+        if expressed_frame == None:
+            expressed_frame = 'ground'
+        if applied_body == None:
+            applied_body = 'patella'
+        reaction_force_name = ['{}_{}_on_{}_{}_in_{}_{}'.format(joint_names,side,applied_body,side,expressed_frame,force)
+                            for side in ['r','l']\
+                            for force in force_list]
+        return reaction_force_name
     
 def extract_reaction_forces(loadcondition,case,joints,device=None,force_or_moment='moment'):
+    """[summary]
+
+    Args:
+        loadcondition ([type]): [description]
+        case ([type]): [description]
+        joints ([type]): [description]
+        device ([type], optional): [description]. Defaults to None.
+        force_or_moment (str, optional): [description]. Defaults to 'moment'.
+
+    Raises:
+        Exception: [description]
+        Exception: [description]
+
+    Returns:
+        [type]: [description]
+    """
     # general subjects and trials lists 
     subjects = ['05','07','09','10','11','12','14']
     trials = ['01','02','03']
@@ -1623,7 +1726,7 @@ def extract_reaction_forces(loadcondition,case,joints,device=None,force_or_momen
         if device == None:
             raise Exception('please determine the device.')
     # joint list check
-    joint_check_list = ['back','duct_tape','hip','knee','ankle']
+    joint_check_list = ['back','duct_tape','hip','knee','patellofemoral','ankle']
     if all(elem in joint_check_list for elem in joints) == False:
         raise Exception('error in joint list')
     # hip and knee weights for pareto fronts
@@ -1693,7 +1796,7 @@ def extract_reaction_forces(loadcondition,case,joints,device=None,force_or_momen
                                            "Right_Parameter":reaction_forces_list[n],
                                             "Left_Parameter":reaction_forces_list[n],
                                                         "gl": gl}
-                            data = data_extraction(Subject_Dic=subject_directory,raw_data=False)
+                            data = data_extraction_reactionforce(Subject_Dic=subject_directory,raw_data=False)
                             dataset[:,c] = data
                             c+=1
                     else:
@@ -1706,7 +1809,7 @@ def extract_reaction_forces(loadcondition,case,joints,device=None,force_or_momen
                                         "Right_Parameter":reaction_forces_list[n],
                                             "Left_Parameter":reaction_forces_list[n+3],
                                                         "gl": gl}
-                            data = data_extraction(Subject_Dic=subject_directory,raw_data=False)
+                            data = data_extraction_reactionforce(Subject_Dic=subject_directory,raw_data=False)
                             dataset[:,c] = data
                             c+=1
 <<<<<<< HEAD
@@ -1738,7 +1841,7 @@ def extract_reaction_forces(loadcondition,case,joints,device=None,force_or_momen
                                                 "Right_Parameter":reaction_forces_list[n],
                                                     "Left_Parameter":reaction_forces_list[n],
                                                                 "gl": gl}
-                                    data = data_extraction(Subject_Dic=subject_directory,raw_data=False)
+                                    data = data_extraction_reactionforce(Subject_Dic=subject_directory,raw_data=False)
                                     dataset[:,c] = data
                                     c+=1
                             else:
@@ -1751,19 +1854,13 @@ def extract_reaction_forces(loadcondition,case,joints,device=None,force_or_momen
                                                 "Right_Parameter":reaction_forces_list[n],
                                                     "Left_Parameter":reaction_forces_list[n+3],
                                                                 "gl": gl}
-                                    data = data_extraction(Subject_Dic=subject_directory,raw_data=False)
+                                    data = data_extraction_reactionforce(Subject_Dic=subject_directory,raw_data=False)
                                     dataset[:,c] = data
                                     c+=1
 <<<<<<< HEAD
 =======
     return dataset
 >>>>>>> development
-
-                      
-
-                    
-
-                    
 
 #####################################################################################
 #####################################################################################
