@@ -760,7 +760,11 @@ monovsbi_color_dic = {
 'color_3_list' : [mycolors['cyan blue'],mycolors['olympic blue'],mycolors['cyan blue'],mycolors['olympic blue']],
 'color_2_list' : [mycolors['crimson red'],mycolors['french rose'],mycolors['crimson red'],mycolors['french rose']]
 }
+<<<<<<< HEAD
 
+=======
+'''
+>>>>>>> paper
 # ***************************
 # back joint moment figure
 # required dictionary
@@ -774,8 +778,13 @@ plot_dic={
 # plot
 fig = plt.figure(num='Loaded Back Reaction Moment',figsize=(9.4, 6.8))
 utils.plot_joint_muscle_exo(nrows=2,ncols=2,plot_dic=plot_dic,thirdplot=False,
+<<<<<<< HEAD
                             color_dic=default_color_dic,ylabel='back reaction\n moment (N-m/kg)')#,
 #                            y_ticks = [-0.2,0,0.2,0.4,0.6,0.8,1])
+=======
+                            color_dic=default_color_dic,ylabel='back reaction\n moment (N-m/kg)',
+                            y_ticks = [-0.2,0,0.2,0.4,0.6,0.8,1])
+>>>>>>> paper
 fig.tight_layout()
 fig.savefig('./Figures/Ideal/JRF/Back_Joint_ReactionMoment.pdf',orientation='landscape',bbox_inches='tight')
 plt.show()
@@ -791,8 +800,13 @@ plot_dic={
 # plot
 fig = plt.figure(num='Loaded Back Reaction Moment',figsize=(6.4, 4.8))
 utils.plot_joint_muscle_exo(nrows=1,ncols=2,plot_dic=plot_dic,thirdplot=False,
+<<<<<<< HEAD
                             color_dic=default_color_dic,ylabel='duct tape reaction\n moment (N-m/kg)')#,
 #                            y_ticks = )[-0.2,-0.1,0,0.1])
+=======
+                            color_dic=default_color_dic,ylabel='duct tape reaction\n moment (N-m/kg)',
+                            y_ticks = [-0.2,-0.1,0,0.1])
+>>>>>>> paper
 fig.tight_layout()
 fig.savefig('./Figures/Ideal/JRF/Duck_Tape_Joint_ReactionMoment.pdf',orientation='landscape',bbox_inches='tight')
 plt.show()
@@ -810,8 +824,13 @@ plot_dic={
 # plot
 fig = plt.figure(num='Loaded Hip Reaction Moment',figsize=(9.4, 6.8))
 utils.plot_joint_muscle_exo(nrows=2,ncols=2,plot_dic=plot_dic,thirdplot=False,
+<<<<<<< HEAD
                             color_dic=default_color_dic,ylabel='hip reaction\n moment (N-m/kg)')#,
 #                            y_ticks = )[-0.06,-0.03,0,0.03,0.06,0.09])
+=======
+                            color_dic=default_color_dic,ylabel='hip reaction\n moment (N-m/kg)',
+                            y_ticks = [-0.06,-0.03,0,0.03,0.06,0.09])
+>>>>>>> paper
 fig.tight_layout()
 fig.savefig('./Figures/Ideal/JRF/Hip_Joint_ReactionMoment.pdf',orientation='landscape',bbox_inches='tight')
 plt.show()
@@ -887,8 +906,13 @@ plot_dic={
 # plot
 fig = plt.figure(num='Loaded Knee Reaction Moment',figsize=(9.4, 6.8))
 utils.plot_joint_muscle_exo(nrows=2,ncols=2,plot_dic=plot_dic,thirdplot=False,
+<<<<<<< HEAD
                             color_dic=default_color_dic,ylabel='knee reaction\n moment (N-m/kg)')#,
 #                            y_ticks = )[1,0.5,0,-0.5])
+=======
+                            color_dic=default_color_dic,ylabel='knee reaction\n moment (N-m/kg)',
+                            y_ticks = [1,0.5,0,-0.5])
+>>>>>>> paper
 fig.tight_layout()
 fig.savefig('./Figures/Ideal/JRF/Knee_Joint_ReactionMoment_Mx.pdf',orientation='landscape',bbox_inches='tight')
 plt.show()
@@ -905,8 +929,13 @@ plot_dic={
 # plot
 fig = plt.figure(num='Loaded Knee Reaction Moment',figsize=(9.4, 6.8))
 utils.plot_joint_muscle_exo(nrows=2,ncols=2,plot_dic=plot_dic,thirdplot=False,
+<<<<<<< HEAD
                             color_dic=default_color_dic,ylabel='knee reaction\n moment (N-m/kg)')#,
 #                            y_ticks = )[0.4,0.2,0,-0.2,-0.4])
+=======
+                            color_dic=default_color_dic,ylabel='knee reaction\n moment (N-m/kg)',
+                            y_ticks = [0.4,0.2,0,-0.2,-0.4])
+>>>>>>> paper
 fig.tight_layout()
 fig.savefig('./Figures/Ideal/JRF/Knee_Joint_ReactionMoment_My.pdf',orientation='landscape',bbox_inches='tight')
 plt.show()
@@ -923,8 +952,13 @@ plot_dic={
 # plot
 fig = plt.figure(num='Loaded Knee Reaction Moment',figsize=(9.4, 6.8))
 utils.plot_joint_muscle_exo(nrows=2,ncols=2,plot_dic=plot_dic,thirdplot=False,
+<<<<<<< HEAD
                             color_dic=default_color_dic,ylabel='knee reaction\n moment (N-m/kg)')#,
 #                            y_ticks = )[0,-0.2,-0.4,-0.6])
+=======
+                            color_dic=default_color_dic,ylabel='knee reaction\n moment (N-m/kg)',
+                            y_ticks = [0,-0.2,-0.4,-0.6])
+>>>>>>> paper
 fig.tight_layout()
 fig.savefig('./Figures/Ideal/JRF/Knee_Joint_ReactionMoment_Mz.pdf',orientation='landscape',bbox_inches='tight')
 plt.show()
@@ -944,8 +978,13 @@ plot_dic={
 # plot
 fig = plt.figure(num='Loaded Knee Reaction Force',figsize=(9.4, 6.8))
 utils.plot_joint_muscle_exo(nrows=2,ncols=2,plot_dic=plot_dic,thirdplot=False,
+<<<<<<< HEAD
                             color_dic=default_color_dic,ylabel='knee reaction\n force (N/kg)')#,
 #                            y_ticks = )[1,0.5,0,-0.5])
+=======
+                            color_dic=default_color_dic,ylabel='knee reaction\n force (N/kg)',
+                            y_ticks = [1,0.5,0,-0.5])
+>>>>>>> paper
 fig.tight_layout()
 fig.savefig('./Figures/Ideal/JRF/Knee_Joint_ReactionForce_Fx.pdf',orientation='landscape',bbox_inches='tight')
 plt.show()
@@ -1002,8 +1041,13 @@ plot_dic={
 # plot
 fig = plt.figure(num='Loaded Patellofemoral Reaction Moment',figsize=(9.4, 6.8))
 utils.plot_joint_muscle_exo(nrows=2,ncols=2,plot_dic=plot_dic,thirdplot=False,
+<<<<<<< HEAD
                             color_dic=default_color_dic,ylabel='patellofemoral reaction\n moment (N-m/kg)')#,
 #                            y_ticks = )[0.2,0.1,0,-0.1,-0.2])
+=======
+                            color_dic=default_color_dic,ylabel='patellofemoral reaction\n moment (N-m/kg)',
+                            y_ticks = [0.2,0.1,0,-0.1,-0.2])
+>>>>>>> paper
 fig.tight_layout()
 fig.savefig('./Figures/Ideal/JRF/Patellofemoral_Joint_ReactionMoment_Mx.pdf',orientation='landscape',bbox_inches='tight')
 plt.show()
@@ -1038,8 +1082,13 @@ plot_dic={
 # plot
 fig = plt.figure(num='Loaded Patellofemoral Reaction Moment',figsize=(9.4, 6.8))
 utils.plot_joint_muscle_exo(nrows=2,ncols=2,plot_dic=plot_dic,thirdplot=False,
+<<<<<<< HEAD
                             color_dic=default_color_dic,ylabel='patellofemoral reaction\n moment (N-m/kg)')#,
 #                            y_ticks = )[0,-0.5,-1])
+=======
+                            color_dic=default_color_dic,ylabel='patellofemoral reaction\n moment (N-m/kg)',
+                            y_ticks = [0,-0.5,-1])
+>>>>>>> paper
 fig.tight_layout()
 fig.savefig('./Figures/Ideal/JRF/Patellofemoral_Joint_ReactionMoment_Mz.pdf',orientation='landscape',bbox_inches='tight')
 plt.show()
@@ -1058,8 +1107,13 @@ plot_dic={
 # plot
 fig = plt.figure(num='Loaded Patellofemoral Reaction Force',figsize=(9.4, 6.8))
 utils.plot_joint_muscle_exo(nrows=2,ncols=2,plot_dic=plot_dic,thirdplot=False,
+<<<<<<< HEAD
                             color_dic=default_color_dic,ylabel='patellofemoral reaction\n force (N/kg)')#,
 #                            y_ticks = )[0.2,0.1,0,-0.1,-0.2])
+=======
+                            color_dic=default_color_dic,ylabel='patellofemoral reaction\n force (N/kg)',
+                            y_ticks = [0.2,0.1,0,-0.1,-0.2])
+>>>>>>> paper
 fig.tight_layout()
 fig.savefig('./Figures/Ideal/JRF/Patellofemoral_Joint_ReactionForce_Fx.pdf',orientation='landscape',bbox_inches='tight')
 plt.show()
@@ -1117,8 +1171,13 @@ plot_dic={
 # plot
 fig = plt.figure(num='Loaded Ankle Reaction Moment',figsize=(9.4, 6.8))
 utils.plot_joint_muscle_exo(nrows=2,ncols=2,plot_dic=plot_dic,thirdplot=False,
+<<<<<<< HEAD
                             color_dic=default_color_dic,ylabel='ankle reaction\n moment (N-m/kg)')#,
 #                            y_ticks = )[-0.06,-0.03,0,0.03,0.06,0.09])
+=======
+                            color_dic=default_color_dic,ylabel='ankle reaction\n moment (N-m/kg)',
+                            y_ticks = [-0.06,-0.03,0,0.03,0.06,0.09])
+>>>>>>> paper
 fig.tight_layout()
 fig.savefig('./Figures/Ideal/JRF/Ankle_Joint_ReactionMoment_Mx.pdf',orientation='landscape',bbox_inches='tight')
 plt.show()
@@ -1135,8 +1194,13 @@ plot_dic={
 # plot
 fig = plt.figure(num='Loaded Ankle Reaction Moment',figsize=(9.4, 6.8))
 utils.plot_joint_muscle_exo(nrows=2,ncols=2,plot_dic=plot_dic,thirdplot=False,
+<<<<<<< HEAD
                             color_dic=default_color_dic,ylabel='ankle reaction\n moment (N-m/kg)')#,
 #                            y_ticks = )[-0.06,-0.03,0,0.03,0.06,0.09])
+=======
+                            color_dic=default_color_dic,ylabel='ankle reaction\n moment (N-m/kg)',
+                            y_ticks = [-0.06,-0.03,0,0.03,0.06,0.09])
+>>>>>>> paper
 fig.tight_layout()
 fig.savefig('./Figures/Ideal/JRF/Ankle_Joint_ReactionMoment_My.pdf',orientation='landscape',bbox_inches='tight')
 plt.show()
@@ -1153,8 +1217,13 @@ plot_dic={
 # plot
 fig = plt.figure(num='Loaded Ankle Reaction Moment',figsize=(9.4, 6.8))
 utils.plot_joint_muscle_exo(nrows=2,ncols=2,plot_dic=plot_dic,thirdplot=False,
+<<<<<<< HEAD
                             color_dic=default_color_dic,ylabel='ankle reaction\n moment (N-m/kg)')#,
 #                            y_ticks = )[-0.06,-0.03,0,0.03,0.06,0.09])
+=======
+                            color_dic=default_color_dic,ylabel='ankle reaction\n moment (N-m/kg)',
+                            y_ticks = [-0.06,-0.03,0,0.03,0.06,0.09])
+>>>>>>> paper
 fig.tight_layout()
 fig.savefig('./Figures/Ideal/JRF/Ankle_Joint_ReactionMoment_Mz.pdf',orientation='landscape',bbox_inches='tight')
 plt.show()
@@ -1215,7 +1284,11 @@ utils.plot_joint_muscle_exo(nrows=2,ncols=2,plot_dic=plot_dic,thirdplot=False,
 fig.tight_layout()
 fig.savefig('./Figures/Ideal/JRF/Ankle_Joint_ReactionForce_Fz.pdf',orientation='landscape',bbox_inches='tight')
 plt.show()
+<<<<<<< HEAD
 
+=======
+'''
+>>>>>>> paper
 ########################################################################################################################################
 default_color_dic = {
 'color_1_list' : ['k','xkcd:irish green','k','xkcd:irish green','k','xkcd:irish green'],
@@ -1242,8 +1315,13 @@ plot_dic={
 # plot
 fig = plt.figure(num='Loaded Knee Reaction Moment Comparison',figsize=(8.4, 4.8))
 utils.plot_joint_muscle_exo(nrows=3,ncols=2,plot_dic=plot_dic,thirdplot=True,
+<<<<<<< HEAD
                             color_dic=default_color_dic,ylabel='reaction\n moment (N-m/kg)')#,
 #                            y_ticks = )[-0.6,-0.3,0,0.3,0.6],xlabel_loc=[4,5],ylabel_loc=[0,2,4])
+=======
+                            color_dic=default_color_dic,ylabel='reaction\n moment (N-m/kg)',
+                            y_ticks = [-0.6,-0.3,0,0.3,0.6],xlabel_loc=[4,5],ylabel_loc=[0,2,4])
+>>>>>>> paper
 fig.tight_layout(h_pad=-1, w_pad=-1.5)
 fig.subplots_adjust(top=0.95, bottom=0.075, left=0.100, right=0.975,hspace=0.40,wspace=0.20)
 fig.savefig('./Figures/Ideal/JRF/Knee_Joint_ReactionMoment_Comparison.pdf',orientation='landscape',bbox_inches='tight')
@@ -1268,8 +1346,13 @@ plot_dic={
 # plot
 fig = plt.figure(num='Loaded Patellofemoral Reaction Moment Comparison',figsize=(8.4, 4.8))
 utils.plot_joint_muscle_exo(nrows=3,ncols=2,plot_dic=plot_dic,thirdplot=True,
+<<<<<<< HEAD
                             color_dic=default_color_dic,ylabel='reaction\n moment (N-m/kg)')#,
 #                            y_ticks = )[-0.5,0,0.5],xlabel_loc=[4,5],ylabel_loc=[0,2,4])
+=======
+                            color_dic=default_color_dic,ylabel='reaction\n moment (N-m/kg)',
+                            y_ticks = [-0.5,0,0.5],xlabel_loc=[4,5],ylabel_loc=[0,2,4])
+>>>>>>> paper
 fig.tight_layout(h_pad=-1, w_pad=-1.5)
 fig.subplots_adjust(top=0.95, bottom=0.075, left=0.100, right=0.975,hspace=0.40,wspace=0.20)
 fig.savefig('./Figures/Ideal/JRF/Patellofemoral_Joint_ReactionMoment_Comparison.pdf',orientation='landscape',bbox_inches='tight')
@@ -1295,8 +1378,13 @@ plot_dic={
 # plot
 fig = plt.figure(num='Loaded Knee Reaction Force Comparison',figsize=(8.4, 4.8))
 utils.plot_joint_muscle_exo(nrows=3,ncols=2,plot_dic=plot_dic,thirdplot=True,
+<<<<<<< HEAD
                             color_dic=default_color_dic,ylabel='reaction\n force (N/kg)')#,
 #                            y_ticks = )[-0.6,-0.3,0,0.3,0.6],xlabel_loc=[4,5],ylabel_loc=[0,2,4])
+=======
+                            color_dic=default_color_dic,ylabel='reaction\n force (N/kg)',
+                            y_ticks = [-0.6,-0.3,0,0.3,0.6],xlabel_loc=[4,5],ylabel_loc=[0,2,4])
+>>>>>>> paper
 fig.tight_layout(h_pad=-1, w_pad=-1.5)
 fig.subplots_adjust(top=0.95, bottom=0.075, left=0.100, right=0.975,hspace=0.40,wspace=0.20)
 fig.savefig('./Figures/Ideal/JRF/Knee_Joint_ReactionForce_Comparison.pdf',orientation='landscape',bbox_inches='tight')
@@ -1321,8 +1409,13 @@ plot_dic={
 # plot
 fig = plt.figure(num='Loaded Patellofemoral Reaction Force Comparison',figsize=(8.4, 4.8))
 utils.plot_joint_muscle_exo(nrows=3,ncols=2,plot_dic=plot_dic,thirdplot=True,
+<<<<<<< HEAD
                             color_dic=default_color_dic,ylabel='reaction\n force (N/kg)')#,
 #                            y_ticks = )[-0.5,0,0.5],xlabel_loc=[4,5],ylabel_loc=[0,2,4])
+=======
+                            color_dic=default_color_dic,ylabel='reaction\n force (N/kg)',
+                            y_ticks = [-0.5,0,0.5],xlabel_loc=[4,5],ylabel_loc=[0,2,4])
+>>>>>>> paper
 fig.tight_layout(h_pad=-1, w_pad=-1.5)
 fig.subplots_adjust(top=0.95, bottom=0.075, left=0.100, right=0.975,hspace=0.40,wspace=0.20)
 fig.savefig('./Figures/Ideal/JRF/Patellofemoral_Joint_ReactionForce_Comparison.pdf',orientation='landscape',bbox_inches='tight')

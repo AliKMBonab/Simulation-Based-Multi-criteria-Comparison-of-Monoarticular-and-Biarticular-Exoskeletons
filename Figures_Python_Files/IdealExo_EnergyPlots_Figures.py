@@ -35,6 +35,15 @@ assisted_energy_dataset = {pathlib.PurePath(f[1]).stem: np.loadtxt(f[1], delimit
 directory = './Data/Unassist/*_energy.csv'
 files = enumerate(glob.iglob(directory), 1)
 unassisted_energy_dataset = {pathlib.PurePath(f[1]).stem: np.loadtxt(f[1], delimiter=',') for f in files}
+# unassist muscles metabolic rate
+directory = './Data/Unassist/*_metabolic_rate.csv'
+files = enumerate(glob.iglob(directory), 1)
+unassist_musclesmetabolicrate_dataset = {pathlib.PurePath(f[1]).stem: np.loadtxt(f[1], delimiter=',') for f in files}
+# assisted muscles metabolic rate
+directory = './Data/Ideal/*_metabolic_rate.csv'
+files = enumerate(glob.iglob(directory), 1)
+assisted_musclesmetabolicrate_dataset = {pathlib.PurePath(f[1]).stem: np.loadtxt(f[1], delimiter=',') for f in files}
+
 # gls
 gl_noload = {'noload_subject{}_trial{}'.format(i,j): utils.construct_gl_mass_side(subjectno=i,trialno=j,loadcond='noload') for i in subjects for j in trials_num}
 gl_loaded = {'loaded_subject{}_trial{}'.format(i,j): utils.construct_gl_mass_side(subjectno=i,trialno=j,loadcond='loaded') for i in subjects for j in trials_num}
@@ -87,7 +96,10 @@ mean_loaded_mono_energy,std_loaded_mono_energy = utils.mean_std_over_subjects(as
 #####################################################################################
 # Plots
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+>>>>>>> paper
 # muscles metabolic rate figure
 # noload mono vs bi
 fig = plt.figure(num='Muscles Metabolic Rate',figsize=(20, 20))
@@ -135,7 +147,10 @@ fig.tight_layout(h_pad=-1, w_pad=-1.5)
 fig.subplots_adjust(top=0.98, bottom=0.075, left=0.100, right=0.975,hspace=0.45,wspace=0.40)
 fig.savefig('./Figures/Ideal/MusclesMetabolicRate_Mono_LoadedVsNoload.pdf',orientation='landscape',bbox_inches='tight')
 
+<<<<<<< HEAD
 >>>>>>> development
+=======
+>>>>>>> paper
 #####################################################################################
 # writing data to csv for adding the ideal exoskeletons on the paretofronts
 headers = ['mean_noload_bi_hip_energy','std_noload_bi_hip_energy','mean_noload_bi_knee_energy','std_noload_bi_knee_energy',\
