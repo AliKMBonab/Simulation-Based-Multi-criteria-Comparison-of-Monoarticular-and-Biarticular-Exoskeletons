@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.21 (MiKTeX 2.9.7380 64-bit) (preloaded format=pdflatex 2020.4.9)  7 JUL 2020 20:09
+This is pdfTeX, Version 3.14159265-2.6-1.40.21 (MiKTeX 2.9.7380 64-bit) (preloaded format=pdflatex 2020.4.9)  10 JUL 2020 02:20
 entering extended mode
 **./Ideal_Exoskeleton_Draft.tex
 (Ideal_Exoskeleton_Draft.tex
@@ -845,102 +845,102 @@ Package pdftex.def Info: ./Figures/Ideal_Exo_MonovsBi_Figures/PaperFigure_Exosk
 eletons_Power.pdf  used on input line 570.
 (pdftex.def)             Requested size: 379.4175pt x 298.5836pt.
  [23 <./Figures/Ideal_Exo_MonovsBi_Figures/PaperFigure_Exoskeletons_Power.pdf>]
-<./Figures/Cartoons/Saggital_Leg_Biarticular_Muscles.pdf, id=1010, 658.46pt x 5
+<./Figures/Cartoons/Saggital_Leg_Biarticular_Muscles.pdf, id=1011, 658.46pt x 5
 97.50829pt>
 File: ./Figures/Cartoons/Saggital_Leg_Biarticular_Muscles.pdf Graphic file (typ
 e pdf)
 <use ./Figures/Cartoons/Saggital_Leg_Biarticular_Muscles.pdf>
 Package pdftex.def Info: ./Figures/Cartoons/Saggital_Leg_Biarticular_Muscles.pd
-f  used on input line 582.
+f  used on input line 585.
 (pdftex.def)             Requested size: 144.54pt x 131.16048pt.
-<./Figures/Cartoons/Saggital_Leg_Monoarticular_Muscles.pdf, id=1011, 658.46pt x
+<./Figures/Cartoons/Saggital_Leg_Monoarticular_Muscles.pdf, id=1012, 658.46pt x
  597.50829pt>
 File: ./Figures/Cartoons/Saggital_Leg_Monoarticular_Muscles.pdf Graphic file (t
 ype pdf)
 <use ./Figures/Cartoons/Saggital_Leg_Monoarticular_Muscles.pdf>
 Package pdftex.def Info: ./Figures/Cartoons/Saggital_Leg_Monoarticular_Muscles.
-pdf  used on input line 585.
+pdf  used on input line 588.
 (pdftex.def)             Requested size: 144.54pt x 131.16048pt.
 <./Figures/Ideal_Exo_MonovsBi_Figures/PaperFigure_Biarticular_MuscleActivation.
-pdf, id=1012, 599.54207pt x 483.87651pt>
+pdf, id=1013, 599.54207pt x 483.87651pt>
 File: ./Figures/Ideal_Exo_MonovsBi_Figures/PaperFigure_Biarticular_MuscleActiva
 tion.pdf Graphic file (type pdf)
 <use ./Figures/Ideal_Exo_MonovsBi_Figures/PaperFigure_Biarticular_MuscleActivat
 ion.pdf>
 Package pdftex.def Info: ./Figures/Ideal_Exo_MonovsBi_Figures/PaperFigure_Biart
-icular_MuscleActivation.pdf  used on input line 592.
+icular_MuscleActivation.pdf  used on input line 595.
 (pdftex.def)             Requested size: 379.4175pt x 306.21712pt.
  [24 <./Figures/Cartoons/Saggital_Leg_Biarticular_Muscles.pdf> <./Figures/Carto
 ons/Saggital_Leg_Monoarticular_Muscles.pdf>]
 [25 <./Figures/Ideal_Exo_MonovsBi_Figures/PaperFigure_Biarticular_MuscleActivat
-ion.pdf>]
-<./Figures/Pareto_Simulations_Figures/PaperFigure_Main_Pareto.pdf, id=1116, 874
+ion.pdf>] [26]
+<./Figures/Pareto_Simulations_Figures/PaperFigure_Main_Pareto.pdf, id=1142, 874
 .69595pt x 695.6945pt>
 File: ./Figures/Pareto_Simulations_Figures/PaperFigure_Main_Pareto.pdf Graphic 
 file (type pdf)
 <use ./Figures/Pareto_Simulations_Figures/PaperFigure_Main_Pareto.pdf>
 Package pdftex.def Info: ./Figures/Pareto_Simulations_Figures/PaperFigure_Main_
-Pareto.pdf  used on input line 613.
+Pareto.pdf  used on input line 619.
 (pdftex.def)             Requested size: 379.4175pt x 301.76482pt.
 <./Figures/Pareto_Simulations_Figures/PaperFigure_Paretofront_EnergyBarPlot.pdf
-, id=1117, 868.31273pt x 670.73872pt>
+, id=1143, 868.31273pt x 670.73872pt>
 File: ./Figures/Pareto_Simulations_Figures/PaperFigure_Paretofront_EnergyBarPlo
 t.pdf Graphic file (type pdf)
 <use ./Figures/Pareto_Simulations_Figures/PaperFigure_Paretofront_EnergyBarPlot
 .pdf>
 Package pdftex.def Info: ./Figures/Pareto_Simulations_Figures/PaperFigure_Paret
-ofront_EnergyBarPlot.pdf  used on input line 620.
+ofront_EnergyBarPlot.pdf  used on input line 626.
 (pdftex.def)             Requested size: 379.4175pt x 293.08926pt.
- [26] [27 <./Figures/Pareto_Simulations_Figures/PaperFigure_Main_Pareto.pdf>]
+ [27] [28 <./Figures/Pareto_Simulations_Figures/PaperFigure_Main_Pareto.pdf>]
 <./Figures/Pareto_Simulations_Figures/PaperFigure_Paretofront_TorqueProfiles.pd
-f, id=1198, 1009.88394pt x 701.47545pt>
+f, id=1228, 1009.88394pt x 701.47545pt>
 File: ./Figures/Pareto_Simulations_Figures/PaperFigure_Paretofront_TorqueProfil
 es.pdf Graphic file (type pdf)
 <use ./Figures/Pareto_Simulations_Figures/PaperFigure_Paretofront_TorqueProfile
 s.pdf>
 Package pdftex.def Info: ./Figures/Pareto_Simulations_Figures/PaperFigure_Paret
-ofront_TorqueProfiles.pdf  used on input line 663.
+ofront_TorqueProfiles.pdf  used on input line 669.
 (pdftex.def)             Requested size: 379.4175pt x 263.54501pt.
- [28 <./Figures/Pareto_Simulations_Figures/PaperFigure_Paretofront_EnergyBarPlo
+ [29 <./Figures/Pareto_Simulations_Figures/PaperFigure_Paretofront_EnergyBarPlo
 t.pdf>]
 <./Figures/Pareto_Simulations_Figures/PaperFigure_Paretofront_PowerProfiles.pdf
-, id=1245, 1009.88394pt x 701.47545pt>
+, id=1275, 1009.88394pt x 701.47545pt>
 File: ./Figures/Pareto_Simulations_Figures/PaperFigure_Paretofront_PowerProfile
 s.pdf Graphic file (type pdf)
 <use ./Figures/Pareto_Simulations_Figures/PaperFigure_Paretofront_PowerProfiles
 .pdf>
 Package pdftex.def Info: ./Figures/Pareto_Simulations_Figures/PaperFigure_Paret
-ofront_PowerProfiles.pdf  used on input line 673.
+ofront_PowerProfiles.pdf  used on input line 679.
 (pdftex.def)             Requested size: 379.4175pt x 263.54501pt.
- [29] [30 <./Figures/Pareto_Simulations_Figures/PaperFigure_Paretofront_TorqueP
+ [30] [31 <./Figures/Pareto_Simulations_Figures/PaperFigure_Paretofront_TorqueP
 rofiles.pdf>]
 <./Figures/Pareto_Mass_Regenration_Figures/PaperFigure_Pareto_Comparison.pdf, i
-d=1332, 1001.16846pt x 826.50322pt>
+d=1361, 1001.16846pt x 826.50322pt>
 File: ./Figures/Pareto_Mass_Regenration_Figures/PaperFigure_Pareto_Comparison.p
 df Graphic file (type pdf)
 <use ./Figures/Pareto_Mass_Regenration_Figures/PaperFigure_Pareto_Comparison.pd
 f>
 Package pdftex.def Info: ./Figures/Pareto_Mass_Regenration_Figures/PaperFigure_
-Pareto_Comparison.pdf  used on input line 690.
+Pareto_Comparison.pdf  used on input line 696.
 (pdftex.def)             Requested size: 379.4175pt x 313.2169pt.
- [31 <./Figures/Pareto_Simulations_Figures/PaperFigure_Paretofront_PowerProfile
+ [32 <./Figures/Pareto_Simulations_Figures/PaperFigure_Paretofront_PowerProfile
 s.pdf>]
 <./Figures/Pareto_Mass_Regenration_Figures/PaperFigure_AddingMass_Pareto.pdf, i
-d=1394, 874.69595pt x 709.1949pt>
+d=1423, 874.69595pt x 709.1949pt>
 File: ./Figures/Pareto_Mass_Regenration_Figures/PaperFigure_AddingMass_Pareto.p
 df Graphic file (type pdf)
 <use ./Figures/Pareto_Mass_Regenration_Figures/PaperFigure_AddingMass_Pareto.pd
 f>
 Package pdftex.def Info: ./Figures/Pareto_Mass_Regenration_Figures/PaperFigure_
-AddingMass_Pareto.pdf  used on input line 699.
+AddingMass_Pareto.pdf  used on input line 705.
 (pdftex.def)             Requested size: 379.4175pt x 307.62076pt.
- [32 <./Figures/Pareto_Mass_Regenration_Figures/PaperFigure_Pareto_Comparison.p
-df>] [33 <./Figures/Pareto_Mass_Regenration_Figures/PaperFigure_AddingMass_Pare
-to.pdf>] [34] [35]
-(Ideal_Exoskeleton_Draft.bbl [36] ("E:\MiKTeX 2.9\tex/latex/ucs\uni-32.def"
+ [33 <./Figures/Pareto_Mass_Regenration_Figures/PaperFigure_Pareto_Comparison.p
+df>] [34 <./Figures/Pareto_Mass_Regenration_Figures/PaperFigure_AddingMass_Pare
+to.pdf>] [35] [36]
+(Ideal_Exoskeleton_Draft.bbl [37] ("E:\MiKTeX 2.9\tex/latex/ucs\uni-32.def"
 File: uni-32.def 2013/05/13 UCS: Unicode data U+2000..U+20FF
 )
-[37]
+[38]
 Package microtype Info: Loading generic protrusion settings for font family
 (microtype)             `cmtt' (encoding: OT1).
 (microtype)             For optimal results, create family-specific settings.
@@ -950,25 +950,25 @@ File: uni-0.def 2013/05/13 UCS: Unicode data U+0000..U+00FF
 )
 ("E:\MiKTeX 2.9\tex/latex/ucs\uni-33.def"
 File: uni-33.def 2013/05/13 UCS: Unicode data U+2100..U+21FF
-) [38] [39] [40] [41] [42] [43]
-[44] [45] [46]) 
+) [39] [40] [41] [42] [43] [44]
+[45] [46] [47] [48]) 
 AED: lastpage setting LastPage
-[47]
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 761.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 761.
+[49]
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 770.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 770.
  (Ideal_Exoskeleton_Draft.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 761.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 761.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 770.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 770.
 Package rerunfilecheck Info: File `Ideal_Exoskeleton_Draft.out' has not changed
 .
 (rerunfilecheck)             Checksum: D41D8CD98F00B204E9800998ECF8427E;0.
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 761.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 770.
  ) 
 Here is how much of TeX's memory you used:
- 13949 strings out of 492478
- 206136 string characters out of 3137227
- 344757 words of memory out of 3000000
- 17615 multiletter control sequences out of 15000+200000
+ 13973 strings out of 492478
+ 206310 string characters out of 3137227
+ 344039 words of memory out of 3000000
+ 17626 multiletter control sequences out of 15000+200000
  17316 words of font info for 99 fonts, out of 3000000 for 9000
  1141 hyphenation exceptions out of 8191
  41i,16n,50p,1692b,600s stack positions out of 5000i,500n,10000p,200000b,50000s
@@ -993,9 +993,9 @@ cmsy5.pfb><E:/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy6.pfb><E:/MiKTeX 2.
 sfonts/cm/cmti10.pfb><E:/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmti7.pfb><E
 :/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmti9.pfb><E:/MiKTeX 2.9/fonts/type
 1/public/amsfonts/cm/cmtt10.pfb>
-Output written on Ideal_Exoskeleton_Draft.pdf (47 pages, 8094659 bytes).
+Output written on Ideal_Exoskeleton_Draft.pdf (49 pages, 8105934 bytes).
 PDF statistics:
- 1841 PDF objects out of 2073 (max. 8388607)
- 295 named destinations out of 1000 (max. 500000)
+ 1881 PDF objects out of 2073 (max. 8388607)
+ 308 named destinations out of 1000 (max. 500000)
  21600 words of extra memory for PDF output out of 24883 (max. 10000000)
 

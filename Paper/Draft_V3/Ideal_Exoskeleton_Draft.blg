@@ -2,11 +2,11 @@ This is BibTeX, Version 0.99d (MiKTeX 2.9.7380 64-bit)
 Capacity: max_strings=200000, hash_size=200000, hash_prime=170003
 The top-level auxiliary file: Ideal_Exoskeleton_Draft.aux
 The style file: plos2015.bst
-Illegal, another \bibstyle command---line 317 of file Ideal_Exoskeleton_Draft.aux
+Illegal, another \bibstyle command---line 330 of file Ideal_Exoskeleton_Draft.aux
  : \bibstyle
  :          {plos2015.bst}
 I'm skipping whatever remains of this command
-Reallocating 'field_info' (item size: 4) to 10406 items.
+Reallocating 'field_info' (item size: 4) to 10746 items.
 Database file #1: Bibliography.bib
 Warning--I'm ignoring 1's extra "doi" field
 --line 16 of file Bibliography.bib
@@ -42,6 +42,7 @@ You're missing a field name---line 1228 of file Bibliography.bib
 I'm skipping whatever remains of this entry
 Warning--entry type for "spss" isn't style-file defined
 --line 2033 of file Bibliography.bib
+Warning--I didn't find a database entry for ""
 Reallocating 'glb_str_end' (item size: 4) to 20 items.
 Reallocating 'glb_str_ptr' (item size: 4) to 20 items.
 Reallocating 'global_strs' (item size: 1) to 4000000 items.
@@ -59,45 +60,45 @@ Warning--empty chapter in 72
 Warning--there's a month but no year in spss
 Warning--empty chapter in 146
 Warning--empty pages in 146
-You've used 159 entries,
+You've used 168 entries,
             3058 wiz_defined-function locations,
-            1679 strings with 42820 characters,
-and the built_in function-call counts, 286027 in all, are:
-= -- 37346
-> -- 2096
+            1739 strings with 45363 characters,
+and the built_in function-call counts, 305214 in all, are:
+= -- 39841
+> -- 2244
 < -- 17
-+ -- 1516
-- -- 524
-* -- 23773
-:= -- 30892
-add.period$ -- 725
-call.type$ -- 159
++ -- 1619
+- -- 561
+* -- 25417
+:= -- 32958
+add.period$ -- 770
+call.type$ -- 168
 change.case$ -- 32
 chr.to.int$ -- 0
-cite$ -- 168
-duplicate$ -- 25774
-empty$ -- 26707
-format.name$ -- 665
-if$ -- 67125
+cite$ -- 177
+duplicate$ -- 27406
+empty$ -- 28505
+format.name$ -- 711
+if$ -- 71598
 int.to.chr$ -- 0
-int.to.str$ -- 159
-missing$ -- 1437
-newline$ -- 910
-num.names$ -- 163
-pop$ -- 2226
+int.to.str$ -- 168
+missing$ -- 1528
+newline$ -- 964
+num.names$ -- 172
+pop$ -- 2352
 preamble$ -- 1
 purify$ -- 0
 quote$ -- 0
-skip$ -- 2489
+skip$ -- 2635
 stack$ -- 0
-substring$ -- 53669
-swap$ -- 3826
+substring$ -- 57460
+swap$ -- 4058
 text.length$ -- 17
 text.prefix$ -- 0
 top$ -- 0
 type$ -- 0
 warning$ -- 9
-while$ -- 1468
-width$ -- 162
-write$ -- 1972
+while$ -- 1566
+width$ -- 171
+write$ -- 2089
 (There were 9 error messages)
