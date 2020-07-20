@@ -1522,9 +1522,13 @@ def unassist_idealdevice_data_subjects(configuration,loadcond='noload',metabolic
             Regen_HipActuatorEnergy_Proc_Data,Regen_KneeActuatorEnergy_Proc_Data,MetabolicEnergy_Proc_Data,\
             HipMusclePower_Data,KneeMusclePower_Data,Muscles_Metabolic_Data,HipActuator_Kinematics_Data,KneeActuator_Kinematics_Data
     else:
+<<<<<<< HEAD
         return MetabolicEnergy_Data,MuscleActivation_Data,HipMuscleMoment_Data,\
                KneeMuscleMoment_Data,MetabolicEnergy_Proc_Data,Muscles_Metabolic_Data,\
                HipActuator_Kinematics_Data,KneeActuator_Kinematics_Data
+=======
+        return MetabolicEnergy_Data,MuscleActivation_Data,HipMuscleMoment_Data,KneeMuscleMoment_Data,MetabolicEnergy_Proc_Data,Muscles_Metabolic_Data
+>>>>>>> paper
 
 #####################################################################################
 #####################################################################################
@@ -1597,7 +1601,11 @@ def reaction_forces_name_const(joint,force_or_moment = 'moment',expressed_frame 
         joint_names = 'back'
         if expressed_frame == None:
             expressed_frame = 'ground'
+<<<<<<< HEAD
         elif applied_body == None:
+=======
+        if applied_body == None:
+>>>>>>> cc67b632ebe6bfc1cc25bbcbe317da0d31a89bd3
             applied_body = 'torso'
         reaction_force_name = ['{}_on_{}_in_{}_{}'.format(joint_names,applied_body,expressed_frame,force) for force in force_list]
         return reaction_force_name
@@ -1605,7 +1613,11 @@ def reaction_forces_name_const(joint,force_or_moment = 'moment',expressed_frame 
         joint_names = 'duct_tape'
         if expressed_frame == None:
             expressed_frame = 'ground'
+<<<<<<< HEAD
         elif applied_body == None:
+=======
+        if applied_body == None:
+>>>>>>> cc67b632ebe6bfc1cc25bbcbe317da0d31a89bd3
             applied_body = 'backpack'
         reaction_force_name = ['{}_on_{}_in_{}_{}'.format(joint_names,applied_body,expressed_frame,force) for force in force_list]
         return reaction_force_name
@@ -1613,7 +1625,11 @@ def reaction_forces_name_const(joint,force_or_moment = 'moment',expressed_frame 
         joint_names = 'hip'
         if expressed_frame == None:
             expressed_frame = 'ground'
+<<<<<<< HEAD
         elif applied_body == None:
+=======
+        if applied_body == None:
+>>>>>>> cc67b632ebe6bfc1cc25bbcbe317da0d31a89bd3
             applied_body = 'femur'
         reaction_force_name = ['{}_{}_on_{}_{}_in_{}_{}'.format(joint_names,side,applied_body,side,expressed_frame,force)
                             for side in ['r','l']\
@@ -1623,7 +1639,11 @@ def reaction_forces_name_const(joint,force_or_moment = 'moment',expressed_frame 
         joint_names = 'walker_knee'
         if expressed_frame == None:
             expressed_frame = 'ground'
+<<<<<<< HEAD
         elif applied_body == None:
+=======
+        if applied_body == None:
+>>>>>>> cc67b632ebe6bfc1cc25bbcbe317da0d31a89bd3
             applied_body = 'tibia'
         reaction_force_name = ['{}_{}_on_{}_{}_in_{}_{}'.format(joint_names,side,applied_body,side,expressed_frame,force)
                             for side in ['r','l']\
@@ -1633,7 +1653,11 @@ def reaction_forces_name_const(joint,force_or_moment = 'moment',expressed_frame 
         joint_names = 'ankle'
         if expressed_frame == None:
             expressed_frame = 'ground'
+<<<<<<< HEAD
         elif applied_body == None:
+=======
+        if applied_body == None:
+>>>>>>> cc67b632ebe6bfc1cc25bbcbe317da0d31a89bd3
             applied_body = 'talus'
         reaction_force_name = ['{}_{}_on_{}_{}_in_{}_{}'.format(joint_names,side,applied_body,side,expressed_frame,force)
                             for side in ['r','l']\
@@ -1678,6 +1702,7 @@ def extract_reaction_forces(loadcondition,case,joints,device=None,force_or_momen
         load_dir = 'loaded'
         load_dataset = 'Loaded'
     # check if device is determined
+<<<<<<< HEAD
     if case.low() != 'unassist':
         if device != None:
             raise Exception('please determine the device.')
@@ -1700,14 +1725,45 @@ def extract_reaction_forces(loadcondition,case,joints,device=None,force_or_momen
             hip_weight = [30,40,50,60,70,70,70,70,70]
             knee_weight = [30,30,30,30,30,40,50,60,70]  
         elif device == 'monoarticular' and loadcondition == 'noload':  
+=======
+    if case != 'unassist':
+        if device == None:
+            raise Exception('please determine the device.')
+    # joint list check
+    joint_check_list = ['back','duct_tape','hip','knee','patellofemoral','ankle']
+    if all(elem in joint_check_list for elem in joints) == False:
+        raise Exception('error in joint list')
+    # hip and knee weights for pareto fronts
+    if case == 'paretofront':
+        if device.lower() == 'biarticular' and loadcondition == 'loaded':
+            # biarticular/loaded
+            hip_weight = [30,30,30,30,30,40,40,50,50,50,60,70]
+            knee_weight = [30,40,50,60,70,60,70,50,60,70,70,70]
+        elif device.lower() == 'biarticular' and loadcondition == 'noload':
+            # biarticular/noload
+            hip_weight = [30,30,30,30,30,40,40,40,50,50,50,70]
+            knee_weight = [30,40,50,60,70,40,50,60,50,60,70,70]
+        elif device.lower() == 'monoarticular' and loadcondition == 'loaded':
+            # monoarticular/loaded
+            hip_weight = [30,40,50,60,70,70,70,70,70]
+            knee_weight = [30,30,30,30,30,40,50,60,70]  
+        elif device.lower() == 'monoarticular' and loadcondition == 'noload':  
+>>>>>>> cc67b632ebe6bfc1cc25bbcbe317da0d31a89bd3
             # monoarticular/noload
             hip_weight = [30,40,50,50,50,60,60,60,70,70]
             knee_weight = [30,30,30,40,50,50,60,70,60,70]
     # dataset initialization
+<<<<<<< HEAD
     if case.low() == 'unassist' or case.low() == 'ideal':
         dataset = np.zeros([1000,len(joints)*len(subjects)*len(trials)])
     else:
         dataset = np.zeros([1000,len(hip_weight)*len(knee_weight)*len(joints)*len(subjects)*len(trials)])
+=======
+    if case == 'unassist' or case == 'ideal':
+        dataset = np.zeros([1000,len(joints)*len(subjects)*len(trials)*3])
+    else:
+        dataset = np.zeros([1000,len(knee_weight)*len(joints)*len(subjects)*len(trials)*3])
+>>>>>>> cc67b632ebe6bfc1cc25bbcbe317da0d31a89bd3
     # main code
     c = 0
     for i in joints:
@@ -1716,6 +1772,7 @@ def extract_reaction_forces(loadcondition,case,joints,device=None,force_or_momen
                 # gait landmark construction
                 gl,_,trial_num = construct_gl_mass_trial(subjectno=j,trialno=k,loadcond=loadcondition)
                 # core code for extracting data
+<<<<<<< HEAD
                 if case.lower() == 'unassist' or case.lower() == 'ideal':
                     reaction_forces_list = reaction_forces_name_const(joint=i,force_or_moment = force_or_moment)
                     # construct directory
@@ -1725,6 +1782,17 @@ def extract_reaction_forces(loadcondition,case,joints,device=None,force_or_momen
                     else:
                         directory = '../subject{}/{}/Subject{}_{}_Dataset/UnAssist/Cycle{}/loadedwalking_subject{}_{}_free_trial{}_analyze_JointReaction_ReactionLoads.sto'\
                                 .format(j,loadcondition,j,load_dataset,k,j,loadcondition,trial_num)
+=======
+                if case == 'unassist' or case == 'ideal':
+                    reaction_forces_list = reaction_forces_name_const(joint=i,force_or_moment = force_or_moment)
+                    # construct directory
+                    if case == 'ideal':
+                        directory = '../subject{}/{}/Subject{}_{}_Dataset/{}/Ideal/Cycle{}/loadedwalking_subject{}_{}_free_trial{}_analyze_JointReaction_ReactionLoads.sto'\
+                                .format(j,load_dir,j,load_dataset,device,k,j,loadcondition,trial_num)
+                    else:
+                        directory = '../subject{}/{}/Subject{}_{}_Dataset/UnAssist/Cycle{}/loadedwalking_subject{}_{}_free_trial{}_analyze_JointReaction_ReactionLoads.sto'\
+                                .format(j,load_dir,j,load_dataset,k,j,loadcondition,trial_num)
+>>>>>>> cc67b632ebe6bfc1cc25bbcbe317da0d31a89bd3
                     # extracting data
                     if i == 'back' or i == 'duct_tape':
                         for n in range(len(reaction_forces_list)):
@@ -1736,11 +1804,7 @@ def extract_reaction_forces(loadcondition,case,joints,device=None,force_or_momen
                             dataset[:,c] = data
                             c+=1
                     else:
-<<<<<<< HEAD
-                        for n in range(len(reaction_forces_list)/2):
-=======
                         for n in range(int(len(reaction_forces_list)/2)):
->>>>>>> development
                             subject_directory = {"Directory":directory,
                                         "Right_Parameter":reaction_forces_list[n],
                                             "Left_Parameter":reaction_forces_list[n+3],
@@ -1748,13 +1812,6 @@ def extract_reaction_forces(loadcondition,case,joints,device=None,force_or_momen
                             data = data_extraction_reactionforce(Subject_Dic=subject_directory,raw_data=False)
                             dataset[:,c] = data
                             c+=1
-<<<<<<< HEAD
-                elif case.low() == 'paretofront':
-                    for hw in hip_weight:
-                        for kw in knee_weight:
-                            directory = '../subject{}/{}/Subject{}_{}_Dataset/{}/Trial{}/H{}K{}/loadedwalking_subject05_adjusted_JointReaction_ReactionLoads.sto'\
-                                .format(j,loadcondition,j,load_dataset,device,k,hw,kw)
-=======
                 elif case == 'paretofront':
                     for m in range(len(hip_weight)):
                         reaction_forces_list = reaction_forces_name_const(joint=i,force_or_moment = force_or_moment)
@@ -1770,7 +1827,6 @@ def extract_reaction_forces(loadcondition,case,joints,device=None,force_or_momen
                                     dataset[:,c] = np.nan
                                     c+=1
                         else:
->>>>>>> development
                             if i == 'back' or i == 'duct_tape':
                                 for n in range(len(reaction_forces_list)):
                                     subject_directory = {"Directory":directory,
@@ -1781,11 +1837,7 @@ def extract_reaction_forces(loadcondition,case,joints,device=None,force_or_momen
                                     dataset[:,c] = data
                                     c+=1
                             else:
-<<<<<<< HEAD
-                                for n in range(len(reaction_forces_list)/2):
-=======
                                 for n in range(int(len(reaction_forces_list)/2)):
->>>>>>> development
                                     subject_directory = {"Directory":directory,
                                                 "Right_Parameter":reaction_forces_list[n],
                                                     "Left_Parameter":reaction_forces_list[n+3],
@@ -1793,10 +1845,7 @@ def extract_reaction_forces(loadcondition,case,joints,device=None,force_or_momen
                                     data = data_extraction_reactionforce(Subject_Dic=subject_directory,raw_data=False)
                                     dataset[:,c] = data
                                     c+=1
-<<<<<<< HEAD
-=======
     return dataset
->>>>>>> development
 
 #####################################################################################
 #####################################################################################
