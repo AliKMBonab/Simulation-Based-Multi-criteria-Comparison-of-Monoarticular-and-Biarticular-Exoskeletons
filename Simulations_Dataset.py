@@ -168,7 +168,6 @@ if  y.lower() == 'y':
 
 #####################################################################################
 #####################################################################################
-<<<<<<< HEAD
 """Section 05:
                 reaction forces dataset
 """
@@ -178,7 +177,6 @@ config_names = ['unassist','monoarticular_ideal','biarticular_ideal','monoarticu
 cases = ['Unassist','Ideal','Ideal','Paretofront','Paretofront']
 #***************************
 print('Section 04:\t extracting reaction forces')
-=======
 """Section 06:
                 reaction forces dataset
 """
@@ -190,36 +188,24 @@ config_names = ['unassist','monoarticular_ideal','biarticular_ideal','monoarticu
 cases = ['Unassist','Ideal','Ideal','Paretofront','Paretofront']
 cases_dir = ['Unassist','Ideal','Ideal','Pareto','Pareto']
 #***************************
-<<<<<<< HEAD
 print('Section 06:\t extracting reaction forces')
->>>>>>> development
-=======
 print('Section 06:\t extracting reaction forces.\n')
->>>>>>> development
 #***************************
 y = input('reaction forces data extraction? (y,n):  ')
 print('\n')
 if  y.lower() == 'y':
     print('reaction forces biarticular/monoarticular loaded/noload files are getting extracted the file.\n')
     for load_type in loads:
-<<<<<<< HEAD
         for i in range(len(configs)):
             out = fcns.extract_reaction_forces(loadcondition=load_type,case=cases[i].lower(),\
                                                joints=['back','duct_tape','hip','knee','ankle'],\
                                                device=configs[i],force_or_moment='moment')
             np.savetxt('./Data/{}/{}_{}_reaction_moments.csv'.format(cases[i],config_names[i],load_type), out, fmt='%s', delimiter=',')
-=======
         if load_type == 'noload':
             joint_name = ['back','hip','knee','patellofemoral','ankle']
         else:
             joint_name = ['back','duct_tape','hip','knee','patellofemoral','ankle']
         for i in range(len(configs)):
             out = fcns.extract_reaction_forces(loadcondition=load_type,case=cases[i].lower(),\
-<<<<<<< HEAD
                                                joints=joint_name,device=configs[i],force_or_moment='moment')
             np.savetxt('./Data/{}/{}_{}_reaction_moments.csv'.format(cases_dir[i],config_names[i],load_type), out, fmt='%s', delimiter=',')
->>>>>>> development
-=======
-                                               joints=joint_name,device=configs[i],force_or_moment='body force')
-            np.savetxt('./Data/{}/{}_{}_reaction_forces.csv'.format(cases_dir[i],config_names[i],load_type), out, fmt='%s', delimiter=',')
->>>>>>> development
