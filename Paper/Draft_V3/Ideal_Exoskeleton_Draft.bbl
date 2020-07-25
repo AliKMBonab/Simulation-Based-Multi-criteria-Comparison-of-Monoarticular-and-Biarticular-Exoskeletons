@@ -718,121 +718,6 @@ Steele KM, DeMers MS, Schwartz MH, Delp SL.
 \newblock Gait \& Posture. 2012;35(4):556 -- 560.
 \newblock doi:{https://doi.org/10.1016/j.gaitpost.2011.11.023}.
 
-\bibitem{152}
-Frigo C, Crenna P, Jensen LM.
-\newblock {Moment-angle relationship at lower limb joints during human walking
-  at different velocities}.
-\newblock Journal of Electromyography and Kinesiology. 1996;6(3):177--190.
-\newblock doi:{10.1016/1050-6411(96)00030-2}.
-
-\bibitem{153}
-Shamaei K, Cenciarini M, Dollar AM.
-\newblock {On the mechanics of the ankle in the stance phase of the gait}.
-\newblock Proceedings of the Annual International Conference of the IEEE
-  Engineering in Medicine and Biology Society, EMBS. 2011; p. 8135--8140.
-\newblock doi:{10.1109/IEMBS.2011.6092007}.
-
-\bibitem{155}
-Shamaei K, Sawicki GS, Dollar AM.
-\newblock {Estimation of Quasi-Stiffness of the Human Knee in the Stance Phase
-  of Walking}.
-\newblock PLoS ONE. 2013;8(3).
-\newblock doi:{10.1371/journal.pone.0059993}.
-
-\bibitem{156}
-Shamaei K, Sawicki GS, Dollar AM.
-\newblock {Estimation of Quasi-Stiffness of the Human Hip in the Stance Phase
-  of Walking}.
-\newblock PLoS ONE. 2013;8(12):e81841.
-\newblock doi:{10.1371/journal.pone.0081841}.
-
-\bibitem{157}
-Shamaei K, Cenciarini M, Dollar AM.
-\newblock {On the mechanics of the ankle in the stance phase of the gait}.
-\newblock Proceedings of the Annual International Conference of the IEEE
-  Engineering in Medicine and Biology Society, EMBS. 2011; p. 8135--8140.
-\newblock doi:{10.1109/IEMBS.2011.6092007}.
-
-\bibitem{159}
-Shamaei K, Sawicki GS, Dollar AM.
-\newblock {Estimation of Quasi-Stiffness and Propulsive Work of the Human Ankle
-  in the Stance Phase of Walking}.
-\newblock PLoS ONE. 2013;8(3).
-\newblock doi:{10.1371/journal.pone.0059935}.
-
-\bibitem{162}
-Kuitunen S, Komi PV, Kyr{\"{o}}l{\"{a}}inen H.
-\newblock {Knee and ankle joint stiffness in sprint running}.
-\newblock Medicine and Science in Sports and Exercise. 2002;34(1):166--173.
-\newblock doi:{10.1097/00005768-200201000-00025}.
-
-\bibitem{163}
-Salsich GB, Mueller MJ.
-\newblock {Effect of plantar flexor muscle stiffness on selected gait
-  characteristics}.
-\newblock Gait and Posture. 2000;11(3):207--216.
-\newblock doi:{10.1016/S0966-6362(00)00047-3}.
-
-\bibitem{164}
-Lark SD, Buckley JG, Bennett S, Jones D, Sargeant AJ.
-\newblock {Joint torques and dynamic joint stiffness in elderly and young men
-  during stepping down}.
-\newblock Clinical Biomechanics. 2003;18(9):848--855.
-\newblock doi:{10.1016/S0268-0033(03)00150-5}.
-
-\bibitem{165}
-Crenna P, Frigo C.
-\newblock {Dynamics of the ankle joint analyzed through moment-angle loops
-  during human walking: Gender and age effects}.
-\newblock Human Movement Science. 2011;30(6):1185--1198.
-\newblock doi:{10.1016/j.humov.2011.02.009}.
-
-\bibitem{166}
-Davis RB, DeLuca PA. {Gait characterization via dynamic joint stiffness}; 1996.
-
-\bibitem{167}
-Weiss PL, Kearney RE, Hunter IW.
-\newblock {Position dependence of ankle joint dynamics—I. Passive mechanics}.
-\newblock Journal of Biomechanics. 1986;19(9):727--735.
-\newblock doi:{10.1016/0021-9290(86)90196-X}.
-
-\bibitem{168}
-Weiss PL, Kearney RE, Hunter IW.
-\newblock {Position dependence of ankle joint dynamics—II. Active mechanics}.
-\newblock Journal of Biomechanics. 1986;19(9):737--751.
-\newblock doi:{10.1016/0021-9290(86)90197-1}.
-
-\bibitem{169}
-Rouse EJ, Gregg RD, Hargrove LJ, Sensinger JW.
-\newblock {The difference between stiffness and quasi-stiffness in the context
-  of biomechanical modeling}.
-\newblock IEEE Transactions on Biomedical Engineering. 2013;60(2):562--568.
-\newblock doi:{10.1109/TBME.2012.2230261}.
-
-\bibitem{154}
-Shamaei K, Cenciarini M, Adams AA, Gregorczyk KN, Schiffman JM, Dollar AM.
-\newblock {Biomechanical effects of stiffness in parallel with the knee joint
-  during walking}.
-\newblock IEEE Transactions on Biomedical Engineering. 2015;62(10):2389--2401.
-\newblock doi:{10.1109/TBME.2015.2428636}.
-
-\bibitem{158}
-Walsh CJ, Endo K, Herr H.
-\newblock {A quasi-passive leg exoskeleton for load-carrying augmentation}.
-\newblock International Journal of Humanoid Robotics. 2007;4(3):487--506.
-\newblock doi:{10.1142/S0219843607001126}.
-
-\bibitem{160}
-Winter DA, Robertson DGE.
-\newblock {Joit torque and energy patterns in normal gait}.
-\newblock Biological Cybernetics. 1978;29(3):137--142.
-\newblock doi:{10.1007/BF00337349}.
-
-\bibitem{161}
-Perry J, Davids JR, et~al.
-\newblock Gait analysis: normal and pathological function.
-\newblock Journal of Pediatric Orthopaedics. 1992;12(6):815.
-
 \bibitem{113}
 Marler R, Arora JS.
 \newblock Survey of multi-objective optimization methods for engineering.
@@ -885,6 +770,11 @@ Torricelli D, Gonzalez J, Weckx M, Jim{\'{e}}nez-Fabi{\'{a}}n R, Vanderborght
   implementations}.
 \newblock Bioinspiration and Biomimetics. 2016;11(5).
 \newblock doi:{10.1088/1748-3190/11/5/051002}.
+
+\bibitem{161}
+Perry J, Davids JR, et~al.
+\newblock Gait analysis: normal and pathological function.
+\newblock Journal of Pediatric Orthopaedics. 1992;12(6):815.
 
 \bibitem{133}
 Browning RC, Modica JR, Kram R, Goswami A.
