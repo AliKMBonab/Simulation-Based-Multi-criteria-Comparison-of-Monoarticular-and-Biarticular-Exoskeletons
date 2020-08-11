@@ -148,8 +148,11 @@ suffixes = ['torque','torque','power','power',\
             'regenerative_energy','regenerative_energy',\
             'power','power','max_power','max_power','avg_positive_power','avg_positive_power',\
             'avg_negative_power','avg_negative_power','kinematics','kinematics']
-HWs = {'mono_load':[30,40,50,60,70,70,70,70,70],'bi_load':[30,30,30,30,30,40,40,50,50,50,60,70],'mono_noload':[30,40,50,50,50,60,60,60,70,70],'bi_noload':[30,30,30,30,30,40,40,40,50,50,50,70]}
-KWs = {'mono_load':[30,30,30,30,30,40,50,60,70],'bi_load':[30,40,50,60,70,60,70,50,60,70,70,70],'mono_noload':[30,30,30,40,50,50,60,70,60,70],'bi_noload':[30,40,50,60,70,40,50,60,50,60,70,70]}
+#HWs = {'mono_load':[30,40,50,60,70,70,70,70,70],'bi_load':[30,30,30,30,30,40,40,50,50,50,60,70],'mono_noload':[30,40,50,50,50,60,60,60,70,70],'bi_noload':[30,30,30,30,30,40,40,40,50,50,50,70]}
+#KWs = {'mono_load':[30,30,30,30,30,40,50,60,70],'bi_load':[30,40,50,60,70,60,70,50,60,70,70,70],'mono_noload':[30,30,30,40,50,50,60,70,60,70],'bi_noload':[30,40,50,60,70,40,50,60,50,60,70,70]}
+HWs = {'bi_noload':[70,50],'mono_load':[30,70]}
+KWs = {'bi_noload':[70,70],'mono_load':[30,70]}
+
 labeling = ['mono','bi']
 #***************************
 print('Section 05:\t extracting Specific Weights of Pareto exoskeletons related files: Actuators Data, Muscles Activation, Muscles Moment, Metabolic Energy.\n')
@@ -158,9 +161,17 @@ y = input('Specific weights data extraction? (y,n):  ')
 if  y.lower() == 'y':
     print('specific weights biarticular/monoarticular loaded/noload files are getting extracted the file.\n')
     for load_type in loads:
-        for i in range(2):
-            HW = HWs['{}_{}'.format(labeling[i],load_type)]
-            KW = KWs['{}_{}'.format(labeling[i],load_type)]
+#        for i in range(2):
+#            HW = HWs['{}_{}'.format(labeling[i],load_type)]
+#            KW = KWs['{}_{}'.format(labeling[i],load_type)]
+        if load_type == 'noload':
+            i = 2
+            HW = HWs['{}_{}'.format('bi',load_type)]
+            KW = KWs['{}_{}'.format('bi',load_type)]
+        else:
+            i = 1
+            HW = HWs['{}_{}'.format('mono',load_type)]
+            KW = KWs['{}_{}'.format('mono',load_type)]
             for j in range(len(HW)):
                 out= fcns.specific_weight_data_subjects(configuration=configs[i],HipWeight=HW[j],KneeWeight=KW[j],loadcond=load_type,regenergy=True)
                 for k in range(len(out)):
