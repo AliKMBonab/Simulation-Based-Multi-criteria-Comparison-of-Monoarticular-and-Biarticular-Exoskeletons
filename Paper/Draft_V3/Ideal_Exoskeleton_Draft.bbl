@@ -920,6 +920,13 @@ COLGATE JE, HOGAN N.
 \newblock International Journal of Control. 1988;48(1):65--88.
 \newblock doi:{10.1080/00207178808906161}.
 
+\bibitem{179}
+Jin X, Cai Y, Prado A, Agrawal SK.
+\newblock {Effects of exoskeleton weight and inertia on human walking}.
+\newblock Proceedings - IEEE International Conference on Robotics and
+  Automation. 2017;(May):1772--1777.
+\newblock doi:{10.1109/ICRA.2017.7989210}.
+
 \bibitem{114}
 Jackson RW, Collins SH.
 \newblock An experimental comparison of the relative benefits of work and
@@ -995,6 +1002,11 @@ Geijtenbeek T.
   Motion.
 \newblock Journal of Open Source Software. 2019;4(38):1421.
 \newblock doi:{10.21105/joss.01421}.
+
+\bibitem{180}
+Dembia CL, Bianco NA, Falisse A, Hicks JL, Delp SL.
+\newblock OpenSim Moco: Musculoskeletal optimal control.
+\newblock bioRxiv. 2019;doi:{10.1101/839381}.
 
 \bibitem{109}
 Zhang J, Fiers P, Witte KA, Jackson RW, Poggensee KL, Atkeson CG, et~al.

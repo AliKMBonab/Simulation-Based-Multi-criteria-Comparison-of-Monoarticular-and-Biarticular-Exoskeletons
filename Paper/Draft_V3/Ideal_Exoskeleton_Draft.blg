@@ -2,11 +2,11 @@ This is BibTeX, Version 0.99d (MiKTeX 2.9.7380 64-bit)
 Capacity: max_strings=200000, hash_size=200000, hash_prime=170003
 The top-level auxiliary file: Ideal_Exoskeleton_Draft.aux
 The style file: plos2015.bst
-Illegal, another \bibstyle command---line 317 of file Ideal_Exoskeleton_Draft.aux
+Illegal, another \bibstyle command---line 326 of file Ideal_Exoskeleton_Draft.aux
  : \bibstyle
  :          {plos2015.bst}
 I'm skipping whatever remains of this command
-Reallocating 'field_info' (item size: 4) to 10134 items.
+Reallocating 'field_info' (item size: 4) to 10202 items.
 Database file #1: Bibliography.bib
 Warning--I'm ignoring 1's extra "doi" field
 --line 16 of file Bibliography.bib
@@ -59,45 +59,46 @@ Warning--empty chapter in 72
 Warning--there's a month but no year in spss
 Warning--empty chapter in 146
 Warning--empty pages in 146
-You've used 151 entries,
+Warning--there's a number but no volume in 179
+You've used 153 entries,
             3058 wiz_defined-function locations,
-            1647 strings with 42138 characters,
-and the built_in function-call counts, 274315 in all, are:
-= -- 35709
-> -- 2032
+            1661 strings with 42698 characters,
+and the built_in function-call counts, 278668 in all, are:
+= -- 36280
+> -- 2068
 < -- 15
-+ -- 1470
-- -- 508
-* -- 22875
-:= -- 29655
-add.period$ -- 689
-call.type$ -- 151
++ -- 1493
+- -- 517
+* -- 23249
+:= -- 30120
+add.period$ -- 698
+call.type$ -- 153
 change.case$ -- 32
 chr.to.int$ -- 0
-cite$ -- 160
-duplicate$ -- 24471
-empty$ -- 25665
-format.name$ -- 641
-if$ -- 64333
+cite$ -- 163
+duplicate$ -- 24850
+empty$ -- 26070
+format.name$ -- 652
+if$ -- 65350
 int.to.chr$ -- 0
-int.to.str$ -- 151
-missing$ -- 1379
-newline$ -- 865
-num.names$ -- 155
-pop$ -- 2118
+int.to.str$ -- 153
+missing$ -- 1397
+newline$ -- 876
+num.names$ -- 157
+pop$ -- 2152
 preamble$ -- 1
 purify$ -- 0
 quote$ -- 0
-skip$ -- 2365
+skip$ -- 2396
 stack$ -- 0
-substring$ -- 51768
-swap$ -- 3654
+substring$ -- 52629
+swap$ -- 3696
 text.length$ -- 15
 text.prefix$ -- 0
 top$ -- 0
 type$ -- 0
-warning$ -- 9
-while$ -- 1401
-width$ -- 154
-write$ -- 1874
+warning$ -- 10
+while$ -- 1422
+width$ -- 156
+write$ -- 1898
 (There were 9 error messages)
