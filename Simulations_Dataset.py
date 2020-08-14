@@ -150,8 +150,8 @@ suffixes = ['torque','torque','power','power',\
             'avg_negative_power','avg_negative_power','kinematics','kinematics']
 #HWs = {'mono_load':[30,40,50,60,70,70,70,70,70],'bi_load':[30,30,30,30,30,40,40,50,50,50,60,70],'mono_noload':[30,40,50,50,50,60,60,60,70,70],'bi_noload':[30,30,30,30,30,40,40,40,50,50,50,70]}
 #KWs = {'mono_load':[30,30,30,30,30,40,50,60,70],'bi_load':[30,40,50,60,70,60,70,50,60,70,70,70],'mono_noload':[30,30,30,40,50,50,60,70,60,70],'bi_noload':[30,40,50,60,70,40,50,60,50,60,70,70]}
-HWs = {'bi_noload':[70,50],'mono_load':[30,70]}
-KWs = {'bi_noload':[70,70],'mono_load':[30,70]}
+HWs = {'bi_noload':[70,30],'mono_load':[30,70]}
+KWs = {'bi_noload':[70,70],'mono_load':[30,30]}
 
 labeling = ['mono','bi']
 #***************************
