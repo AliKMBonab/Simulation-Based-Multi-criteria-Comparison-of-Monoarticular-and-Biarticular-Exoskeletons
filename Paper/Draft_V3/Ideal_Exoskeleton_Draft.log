@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.21 (MiKTeX 2.9.7380 64-bit) (preloaded format=pdflatex 2020.4.9)  13 AUG 2020 16:13
+This is pdfTeX, Version 3.14159265-2.6-1.40.21 (MiKTeX 2.9.7380 64-bit) (preloaded format=pdflatex 2020.4.9)  13 AUG 2020 21:33
 entering extended mode
 **./Ideal_Exoskeleton_Draft.tex
 (Ideal_Exoskeleton_Draft.tex
@@ -904,107 +904,118 @@ Package pdftex.def Info: ./Figures/Pareto_Simulations_Figures/PaperFigure_Paret
 ofront_TorqueProfiles.pdf  used on input line 668.
 (pdftex.def)             Requested size: 379.4175pt x 263.54501pt.
  [29]
+
+LaTeX Warning: Reference `' on page 30 undefined on input line 675.
+
+
+LaTeX Warning: Reference `' on page 30 undefined on input line 675.
+
+[30 <./Figures/Pareto_Simulations_Figures/PaperFigure_Paretofront_TorqueProfile
+s.pdf>]
 <./Figures/Pareto_Simulations_Figures/PaperFigure_Paretofront_PowerProfiles.pdf
-, id=1254, 1009.88394pt x 701.47545pt>
+, id=1311, 1009.88394pt x 701.47545pt>
 File: ./Figures/Pareto_Simulations_Figures/PaperFigure_Paretofront_PowerProfile
 s.pdf Graphic file (type pdf)
 <use ./Figures/Pareto_Simulations_Figures/PaperFigure_Paretofront_PowerProfiles
 .pdf>
 Package pdftex.def Info: ./Figures/Pareto_Simulations_Figures/PaperFigure_Paret
-ofront_PowerProfiles.pdf  used on input line 678.
+ofront_PowerProfiles.pdf  used on input line 679.
 (pdftex.def)             Requested size: 379.4175pt x 263.54501pt.
- [30 <./Figures/Pareto_Simulations_Figures/PaperFigure_Paretofront_TorqueProfil
-es.pdf>] [31 <./Figures/Pareto_Simulations_Figures/PaperFigure_Paretofront_Powe
-rProfiles.pdf>]
+ [31 <./Figures/Pareto_Simulations_Figures/PaperFigure_Paretofront_PowerProfile
+s.pdf>] [32]
 <./Figures/Pareto_Mass_Regenration_Figures/PaperFigure_Paretofront_Regeneration
-_Efficiency.pdf, id=1377, 874.69595pt x 695.6945pt>
+_Efficiency.pdf, id=1383, 874.69595pt x 695.6945pt>
 File: ./Figures/Pareto_Mass_Regenration_Figures/PaperFigure_Paretofront_Regener
 ation_Efficiency.pdf Graphic file (type pdf)
 <use ./Figures/Pareto_Mass_Regenration_Figures/PaperFigure_Paretofront_Regenera
 tion_Efficiency.pdf>
 Package pdftex.def Info: ./Figures/Pareto_Mass_Regenration_Figures/PaperFigure_
-Paretofront_Regeneration_Efficiency.pdf  used on input line 692.
+Paretofront_Regeneration_Efficiency.pdf  used on input line 694.
 (pdftex.def)             Requested size: 379.4175pt x 301.76482pt.
 <./Figures/Pareto_Mass_Regenration_Figures/PaperFigure_Main_Pareto_Regenerated.
-pdf, id=1378, 874.69595pt x 709.1949pt>
+pdf, id=1384, 874.69595pt x 709.1949pt>
 File: ./Figures/Pareto_Mass_Regenration_Figures/PaperFigure_Main_Pareto_Regener
 ated.pdf Graphic file (type pdf)
 <use ./Figures/Pareto_Mass_Regenration_Figures/PaperFigure_Main_Pareto_Regenera
 ted.pdf>
 Package pdftex.def Info: ./Figures/Pareto_Mass_Regenration_Figures/PaperFigure_
-Main_Pareto_Regenerated.pdf  used on input line 699.
+Main_Pareto_Regenerated.pdf  used on input line 701.
 (pdftex.def)             Requested size: 379.4175pt x 307.62076pt.
- [32] [33 <./Figures/Pareto_Mass_Regenration_Figures/PaperFigure_Paretofront_Re
-generation_Efficiency.pdf>] [34 <./Figures/Pareto_Mass_Regenration_Figures/Pape
-rFigure_Main_Pareto_Regenerated.pdf>]
+ [33 <./Figures/Pareto_Mass_Regenration_Figures/PaperFigure_Paretofront_Regener
+ation_Efficiency.pdf>] [34 <./Figures/Pareto_Mass_Regenration_Figures/PaperFigu
+re_Main_Pareto_Regenerated.pdf>]
 <./Figures/Pareto_Mass_Regenration_Figures/PaperFigure_Pareto_Comparison.pdf, i
-d=1551, 1001.16846pt x 826.50322pt>
+d=1548, 1001.16846pt x 826.50322pt>
 File: ./Figures/Pareto_Mass_Regenration_Figures/PaperFigure_Pareto_Comparison.p
 df Graphic file (type pdf)
 <use ./Figures/Pareto_Mass_Regenration_Figures/PaperFigure_Pareto_Comparison.pd
 f>
 Package pdftex.def Info: ./Figures/Pareto_Mass_Regenration_Figures/PaperFigure_
-Pareto_Comparison.pdf  used on input line 714.
+Pareto_Comparison.pdf  used on input line 716.
 (pdftex.def)             Requested size: 379.4175pt x 313.2169pt.
 <./Figures/Pareto_Mass_Regenration_Figures/PaperFigure_AddingMass_Pareto.pdf, i
-d=1553, 874.69595pt x 709.1949pt>
+d=1550, 874.69595pt x 709.1949pt>
 File: ./Figures/Pareto_Mass_Regenration_Figures/PaperFigure_AddingMass_Pareto.p
 df Graphic file (type pdf)
 <use ./Figures/Pareto_Mass_Regenration_Figures/PaperFigure_AddingMass_Pareto.pd
 f>
 Package pdftex.def Info: ./Figures/Pareto_Mass_Regenration_Figures/PaperFigure_
-AddingMass_Pareto.pdf  used on input line 723.
+AddingMass_Pareto.pdf  used on input line 725.
 (pdftex.def)             Requested size: 379.4175pt x 307.62076pt.
-
-[35]
+ [35] [36 <./Figures/Pareto_Mass_Regenration_Figures/PaperFigure_Pareto_Compari
+son.pdf>]
 <./Figures/Pareto_Mass_Regenration_Figures/PaperFigure_MonoarticularExoskeleton
-_DifferentConfigs.pdf, id=1568, 874.69595pt x 709.1949pt>
+_DifferentConfigs.pdf, id=1642, 874.69595pt x 709.1949pt>
 File: ./Figures/Pareto_Mass_Regenration_Figures/PaperFigure_MonoarticularExoske
 leton_DifferentConfigs.pdf Graphic file (type pdf)
 <use ./Figures/Pareto_Mass_Regenration_Figures/PaperFigure_MonoarticularExoskel
 eton_DifferentConfigs.pdf>
 Package pdftex.def Info: ./Figures/Pareto_Mass_Regenration_Figures/PaperFigure_
-MonoarticularExoskeleton_DifferentConfigs.pdf  used on input line 735.
+MonoarticularExoskeleton_DifferentConfigs.pdf  used on input line 737.
 (pdftex.def)             Requested size: 379.4175pt x 307.62076pt.
- [36 <./Figures/Pareto_Mass_Regenration_Figures/PaperFigure_Pareto_Comparison.p
-df>] [37 <./Figures/Pareto_Mass_Regenration_Figures/PaperFigure_AddingMass_Pare
-to.pdf>] [38 <./Figures/Pareto_Mass_Regenration_Figures/PaperFigure_Monoarticul
-arExoskeleton_DifferentConfigs.pdf>] [39] [40] (Ideal_Exoskeleton_Draft.bbl [41
-] [42] ("E:\MiKTeX 2.9\tex/latex/ucs\uni-32.def"
+ [37 <./Figures/Pareto_Mass_Regenration_Figures/PaperFigure_AddingMass_Pareto.p
+df>] [38 <./Figures/Pareto_Mass_Regenration_Figures/PaperFigure_MonoarticularEx
+oskeleton_DifferentConfigs.pdf>] [39] [40] [41] (Ideal_Exoskeleton_Draft.bbl [4
+2]
+("E:\MiKTeX 2.9\tex/latex/ucs\uni-32.def"
 File: uni-32.def 2013/05/13 UCS: Unicode data U+2000..U+20FF
-)
+) [43]
 Package microtype Info: Loading generic protrusion settings for font family
 (microtype)             `cmtt' (encoding: OT1).
 (microtype)             For optimal results, create family-specific settings.
 (microtype)             See the microtype manual for details.
- [43]
+
 ("E:\MiKTeX 2.9\tex/latex/ucs\uni-0.def"
 File: uni-0.def 2013/05/13 UCS: Unicode data U+0000..U+00FF
 )
 ("E:\MiKTeX 2.9\tex/latex/ucs\uni-33.def"
 File: uni-33.def 2013/05/13 UCS: Unicode data U+2100..U+21FF
 ) [44] [45] [46] [47] [48] [49]
-[50] [51]) 
+[50] [51] [52]) 
 AED: lastpage setting LastPage
-[52]
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 806.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 806.
+[53]
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 809.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 809.
  (Ideal_Exoskeleton_Draft.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 806.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 806.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 809.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 809.
 Package rerunfilecheck Info: File `Ideal_Exoskeleton_Draft.out' has not changed
 .
 (rerunfilecheck)             Checksum: 71C172DADCAE1EA9E5A123D546EF70C8;46.
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 806.
+
+
+LaTeX Warning: There were undefined references.
+
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 809.
  ) 
 Here is how much of TeX's memory you used:
- 13978 strings out of 492478
- 208009 string characters out of 3137227
- 344628 words of memory out of 3000000
- 17631 multiletter control sequences out of 15000+200000
+ 13980 strings out of 492478
+ 208020 string characters out of 3137227
+ 344253 words of memory out of 3000000
+ 17632 multiletter control sequences out of 15000+200000
  17424 words of font info for 100 fonts, out of 3000000 for 9000
  1141 hyphenation exceptions out of 8191
- 41i,16n,50p,1879b,601s stack positions out of 5000i,500n,10000p,200000b,50000s
+ 41i,16n,50p,1692b,601s stack positions out of 5000i,500n,10000p,200000b,50000s
  <C:\Users\T.a\AppData\Local\MiKTeX\2.9\fonts/pk/ljfour/jknappen/ec/dpi600\tc
 rm1000.pk><E:/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmbx10.pfb><E:/MiKTeX 2
 .9/fonts/type1/public/amsfonts/cm/cmbx12.pfb><E:/MiKTeX 2.9/fonts/type1/public/
@@ -1026,9 +1037,9 @@ cmsy5.pfb><E:/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy6.pfb><E:/MiKTeX 2.
 sfonts/cm/cmti10.pfb><E:/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmti7.pfb><E
 :/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmti9.pfb><E:/MiKTeX 2.9/fonts/type
 1/public/amsfonts/cm/cmtt10.pfb>
-Output written on Ideal_Exoskeleton_Draft.pdf (52 pages, 8196322 bytes).
+Output written on Ideal_Exoskeleton_Draft.pdf (53 pages, 8198609 bytes).
 PDF statistics:
- 2078 PDF objects out of 2487 (max. 8388607)
- 303 named destinations out of 1000 (max. 500000)
+ 2084 PDF objects out of 2487 (max. 8388607)
+ 304 named destinations out of 1000 (max. 500000)
  21623 words of extra memory for PDF output out of 24883 (max. 10000000)
 
