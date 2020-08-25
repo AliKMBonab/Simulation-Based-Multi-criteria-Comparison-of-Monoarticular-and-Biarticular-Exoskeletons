@@ -373,7 +373,7 @@ mono_loaded_knee_speed_dic = {'pgc':gait_cycle,'avg':utils.smooth(mean_mono_load
                         'std':utils.smooth(std_mono_loaded_knee_speed,3),'avg_toeoff':loaded_mean_toe_off}
 mono_noload_knee_speed_dic = {'pgc':gait_cycle,'avg':utils.smooth(mean_mono_noload_knee_speed,3),'label':'noload actuator',
                         'std':utils.smooth(std_mono_noload_knee_speed,3),'avg_toeoff':noload_mean_toe_off,'load':'noload'}
-
+'''
 #******************************************************************************************************************************
 #******************************************************************************************************************************
 # defualt color dictionary
@@ -495,40 +495,44 @@ utils.plot_joint_muscle_exo(nrows=2,ncols=2,plot_dic=plot_dic,color_dic=default_
 fig.tight_layout()
 plt.show()
 fig.savefig('./Figures/Ideal/Exoskeletons_Knee_Speed.pdf',orientation='landscape',bbox_inches='tight')
-
+'''
 ##################################################################################################
 # Paper figure
 # ***************************
 # moment figure
 # required dictionary
 plot_dic={
-'plot_1_list' : [unassist_loaded_hip_musclesmoment_dic,unassist_loaded_knee_musclesmoment_dic,\
-                 unassist_loaded_hip_musclesmoment_dic,unassist_noload_hip_musclesmoment_dic,\
-                 unassist_noload_knee_musclesmoment_dic,unassist_noload_hip_musclesmoment_dic,\
-                 unassist_loaded_knee_musclesmoment_dic,unassist_noload_knee_musclesmoment_dic],
-'plot_3_list' : [bi_loaded_hip_musclesmoment_dic,bi_loaded_knee_musclesmoment_dic,mono_loaded_hip_musclesmoment_dic,\
-                 bi_noload_hip_musclesmoment_dic,bi_noload_knee_musclesmoment_dic,mono_noload_hip_musclesmoment_dic,\
-                 mono_loaded_knee_musclesmoment_dic,mono_noload_knee_musclesmoment_dic],
-'plot_2_list' : [bi_loaded_hip_torque_dic,bi_loaded_knee_torque_dic,mono_loaded_hip_torque_dic,\
-                 bi_noload_hip_torque_dic,bi_noload_knee_torque_dic,mono_noload_hip_torque_dic,\
-                 mono_loaded_knee_torque_dic,mono_noload_knee_torque_dic],
-'plot_titles' : ['loaded biarticular hip joint','loaded biarticular knee joint','loaded monoarticular hip joint',\
-                 'noload biarticular hip joint','noload biarticular knee joint','noload monoarticular hip joint',\
-                 'loaded monoarticular knee joint','noload monoarticular knee joint']
+'plot_1_list' : [unassist_noload_hip_musclesmoment_dic,unassist_noload_knee_musclesmoment_dic,\
+                 unassist_noload_hip_musclesmoment_dic,unassist_noload_knee_musclesmoment_dic,\
+                 unassist_loaded_hip_musclesmoment_dic,unassist_loaded_knee_musclesmoment_dic,\
+                 unassist_loaded_hip_musclesmoment_dic,unassist_loaded_knee_musclesmoment_dic],
+'plot_3_list' : [mono_noload_hip_musclesmoment_dic,mono_noload_knee_musclesmoment_dic,\
+                 bi_noload_hip_musclesmoment_dic,bi_noload_knee_musclesmoment_dic,\
+                 mono_loaded_hip_musclesmoment_dic,mono_loaded_knee_musclesmoment_dic,\
+                 bi_loaded_hip_musclesmoment_dic,bi_loaded_knee_musclesmoment_dic],
+'plot_2_list' : [mono_noload_hip_torque_dic,mono_noload_knee_torque_dic,\
+                 bi_noload_hip_torque_dic,bi_noload_knee_torque_dic,\
+                 mono_loaded_hip_torque_dic,mono_loaded_knee_torque_dic,\
+                 bi_loaded_hip_torque_dic,bi_loaded_knee_torque_dic],
+'plot_titles' : ['noload monoarticular\n hip joint\n','noload monoarticular\n knee joint\n',\
+                 'noload biarticular\n hip joint\n','noload biarticular\n knee joint\n',\
+                 'loaded monoarticular\n hip joint\n','loaded monoarticular\n knee joint\n',\
+                 'loaded biarticular\n hip joint\n','loaded biarticular\n knee joint\n']
 }
 default_color_dic = {
-'color_1_list' : ['k','k','k','xkcd:irish green','xkcd:irish green','xkcd:irish green','k','xkcd:irish green'],
-'color_2_list' : [mycolors['cyan blue'],mycolors['cyan blue'],mycolors['cyan blue'],mycolors['olympic blue'],\
-                  mycolors['olympic blue'],mycolors['olympic blue'],mycolors['cyan blue'],mycolors['olympic blue']],
-'color_3_list' : [mycolors['crimson red'],mycolors['crimson red'],mycolors['crimson red'],mycolors['french rose'],\
-                  mycolors['french rose'],mycolors['french rose'],mycolors['crimson red'],mycolors['french rose']]
+'color_1_list' : ['xkcd:irish green','xkcd:irish green','xkcd:irish green','xkcd:irish green','k','k','k','k'],
+'color_2_list' : [mycolors['olympic blue'],mycolors['olympic blue'],mycolors['olympic blue'],mycolors['olympic blue'],\
+                  mycolors['cyan blue'],mycolors['cyan blue'],mycolors['cyan blue'],mycolors['cyan blue']],
+'color_3_list' : [mycolors['french rose'],mycolors['french rose'],mycolors['french rose'],mycolors['french rose'],\
+                  mycolors['crimson red'],mycolors['crimson red'],mycolors['crimson red'],mycolors['crimson red']]
 }
 # plot
-fig = plt.figure(num='Moment Figure',figsize=(12.8, 9.6))
-utils.plot_joint_muscle_exo(nrows=3,ncols=3,nplots=8,plot_dic=plot_dic,color_dic=default_color_dic,legend_loc=[0,3],\
-                            subplot_legend=True,fig=fig,ylabel='flexion/extension\n moment (N-m/kg)')
+#plt.rcParams.update({'font.size': 18})
+fig = plt.figure(num='Moment Figure',figsize=(6.4*2.5, 4.8*1.8))
+utils.plot_joint_muscle_exo(nrows=2,ncols=4,nplots=8,plot_dic=plot_dic,color_dic=default_color_dic,legend_loc=[0,4],\
+                            subplot_legend=False,fig=fig,ylabel='flexion/extension\n moment (N-m/kg)')
 fig.tight_layout(h_pad=-1.5, w_pad=-1.5)
-fig.subplots_adjust(top=0.99, bottom=0.075, left=0.100, right=0.975,hspace=0.2,wspace=0.15)
+fig.subplots_adjust(top=0.99, bottom=0.075, left=0.100, right=0.975,hspace=0.40,wspace=0.20)
 fig.savefig('./Figures/Ideal/PaperFigure_Exoskeletons_Torque.pdf',orientation='landscape',bbox_inches='tight')
 plt.show()
 
@@ -536,33 +540,37 @@ plt.show()
 # power figure
 # required dictionary
 plot_dic={
-'plot_1_list' : [loaded_hip_power_dic,loaded_knee_power_dic,\
-                 loaded_hip_power_dic,noload_hip_power_dic,\
-                 noload_knee_power_dic,noload_hip_power_dic,\
-                 loaded_knee_power_dic,noload_knee_power_dic],
-'plot_3_list' : [bi_loaded_hip_musclespower_dic,bi_loaded_knee_musclespower_dic,mono_loaded_hip_musclespower_dic,\
-                 bi_noload_hip_musclespower_dic,bi_noload_knee_musclespower_dic,mono_noload_hip_musclespower_dic,\
-                 mono_loaded_knee_musclespower_dic,mono_noload_knee_musclespower_dic],
-'plot_2_list' : [bi_loaded_hip_power_dic,bi_loaded_knee_power_dic,mono_loaded_hip_power_dic,\
-                 bi_noload_hip_power_dic,bi_noload_knee_power_dic,mono_noload_hip_power_dic,\
-                 mono_loaded_knee_power_dic,mono_noload_knee_power_dic],
-'plot_titles' : ['loaded biarticular hip joint','loaded biarticular knee joint','loaded monoarticular hip joint',\
-                 'noload biarticular hip joint','noload biarticular knee joint','noload monoarticular hip joint',\
-                 'loaded monoarticular knee joint','noload monoarticular knee joint']
+'plot_1_list' : [noload_hip_power_dic,noload_knee_power_dic,\
+                 noload_hip_power_dic,noload_knee_power_dic,\
+                 loaded_hip_power_dic,loaded_knee_power_dic,\
+                 loaded_hip_power_dic,loaded_knee_power_dic],
+'plot_3_list' : [mono_noload_hip_musclespower_dic,mono_noload_knee_musclespower_dic,\
+                 bi_noload_hip_musclespower_dic,bi_noload_knee_musclespower_dic,\
+                 mono_loaded_hip_musclespower_dic,mono_loaded_knee_musclespower_dic,\
+                 bi_loaded_hip_musclespower_dic,bi_loaded_knee_musclespower_dic],
+'plot_2_list' : [mono_noload_hip_power_dic,mono_noload_knee_power_dic,\
+                 bi_noload_hip_power_dic,bi_noload_knee_power_dic,\
+                 mono_loaded_hip_power_dic,mono_loaded_knee_power_dic,\
+                 bi_loaded_hip_power_dic,bi_loaded_knee_power_dic],
+'plot_titles' : ['noload monoarticular\n hip joint\n','noload monoarticular\n knee joint\n',\
+                 'noload biarticular\n hip joint\n','noload biarticular\n knee joint\n',\
+                 'loaded monoarticular\n hip joint\n','loaded monoarticular\n knee joint\n',\
+                 'loaded biarticular\n hip joint\n','loaded biarticular\n knee joint\n']
 }
 default_color_dic = {
-'color_1_list' : ['k','k','k','xkcd:irish green','xkcd:irish green','xkcd:irish green','k','xkcd:irish green'],
-'color_2_list' : [mycolors['cyan blue'],mycolors['cyan blue'],mycolors['cyan blue'],mycolors['olympic blue'],\
-                  mycolors['olympic blue'],mycolors['olympic blue'],mycolors['cyan blue'],mycolors['olympic blue']],
-'color_3_list' : [mycolors['crimson red'],mycolors['crimson red'],mycolors['crimson red'],mycolors['french rose'],\
-                  mycolors['french rose'],mycolors['french rose'],mycolors['crimson red'],mycolors['french rose']]
+'color_1_list' : ['xkcd:irish green','xkcd:irish green','xkcd:irish green','xkcd:irish green','k','k','k','k'],
+'color_2_list' : [mycolors['olympic blue'],mycolors['olympic blue'],mycolors['olympic blue'],mycolors['olympic blue'],\
+                  mycolors['cyan blue'],mycolors['cyan blue'],mycolors['cyan blue'],mycolors['cyan blue']],
+'color_3_list' : [mycolors['french rose'],mycolors['french rose'],mycolors['french rose'],mycolors['french rose'],\
+                  mycolors['crimson red'],mycolors['crimson red'],mycolors['crimson red'],mycolors['crimson red']]
 }
 # plot
-fig = plt.figure(num='Power Figure',figsize=(12.8, 9.6))
-utils.plot_joint_muscle_exo(nrows=3,ncols=3,nplots=8,plot_dic=plot_dic,color_dic=default_color_dic,legend_loc=[0,3],\
-                            subplot_legend=True,fig=fig,ylabel='flexion/extension\n moment (W/kg)')
+#plt.rcParams.update({'font.size': 18})
+fig = plt.figure(num='Power Figure',figsize=(6.4*2.2, 4.8*1.8))
+utils.plot_joint_muscle_exo(nrows=2,ncols=4,nplots=8,plot_dic=plot_dic,color_dic=default_color_dic,legend_loc=[0,4],\
+                            subplot_legend=False,fig=fig,ylabel='flexion/extension\n power (W/kg)',y_ticks=[-5,-4,-2,0,2,4,5])
 fig.tight_layout(h_pad=-1.5, w_pad=-1.5)
-fig.subplots_adjust(top=0.99, bottom=0.075, left=0.100, right=0.975,hspace=0.2,wspace=0.15)
+fig.subplots_adjust(top=0.99, bottom=0.075, left=0.100, right=0.975,hspace=0.40,wspace=0.20)
 fig.savefig('./Figures/Ideal/PaperFigure_Exoskeletons_Power.pdf',orientation='landscape',bbox_inches='tight')
 plt.show()
 

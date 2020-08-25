@@ -173,7 +173,7 @@ std_bi_noload_regen_paretofront = utils.manual_paretofront(std_bi_noload_metabol
 # noload monoarticular regenerated
 mean_mono_noload_regen_paretofront = utils.manual_paretofront(mean_mono_noload_metabolics_percent,mean_mono_noload_regen_energy,mono_noload_regen_indices)
 std_mono_noload_regen_paretofront = utils.manual_paretofront(std_mono_noload_metabolics_percent,std_mono_noload_regen_energy,mono_noload_regen_indices)
-
+'''
 #####################################################################################
 #####################################################################################
 # Table: Ideal vs maximum constrained
@@ -228,6 +228,7 @@ table.set_fontsize(14)
 ax.axis('off')
 fig.savefig('./Figures/Paretofront/Mean_Pareto/Monoarticular_Noload_Energy_Table.pdf',orientation='landscape',bbox_inches='tight')
 plt.show()
+'''
 #####################################################################################
 # PAPER FIGURE
 # plots
@@ -482,6 +483,7 @@ fig.subplots_adjust(top=0.98, bottom=0.075, left=0.100, right=0.975,hspace=0.25,
 fig.savefig('./Figures/Paretofront/Mean_Pareto/PaperFigure_Paretofront_EnergyBarPlot.pdf',orientation='landscape',bbox_inches='tight')
 plt.show()
 #####################################################################################
+'''
 # plots
 # average pareto curve: loaded mono vs biarticular
 
@@ -680,5 +682,4 @@ plt.legend(loc='best',frameon=False)
 fig.tight_layout()
 fig.savefig('./Figures/Paretofront/Mean_Pareto/Pareto_Noload_Bi_GenVsNonGen.pdf',orientation='landscape',bbox_inches='tight')
 plt.show()
-
-
+'''

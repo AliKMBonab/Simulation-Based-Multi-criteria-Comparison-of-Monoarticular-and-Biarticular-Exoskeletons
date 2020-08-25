@@ -706,14 +706,14 @@ def plot_joint_muscle_exo (nrows,ncols,plot_dic,color_dic,
             if thirdplot == True:
                 plot_3_list[i]['load'] = 'noload'
         plot_shaded_avg(plot_dic=plot_1_list[i],color=color_1_list[i])
-        plot_shaded_avg(plot_dic=plot_2_list[i],color=color_2_list[i])
+        plot_shaded_avg(plot_dic=plot_2_list[i],color=color_2_list[i],ls='--')
         if thirdplot == True:
-            plot_shaded_avg(plot_dic=plot_3_list[i],color=color_3_list[i])
+            plot_shaded_avg(plot_dic=plot_3_list[i],color=color_3_list[i],ls='-.')
         if 'y_ticks' in plot_dic:
             ax.set_yticks(plot_dic['y_ticks'][i])
         else:
             ax.set_yticks(y_ticks)
-        ax.set_title(plot_titles[i])
+        ax.set_title(plot_titles[i],fontsize=18)
         plt.tick_params(axis='both',direction='in')
         no_top_right(ax)
         if subplot_legend == True and i == nplots-1:
@@ -731,27 +731,27 @@ def plot_joint_muscle_exo (nrows,ncols,plot_dic,color_dic,
             plt.figlegend(handles=handle1,labels=label1, bbox_to_anchor=(pos.x0+0.05, pos.y0-0.05,  pos.width / 1.5, pos.height / 1.5))
             plt.figlegend(handles=handle2,labels=label2, bbox_to_anchor=(pos.x0+0.05, pos.y0+0.05,  pos.width / 1.5, pos.height / 1.5))
         elif i in legend_loc and subplot_legend == False:
-            plt.legend(loc='best',frameon=False)
+            plt.legend(bbox_to_anchor=(-0.30, 1),loc='upper right',frameon=False,prop={'size': 18})
         if xlabel_loc != None:
             if i in xlabel_loc:
-                ax.set_xlabel('gait cycle (%)')
+                ax.set_xlabel('gait cycle (%)',fontsize=18)
         else:
             if ncols==2 and i in [2,3]:
-                ax.set_xlabel('gait cycle (%)')
+                ax.set_xlabel('gait cycle (%)',fontsize=18)
             elif ncols==3 and i in [7,6]:
-                ax.set_xlabel('gait cycle (%)')
+                ax.set_xlabel('gait cycle (%)',fontsize=18)
             elif ncols==4 and i in [4,5,6,7]:
-                ax.set_xlabel('gait cycle (%)')
+                ax.set_xlabel('gait cycle (%)',fontsize=18)
         if ylabel_loc != None:
             if i in ylabel_loc:
-                ax.set_ylabel(ylabel)
+                ax.set_ylabel(ylabel,fontsize=18)
         else:
             if ncols==2 and i in [0,2]:
-                ax.set_ylabel(ylabel)
+                ax.set_ylabel(ylabel,fontsize=18)
             elif ncols==3 and i in [0,3,6]:
-                ax.set_ylabel(ylabel)
+                ax.set_ylabel(ylabel,fontsize=18)
             elif ncols==4 and i in [0,4]:
-                ax.set_ylabel(ylabel)
+                ax.set_ylabel(ylabel,fontsize=18)
         if remove_subplot_loc != None:
             if i in remove_subplot_loc:
                 labels = [item.get_text() for item in ax.get_xticklabels()]

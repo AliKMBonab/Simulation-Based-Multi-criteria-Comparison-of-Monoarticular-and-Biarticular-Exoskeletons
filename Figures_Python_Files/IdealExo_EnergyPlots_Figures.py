@@ -94,6 +94,7 @@ mean_loaded_mono_knee_energy,std_loaded_mono_knee_energy = utils.mean_std_over_s
 mean_loaded_bi_energy,std_loaded_bi_energy = utils.mean_std_over_subjects(assisted_energy_dataset['biarticular_ideal_loaded_hipactuator_energy']+assisted_energy_dataset['biarticular_ideal_loaded_kneeactuator_energy'],ax=0)
 mean_loaded_mono_energy,std_loaded_mono_energy = utils.mean_std_over_subjects(assisted_energy_dataset['monoarticular_ideal_loaded_hipactuator_energy']+assisted_energy_dataset['monoarticular_ideal_loaded_kneeactuator_energy'],ax=0)
 #####################################################################################
+'''
 # Plots
 # muscles metabolic rate figure
 # noload mono vs bi
@@ -571,13 +572,13 @@ utils.no_top_right(ax[1,1])
 fig.tight_layout()
 plt.show()
 fig.savefig('./Figures/Ideal/Actuator_Energy_BoxPlot.pdf',orientation='landscape',bbox_inches='tight')
-
+'''
 
 ########################################################################################
 # Paper figure
-plt.rcParams.update({'font.size': 12})
-fig = plt.figure(constrained_layout=True,figsize=(12.5,20.8))
-gs = fig3.add_gridspec(3, 2)
+plt.rcParams.update({'font.size': 14})
+fig = plt.figure(constrained_layout=True,figsize=(6.4*2, 4.8*6))
+gs = fig.add_gridspec(3, 2)
 # Biarticular
 names = ['unassist,\n noload','mono,\n noload','bi, noload','unassist,\n loaded','mono,\n loaded','bi, loaded']
 x = np.arange(1,len(names)+1,1)
@@ -591,11 +592,11 @@ ax = fig.add_subplot(gs[0, :])
 bp = ax.boxplot(data, patch_artist=True)
 utils.beautiful_boxplot(bp)
 ax.tick_params(axis='both',direction='in')
-ax.set_ylabel('Metabolic Rate (W/Kg)')
+ax.set_ylabel('metabolic rate (W/Kg)')
 ax.set_xticks(x)
-ax.set_yticks([5,6,7,8,9,10])
+ax.set_yticks([4,6,8,10])
 ax.set_xticklabels(names)
-ax.set_title('biarticular, metabolic rate')
+ax.set_title('metabolic rate\n')
 utils.no_top_right(ax)
 
 # Biarticular Loaded Vs Noload
@@ -607,11 +608,11 @@ ax = fig.add_subplot(gs[1, 0])
 bp = ax.boxplot(data, patch_artist=True)
 utils.beautiful_boxplot(bp)
 ax.tick_params(axis='both',direction='in')
-ax.set_ylabel('Actuator Power (W/Kg)')
+ax.set_ylabel('actuator power (W/Kg)')
 ax.set_xticks(x)
-ax.set_yticks([0.5,1,1.5,2,2.5,3])
+ax.set_yticks([0,1,2,3])
 ax.set_xticklabels(names)
-ax.set_title('biarticular, actutors power')
+ax.set_title('biarticular, actutor power\n')
 utils.no_top_right(ax)
 
 # Monoarticular Loaded Vs Noload
@@ -623,11 +624,11 @@ ax = fig.add_subplot(gs[1, 1])
 bp = ax.boxplot(data, patch_artist=True)
 utils.beautiful_boxplot(bp)
 ax.tick_params(axis='both',direction='in')
-ax.set_ylabel('Actuator Power (W/Kg)')
+ax.set_ylabel('actuator power (W/Kg)')
 ax.set_xticks(x)
-ax.set_yticks([0.5,1,1.5,2,2.5,3])
+ax.set_yticks([0,1,2,3])
 ax.set_xticklabels(names)
-ax.set_title('monoarticular, actuators power')
+ax.set_title('monoarticular, actuator power\n')
 utils.no_top_right(ax)
 # Loaded Biarticular Vs Monoarticular
 names = ['bi hip,\n loaded','bi knee,\n loaded','mono hip,\n loaded','mono knee,\n loaded']
@@ -638,11 +639,11 @@ ax = fig.add_subplot(gs[2, 0])
 bp = ax.boxplot(data, patch_artist=True)
 utils.beautiful_boxplot(bp)
 ax.tick_params(axis='both',direction='in')
-ax.set_ylabel('Actuator Power (W/Kg)')
+ax.set_ylabel('actuator power (W/Kg)')
 ax.set_xticks(x)
-ax.set_yticks([0.5,1,1.5,2,2.5,3])
+ax.set_yticks([0,1,2,3])
 ax.set_xticklabels(names)
-ax.set_title('actutors power, loaded condition')
+ax.set_title('actutor power, loaded condition\n')
 utils.no_top_right(ax)
 
 # Noload Biarticular Vs Monoarticular
@@ -654,13 +655,13 @@ ax = fig.add_subplot(gs[2, 1])
 bp = ax.boxplot(data, patch_artist=True)
 utils.beautiful_boxplot(bp)
 ax.tick_params(axis='both',direction='in')
-ax.set_ylabel('Actuator Power (W/Kg)')
+ax.set_ylabel('actuator power (W/Kg)')
 ax.set_xticks(x)
-ax.set_yticks([0.5,1,1.5,2,2.5,3])
+ax.set_yticks([0,1,2,3])
 ax.set_xticklabels(names)
-ax.set_title('actuators power, noload conditon')
+ax.set_title('actuator power, noload conditon\n')
 utils.no_top_right(ax)
 fig.tight_layout(h_pad=-1, w_pad=-1.5)
-fig.subplots_adjust(top=0.95, bottom=0.075, left=0.100, right=0.975,hspace=0.40,wspace=0.20)
+fig.subplots_adjust(top=0.95, bottom=0.075, left=0.100, right=0.95,hspace=0.90,wspace=0.25)
 plt.show()
 fig.savefig('./Figures/Ideal/Paper_Figure_Energy_BoxPlot.pdf',orientation='landscape',bbox_inches='tight')
