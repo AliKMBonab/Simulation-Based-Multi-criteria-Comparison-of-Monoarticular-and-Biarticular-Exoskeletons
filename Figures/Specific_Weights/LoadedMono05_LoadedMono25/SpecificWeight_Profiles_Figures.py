@@ -277,10 +277,8 @@ mono_Ae_loaded_knee_speed_dic = {'pgc':gait_cycle,'avg':utils.smooth(mean_mono_A
 # Paper figure
 monovsmono_Ee_color_dic = {
 'color_1_list' : ['k','k','k','k'],
-'color_2_list' : [mycolors['dark purple'],mycolors['dark purple'],mycolors['dark purple'],
-                  mycolors['dark purple']],
-'color_3_list' : [mycolors['crimson red'],mycolors['crimson red'],mycolors['crimson red'],
-                  mycolors['crimson red']]
+'color_2_list' : [mycolors['dark purple'],'mediumvioletred',mycolors['dark purple'],'mediumvioletred'],
+'color_3_list' : ['lightsteelblue','blue','lightsteelblue','blue']
 }
 
 plot_dic={

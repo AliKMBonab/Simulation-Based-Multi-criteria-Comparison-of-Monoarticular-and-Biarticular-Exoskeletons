@@ -90,7 +90,7 @@ plot_dic = {'data':utils.smooth(mean_bi_loaded_patellofemoral_joint_jrf_Fx,5,mul
             'ideal_data':ideal_jrf_dataset['mean_bi_loaded_patellofemoral_RFx'],'ideal_color':mycolors['crimson red']}
 ax = plt.subplot(4,3,1)
 utils.plot_paretofront_profile_changes(plot_dic,colormap='tab20',include_colorbar=False,
-                                       toeoff_color='k',add_ideal_profile=True,ylabel='moment (N.m/kg)')
+                                       toeoff_color='k',add_ideal_profile=True,ylabel='force (N/kg)')
 ax.set_yticks([0,5,10,15,20])
 ax.set_ylim((0,25))
 # biarticular loaded Fy
@@ -124,7 +124,7 @@ plot_dic = {'data':utils.smooth(mean_mono_loaded_patellofemoral_joint_jrf_Fx,5,m
             'ideal_data':ideal_jrf_dataset['mean_mono_loaded_patellofemoral_RFx'],'ideal_color':mycolors['crimson red']}
 ax = plt.subplot(4,3,4)
 utils.plot_paretofront_profile_changes(plot_dic,colormap='tab20',include_colorbar=False,
-                                       toeoff_color='k',add_ideal_profile=True,ylabel='moment (N.m/kg)')
+                                       toeoff_color='k',add_ideal_profile=True,ylabel='force (N/kg)')
 ax.set_yticks([0,5,10,15,20])
 ax.set_ylim((0,25))
 # monoarticular loaded Fy
@@ -157,7 +157,7 @@ plot_dic = {'data':utils.smooth(mean_bi_noload_patellofemoral_joint_jrf_Fx,5,mul
             'ideal_data':ideal_jrf_dataset['mean_bi_noload_patellofemoral_RFx'],'ideal_color':mycolors['french rose']}
 ax = plt.subplot(4,3,7)
 utils.plot_paretofront_profile_changes(plot_dic,colormap='tab20',include_colorbar=False,
-                                       toeoff_color='k',add_ideal_profile=True,ylabel='moment (N.m/kg)')
+                                       toeoff_color='k',add_ideal_profile=True,ylabel='force (N/kg)')
 ax.set_yticks([0,5,10,15,20])
 ax.set_ylim((0,25))
 # biarticular noload Fy
@@ -191,7 +191,7 @@ plot_dic = {'data':utils.smooth(mean_mono_noload_patellofemoral_joint_jrf_Fx,5,m
             'ideal_data':ideal_jrf_dataset['mean_mono_noload_patellofemoral_RFx'],'ideal_color':mycolors['french rose']}
 ax = plt.subplot(4,3,10)
 utils.plot_paretofront_profile_changes(plot_dic,colormap='tab20',include_colorbar=False,
-                                       toeoff_color='k',add_ideal_profile=True,ylabel='moment (N.m/kg)')
+                                       toeoff_color='k',add_ideal_profile=True,ylabel='force (N/kg)')
 ax.set_yticks([0,5,10,15,20])
 ax.set_ylim((0,25))
 # monoarticular noload Fy

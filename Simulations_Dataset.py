@@ -184,11 +184,16 @@ if  y.lower() == 'y':
 """
 print('\n')
 loads = ['loaded','noload']
-configs = [None,'Monoarticular','Biarticular','Monoarticular','Biarticular']
-configs = [None,'Monoarticular','Biarticular']
-config_names = ['unassist','monoarticular_ideal','biarticular_ideal','monoarticular_paretofront','biarticular_paretofront']
-cases = ['Unassist','Ideal','Ideal','Paretofront','Paretofront']
-cases_dir = ['Unassist','Ideal','Ideal','Pareto','Pareto']
+#configs = [None,'Monoarticular','Biarticular','Monoarticular','Biarticular']
+#config_names = ['unassist','monoarticular_ideal','biarticular_ideal','monoarticular_paretofront','biarticular_paretofront']
+#cases = ['Unassist','Ideal','Ideal','Paretofront','Paretofront']
+#cases_dir = ['Unassist','Ideal','Ideal','Pareto','Pareto']
+#***************************
+configs = ['Monoarticular','Biarticular']
+config_names = ['monoarticular_paretofront','biarticular_paretofront']
+cases = ['Paretofront','Paretofront']
+cases_dir = ['Pareto','Pareto']
+
 #***************************
 print('Section 06:\t extracting reaction forces.\n')
 #***************************
@@ -203,5 +208,5 @@ if  y.lower() == 'y':
             joint_name = ['back','duct_tape','hip','knee','patellofemoral','ankle']
         for i in range(len(configs)):
             out = fcns.extract_reaction_forces(loadcondition=load_type,case=cases[i].lower(),\
-                                               joints=joint_name,device=configs[i],force_or_moment='body force')
-            np.savetxt('./Data/{}/{}_{}_reaction_forces.csv'.format(cases_dir[i],config_names[i],load_type), out, fmt='%s', delimiter=',')
+                                               joints=joint_name,device=configs[i],force_or_moment='moment')
+            np.savetxt('./Data/{}/{}_{}_reaction_moments.csv'.format(cases_dir[i],config_names[i],load_type), out, fmt='%s', delimiter=',')

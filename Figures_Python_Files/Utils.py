@@ -678,7 +678,7 @@ def plot_joint_muscle_exo (nrows,ncols,plot_dic,color_dic,
                            ylabel,nplots=None,legend_loc=[0,1],
                            subplot_legend=False,fig=None,thirdplot=True,
                            y_ticks = [-2,-1,0,1,2],remove_subplot_loc=None,
-                           xlabel_loc=None,ylabel_loc=None):
+                           xlabel_loc=None,ylabel_loc=None,yticks_loc=None):
     '''Note: please note that since it is in the for loop, if some data is
     needed to plot several times it should be repeated in the lists.  '''
     if nplots is None:
@@ -709,7 +709,10 @@ def plot_joint_muscle_exo (nrows,ncols,plot_dic,color_dic,
         plot_shaded_avg(plot_dic=plot_2_list[i],color=color_2_list[i])
         if thirdplot == True:
             plot_shaded_avg(plot_dic=plot_3_list[i],color=color_3_list[i])
-        ax.set_yticks(y_ticks)
+        if 'y_ticks' in plot_dic:
+            ax.set_yticks(plot_dic['y_ticks'][i])
+        else:
+            ax.set_yticks(y_ticks)
         ax.set_title(plot_titles[i])
         plt.tick_params(axis='both',direction='in')
         no_top_right(ax)
@@ -756,11 +759,11 @@ def plot_joint_muscle_exo (nrows,ncols,plot_dic,color_dic,
                 ax.set_xticklabels(empty_string_labels)
         else:
             if ncols==3 :
-                if i not in [7,6,5]:
+                if i not in [9,10,11]:
                     labels = [item.get_text() for item in ax.get_xticklabels()]
                     empty_string_labels = ['']*len(labels)
                     ax.set_xticklabels(empty_string_labels)
-                if i not in [0,3,6]:
+                if i not in [0,1,2]:
                     labels = [item.get_text() for item in ax.get_yticklabels()]
                     empty_string_labels = ['']*len(labels)
                     ax.set_yticklabels(empty_string_labels)
