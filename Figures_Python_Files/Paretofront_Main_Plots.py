@@ -233,7 +233,7 @@ plt.show()
 # PAPER FIGURE
 # plots
 # average pareto curve: loaded mono vs biarticular
-
+plt.rcParams.update({'font.size': 14})
 plot_dic = {'x1_data':mean_bi_loaded_paretofront[:,0],'x1err_data':std_bi_loaded_paretofront[:,0],
           'x2_data':mean_mono_loaded_paretofront[:,0],'x2err_data':std_mono_loaded_paretofront[:,0],
           'y1_data':mean_bi_loaded_paretofront[:,1],'y1err_data':std_bi_loaded_paretofront[:,1],
@@ -247,14 +247,14 @@ plot_dic = {'x1_data':mean_bi_loaded_paretofront[:,0],'x1err_data':std_bi_loaded
 fig, axes = plt.subplots(nrows=2,ncols=2,num='PaperFigure_Paretofront',figsize=(12.8, 9.6))
 plt.subplot(2,2,1)
 utils.plot_pareto_avg_curve (plot_dic,loadcond='loaded',line=True,ideal_configs=True)
-plt.ylabel('Exoskeleton Energy\n Consumption (W/kg)')
-plt.title('loaded: mono. vs bi.')
+plt.title('loaded: monoarticular vs biarticular\n')
+plt.ylabel('exoskeleton power\n consumption (W/kg)')
 ax = plt.gca()
 ax.set_xticks([5, 10, 15, 20, 25, 30])
 ax.set_yticks([1, 1.5, 2, 2.5, 3, 3.5])
 plt.tick_params(axis='both',direction='in')
 utils.no_top_right(ax)
-plt.legend(loc='best',frameon=False)
+plt.legend(frameon=False,loc='upper left')
 
 # average pareto curve: noload mono vs biarticular
 
@@ -270,13 +270,13 @@ plot_dic = {'x1_data':mean_bi_noload_paretofront[:,0],'x1err_data':std_bi_noload
           }
 plt.subplot(2,2,2)
 utils.plot_pareto_avg_curve (plot_dic,loadcond='noload',line=True,ideal_configs=True)
-plt.title('noload: mono. vs bi.')
+plt.title('noload: monoarticular vs biarticular\n')
 plt.tick_params(axis='both',direction='in')
 ax = plt.gca()
 ax.set_xticks([5, 10, 15, 20, 25, 30])
 ax.set_yticks([1, 1.5, 2, 2.5, 3, 3.5])
 utils.no_top_right(ax)
-plt.legend(loc='best',frameon=False)
+plt.legend(frameon=False,loc='upper left')
 
 # average pareto curve: biarticular noload vs loaded
 
@@ -293,15 +293,15 @@ plot_dic = {'x1_data':mean_bi_loaded_paretofront[:,0],'x1err_data':std_bi_loaded
           }
 plt.subplot(2,2,3)
 utils.plot_pareto_avg_curve (plot_dic,loadcond='loaded',line=True,ideal_configs=True)
-plt.title('biarticular: loaded vs noload')
-plt.ylabel('Exoskeleton Energy\n Consumption (W/kg)')
+plt.title('biarticular: loaded vs noload\n')
+plt.ylabel('exoskeleton power\n consumption (W/kg)')
 plt.tick_params(axis='both',direction='in')
 ax = plt.gca()
 ax.set_xticks([5, 10, 15, 20, 25, 30])
 ax.set_yticks([1, 1.5, 2, 2.5, 3, 3.5])
 ax.set_xlabel('metabolic cost\nreduction (%)')
 utils.no_top_right(ax)
-plt.legend(loc='best',frameon=False)
+plt.legend(frameon=False,loc='upper left')
 
 # average pareto curve: monoarticular noload vs loaded
 
@@ -318,16 +318,16 @@ plot_dic = {'x1_data':mean_mono_loaded_paretofront[:,0],'x1err_data':std_mono_lo
           }
 plt.subplot(2,2,4)
 utils.plot_pareto_avg_curve (plot_dic,loadcond='loaded',line=True,ideal_configs=True)
-plt.title('monoarticular: loaded vs noload')
+plt.title('monoarticular: loaded vs noload\n')
 plt.tick_params(axis='both',direction='in')
 ax = plt.gca()
 ax.set_xticks([5, 10, 15, 20, 25, 30])
 ax.set_yticks([1, 1.5, 2, 2.5, 3, 3.5])
 ax.set_xlabel('metabolic cost\nreduction (%)')
 utils.no_top_right(ax)
-plt.legend(loc='best',frameon=False)
+plt.legend(frameon=False,loc='upper left')
 fig.tight_layout(h_pad=-1, w_pad=-1.5)
-fig.subplots_adjust(top=0.98, bottom=0.075, left=0.100, right=0.975,hspace=0.25,wspace=0.15)
+fig.subplots_adjust(top=0.98, bottom=0.075, left=0.100, right=0.975,hspace=0.30,wspace=0.20)
 fig.savefig('./Figures/Paretofront/Mean_Pareto/PaperFigure_Main_Pareto.pdf',orientation='landscape',bbox_inches='tight')
 plt.show()
 #####################################################################################
@@ -343,12 +343,13 @@ plot_dic = {'x1_data':mean_bi_loaded_regen_paretofront[:,0],'x1err_data':std_bi_
 fig, axes = plt.subplots(nrows=2,ncols=2,num='PaperFigure_Paretofront',figsize=(12.8, 9.6))
 plt.subplot(2,2,1)
 utils.plot_pareto_avg_curve (plot_dic,loadcond='loaded',line=True)
-plt.ylabel('Exoskeleton Energy\n Consumption (W/kg)')
-plt.title('loaded: mono. vs bi.\nregenerated')
+plt.ylabel('exoskeleton power\n consumption (W/kg)')
+plt.title('loaded: monoarticular vs biarticular\nregenerated')
 ax = plt.gca()
 ax.set_xticks([5, 10, 15, 20, 25, 30])
-ax.set_yticks([1, 1.5, 2, 2.5])
+ax.set_yticks([1, 1.5, 2, 2.5,3])
 plt.tick_params(axis='both',direction='in')
+plt.legend(frameon=False,loc='upper left')
 utils.no_top_right(ax)
 plt.legend(loc='best',frameon=False)
 
@@ -362,13 +363,13 @@ plot_dic = {'x1_data':mean_bi_noload_regen_paretofront[:,0],'x1err_data':std_bi_
           }
 plt.subplot(2,2,2)
 utils.plot_pareto_avg_curve (plot_dic,loadcond='noload',line=True)
-plt.title('noload: mono. vs bi.\nregenerated')
+plt.title('noload: monoarticular vs biarticular\nregenerated')
 plt.tick_params(axis='both',direction='in')
 ax = plt.gca()
 ax.set_xticks([5, 10, 15, 20, 25, 30])
-ax.set_yticks([1, 1.5, 2, 2.5])
+ax.set_yticks([1, 1.5, 2, 2.5,3])
 utils.no_top_right(ax)
-plt.legend(loc='best',frameon=False)
+plt.legend(frameon=False,loc='upper left')
 
 # average pareto curve: biarticular noload vs loaded
 
@@ -382,14 +383,14 @@ plot_dic = {'x1_data':mean_bi_loaded_regen_paretofront[:,0],'x1err_data':std_bi_
 plt.subplot(2,2,3)
 utils.plot_pareto_avg_curve (plot_dic,loadcond='loaded',line=True)
 plt.title('biarticular: loaded vs noload\nregenerated')
-plt.ylabel('Exoskeleton Energy\n Consumption (W/kg)')
+plt.ylabel('exoskeleton power\n consumption (W/kg)')
 plt.tick_params(axis='both',direction='in')
 ax = plt.gca()
 ax.set_xticks([5, 10, 15, 20, 25, 30])
-ax.set_yticks([1, 1.5, 2, 2.5])
+ax.set_yticks([1, 1.5, 2, 2.5,3])
 ax.set_xlabel('metabolic cost\nreduction (%)')
 utils.no_top_right(ax)
-plt.legend(loc='best',frameon=False)
+plt.legend(frameon=False,loc='upper left')
 
 # average pareto curve: monoarticular noload vs loaded
 
@@ -406,12 +407,12 @@ plt.title('monoarticular: loaded vs noload\nregenerated')
 plt.tick_params(axis='both',direction='in')
 ax = plt.gca()
 ax.set_xticks([5, 10, 15, 20, 25, 30])
-ax.set_yticks([1, 1.5, 2, 2.5])
+ax.set_yticks([1, 1.5, 2, 2.5,3])
 ax.set_xlabel('metabolic cost\nreduction (%)')
 utils.no_top_right(ax)
-plt.legend(loc='best',frameon=False)
+plt.legend(frameon=False,loc='upper left')
 fig.tight_layout(h_pad=-1, w_pad=-1.5)
-fig.subplots_adjust(top=0.98, bottom=0.075, left=0.100, right=0.975,hspace=0.25,wspace=0.15)
+fig.subplots_adjust(top=0.98, bottom=0.075, left=0.100, right=0.975,hspace=0.30,wspace=0.20)
 fig.savefig('./Figures/Paretofront/Mean_Pareto/PaperFigure_Main_Pareto_Regenerated.pdf',orientation='landscape',bbox_inches='tight')
 plt.show()
 
@@ -419,32 +420,29 @@ plt.show()
 # PAPER FIGURE
 # plots
 # average energy: loaded biarticular
-
 plot_dic = {'x1_data':mean_bi_loaded_hip_actuator_paretofront[:,1],'x1err_data':std_bi_loaded_hip_actuator_paretofront[:,1],
             'y1_data':mean_bi_loaded_knee_actuator_paretofront[:,1],'y1err_data':std_bi_loaded_knee_actuator_paretofront[:,1],
           }
 fig, axes = plt.subplots(nrows=2,ncols=2,num='PaperFigure_Paretofront_EnergyBarPlot',figsize=(12.8, 9.6))
-plt.subplot(2,2,1)
+plt.subplot(2,2,4)
 utils.paretofront_barplot (plot_dic,bi_loaded_indices,loadcond='loaded')
-plt.ylabel( 'Energy\n Consumption (W/kg)')
 plt.title('loaded, biarticular')
 ax = plt.gca()
-ax.set_yticks([0, 0.5, 1, 1.5])
+ax.set_yticks([0, 0.5, 1, 1.5,2])
 plt.tick_params(axis='both',direction='in')
 utils.no_top_right(ax)
 plt.legend(loc='best',frameon=False)
 
 # average energy: loaded monoarticular
-
 plot_dic = {'x1_data':mean_mono_loaded_hip_actuator_paretofront[:,1],'x1err_data':std_mono_loaded_hip_actuator_paretofront[:,1],
             'y1_data':mean_mono_loaded_knee_actuator_paretofront[:,1],'y1err_data':std_mono_loaded_knee_actuator_paretofront[:,1],
           }
-plt.subplot(2,2,2)
+plt.subplot(2,2,3)
 utils.paretofront_barplot (plot_dic,mono_loaded_indices,loadcond='loaded')
-plt.ylabel('Energy\n Consumption (W/kg)')
+plt.ylabel('power consumption (W/kg)')
 plt.title('loaded, monoarticular')
 ax = plt.gca()
-ax.set_yticks([0, 0.5, 1, 1.5])
+ax.set_yticks([0, 0.5, 1, 1.5,2])
 plt.tick_params(axis='both',direction='in')
 utils.no_top_right(ax)
 plt.legend(loc='best',frameon=False)
@@ -454,12 +452,11 @@ plt.legend(loc='best',frameon=False)
 plot_dic = {'x1_data':mean_bi_noload_hip_actuator_paretofront[:,1],'x1err_data':std_bi_noload_hip_actuator_paretofront[:,1],
             'y1_data':mean_bi_noload_knee_actuator_paretofront[:,1],'y1err_data':std_bi_noload_knee_actuator_paretofront[:,1],
           }
-plt.subplot(2,2,3)
+plt.subplot(2,2,2)
 utils.paretofront_barplot (plot_dic,bi_noload_indices,loadcond='noload')
-plt.ylabel( 'Energy\n Consumption (W/kg)')
 plt.title('noload, biarticular')
 ax = plt.gca()
-ax.set_yticks([0, 0.5, 1, 1.5])
+ax.set_yticks([0, 0.5, 1, 1.5,2])
 plt.tick_params(axis='both',direction='in')
 utils.no_top_right(ax)
 plt.legend(loc='best',frameon=False)
@@ -469,12 +466,12 @@ plt.legend(loc='best',frameon=False)
 plot_dic = {'x1_data':mean_mono_noload_hip_actuator_paretofront[:,1],'x1err_data':std_mono_noload_hip_actuator_paretofront[:,1],
             'y1_data':mean_mono_noload_knee_actuator_paretofront[:,1],'y1err_data':std_mono_noload_knee_actuator_paretofront[:,1],
           }
-plt.subplot(2,2,4)
+plt.subplot(2,2,1)
 utils.paretofront_barplot (plot_dic,mono_noload_indices,loadcond='noload')
-plt.ylabel('Energy\n Consumption (W/kg)')
+plt.ylabel('power consumption (W/kg)')
 plt.title('noload, monoarticular')
 ax = plt.gca()
-ax.set_yticks([0, 0.5, 1, 1.5])
+ax.set_yticks([0, 0.5, 1, 1.5,2])
 plt.tick_params(axis='both',direction='in')
 utils.no_top_right(ax)
 plt.legend(loc='best',frameon=False)

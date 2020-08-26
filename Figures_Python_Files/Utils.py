@@ -2067,7 +2067,7 @@ def plot_paretofront_profile_changes(plot_dic,colormap,toeoff_color,adjust_axes=
     plt.xlim([0,100])
     # plotting joint profile
     if add_joint_profile == True:
-        plt.plot(gpc,joint_data, *args, lw=3,ls='--',color=joint_color,label='joint', **kwargs)
+        plt.plot(gpc,joint_data, *args, lw=3,ls='-.',color=joint_color,label='joint', **kwargs)
     # plotting ideal device profile
     if add_ideal_profile == True:
         ideal_data = plot_dic['ideal_data']
@@ -2075,6 +2075,7 @@ def plot_paretofront_profile_changes(plot_dic,colormap,toeoff_color,adjust_axes=
         plt.plot(gpc,ideal_data, *args, lw=3,ls='--',color=ideal_color,label='ideal device',alpha=0.75, **kwargs)
     # legend
     plt.legend(loc='best',frameon=False)
+    plt.tick_params(axis='both',direction='in')
     # toe-off and zero lines
     plt.axvline(avg_toeoff, lw=2, color=toeoff_color, zorder=0, alpha=0.5) #vertical line
     plt.axhline(0, lw=2, color='grey', zorder=0, alpha=0.75) # horizontal line

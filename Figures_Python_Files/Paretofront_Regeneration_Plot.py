@@ -244,6 +244,8 @@ mean_mono_noload_regen_paretofront = utils.manual_paretofront(mean_mono_noload_m
 std_mono_noload_regen_paretofront = utils.manual_paretofront(std_mono_noload_metabolics_percent,std_mono_noload_regen_energy[:,-1],mono_noload_regen_indices)
 #####################################################################################
 # paretocurve for different regenerations
+plt.rcParams.update({'font.size': 14})
+'''
 # loaded biarticular
 plot_dic = {'x_values':np.transpose(np.tile(mean_bi_loaded_metabolics_percent,(len(mu_list),1))),
          'xerr_values':np.transpose(np.tile(std_bi_loaded_metabolics_percent,(len(mu_list),1))),
@@ -300,7 +302,7 @@ fig.tight_layout(h_pad=-1, w_pad=-1.5)
 fig.subplots_adjust(top=0.98, bottom=0.075, left=0.100, right=0.975,hspace=0.25,wspace=0.15)
 fig.savefig('./Figures/Paretofront/Analyses_Pareto/Paretocurve_Regeneration_Efficiency.pdf',orientation='landscape',bbox_inches='tight')
 plt.show()
-
+'''
 #####################################################################################
 # paretofront for different regenerations
 # loaded biarticular
@@ -308,54 +310,54 @@ plot_dic = {'x_values':mean_bi_loaded_regen_paretofront_metabolics,'xerr_values'
           'y_values':mean_bi_loaded_regen_paretofront_energy,'yerr_values':std_bi_loaded_regen_paretofront_energy,
           'legends':['0%','30%','37%','50%','65%'],'weights':np.transpose(np.tile(bi_loaded_indices,(len(mu_list),1)))}
 fig, axes = plt.subplots(nrows=2,ncols=2,num='PaperFigure_Paretofront',figsize=(12.8, 9.6))
-plt.subplot(2,2,1)
+plt.subplot(2,2,4)
 utils.plot_regeneration_efficiency (plot_dic,line=True,label_on=False,ideal_color=mycolors['crimson red'])
-plt.ylabel('Exoskeleton Energy\n Consumption (W/kg)')
 plt.title('loaded: biarticular regenerated')
 ax = plt.gca()
-ax.set_xticks([5, 10, 15, 20, 25, 30])
-ax.set_yticks([1, 1.5, 2, 2.5,3.10])
+ax.set_xlabel('metabolic cost\nreduction (%)')
+ax.set_xticks([5, 10, 15, 20, 25])
+ax.set_yticks([1, 1.5, 2, 2.5,3])
 plt.tick_params(axis='both',direction='in')
 utils.no_top_right(ax)
-plt.legend(loc='best',frameon=False)
 # loaded monoarticular
 plot_dic = {'x_values':mean_mono_loaded_regen_paretofront_metabolics,'xerr_values':std_mono_loaded_regen_paretofront_metabolics,
           'y_values':mean_mono_loaded_regen_paretofront_energy,'yerr_values':std_mono_loaded_regen_paretofront_energy,
           'legends':['0%','30%','37%','50%','65%'],'weights':np.transpose(np.tile(mono_loaded_indices,(len(mu_list),1)))}
-plt.subplot(2,2,2)
+plt.subplot(2,2,3)
 utils.plot_regeneration_efficiency (plot_dic,line=True,label_on=False,ideal_color=mycolors['dark purple'])
 plt.title('loaded: monoarticular regenerated')
+plt.ylabel('exoskeleton power\n consumption (W/kg)')
 ax = plt.gca()
-ax.set_xticks([5, 10, 15, 20, 25, 30])
-ax.set_yticks([1, 1.5, 2, 2.5,3.10])
+ax.set_xlabel('metabolic cost\nreduction (%)')
+ax.set_xticks([5, 10, 15, 20, 25])
+ax.set_yticks([1, 1.5, 2, 2.5,3])
 plt.tick_params(axis='both',direction='in')
 utils.no_top_right(ax)
 # noload biarticular
 plot_dic = {'x_values':mean_bi_noload_regen_paretofront_metabolics,'xerr_values':std_bi_noload_regen_paretofront_metabolics,
           'y_values':mean_bi_noload_regen_paretofront_energy,'yerr_values':std_bi_noload_regen_paretofront_energy,
           'legends':['0%','30%','37%','50%','65%'],'weights':np.transpose(np.tile(bi_noload_indices,(len(mu_list),1)))}
-plt.subplot(2,2,3)
+plt.subplot(2,2,2)
 utils.plot_regeneration_efficiency (plot_dic,line=True,label_on=False,ideal_color=mycolors['french rose'])
 plt.title('noload: biarticular regenerated')
 ax = plt.gca()
-ax.set_xticks([5, 10, 15, 20, 25, 30])
-ax.set_yticks([1, 1.5, 2, 2.5,3.10])
-plt.ylabel('Exoskeleton Energy\n Consumption (W/kg)')
-ax.set_xlabel('metabolic cost\nreduction (%)')
+ax.set_xticks([5, 10, 15, 20, 25])
+ax.set_yticks([1, 1.5, 2, 2.5,3])
 plt.tick_params(axis='both',direction='in')
 utils.no_top_right(ax)
 # noload monoarticular
 plot_dic = {'x_values':mean_mono_noload_regen_paretofront_metabolics,'xerr_values':std_mono_noload_regen_paretofront_metabolics,
           'y_values':mean_mono_noload_regen_paretofront_energy,'yerr_values':std_mono_noload_regen_paretofront_energy,
           'legends':['0%','30%','37%','50%','65%'],'weights':np.transpose(np.tile(bi_noload_indices,(len(mu_list),1)))}
-plt.subplot(2,2,4)
+plt.subplot(2,2,1)
 utils.plot_regeneration_efficiency (plot_dic,line=True,label_on=False,ideal_color=mycolors['lavender purple'])
 plt.title('noload: monoarticular regenerated')
+plt.ylabel('Exoskeleton Energy\n Consumption (W/kg)')
 ax = plt.gca()
-ax.set_xticks([5, 10, 15, 20, 25, 30])
-ax.set_yticks([1, 1.5, 2, 2.5,3.10])
-ax.set_xlabel('metabolic cost\nreduction (%)')
+ax.set_xticks([5, 10, 15, 20, 25])
+ax.set_yticks([1, 1.5, 2, 2.5,3])
 plt.tick_params(axis='both',direction='in')
+plt.legend(loc='best',frameon=False)
 utils.no_top_right(ax)
 fig.tight_layout(h_pad=-1, w_pad=-1.5)
 fig.subplots_adjust(top=0.98, bottom=0.075, left=0.100, right=0.975,hspace=0.25,wspace=0.15)
