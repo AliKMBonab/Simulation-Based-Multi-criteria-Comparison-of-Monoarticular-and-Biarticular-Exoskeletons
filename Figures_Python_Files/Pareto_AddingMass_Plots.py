@@ -191,56 +191,63 @@ plt.show()
 
 #####################################################################################
 # bar plots for the percent of regeneratable energy
-fig = plt.figure(num='regeneratable energy',figsize=(14.4, 12.8))
+plt.rcParams.update({'font.size': 14})
+fig = plt.figure(num='regeneratable energy',figsize=(18.4, 10.8))
 indices = np.arange(1,26,1)
 # biarticular noload
 plot_dic = {'x1_data':mean_bi_noload_hip_regen_energy,'x1err_data':std_bi_noload_hip_regen_energy,
             'y1_data':mean_bi_noload_knee_regen_energy,'y1err_data':std_bi_noload_knee_regen_energy
             }
-plt.subplot(2,2,1)
+plt.subplot(2,2,2)
 utils.paretofront_barplot(plot_dic,indices,loadcond='noload')
-plt.ylabel('regenerable energy/\n absolute energy')
 plt.title('biarticular, noload')
 ax = plt.gca()
+ax.set_yticks([0,0.2,0.4,0.6,0.8,1])
 plt.tight_layout()
 utils.no_top_right(ax)
+plt.tick_params(axis='both',direction='in')
 plt.legend(loc='best',frameon=False)
 # monoarticular noload
 plot_dic = {'x1_data':mean_mono_noload_hip_regen_energy,'x1err_data':std_mono_noload_hip_regen_energy,
             'y1_data':mean_mono_noload_knee_regen_energy,'y1err_data':std_mono_noload_knee_regen_energy
             }
-plt.subplot(2,2,2)
+plt.subplot(2,2,1)
 utils.paretofront_barplot(plot_dic,indices,loadcond='noload')
+plt.ylabel('regenerable power to\n absolute power ratio')
 plt.title('monoarticular, noload')
 ax = plt.gca()
+ax.set_yticks([0,0.2,0.4,0.6,0.8,1])
 plt.tight_layout()
 utils.no_top_right(ax)
+plt.tick_params(axis='both',direction='in')
 plt.legend(loc='best',frameon=False)
 # biarticular loaded
 plot_dic = {'x1_data':mean_bi_loaded_hip_regen_energy,'x1err_data':std_bi_loaded_hip_regen_energy,
             'y1_data':mean_bi_loaded_knee_regen_energy,'y1err_data':std_bi_loaded_knee_regen_energy
             }
-plt.subplot(2,2,3)
+plt.subplot(2,2,4)
 utils.paretofront_barplot(plot_dic,indices,loadcond='loaded')
-plt.ylabel('regenerable energy/\n absolute energy')
-plt.xlabel('device configuration')
 plt.title('biarticular, loaded')
 ax = plt.gca()
+ax.set_yticks([0,0.2,0.4,0.6,0.8,1])
 plt.tight_layout()
 utils.no_top_right(ax)
+plt.tick_params(axis='both',direction='in')
 plt.legend(loc='best',frameon=False)
 # monoarticular loaded
 plot_dic = {'x1_data':mean_mono_loaded_hip_regen_energy,'x1err_data':std_mono_loaded_hip_regen_energy,
             'y1_data':mean_mono_loaded_knee_regen_energy,'y1err_data':std_mono_loaded_knee_regen_energy
             }
-plt.subplot(2,2,4)
+plt.subplot(2,2,3)
 utils.paretofront_barplot(plot_dic,indices,loadcond='loaded')
 plt.title('monoarticular, loaded')
-plt.xlabel('device configuration')
+plt.ylabel('regenerable power to\n absolute power ratio')
 ax = plt.gca()
+ax.set_yticks([0,0.2,0.4,0.6,0.8,1])
 plt.tight_layout()
 utils.no_top_right(ax)
 plt.legend(loc='best',frameon=False)
+plt.tick_params(axis='both',direction='in')
 fig.tight_layout(h_pad=-1.5, w_pad=-1.5)
 fig.subplots_adjust(top=0.99, bottom=0.075, left=0.100, right=0.975,hspace=0.30,wspace=0.15)
 fig.savefig('./Figures/Pareto/Adding_Mass_Pareto/Regenerable_Energy.pdf',orientation='landscape',bbox_inches='tight')
@@ -260,7 +267,7 @@ utils.plot_pareto_curve_subjects (nrows=7,ncols=3,nplot=21,plot_dic=plot_dic,loa
 fig.tight_layout()
 fig.savefig('./Figures/Pareto/Adding_Mass_Pareto/Pareto_Noload_Subjects_BiVsMono_NoMass.pdf',orientation='landscape',bbox_inches='tight')
 plt.show()
-'''
+
 # average pareto curve: noload mono vs biarticular
 
 plot_dic = {'x1_data':mean_bi_noload_metabolics_percent,'x1err_data':std_bi_noload_metabolics_percent,
@@ -282,7 +289,7 @@ plt.show()
 
 #####################################################################################
 # plots with masses
-'''
+
 # subjects pareto curve: noload mono vs biarticular mass added
 
 plot_dic = {'x1_data':bi_noload_metabolics_addedmass_percent,'x2_data':mono_noload_metabolics_addedmass_percent,
@@ -321,7 +328,7 @@ utils.plot_pareto_curve_subjects (nrows=7,ncols=3,nplot=21,plot_dic=plot_dic,loa
 fig.tight_layout()
 fig.savefig('./Figures/Pareto/Adding_Mass_Pareto/Pareto_Noload_Subjects_Mono_MassAddedVSIdeal.pdf',orientation='landscape',bbox_inches='tight')
 plt.show()
-'''
+
 # average pareto curve: noload mono three types
 # monoarticular with typical design
 plot_dic = {'x1_data':mean_mono_noload_metabolics_percent,'x1err_data':std_mono_noload_metabolics_percent,
@@ -459,7 +466,7 @@ plt.show()
 
 #####################################################################################
 # plots with regenration and mass
-'''
+
 # subjects pareto curve: noload mono vs biarticular mass added
 
 plot_dic = {'x1_data':bi_noload_metabolics_addedmass_percent,'x2_data':mono_noload_metabolics_addedmass_percent,
@@ -499,7 +506,6 @@ utils.plot_pareto_curve_subjects (nrows=7,ncols=3,nplot=21,plot_dic=plot_dic,loa
 fig.tight_layout()
 fig.savefig('./Figures/Pareto/Adding_Mass_Pareto/Pareto_Noload_Subjects_Mono_GenVsNonGen.pdf',orientation='landscape',bbox_inches='tight')
 plt.show()
-'''
 
 # average pareto curve: biarticular ideal vs mass added
 
@@ -540,3 +546,4 @@ plt.legend(loc='best',frameon=False)
 fig.tight_layout()
 fig.savefig('./Figures/Pareto/Adding_Mass_Pareto/Pareto_Noload_Mono_NonGenVsGen.pdf',orientation='landscape',bbox_inches='tight')
 plt.show()
+'''
