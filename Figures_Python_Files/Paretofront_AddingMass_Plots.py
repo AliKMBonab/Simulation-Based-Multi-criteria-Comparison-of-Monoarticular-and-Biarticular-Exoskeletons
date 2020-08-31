@@ -112,6 +112,9 @@ monoarticular_out = utils.addingmass_metabolics_pareto(unassisted_energy_dataset
 monoarticular_actuator_near_waist_out = utils.addingmass_metabolics_pareto(unassisted_energy_dataset['noload_metabolics_energy'],mono_noload_metabolics,monoarticular_actuator_near_waist_exoskeleton_dic)
 monoarticular_actuator_on_shank_out = utils.addingmass_metabolics_pareto(unassisted_energy_dataset['noload_metabolics_energy'],mono_noload_metabolics,monoarticular_actuator_on_shank_exoskeleton_dic)
 # Metabolic cost reduction after adding mass
+# biarticular_out[0]: Metabolics_Added_Mass = assisted_metabolics + Total_AddMass_MetabolicChange
+# biarticular_out[4]: Total_AddMass_MetabolicChange
+
 noload_metabolics_energy_biarticular_mass_added = np.tile(unassisted_energy_dataset['noload_metabolics_energy'][np.newaxis][0,:],(25,1))  + biarticular_out[4]
 noload_metabolics_energy_monoarticular_mass_added = np.tile(unassisted_energy_dataset['noload_metabolics_energy'][np.newaxis][0,:],(25,1)) + monoarticular_out[4]
 noload_metabolics_energy_monoarticular_actuator_near_waist_mass_added = np.tile(unassisted_energy_dataset['noload_metabolics_energy'][np.newaxis][0,:],(25,1)) + monoarticular_actuator_near_waist_out[4]
@@ -128,6 +131,47 @@ mean_bi_noload_metabolics_addedmass_percent, std_bi_noload_metabolics_addedmass_
 mean_mono_noload_metabolics_addedmass_percent, std_mono_noload_metabolics_addedmass_percent = utils.pareto_avg_std_energy(mono_noload_metabolics_addedmass_percent,reshape=False)
 mean_mono_noload_actuator_near_waist_metabolics_addedmass_percent, std_mono_noload_actuator_near_waist_metabolics_addedmass_percent = utils.pareto_avg_std_energy(mono_noload_actuator_near_waist_metabolics_addedmass_percent,reshape=False)
 mean_mono_noload_actuator_on_shank_metabolics_addedmass_percent, std_mono_noload_actuator_on_shank_metabolics_addedmass_percent = utils.pareto_avg_std_energy(mono_noload_actuator_on_shank_metabolics_addedmass_percent,reshape=False)
+#####################################################################################
+# efficiency of devices after reflecting 
+# efficiency defined as difference between the metabolic cost reduction of ideal devices
+# and the metabolic cost reduction of devices under their inertial properties effect, divided to
+# the metabolic cost reduction of ideal devices.
+mean_bi_noload_efficiency, std_bi_noload_efficiency = utils.calculate_efficiency(bi_noload_metabolics_addedmass_percent,bi_noload_metabolics_percent,reshape=False)
+mean_mono_noload_efficiency, std_mono_noload_efficiency = utils.calculate_efficiency(mono_noload_metabolics_addedmass_percent,mono_noload_metabolics_percent,reshape=False)
+mean_mono_actuator_near_waist_efficiency, std_mono_actuator_near_waist_efficiency = utils.calculate_efficiency(mono_noload_actuator_near_waist_metabolics_addedmass_percent,mono_noload_metabolics_percent,reshape=False)
+mean_mono_actuator_on_shank_efficiency, std_mono_actuator_on_shank_efficiency = utils.calculate_efficiency(mono_noload_actuator_on_shank_metabolics_addedmass_percent,mono_noload_metabolics_percent,reshape=False)
+mean_mono_actuator_near_waist_wrt_typical_mono_efficiency, std_mono_actuator_near_waist_wrt_typical_mono_efficiency = utils.calculate_efficiency(mono_noload_metabolics_addedmass_percent,mono_noload_actuator_near_waist_metabolics_addedmass_percent,reshape=False)
+mean_mono_actuator_on_shank_wrt_typical_mono_efficiency, std_mono_actuator_on_shank_wrt_typical_mono_efficiency = utils.calculate_efficiency(mono_noload_metabolics_addedmass_percent,mono_noload_actuator_on_shank_metabolics_addedmass_percent,reshape=False)
+mean_mono_actuator_near_waist_wrt_shank_mono_efficiency, std_mono_actuator_near_waist_wrt_shank_mono_efficiency = utils.calculate_efficiency(mono_noload_actuator_on_shank_metabolics_addedmass_percent,mono_noload_actuator_near_waist_metabolics_addedmass_percent,reshape=False)
+#####################################################################################
+# filtering them according to the ideal configurations
+# indices
+indices = np.arange(0,25,1)
+bi_noload_indices = np.array([25,24,23,22,21,19,18,17,13,12,11,1])
+mono_noload_indices = np.array([25,20,15,14,13,8,7,6,2,1])
+# biarticular
+mean_bi_noload_efficiency_paretofront = utils.manual_paretofront(mean_bi_noload_efficiency,indices,bi_noload_indices)
+std_bi_noload_efficiency_paretofront = utils.manual_paretofront(std_bi_noload_efficiency,indices,bi_noload_indices)
+# monoarticular
+mean_mono_noload_efficiency_paretofront = utils.manual_paretofront(mean_mono_noload_efficiency,indices,mono_noload_indices)
+std_mono_noload_efficiency_paretofront = utils.manual_paretofront(std_mono_noload_efficiency,indices,mono_noload_indices)
+# monoarticular-near waist
+mean_mono_actuator_near_waist_efficiency_paretofront = utils.manual_paretofront(mean_mono_actuator_near_waist_efficiency,indices,mono_noload_indices)
+std_mono_actuator_near_waist_efficiency_paretofront = utils.manual_paretofront(std_mono_actuator_near_waist_efficiency,indices,mono_noload_indices)
+# monoarticular- on shank
+mean_mono_actuator_on_shank_efficiency_paretofront = utils.manual_paretofront(mean_mono_actuator_on_shank_efficiency,indices,mono_noload_indices)
+std_mono_actuator_on_shank_efficiency_paretofront = utils.manual_paretofront(std_mono_actuator_on_shank_efficiency,indices,mono_noload_indices)
+# improvements
+mono_noload_massadded_indices = np.array([25,24,20,19,18,14,13,12])
+# monoarticular-near waist compared to typical monoarticular design
+mean_mono_actuator_near_waist_wrt_typical_mono_efficiency_paretofront = utils.manual_paretofront(mean_mono_actuator_near_waist_wrt_typical_mono_efficiency,indices,mono_noload_massadded_indices)
+std_mono_actuator_near_waist_wrt_typical_mono_efficiency_paretofront = utils.manual_paretofront(std_mono_actuator_near_waist_wrt_typical_mono_efficiency,indices,mono_noload_massadded_indices)
+# monoarticular-on shank compared to typical monoarticular design
+mean_mono_actuator_on_shank_wrt_typical_mono_efficiency_paretofront = utils.manual_paretofront(mean_mono_actuator_on_shank_wrt_typical_mono_efficiency,indices,mono_noload_massadded_indices)
+std_mono_actuator_on_shank_wrt_typical_mono_efficiency_paretofront = utils.manual_paretofront(std_mono_actuator_on_shank_wrt_typical_mono_efficiency,indices,mono_noload_massadded_indices)
+# monoarticular-near waist compared to monoarticular-on shank
+mean_mono_actuator_near_waist_wrt_shank_mono_efficiency_paretofront = utils.manual_paretofront(mean_mono_actuator_near_waist_wrt_shank_mono_efficiency,indices,mono_noload_massadded_indices)
+std_mono_actuator_near_waist_wrt_shank_mono_efficiency_paretofront = utils.manual_paretofront(std_mono_actuator_near_waist_wrt_shank_mono_efficiency,indices,mono_noload_massadded_indices)
 #####################################################################################
 # Pareto filtering
 unassist_noload_metabolics = unassisted_energy_dataset['noload_metabolics_energy']
@@ -167,7 +211,7 @@ mean_bi_noload_addedmass_paretofront = utils.manual_paretofront(mean_bi_noload_m
 std_bi_noload_addedmass_paretofront = utils.manual_paretofront(std_bi_noload_metabolics_addedmass_percent,std_bi_noload_energy,bi_noload_indices)
 
 # monoarticular noload mass added
-mono_noload_indices = np.array([25,24,20,18,14,13,12])
+mono_noload_indices = np.array([25,24,20,19,18,14,13,12])
 mean_mono_noload_addedmass_paretofront = utils.manual_paretofront(mean_mono_noload_metabolics_addedmass_percent,mean_mono_noload_energy,mono_noload_indices)
 std_mono_noload_addedmass_paretofront = utils.manual_paretofront(std_mono_noload_metabolics_addedmass_percent,std_mono_noload_energy,mono_noload_indices)
 
@@ -201,6 +245,39 @@ std_mono_noload_regen_paretofront = utils.manual_paretofront(std_mono_noload_met
 
 #####################################################################################
 # PAPER FIGURE
+plt.rcParams.update({'font.size': 14})
+bi_noload_indices = np.array([25,24,23,22,21,19,18,17,13,12,11,1])
+mono_noload_indices = np.array([25,20,15,14,13,8,7,6,2,1])
+# effect of adding mass and inertia on the efficiency of devices.
+# monoarticular
+plot_dic = {'x1_data':np.transpose(np.array([mean_mono_noload_efficiency_paretofront[:,0],mean_mono_actuator_near_waist_efficiency_paretofront[:,0],mean_mono_actuator_on_shank_efficiency_paretofront[:,0]])),
+            'x1err_data':np.transpose(np.array([std_mono_noload_efficiency_paretofront[:,0],std_mono_actuator_near_waist_efficiency_paretofront[:,0],std_mono_actuator_on_shank_efficiency_paretofront[:,0]]))}
+fig, axes = plt.subplots(nrows=1,ncols=2,num='PaperFigure_Paretofront_AddingMassEffectBarPlot',figsize=(6.4*1.5, 4.8))
+plt.subplot(1,2,1)
+utils.paretofront_devices_efficiency_barplot(plot_dic,mono_noload_indices,loadcond='noload',
+                                             legends=['monoarticular','monoarticular\nknee actuator near waist','monoarticular\nknee actuator on shank'],skip_first_data=False)
+plt.title('monoarticular')
+plt.ylabel('device performance\n degradation (%)')
+ax = plt.gca()
+ax.set_yticks([0,20,40,60,80,100])
+plt.legend(loc='best',frameon=False)
+plt.tick_params(axis='both',direction='in')
+utils.no_top_right(ax)
+# biarticular
+plot_dic = {'x1_data':mean_bi_noload_efficiency_paretofront[:,0],'x1err_data':std_bi_noload_efficiency_paretofront[:,0]}
+plt.subplot(1,2,2)
+utils.paretofront_devices_efficiency_barplot(plot_dic,bi_noload_indices,loadcond='noload',legends=['biarticular'],skip_first_data=False)
+plt.title('biarticular')
+ax = plt.gca()
+ax.set_yticks([0,20,40,60,80,100])
+plt.tick_params(axis='both',direction='in')
+utils.no_top_right(ax)
+fig.tight_layout(h_pad=-1, w_pad=-1.5)
+fig.subplots_adjust(top=0.98, bottom=0.075, left=0.100, right=0.975,hspace=0.35,wspace=0.15)
+fig.savefig('./Figures/Paretofront/Adding_Mass_Pareto/PaperFigure_Devices_Performance_Degradation_BarPlot.pdf',orientation='landscape',bbox_inches='tight')
+plt.show()
+
+#####################################################################################
 # average pareto curve: noload mono three types
 # monoarticular with typical design
 '''
@@ -272,10 +349,12 @@ plot_dic = {'x1_data':mean_mono_noload_addedmass_paretofront[:,0],'x1err_data':s
           'legend_1':'monoarticular typical design','legend_2':'monoarticular with knee\n actuator near waist',
           'legend_3':'monoarticular with knee\n actuator mounted on shank','legend_4':'biarticular device'}
 #plt.rcParams.update({'font.size': 14})
-fig = plt.figure(num='Monoarticular exoskeleton types',figsize=(6.4, 4.8))
+fig,axes = plt.subplots(nrows=1,ncols=2,num='Monoarticular exoskeleton types',figsize=(6.4*2, 4.8*1.5))
+plt.subplot(1,2,1)
 utils.plot_pareto_avg_curve (plot_dic,loadcond='noload',third_plot=True,fourth_plot=True,line=True,errbar_on=True)
 plt.ylabel('exoskeleton power\n consumption (W/kg)')
 plt.xlabel('metabolic cost\n reduction (%)')
+plt.title('Pareto front curves')
 ax = plt.gca()
 utils.no_top_right(ax)
 ax.set_xticks([5,10,15,17])
@@ -283,7 +362,20 @@ ax.set_xlim([5,17])
 ax.set_yticks([1, 1.5, 2, 2.5,3])
 plt.legend(loc='upper left',frameon=False)
 plt.tick_params(axis='both',direction='in')
-fig.tight_layout()
+# monoartıcular near waist compared to typical monoarticular device
+plot_dic = {'x1_data':np.transpose(np.array([mean_mono_actuator_near_waist_wrt_typical_mono_efficiency_paretofront[:,0],mean_mono_actuator_on_shank_wrt_typical_mono_efficiency_paretofront[:,0]])),
+            'x1err_data':np.transpose(np.array([std_mono_actuator_near_waist_wrt_typical_mono_efficiency_paretofront[:,0],std_mono_actuator_on_shank_wrt_typical_mono_efficiency_paretofront[:,0]]))}
+plt.subplot(1,2,2)
+utils.paretofront_devices_efficiency_barplot(plot_dic,mono_noload_massadded_indices,loadcond='noload',
+                                             legends=['monoarticular with knee\n actuator near waist','monoarticular with knee\n actuator mounted on shank'],
+                                             colors=[mycolors['pine green'],mycolors['french sky blue']],skip_first_data=False)
+plt.ylabel('device performance\n improvement (%)')
+plt.title('performance imporvement')
+ax = plt.gca()
+ax.set_yticks([0,5,10,15])
+plt.legend(loc='upper left',frameon=False)
+plt.tick_params(axis='both',direction='in')
+utils.no_top_right(ax)
 fig.tight_layout(h_pad=-1, w_pad=-1.5)
 fig.subplots_adjust(top=0.98, bottom=0.075, left=0.100, right=0.975,hspace=0.25,wspace=0.15)
 fig.savefig('./Figures/Paretofront/Adding_Mass_Pareto/PaperFigure_MonoarticularExoskeleton_DifferentConfigs.pdf',orientation='landscape',bbox_inches='tight')

@@ -1142,17 +1142,18 @@ def pareto_avg_std_energy(data,simulation_num=25,subject_num=7,trial_num=3,
         std = np.nanstd(final_data,axis=1)
     return avg,std
 
-def regeneration_efficiency(regen_data,nonregen_data,reshape=True):
+def calculate_efficiency(modified_data,main_data,reshape=True):
     if reshape == True:
-        regenerated_energy = np.reshape(regen_data,(25,21),order='F')
-        absolute_energy = np.reshape(nonregen_data,(25,21),order='F')
+        modified_data = np.reshape(modified_data,(25,21),order='F')
+        main_data = np.reshape(main_data,(25,21),order='F')
     percent = np.zeros((25,21))
     for i in range (21):
-        percent[:,i] = np.true_divide(((absolute_energy[:,i]-regenerated_energy[:,i])*100.0),absolute_energy[:,i])
+        percent[:,i] = np.true_divide(((main_data[:,i]-modified_data[:,i])*100.0),main_data[:,i])
     avg_percent = np.nanmean(percent,axis=1)
     std_percent = np.nanstd(percent,axis=1)
     return avg_percent, std_percent
-    
+
+
 def pareto_avg_std_within_subjects(data,simulation_num=25,subject_num=7,trial_num=3,reshape=True,delete_subject=None):
     '''
     pareto_avg_std_within_subjects has been used to take average within subjects trials to remove  hierarchical
@@ -2242,26 +2243,36 @@ def paretofront_barplot(plot_dic,indices,loadcond):
     for i in reversed(indices):
         indices_str.append(label[i-1])
     plt.xticks(index + bar_width / 2,indices_str )
-
-def paretofront_devices_efficiency_barplot(plot_dic,indices,loadcond):
+    
+def paretofront_devices_efficiency_barplot(plot_dic,indices,loadcond,legends=None,colors=None,skip_first_data=False):
     x1_data = plot_dic['x1_data']
     x1err_data = plot_dic['x1err_data']
-    legends =['0% regeneration','30% regeneration','37% regeneration','50% regeneration','65% regeneration']
-    colors = ['black','gray','silver','lightgray','whitesmoke']
+    if legends == None:
+        legends =['30% regeneration','37% regeneration','50% regeneration','65% regeneration']
+    bar_width = [0,0.25,0.25*2,0.25*3,0.25*4]
+    if colors == None:
+        colors = ['gray','silver','lightgray','whitesmoke']
     patterns = [ " " , " " , "/" , "\\" , "x"]
     index = np.arange(1,len(indices)+1,1)
-    bar_width = [0,0,0.25,0.25*2,0.25*3,0.25*4]
     opacity = 1
     error_config = {'ecolor': '0.3'}
-    for i in range(1,len(legends)):
-        x1 = x1_data[:,i]
-        x1err = x1err_data[:,i]
+    if skip_first_data == True:
+        j = 1
+    else:
+        j = 0
+    for i in range(j,len(legends)):
+        if len(legends)<2:
+            x1 = x1_data
+            x1err = x1err_data
+        else:
+            x1 = x1_data[:,i]
+            x1err = x1err_data[:,i]
         x1 = x1[~np.isnan(x1)]
         x1err = x1err[~np.isnan(x1err)]
         rects1 = plt.bar(index + bar_width[i], x1, 0.25,
                         alpha=opacity,
-                        color=colors[i-1],
-                        hatch=patterns[i-1],
+                        color=colors[i],
+                        hatch=patterns[i],
                         yerr=x1err,
                         error_kw=error_config,
                         label=legends[i])
@@ -2272,9 +2283,10 @@ def paretofront_devices_efficiency_barplot(plot_dic,indices,loadcond):
     indices_str = []
     for i in reversed(indices):
         indices_str.append(label[i-1])
-    plt.xticks(index + sum(bar_width)/5,indices_str )
-
-
+    if len(legends)<2:
+        plt.xticks(index,indices_str)
+    else:
+        plt.xticks(index + sum(bar_width)/5,indices_str)
 def plot_regeneration_efficiency(plot_dic,ideal_color=None,line=True,errbar_on=True,label_on=True,*args, **kwargs):
     x_values = plot_dic['x_values']
     y_values = plot_dic['y_values']

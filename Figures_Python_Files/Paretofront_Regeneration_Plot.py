@@ -161,7 +161,7 @@ for mu in mu_list:
                                                                                             assisted_energy_dataset['monoarticular_pareto_load_hipactuator_energy'],reshape=True)
     # efficiency
     # mono noload
-    mean_mono_noload_eff, std_mono_noload_eff = utils.regeneration_efficiency(-mu*assisted_energy_dataset['monoarticular_pareto_noload_kneeregenrative_energy']-\
+    mean_mono_noload_eff, std_mono_noload_eff = utils.calculate_efficiency(-mu*assisted_energy_dataset['monoarticular_pareto_noload_kneeregenrative_energy']-\
                                                             mu*assisted_energy_dataset['monoarticular_pareto_noload_hipregenrative_energy']+\
                                                             assisted_energy_dataset['monoarticular_pareto_noload_kneeactuator_energy']+\
                                                             assisted_energy_dataset['monoarticular_pareto_noload_hipactuator_energy'],
@@ -173,7 +173,7 @@ for mu in mu_list:
     std_mono_noload_efficiency_paretofront[:,c] = std_mono_noload_efficiency_filtered[:,1]
     
     # bi noload
-    mean_bi_noload_eff, std_bi_noload_eff = utils.regeneration_efficiency(-mu*assisted_energy_dataset['biarticular_pareto_noload_kneeregenrative_energy']-\
+    mean_bi_noload_eff, std_bi_noload_eff = utils.calculate_efficiency(-mu*assisted_energy_dataset['biarticular_pareto_noload_kneeregenrative_energy']-\
                                                             mu*assisted_energy_dataset['biarticular_pareto_noload_hipregenrative_energy']+\
                                                             assisted_energy_dataset['biarticular_pareto_noload_kneeactuator_energy']+\
                                                             assisted_energy_dataset['biarticular_pareto_noload_hipactuator_energy'],
@@ -185,7 +185,7 @@ for mu in mu_list:
     std_bi_noload_efficiency_paretofront[:,c] = std_bi_noload_efficiency_filtered[:,1]
     
     # mono loaded
-    mean_mono_loaded_eff, std_mono_loaded_eff = utils.regeneration_efficiency(-mu*assisted_energy_dataset['monoarticular_pareto_load_kneeregenrative_energy']-\
+    mean_mono_loaded_eff, std_mono_loaded_eff = utils.calculate_efficiency(-mu*assisted_energy_dataset['monoarticular_pareto_load_kneeregenrative_energy']-\
                                                             mu*assisted_energy_dataset['monoarticular_pareto_load_hipregenrative_energy']+\
                                                             assisted_energy_dataset['monoarticular_pareto_load_kneeactuator_energy']+\
                                                             assisted_energy_dataset['monoarticular_pareto_load_hipactuator_energy'],
@@ -197,7 +197,7 @@ for mu in mu_list:
     std_mono_loaded_efficiency_paretofront[:,c] = std_mono_loaded_efficiency_filtered[:,1]
     
     # bi loaded
-    mean_bi_loaded_eff, std_bi_loaded_eff = utils.regeneration_efficiency(-mu*assisted_energy_dataset['biarticular_pareto_load_kneeregenrative_energy']-\
+    mean_bi_loaded_eff, std_bi_loaded_eff = utils.calculate_efficiency(-mu*assisted_energy_dataset['biarticular_pareto_load_kneeregenrative_energy']-\
                                                             mu*assisted_energy_dataset['biarticular_pareto_load_hipregenrative_energy']+\
                                                             assisted_energy_dataset['biarticular_pareto_load_kneeactuator_energy']+\
                                                             assisted_energy_dataset['biarticular_pareto_load_hipactuator_energy'],
@@ -359,6 +359,7 @@ fig, axes = plt.subplots(nrows=2,ncols=2,num='PaperFigure_Paretofront_EnergyBarP
 plt.subplot(2,2,1)
 utils.paretofront_devices_efficiency_barplot(plot_dic,mono_noload_regen_indices,loadcond='noload')
 plt.title('noload, monoarticular')
+plt.ylabel('efficiency improvement (%)')
 ax = plt.gca()
 ax.set_yticks([0,10,20,30,40])
 plt.tick_params(axis='both',direction='in')
@@ -377,6 +378,7 @@ plot_dic = {'x1_data':mean_mono_loaded_efficiency_paretofront,'x1err_data':std_m
 plt.subplot(2,2,3)
 utils.paretofront_devices_efficiency_barplot(plot_dic,mono_loaded_regen_indices,loadcond='noload')
 plt.title('loaded, monoarticular')
+plt.ylabel('efficiency improvement (%)')
 ax = plt.gca()
 ax.set_yticks([0,10,20,30,40])
 plt.tick_params(axis='both',direction='in')
@@ -398,7 +400,7 @@ plt.show()
 #####################################################################################
 # bar plots for the percent of regeneratable energy
 plt.rcParams.update({'font.size': 14})
-fig = plt.figure(num='regeneratable energy',figsize=(18.4, 10.8))
+fig = plt.figure(num='regeneratable energy',figsize=(12.8, 9.6))
 # biarticular noload
 plot_dic = {'x1_data':mean_bi_noload_hip_regen_paretofront[:,1],'x1err_data':std_bi_noload_hip_regen_paretofront[:,1],
             'y1_data':mean_bi_noload_knee_regen_paretofront[:,1],'y1err_data':std_bi_noload_knee_regen_paretofront[:,1]
@@ -513,7 +515,7 @@ plt.tick_params(axis='both',direction='in')
 utils.no_top_right(ax)
 fig.tight_layout(h_pad=-1, w_pad=-1.5)
 fig.subplots_adjust(top=0.98, bottom=0.075, left=0.100, right=0.975,hspace=0.25,wspace=0.15)
-fig.savefig('./Figures/Paretofront/Analyses_Pareto/Paretocurve_Regeneration_Efficiency.pdf',orientation='landscape',bbox_inches='tight')
+fig.savefig('./Figures/Paretofront/Analyses_Pareto/Paretocurve_calculate_efficiency.pdf',orientation='landscape',bbox_inches='tight')
 plt.show()
 '''
 #####################################################################################
@@ -574,7 +576,7 @@ plt.legend(loc='best',frameon=False)
 utils.no_top_right(ax)
 fig.tight_layout(h_pad=-1, w_pad=-1.5)
 fig.subplots_adjust(top=0.98, bottom=0.075, left=0.100, right=0.975,hspace=0.25,wspace=0.15)
-fig.savefig('./Figures/Paretofront/Analyses_Pareto/Paretofront_Regeneration_Efficiency.pdf',orientation='landscape',bbox_inches='tight')
+fig.savefig('./Figures/Paretofront/Analyses_Pareto/Paretofront_calculate_efficiency.pdf',orientation='landscape',bbox_inches='tight')
 plt.show()
 
 #####################################################################################
