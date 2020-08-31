@@ -262,7 +262,10 @@ The results and their discussions have been separated into three main subsection
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section*{Kinematic Modeling}
+\section*{Musculoskeletal Simulation}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection*{Kinematic Modeling}
 The biarticular exoskeleton was designed to assist hip and knee joints. The exoskeleton was inspired by the biarticular muscles and their functionality and the aim of the design was to keep the large portion of the device weight around the proximal joint (Hip) while delivering the required power to the distal joint (Knee). A parallelogram mechanism was purposed in the exoskeleton to accomplish this goal and take advantage of the biological features of biarticular muscles. The purposed assistive device is shown in Figure \ref{Fig_Exos_Kinematics_Model}\subref{Fig_Biarticular_Exo_Mechanism}.\\
 \begin{figure*}[h!]
 	\centering
@@ -310,13 +313,9 @@ Using Eqn.\eqref{Eqn_Mono_Bi_Jacobian} which is a mapping between the angular ve
 \end{equation}
 This relation between two exoskeleton was used to verify the modeling of the exoskeleton through a musculoskeletal simulation framework.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section*{Musculoskeletal Simulation}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection*{Musculoskeletal Model}
 The exoskeletons were studied through musculoskeletal simulations by conducting the simulations of seven subjects walking normally and while carrying a 38 kg load on the torso at their chosen speed. The data used in this study was experimentally collected and processed by Dembia et.al. \cite{93} and their experimental protocol was approved by the Stanford University Institutional Review Board \cite{93}.\\
-The musculoskeletal model used in the simulations, which was the same as the model used by Dembia et al. \cite{93}, was a three-dimensional model developed by Rajagopal et al. \cite{130} with 39 degrees of freedom in which the lower limbs were actuated using 80 massless musculotendon actuators, and the upper limb was actuated by 17 torque actuators\cite{130}. \\
-This three-dimensional musculoskeletal model was adapted by locking some unnecessary degrees of freedom for both normal walking and walking with a heavy load scenarios and modeling the extra load on the torso of the musculoskeletal model for the walking with heavy load condition \cite{93}.\\
+The musculoskeletal model used in the simulations, which was the same as the model used by Dembia et al. \cite{93}, was a three-dimensional model developed by Rajagopal et al. \cite{130} with 39 degrees of freedom in which the lower limbs were actuated using 80 massless musculotendon actuators, and the upper limb was actuated by 17 torque actuators\cite{130}. This three-dimensional musculoskeletal model was adapted by locking some unnecessary degrees of freedom for both normal walking and walking with a heavy load scenarios and modeling the extra load on the torso of the musculoskeletal model for the walking with heavy load condition \cite{93}.\\
 Since this research was built upon the study performed by Dembia et al., we followed similar terminologies in most of the cases to avoid any confusion. Therefore, the \textit{loaded} condition refers to subjects walking while carrying a 38 kg load on their torso while the \textit{noload} condition references subjects walking without any extra load at their chosen speed.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection*{Simulation Procedure}
