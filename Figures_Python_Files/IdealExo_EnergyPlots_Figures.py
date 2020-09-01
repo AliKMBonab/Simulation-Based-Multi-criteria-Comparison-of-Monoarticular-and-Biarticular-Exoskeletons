@@ -187,12 +187,12 @@ headers = ['subjects','assistance','metabolic rate 01','metabolic rate 02','meta
 subject_col = np.tile(subjects,6)
 assistance_col = np.concatenate((loaded_unassist_col,loaded_monoarticular_col,loaded_biarticular_col,
                                  noload_unassist_col,noload_monoarticular_col,noload_biarticular_col),axis=0)
-metabolic_rate_data = np.concatenate((np.reshape(unassisted_energy_dataset['loaded_metabolics_energy'],(7,3),order='F'),\
-                                      np.reshape(assisted_energy_dataset['monoarticular_ideal_loaded_metabolics_energy'],(7,3),order='F'),\
-                                      np.reshape(assisted_energy_dataset['biarticular_ideal_loaded_metabolics_energy'],(7,3),order='F'),\
-                                      np.reshape(unassisted_energy_dataset['noload_metabolics_energy'],(7,3),order='F'),\
-                                      np.reshape(assisted_energy_dataset['monoarticular_ideal_noload_metabolics_energy'],(7,3),order='F'),\
-                                      np.reshape(assisted_energy_dataset['biarticular_ideal_noload_metabolics_energy'],(7,3),order='F')),axis=0)
+metabolic_rate_data = np.concatenate((np.reshape(unassisted_energy_dataset['loaded_metabolics_energy'],(7,3)),\
+                                      np.reshape(assisted_energy_dataset['monoarticular_ideal_loaded_metabolics_energy'],(7,3)),\
+                                      np.reshape(assisted_energy_dataset['biarticular_ideal_loaded_metabolics_energy'],(7,3)),\
+                                      np.reshape(unassisted_energy_dataset['noload_metabolics_energy'],(7,3)),\
+                                      np.reshape(assisted_energy_dataset['monoarticular_ideal_noload_metabolics_energy'],(7,3)),\
+                                      np.reshape(assisted_energy_dataset['biarticular_ideal_noload_metabolics_energy'],(7,3))),axis=0)
 final_dataset = np.column_stack([assistance_col,metabolic_rate_data])
 final_dataset = np.column_stack([subject_col,final_dataset])
 with open(r'.\Statistics\Ideal\MetabolicRate_Dataset.csv', 'wb') as f:
@@ -213,14 +213,14 @@ noload_monoarticular_knee_col = np.repeat(np.array('noload monoarticular knee ac
 subject_col = np.tile(subjects,8)
 assistive_actuators_col = np.concatenate((loaded_biarticular_hip_col,loaded_biarticular_knee_col,loaded_monoarticular_hip_col,loaded_monoarticular_knee_col,
                                           noload_biarticular_hip_col,noload_biarticular_knee_col,noload_monoarticular_hip_col,noload_monoarticular_knee_col),axis=0)
-assistive_actuators_avg_totalpower_data = np.concatenate((np.reshape(assisted_energy_dataset['biarticular_ideal_loaded_hipactuator_energy'],(7,3),order='F'),\
-                                                        np.reshape(assisted_energy_dataset['biarticular_ideal_loaded_kneeactuator_energy'],(7,3),order='F'),\
-                                                        np.reshape(assisted_energy_dataset['monoarticular_ideal_loaded_hipactuator_energy'],(7,3),order='F'),\
-                                                        np.reshape(assisted_energy_dataset['monoarticular_ideal_loaded_kneeactuator_energy'],(7,3),order='F'),\
-                                                        np.reshape(assisted_energy_dataset['biarticular_ideal_noload_hipactuator_energy'],(7,3),order='F'),\
-                                                        np.reshape(assisted_energy_dataset['biarticular_ideal_noload_kneeactuator_energy'],(7,3),order='F'),\
-                                                        np.reshape(assisted_energy_dataset['monoarticular_ideal_noload_hipactuator_energy'],(7,3),order='F'),\
-                                                        np.reshape(assisted_energy_dataset['monoarticular_ideal_noload_kneeactuator_energy'],(7,3),order='F')),axis=0)
+assistive_actuators_avg_totalpower_data = np.concatenate((np.reshape(assisted_energy_dataset['biarticular_ideal_loaded_hipactuator_energy'],(7,3)),\
+                                                        np.reshape(assisted_energy_dataset['biarticular_ideal_loaded_kneeactuator_energy'],(7,3)),\
+                                                        np.reshape(assisted_energy_dataset['monoarticular_ideal_loaded_hipactuator_energy'],(7,3)),\
+                                                        np.reshape(assisted_energy_dataset['monoarticular_ideal_loaded_kneeactuator_energy'],(7,3)),\
+                                                        np.reshape(assisted_energy_dataset['biarticular_ideal_noload_hipactuator_energy'],(7,3)),\
+                                                        np.reshape(assisted_energy_dataset['biarticular_ideal_noload_kneeactuator_energy'],(7,3)),\
+                                                        np.reshape(assisted_energy_dataset['monoarticular_ideal_noload_hipactuator_energy'],(7,3)),\
+                                                        np.reshape(assisted_energy_dataset['monoarticular_ideal_noload_kneeactuator_energy'],(7,3))),axis=0)
 final_dataset = np.column_stack([assistive_actuators_col,assistive_actuators_avg_totalpower_data])
 final_dataset = np.column_stack([subject_col,final_dataset])
 with open(r'.\Statistics\Ideal\ActuatorsAvgPower_Dataset.csv', 'wb') as f:
@@ -581,99 +581,94 @@ fig.tight_layout()
 plt.show()
 fig.savefig('./Figures/Ideal/Actuator_Energy_BoxPlot.pdf',orientation='landscape',bbox_inches='tight')
 
-
 ########################################################################################
 # Paper figure
-plt.rcParams.update({'font.size': 12})
-names = ['unassist,\n loaded','bi, loaded','unassist,\n noload','bi, noload']
+plt.rcParams.update({'font.size': 14})
+fig = plt.figure(constrained_layout=True,figsize=(6.4*2, 4.8*6))
+gs = fig.add_gridspec(3, 2)
+# Biarticular
+names = ['unassist,\n noload','mono,\n noload','bi, noload','unassist,\n loaded','mono,\n loaded','bi, loaded']
 x = np.arange(1,len(names)+1,1)
-data = [utils.mean_over_trials(unassisted_energy_dataset['loaded_metabolics_energy'],ax=0),utils.mean_over_trials(unassisted_energy_dataset['noload_metabolics_energy'],ax=0),\
-        utils.mean_over_trials(assisted_energy_dataset['biarticular_ideal_loaded_metabolics_energy'],ax=0),utils.mean_over_trials(assisted_energy_dataset['biarticular_ideal_noload_metabolics_energy'],ax=0)]
-fig, ax = plt.subplots(nrows=3,ncols=2,figsize=(12.5,20.8))
-bp = ax[0,0].boxplot(data, patch_artist=True)
+data = [utils.mean_over_trials(unassisted_energy_dataset['noload_metabolics_energy'],ax=0),\
+        utils.mean_over_trials(assisted_energy_dataset['monoarticular_ideal_noload_metabolics_energy'],ax=0),\
+        utils.mean_over_trials(assisted_energy_dataset['biarticular_ideal_noload_metabolics_energy'],ax=0),\
+        utils.mean_over_trials(unassisted_energy_dataset['loaded_metabolics_energy'],ax=0),\
+        utils.mean_over_trials(assisted_energy_dataset['monoarticular_ideal_loaded_metabolics_energy'],ax=0),\
+        utils.mean_over_trials(assisted_energy_dataset['biarticular_ideal_loaded_metabolics_energy'],ax=0)]
+ax = fig.add_subplot(gs[0, :])
+bp = ax.boxplot(data, patch_artist=True)
 utils.beautiful_boxplot(bp)
-ax[0,0].tick_params(axis='both',direction='in')
-ax[0,0].set_ylabel('Metabolic Rate (W/Kg)')
-ax[0,0].set_xticks(x)
-ax[0,0].set_yticks([5,6,7,8,9,10])
-ax[0,0].set_xticklabels(names)
-ax[0,0].set_title('biarticular, metabolic rate')
-utils.no_top_right(ax[0,0])
-
-# Monoarticular metabolics
-names = ['unassist,\n loaded','mono,\n loaded','unassist,\n noload','mono,\n noload']
-x = np.arange(1,len(names)+1,1)
-data = [utils.mean_over_trials(unassisted_energy_dataset['loaded_metabolics_energy'],ax=0),utils.mean_over_trials(unassisted_energy_dataset['noload_metabolics_energy'],ax=0),\
-        utils.mean_over_trials(assisted_energy_dataset['monoarticular_ideal_loaded_metabolics_energy'],ax=0),utils.mean_over_trials(assisted_energy_dataset['monoarticular_ideal_noload_metabolics_energy'],ax=0)]
-bp = ax[0,1].boxplot(data, patch_artist=True)
-utils.beautiful_boxplot(bp)
-ax[0,1].tick_params(axis='both',direction='in')
-ax[0,1].set_ylabel('Metabolic Rate (W/Kg)')
-ax[0,1].set_xticks(x)
-ax[0,1].set_yticks([5,6,7,8,9,10])
-ax[0,1].set_xticklabels(names)
-ax[0,1].set_title('monoarticular, metabolic rate')
-utils.no_top_right(ax[0,1])
+ax.tick_params(axis='both',direction='in')
+ax.set_ylabel('metabolic rate (W/Kg)')
+ax.set_xticks(x)
+ax.set_yticks([4,6,8,10])
+ax.set_xticklabels(names)
+ax.set_title('metabolic rate\n')
+utils.no_top_right(ax)
 
 # Biarticular Loaded Vs Noload
 names = ['bi hip,\n loaded','bi knee,\n loaded','bi hip,\n noload','bi knee,\n noload',]
 x = np.arange(1,len(names)+1,1)
 data = [utils.mean_over_trials(assisted_energy_dataset['biarticular_ideal_loaded_hipactuator_energy'],ax=0),utils.mean_over_trials(assisted_energy_dataset['biarticular_ideal_loaded_kneeactuator_energy'],ax=0),\
         utils.mean_over_trials(assisted_energy_dataset['biarticular_ideal_noload_hipactuator_energy'],ax=0),utils.mean_over_trials(assisted_energy_dataset['biarticular_ideal_noload_kneeactuator_energy'],ax=0)]
-bp = ax[1,0].boxplot(data, patch_artist=True)
+ax = fig.add_subplot(gs[1, 0])
+bp = ax.boxplot(data, patch_artist=True)
 utils.beautiful_boxplot(bp)
-ax[1,0].tick_params(axis='both',direction='in')
-ax[1,0].set_ylabel('Actuator Power (W/Kg)')
-ax[1,0].set_xticks(x)
-ax[1,0].set_yticks([0.5,1,1.5,2,2.5,3])
-ax[1,0].set_xticklabels(names)
-ax[1,0].set_title('biarticular, actutors power')
-utils.no_top_right(ax[1,0])
+ax.tick_params(axis='both',direction='in')
+ax.set_ylabel('actuator power (W/Kg)')
+ax.set_xticks(x)
+ax.set_yticks([0,1,2,3])
+ax.set_xticklabels(names)
+ax.set_title('biarticular, actutor power\n')
+utils.no_top_right(ax)
 
 # Monoarticular Loaded Vs Noload
 names = ['mono hip,\n loaded','mono knee,\n loaded','mono hip,\n noload','mono knee,\n noload',]
 x = np.arange(1,len(names)+1,1)
 data = [utils.mean_over_trials(assisted_energy_dataset['monoarticular_ideal_loaded_hipactuator_energy'],ax=0),utils.mean_over_trials(assisted_energy_dataset['monoarticular_ideal_loaded_kneeactuator_energy'],ax=0),\
         utils.mean_over_trials(assisted_energy_dataset['monoarticular_ideal_noload_hipactuator_energy'],ax=0),utils.mean_over_trials(assisted_energy_dataset['monoarticular_ideal_noload_kneeactuator_energy'],ax=0)]
-bp = ax[1,1].boxplot(data, patch_artist=True)
+ax = fig.add_subplot(gs[1, 1])
+bp = ax.boxplot(data, patch_artist=True)
 utils.beautiful_boxplot(bp)
-ax[1,1].tick_params(axis='both',direction='in')
-ax[1,1].set_ylabel('Actuator Power (W/Kg)')
-ax[1,1].set_xticks(x)
-ax[1,1].set_yticks([0.5,1,1.5,2,2.5,3])
-ax[1,1].set_xticklabels(names)
-ax[1,1].set_title('monoarticular, actuators power')
-utils.no_top_right(ax[1,1])
+ax.tick_params(axis='both',direction='in')
+ax.set_ylabel('actuator power (W/Kg)')
+ax.set_xticks(x)
+ax.set_yticks([0,1,2,3])
+ax.set_xticklabels(names)
+ax.set_title('monoarticular, actuator power\n')
+utils.no_top_right(ax)
 # Loaded Biarticular Vs Monoarticular
 names = ['bi hip,\n loaded','bi knee,\n loaded','mono hip,\n loaded','mono knee,\n loaded']
 x = np.arange(1,len(names)+1,1)
 data = [utils.mean_over_trials(assisted_energy_dataset['biarticular_ideal_loaded_hipactuator_energy'],ax=0),utils.mean_over_trials(assisted_energy_dataset['biarticular_ideal_loaded_kneeactuator_energy'],ax=0),\
         utils.mean_over_trials(assisted_energy_dataset['monoarticular_ideal_loaded_hipactuator_energy'],ax=0),utils.mean_over_trials(assisted_energy_dataset['monoarticular_ideal_loaded_kneeactuator_energy'],ax=0)]
-bp = ax[2,0].boxplot(data, patch_artist=True)
+ax = fig.add_subplot(gs[2, 0])
+bp = ax.boxplot(data, patch_artist=True)
 utils.beautiful_boxplot(bp)
-ax[2,0].tick_params(axis='both',direction='in')
-ax[2,0].set_ylabel('Actuator Power (W/Kg)')
-ax[2,0].set_xticks(x)
-ax[2,0].set_yticks([0.5,1,1.5,2,2.5,3])
-ax[2,0].set_xticklabels(names)
-ax[2,0].set_title('actutors power, loaded condition')
-utils.no_top_right(ax[2,0])
+ax.tick_params(axis='both',direction='in')
+ax.set_ylabel('actuator power (W/Kg)')
+ax.set_xticks(x)
+ax.set_yticks([0,1,2,3])
+ax.set_xticklabels(names)
+ax.set_title('actutor power, loaded condition\n')
+utils.no_top_right(ax)
 
 # Noload Biarticular Vs Monoarticular
 names = ['bi hip,\n noload','bi knee,\n noload','mono hip,\n noload','mono knee,\n noload']
 x = np.arange(1,len(names)+1,1)
 data = [utils.mean_over_trials(assisted_energy_dataset['biarticular_ideal_noload_hipactuator_energy'],ax=0),utils.mean_over_trials(assisted_energy_dataset['biarticular_ideal_noload_kneeactuator_energy'],ax=0),\
         utils.mean_over_trials(assisted_energy_dataset['monoarticular_ideal_noload_hipactuator_energy'],ax=0),utils.mean_over_trials(assisted_energy_dataset['monoarticular_ideal_noload_kneeactuator_energy'],ax=0)]
-bp = ax[2,1].boxplot(data, patch_artist=True)
+ax = fig.add_subplot(gs[2, 1])
+bp = ax.boxplot(data, patch_artist=True)
 utils.beautiful_boxplot(bp)
-ax[2,1].tick_params(axis='both',direction='in')
-ax[2,1].set_ylabel('Actuator Power (W/Kg)')
-ax[2,1].set_xticks(x)
-ax[2,1].set_yticks([0.5,1,1.5,2,2.5,3])
-ax[2,1].set_xticklabels(names)
-ax[2,1].set_title('actuators power, noload conditon')
-utils.no_top_right(ax[2,1])
+ax.tick_params(axis='both',direction='in')
+ax.set_ylabel('actuator power (W/Kg)')
+ax.set_xticks(x)
+ax.set_yticks([0,1,2,3])
+ax.set_xticklabels(names)
+ax.set_title('actuator power, noload conditon\n')
+utils.no_top_right(ax)
 fig.tight_layout(h_pad=-1, w_pad=-1.5)
-fig.subplots_adjust(top=0.95, bottom=0.075, left=0.100, right=0.975,hspace=0.40,wspace=0.20)
+fig.subplots_adjust(top=0.95, bottom=0.075, left=0.100, right=0.95,hspace=0.90,wspace=0.25)
 plt.show()
 fig.savefig('./Figures/Ideal/Paper_Figure_Energy_BoxPlot.pdf',orientation='landscape',bbox_inches='tight')

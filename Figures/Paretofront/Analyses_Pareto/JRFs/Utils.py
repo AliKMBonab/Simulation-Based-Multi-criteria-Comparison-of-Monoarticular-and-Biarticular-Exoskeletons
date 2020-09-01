@@ -2046,7 +2046,7 @@ def plot_paretofront_profile_changes(plot_dic,colormap,toeoff_color,adjust_axes=
     plt.xlim([0,100])
     # plotting joint profile
     if add_joint_profile == True:
-        plt.plot(gpc,joint_data, *args, lw=3,ls='--',color=joint_color,label='joint', **kwargs)
+        plt.plot(gpc,joint_data, *args, lw=3,color=joint_color,label='unassisted', **kwargs)
     # plotting ideal device profile
     if add_ideal_profile == True:
         ideal_data = plot_dic['ideal_data']

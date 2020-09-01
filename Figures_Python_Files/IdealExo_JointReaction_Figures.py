@@ -502,39 +502,39 @@ unassist_noload_hip_RFz_dic = {'pgc':gait_cycle,'avg':utils.smooth(jrf_dataset['
 #*********************
 # knee joint reaction moment plot dictionaries
 ## MX ##
-bi_loaded_knee_RMx_dic = {'pgc':gait_cycle,'avg':utils.smooth(mean_bi_loaded_knee_RMx,9),'label':'biarticular',
+bi_loaded_knee_RMx_dic = {'pgc':gait_cycle,'avg':utils.smooth(mean_bi_loaded_knee_RMx,9),'label':'loaded assisted joint',
                         'std':utils.smooth(std_bi_loaded_knee_RMx,9),'avg_toeoff':loaded_mean_toe_off}
-bi_noload_knee_RMx_dic = {'pgc':gait_cycle,'avg':utils.smooth(mean_bi_noload_knee_RMx,9),'label':'biarticular',
+bi_noload_knee_RMx_dic = {'pgc':gait_cycle,'avg':utils.smooth(mean_bi_noload_knee_RMx,9),'label':'noload assisted joint',
                         'std':utils.smooth(std_bi_noload_knee_RMx,9),'avg_toeoff':noload_mean_toe_off,'load':'noload'}
-mono_loaded_knee_RMx_dic = {'pgc':gait_cycle,'avg':utils.smooth(mean_mono_loaded_knee_RMx,9),'label':'monoarticular',
+mono_loaded_knee_RMx_dic = {'pgc':gait_cycle,'avg':utils.smooth(mean_mono_loaded_knee_RMx,9),'label':'loaded assisted joint',
                         'std':utils.smooth(std_mono_loaded_knee_RMx,9),'avg_toeoff':loaded_mean_toe_off}
-mono_noload_knee_RMx_dic = {'pgc':gait_cycle,'avg':utils.smooth(mean_mono_noload_knee_RMx,9),'label':'monoarticular',
+mono_noload_knee_RMx_dic = {'pgc':gait_cycle,'avg':utils.smooth(mean_mono_noload_knee_RMx,9),'label':'noload assisted joint',
                         'std':utils.smooth(std_mono_noload_knee_RMx,9),'avg_toeoff':noload_mean_toe_off,'load':'noload'}
 unassist_loaded_knee_RMx_dic = {'pgc':gait_cycle,'avg':utils.smooth(jrf_dataset['mean_loaded_kneejoint_RMx'],9),'label':'loaded unassisted joint',
                         'std':utils.smooth(jrf_dataset['std_loaded_kneejoint_RMx'],9),'avg_toeoff':loaded_mean_toe_off}
 unassist_noload_knee_RMx_dic = {'pgc':gait_cycle,'avg':utils.smooth(jrf_dataset['mean_noload_kneejoint_RMx'],9),'label':'noload unassisted joint',
                         'std':utils.smooth(jrf_dataset['std_noload_kneejoint_RMx'],9),'avg_toeoff':noload_mean_toe_off,'load':'noload'}
 ## MY ##
-bi_loaded_knee_RMy_dic = {'pgc':gait_cycle,'avg':utils.smooth(mean_bi_loaded_knee_RMy,9),'label':'biarticular',
+bi_loaded_knee_RMy_dic = {'pgc':gait_cycle,'avg':utils.smooth(mean_bi_loaded_knee_RMy,9),'label':'loaded assisted joint',
                         'std':utils.smooth(std_bi_loaded_knee_RMy,9),'avg_toeoff':loaded_mean_toe_off}
-bi_noload_knee_RMy_dic = {'pgc':gait_cycle,'avg':utils.smooth(mean_bi_noload_knee_RMy,9),'label':'biarticular',
+bi_noload_knee_RMy_dic = {'pgc':gait_cycle,'avg':utils.smooth(mean_bi_noload_knee_RMy,9),'label':'noload assisted joint',
                         'std':utils.smooth(std_bi_noload_knee_RMy,9),'avg_toeoff':noload_mean_toe_off,'load':'noload'}
-mono_loaded_knee_RMy_dic = {'pgc':gait_cycle,'avg':utils.smooth(mean_mono_loaded_knee_RMy,9),'label':'monoarticular',
+mono_loaded_knee_RMy_dic = {'pgc':gait_cycle,'avg':utils.smooth(mean_mono_loaded_knee_RMy,9),'label':'loaded assisted joint',
                         'std':utils.smooth(std_mono_loaded_knee_RMy,9),'avg_toeoff':loaded_mean_toe_off}
-mono_noload_knee_RMy_dic = {'pgc':gait_cycle,'avg':utils.smooth(mean_mono_noload_knee_RMy,9),'label':'monoarticular',
+mono_noload_knee_RMy_dic = {'pgc':gait_cycle,'avg':utils.smooth(mean_mono_noload_knee_RMy,9),'label':'noload assisted joint',
                         'std':utils.smooth(std_mono_noload_knee_RMy,9),'avg_toeoff':noload_mean_toe_off,'load':'noload'}
 unassist_loaded_knee_RMy_dic = {'pgc':gait_cycle,'avg':utils.smooth(jrf_dataset['mean_loaded_kneejoint_RMy'],9),'label':'loaded unassisted',
                         'std':utils.smooth(jrf_dataset['std_loaded_kneejoint_RMy'],9),'avg_toeoff':loaded_mean_toe_off}
 unassist_noload_knee_RMy_dic = {'pgc':gait_cycle,'avg':utils.smooth(jrf_dataset['mean_noload_kneejoint_RMy'],9),'label':'noload unassisted',
                         'std':utils.smooth(jrf_dataset['std_noload_kneejoint_RMy'],9),'avg_toeoff':noload_mean_toe_off,'load':'noload'}
 ## MZ ##
-bi_loaded_knee_RMz_dic = {'pgc':gait_cycle,'avg':utils.smooth(mean_bi_loaded_knee_RMz,9),'label':'biarticular',
+bi_loaded_knee_RMz_dic = {'pgc':gait_cycle,'avg':utils.smooth(mean_bi_loaded_knee_RMz,9),'label':'loaded assisted joint',
                         'std':utils.smooth(std_bi_loaded_knee_RMz,9),'avg_toeoff':loaded_mean_toe_off}
-bi_noload_knee_RMz_dic = {'pgc':gait_cycle,'avg':utils.smooth(mean_bi_noload_knee_RMz,9),'label':'biarticular',
+bi_noload_knee_RMz_dic = {'pgc':gait_cycle,'avg':utils.smooth(mean_bi_noload_knee_RMz,9),'label':'noload assisted joint',
                         'std':utils.smooth(std_bi_noload_knee_RMz,9),'avg_toeoff':noload_mean_toe_off,'load':'noload'}
-mono_loaded_knee_RMz_dic = {'pgc':gait_cycle,'avg':utils.smooth(mean_mono_loaded_knee_RMz,9),'label':'monoarticular',
+mono_loaded_knee_RMz_dic = {'pgc':gait_cycle,'avg':utils.smooth(mean_mono_loaded_knee_RMz,9),'label':'loaded assisted joint',
                         'std':utils.smooth(std_mono_loaded_knee_RMz,9),'avg_toeoff':loaded_mean_toe_off}
-mono_noload_knee_RMz_dic = {'pgc':gait_cycle,'avg':utils.smooth(mean_mono_noload_knee_RMz,9),'label':'monoarticular',
+mono_noload_knee_RMz_dic = {'pgc':gait_cycle,'avg':utils.smooth(mean_mono_noload_knee_RMz,9),'label':'noload assisted joint',
                         'std':utils.smooth(std_mono_noload_knee_RMz,9),'avg_toeoff':noload_mean_toe_off,'load':'noload'}
 unassist_loaded_knee_RMz_dic = {'pgc':gait_cycle,'avg':utils.smooth(jrf_dataset['mean_loaded_kneejoint_RMz'],9),'label':'loaded unassisted',
                         'std':utils.smooth(jrf_dataset['std_loaded_kneejoint_RMz'],9),'avg_toeoff':loaded_mean_toe_off}
@@ -543,39 +543,39 @@ unassist_noload_knee_RMz_dic = {'pgc':gait_cycle,'avg':utils.smooth(jrf_dataset[
 #*********************
 # knee joint reaction forces plot dictionaries
 ## FX ##
-bi_loaded_knee_RFx_dic = {'pgc':gait_cycle,'avg':utils.smooth(mean_bi_loaded_knee_RFx,9),'label':'biarticular',
+bi_loaded_knee_RFx_dic = {'pgc':gait_cycle,'avg':utils.smooth(mean_bi_loaded_knee_RFx,9),'label':'loaded assisted joint',
                         'std':utils.smooth(std_bi_loaded_knee_RFx,9),'avg_toeoff':loaded_mean_toe_off}
-bi_noload_knee_RFx_dic = {'pgc':gait_cycle,'avg':utils.smooth(mean_bi_noload_knee_RFx,9),'label':'biarticular',
+bi_noload_knee_RFx_dic = {'pgc':gait_cycle,'avg':utils.smooth(mean_bi_noload_knee_RFx,9),'label':'noload assisted joint',
                         'std':utils.smooth(std_bi_noload_knee_RFx,9),'avg_toeoff':noload_mean_toe_off,'load':'noload'}
-mono_loaded_knee_RFx_dic = {'pgc':gait_cycle,'avg':utils.smooth(mean_mono_loaded_knee_RFx,9),'label':'monoarticular',
+mono_loaded_knee_RFx_dic = {'pgc':gait_cycle,'avg':utils.smooth(mean_mono_loaded_knee_RFx,9),'label':'loaded assisted joint',
                         'std':utils.smooth(std_mono_loaded_knee_RFx,9),'avg_toeoff':loaded_mean_toe_off}
-mono_noload_knee_RFx_dic = {'pgc':gait_cycle,'avg':utils.smooth(mean_mono_noload_knee_RFx,9),'label':'monoarticular',
+mono_noload_knee_RFx_dic = {'pgc':gait_cycle,'avg':utils.smooth(mean_mono_noload_knee_RFx,9),'label':'noload assisted joint',
                         'std':utils.smooth(std_mono_noload_knee_RFx,9),'avg_toeoff':noload_mean_toe_off,'load':'noload'}
 unassist_loaded_knee_RFx_dic = {'pgc':gait_cycle,'avg':utils.smooth(jrf_dataset['mean_loaded_kneejoint_RFx'],9),'label':'loaded unassisted joint',
                         'std':utils.smooth(jrf_dataset['std_loaded_kneejoint_RFx'],9),'avg_toeoff':loaded_mean_toe_off}
 unassist_noload_knee_RFx_dic = {'pgc':gait_cycle,'avg':utils.smooth(jrf_dataset['mean_noload_kneejoint_RFx'],9),'label':'noload unassisted joint',
                         'std':utils.smooth(jrf_dataset['std_noload_kneejoint_RFx'],9),'avg_toeoff':noload_mean_toe_off,'load':'noload'}
 ## FY ##
-bi_loaded_knee_RFy_dic = {'pgc':gait_cycle,'avg':utils.smooth(mean_bi_loaded_knee_RFy,9),'label':'biarticular',
+bi_loaded_knee_RFy_dic = {'pgc':gait_cycle,'avg':utils.smooth(mean_bi_loaded_knee_RFy,9),'label':'loaded assisted joint',
                         'std':utils.smooth(std_bi_loaded_knee_RFy,9),'avg_toeoff':loaded_mean_toe_off}
-bi_noload_knee_RFy_dic = {'pgc':gait_cycle,'avg':utils.smooth(mean_bi_noload_knee_RFy,9),'label':'biarticular',
+bi_noload_knee_RFy_dic = {'pgc':gait_cycle,'avg':utils.smooth(mean_bi_noload_knee_RFy,9),'label':'noload assisted joint',
                         'std':utils.smooth(std_bi_noload_knee_RFy,9),'avg_toeoff':noload_mean_toe_off,'load':'noload'}
-mono_loaded_knee_RFy_dic = {'pgc':gait_cycle,'avg':utils.smooth(mean_mono_loaded_knee_RFy,9),'label':'monoarticular',
+mono_loaded_knee_RFy_dic = {'pgc':gait_cycle,'avg':utils.smooth(mean_mono_loaded_knee_RFy,9),'label':'loaded assisted joint',
                         'std':utils.smooth(std_mono_loaded_knee_RFy,9),'avg_toeoff':loaded_mean_toe_off}
-mono_noload_knee_RFy_dic = {'pgc':gait_cycle,'avg':utils.smooth(mean_mono_noload_knee_RFy,9),'label':'monoarticular',
+mono_noload_knee_RFy_dic = {'pgc':gait_cycle,'avg':utils.smooth(mean_mono_noload_knee_RFy,9),'label':'noload assisted joint',
                         'std':utils.smooth(std_mono_noload_knee_RFy,9),'avg_toeoff':noload_mean_toe_off,'load':'noload'}
 unassist_loaded_knee_RFy_dic = {'pgc':gait_cycle,'avg':utils.smooth(jrf_dataset['mean_loaded_kneejoint_RFy'],9),'label':'loaded unassisted',
                         'std':utils.smooth(jrf_dataset['std_loaded_kneejoint_RFy'],9),'avg_toeoff':loaded_mean_toe_off}
 unassist_noload_knee_RFy_dic = {'pgc':gait_cycle,'avg':utils.smooth(jrf_dataset['mean_noload_kneejoint_RFy'],9),'label':'noload unassisted',
                         'std':utils.smooth(jrf_dataset['std_noload_kneejoint_RFy'],9),'avg_toeoff':noload_mean_toe_off,'load':'noload'}
 ## FZ ##
-bi_loaded_knee_RFz_dic = {'pgc':gait_cycle,'avg':utils.smooth(mean_bi_loaded_knee_RFz,9),'label':'biarticular',
+bi_loaded_knee_RFz_dic = {'pgc':gait_cycle,'avg':utils.smooth(mean_bi_loaded_knee_RFz,9),'label':'loaded assisted joint',
                         'std':utils.smooth(std_bi_loaded_knee_RFz,9),'avg_toeoff':loaded_mean_toe_off}
-bi_noload_knee_RFz_dic = {'pgc':gait_cycle,'avg':utils.smooth(mean_bi_noload_knee_RFz,9),'label':'biarticular',
+bi_noload_knee_RFz_dic = {'pgc':gait_cycle,'avg':utils.smooth(mean_bi_noload_knee_RFz,9),'label':'noload assisted joint',
                         'std':utils.smooth(std_bi_noload_knee_RFz,9),'avg_toeoff':noload_mean_toe_off,'load':'noload'}
-mono_loaded_knee_RFz_dic = {'pgc':gait_cycle,'avg':utils.smooth(mean_mono_loaded_knee_RFz,9),'label':'monoarticular',
+mono_loaded_knee_RFz_dic = {'pgc':gait_cycle,'avg':utils.smooth(mean_mono_loaded_knee_RFz,9),'label':'loaded assisted joint',
                         'std':utils.smooth(std_mono_loaded_knee_RFz,9),'avg_toeoff':loaded_mean_toe_off}
-mono_noload_knee_RFz_dic = {'pgc':gait_cycle,'avg':utils.smooth(mean_mono_noload_knee_RFz,9),'label':'monoarticular',
+mono_noload_knee_RFz_dic = {'pgc':gait_cycle,'avg':utils.smooth(mean_mono_noload_knee_RFz,9),'label':'noload assisted joint',
                         'std':utils.smooth(std_mono_noload_knee_RFz,9),'avg_toeoff':noload_mean_toe_off,'load':'noload'}
 unassist_loaded_knee_RFz_dic = {'pgc':gait_cycle,'avg':utils.smooth(jrf_dataset['mean_loaded_kneejoint_RFz'],9),'label':'loaded unassisted',
                         'std':utils.smooth(jrf_dataset['std_loaded_kneejoint_RFz'],9),'avg_toeoff':loaded_mean_toe_off}
@@ -585,39 +585,39 @@ unassist_noload_knee_RFz_dic = {'pgc':gait_cycle,'avg':utils.smooth(jrf_dataset[
 # *********************
 # patellofemoral joint reaction moment plot dictionaries
 ## MX ##
-bi_loaded_patellofemoral_RMx_dic = {'pgc':gait_cycle,'avg':utils.smooth(mean_bi_loaded_patellofemoral_RMx,9),'label':'biarticular',
+bi_loaded_patellofemoral_RMx_dic = {'pgc':gait_cycle,'avg':utils.smooth(mean_bi_loaded_patellofemoral_RMx,9),'label':'loaded assisted joint',
                         'std':utils.smooth(std_bi_loaded_patellofemoral_RMx,9),'avg_toeoff':loaded_mean_toe_off}
-bi_noload_patellofemoral_RMx_dic = {'pgc':gait_cycle,'avg':utils.smooth(mean_bi_noload_patellofemoral_RMx,9),'label':'biarticular',
+bi_noload_patellofemoral_RMx_dic = {'pgc':gait_cycle,'avg':utils.smooth(mean_bi_noload_patellofemoral_RMx,9),'label':'noload assisted joint',
                         'std':utils.smooth(std_bi_noload_patellofemoral_RMx,9),'avg_toeoff':noload_mean_toe_off,'load':'noload'}
-mono_loaded_patellofemoral_RMx_dic = {'pgc':gait_cycle,'avg':utils.smooth(mean_mono_loaded_patellofemoral_RMx,9),'label':'monoarticular',
+mono_loaded_patellofemoral_RMx_dic = {'pgc':gait_cycle,'avg':utils.smooth(mean_mono_loaded_patellofemoral_RMx,9),'label':'loaded assisted joint',
                         'std':utils.smooth(std_mono_loaded_patellofemoral_RMx,9),'avg_toeoff':loaded_mean_toe_off}
-mono_noload_patellofemoral_RMx_dic = {'pgc':gait_cycle,'avg':utils.smooth(mean_mono_noload_patellofemoral_RMx,9),'label':'monoarticular',
+mono_noload_patellofemoral_RMx_dic = {'pgc':gait_cycle,'avg':utils.smooth(mean_mono_noload_patellofemoral_RMx,9),'label':'noload assisted joint',
                         'std':utils.smooth(std_mono_noload_patellofemoral_RMx,9),'avg_toeoff':noload_mean_toe_off,'load':'noload'}
 unassist_loaded_patellofemoral_RMx_dic = {'pgc':gait_cycle,'avg':utils.smooth(jrf_dataset['mean_loaded_patellofemoraljoint_RMx'],9),'label':'loaded unassisted',
                         'std':utils.smooth(jrf_dataset['std_loaded_patellofemoraljoint_RMx'],9),'avg_toeoff':loaded_mean_toe_off}
 unassist_noload_patellofemoral_RMx_dic = {'pgc':gait_cycle,'avg':utils.smooth(jrf_dataset['mean_noload_patellofemoraljoint_RMx'],9),'label':'noload unassisted',
                         'std':utils.smooth(jrf_dataset['std_noload_patellofemoraljoint_RMx'],9),'avg_toeoff':noload_mean_toe_off,'load':'noload'}
 ## MY ##
-bi_loaded_patellofemoral_RMy_dic = {'pgc':gait_cycle,'avg':utils.smooth(mean_bi_loaded_patellofemoral_RMy,9),'label':'biarticular',
+bi_loaded_patellofemoral_RMy_dic = {'pgc':gait_cycle,'avg':utils.smooth(mean_bi_loaded_patellofemoral_RMy,9),'label':'loaded assisted joint',
                         'std':utils.smooth(std_bi_loaded_patellofemoral_RMy,9),'avg_toeoff':loaded_mean_toe_off}
-bi_noload_patellofemoral_RMy_dic = {'pgc':gait_cycle,'avg':utils.smooth(mean_bi_noload_patellofemoral_RMy,9),'label':'biarticular',
+bi_noload_patellofemoral_RMy_dic = {'pgc':gait_cycle,'avg':utils.smooth(mean_bi_noload_patellofemoral_RMy,9),'label':'noload assisted joint',
                         'std':utils.smooth(std_bi_noload_patellofemoral_RMy,9),'avg_toeoff':noload_mean_toe_off,'load':'noload'}
-mono_loaded_patellofemoral_RMy_dic = {'pgc':gait_cycle,'avg':utils.smooth(mean_mono_loaded_patellofemoral_RMy,9),'label':'monoarticular',
+mono_loaded_patellofemoral_RMy_dic = {'pgc':gait_cycle,'avg':utils.smooth(mean_mono_loaded_patellofemoral_RMy,9),'label':'loaded assisted joint',
                         'std':utils.smooth(std_mono_loaded_patellofemoral_RMy,9),'avg_toeoff':loaded_mean_toe_off}
-mono_noload_patellofemoral_RMy_dic = {'pgc':gait_cycle,'avg':utils.smooth(mean_mono_noload_patellofemoral_RMy,9),'label':'monoarticular',
+mono_noload_patellofemoral_RMy_dic = {'pgc':gait_cycle,'avg':utils.smooth(mean_mono_noload_patellofemoral_RMy,9),'label':'noload assisted joint',
                         'std':utils.smooth(std_mono_noload_patellofemoral_RMy,9),'avg_toeoff':noload_mean_toe_off,'load':'noload'}
 unassist_loaded_patellofemoral_RMy_dic = {'pgc':gait_cycle,'avg':utils.smooth(jrf_dataset['mean_loaded_patellofemoraljoint_RMy'],9),'label':'loaded unassisted',
                         'std':utils.smooth(jrf_dataset['std_loaded_patellofemoraljoint_RMy'],9),'avg_toeoff':loaded_mean_toe_off}
 unassist_noload_patellofemoral_RMy_dic = {'pgc':gait_cycle,'avg':utils.smooth(jrf_dataset['mean_noload_patellofemoraljoint_RMy'],9),'label':'noload unassisted',
                         'std':utils.smooth(jrf_dataset['std_noload_patellofemoraljoint_RMy'],9),'avg_toeoff':noload_mean_toe_off,'load':'noload'}
 ## MZ ##
-bi_loaded_patellofemoral_RMz_dic = {'pgc':gait_cycle,'avg':utils.smooth(mean_bi_loaded_patellofemoral_RMz,9),'label':'biarticular',
+bi_loaded_patellofemoral_RMz_dic = {'pgc':gait_cycle,'avg':utils.smooth(mean_bi_loaded_patellofemoral_RMz,9),'label':'loaded assisted joint',
                         'std':utils.smooth(std_bi_loaded_patellofemoral_RMz,9),'avg_toeoff':loaded_mean_toe_off}
-bi_noload_patellofemoral_RMz_dic = {'pgc':gait_cycle,'avg':utils.smooth(mean_bi_noload_patellofemoral_RMz,9),'label':'biarticular',
+bi_noload_patellofemoral_RMz_dic = {'pgc':gait_cycle,'avg':utils.smooth(mean_bi_noload_patellofemoral_RMz,9),'label':'noload assisted joint',
                         'std':utils.smooth(std_bi_noload_patellofemoral_RMz,9),'avg_toeoff':noload_mean_toe_off,'load':'noload'}
-mono_loaded_patellofemoral_RMz_dic = {'pgc':gait_cycle,'avg':utils.smooth(mean_mono_loaded_patellofemoral_RMz,9),'label':'monoarticular',
+mono_loaded_patellofemoral_RMz_dic = {'pgc':gait_cycle,'avg':utils.smooth(mean_mono_loaded_patellofemoral_RMz,9),'label':'loaded assisted joint',
                         'std':utils.smooth(std_mono_loaded_patellofemoral_RMz,9),'avg_toeoff':loaded_mean_toe_off}
-mono_noload_patellofemoral_RMz_dic = {'pgc':gait_cycle,'avg':utils.smooth(mean_mono_noload_patellofemoral_RMz,9),'label':'monoarticular',
+mono_noload_patellofemoral_RMz_dic = {'pgc':gait_cycle,'avg':utils.smooth(mean_mono_noload_patellofemoral_RMz,9),'label':'noload assisted joint',
                         'std':utils.smooth(std_mono_noload_patellofemoral_RMz,9),'avg_toeoff':noload_mean_toe_off,'load':'noload'}
 unassist_loaded_patellofemoral_RMz_dic = {'pgc':gait_cycle,'avg':utils.smooth(jrf_dataset['mean_loaded_patellofemoraljoint_RMz'],9),'label':'loaded unassisted',
                         'std':utils.smooth(jrf_dataset['std_loaded_patellofemoraljoint_RMz'],9),'avg_toeoff':loaded_mean_toe_off}
@@ -626,39 +626,39 @@ unassist_noload_patellofemoral_RMz_dic = {'pgc':gait_cycle,'avg':utils.smooth(jr
 # *********************
 # patellofemoral joint reaction force plot dictionaries
 ## FX ##
-bi_loaded_patellofemoral_RFx_dic = {'pgc':gait_cycle,'avg':utils.smooth(mean_bi_loaded_patellofemoral_RFx,9),'label':'biarticular',
+bi_loaded_patellofemoral_RFx_dic = {'pgc':gait_cycle,'avg':utils.smooth(mean_bi_loaded_patellofemoral_RFx,9),'label':'loaded assisted joint',
                         'std':utils.smooth(std_bi_loaded_patellofemoral_RFx,9),'avg_toeoff':loaded_mean_toe_off}
-bi_noload_patellofemoral_RFx_dic = {'pgc':gait_cycle,'avg':utils.smooth(mean_bi_noload_patellofemoral_RFx,9),'label':'biarticular',
+bi_noload_patellofemoral_RFx_dic = {'pgc':gait_cycle,'avg':utils.smooth(mean_bi_noload_patellofemoral_RFx,9),'label':'noload assisted joint',
                         'std':utils.smooth(std_bi_noload_patellofemoral_RFx,9),'avg_toeoff':noload_mean_toe_off,'load':'noload'}
-mono_loaded_patellofemoral_RFx_dic = {'pgc':gait_cycle,'avg':utils.smooth(mean_mono_loaded_patellofemoral_RFx,9),'label':'monoarticular',
+mono_loaded_patellofemoral_RFx_dic = {'pgc':gait_cycle,'avg':utils.smooth(mean_mono_loaded_patellofemoral_RFx,9),'label':'loaded assisted joint',
                         'std':utils.smooth(std_mono_loaded_patellofemoral_RFx,9),'avg_toeoff':loaded_mean_toe_off}
-mono_noload_patellofemoral_RFx_dic = {'pgc':gait_cycle,'avg':utils.smooth(mean_mono_noload_patellofemoral_RFx,9),'label':'monoarticular',
+mono_noload_patellofemoral_RFx_dic = {'pgc':gait_cycle,'avg':utils.smooth(mean_mono_noload_patellofemoral_RFx,9),'label':'noload assisted joint',
                         'std':utils.smooth(std_mono_noload_patellofemoral_RFx,9),'avg_toeoff':noload_mean_toe_off,'load':'noload'}
 unassist_loaded_patellofemoral_RFx_dic = {'pgc':gait_cycle,'avg':utils.smooth(jrf_dataset['mean_loaded_patellofemoraljoint_RFx'],9),'label':'loaded unassisted',
                         'std':utils.smooth(jrf_dataset['std_loaded_patellofemoraljoint_RFx'],9),'avg_toeoff':loaded_mean_toe_off}
 unassist_noload_patellofemoral_RFx_dic = {'pgc':gait_cycle,'avg':utils.smooth(jrf_dataset['mean_noload_patellofemoraljoint_RFx'],9),'label':'noload unassisted',
                         'std':utils.smooth(jrf_dataset['std_noload_patellofemoraljoint_RFx'],9),'avg_toeoff':noload_mean_toe_off,'load':'noload'}
 ## FY ##
-bi_loaded_patellofemoral_RFy_dic = {'pgc':gait_cycle,'avg':utils.smooth(mean_bi_loaded_patellofemoral_RFy,9),'label':'biarticular',
+bi_loaded_patellofemoral_RFy_dic = {'pgc':gait_cycle,'avg':utils.smooth(mean_bi_loaded_patellofemoral_RFy,9),'label':'loaded assisted joint',
                         'std':utils.smooth(std_bi_loaded_patellofemoral_RFy,9),'avg_toeoff':loaded_mean_toe_off}
-bi_noload_patellofemoral_RFy_dic = {'pgc':gait_cycle,'avg':utils.smooth(mean_bi_noload_patellofemoral_RFy,9),'label':'biarticular',
+bi_noload_patellofemoral_RFy_dic = {'pgc':gait_cycle,'avg':utils.smooth(mean_bi_noload_patellofemoral_RFy,9),'label':'noload assisted joint',
                         'std':utils.smooth(std_bi_noload_patellofemoral_RFy,9),'avg_toeoff':noload_mean_toe_off,'load':'noload'}
-mono_loaded_patellofemoral_RFy_dic = {'pgc':gait_cycle,'avg':utils.smooth(mean_mono_loaded_patellofemoral_RFy,9),'label':'monoarticular',
+mono_loaded_patellofemoral_RFy_dic = {'pgc':gait_cycle,'avg':utils.smooth(mean_mono_loaded_patellofemoral_RFy,9),'label':'loaded assisted joint',
                         'std':utils.smooth(std_mono_loaded_patellofemoral_RFy,9),'avg_toeoff':loaded_mean_toe_off}
-mono_noload_patellofemoral_RFy_dic = {'pgc':gait_cycle,'avg':utils.smooth(mean_mono_noload_patellofemoral_RFy,9),'label':'monoarticular',
+mono_noload_patellofemoral_RFy_dic = {'pgc':gait_cycle,'avg':utils.smooth(mean_mono_noload_patellofemoral_RFy,9),'label':'noload assisted joint',
                         'std':utils.smooth(std_mono_noload_patellofemoral_RFy,9),'avg_toeoff':noload_mean_toe_off,'load':'noload'}
 unassist_loaded_patellofemoral_RFy_dic = {'pgc':gait_cycle,'avg':utils.smooth(jrf_dataset['mean_loaded_patellofemoraljoint_RFy'],9),'label':'loaded unassisted',
                         'std':utils.smooth(jrf_dataset['std_loaded_patellofemoraljoint_RFy'],9),'avg_toeoff':loaded_mean_toe_off}
 unassist_noload_patellofemoral_RFy_dic = {'pgc':gait_cycle,'avg':utils.smooth(jrf_dataset['mean_noload_patellofemoraljoint_RFy'],9),'label':'noload unassisted',
                         'std':utils.smooth(jrf_dataset['std_noload_patellofemoraljoint_RFy'],9),'avg_toeoff':noload_mean_toe_off,'load':'noload'}
 ## FZ ##
-bi_loaded_patellofemoral_RFz_dic = {'pgc':gait_cycle,'avg':utils.smooth(mean_bi_loaded_patellofemoral_RFz,9),'label':'biarticular',
+bi_loaded_patellofemoral_RFz_dic = {'pgc':gait_cycle,'avg':utils.smooth(mean_bi_loaded_patellofemoral_RFz,9),'label':'loaded assisted joint',
                         'std':utils.smooth(std_bi_loaded_patellofemoral_RFz,9),'avg_toeoff':loaded_mean_toe_off}
-bi_noload_patellofemoral_RFz_dic = {'pgc':gait_cycle,'avg':utils.smooth(mean_bi_noload_patellofemoral_RFz,9),'label':'biarticular',
+bi_noload_patellofemoral_RFz_dic = {'pgc':gait_cycle,'avg':utils.smooth(mean_bi_noload_patellofemoral_RFz,9),'label':'noload assisted joint',
                         'std':utils.smooth(std_bi_noload_patellofemoral_RFz,9),'avg_toeoff':noload_mean_toe_off,'load':'noload'}
-mono_loaded_patellofemoral_RFz_dic = {'pgc':gait_cycle,'avg':utils.smooth(mean_mono_loaded_patellofemoral_RFz,9),'label':'monoarticular',
+mono_loaded_patellofemoral_RFz_dic = {'pgc':gait_cycle,'avg':utils.smooth(mean_mono_loaded_patellofemoral_RFz,9),'label':'loaded assisted joint',
                         'std':utils.smooth(std_mono_loaded_patellofemoral_RFz,9),'avg_toeoff':loaded_mean_toe_off}
-mono_noload_patellofemoral_RFz_dic = {'pgc':gait_cycle,'avg':utils.smooth(mean_mono_noload_patellofemoral_RFz,9),'label':'monoarticular',
+mono_noload_patellofemoral_RFz_dic = {'pgc':gait_cycle,'avg':utils.smooth(mean_mono_noload_patellofemoral_RFz,9),'label':'noload assisted joint',
                         'std':utils.smooth(std_mono_noload_patellofemoral_RFz,9),'avg_toeoff':noload_mean_toe_off,'load':'noload'}
 unassist_loaded_patellofemoral_RFz_dic = {'pgc':gait_cycle,'avg':utils.smooth(jrf_dataset['mean_loaded_patellofemoraljoint_RFz'],9),'label':'loaded unassisted',
                         'std':utils.smooth(jrf_dataset['std_loaded_patellofemoraljoint_RFz'],9),'avg_toeoff':loaded_mean_toe_off}
@@ -751,20 +751,36 @@ unassist_noload_ankle_RFz_dic = {'pgc':gait_cycle,'avg':utils.smooth(jrf_dataset
 #******************************************************************************************************************************
 # defualt color dictionary
 default_color_dic = {
-'color_1_list' : ['k','xkcd:irish green','k','xkcd:irish green'],
-'color_2_list' : [mycolors['cyan blue'],mycolors['olympic blue'],mycolors['cyan blue'],mycolors['olympic blue']],
-'color_3_list' : [mycolors['crimson red'],mycolors['french rose'],mycolors['crimson red'],mycolors['french rose']]
-}
+'color_1_list' : ['k','k','k','k','k','k','xkcd:irish green','xkcd:irish green','xkcd:irish green',\
+                  'xkcd:irish green','xkcd:irish green','xkcd:irish green'],
+'color_3_list' : [mycolors['cyan blue'],mycolors['cyan blue'],mycolors['cyan blue'],\
+                  mycolors['cyan blue'],mycolors['cyan blue'],mycolors['cyan blue'],\
+                  mycolors['olympic blue'],mycolors['olympic blue'],mycolors['olympic blue'],\
+                  mycolors['olympic blue'],mycolors['olympic blue'],mycolors['olympic blue']],
+'color_2_list' : [mycolors['crimson red'],mycolors['crimson red'],mycolors['crimson red'],\
+                  mycolors['cyan blue'],mycolors['cyan blue'],mycolors['cyan blue'],\
+                  mycolors['french rose'],mycolors['french rose'],mycolors['french rose'],\
+                  mycolors['olympic blue'],mycolors['olympic blue'],mycolors['olympic blue']]}
 monovsbi_color_dic = {
 'color_1_list' : ['k','xkcd:irish green','k','xkcd:irish green'],
-'color_3_list' : [mycolors['cyan blue'],mycolors['olympic blue'],mycolors['cyan blue'],mycolors['olympic blue']],
-'color_2_list' : [mycolors['crimson red'],mycolors['french rose'],mycolors['crimson red'],mycolors['french rose']]
+'color_3_list' : [mycolors['cyan blue'],mycolors['cyan blue'],mycolors['cyan blue'],\
+                  mycolors['cyan blue'],mycolors['cyan blue'],mycolors['cyan blue'],\
+                  mycolors['olympic blue'],mycolors['olympic blue'],mycolors['olympic blue'],\
+                  mycolors['olympic blue'],mycolors['olympic blue'],mycolors['olympic blue']],
+'color_2_list' : [mycolors['crimson red'],mycolors['crimson red'],mycolors['crimson red'],\
+                  mycolors['cyan blue'],mycolors['cyan blue'],mycolors['cyan blue'],\
+                  mycolors['french rose'],mycolors['french rose'],mycolors['french rose'],\
+                  mycolors['olympic blue'],mycolors['olympic blue'],mycolors['olympic blue']]
 }
+<<<<<<< HEAD
 <<<<<<< HEAD
 
 =======
 '''
 >>>>>>> paper
+=======
+'''
+>>>>>>> development
 # ***************************
 # back joint moment figure
 # required dictionary
@@ -834,27 +850,37 @@ utils.plot_joint_muscle_exo(nrows=2,ncols=2,plot_dic=plot_dic,thirdplot=False,
 fig.tight_layout()
 fig.savefig('./Figures/Ideal/JRF/Hip_Joint_ReactionMoment.pdf',orientation='landscape',bbox_inches='tight')
 plt.show()
-
+'''
 # ***************************
 # hip joint force figure
 # Fx
 # required dictionary
 plot_dic={
-'plot_1_list' : [unassist_loaded_hip_RFx_dic,unassist_noload_hip_RFx_dic,\
-                     unassist_loaded_hip_RFx_dic,unassist_noload_hip_RFx_dic],
-'plot_2_list' : [bi_loaded_hip_RFx_dic,bi_noload_hip_RFx_dic,\
-                      mono_loaded_hip_RFx_dic,mono_noload_hip_RFx_dic],
-'plot_titles' : ['loaded biarticular hip joint (FX)','noload biarticular hip joint (FX)',\
-                 'loaded monoarticular hip joint (FX)','noload monoarticular hip joint (FX)']
+'plot_1_list' : [unassist_loaded_hip_RFx_dic,unassist_loaded_hip_RFy_dic,unassist_loaded_hip_RFz_dic,\
+                 unassist_loaded_hip_RFx_dic,unassist_loaded_hip_RFy_dic,unassist_loaded_hip_RFz_dic,\
+                 unassist_noload_hip_RFx_dic,unassist_noload_hip_RFy_dic,unassist_noload_hip_RFz_dic,\
+                 unassist_noload_hip_RFx_dic,unassist_noload_hip_RFy_dic,unassist_noload_hip_RFz_dic],
+'plot_2_list' : [bi_loaded_hip_RFx_dic,bi_loaded_hip_RFy_dic,bi_loaded_hip_RFz_dic,\
+                 mono_loaded_hip_RFx_dic,mono_loaded_hip_RFy_dic,mono_loaded_hip_RFz_dic,\
+                 bi_noload_hip_RFx_dic,bi_noload_hip_RFy_dic,bi_noload_hip_RFz_dic,\
+                 mono_noload_hip_RFx_dic,mono_noload_hip_RFy_dic,mono_noload_hip_RFz_dic],
+'plot_titles' : ['loaded biarticular\n hip joint (FX)','loaded biarticular\n hip joint (FY)','loaded biarticular\n hip joint (FZ)',\
+                 'loaded monoarticular\n hip joint (FX)','loaded monoarticular\n hip joint (FY)','loaded monoarticular\n hip joint (FZ)',\
+                 'noload biarticular\n hip joint (FX)','noload biarticular hip\n joint (FY)','noload biarticular\n hip joint (FZ)',\
+                 'noload monoarticular\n hip joint (FX)','noload monoarticular\n hip joint (FY)','noload monoarticular\n hip joint (FZ)'],
+'y_ticks' : [[-40,-20,0,20,40],[-80,-60,-40,-20,0,20],[-10,0,10,20],[-40,-20,0,20,40],[-80,-60,-40,-20,0,20],[-10,0,10,20],\
+             [-40,-20,0,20,40],[-80,-60,-40,-20,0,20],[-10,0,10,20],[-40,-20,0,20,40],[-80,-60,-40,-20,0,20],[-10,0,10,20]]
 }
 # plot
-fig = plt.figure(num='Loaded Hip Reaction Force',figsize=(9.4, 6.8))
-utils.plot_joint_muscle_exo(nrows=2,ncols=2,plot_dic=plot_dic,thirdplot=False,
-                            color_dic=default_color_dic,ylabel='hip reaction\n force (N/kg)')
-                            #y_ticks = [-0.06,-0.03,0,0.03,0.06,0.09])
-fig.tight_layout()
-fig.savefig('./Figures/Ideal/JRF/Hip_Joint_ReactionForce_Fx.pdf',orientation='landscape',bbox_inches='tight')
+fig = plt.figure(num='Loaded Hip Reaction Force',figsize=(16.4, 12.8))
+utils.plot_joint_muscle_exo(nrows=4,ncols=3,plot_dic=plot_dic,thirdplot=False,legend_loc=[0,6],
+                            color_dic=default_color_dic,ylabel='hip reaction\n force (N/kg)',xlabel_loc=[9,10,11],
+                            ylabel_loc=[0,3,6,9])
+fig.tight_layout(h_pad=-1.5, w_pad=-1.5)
+fig.subplots_adjust(top=0.99, bottom=0.075, left=0.100, right=0.975,hspace=0.40,wspace=0.15)
+fig.savefig('./Figures/Ideal/JRF/PaperFigure_Hip_Joint_ReactionForce.pdf',bbox_inches='tight')
 plt.show()
+'''
 # Fy
 # required dictionary
 plot_dic={
@@ -891,19 +917,29 @@ utils.plot_joint_muscle_exo(nrows=2,ncols=2,plot_dic=plot_dic,thirdplot=False,
 fig.tight_layout()
 fig.savefig('./Figures/Ideal/JRF/Hip_Joint_ReactionForce_Fz.pdf',orientation='landscape',bbox_inches='tight')
 plt.show()
-
+'''
 # ***************************
 # knee joint moment figure
 ## MX ##
 # required dictionary
 plot_dic={
-'plot_1_list' : [unassist_loaded_knee_RMx_dic,unassist_noload_knee_RMx_dic,\
-                     unassist_loaded_knee_RMx_dic,unassist_noload_knee_RMx_dic],
-'plot_2_list' : [bi_loaded_knee_RMx_dic,bi_noload_knee_RMx_dic,\
-                      mono_loaded_knee_RMx_dic,mono_noload_knee_RMx_dic],
-'plot_titles' : ['loaded biarticular\nknee joint (Mx)','noload biarticular\nknee joint (Mx)','loaded monoarticular\nknee joint (Mx)','noload monoarticular\nknee joint (Mx)']
+'plot_1_list' : [unassist_loaded_knee_RMx_dic,unassist_loaded_knee_RMy_dic,unassist_loaded_knee_RMz_dic,\
+                 unassist_loaded_knee_RMx_dic,unassist_loaded_knee_RMy_dic,unassist_loaded_knee_RMz_dic,\
+                 unassist_noload_knee_RMx_dic,unassist_noload_knee_RMy_dic,unassist_noload_knee_RMz_dic,\
+                 unassist_noload_knee_RMx_dic,unassist_noload_knee_RMy_dic,unassist_noload_knee_RMz_dic],
+'plot_2_list' : [bi_loaded_knee_RMx_dic,bi_loaded_knee_RMy_dic,bi_loaded_knee_RMz_dic,\
+                 mono_loaded_knee_RMx_dic,mono_loaded_knee_RMy_dic,mono_loaded_knee_RMz_dic,\
+                 bi_noload_knee_RMx_dic,bi_noload_knee_RMy_dic,bi_noload_knee_RMz_dic,\
+                 mono_noload_knee_RMx_dic,mono_noload_knee_RMy_dic,mono_noload_knee_RMz_dic],
+'plot_titles' : ['loaded biarticular\nknee joint (Mx)','loaded biarticular\nknee joint (My)','loaded biarticular\nknee joint (Mz)',\
+                 'loaded monoarticular\nknee joint (Mx)','loaded monoarticular\nknee joint (My)','loaded monoarticular\nknee joint (Mz)',\
+                 'noload biarticular\nknee joint (Mx)','noload biarticular\nknee joint (My)','noload biarticular\nknee joint (Mz)',\
+                 'noload monoarticular\nknee joint (Mx)','noload monoarticular\nknee joint (My)','noload monoarticular\nknee joint (Mz)'],
+'y_ticks' : [[-1,0,1],[-0.5,0,0.5],[-1,-0.5,0,0.5],[-1,0,1],[-0.5,0,0.5],[-1,-0.5,0,0.5],\
+             [-1,0,1],[-0.5,0,0.5],[-1,-0.5,0,0.5],[-1,0,1],[-0.5,0,0.5],[-1,-0.5,0,0.5]]
 }
 # plot
+<<<<<<< HEAD
 fig = plt.figure(num='Loaded Knee Reaction Moment',figsize=(9.4, 6.8))
 utils.plot_joint_muscle_exo(nrows=2,ncols=2,plot_dic=plot_dic,thirdplot=False,
 <<<<<<< HEAD
@@ -915,8 +951,17 @@ utils.plot_joint_muscle_exo(nrows=2,ncols=2,plot_dic=plot_dic,thirdplot=False,
 >>>>>>> paper
 fig.tight_layout()
 fig.savefig('./Figures/Ideal/JRF/Knee_Joint_ReactionMoment_Mx.pdf',orientation='landscape',bbox_inches='tight')
+=======
+fig = plt.figure(num=' Knee Reaction Moment',figsize=(16.4, 12.8))
+utils.plot_joint_muscle_exo(nrows=4,ncols=3,plot_dic=plot_dic,thirdplot=False,legend_loc=[0,6],
+                            color_dic=default_color_dic,ylabel='hip reaction\n moment (N-m/kg)',xlabel_loc=[9,10,11],
+                            ylabel_loc=[0,3,6,9])
+fig.tight_layout(h_pad=-1.5, w_pad=-1.5)
+fig.subplots_adjust(top=0.99, bottom=0.075, left=0.100, right=0.975,hspace=0.40,wspace=0.15)
+fig.savefig('./Figures/Ideal/JRF/PaperFigure_Knee_Joint_ReactionMoment.pdf',bbox_inches='tight')
+>>>>>>> development
 plt.show()
-
+'''
 ## MY ##
 # required dictionary
 plot_dic={
@@ -962,20 +1007,29 @@ utils.plot_joint_muscle_exo(nrows=2,ncols=2,plot_dic=plot_dic,thirdplot=False,
 fig.tight_layout()
 fig.savefig('./Figures/Ideal/JRF/Knee_Joint_ReactionMoment_Mz.pdf',orientation='landscape',bbox_inches='tight')
 plt.show()
-
+'''
 # ***************************
 # knee joint force figure
 ## FX ##
 # required dictionary
 plot_dic={
-'plot_1_list' : [unassist_loaded_knee_RFx_dic,unassist_noload_knee_RFx_dic,\
-                     unassist_loaded_knee_RFx_dic,unassist_noload_knee_RFx_dic],
-'plot_2_list' : [bi_loaded_knee_RFx_dic,bi_noload_knee_RFx_dic,\
-                      mono_loaded_knee_RFx_dic,mono_noload_knee_RFx_dic],
-'plot_titles' : ['loaded biarticular\nknee joint (Fx)','noload biarticular\nknee joint (Fx)',\
-                'loaded monoarticular\nknee joint (Fx)','noload monoarticular\nknee joint (Fx)']
+'plot_1_list' : [unassist_loaded_knee_RFx_dic,unassist_loaded_knee_RFy_dic,unassist_loaded_knee_RFz_dic,\
+                 unassist_loaded_knee_RFx_dic,unassist_loaded_knee_RFy_dic,unassist_loaded_knee_RFz_dic,\
+                 unassist_noload_knee_RFx_dic,unassist_noload_knee_RFy_dic,unassist_noload_knee_RFz_dic,\
+                 unassist_noload_knee_RFx_dic,unassist_noload_knee_RFy_dic,unassist_noload_knee_RFz_dic],
+'plot_2_list' : [bi_loaded_knee_RFx_dic,bi_loaded_knee_RFy_dic,bi_loaded_knee_RFz_dic,\
+                 mono_loaded_knee_RFx_dic,mono_loaded_knee_RFy_dic,mono_loaded_knee_RFz_dic,\
+                 bi_noload_knee_RFx_dic,bi_noload_knee_RFy_dic,bi_noload_knee_RFz_dic,\
+                 mono_noload_knee_RFx_dic,mono_noload_knee_RFy_dic,mono_noload_knee_RFz_dic],
+'plot_titles' : ['loaded biarticular\nknee joint (Fx)','loaded biarticular\nknee joint (Fy)','loaded biarticular\nknee joint (Fz)',\
+                 'loaded monoarticular\nknee joint (Fx)','loaded monoarticular\nknee joint (Fy)','loaded monoarticular\nknee joint (Fz)',\
+                 'noload biarticular\nknee joint (Fx)','noload biarticular\nknee joint (Fy)','noload biarticular\nknee joint (Fz)',\
+                 'noload monoarticular\nknee joint (Fx)','noload monoarticular\nknee joint (Fy)','noload monoarticular\nknee joint (Fz)'],
+'y_ticks' : [[-40,-20,0,20,40],[-60,-40,-20,0,20],[-10,5,0,5],[-40,-20,0,20,40],[-60,-40,-20,0,20],[-10,5,0,5],\
+             [-40,-20,0,20,40],[-60,-40,-20,0,20],[-10,5,0,5],[-40,-20,0,20,40],[-60,-40,-20,0,20],[-10,5,0,5]]
 }
 # plot
+<<<<<<< HEAD
 fig = plt.figure(num='Loaded Knee Reaction Force',figsize=(9.4, 6.8))
 utils.plot_joint_muscle_exo(nrows=2,ncols=2,plot_dic=plot_dic,thirdplot=False,
 <<<<<<< HEAD
@@ -987,8 +1041,17 @@ utils.plot_joint_muscle_exo(nrows=2,ncols=2,plot_dic=plot_dic,thirdplot=False,
 >>>>>>> paper
 fig.tight_layout()
 fig.savefig('./Figures/Ideal/JRF/Knee_Joint_ReactionForce_Fx.pdf',orientation='landscape',bbox_inches='tight')
+=======
+fig = plt.figure(num=' Knee Reaction Force',figsize=(16.4, 12.8))
+utils.plot_joint_muscle_exo(nrows=4,ncols=3,plot_dic=plot_dic,thirdplot=False,legend_loc=[0,6],
+                            color_dic=default_color_dic,ylabel='hip reaction\n force (N/kg)',xlabel_loc=[9,10,11],
+                            ylabel_loc=[0,3,6,9])
+fig.tight_layout(h_pad=-1.5, w_pad=-1.5)
+fig.subplots_adjust(top=0.99, bottom=0.075, left=0.100, right=0.975,hspace=0.40,wspace=0.15)
+fig.savefig('./Figures/Ideal/JRF/PaperFigure_Knee_Joint_ReactionForce.pdf',bbox_inches='tight')
+>>>>>>> development
 plt.show()
-
+'''
 ## FY ##
 # required dictionary
 plot_dic={
@@ -1026,19 +1089,29 @@ utils.plot_joint_muscle_exo(nrows=2,ncols=2,plot_dic=plot_dic,thirdplot=False,
 fig.tight_layout()
 fig.savefig('./Figures/Ideal/JRF/Knee_Joint_ReactionForce_Fz.pdf',orientation='landscape',bbox_inches='tight')
 plt.show()
-
+'''
 # ***************************
 # patellofemoral joint moment figure
 ## MX ##
 # required dictionary
 plot_dic={
-'plot_1_list' : [unassist_loaded_patellofemoral_RMx_dic,unassist_noload_patellofemoral_RMx_dic,\
-                     unassist_loaded_patellofemoral_RMx_dic,unassist_noload_patellofemoral_RMx_dic],
-'plot_2_list' : [bi_loaded_patellofemoral_RMx_dic,bi_noload_patellofemoral_RMx_dic,\
-                      mono_loaded_patellofemoral_RMx_dic,mono_noload_patellofemoral_RMx_dic],
-'plot_titles' : ['loaded biarticular\npatellofemoral joint (Mx)','noload biarticular\npatellofemoral joint (Mx)','loaded monoarticular\npatellofemoral joint (Mx)','noload monoarticular\npatellofemoral joint (Mx)']
+'plot_1_list' : [unassist_loaded_patellofemoral_RMx_dic,unassist_loaded_patellofemoral_RMy_dic,unassist_loaded_patellofemoral_RMz_dic,\
+                 unassist_loaded_patellofemoral_RMx_dic,unassist_loaded_patellofemoral_RMy_dic,unassist_loaded_patellofemoral_RMz_dic,\
+                 unassist_noload_patellofemoral_RMx_dic,unassist_noload_patellofemoral_RMy_dic,unassist_noload_patellofemoral_RMz_dic,\
+                 unassist_noload_patellofemoral_RMx_dic,unassist_noload_patellofemoral_RMy_dic,unassist_noload_patellofemoral_RMz_dic],
+'plot_2_list' : [bi_loaded_patellofemoral_RMx_dic,bi_loaded_patellofemoral_RMy_dic,bi_loaded_patellofemoral_RMz_dic,\
+                 mono_loaded_patellofemoral_RMx_dic,mono_loaded_patellofemoral_RMy_dic,mono_loaded_patellofemoral_RMz_dic,\
+                 bi_noload_patellofemoral_RMx_dic,bi_noload_patellofemoral_RMy_dic,bi_noload_patellofemoral_RMz_dic,\
+                 mono_noload_patellofemoral_RMx_dic,mono_noload_patellofemoral_RMy_dic,mono_noload_patellofemoral_RMz_dic],
+'plot_titles' : ['loaded biarticular\npatellofemoral joint (Mx)','loaded biarticular\npatellofemoral joint (My)','loaded biarticular\npatellofemoral joint (Mz)',\
+                 'loaded monoarticular\npatellofemoral joint (Mx)','loaded monoarticular\npatellofemoral joint (My)','loaded monoarticular\npatellofemoral joint (Mz)',\
+                 'noload biarticular\npatellofemoral joint (Mx)','noload biarticular\npatellofemoral joint (My)','noload biarticular\npatellofemoral joint (Mz)',\
+                 'noload monoarticular\npatellofemoral joint (Mx)','noload monoarticular\npatellofemoral joint (My)','noload monoarticular\npatellofemoral joint (Mz)'],
+'y_ticks' : [[-0.25,0,0.25],[-0.25,0,0.25],[-1,-0.5,0,0.5],[-0.25,0,0.25],[-0.25,0,0.25],[-1,-0.5,0,0.5],\
+             [-0.25,0,0.25],[-0.25,0,0.25],[-1,-0.5,0,0.5],[-0.25,0,0.25],[-0.25,0,0.25],[-1,-0.5,0,0.5]]
 }
 # plot
+<<<<<<< HEAD
 fig = plt.figure(num='Loaded Patellofemoral Reaction Moment',figsize=(9.4, 6.8))
 utils.plot_joint_muscle_exo(nrows=2,ncols=2,plot_dic=plot_dic,thirdplot=False,
 <<<<<<< HEAD
@@ -1050,8 +1123,17 @@ utils.plot_joint_muscle_exo(nrows=2,ncols=2,plot_dic=plot_dic,thirdplot=False,
 >>>>>>> paper
 fig.tight_layout()
 fig.savefig('./Figures/Ideal/JRF/Patellofemoral_Joint_ReactionMoment_Mx.pdf',orientation='landscape',bbox_inches='tight')
+=======
+fig = plt.figure(num=' Patellofemoral Reaction Moment',figsize=(16.4, 12.8))
+utils.plot_joint_muscle_exo(nrows=4,ncols=3,plot_dic=plot_dic,thirdplot=False,legend_loc=[0,6],
+                            color_dic=default_color_dic,ylabel='hip reaction\n moment (N-m/kg)',xlabel_loc=[9,10,11],
+                            ylabel_loc=[0,3,6,9])
+fig.tight_layout(h_pad=-1.5, w_pad=-1.5)
+fig.subplots_adjust(top=0.99, bottom=0.075, left=0.100, right=0.975,hspace=0.40,wspace=0.15)
+fig.savefig('./Figures/Ideal/JRF/PaperFigure_Patellofemoral_Joint_ReactionMoment.pdf',bbox_inches='tight')
+>>>>>>> development
 plt.show()
-
+'''
 ## MY ##
 # required dictionary
 plot_dic={
@@ -1092,19 +1174,29 @@ utils.plot_joint_muscle_exo(nrows=2,ncols=2,plot_dic=plot_dic,thirdplot=False,
 fig.tight_layout()
 fig.savefig('./Figures/Ideal/JRF/Patellofemoral_Joint_ReactionMoment_Mz.pdf',orientation='landscape',bbox_inches='tight')
 plt.show()
+'''
 # ***************************
 # patellofemoral joint force figure
 ## FX ##
 # required dictionary
 plot_dic={
-'plot_1_list' : [unassist_loaded_patellofemoral_RFx_dic,unassist_noload_patellofemoral_RFx_dic,\
-                     unassist_loaded_patellofemoral_RFx_dic,unassist_noload_patellofemoral_RFx_dic],
-'plot_2_list' : [bi_loaded_patellofemoral_RFx_dic,bi_noload_patellofemoral_RFx_dic,\
-                      mono_loaded_patellofemoral_RFx_dic,mono_noload_patellofemoral_RFx_dic],
-'plot_titles' : ['loaded biarticular\npatellofemoral joint (Fx)','noload biarticular\npatellofemoral joint (Fx)',\
-                'loaded monoarticular\npatellofemoral joint (Fx)','noload monoarticular\npatellofemoral joint (Fx)']
+'plot_1_list' : [unassist_loaded_patellofemoral_RFx_dic,unassist_loaded_patellofemoral_RFy_dic,unassist_loaded_patellofemoral_RFz_dic,\
+                 unassist_loaded_patellofemoral_RFx_dic,unassist_loaded_patellofemoral_RFy_dic,unassist_loaded_patellofemoral_RFz_dic,\
+                 unassist_noload_patellofemoral_RFx_dic,unassist_noload_patellofemoral_RFy_dic,unassist_noload_patellofemoral_RFz_dic,\
+                 unassist_noload_patellofemoral_RFx_dic,unassist_noload_patellofemoral_RFy_dic,unassist_noload_patellofemoral_RFz_dic],
+'plot_2_list' : [bi_loaded_patellofemoral_RFx_dic,bi_loaded_patellofemoral_RFy_dic,bi_loaded_patellofemoral_RFz_dic,\
+                 mono_loaded_patellofemoral_RFx_dic,mono_loaded_patellofemoral_RFy_dic,mono_loaded_patellofemoral_RFz_dic,\
+                 bi_noload_patellofemoral_RFx_dic,bi_noload_patellofemoral_RFy_dic,bi_noload_patellofemoral_RFz_dic,\
+                 mono_noload_patellofemoral_RFx_dic,mono_noload_patellofemoral_RFy_dic,mono_noload_patellofemoral_RFz_dic],
+'plot_titles' : ['loaded biarticular\npatellofemoral joint (Fx)','loaded biarticular\npatellofemoral joint (Fy)','loaded biarticular\npatellofemoral joint (Fz)',\
+                 'loaded monoarticular\npatellofemoral joint (Fx)','loaded monoarticular\npatellofemoral joint (Fy)','loaded monoarticular\npatellofemoral joint (Fz)',\
+                 'noload biarticular\npatellofemoral joint (Fx)','noload biarticular\npatellofemoral joint (Fy)','noload biarticular\npatellofemoral joint (Fz)',\
+                 'noload monoarticular\npatellofemoral joint (Fx)','noload monoarticular\npatellofemoral joint (Fy)','noload monoarticular\npatellofemoral joint (Fz)'],
+'y_ticks' : [[-10,0,10,20,30],[-20,-10,0,10],[-10,0,10,20],[-10,0,10,20,30],[-20,-10,0,10],[-10,0,10,20],\
+             [-10,0,10,20,30],[-20,-10,0,10],[-10,0,10,20],[-10,0,10,20,30],[-20,-10,0,10],[-10,0,10,20]]
 }
 # plot
+<<<<<<< HEAD
 fig = plt.figure(num='Loaded Patellofemoral Reaction Force',figsize=(9.4, 6.8))
 utils.plot_joint_muscle_exo(nrows=2,ncols=2,plot_dic=plot_dic,thirdplot=False,
 <<<<<<< HEAD
@@ -1116,8 +1208,17 @@ utils.plot_joint_muscle_exo(nrows=2,ncols=2,plot_dic=plot_dic,thirdplot=False,
 >>>>>>> paper
 fig.tight_layout()
 fig.savefig('./Figures/Ideal/JRF/Patellofemoral_Joint_ReactionForce_Fx.pdf',orientation='landscape',bbox_inches='tight')
+=======
+fig = plt.figure(num=' Patellofemoral Reaction Force',figsize=(16.4, 12.8))
+utils.plot_joint_muscle_exo(nrows=4,ncols=3,plot_dic=plot_dic,thirdplot=False,legend_loc=[0,6],
+                            color_dic=default_color_dic,ylabel='hip reaction\n force (N/kg)',xlabel_loc=[9,10,11],
+                            ylabel_loc=[0,3,6,9])
+fig.tight_layout(h_pad=-1.5, w_pad=-1.5)
+fig.subplots_adjust(top=0.99, bottom=0.075, left=0.100, right=0.975,hspace=0.40,wspace=0.15)
+fig.savefig('./Figures/Ideal/JRF/PaperFigure_Patellofemoral_Joint_ReactionForce.pdf',bbox_inches='tight')
+>>>>>>> development
 plt.show()
-
+'''
 ## FY ##
 # required dictionary
 plot_dic={
@@ -1155,20 +1256,29 @@ utils.plot_joint_muscle_exo(nrows=2,ncols=2,plot_dic=plot_dic,thirdplot=False,
 fig.tight_layout()
 fig.savefig('./Figures/Ideal/JRF/Patellofemoral_Joint_ReactionForce_Fz.pdf',orientation='landscape',bbox_inches='tight')
 plt.show()
-
+'''
 # ***************************
 # ankle joint moment figure
 # MX
 # required dictionary
 plot_dic={
-'plot_1_list' : [unassist_loaded_ankle_RMx_dic,unassist_noload_ankle_RMx_dic,\
-                     unassist_loaded_ankle_RMx_dic,unassist_noload_ankle_RMx_dic],
-'plot_2_list' : [bi_loaded_ankle_RMx_dic,bi_noload_ankle_RMx_dic,\
-                      mono_loaded_ankle_RMx_dic,mono_noload_ankle_RMx_dic],
-'plot_titles' : ['loaded biarticular ankle joint (Mx)','noload biarticular ankle joint (Mx)',\
-                'loaded monoarticular ankle joint (Mx)','noload monoarticular ankle joint (Mx)']
+'plot_1_list' : [unassist_loaded_ankle_RMx_dic,unassist_loaded_ankle_RMy_dic,unassist_loaded_ankle_RMz_dic,\
+                 unassist_loaded_ankle_RMx_dic,unassist_loaded_ankle_RMy_dic,unassist_loaded_ankle_RMz_dic,\
+                 unassist_noload_ankle_RMx_dic,unassist_noload_ankle_RMy_dic,unassist_noload_ankle_RMz_dic,\
+                 unassist_noload_ankle_RMx_dic,unassist_noload_ankle_RMy_dic,unassist_noload_ankle_RMz_dic],
+'plot_2_list' : [bi_loaded_ankle_RMx_dic,bi_loaded_ankle_RMy_dic,bi_loaded_ankle_RMz_dic,\
+                 mono_loaded_ankle_RMx_dic,mono_loaded_ankle_RMy_dic,mono_loaded_ankle_RMz_dic,\
+                 bi_noload_ankle_RMx_dic,bi_noload_ankle_RMy_dic,bi_noload_ankle_RMz_dic,\
+                 mono_noload_ankle_RMx_dic,mono_noload_ankle_RMy_dic,mono_noload_ankle_RMz_dic],
+'plot_titles' : ['loaded biarticular\nankle joint (Mx)','loaded biarticular\nankle joint (My)','loaded biarticular\nankle joint (Mz)',\
+                 'loaded monoarticular\nankle joint (Mx)','loaded monoarticular\nankle joint (My)','loaded monoarticular\nankle joint (Mz)',\
+                 'noload biarticular\nankle joint (Mx)','noload biarticular\nankle joint (My)','noload biarticular\nankle joint (Mz)',\
+                 'noload monoarticular\nankle joint (Mx)','noload monoarticular\nankle joint (My)','noload monoarticular\nankle joint (Mz)'],
+'y_ticks' : [[-0.25,0,0.25,0.50],[-0.50,-0.25,0,0.25],[-0.1,0,0.1],[-0.25,0,0.25,0.50],[-0.50,-0.25,0,0.25],[-0.1,0,0.1],\
+             [-0.25,0,0.25,0.50],[-0.50,-0.25,0,0.25],[-0.1,0,0.1],[-0.25,0,0.25,0.50],[-0.50,-0.25,0,0.25],[-0.1,0,0.1]]
 }
 # plot
+<<<<<<< HEAD
 fig = plt.figure(num='Loaded Ankle Reaction Moment',figsize=(9.4, 6.8))
 utils.plot_joint_muscle_exo(nrows=2,ncols=2,plot_dic=plot_dic,thirdplot=False,
 <<<<<<< HEAD
@@ -1180,7 +1290,17 @@ utils.plot_joint_muscle_exo(nrows=2,ncols=2,plot_dic=plot_dic,thirdplot=False,
 >>>>>>> paper
 fig.tight_layout()
 fig.savefig('./Figures/Ideal/JRF/Ankle_Joint_ReactionMoment_Mx.pdf',orientation='landscape',bbox_inches='tight')
+=======
+fig = plt.figure(num=' Ankle Reaction Moment',figsize=(16.4, 12.8))
+utils.plot_joint_muscle_exo(nrows=4,ncols=3,plot_dic=plot_dic,thirdplot=False,legend_loc=[0,6],
+                            color_dic=default_color_dic,ylabel='hip reaction\n moment (N-m/kg)',xlabel_loc=[9,10,11],
+                            ylabel_loc=[0,3,6,9])
+fig.tight_layout(h_pad=-1.5, w_pad=-1.5)
+fig.subplots_adjust(top=0.99, bottom=0.075, left=0.100, right=0.975,hspace=0.40,wspace=0.15)
+fig.savefig('./Figures/Ideal/JRF/PaperFigure_Ankle_Joint_ReactionMoment.pdf',bbox_inches='tight')
+>>>>>>> development
 plt.show()
+'''
 # MY
 # required dictionary
 plot_dic={
@@ -1227,27 +1347,37 @@ utils.plot_joint_muscle_exo(nrows=2,ncols=2,plot_dic=plot_dic,thirdplot=False,
 fig.tight_layout()
 fig.savefig('./Figures/Ideal/JRF/Ankle_Joint_ReactionMoment_Mz.pdf',orientation='landscape',bbox_inches='tight')
 plt.show()
-
+'''
 # ***************************
 # ankle joint moment figure
 # FX
 # required dictionary
 plot_dic={
-'plot_1_list' : [unassist_loaded_ankle_RFx_dic,unassist_noload_ankle_RFx_dic,\
-                     unassist_loaded_ankle_RFx_dic,unassist_noload_ankle_RFx_dic],
-'plot_2_list' : [bi_loaded_ankle_RFx_dic,bi_noload_ankle_RFx_dic,\
-                      mono_loaded_ankle_RFx_dic,mono_noload_ankle_RFx_dic],
-'plot_titles' : ['loaded biarticular ankle joint (Fx)','noload biarticular ankle joint (Fx)',\
-                'loaded monoarticular ankle joint (Fx)','noload monoarticular ankle joint (Fx)']
+'plot_1_list' : [unassist_loaded_ankle_RFx_dic,unassist_loaded_ankle_RFy_dic,unassist_loaded_ankle_RFz_dic,\
+                 unassist_loaded_ankle_RFx_dic,unassist_loaded_ankle_RFy_dic,unassist_loaded_ankle_RFz_dic,\
+                 unassist_noload_ankle_RFx_dic,unassist_noload_ankle_RFy_dic,unassist_noload_ankle_RFz_dic,\
+                 unassist_noload_ankle_RFx_dic,unassist_noload_ankle_RFy_dic,unassist_noload_ankle_RFz_dic],
+'plot_2_list' : [bi_loaded_ankle_RFx_dic,bi_loaded_ankle_RFy_dic,bi_loaded_ankle_RFz_dic,\
+                 mono_loaded_ankle_RFx_dic,mono_loaded_ankle_RFy_dic,mono_loaded_ankle_RFz_dic,\
+                 bi_noload_ankle_RFx_dic,bi_noload_ankle_RFy_dic,bi_noload_ankle_RFz_dic,\
+                 mono_noload_ankle_RFx_dic,mono_noload_ankle_RFy_dic,mono_noload_ankle_RFz_dic],
+'plot_titles' : ['loaded biarticular\nankle joint (Fx)','loaded biarticular\nankle joint (Fy)','loaded biarticular\nankle joint (Fz)',\
+                 'loaded monoarticular\nankle joint (Fx)','loaded monoarticular\nankle joint (Fy)','loaded monoarticular\nankle joint (Fz)',\
+                 'noload biarticular\nankle joint (Fx)','noload biarticular\nankle joint (Fy)','noload biarticular\nankle joint (Fz)',\
+                 'noload monoarticular\nankle joint (Fx)','noload monoarticular\nankle joint (Fy)','noload monoarticular\nankle joint (Fz)'],
+'y_ticks' : [[-60,-40,-20,0,20],[-80,-60,-40,-20,0,20],[-10,-5,0,5],[-60,-40,-20,0,20],[-80,-60,-40,-20,0,20],[-10,-5,0,5],\
+             [-60,-40,-20,0,20],[-80,-60,-40,-20,0,20],[-10,-5,0,5],[-60,-40,-20,0,20],[-80,-60,-40,-20,0,20],[-10,-5,0,5]]
 }
 # plot
-fig = plt.figure(num='Loaded Ankle Reaction Force',figsize=(9.4, 6.8))
-utils.plot_joint_muscle_exo(nrows=2,ncols=2,plot_dic=plot_dic,thirdplot=False,
-                            color_dic=default_color_dic,ylabel='ankle reaction\n force (N/kg)')
-                            #,y_ticks = [-0.06,-0.03,0,0.03,0.06,0.09])
-fig.tight_layout()
-fig.savefig('./Figures/Ideal/JRF/Ankle_Joint_ReactionForce_Fx.pdf',orientation='landscape',bbox_inches='tight')
+fig = plt.figure(num=' Ankle Reaction Force',figsize=(16.4, 12.8))
+utils.plot_joint_muscle_exo(nrows=4,ncols=3,plot_dic=plot_dic,thirdplot=False,legend_loc=[0,6],
+                            color_dic=default_color_dic,ylabel='hip reaction\n force (N/kg)',xlabel_loc=[9,10,11],
+                            ylabel_loc=[0,3,6,9])
+fig.tight_layout(h_pad=-1.5, w_pad=-1.5)
+fig.subplots_adjust(top=0.99, bottom=0.075, left=0.100, right=0.975,hspace=0.40,wspace=0.15)
+fig.savefig('./Figures/Ideal/JRF/PaperFigure_Ankle_Joint_ReactionForce.pdf',bbox_inches='tight')
 plt.show()
+'''
 # FY
 # required dictionary
 plot_dic={
@@ -1285,10 +1415,14 @@ fig.tight_layout()
 fig.savefig('./Figures/Ideal/JRF/Ankle_Joint_ReactionForce_Fz.pdf',orientation='landscape',bbox_inches='tight')
 plt.show()
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 =======
 '''
 >>>>>>> paper
+=======
+'''
+>>>>>>> development
 ########################################################################################################################################
 default_color_dic = {
 'color_1_list' : ['k','xkcd:irish green','k','xkcd:irish green','k','xkcd:irish green'],
