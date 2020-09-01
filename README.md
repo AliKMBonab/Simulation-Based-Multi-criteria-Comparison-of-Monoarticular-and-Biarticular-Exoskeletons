@@ -1,1 +1,1 @@
-# Opensim_NormalWalking_InertiaMassEffect
+# Simulation Based Biarticular and Monoarticular Exsokeletons Design, Analysis, and Comparison
