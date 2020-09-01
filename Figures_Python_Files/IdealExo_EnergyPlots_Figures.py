@@ -94,7 +94,6 @@ mean_loaded_mono_knee_energy,std_loaded_mono_knee_energy = utils.mean_std_over_s
 mean_loaded_bi_energy,std_loaded_bi_energy = utils.mean_std_over_subjects(assisted_energy_dataset['biarticular_ideal_loaded_hipactuator_energy']+assisted_energy_dataset['biarticular_ideal_loaded_kneeactuator_energy'],ax=0)
 mean_loaded_mono_energy,std_loaded_mono_energy = utils.mean_std_over_subjects(assisted_energy_dataset['monoarticular_ideal_loaded_hipactuator_energy']+assisted_energy_dataset['monoarticular_ideal_loaded_kneeactuator_energy'],ax=0)
 #####################################################################################
-'''
 # Plots
 # muscles metabolic rate figure
 # noload mono vs bi
@@ -179,12 +178,12 @@ headers = ['subjects','assistance','metabolic rate 01','metabolic rate 02','meta
 subject_col = np.tile(subjects,6)
 assistance_col = np.concatenate((loaded_unassist_col,loaded_monoarticular_col,loaded_biarticular_col,
                                  noload_unassist_col,noload_monoarticular_col,noload_biarticular_col),axis=0)
-metabolic_rate_data = np.concatenate((np.reshape(unassisted_energy_dataset['loaded_metabolics_energy'],(7,3),order='F'),\
-                                      np.reshape(assisted_energy_dataset['monoarticular_ideal_loaded_metabolics_energy'],(7,3),order='F'),\
-                                      np.reshape(assisted_energy_dataset['biarticular_ideal_loaded_metabolics_energy'],(7,3),order='F'),\
-                                      np.reshape(unassisted_energy_dataset['noload_metabolics_energy'],(7,3),order='F'),\
-                                      np.reshape(assisted_energy_dataset['monoarticular_ideal_noload_metabolics_energy'],(7,3),order='F'),\
-                                      np.reshape(assisted_energy_dataset['biarticular_ideal_noload_metabolics_energy'],(7,3),order='F')),axis=0)
+metabolic_rate_data = np.concatenate((np.reshape(unassisted_energy_dataset['loaded_metabolics_energy'],(7,3)),\
+                                      np.reshape(assisted_energy_dataset['monoarticular_ideal_loaded_metabolics_energy'],(7,3)),\
+                                      np.reshape(assisted_energy_dataset['biarticular_ideal_loaded_metabolics_energy'],(7,3)),\
+                                      np.reshape(unassisted_energy_dataset['noload_metabolics_energy'],(7,3)),\
+                                      np.reshape(assisted_energy_dataset['monoarticular_ideal_noload_metabolics_energy'],(7,3)),\
+                                      np.reshape(assisted_energy_dataset['biarticular_ideal_noload_metabolics_energy'],(7,3))),axis=0)
 final_dataset = np.column_stack([assistance_col,metabolic_rate_data])
 final_dataset = np.column_stack([subject_col,final_dataset])
 with open(r'.\Statistics\Ideal\MetabolicRate_Dataset.csv', 'wb') as f:
@@ -205,14 +204,14 @@ noload_monoarticular_knee_col = np.repeat(np.array('noload monoarticular knee ac
 subject_col = np.tile(subjects,8)
 assistive_actuators_col = np.concatenate((loaded_biarticular_hip_col,loaded_biarticular_knee_col,loaded_monoarticular_hip_col,loaded_monoarticular_knee_col,
                                           noload_biarticular_hip_col,noload_biarticular_knee_col,noload_monoarticular_hip_col,noload_monoarticular_knee_col),axis=0)
-assistive_actuators_avg_totalpower_data = np.concatenate((np.reshape(assisted_energy_dataset['biarticular_ideal_loaded_hipactuator_energy'],(7,3),order='F'),\
-                                                        np.reshape(assisted_energy_dataset['biarticular_ideal_loaded_kneeactuator_energy'],(7,3),order='F'),\
-                                                        np.reshape(assisted_energy_dataset['monoarticular_ideal_loaded_hipactuator_energy'],(7,3),order='F'),\
-                                                        np.reshape(assisted_energy_dataset['monoarticular_ideal_loaded_kneeactuator_energy'],(7,3),order='F'),\
-                                                        np.reshape(assisted_energy_dataset['biarticular_ideal_noload_hipactuator_energy'],(7,3),order='F'),\
-                                                        np.reshape(assisted_energy_dataset['biarticular_ideal_noload_kneeactuator_energy'],(7,3),order='F'),\
-                                                        np.reshape(assisted_energy_dataset['monoarticular_ideal_noload_hipactuator_energy'],(7,3),order='F'),\
-                                                        np.reshape(assisted_energy_dataset['monoarticular_ideal_noload_kneeactuator_energy'],(7,3),order='F')),axis=0)
+assistive_actuators_avg_totalpower_data = np.concatenate((np.reshape(assisted_energy_dataset['biarticular_ideal_loaded_hipactuator_energy'],(7,3)),\
+                                                        np.reshape(assisted_energy_dataset['biarticular_ideal_loaded_kneeactuator_energy'],(7,3)),\
+                                                        np.reshape(assisted_energy_dataset['monoarticular_ideal_loaded_hipactuator_energy'],(7,3)),\
+                                                        np.reshape(assisted_energy_dataset['monoarticular_ideal_loaded_kneeactuator_energy'],(7,3)),\
+                                                        np.reshape(assisted_energy_dataset['biarticular_ideal_noload_hipactuator_energy'],(7,3)),\
+                                                        np.reshape(assisted_energy_dataset['biarticular_ideal_noload_kneeactuator_energy'],(7,3)),\
+                                                        np.reshape(assisted_energy_dataset['monoarticular_ideal_noload_hipactuator_energy'],(7,3)),\
+                                                        np.reshape(assisted_energy_dataset['monoarticular_ideal_noload_kneeactuator_energy'],(7,3))),axis=0)
 final_dataset = np.column_stack([assistive_actuators_col,assistive_actuators_avg_totalpower_data])
 final_dataset = np.column_stack([subject_col,final_dataset])
 with open(r'.\Statistics\Ideal\ActuatorsAvgPower_Dataset.csv', 'wb') as f:
@@ -572,7 +571,6 @@ utils.no_top_right(ax[1,1])
 fig.tight_layout()
 plt.show()
 fig.savefig('./Figures/Ideal/Actuator_Energy_BoxPlot.pdf',orientation='landscape',bbox_inches='tight')
-'''
 
 ########################################################################################
 # Paper figure
