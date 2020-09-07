@@ -23,6 +23,7 @@ from Colors import colors as mycolors
 subjects = ['05','07','09','10','11','12','14']
 trials_num = ['01','02','03']
 gait_cycle = np.linspace(0,100,1000)
+plt.rcParams.update({'font.size':12})
 #####################################################################################
 # Reading CSV files into a dictionary and constructing gls
 rra_dataset = utils.csv2numpy('D:/Ali.K.M.Bonab/Walking_Mass_Inertia_Effect/Data/Data/RRA/rra_final_data.csv') 
@@ -182,7 +183,7 @@ data = [utils.mean_over_trials(unassisted_energy_dataset['noload_metabolics_ener
         utils.mean_over_trials(unassisted_energy_dataset['loaded_metabolics_energy']),\
         utils.mean_over_trials(assisted_energy_dataset['biarticular_hip50knee60_load_metabolics_energy']),\
         utils.mean_over_trials(assisted_energy_dataset['biarticular_hip30knee50_noload_metabolics_energy'])]
-fig= plt.figure(figsize=(9.6, 4.8))
+fig= plt.figure(figsize=(6.4*1.5, 4.8))
 plt.subplot(1,2,1)
 bp = plt.boxplot(data, patch_artist=True)
 ax = plt.gca()

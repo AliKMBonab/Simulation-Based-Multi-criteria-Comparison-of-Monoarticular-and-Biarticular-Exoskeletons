@@ -66,12 +66,12 @@ unassist_noload_muscles_activation_dic = {'pgc':gait_cycle,'avg':mean_unassist_n
 muscles_activation_noload_plot_dic = {'pgc':gait_cycle,'avg':mean_unassist_noload_muscles_activation,'muscle_group': 'nine_muscles',
                                       'label':'noload, unassist','std':std_unassist_noload_muscles_activation,'avg_toeoff':noload_mean_toe_off}
 muscles_activation_loaded_plot_dic = {'pgc':gait_cycle,'avg':mean_unassist_loaded_muscles_activation,'muscle_group': 'nine_muscles',
-                                      'label':'noload, unassist','std':std_unassist_loaded_muscles_activation,'avg_toeoff':loaded_mean_toe_off}
+                                      'label':'loaded, unassist','std':std_unassist_loaded_muscles_activation,'avg_toeoff':loaded_mean_toe_off}
 muscles_activation_monoarticular_noload_plot_dic = {'pgc':gait_cycle,'avg':mean_mono_noload_muscles_activation,'muscle_group': 'nine_muscles',
                                                 'label':'noload, monoarticular','std':std_mono_noload_muscles_activation,'avg_toeoff':noload_mean_toe_off}
 muscles_activation_monoarticular_loaded_plot_dic = {'pgc':gait_cycle,'avg':mean_mono_loaded_muscles_activation,'muscle_group': 'nine_muscles',
-                                                'label':'noload, monoarticular','std':std_mono_loaded_muscles_activation,'avg_toeoff':loaded_mean_toe_off}
-
+                                                'label':'loaded, monoarticular','std':std_mono_loaded_muscles_activation,'avg_toeoff':loaded_mean_toe_off}
+plt.rcParams.update({'font.size':12})
 # muscles activation figure
 # monoarticular
 fig, ax = plt.subplots(num='Monoarticular Noload Muscles Activation',figsize=(8.4, 6.8))
@@ -92,11 +92,11 @@ fig.tight_layout()
 fig.savefig('./Figures/Specific_Weights/NoloadMono25_LoadedMono05/Monoarticular_Loaded_MusclesActivation.pdf',orientation='landscape',bbox_inches='tight')
 
 # monoarticular versus monoarticular
-fig, ax = plt.subplots(num='Noload Muscles Activation',figsize=(8.4, 6.8))
-utils.plot_muscles_avg(plot_dic=muscles_activation_noload_plot_dic,toeoff_color='xkcd:shamrock green',color='xkcd:irish green',is_std=False)
+fig, ax = plt.subplots(num='Noload Muscles Activation',figsize=(10.4, 6.8))
+utils.plot_muscles_avg(plot_dic=muscles_activation_noload_plot_dic,toeoff_color='xkcd:shamrock green',color='xkcd:irish green',is_std=False,ls='--')
 utils.plot_muscles_avg(plot_dic=muscles_activation_loaded_plot_dic,toeoff_color='grey',color='k',is_std=False)
-utils.plot_muscles_avg(plot_dic=muscles_activation_monoarticular_noload_plot_dic,toeoff_color='xkcd:shamrock green',color=mycolors['french rose'],is_std=False)
-utils.plot_muscles_avg(plot_dic=muscles_activation_monoarticular_loaded_plot_dic,toeoff_color='grey',color=mycolors['crimson red'],is_std=False)
+utils.plot_muscles_avg(plot_dic=muscles_activation_monoarticular_noload_plot_dic,toeoff_color='xkcd:shamrock green',color=mycolors['french rose'],is_std=False,ls='-.')
+utils.plot_muscles_avg(plot_dic=muscles_activation_monoarticular_loaded_plot_dic,toeoff_color='grey',color=mycolors['crimson red'],is_std=False,ls=':')
 plt.legend(loc='best',frameon=False)
 plt.show()
 fig.tight_layout()

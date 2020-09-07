@@ -82,6 +82,7 @@ mean_mono_noload_patellofemoral_joint_jrf_Fz, std_mono_noload_patellofemoral_joi
 # profile plots
 #************************************************************************************
 # torque profile
+plt.rcParams.update({'font.size': 14})
 fig, axes = plt.subplots(nrows=4,ncols=3,num='Pareto Curve: loaded mono vs bi',figsize=(12.6, 14.8))
 # biarticular loaded Fx
 plot_dic = {'data':utils.smooth(mean_bi_loaded_patellofemoral_joint_jrf_Fx,5,multidim=True),

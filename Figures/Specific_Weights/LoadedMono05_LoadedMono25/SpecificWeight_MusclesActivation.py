@@ -89,10 +89,10 @@ fig.tight_layout()
 fig.savefig('./Figures/Specific_Weights/LoadedMono05_LoadedMono25/Monoarticular_Ae_Loaded_MusclesActivation.pdf',orientation='landscape',bbox_inches='tight')
 
 # monoarticular versus monoarticular_ee
-fig, ax = plt.subplots(num='Loaded Muscles Activation',figsize=(8.4, 6.8))
+fig, ax = plt.subplots(num='Loaded Muscles Activation',figsize=(10.4, 6.8))
 utils.plot_muscles_avg(plot_dic=muscles_activation_loaded_plot_dic,toeoff_color='grey',color='k',is_std=False)
-utils.plot_muscles_avg(plot_dic=muscles_activation_monoarticular_ee_loaded_plot_dic,toeoff_color='grey',color='lightsteelblue',is_std=False)
-utils.plot_muscles_avg(plot_dic=muscles_activation_monoarticular_loaded_plot_dic,toeoff_color='grey',color='blue',is_std=False)
+utils.plot_muscles_avg(plot_dic=muscles_activation_monoarticular_ee_loaded_plot_dic,toeoff_color='grey',color='lightsteelblue',is_std=False,ls='--')
+utils.plot_muscles_avg(plot_dic=muscles_activation_monoarticular_loaded_plot_dic,toeoff_color='grey',color='blue',is_std=False,ls='-.')
 plt.legend(loc='best',frameon=False)
 plt.show()
 fig.tight_layout()

@@ -77,6 +77,7 @@ with open(r'.\Statistics\Specific_Weights\NoloadBi23_LoadedBi23\MetabolicRate_Da
 
 #****************************************************************
 #establishing dataset for assistive actuators average total power 
+plt.rcParams.update({'font.size':12})
 headers = ['subjects','assistive actuator','avg total power 01','avg total power 02','avg total power 03']
 loaded_biarticular_hip_col = np.repeat(np.array('loaded biarticular hip actuator'),7)
 noload_biarticular_hip_col = np.repeat(np.array('noload biarticular hip actuator'),7)
@@ -182,7 +183,7 @@ data = [utils.mean_over_trials(unassisted_energy_dataset['noload_metabolics_ener
         utils.mean_over_trials(unassisted_energy_dataset['loaded_metabolics_energy']),\
         utils.mean_over_trials(assisted_energy_dataset['biarticular_hip30knee50_load_metabolics_energy']),\
         utils.mean_over_trials(assisted_energy_dataset['biarticular_hip30knee50_noload_metabolics_energy'])]
-fig= plt.figure(figsize=(9.6, 4.8))
+fig= plt.figure(figsize=(6.4*1.5, 4.8))
 plt.subplot(1,2,1)
 bp = plt.boxplot(data, patch_artist=True)
 ax = plt.gca()

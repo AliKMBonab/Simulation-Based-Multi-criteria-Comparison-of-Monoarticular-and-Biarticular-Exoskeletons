@@ -24,6 +24,7 @@ import matplotlib.gridspec as gridspec
 subjects = ['05','07','09','10','11','12','14']
 trials_num = ['01','02','03']
 gait_cycle = np.linspace(0,100,1000)
+plt.rcParams.update({'font.size':12})
 #####################################################################################
 # Reading CSV files into a dictionary and constructing gls
 rra_dataset = utils.csv2numpy('D:/Ali.K.M.Bonab/Walking_Mass_Inertia_Effect/Data/Data/RRA/rra_final_data.csv') 
@@ -288,12 +289,14 @@ plot_dic={
 'plot_titles' : ['loaded monoarticular "Ee" hip joint','loaded monoarticular "Ae" hip joint','loaded monoarticular "Ee" knee joint','loaded monoarticular "Ae" knee joint']
 }
 # plot
-fig = plt.figure(num='Paper figure',figsize=(9.4, 6.8))
+fig = plt.figure(num='Paper figure',figsize=(6.4*3,4.8*2))
 utils.plot_joint_muscle_exo(nrows=2,ncols=2,plot_dic=plot_dic,color_dic=monovsmono_Ee_color_dic,\
                             thirdplot=True,ylabel=' flexion/extension\n(N-m/kg)',y_ticks=np.arange(-2,3,1))
 fig.tight_layout()
-plt.show()
+fig.tight_layout(h_pad=-1, w_pad=-1.5)
+fig.subplots_adjust(top=0.98, bottom=0.075, left=0.100, right=0.975,hspace=0.25,wspace=0.15)
 fig.savefig('./Figures/Specific_Weights/LoadedMono05_LoadedMono25/PaperFigure_TorqueProfiles.pdf',orientation='landscape',bbox_inches='tight')
+plt.show()
 
 plot_dic={
 'plot_1_list' : [loaded_hip_power_dic,loaded_hip_power_dic,loaded_knee_power_dic,loaded_knee_power_dic],

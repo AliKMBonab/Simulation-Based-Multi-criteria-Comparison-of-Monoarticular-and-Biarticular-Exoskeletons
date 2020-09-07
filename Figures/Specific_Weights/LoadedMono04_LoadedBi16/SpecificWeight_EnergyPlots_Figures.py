@@ -94,6 +94,7 @@ with open(r'.\Statistics\Specific_Weights\LoadedMono04_LoadedBi16\ActuatorsAvgPo
 #####################################################################################
 # Plots
 # Biarticular VS Monoarticular
+plt.rcParams.update({'font.size': 12})
 names = ['unassist, loaded','mono, loaded','bi, loaded']
 data = [mean_loaded_unassist_energy,mean_loaded_mono_energy,mean_loaded_bi_energy]
 err = [std_loaded_unassist_energy,std_loaded_mono_energy,std_loaded_bi_energy]
@@ -135,7 +136,7 @@ x = np.arange(1,len(names)+1,1)
 data = [utils.mean_over_trials(unassisted_energy_dataset['loaded_metabolics_energy']),\
         utils.mean_over_trials(assisted_energy_dataset['monoarticular_hip70knee40_load_metabolics_energy']),\
         utils.mean_over_trials(assisted_energy_dataset['biarticular_hip40knee70_load_metabolics_energy'])]
-fig= plt.figure(figsize=(9.6, 4.8))
+fig= plt.figure(figsize=(6.4*1.5, 4.8))
 plt.subplot(1,2,1)
 bp = plt.boxplot(data, patch_artist=True)
 ax = plt.gca()

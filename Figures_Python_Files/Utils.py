@@ -678,7 +678,8 @@ def plot_joint_muscle_exo (nrows,ncols,plot_dic,color_dic,
                            ylabel,nplots=None,legend_loc=[0,1],
                            subplot_legend=False,fig=None,thirdplot=True,
                            y_ticks = [-2,-1,0,1,2],remove_subplot_loc=None,
-                           xlabel_loc=None,ylabel_loc=None,yticks_loc=None):
+                           xlabel_loc=None,ylabel_loc=None,yticks_loc=None,
+                           legend_out=True):
     '''Note: please note that since it is in the for loop, if some data is
     needed to plot several times it should be repeated in the lists.  '''
     if nplots is None:
@@ -730,8 +731,9 @@ def plot_joint_muscle_exo (nrows,ncols,plot_dic,color_dic,
             handle2,label2 = ax_list[legend_loc[1]].get_legend_handles_labels()
             plt.figlegend(handles=handle1,labels=label1, bbox_to_anchor=(pos.x0+0.05, pos.y0-0.05,  pos.width / 1.5, pos.height / 1.5))
             plt.figlegend(handles=handle2,labels=label2, bbox_to_anchor=(pos.x0+0.05, pos.y0+0.05,  pos.width / 1.5, pos.height / 1.5))
-        elif i in legend_loc and subplot_legend == False:
+        elif i in legend_loc and subplot_legend == False and legend_out==True:
             plt.legend(bbox_to_anchor=(-0.30, 1),loc='upper right',frameon=False,prop={'size': 18})
+        elif i in legend_loc and subplot_legend == False and legend_out==False:
         if xlabel_loc != None:
             if i in xlabel_loc:
                 ax.set_xlabel('gait cycle (%)',fontsize=18)

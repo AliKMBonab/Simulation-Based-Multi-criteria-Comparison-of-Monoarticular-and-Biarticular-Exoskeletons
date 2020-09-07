@@ -23,6 +23,7 @@ from Colors import colors as mycolors
 subjects = ['05','07','09','10','11','12','14']
 trials_num = ['01','02','03']
 gait_cycle = np.linspace(0,100,1000)
+plt.rcParams.update({'font.size':12})
 #####################################################################################
 # Reading CSV files into a dictionary and constructing gls
 rra_dataset = utils.csv2numpy('D:/Ali.K.M.Bonab/Walking_Mass_Inertia_Effect/Data/Data/RRA/rra_final_data.csv') 
@@ -92,10 +93,10 @@ fig.tight_layout()
 fig.savefig('./Figures/Specific_Weights/NoloadBi01_NoloadBi11/Biarticular_Noload_Ea_MusclesActivation.pdf',orientation='landscape',bbox_inches='tight')
 
 # monoarticular versus biarticular
-fig, ax = plt.subplots(num='Noload Muscles Activation',figsize=(8.4, 6.8))
+fig, ax = plt.subplots(num='Noload Muscles Activation',figsize=(10.4, 6.8))
 utils.plot_muscles_avg(plot_dic=muscles_activation_noload_plot_dic,toeoff_color='xkcd:shamrock green',color='xkcd:irish green',is_std=False)
-utils.plot_muscles_avg(plot_dic=muscles_activation_biarticular_noload_plot_dic,toeoff_color='xkcd:shamrock green',color=mycolors['french rose'],is_std=False)
-utils.plot_muscles_avg(plot_dic=muscles_activation_biarticular_loaded_plot_dic,toeoff_color='xkcd:shamrock green',color='darkorange',is_std=False)
+utils.plot_muscles_avg(plot_dic=muscles_activation_biarticular_noload_plot_dic,toeoff_color='xkcd:shamrock green',color=mycolors['french rose'],is_std=False,ls='--')
+utils.plot_muscles_avg(plot_dic=muscles_activation_biarticular_loaded_plot_dic,toeoff_color='xkcd:shamrock green',color='darkorange',is_std=False,ls='-.')
 plt.legend(loc='best',frameon=False)
 plt.show()
 fig.tight_layout()

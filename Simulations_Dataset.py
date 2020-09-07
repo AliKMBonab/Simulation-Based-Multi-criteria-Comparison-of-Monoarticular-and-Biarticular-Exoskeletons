@@ -190,9 +190,9 @@ loads = ['loaded','noload']
 #cases_dir = ['Unassist','Ideal','Ideal','Pareto','Pareto']
 #***************************
 configs = ['Monoarticular','Biarticular']
-config_names = ['monoarticular_paretofront','biarticular_paretofront']
-cases = ['Paretofront','Paretofront']
-cases_dir = ['Pareto','Pareto']
+config_names = ['monoarticular_ideal','biarticular_ideal']
+cases = ['Ideal','Ideal']
+cases_dir = ['Ideal','Ideal']
 
 #***************************
 print('Section 06:\t extracting reaction forces.\n')

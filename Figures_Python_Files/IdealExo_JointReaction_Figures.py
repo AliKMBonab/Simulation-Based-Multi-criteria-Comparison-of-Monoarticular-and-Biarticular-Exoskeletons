@@ -832,6 +832,7 @@ plt.show()
 # hip joint force figure
 # Fx
 # required dictionary
+plt.rcParams.update({'font.size': 12})
 plot_dic={
 'plot_1_list' : [unassist_loaded_hip_RFx_dic,unassist_loaded_hip_RFy_dic,unassist_loaded_hip_RFz_dic,\
                  unassist_loaded_hip_RFx_dic,unassist_loaded_hip_RFy_dic,unassist_loaded_hip_RFz_dic,\

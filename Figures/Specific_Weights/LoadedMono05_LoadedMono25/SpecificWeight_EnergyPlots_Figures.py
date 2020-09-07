@@ -55,6 +55,7 @@ mean_loaded_mono_energy,std_loaded_mono_energy = utils.mean_std_over_subjects(as
 #####################################################################################
 # writing data to csv for statistical analyses
 # general columns 
+plt.rcParams.update({'font.size': 12})
 subjects = np.array(['subject05','subject07','subject09','subject10','subject11','subject12','subject14'])
 unassist_col = np.repeat(np.array('unassist'),7)
 biarticular_col = np.repeat(np.array('biarticular'),7)
@@ -68,7 +69,7 @@ metabolic_rate_data = np.concatenate((np.reshape(unassisted_energy_dataset['load
                                 np.reshape(assisted_energy_dataset['biarticular_hip40knee70_load_metabolics_energy'],(7,3))),axis=0)
 final_dataset = np.column_stack([assistance_col,metabolic_rate_data])
 final_dataset = np.column_stack([subject_col,final_dataset])
-with open(r'.\Statistics\Specific_Weights\LoadedMono04_LoadedBi16\MetabolicRate_Dataset.csv', 'wb') as f:
+with open(r'.\Statistics\Specific_Weights\LoadedMono05_LoadedMono25\MetabolicRate_Dataset.csv', 'wb') as f:
   f.write(bytes(utils.listToString(headers)+'\n','UTF-8'))
   np.savetxt(f, final_dataset, fmt='%s', delimiter=",")
 
@@ -87,7 +88,7 @@ assistive_actuators_avg_totalpower_data = np.concatenate((np.reshape(assisted_en
                                                 np.reshape(assisted_energy_dataset['monoarticular_hip70knee40_load_kneeactuator_energy'],(7,3))),axis=0)
 final_dataset = np.column_stack([assistive_actuators_col,assistive_actuators_avg_totalpower_data])
 final_dataset = np.column_stack([subject_col,final_dataset])
-with open(r'.\Statistics\Specific_Weights\LoadedMono04_LoadedBi16\ActuatorsAvgPower_Dataset.csv', 'wb') as f:
+with open(r'.\Statistics\Specific_Weights\LoadedMono05_LoadedMono25\ActuatorsAvgPower_Dataset.csv', 'wb') as f:
   f.write(bytes(utils.listToString(headers)+'\n','UTF-8'))
   np.savetxt(f, final_dataset, fmt='%s', delimiter=",")
 
@@ -105,7 +106,7 @@ ax.set_ylabel('Metabolic Rate (W/Kg)')
 ax.set_xticks(names)
 ax.set_xticklabels(names)
 utils.no_top_right(ax)
-fig.savefig('./Figures/Specific_Weights/LoadedMono04_LoadedBi16/Metabolic_Rate_BarPlot.pdf',orientation='landscape',bbox_inches='tight')
+fig.savefig('./Figures/Specific_Weights/LoadedMono05_LoadedMono25/Metabolic_Rate_BarPlot.pdf',orientation='landscape',bbox_inches='tight')
 
 #******************************************************************
 # Metabolic Bar Plot
@@ -123,7 +124,7 @@ ax.set_xticklabels(names)
 utils.no_top_right(ax)
 fig.tight_layout()
 plt.show()
-fig.savefig('./Figures/Specific_Weights/LoadedMono04_LoadedBi16/Metabolic_Percent_ParPlot.pdf',orientation='landscape',bbox_inches='tight')
+fig.savefig('./Figures/Specific_Weights/LoadedMono05_LoadedMono25/Metabolic_Percent_ParPlot.pdf',orientation='landscape',bbox_inches='tight')
 
 
 #******************************************************************
@@ -135,7 +136,7 @@ x = np.arange(1,len(names)+1,1)
 data = [utils.mean_over_trials(unassisted_energy_dataset['loaded_metabolics_energy']),\
         utils.mean_over_trials(assisted_energy_dataset['monoarticular_hip70knee40_load_metabolics_energy']),\
         utils.mean_over_trials(assisted_energy_dataset['biarticular_hip40knee70_load_metabolics_energy'])]
-fig= plt.figure(figsize=(9.6, 4.8))
+fig= plt.figure(figsize=(6.4*1.5, 4.8))
 plt.subplot(1,2,1)
 bp = plt.boxplot(data, patch_artist=True)
 ax = plt.gca()
@@ -169,5 +170,5 @@ ax.set_xticklabels(names)
 utils.no_top_right(ax)
 fig.tight_layout(h_pad=-1, w_pad=-1.5)
 fig.subplots_adjust(top=0.98, bottom=0.075, left=0.100, right=0.975,hspace=0.35,wspace=0.15)
-fig.savefig('./Figures/Specific_Weights/LoadedMono04_LoadedBi16/PaperFigure_BoxPlot.pdf',orientation='landscape',bbox_inches='tight')
+fig.savefig('./Figures/Specific_Weights/LoadedMono05_LoadedMono25/PaperFigure_BoxPlot.pdf',orientation='landscape',bbox_inches='tight')
 plt.show()

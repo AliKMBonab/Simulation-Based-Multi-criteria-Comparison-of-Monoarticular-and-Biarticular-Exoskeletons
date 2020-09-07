@@ -82,6 +82,7 @@ mean_mono_noload_ankle_joint_jrf_Mz, std_mono_noload_ankle_joint_jrf_Mz = utils.
 # profile plots
 #************************************************************************************
 # torque profile
+plt.rcParams.update({'font.size': 14})
 fig, axes = plt.subplots(nrows=4,ncols=3,num='Pareto Curve: loaded mono vs bi',figsize=(12.6, 14.8))
 # biarticular loaded Mx
 plot_dic = {'data':utils.smooth(mean_bi_loaded_ankle_joint_jrf_Mx,5,multidim=True),
