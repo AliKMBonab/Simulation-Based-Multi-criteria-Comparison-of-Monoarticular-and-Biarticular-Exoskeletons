@@ -1346,31 +1346,33 @@ def idealdevice_data_extraction(Subject_Dic,loadcond='noload',calculatenergy=Tru
                                      "gl": gl,
                            "Subject_Mass": subject_mass}
                 if regen_energy == False:
-                    hip_actuator_energy = actuators_energy_calc(Subject_Dic=energy_dic,regen=regen_energy)
+                    hip_actuator_energy, hip_max_power, hip_pos_power, hip_neg_power = actuators_energy_calc(Subject_Dic=energy_dic,regen=regen_energy,max_avg_power=True)
                     hip_proc_actuator_energy = actuator_energy_proc_power(Subject_Dic=energy_dic,regen=regen_energy)
                 else:
-                    hip_actuator_energy,hip_actuator_regen_energy = actuators_energy_calc(Subject_Dic=energy_dic,regen=regen_energy)
-                    hip_proc_actuator_energy,hip_proc_actuator_regen_energy = actuator_energy_proc_power(Subject_Dic=energy_dic,regen=regen_energy)
+                    hip_actuator_energy,hip_actuator_regen_energy, hip_max_power, hip_pos_power, hip_neg_power = actuators_energy_calc(Subject_Dic=energy_dic,regen=regen_energy,max_avg_power=True)
+                    hip_proc_actuator_energy,hip_proc_actuator_regen_energy= actuator_energy_proc_power(Subject_Dic=energy_dic,regen=regen_energy)
                 energy_dic = {"Directory":actuator_power_data_dir,
                         "Right_Parameter":'Knee_Right_Actuator',
                          "Left_Parameter":'Knee_Left_Actuator',
                                      "gl": gl,
                            "Subject_Mass": subject_mass}
                 if regen_energy == False:
-                    knee_actuator_energy = actuators_energy_calc(Subject_Dic=energy_dic,regen=regen_energy)
+                    knee_actuator_energy, knee_max_power, knee_pos_power, knee_neg_power = actuators_energy_calc(Subject_Dic=energy_dic,regen=regen_energy,max_avg_power=True)
                     knee_proc_actuator_energy = actuator_energy_proc_power(Subject_Dic=energy_dic,regen=regen_energy)
                 else:
-                     knee_actuator_energy,knee_actuator_regen_energy = actuators_energy_calc(Subject_Dic=energy_dic,regen=regen_energy)
+                     knee_actuator_energy,knee_actuator_regen_energy, knee_max_power, knee_pos_power, knee_neg_power = actuators_energy_calc(Subject_Dic=energy_dic,regen=regen_energy,max_avg_power=True)
                      knee_proc_actuator_energy,knee_proc_actuator_regen_energy = actuator_energy_proc_power(Subject_Dic=energy_dic,regen=regen_energy)
     if regen_energy == False:
         return hip_actuator_torque,knee_actuator_torque,hip_actuator_power,knee_actuator_power,\
             hip_actuator_speed,knee_actuator_speed,hip_actuator_energy,knee_actuator_energy,\
-            hip_proc_actuator_energy,knee_proc_actuator_energy,hip_actuator_kinematics,knee_actuator_kinematics
+            hip_proc_actuator_energy,knee_proc_actuator_energy,hip_actuator_kinematics,knee_actuator_kinematics,\
+            hip_max_power, hip_pos_power, hip_neg_power, knee_max_power, knee_pos_power, knee_neg_power
     else:
         return hip_actuator_torque,knee_actuator_torque,hip_actuator_power,knee_actuator_power,\
             hip_actuator_speed,knee_actuator_speed,hip_actuator_energy,knee_actuator_energy,\
             hip_actuator_regen_energy,knee_actuator_regen_energy,hip_proc_actuator_energy,knee_proc_actuator_energy,\
-            hip_proc_actuator_regen_energy,knee_proc_actuator_regen_energy,hip_actuator_kinematics,knee_actuator_kinematics
+            hip_proc_actuator_regen_energy,knee_proc_actuator_regen_energy,hip_actuator_kinematics,knee_actuator_kinematics,\
+            hip_max_power, hip_pos_power, hip_neg_power, knee_max_power, knee_pos_power, knee_neg_power
 
 
 def unassist_idealdevice_data_subjects(configuration,loadcond='noload',metabolicrate=True,musclesmoment=True,
@@ -1390,6 +1392,7 @@ def unassist_idealdevice_data_subjects(configuration,loadcond='noload',metabolic
     musclesgroup = 9
     muscles_num = 40
     # initialization
+    # energy consumptions
     KneeActuatorEnergy_Data = np.zeros(len(subjects)*len(trials_num))
     HipActuatorEnergy_Data = np.zeros(len(subjects)*len(trials_num))
     Regen_KneeActuatorEnergy_Data = np.zeros(len(subjects)*len(trials_num))
@@ -1400,6 +1403,14 @@ def unassist_idealdevice_data_subjects(configuration,loadcond='noload',metabolic
     Regen_KneeActuatorEnergy_Proc_Data = np.zeros(len(subjects)*len(trials_num))
     Regen_HipActuatorEnergy_Proc_Data = np.zeros(len(subjects)*len(trials_num))
     MetabolicEnergy_Proc_Data = np.zeros(len(subjects)*len(trials_num))
+    # positive/negative avg and maximum positive power
+    KneeActuator_Max_Positive_Power_Data = np.zeros(len(subjects)*len(trials_num))
+    HipActuator_Max_Positive_Power_Data = np.zeros(len(subjects)*len(trials_num))
+    KneeActuator_Positive_Power_Data = np.zeros(len(subjects)*len(trials_num))
+    HipActuator_Positive_Power_Data = np.zeros(len(subjects)*len(trials_num))
+    KneeActuator_Negative_Power_Data = np.zeros(len(subjects)*len(trials_num))
+    HipActuator_Negative_Power_Data = np.zeros(len(subjects)*len(trials_num))
+    # torque, power, and speed data
     HipActuator_Torque_Data = np.zeros([1000,len(subjects)*len(trials_num)])
     KneeActuator_Torque_Data = np.zeros([1000,len(subjects)*len(trials_num)])
     HipActuator_Power_Data = np.zeros([1000,len(subjects)*len(trials_num)])
@@ -1437,12 +1448,14 @@ def unassist_idealdevice_data_subjects(configuration,loadcond='noload',metabolic
                 if regenergy == False:
                     hip_torque,knee_torque,hip_power,knee_power,hip_speed,\
                     knee_speed,hip_energy,knee_energy,hip_proc_energy,knee_proc_energy,\
-                    hip_kinematics,knee_kinematics= idealdevice_data_extraction(Subject_Dictionary,loadcond=loadcond)
+                    hip_kinematics,knee_kinematics,hip_max_power, hip_pos_power, hip_neg_power,\
+                    knee_max_power, knee_pos_power, knee_neg_power= idealdevice_data_extraction(Subject_Dictionary,loadcond=loadcond)
                 else:
                     hip_torque,knee_torque,hip_power,knee_power,hip_speed,\
                     knee_speed,hip_energy,knee_energy,hip_regen_energy,knee_regen_energy,\
                     hip_proc_energy,knee_proc_energy,hip_proc_regen_energy,knee_proc_regen_energy,\
-                    hip_kinematics,knee_kinematics = idealdevice_data_extraction(Subject_Dictionary,loadcond=loadcond,regen_energy=regenergy)
+                    hip_kinematics,knee_kinematics, hip_max_power, hip_pos_power, hip_neg_power,\
+                    knee_max_power, knee_pos_power, knee_neg_power = idealdevice_data_extraction(Subject_Dictionary,loadcond=loadcond,regen_energy=regenergy)
                     Regen_HipActuatorEnergy_Data[c]     = hip_regen_energy
                     Regen_KneeActuatorEnergy_Data[c]    = knee_regen_energy
                     Regen_HipActuatorEnergy_Proc_Data[c]  = hip_proc_regen_energy
@@ -1461,6 +1474,12 @@ def unassist_idealdevice_data_subjects(configuration,loadcond='noload',metabolic
                 KneeActuatorEnergy_Data[c]    = knee_energy
                 HipActuatorEnergy_Proc_Data[c]     = hip_proc_energy
                 KneeActuatorEnergy_Proc_Data[c]    = knee_proc_energy
+                KneeActuator_Max_Positive_Power_Data[c] = knee_max_power
+                HipActuator_Max_Positive_Power_Data[c] = hip_max_power
+                KneeActuator_Positive_Power_Data[c] = knee_pos_power
+                HipActuator_Positive_Power_Data[c] = hip_pos_power
+                KneeActuator_Negative_Power_Data[c] = knee_neg_power
+                HipActuator_Negative_Power_Data[c] = hip_neg_power
             if musclesactivation == True:
                 muscles_activation = group_muscles_activation(Subject_Dictionary,whichgroup=whichgroup,loadcond=loadcond)
                 MuscleActivation_Data[:,c_m:c_m+musclesgroup] = muscles_activation
@@ -1520,7 +1539,9 @@ def unassist_idealdevice_data_subjects(configuration,loadcond='noload',metabolic
             HipMuscleMoment_Data,KneeMuscleMoment_Data,\
             HipActuatorEnergy_Proc_Data,KneeActuatorEnergy_Proc_Data,\
             Regen_HipActuatorEnergy_Proc_Data,Regen_KneeActuatorEnergy_Proc_Data,MetabolicEnergy_Proc_Data,\
-            HipMusclePower_Data,KneeMusclePower_Data,Muscles_Metabolic_Data,HipActuator_Kinematics_Data,KneeActuator_Kinematics_Data
+            HipMusclePower_Data,KneeMusclePower_Data,Muscles_Metabolic_Data,HipActuator_Kinematics_Data,KneeActuator_Kinematics_Data,\
+            HipActuator_Max_Positive_Power_Data,HipActuator_Positive_Power_Data,HipActuator_Negative_Power_Data,\
+            KneeActuator_Max_Positive_Power_Data,KneeActuator_Positive_Power_Data,KneeActuator_Negative_Power_Data
     else:
         return MetabolicEnergy_Data,MuscleActivation_Data,HipMuscleMoment_Data,\
                KneeMuscleMoment_Data,MetabolicEnergy_Proc_Data,Muscles_Metabolic_Data,\

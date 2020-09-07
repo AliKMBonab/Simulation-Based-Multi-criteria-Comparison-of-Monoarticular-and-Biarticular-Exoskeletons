@@ -77,27 +77,27 @@ mono_noload_energy = np.reshape(assisted_energy_dataset['monoarticular_pareto_no
 #####################################################################################
 # metabolic rate and energy of "Aa" for all conditions
 # metabolics cost reduction percents
-bi_loaded_Aa_metabolics_percent = np.reshape(bi_loaded_metabolics_percent[0,:],(7,3))
-bi_noload_Aa_metabolics_percent = np.reshape(bi_noload_metabolics_percent[0,:],(7,3))
-mono_loaded_Aa_metabolics_percent = np.reshape(mono_loaded_metabolics_percent[0,:],(7,3))
-mono_noload_Aa_metabolics_percent = np.reshape(mono_noload_metabolics_percent[0,:],(7,3))
+bi_loaded_Aa_metabolics_percent = np.reshape(bi_loaded_metabolics_percent[16,:],(7,3))
+bi_noload_Aa_metabolics_percent = np.reshape(bi_noload_metabolics_percent[16,:],(7,3))
+mono_loaded_Aa_metabolics_percent = np.reshape(mono_loaded_metabolics_percent[9,:],(7,3))
+mono_noload_Aa_metabolics_percent = np.reshape(mono_noload_metabolics_percent[12,:],(7,3))
 # actuators energy
 # loaded bi
-bi_loaded_Aa_hip_energy = np.reshape(bi_loaded_hip_energy[0,:],(7,3))
-bi_loaded_Aa_knee_energy = np.reshape(bi_loaded_knee_energy[0,:],(7,3))
-bi_loaded_Aa_energy = np.reshape(bi_loaded_energy[0,:],(7,3))
+bi_loaded_Aa_hip_energy = np.reshape(bi_loaded_hip_energy[16,:],(7,3))
+bi_loaded_Aa_knee_energy = np.reshape(bi_loaded_knee_energy[16,:],(7,3))
+bi_loaded_Aa_energy = np.reshape(bi_loaded_energy[16,:],(7,3))
 # noload bi
-bi_noload_Aa_hip_energy = np.reshape(bi_noload_hip_energy[0,:],(7,3))
-bi_noload_Aa_knee_energy = np.reshape(bi_noload_knee_energy[0,:],(7,3))
-bi_noload_Aa_energy = np.reshape(bi_noload_energy[0,:],(7,3))
+bi_noload_Aa_hip_energy = np.reshape(bi_noload_hip_energy[16,:],(7,3))
+bi_noload_Aa_knee_energy = np.reshape(bi_noload_knee_energy[16,:],(7,3))
+bi_noload_Aa_energy = np.reshape(bi_noload_energy[16,:],(7,3))
 # loaded mono
-mono_loaded_Aa_hip_energy = np.reshape(mono_loaded_hip_energy[0,:],(7,3))
-mono_loaded_Aa_knee_energy = np.reshape(mono_loaded_knee_energy[0,:],(7,3))
-mono_loaded_Aa_energy = np.reshape(mono_loaded_energy[0,:],(7,3))
+mono_loaded_Aa_hip_energy = np.reshape(mono_loaded_hip_energy[9,:],(7,3))
+mono_loaded_Aa_knee_energy = np.reshape(mono_loaded_knee_energy[9,:],(7,3))
+mono_loaded_Aa_energy = np.reshape(mono_loaded_energy[9,:],(7,3))
 # noload mono
-mono_noload_Aa_hip_energy = np.reshape(mono_noload_hip_energy[0,:],(7,3))
-mono_noload_Aa_knee_energy = np.reshape(mono_noload_knee_energy[0,:],(7,3))
-mono_noload_Aa_energy = np.reshape(mono_noload_energy[0,:],(7,3))
+mono_noload_Aa_hip_energy = np.reshape(mono_noload_hip_energy[12,:],(7,3))
+mono_noload_Aa_knee_energy = np.reshape(mono_noload_knee_energy[12,:],(7,3))
+mono_noload_Aa_energy = np.reshape(mono_noload_energy[12,:],(7,3))
 #####################################################################################
 # writing data to csv for statistical analyses
 # general columns 
