@@ -65,10 +65,10 @@ noload_biarticular_col = np.repeat(np.array('noload biarticular'),7)
 headers = ['subjects','assistance','metabolic rate 01','metabolic rate 02','metabolic rate 03']
 subject_col = np.tile(subjects,4)
 assistance_col = np.concatenate((noload_unassist_col,loaded_unassist_col,loaded_biarticular_col,noload_biarticular_col),axis=0)
-metabolic_rate_data = np.concatenate((np.reshape(unassisted_energy_dataset['noload_metabolics_energy'],(7,3),order='F'),\
-                                np.reshape(unassisted_energy_dataset['loaded_metabolics_energy'],(7,3),order='F'),\
-                                np.reshape(assisted_energy_dataset['biarticular_hip30knee50_load_metabolics_energy'],(7,3),order='F'),\
-                                np.reshape(assisted_energy_dataset['biarticular_hip30knee50_noload_metabolics_energy'],(7,3),order='F')),axis=0)
+metabolic_rate_data = np.concatenate((np.reshape(unassisted_energy_dataset['noload_metabolics_energy'],(7,3)),\
+                                np.reshape(unassisted_energy_dataset['loaded_metabolics_energy'],(7,3)),\
+                                np.reshape(assisted_energy_dataset['biarticular_hip30knee50_load_metabolics_energy'],(7,3)),\
+                                np.reshape(assisted_energy_dataset['biarticular_hip30knee50_noload_metabolics_energy'],(7,3))),axis=0)
 final_dataset = np.column_stack([assistance_col,metabolic_rate_data])
 final_dataset = np.column_stack([subject_col,final_dataset])
 with open(r'.\Statistics\Specific_Weights\NoloadBi23_LoadedBi23\MetabolicRate_Dataset.csv', 'wb') as f:
@@ -77,6 +77,7 @@ with open(r'.\Statistics\Specific_Weights\NoloadBi23_LoadedBi23\MetabolicRate_Da
 
 #****************************************************************
 #establishing dataset for assistive actuators average total power 
+plt.rcParams.update({'font.size':12})
 headers = ['subjects','assistive actuator','avg total power 01','avg total power 02','avg total power 03']
 loaded_biarticular_hip_col = np.repeat(np.array('loaded biarticular hip actuator'),7)
 noload_biarticular_hip_col = np.repeat(np.array('noload biarticular hip actuator'),7)
@@ -84,10 +85,10 @@ loaded_biarticular_knee_col = np.repeat(np.array('loaded biarticular knee actuat
 noload_biarticular_knee_col = np.repeat(np.array('noload biarticular knee actuator'),7)
 subject_col = np.tile(subjects,4)
 assistive_actuators_col = np.concatenate((noload_biarticular_hip_col,noload_biarticular_knee_col,loaded_biarticular_hip_col,loaded_biarticular_knee_col),axis=0)
-assistive_actuators_avg_totalpower_data = np.concatenate((np.reshape(assisted_energy_dataset['biarticular_hip30knee50_noload_hipactuator_energy'],(7,3),order='F'),\
-                                                        np.reshape(assisted_energy_dataset['biarticular_hip30knee50_noload_kneeactuator_energy'],(7,3),order='F'),\
-                                                        np.reshape(assisted_energy_dataset['biarticular_hip30knee50_load_hipactuator_energy'],(7,3),order='F'),\
-                                                        np.reshape(assisted_energy_dataset['biarticular_hip30knee50_load_kneeactuator_energy'],(7,3),order='F')),axis=0)
+assistive_actuators_avg_totalpower_data = np.concatenate((np.reshape(assisted_energy_dataset['biarticular_hip30knee50_noload_hipactuator_energy'],(7,3)),\
+                                                        np.reshape(assisted_energy_dataset['biarticular_hip30knee50_noload_kneeactuator_energy'],(7,3)),\
+                                                        np.reshape(assisted_energy_dataset['biarticular_hip30knee50_load_hipactuator_energy'],(7,3)),\
+                                                        np.reshape(assisted_energy_dataset['biarticular_hip30knee50_load_kneeactuator_energy'],(7,3))),axis=0)
 final_dataset = np.column_stack([assistive_actuators_col,assistive_actuators_avg_totalpower_data])
 final_dataset = np.column_stack([subject_col,final_dataset])
 with open(r'.\Statistics\Specific_Weights\NoloadBi23_LoadedBi23\ActuatorsAvgPower_Dataset.csv', 'wb') as f:
@@ -182,7 +183,7 @@ data = [utils.mean_over_trials(unassisted_energy_dataset['noload_metabolics_ener
         utils.mean_over_trials(unassisted_energy_dataset['loaded_metabolics_energy']),\
         utils.mean_over_trials(assisted_energy_dataset['biarticular_hip30knee50_load_metabolics_energy']),\
         utils.mean_over_trials(assisted_energy_dataset['biarticular_hip30knee50_noload_metabolics_energy'])]
-fig= plt.figure(figsize=(9.6, 4.8))
+fig= plt.figure(figsize=(6.4*1.5, 4.8))
 plt.subplot(1,2,1)
 bp = plt.boxplot(data, patch_artist=True)
 ax = plt.gca()

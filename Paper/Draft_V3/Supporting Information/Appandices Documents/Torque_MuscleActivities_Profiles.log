@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.21 (MiKTeX 2.9.7380 64-bit) (preloaded format=pdflatex 2020.4.9)  16 AUG 2020 22:42
+This is pdfTeX, Version 3.14159265-2.6-1.40.21 (MiKTeX 2.9.7380 64-bit) (preloaded format=pdflatex 2020.4.9)  6 SEP 2020 15:57
 entering extended mode
 **./Torque_MuscleActivities_Profiles.tex
 (Torque_MuscleActivities_Profiles.tex
@@ -616,27 +616,27 @@ G,.JBIG2,.JB2,.eps]
 (Torque_MuscleActivities_Profiles.aux)
 \openout1 = `Torque_MuscleActivities_Profiles.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 188.
-LaTeX Font Info:    ... okay on input line 188.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 188.
-LaTeX Font Info:    ... okay on input line 188.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 188.
-LaTeX Font Info:    ... okay on input line 188.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 188.
-LaTeX Font Info:    ... okay on input line 188.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 188.
-LaTeX Font Info:    ... okay on input line 188.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 188.
-LaTeX Font Info:    ... okay on input line 188.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 188.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 189.
+LaTeX Font Info:    ... okay on input line 189.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 189.
+LaTeX Font Info:    ... okay on input line 189.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 189.
+LaTeX Font Info:    ... okay on input line 189.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 189.
+LaTeX Font Info:    ... okay on input line 189.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 189.
+LaTeX Font Info:    ... okay on input line 189.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 189.
+LaTeX Font Info:    ... okay on input line 189.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 189.
 LaTeX Font Info:    Trying to load font information for TS1+cmr on input line 1
-88.
+89.
  ("E:\MiKTeX 2.9\tex/latex/base\ts1cmr.fd"
 File: ts1cmr.fd 2014/09/29 v2.5h Standard LaTeX font definitions
 )
-LaTeX Font Info:    ... okay on input line 188.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 188.
-LaTeX Font Info:    ... okay on input line 188.
+LaTeX Font Info:    ... okay on input line 189.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 189.
+LaTeX Font Info:    ... okay on input line 189.
 
 *geometry* driver: auto-detecting
 *geometry* detected driver: pdftex
@@ -679,23 +679,23 @@ Package caption Info: End \AtBeginDocument code.
 File: ucsencs.def 2011/01/21 Fixes to fontencodings LGR, T3
 )
 \AtBeginShipoutBox=\box34
-Package hyperref Info: Link coloring OFF on input line 188.
-LaTeX Info: Redefining \ref on input line 188.
-LaTeX Info: Redefining \pageref on input line 188.
-LaTeX Info: Redefining \nameref on input line 188.
+Package hyperref Info: Link coloring OFF on input line 189.
+LaTeX Info: Redefining \ref on input line 189.
+LaTeX Info: Redefining \pageref on input line 189.
+LaTeX Info: Redefining \nameref on input line 189.
 
 (Torque_MuscleActivities_Profiles.out) (Torque_MuscleActivities_Profiles.out)
 \@outlinefile=\write3
 \openout3 = `Torque_MuscleActivities_Profiles.out'.
 
-LaTeX Info: Redefining \microtypecontext on input line 188.
+LaTeX Info: Redefining \microtypecontext on input line 189.
 Package microtype Info: Generating PDF output.
 Package microtype Info: Character protrusion enabled (level 2).
 Package microtype Info: Using default protrusion set `alltext'.
 Package microtype Info: Automatic font expansion enabled (level 2),
 (microtype)             stretch: 20, shrink: 20, step: 1, non-selected.
 Package microtype Info: Using default expansion set `basictext'.
-LaTeX Info: Redefining \showhyphens on input line 188.
+LaTeX Info: Redefining \showhyphens on input line 189.
 Package microtype Info: No adjustment of tracking.
 Package microtype Info: No adjustment of interword spacing.
 Package microtype Info: No adjustment of character kerning.
@@ -720,43 +720,44 @@ File: mt-cmr.cfg 2013/05/19 v2.2 microtype config. file: Computer Modern Roman
 )
 Package lastpage Info: Please have a look at the pageslts package at
 (lastpage)             https://www.ctan.org/pkg/pageslts
-(lastpage)             ! on input line 188.
+(lastpage)             ! on input line 189.
 <../../Figures/Case_Studies/NoloadBi01_NoloadBi21/PaperFigure_TorqueProfiles.pd
-f, id=3, 671.2447pt x 483.87651pt>
+f, id=3, 1303.1106pt x 698.7653pt>
 File: ../../Figures/Case_Studies/NoloadBi01_NoloadBi21/PaperFigure_TorqueProfil
 es.pdf Graphic file (type pdf)
 <use ../../Figures/Case_Studies/NoloadBi01_NoloadBi21/PaperFigure_TorqueProfile
 s.pdf>
 Package pdftex.def Info: ../../Figures/Case_Studies/NoloadBi01_NoloadBi21/Paper
-Figure_TorqueProfiles.pdf  used on input line 195.
-(pdftex.def)             Requested size: 379.4175pt x 273.51625pt.
+Figure_TorqueProfiles.pdf  used on input line 196.
+(pdftex.def)             Requested size: 379.4175pt x 203.44708pt.
 <../../Figures/Case_Studies/NoloadBi01_NoloadBi21/Biarticular_AaVsEa_MusclesAct
-ivation.pdf, id=4, 599.54207pt x 483.87651pt>
+ivation.pdf, id=4, 740.87257pt x 481.66699pt>
 File: ../../Figures/Case_Studies/NoloadBi01_NoloadBi21/Biarticular_AaVsEa_Muscl
 esActivation.pdf Graphic file (type pdf)
 <use ../../Figures/Case_Studies/NoloadBi01_NoloadBi21/Biarticular_AaVsEa_Muscle
 sActivation.pdf>
 Package pdftex.def Info: ../../Figures/Case_Studies/NoloadBi01_NoloadBi21/Biart
-icular_AaVsEa_MusclesActivation.pdf  used on input line 202.
-(pdftex.def)             Requested size: 379.4175pt x 306.21712pt.
+icular_AaVsEa_MusclesActivation.pdf  used on input line 203.
+(pdftex.def)             Requested size: 379.4175pt x 246.67586pt.
 <../../Figures/Case_Studies/LoadedMono05_LoadedMono25/PaperFigure_TorqueProfile
-s.pdf, id=5, 671.2447pt x 483.87651pt>
+s.pdf, id=5, 1303.1106pt x 698.7653pt>
 File: ../../Figures/Case_Studies/LoadedMono05_LoadedMono25/PaperFigure_TorquePr
 ofiles.pdf Graphic file (type pdf)
 <use ../../Figures/Case_Studies/LoadedMono05_LoadedMono25/PaperFigure_TorquePro
 files.pdf>
 Package pdftex.def Info: ../../Figures/Case_Studies/LoadedMono05_LoadedMono25/P
-aperFigure_TorqueProfiles.pdf  used on input line 209.
-(pdftex.def)             Requested size: 379.4175pt x 273.51625pt.
-<../../Figures/Case_Studies/LoadedMono05_LoadedMono25/Monoarticular_Ae_VS_Ee_Lo
-aded_MusclesActivation.pdf, id=6, 599.54207pt x 483.87651pt>
+aperFigure_TorqueProfiles.pdf  used on input line 210.
+(pdftex.def)             Requested size: 379.4175pt x 203.44708pt.
+<../../Figures/Case_Studies/LoadedMono05_LoadedMono25/Monoarticular_Ae_VS_Monoa
+rticular_Ee_Loaded_MusclesActivation.pdf, id=6, 744.08206pt x 483.87651pt>
 File: ../../Figures/Case_Studies/LoadedMono05_LoadedMono25/Monoarticular_Ae_VS_
-Ee_Loaded_MusclesActivation.pdf Graphic file (type pdf)
-<use ../../Figures/Case_Studies/LoadedMono05_LoadedMono25/Monoarticular_Ae_VS_E
-e_Loaded_MusclesActivation.pdf>
+Monoarticular_Ee_Loaded_MusclesActivation.pdf Graphic file (type pdf)
+<use ../../Figures/Case_Studies/LoadedMono05_LoadedMono25/Monoarticular_Ae_VS_M
+onoarticular_Ee_Loaded_MusclesActivation.pdf>
 Package pdftex.def Info: ../../Figures/Case_Studies/LoadedMono05_LoadedMono25/M
-onoarticular_Ae_VS_Ee_Loaded_MusclesActivation.pdf  used on input line 216.
-(pdftex.def)             Requested size: 379.4175pt x 306.21712pt.
+onoarticular_Ae_VS_Monoarticular_Ee_Loaded_MusclesActivation.pdf  used on input
+ line 217.
+(pdftex.def)             Requested size: 379.4175pt x 246.73683pt.
  
 AED: lastpage setting LastPage
 [1
@@ -764,37 +765,42 @@ AED: lastpage setting LastPage
 {C:/Users/T.a/AppData/Local/MiKTeX/2.9/pdftex/config/pdftex.map} <../../Figures
 /Case_Studies/NoloadBi01_NoloadBi21/PaperFigure_TorqueProfiles.pdf>] [2 <../../
 Figures/Case_Studies/NoloadBi01_NoloadBi21/Biarticular_AaVsEa_MusclesActivation
-.pdf>] [3 <../../Figures/Case_Studies/LoadedMono05_LoadedMono25/PaperFigure_Tor
-queProfiles.pdf>] [4 <../../Figures/Case_Studies/LoadedMono05_LoadedMono25/Mono
-articular_Ae_VS_Ee_Loaded_MusclesActivation.pdf>]
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 221.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 221.
+.pdf> <../../Figures/Case_Studies/LoadedMono05_LoadedMono25/PaperFigure_TorqueP
+rofiles.pdf
+
+pdfTeX warning: pdflatex.exe (file ../../Figures/Case_Studies/LoadedMono05_Load
+edMono25/PaperFigure_TorqueProfiles.pdf): PDF inclusion: multiple pdfs with pag
+e group included in a single page
+>] [3 <../../Figures/Case_Studies/LoadedMono05_LoadedMono25/Monoarticular_Ae_VS
+_Monoarticular_Ee_Loaded_MusclesActivation.pdf>]
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 222.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 222.
 
 (Torque_MuscleActivities_Profiles.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 221.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 221.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 222.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 222.
 Package rerunfilecheck Info: File `Torque_MuscleActivities_Profiles.out' has no
 t changed.
 (rerunfilecheck)             Checksum: D41D8CD98F00B204E9800998ECF8427E;0.
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 221.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 222.
  ) 
 Here is how much of TeX's memory you used:
- 12166 strings out of 492478
- 183314 string characters out of 3137227
- 324735 words of memory out of 3000000
+ 12165 strings out of 492478
+ 183284 string characters out of 3137227
+ 324743 words of memory out of 3000000
  16270 multiletter control sequences out of 15000+200000
  5925 words of font info for 26 fonts, out of 3000000 for 9000
  1141 hyphenation exceptions out of 8191
- 41i,11n,45p,349b,433s stack positions out of 5000i,500n,10000p,200000b,50000s
+ 41i,11n,45p,352b,433s stack positions out of 5000i,500n,10000p,200000b,50000s
 <E:/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmbx10.pfb><E:/MiKTeX 2.9/fonts
 /type1/public/amsfonts/cm/cmbx9.pfb><E:/MiKTeX 2.9/fonts/type1/public/amsfonts/
 cm/cmr10.pfb><E:/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr12.pfb><E:/MiKTeX
  2.9/fonts/type1/public/amsfonts/cm/cmr9.pfb><E:/MiKTeX 2.9/fonts/type1/public/
 amsfonts/cm/cmti9.pfb>
-Output written on Torque_MuscleActivities_Profiles.pdf (4 pages, 649610 bytes).
+Output written on Torque_MuscleActivities_Profiles.pdf (3 pages, 668229 bytes).
 
 PDF statistics:
- 246 PDF objects out of 1000 (max. 8388607)
- 9 named destinations out of 1000 (max. 500000)
+ 240 PDF objects out of 1000 (max. 8388607)
+ 8 named destinations out of 1000 (max. 500000)
  8213 words of extra memory for PDF output out of 10000 (max. 10000000)
 

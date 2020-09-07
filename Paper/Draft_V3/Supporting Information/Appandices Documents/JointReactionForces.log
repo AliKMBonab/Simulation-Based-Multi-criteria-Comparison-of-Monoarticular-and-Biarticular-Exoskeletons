@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.21 (MiKTeX 2.9.7380 64-bit) (preloaded format=pdflatex 2020.4.9)  17 AUG 2020 14:33
+This is pdfTeX, Version 3.14159265-2.6-1.40.21 (MiKTeX 2.9.7380 64-bit) (preloaded format=pdflatex 2020.4.9)  4 SEP 2020 10:48
 entering extended mode
 **./JointReactionForces.tex
 (JointReactionForces.tex
@@ -616,27 +616,27 @@ G,.JBIG2,.JB2,.eps]
 (JointReactionForces.aux)
 \openout1 = `JointReactionForces.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 188.
-LaTeX Font Info:    ... okay on input line 188.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 188.
-LaTeX Font Info:    ... okay on input line 188.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 188.
-LaTeX Font Info:    ... okay on input line 188.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 188.
-LaTeX Font Info:    ... okay on input line 188.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 188.
-LaTeX Font Info:    ... okay on input line 188.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 188.
-LaTeX Font Info:    ... okay on input line 188.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 188.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 189.
+LaTeX Font Info:    ... okay on input line 189.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 189.
+LaTeX Font Info:    ... okay on input line 189.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 189.
+LaTeX Font Info:    ... okay on input line 189.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 189.
+LaTeX Font Info:    ... okay on input line 189.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 189.
+LaTeX Font Info:    ... okay on input line 189.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 189.
+LaTeX Font Info:    ... okay on input line 189.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 189.
 LaTeX Font Info:    Trying to load font information for TS1+cmr on input line 1
-88.
+89.
  ("E:\MiKTeX 2.9\tex/latex/base\ts1cmr.fd"
 File: ts1cmr.fd 2014/09/29 v2.5h Standard LaTeX font definitions
 )
-LaTeX Font Info:    ... okay on input line 188.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 188.
-LaTeX Font Info:    ... okay on input line 188.
+LaTeX Font Info:    ... okay on input line 189.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 189.
+LaTeX Font Info:    ... okay on input line 189.
 
 *geometry* driver: auto-detecting
 *geometry* detected driver: pdftex
@@ -679,23 +679,23 @@ Package caption Info: End \AtBeginDocument code.
 File: ucsencs.def 2011/01/21 Fixes to fontencodings LGR, T3
 )
 \AtBeginShipoutBox=\box34
-Package hyperref Info: Link coloring OFF on input line 188.
-LaTeX Info: Redefining \ref on input line 188.
-LaTeX Info: Redefining \pageref on input line 188.
-LaTeX Info: Redefining \nameref on input line 188.
+Package hyperref Info: Link coloring OFF on input line 189.
+LaTeX Info: Redefining \ref on input line 189.
+LaTeX Info: Redefining \pageref on input line 189.
+LaTeX Info: Redefining \nameref on input line 189.
  (JointReactionForces.out)
 (JointReactionForces.out)
 \@outlinefile=\write3
 \openout3 = `JointReactionForces.out'.
 
-LaTeX Info: Redefining \microtypecontext on input line 188.
+LaTeX Info: Redefining \microtypecontext on input line 189.
 Package microtype Info: Generating PDF output.
 Package microtype Info: Character protrusion enabled (level 2).
 Package microtype Info: Using default protrusion set `alltext'.
 Package microtype Info: Automatic font expansion enabled (level 2),
 (microtype)             stretch: 20, shrink: 20, step: 1, non-selected.
 Package microtype Info: Using default expansion set `basictext'.
-LaTeX Info: Redefining \showhyphens on input line 188.
+LaTeX Info: Redefining \showhyphens on input line 189.
 Package microtype Info: No adjustment of tracking.
 Package microtype Info: No adjustment of interword spacing.
 Package microtype Info: No adjustment of character kerning.
@@ -719,17 +719,17 @@ File: mt-cmr.cfg 2013/05/19 v2.2 microtype config. file: Computer Modern Roman
 )
 Package lastpage Info: Please have a look at the pageslts package at
 (lastpage)             https://www.ctan.org/pkg/pageslts
-(lastpage)             ! on input line 188.
+(lastpage)             ! on input line 189.
 <../../Figures/JointReactionForce_Figures/PaperFigure_Ankle_Joint_ReactionForce
-.pdf, id=3, 1121.16841pt x 924.93204pt>
+.pdf, id=3, 1440.59212pt x 937.54164pt>
 File: ../../Figures/JointReactionForce_Figures/PaperFigure_Ankle_Joint_Reaction
 Force.pdf Graphic file (type pdf)
 <use ../../Figures/JointReactionForce_Figures/PaperFigure_Ankle_Joint_ReactionF
 orce.pdf>
 Package pdftex.def Info: ../../Figures/JointReactionForce_Figures/PaperFigure_A
-nkle_Joint_ReactionForce.pdf  used on input line 195.
-(pdftex.def)             Requested size: 379.4175pt x 313.00494pt.
-LaTeX Font Info:    Trying to load font information for U+msa on input line 197
+nkle_Joint_ReactionForce.pdf  used on input line 196.
+(pdftex.def)             Requested size: 379.4175pt x 246.91664pt.
+LaTeX Font Info:    Trying to load font information for U+msa on input line 198
 .
  ("E:\MiKTeX 2.9\tex/latex/amsfonts\umsa.fd"
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
@@ -737,7 +737,7 @@ File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 ("E:\MiKTeX 2.9\tex/latex/microtype\mt-msa.cfg"
 File: mt-msa.cfg 2006/02/04 v1.1 microtype config. file: AMS symbols (a) (RS)
 )
-LaTeX Font Info:    Trying to load font information for U+msb on input line 197
+LaTeX Font Info:    Trying to load font information for U+msb on input line 198
 .
 
 ("E:\MiKTeX 2.9\tex/latex/amsfonts\umsb.fd"
@@ -747,124 +747,124 @@ File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 File: mt-msb.cfg 2005/06/01 v1.0 microtype config. file: AMS symbols (b) (RS)
 )
 <../../Figures/JointReactionForce_Figures/PaperFigure_Ankle_Joint_ReactionMomen
-t.pdf, id=4, 1132.66449pt x 924.93204pt>
+t.pdf, id=4, 1440.59212pt x 937.54164pt>
 File: ../../Figures/JointReactionForce_Figures/PaperFigure_Ankle_Joint_Reaction
 Moment.pdf Graphic file (type pdf)
 <use ../../Figures/JointReactionForce_Figures/PaperFigure_Ankle_Joint_ReactionM
 oment.pdf>
 Package pdftex.def Info: ../../Figures/JointReactionForce_Figures/PaperFigure_A
-nkle_Joint_ReactionMoment.pdf  used on input line 202.
-(pdftex.def)             Requested size: 379.4175pt x 309.82945pt.
+nkle_Joint_ReactionMoment.pdf  used on input line 203.
+(pdftex.def)             Requested size: 379.4175pt x 246.91664pt.
 <../../Figures/JointReactionForce_Figures/PaperFigure_Knee_Joint_ReactionForce.
-pdf, id=5, 1121.16841pt x 924.93204pt>
+pdf, id=5, 1440.59212pt x 937.54164pt>
 File: ../../Figures/JointReactionForce_Figures/PaperFigure_Knee_Joint_ReactionF
 orce.pdf Graphic file (type pdf)
 <use ../../Figures/JointReactionForce_Figures/PaperFigure_Knee_Joint_ReactionFo
 rce.pdf>
 Package pdftex.def Info: ../../Figures/JointReactionForce_Figures/PaperFigure_K
-nee_Joint_ReactionForce.pdf  used on input line 209.
-(pdftex.def)             Requested size: 379.4175pt x 313.00494pt.
+nee_Joint_ReactionForce.pdf  used on input line 210.
+(pdftex.def)             Requested size: 379.4175pt x 246.91664pt.
 <../../Figures/JointReactionForce_Figures/PaperFigure_Knee_Joint_ReactionMoment
-.pdf, id=6, 1113.49913pt x 924.93204pt>
+.pdf, id=6, 1440.59212pt x 937.54164pt>
 File: ../../Figures/JointReactionForce_Figures/PaperFigure_Knee_Joint_ReactionM
 oment.pdf Graphic file (type pdf)
 <use ../../Figures/JointReactionForce_Figures/PaperFigure_Knee_Joint_ReactionMo
 ment.pdf>
 Package pdftex.def Info: ../../Figures/JointReactionForce_Figures/PaperFigure_K
-nee_Joint_ReactionMoment.pdf  used on input line 216.
-(pdftex.def)             Requested size: 379.4175pt x 315.16428pt.
+nee_Joint_ReactionMoment.pdf  used on input line 217.
+(pdftex.def)             Requested size: 379.4175pt x 246.91664pt.
 <../../Figures/JointReactionForce_Figures/PaperFigure_Patellofemoral_Joint_Reac
-tionForce.pdf, id=7, 1121.16841pt x 924.93204pt>
+tionForce.pdf, id=7, 1417.69408pt x 937.54164pt>
 File: ../../Figures/JointReactionForce_Figures/PaperFigure_Patellofemoral_Joint
 _ReactionForce.pdf Graphic file (type pdf)
 <use ../../Figures/JointReactionForce_Figures/PaperFigure_Patellofemoral_Joint_
 ReactionForce.pdf>
 Package pdftex.def Info: ../../Figures/JointReactionForce_Figures/PaperFigure_P
-atellofemoral_Joint_ReactionForce.pdf  used on input line 223.
-(pdftex.def)             Requested size: 379.4175pt x 313.00494pt.
+atellofemoral_Joint_ReactionForce.pdf  used on input line 224.
+(pdftex.def)             Requested size: 379.4175pt x 250.90793pt.
 <../../Figures/JointReactionForce_Figures/PaperFigure_Patellofemoral_Joint_Reac
-tionMoment.pdf, id=8, 1132.66449pt x 924.93204pt>
+tionMoment.pdf, id=8, 1417.69408pt x 937.54164pt>
 File: ../../Figures/JointReactionForce_Figures/PaperFigure_Patellofemoral_Joint
 _ReactionMoment.pdf Graphic file (type pdf)
 <use ../../Figures/JointReactionForce_Figures/PaperFigure_Patellofemoral_Joint_
 ReactionMoment.pdf>
 Package pdftex.def Info: ../../Figures/JointReactionForce_Figures/PaperFigure_P
-atellofemoral_Joint_ReactionMoment.pdf  used on input line 230.
-(pdftex.def)             Requested size: 379.4175pt x 309.82945pt.
+atellofemoral_Joint_ReactionMoment.pdf  used on input line 231.
+(pdftex.def)             Requested size: 379.4175pt x 250.90793pt.
 <../../Figures/JointReactionForce_Figures/PaperFigure_Hip_Joint_ReactionForce.p
-df, id=9, 1121.16841pt x 924.93204pt>
+df, id=9, 1440.59212pt x 937.54164pt>
 File: ../../Figures/JointReactionForce_Figures/PaperFigure_Hip_Joint_ReactionFo
 rce.pdf Graphic file (type pdf)
 <use ../../Figures/JointReactionForce_Figures/PaperFigure_Hip_Joint_ReactionFor
 ce.pdf>
 Package pdftex.def Info: ../../Figures/JointReactionForce_Figures/PaperFigure_H
-ip_Joint_ReactionForce.pdf  used on input line 237.
-(pdftex.def)             Requested size: 379.4175pt x 313.00494pt.
+ip_Joint_ReactionForce.pdf  used on input line 238.
+(pdftex.def)             Requested size: 379.4175pt x 246.91664pt.
 <../../Figures/JointReactionForce_Figures/Paretofront_Configurations_JRF/Pareto
-front_JRF_Ankle_Force.pdf, id=10, 855.136pt x 1027.85495pt>
+front_JRF_Ankle_Force.pdf, id=10, 873.15645pt x 1040.78766pt>
 File: ../../Figures/JointReactionForce_Figures/Paretofront_Configurations_JRF/P
 aretofront_JRF_Ankle_Force.pdf Graphic file (type pdf)
 <use ../../Figures/JointReactionForce_Figures/Paretofront_Configurations_JRF/Pa
 retofront_JRF_Ankle_Force.pdf>
 Package pdftex.def Info: ../../Figures/JointReactionForce_Figures/Paretofront_C
-onfigurations_JRF/Paretofront_JRF_Ankle_Force.pdf  used on input line 246.
-(pdftex.def)             Requested size: 379.4175pt x 456.05305pt.
+onfigurations_JRF/Paretofront_JRF_Ankle_Force.pdf  used on input line 247.
+(pdftex.def)             Requested size: 379.4175pt x 452.26254pt.
 <../../Figures/JointReactionForce_Figures/Paretofront_Configurations_JRF/Pareto
-front_JRF_Ankle_Moment.pdf, id=11, 858.33545pt x 1027.85495pt>
+front_JRF_Ankle_Moment.pdf, id=11, 877.62628pt x 1040.78766pt>
 File: ../../Figures/JointReactionForce_Figures/Paretofront_Configurations_JRF/P
 aretofront_JRF_Ankle_Moment.pdf Graphic file (type pdf)
 <use ../../Figures/JointReactionForce_Figures/Paretofront_Configurations_JRF/Pa
 retofront_JRF_Ankle_Moment.pdf>
 Package pdftex.def Info: ../../Figures/JointReactionForce_Figures/Paretofront_C
-onfigurations_JRF/Paretofront_JRF_Ankle_Moment.pdf  used on input line 253.
-(pdftex.def)             Requested size: 379.4175pt x 454.3592pt.
+onfigurations_JRF/Paretofront_JRF_Ankle_Moment.pdf  used on input line 254.
+(pdftex.def)             Requested size: 379.4175pt x 449.95978pt.
 <../../Figures/JointReactionForce_Figures/Paretofront_Configurations_JRF/Pareto
-front_JRF_Hip_Force.pdf, id=12, 855.136pt x 1027.85495pt>
+front_JRF_Hip_Force.pdf, id=12, 873.15645pt x 1040.78766pt>
 File: ../../Figures/JointReactionForce_Figures/Paretofront_Configurations_JRF/P
 aretofront_JRF_Hip_Force.pdf Graphic file (type pdf)
 <use ../../Figures/JointReactionForce_Figures/Paretofront_Configurations_JRF/Pa
 retofront_JRF_Hip_Force.pdf>
 Package pdftex.def Info: ../../Figures/JointReactionForce_Figures/Paretofront_C
-onfigurations_JRF/Paretofront_JRF_Hip_Force.pdf  used on input line 260.
-(pdftex.def)             Requested size: 379.4175pt x 456.05305pt.
+onfigurations_JRF/Paretofront_JRF_Hip_Force.pdf  used on input line 261.
+(pdftex.def)             Requested size: 379.4175pt x 452.26254pt.
 <../../Figures/JointReactionForce_Figures/Paretofront_Configurations_JRF/Pareto
-front_JRF_Knee_Force.pdf, id=13, 855.136pt x 1027.85495pt>
+front_JRF_Knee_Force.pdf, id=13, 873.15645pt x 1040.78766pt>
 File: ../../Figures/JointReactionForce_Figures/Paretofront_Configurations_JRF/P
 aretofront_JRF_Knee_Force.pdf Graphic file (type pdf)
 <use ../../Figures/JointReactionForce_Figures/Paretofront_Configurations_JRF/Pa
 retofront_JRF_Knee_Force.pdf>
 Package pdftex.def Info: ../../Figures/JointReactionForce_Figures/Paretofront_C
-onfigurations_JRF/Paretofront_JRF_Knee_Force.pdf  used on input line 267.
-(pdftex.def)             Requested size: 379.4175pt x 456.05305pt.
+onfigurations_JRF/Paretofront_JRF_Knee_Force.pdf  used on input line 268.
+(pdftex.def)             Requested size: 379.4175pt x 452.26254pt.
 <../../Figures/JointReactionForce_Figures/Paretofront_Configurations_JRF/Pareto
-front_JRF_Knee_Moment.pdf, id=14, 858.33545pt x 1027.85495pt>
+front_JRF_Knee_Moment.pdf, id=14, 877.62628pt x 1040.78766pt>
 File: ../../Figures/JointReactionForce_Figures/Paretofront_Configurations_JRF/P
 aretofront_JRF_Knee_Moment.pdf Graphic file (type pdf)
 <use ../../Figures/JointReactionForce_Figures/Paretofront_Configurations_JRF/Pa
 retofront_JRF_Knee_Moment.pdf>
 Package pdftex.def Info: ../../Figures/JointReactionForce_Figures/Paretofront_C
-onfigurations_JRF/Paretofront_JRF_Knee_Moment.pdf  used on input line 274.
-(pdftex.def)             Requested size: 379.4175pt x 454.3592pt.
+onfigurations_JRF/Paretofront_JRF_Knee_Moment.pdf  used on input line 275.
+(pdftex.def)             Requested size: 379.4175pt x 449.95978pt.
 <../../Figures/JointReactionForce_Figures/Paretofront_Configurations_JRF/Pareto
-front_JRF_Patellofemoral_Force.pdf, id=15, 851.60847pt x 1027.85495pt>
+front_JRF_Patellofemoral_Force.pdf, id=15, 861.37807pt x 1040.78766pt>
 File: ../../Figures/JointReactionForce_Figures/Paretofront_Configurations_JRF/P
 aretofront_JRF_Patellofemoral_Force.pdf Graphic file (type pdf)
 <use ../../Figures/JointReactionForce_Figures/Paretofront_Configurations_JRF/Pa
 retofront_JRF_Patellofemoral_Force.pdf>
 Package pdftex.def Info: ../../Figures/JointReactionForce_Figures/Paretofront_C
 onfigurations_JRF/Paretofront_JRF_Patellofemoral_Force.pdf  used on input line 
-281.
-(pdftex.def)             Requested size: 379.4175pt x 457.9351pt.
+282.
+(pdftex.def)             Requested size: 379.4175pt x 458.4403pt.
 <../../Figures/JointReactionForce_Figures/Paretofront_Configurations_JRF/Pareto
-front_JRF_Patellofemoral_Moment.pdf, id=16, 858.33545pt x 1027.85495pt>
+front_JRF_Patellofemoral_Moment.pdf, id=16, 877.62628pt x 1040.78766pt>
 File: ../../Figures/JointReactionForce_Figures/Paretofront_Configurations_JRF/P
 aretofront_JRF_Patellofemoral_Moment.pdf Graphic file (type pdf)
 <use ../../Figures/JointReactionForce_Figures/Paretofront_Configurations_JRF/Pa
 retofront_JRF_Patellofemoral_Moment.pdf>
 Package pdftex.def Info: ../../Figures/JointReactionForce_Figures/Paretofront_C
 onfigurations_JRF/Paretofront_JRF_Patellofemoral_Moment.pdf  used on input line
- 288.
-(pdftex.def)             Requested size: 379.4175pt x 454.3592pt.
+ 289.
+(pdftex.def)             Requested size: 379.4175pt x 449.95978pt.
 
 
 AED: lastpage setting LastPage
@@ -890,30 +890,30 @@ rce_Figures/Paretofront_Configurations_JRF/Paretofront_JRF_Knee_Moment.pdf>]
 retofront_JRF_Patellofemoral_Force.pdf>] [14 <../../Figures/JointReactionForce_
 Figures/Paretofront_Configurations_JRF/Paretofront_JRF_Patellofemoral_Moment.pd
 f>]
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 294.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 294.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 295.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 295.
  (JointReactionForces.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 294.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 294.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 295.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 295.
 Package rerunfilecheck Info: File `JointReactionForces.out' has not changed.
 (rerunfilecheck)             Checksum: D41D8CD98F00B204E9800998ECF8427E;0.
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 294.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 295.
  ) 
 Here is how much of TeX's memory you used:
- 12357 strings out of 492478
- 190557 string characters out of 3137227
- 361007 words of memory out of 3000000
+ 12361 strings out of 492478
+ 190583 string characters out of 3137227
+ 361083 words of memory out of 3000000
  16381 multiletter control sequences out of 15000+200000
- 9997 words of font info for 50 fonts, out of 3000000 for 9000
+ 10156 words of font info for 52 fonts, out of 3000000 for 9000
  1141 hyphenation exceptions out of 8191
- 41i,11n,47p,882b,425s stack positions out of 5000i,500n,10000p,200000b,50000s
+ 41i,11n,47p,883b,425s stack positions out of 5000i,500n,10000p,200000b,50000s
 <E:/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmbx10.pfb><E:/MiKTeX 2.9/fonts
 /type1/public/amsfonts/cm/cmbx9.pfb><E:/MiKTeX 2.9/fonts/type1/public/amsfonts/
 cm/cmmi6.pfb><E:/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmmi9.pfb><E:/MiKTeX
  2.9/fonts/type1/public/amsfonts/cm/cmr10.pfb><E:/MiKTeX 2.9/fonts/type1/public
 /amsfonts/cm/cmr12.pfb><E:/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr9.pfb><
 E:/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmti9.pfb>
-Output written on JointReactionForces.pdf (14 pages, 4911096 bytes).
+Output written on JointReactionForces.pdf (14 pages, 4935590 bytes).
 PDF statistics:
  793 PDF objects out of 1000 (max. 8388607)
  29 named destinations out of 1000 (max. 500000)

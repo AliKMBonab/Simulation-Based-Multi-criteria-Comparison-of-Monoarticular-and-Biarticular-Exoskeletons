@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.21 (MiKTeX 2.9.7380 64-bit) (preloaded format=pdflatex 2020.4.9)  13 JUN 2020 22:02
+This is pdfTeX, Version 3.14159265-2.6-1.40.21 (MiKTeX 2.9.7380 64-bit) (preloaded format=pdflatex 2020.4.9)  31 AUG 2020 17:50
 entering extended mode
 **./Kinematics.tex
 (Kinematics.tex
@@ -720,22 +720,22 @@ File: mt-cmr.cfg 2013/05/19 v2.2 microtype config. file: Computer Modern Roman
 Package lastpage Info: Please have a look at the pageslts package at
 (lastpage)             https://www.ctan.org/pkg/pageslts
 (lastpage)             ! on input line 188.
-<../Figures/Cartoons/Biarticular_Exo_Mechanism.pdf, id=5, 599.23875pt x 558.362
-03pt>
-File: ../Figures/Cartoons/Biarticular_Exo_Mechanism.pdf Graphic file (type pdf)
-
-<use ../Figures/Cartoons/Biarticular_Exo_Mechanism.pdf>
-Package pdftex.def Info: ../Figures/Cartoons/Biarticular_Exo_Mechanism.pdf  use
-d on input line 200.
-(pdftex.def)             Requested size: 144.54pt x 134.67418pt.
-<../Figures/Cartoons/Monoarticular_Exo_Mechanism.pdf, id=6, 599.24377pt x 558.3
-5701pt>
-File: ../Figures/Cartoons/Monoarticular_Exo_Mechanism.pdf Graphic file (type pd
-f)
-<use ../Figures/Cartoons/Monoarticular_Exo_Mechanism.pdf>
-Package pdftex.def Info: ../Figures/Cartoons/Monoarticular_Exo_Mechanism.pdf  u
-sed on input line 203.
-(pdftex.def)             Requested size: 144.54pt x 134.67296pt.
+<../../Figures/Cartoons/Biarticular_Exo_Mechanism.pdf, id=5, 771.88374pt x 720.
+6925pt>
+File: ../../Figures/Cartoons/Biarticular_Exo_Mechanism.pdf Graphic file (type p
+df)
+<use ../../Figures/Cartoons/Biarticular_Exo_Mechanism.pdf>
+Package pdftex.def Info: ../../Figures/Cartoons/Biarticular_Exo_Mechanism.pdf  
+used on input line 200.
+(pdftex.def)             Requested size: 144.54pt x 134.95355pt.
+<../../Figures/Cartoons/Monoarticular_Exo_Mechanism.pdf, id=6, 769.87625pt x 74
+1.48117pt>
+File: ../../Figures/Cartoons/Monoarticular_Exo_Mechanism.pdf Graphic file (type
+ pdf)
+<use ../../Figures/Cartoons/Monoarticular_Exo_Mechanism.pdf>
+Package pdftex.def Info: ../../Figures/Cartoons/Monoarticular_Exo_Mechanism.pdf
+  used on input line 203.
+(pdftex.def)             Requested size: 144.54pt x 139.2084pt.
 LaTeX Font Info:    Trying to load font information for U+msa on input line 209
 .
  ("E:\MiKTeX 2.9\tex/latex/amsfonts\umsa.fd"
@@ -754,9 +754,9 @@ File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 File: mt-msb.cfg 2005/06/01 v1.0 microtype config. file: AMS symbols (b) (RS)
 ) [1
 
-{C:/Users/T.a/AppData/Local/MiKTeX/2.9/pdftex/config/pdftex.map} <../Figures/Ca
-rtoons/Biarticular_Exo_Mechanism.pdf> <../Figures/Cartoons/Monoarticular_Exo_Me
-chanism.pdf>]
+{C:/Users/T.a/AppData/Local/MiKTeX/2.9/pdftex/config/pdftex.map} <../../Figures
+/Cartoons/Biarticular_Exo_Mechanism.pdf> <../../Figures/Cartoons/Monoarticular_
+Exo_Mechanism.pdf>]
 
 AED: lastpage setting LastPage
 [2]
@@ -771,8 +771,8 @@ Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 245.
  ) 
 Here is how much of TeX's memory you used:
  12243 strings out of 492478
- 182646 string characters out of 3137227
- 329666 words of memory out of 3000000
+ 182767 string characters out of 3137227
+ 328677 words of memory out of 3000000
  16313 multiletter control sequences out of 15000+200000
  7975 words of font info for 39 fonts, out of 3000000 for 9000
  1141 hyphenation exceptions out of 8191
@@ -784,12 +784,10 @@ X 2.9/fonts/type1/public/amsfonts/cm/cmex10.pfb><E:/MiKTeX 2.9/fonts/type1/publ
 ic/amsfonts/cm/cmmi10.pfb><E:/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmmi7.p
 fb><E:/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr10.pfb><E:/MiKTeX 2.9/fonts
 /type1/public/amsfonts/cm/cmr12.pfb><E:/MiKTeX 2.9/fonts/type1/public/amsfonts/
-cm/cmr7.pfb><E:/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr9.pfb><E:/MiKTeX 2
-.9/fonts/type1/public/amsfonts/cm/cmsy10.pfb><E:/MiKTeX 2.9/fonts/type1/public/
-amsfonts/cm/cmsy7.pfb>
-Output written on Kinematics.pdf (2 pages, 1706794 bytes).
+cm/cmr9.pfb><E:/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy10.pfb>
+Output written on Kinematics.pdf (2 pages, 910384 bytes).
 PDF statistics:
- 156 PDF objects out of 1000 (max. 8388607)
+ 137 PDF objects out of 1000 (max. 8388607)
  14 named destinations out of 1000 (max. 500000)
  9739 words of extra memory for PDF output out of 10000 (max. 10000000)
 

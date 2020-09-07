@@ -23,6 +23,7 @@ from Colors import colors as mycolors
 subjects = ['05','07','09','10','11','12','14']
 trials_num = ['01','02','03']
 gait_cycle = np.linspace(0,100,1000)
+plt.rcParams.update({'font.size':12})
 #####################################################################################
 # Reading CSV files into a dictionary and constructing gls
 rra_dataset = utils.csv2numpy('D:/Ali.K.M.Bonab/Walking_Mass_Inertia_Effect/Data/Data/RRA/rra_final_data.csv') 
@@ -123,7 +124,8 @@ mean_rmse_knee_actuator_power,std_rmse_knee_actuator_power = utils.profiles_all_
 # muscles moment difference
 mean_rmse_hip_musclesmoment,std_rmse_hip_musclesmoment = utils.profiles_all_phases_rmse(mono_noload_hipmuscles_moment,mono_loaded_hipmuscles_moment,noload_toe_off,loaded_toe_off,which_comparison='ideal vs ideal')
 mean_rmse_knee_musclesmoment,std_rmse_knee_musclesmoment = utils.profiles_all_phases_rmse(mono_noload_kneemuscles_moment,mono_loaded_kneemuscles_moment,noload_toe_off,loaded_toe_off,which_comparison='ideal vs ideal')
-# RMSE plot       
+# RMSE plot    
+plt.rcParams.update({'font.size':12})   
 plot_dic = {'mean_11':mean_rmse_hip_actuator_torque,'mean_12':mean_rmse_hip_actuator_power,
             'mean_13':mean_rmse_hip_musclesmoment,'mean_21':mean_rmse_knee_actuator_torque,
             'mean_22':mean_rmse_knee_actuator_power,'mean_23':mean_rmse_knee_musclesmoment,
@@ -133,7 +135,7 @@ plot_dic = {'mean_11':mean_rmse_hip_actuator_torque,'mean_12':mean_rmse_hip_actu
             'color_1':mycolors['pastel blue'],'color_2':mycolors['deep space sparkle'],'title_1':'assistive actuators\n torque error',
             'title_2':'assistive actuators\n power error','title_3':'assisted muscles\n moment error',
             'y_ticks':[0,0.2,0.4,0.6,0.8,1,1.2,1.4,1.6]}
-fig = plt.figure(num='RMSE',figsize=(20.8, 6.4))
+fig = plt.figure(num='RMSE',figsize=(6.4*3.8,4.8*1.5))
 utils.rmse_barplots(plot_dic=plot_dic)
 fig.tight_layout(h_pad=-1, w_pad=-1.5)
 fig.subplots_adjust(top=0.98, bottom=0.075, left=0.100, right=0.975,hspace=0.35,wspace=0.15)
@@ -328,19 +330,20 @@ plot_dic_1={
 'plot_1_list' : [unassist_noload_hip_musclesmoment_dic,unassist_loaded_hip_musclesmoment_dic,unassist_noload_knee_musclesmoment_dic,unassist_loaded_knee_musclesmoment_dic],
 'plot_2_list' : [mono_noload_hip_torque_dic,mono_loaded_hip_torque_dic,mono_noload_knee_torque_dic,mono_loaded_knee_torque_dic],
 'plot_3_list' : [mono_noload_hip_musclesmoment_dic, mono_loaded_hip_musclesmoment_dic,mono_noload_knee_musclesmoment_dic, mono_loaded_knee_musclesmoment_dic],
-'plot_titles' : ['noload monoarticular hip joint','loaded monoarticular hip joint','noload monoarticular knee joint','loaded monoarticular knee joint'],
+'plot_titles' : ['noload monoarticular\n hip joint','loaded monoarticular\n hip joint','noload monoarticular\n knee joint','loaded monoarticular\n knee joint'],
 'y_ticks': [-2,-1,0,1,2], 'y_label':'flexion/extension\nmoment (N-m/kg)','general_title':'Devices torque profiles','thirdplot':True
 }
 plot_dic_2={
 'plot_1_list' : [noload_hip_power_dic,loaded_hip_power_dic,noload_knee_power_dic,loaded_knee_power_dic],
 'plot_2_list' : [mono_noload_hip_power_dic,mono_loaded_hip_power_dic,mono_noload_knee_power_dic,mono_loaded_knee_power_dic],
-'plot_titles' : ['noload monoarticular hip joint','loaded monoarticular hip joint','noload monoarticular knee joint','loaded monoarticular knee joint'],
+'plot_titles' : ['noload monoarticular\n hip joint','loaded monoarticular\n hip joint','noload monoarticular\n knee joint','loaded monoarticular\n knee joint'],
 'y_ticks': [-3,-2,-1,0,1,2,3], 'y_label':'flexion/extension\npower (W/kg)','general_title':'Devices power profiles','thirdplot':False
 }
-fig = plt.figure(num='Main Paper figure',figsize=(12.8, 16.8))
+plt.rcParams.update({'font.size':14})
+fig = plt.figure(num='Main Paper figure',figsize=(6.4*3.8,4.8*1.5))
 utils.nested_plots(fig,plot_dic_1,plot_dic_2,monovsmono_color_dic,monovsmono_color_dic)
 fig.tight_layout(h_pad=-1, w_pad=-1.5)
-fig.subplots_adjust(top=0.98, bottom=0.075, left=0.100, right=0.975,hspace=0.25,wspace=0.30)
+fig.subplots_adjust(top=0.98, bottom=0.075, left=0.100, right=0.975,hspace=0.30,wspace=0.30)
 plt.show()
 fig.savefig('./Figures/Specific_Weights/NoloadMono25_LoadedMono25/PaperFigure_Profiles.pdf',orientation='landscape',bbox_inches='tight')
 

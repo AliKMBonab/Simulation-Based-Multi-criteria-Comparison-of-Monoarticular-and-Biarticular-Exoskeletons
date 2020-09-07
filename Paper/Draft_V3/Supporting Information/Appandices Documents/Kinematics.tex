@@ -150,7 +150,7 @@
 % Captions will be left justified
 \usepackage[aboveskip=1pt,labelfont=bf,labelsep=period,justification=raggedright,singlelinecheck=off]{caption}
 \renewcommand{\figurename}{Fig}
-
+\renewcommand{\thefigure}{A\arabic{figure}}
 % Use the PLoS provided BiBTeX style
 \bibliographystyle{plos2015}
 
@@ -164,7 +164,7 @@
 % Header and Footer with logo
 \usepackage{lastpage,fancyhdr,graphicx}
 \usepackage{epstopdf}
-\graphicspath{{../Figures/}}
+\graphicspath{{../../Figures/}}
 %\pagestyle{myheadings}
 \pagestyle{fancy}
 \fancyhf{}
@@ -224,7 +224,7 @@ J_{Bi} =
 \begin{bmatrix}
 -l_{A}\sin{q_{A}}  & -(l_ {E} + l_ {D})\sin (q_ {B})\\
 l_ {A}\cos (q_{A}) &  (l_ {E} + l_ {D})\cos (q_ {B})
-\end{bmatrix}_{2 \times 2}
+\end{bmatrix}
 \end{gather}
 
 \begin{equation}\label{Eqn_Mono_Jacobian}
@@ -238,7 +238,7 @@ l_{A}\cos{q_{A}} + (l_{E} + l_{D})\cos (q_{A} - q_ {B})
 \left.\begin{matrix}
 {} (l_ {E} + l_ {D})\sin (q_ {A} - q_ {B})\\
 {} - (l_ {E} + l_ {D})\cos (q_ {A} - q_ {B})
-\end{matrix}\right]_{2\times 2}
+\end{matrix}\right]
 \end{aligned}
 \end{equation}
 

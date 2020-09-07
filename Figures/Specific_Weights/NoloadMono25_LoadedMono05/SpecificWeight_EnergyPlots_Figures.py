@@ -56,6 +56,7 @@ mean_loaded_mono_energy,std_loaded_mono_energy = utils.mean_std_over_subjects(as
 
 #####################################################################################
 # writing data to csv for statistical analyses
+plt.rcParams.update({'font.size': 12})
 # general columns 
 subjects = np.array(['subject05','subject07','subject09','subject10','subject11','subject12','subject14'])
 loaded_unassist_col = np.repeat(np.array('loaded unassist'),7)
@@ -66,10 +67,10 @@ noload_monoarticular_col = np.repeat(np.array('noload monoarticular'),7)
 headers = ['subjects','assistance','metabolic rate 01','metabolic rate 02','metabolic rate 03']
 subject_col = np.tile(subjects,4)
 assistance_col = np.concatenate((noload_unassist_col,loaded_unassist_col,loaded_monoarticular_col,noload_monoarticular_col),axis=0)
-metabolic_rate_data = np.concatenate((np.reshape(unassisted_energy_dataset['noload_metabolics_energy'],(7,3),order='F'),\
-                                np.reshape(unassisted_energy_dataset['loaded_metabolics_energy'],(7,3),order='F'),\
-                                np.reshape(assisted_energy_dataset['monoarticular_hip70knee30_load_metabolics_energy'],(7,3),order='F'),\
-                                np.reshape(assisted_energy_dataset['monoarticular_hip30knee30_noload_metabolics_energy'],(7,3),order='F')),axis=0)
+metabolic_rate_data = np.concatenate((np.reshape(unassisted_energy_dataset['noload_metabolics_energy'],(7,3)),\
+                                np.reshape(unassisted_energy_dataset['loaded_metabolics_energy'],(7,3)),\
+                                np.reshape(assisted_energy_dataset['monoarticular_hip70knee30_load_metabolics_energy'],(7,3)),\
+                                np.reshape(assisted_energy_dataset['monoarticular_hip30knee30_noload_metabolics_energy'],(7,3))),axis=0)
 final_dataset = np.column_stack([assistance_col,metabolic_rate_data])
 final_dataset = np.column_stack([subject_col,final_dataset])
 with open(r'.\Statistics\Specific_Weights\NoloadMono25_LoadedMono05\MetabolicRate_Dataset.csv', 'wb') as f:
@@ -85,10 +86,10 @@ loaded_monoarticular_knee_col = np.repeat(np.array('loaded monoarticular knee ac
 noload_monoarticular_knee_col = np.repeat(np.array('noload monoarticular knee actuator'),7)
 subject_col = np.tile(subjects,4)
 assistive_actuators_col = np.concatenate((noload_monoarticular_hip_col,noload_monoarticular_knee_col,loaded_monoarticular_hip_col,loaded_monoarticular_knee_col),axis=0)
-assistive_actuators_avg_totalpower_data = np.concatenate((np.reshape(assisted_energy_dataset['monoarticular_hip30knee30_noload_hipactuator_energy'],(7,3),order='F'),\
-                                                        np.reshape(assisted_energy_dataset['monoarticular_hip30knee30_noload_kneeactuator_energy'],(7,3),order='F'),\
-                                                        np.reshape(assisted_energy_dataset['monoarticular_hip70knee30_load_hipactuator_energy'],(7,3),order='F'),\
-                                                        np.reshape(assisted_energy_dataset['monoarticular_hip70knee30_load_kneeactuator_energy'],(7,3),order='F')),axis=0)
+assistive_actuators_avg_totalpower_data = np.concatenate((np.reshape(assisted_energy_dataset['monoarticular_hip30knee30_noload_hipactuator_energy'],(7,3)),\
+                                                        np.reshape(assisted_energy_dataset['monoarticular_hip30knee30_noload_kneeactuator_energy'],(7,3)),\
+                                                        np.reshape(assisted_energy_dataset['monoarticular_hip70knee30_load_hipactuator_energy'],(7,3)),\
+                                                        np.reshape(assisted_energy_dataset['monoarticular_hip70knee30_load_kneeactuator_energy'],(7,3))),axis=0)
 final_dataset = np.column_stack([assistive_actuators_col,assistive_actuators_avg_totalpower_data])
 final_dataset = np.column_stack([subject_col,final_dataset])
 with open(r'.\Statistics\Specific_Weights\NoloadMono25_LoadedMono05\ActuatorsAvgPower_Dataset.csv', 'wb') as f:
@@ -183,7 +184,7 @@ data = [utils.mean_over_trials(unassisted_energy_dataset['noload_metabolics_ener
         utils.mean_over_trials(unassisted_energy_dataset['loaded_metabolics_energy']),\
         utils.mean_over_trials(assisted_energy_dataset['monoarticular_hip70knee30_load_metabolics_energy']),\
         utils.mean_over_trials(assisted_energy_dataset['monoarticular_hip30knee30_noload_metabolics_energy'])]
-fig= plt.figure(figsize=(9.6, 4.8))
+fig= plt.figure(figsize=(6.4*1.5, 4.8))
 plt.subplot(1,2,1)
 bp = plt.boxplot(data, patch_artist=True)
 ax = plt.gca()
@@ -194,7 +195,6 @@ ax.set_ylim((4,10))
 plt.tick_params(axis='both',direction='in')
 ax.set_xticklabels(names)
 utils.no_top_right(ax)
-
 
 #******************************************************************
 # Actuators Energy Box Plot
