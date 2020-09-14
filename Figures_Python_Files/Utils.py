@@ -734,6 +734,7 @@ def plot_joint_muscle_exo (nrows,ncols,plot_dic,color_dic,
         elif i in legend_loc and subplot_legend == False and legend_out==True:
             plt.legend(bbox_to_anchor=(-0.30, 1),loc='upper right',frameon=False,prop={'size': 18})
         elif i in legend_loc and subplot_legend == False and legend_out==False:
+            plt.legend(loc='best',frameon=False,prop={'size': 18})
         if xlabel_loc != None:
             if i in xlabel_loc:
                 ax.set_xlabel('gait cycle (%)',fontsize=18)

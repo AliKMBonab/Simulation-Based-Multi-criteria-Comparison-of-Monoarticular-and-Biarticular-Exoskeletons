@@ -1691,8 +1691,7 @@ def specific_weights_modified_AF(analysis_dict,regen_effect=False,normalize_AF=F
         return avg,std
 
 def rmse_barplots(plot_dic,ncols=3,nrows=1,nplots=3):
-    phase_name = ['total gait\n cycle','loading\n response','mid\n stance','terminal\n stance','pre\nswing',\
-                  'initial\n swing','mid\n swing','terminal\n swing']
+    phase_name = ['A','B','C','D','E','F','G','H']
     x_position = np.arange(0,len(phase_name),1)
     width = 0.30
     color_1 = plot_dic['color_1']
@@ -1707,9 +1706,9 @@ def rmse_barplots(plot_dic,ncols=3,nrows=1,nplots=3):
             color_2 = mycolors['pale blue']
         ax = plt.subplot(nrows,ncols,i+1)
         plt.bar(x_position-width/2,plot_dic['mean_1{}'.format(i+1)],width=width,alpha=0.75,color=color_1,\
-                yerr=plot_dic['std_1{}'.format(i+1)],ecolor=[0.09,0.09,0.09],capsize=5,align='center')
+                yerr=plot_dic['std_1{}'.format(i+1)],ecolor=[0.09,0.09,0.09],capsize=0,align='center')
         plt.bar(x_position+width/2,plot_dic['mean_2{}'.format(i+1)],width=width,alpha=0.75,color=color_2,\
-                yerr=plot_dic['std_2{}'.format(i+1)],ecolor=[0.09,0.09,0.09],capsize=5,align='center')
+                yerr=plot_dic['std_2{}'.format(i+1)],ecolor=[0.09,0.09,0.09],capsize=0,align='center')
         plt.ylabel('RMSE (W/kg)')
         ax.set_yticks(y_ticks)
         ax.set_xticks(x_position)

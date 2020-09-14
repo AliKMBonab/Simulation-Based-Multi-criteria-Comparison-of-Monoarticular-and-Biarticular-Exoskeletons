@@ -135,7 +135,7 @@ plot_dic = {'mean_11':mean_rmse_hip_actuator_torque,'mean_12':mean_rmse_hip_actu
             'color_1':mycolors['pastel blue'],'color_2':mycolors['deep space sparkle'],'title_1':'assistive actuators\n torque error',
             'title_2':'assistive actuators\n power error','title_3':'assisted muscles\n moment error',
             'y_ticks':[0,0.2,0.4,0.6,0.8,1,1.2,1.4,1.6]}
-fig = plt.figure(num='RMSE',figsize=(6.4*3.8,4.8*1.5))
+fig = plt.figure(num='RMSE',figsize=(6.4*2, 4.8*1))
 utils.rmse_barplots(plot_dic=plot_dic)
 fig.tight_layout(h_pad=-1, w_pad=-1.5)
 fig.subplots_adjust(top=0.98, bottom=0.075, left=0.100, right=0.975,hspace=0.35,wspace=0.15)
