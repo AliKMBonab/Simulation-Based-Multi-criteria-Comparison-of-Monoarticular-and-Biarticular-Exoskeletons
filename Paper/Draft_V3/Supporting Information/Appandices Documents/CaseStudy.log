@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.21 (MiKTeX 2.9.7380 64-bit) (preloaded format=pdflatex 2020.4.9)  6 SEP 2020 16:00
+This is pdfTeX, Version 3.14159265-2.6-1.40.21 (MiKTeX 2.9.7380 64-bit) (preloaded format=pdflatex 2020.4.9)  14 SEP 2020 13:48
 entering extended mode
 **./CaseStudy.tex
 (CaseStudy.tex
@@ -868,16 +868,9 @@ Overfull \hbox (3.33333pt too wide) in paragraph at lines 290--295
  [][] 
  []
 
-[8 <../../Figures/Case_Studies/NoloadMono06_NoloadBi12/RMSE.pdf>] [9 <../../Fig
-ures/Case_Studies/NoloadBi23_LoadedBi12/PaperFigure_BoxPlot.pdf> <../../Figures
-/Case_Studies/NoloadBi23_LoadedBi23/PaperFigure_BoxPlot.pdf
-
-pdfTeX warning: pdflatex.exe (file ../../Figures/Case_Studies/NoloadBi23_Loaded
-Bi23/PaperFigure_BoxPlot.pdf): PDF inclusion: multiple pdfs with page group inc
-luded in a single page
->]
+[8 <../../Figures/Case_Studies/NoloadMono06_NoloadBi12/RMSE.pdf>]
 <../../Figures/Case_Studies/NoloadBi23_LoadedBi12/PaperFigure_Profiles.pdf, id=
-1442, 1299.57713pt x 760.31429pt>
+1336, 1299.57713pt x 760.31429pt>
 File: ../../Figures/Case_Studies/NoloadBi23_LoadedBi12/PaperFigure_Profiles.pdf
  Graphic file (type pdf)
 <use ../../Figures/Case_Studies/NoloadBi23_LoadedBi12/PaperFigure_Profiles.pdf>
@@ -886,7 +879,7 @@ Package pdftex.def Info: ../../Figures/Case_Studies/NoloadBi23_LoadedBi12/Paper
 Figure_Profiles.pdf  used on input line 305.
 (pdftex.def)             Requested size: 379.4175pt x 221.97047pt.
 <../../Figures/Case_Studies/NoloadBi23_LoadedBi23/PaperFigure_Profiles.pdf, id=
-1443, 1299.57713pt x 760.31429pt>
+1337, 1299.57713pt x 760.31429pt>
 File: ../../Figures/Case_Studies/NoloadBi23_LoadedBi23/PaperFigure_Profiles.pdf
  Graphic file (type pdf)
 <use ../../Figures/Case_Studies/NoloadBi23_LoadedBi23/PaperFigure_Profiles.pdf>
@@ -904,8 +897,15 @@ Overfull \hbox (3.33333pt too wide) in paragraph at lines 305--310
  [][] 
  []
 
+[9 <../../Figures/Case_Studies/NoloadBi23_LoadedBi12/PaperFigure_BoxPlot.pdf> <
+../../Figures/Case_Studies/NoloadBi23_LoadedBi23/PaperFigure_BoxPlot.pdf
+
+pdfTeX warning: pdflatex.exe (file ../../Figures/Case_Studies/NoloadBi23_Loaded
+Bi23/PaperFigure_BoxPlot.pdf): PDF inclusion: multiple pdfs with page group inc
+luded in a single page
+>]
 <../../Figures/Case_Studies/NoloadMono25_LoadedMono05/PaperFigure_BoxPlot.pdf, 
-id=1450, 656.37224pt x 361.65666pt>
+id=1447, 656.37224pt x 361.65666pt>
 File: ../../Figures/Case_Studies/NoloadMono25_LoadedMono05/PaperFigure_BoxPlot.
 pdf Graphic file (type pdf)
 <use ../../Figures/Case_Studies/NoloadMono25_LoadedMono05/PaperFigure_BoxPlot.p
@@ -914,7 +914,7 @@ Package pdftex.def Info: ../../Figures/Case_Studies/NoloadMono25_LoadedMono05/P
 aperFigure_BoxPlot.pdf  used on input line 319.
 (pdftex.def)             Requested size: 379.4175pt x 209.06017pt.
 <../../Figures/Case_Studies/NoloadMono25_LoadedMono25/PaperFigure_BoxPlot.pdf, 
-id=1451, 656.37224pt x 361.65666pt>
+id=1448, 656.37224pt x 361.65666pt>
 File: ../../Figures/Case_Studies/NoloadMono25_LoadedMono25/PaperFigure_BoxPlot.
 pdf Graphic file (type pdf)
 <use ../../Figures/Case_Studies/NoloadMono25_LoadedMono25/PaperFigure_BoxPlot.p
@@ -932,7 +932,7 @@ Overfull \hbox (3.33333pt too wide) in paragraph at lines 319--324
  [][] 
  []
 
-<../../Figures/Case_Studies/NoloadMono25_LoadedMono05/RMSE.pdf, id=1452, 1590.7
+<../../Figures/Case_Studies/NoloadMono25_LoadedMono05/RMSE.pdf, id=1449, 1590.7
 2173pt x 547.23398pt>
 File: ../../Figures/Case_Studies/NoloadMono25_LoadedMono05/RMSE.pdf Graphic fil
 e (type pdf)
@@ -940,7 +940,7 @@ e (type pdf)
 Package pdftex.def Info: ../../Figures/Case_Studies/NoloadMono25_LoadedMono05/R
 MSE.pdf  used on input line 330.
 (pdftex.def)             Requested size: 379.4175pt x 130.52052pt.
-<../../Figures/Case_Studies/NoloadMono25_LoadedMono25/RMSE.pdf, id=1453, 1590.7
+<../../Figures/Case_Studies/NoloadMono25_LoadedMono25/RMSE.pdf, id=1450, 1590.7
 2173pt x 547.23398pt>
 File: ../../Figures/Case_Studies/NoloadMono25_LoadedMono25/RMSE.pdf Graphic fil
 e (type pdf)
@@ -972,7 +972,7 @@ Bi23/PaperFigure_Profiles.pdf): PDF inclusion: multiple pdfs with page group in
 cluded in a single page
 >]
 <../../Figures/Case_Studies/NoloadMono25_LoadedMono05/PaperFigure_Profiles.pdf,
- id=1678, 1299.57713pt x 760.31429pt>
+ id=1676, 1299.57713pt x 760.31429pt>
 File: ../../Figures/Case_Studies/NoloadMono25_LoadedMono05/PaperFigure_Profiles
 .pdf Graphic file (type pdf)
 <use ../../Figures/Case_Studies/NoloadMono25_LoadedMono05/PaperFigure_Profiles.
@@ -981,7 +981,7 @@ Package pdftex.def Info: ../../Figures/Case_Studies/NoloadMono25_LoadedMono05/P
 aperFigure_Profiles.pdf  used on input line 343.
 (pdftex.def)             Requested size: 379.4175pt x 221.97047pt.
 <../../Figures/Case_Studies/NoloadMono25_LoadedMono25/PaperFigure_Profiles.pdf,
- id=1679, 1299.57713pt x 777.35193pt>
+ id=1677, 1299.57713pt x 777.35193pt>
 File: ../../Figures/Case_Studies/NoloadMono25_LoadedMono25/PaperFigure_Profiles
 .pdf Graphic file (type pdf)
 <use ../../Figures/Case_Studies/NoloadMono25_LoadedMono25/PaperFigure_Profiles.
@@ -1032,13 +1032,13 @@ Package rerunfilecheck Info: File `CaseStudy.out' has not changed.
 Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 356.
  ) 
 Here is how much of TeX's memory you used:
- 12503 strings out of 492478
- 193064 string characters out of 3137227
+ 12507 strings out of 492478
+ 193096 string characters out of 3137227
  332220 words of memory out of 3000000
  16461 multiletter control sequences out of 15000+200000
- 13769 words of font info for 81 fonts, out of 3000000 for 9000
+ 13928 words of font info for 83 fonts, out of 3000000 for 9000
  1141 hyphenation exceptions out of 8191
- 41i,11n,49p,1577b,447s stack positions out of 5000i,500n,10000p,200000b,50000s
+ 41i,12n,49p,1572b,447s stack positions out of 5000i,500n,10000p,200000b,50000s
 <E:/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmbx10.pfb><E:/MiKTeX 2.9/fonts
 /type1/public/amsfonts/cm/cmbx12.pfb><E:/MiKTeX 2.9/fonts/type1/public/amsfonts
 /cm/cmbx8.pfb><E:/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmbx9.pfb><E:/MiKTe
@@ -1048,9 +1048,9 @@ pfb><E:/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr12.pfb><E:/MiKTeX 2.9/font
 s/type1/public/amsfonts/cm/cmr9.pfb><E:/MiKTeX 2.9/fonts/type1/public/amsfonts/
 cm/cmsy10.pfb><E:/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmti10.pfb><E:/MiKT
 eX 2.9/fonts/type1/public/amsfonts/cm/cmti9.pfb>
-Output written on CaseStudy.pdf (15 pages, 3393173 bytes).
+Output written on CaseStudy.pdf (15 pages, 3392817 bytes).
 PDF statistics:
- 2062 PDF objects out of 2073 (max. 8388607)
+ 2060 PDF objects out of 2073 (max. 8388607)
  46 named destinations out of 1000 (max. 500000)
  14949 words of extra memory for PDF output out of 17280 (max. 10000000)
 
