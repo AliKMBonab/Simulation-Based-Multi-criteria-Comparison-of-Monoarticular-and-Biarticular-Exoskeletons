@@ -179,21 +179,23 @@ dataset = np.c_[mean_noload_bi_hip_energy,std_noload_bi_hip_energy,mean_noload_b
 with open(r'.\Data\Ideal\ideal_exos_dataset.csv', 'wb') as f:
   f.write(bytes(utils.listToString(headers)+'\n','UTF-8'))
   np.savetxt(f, dataset, fmt='%s', delimiter=",")
+
+#####################################################################################
 # writing data to csv for statistical analyses
 # general columns 
 subjects = np.array(['subject05','subject07','subject09','subject10','subject11','subject12','subject14'])
-loaded_unassist_col = np.repeat(np.array('loaded unassist'),7)
-loaded_biarticular_col = np.repeat(np.array('loaded biarticular'),7)
 loaded_monoarticular_col = np.repeat(np.array('loaded monoarticular'),7)
-noload_unassist_col = np.repeat(np.array('noload unassist'),7)
-noload_biarticular_col = np.repeat(np.array('noload biarticular'),7)
+loaded_biarticular_col = np.repeat(np.array('loaded biarticular'),7)
+loaded_unassist_col = np.repeat(np.array('loaded unassist'),7)
 noload_monoarticular_col = np.repeat(np.array('noload monoarticular'),7)
+noload_biarticular_col = np.repeat(np.array('noload biarticular'),7)
+noload_unassist_col = np.repeat(np.array('noload unassist'),7)
+
+assistance_col = np.concatenate((loaded_unassist_col,loaded_monoarticular_col,loaded_biarticular_col,noload_unassist_col,noload_monoarticular_col,noload_biarticular_col),axis=0)
 
 # establishing dataset for metabolic rate
 headers = ['subjects','assistance','metabolic rate 01','metabolic rate 02','metabolic rate 03']
 subject_col = np.tile(subjects,6)
-assistance_col = np.concatenate((loaded_unassist_col,loaded_monoarticular_col,loaded_biarticular_col,
-                                 noload_unassist_col,noload_monoarticular_col,noload_biarticular_col),axis=0)
 metabolic_rate_data = np.concatenate((np.reshape(unassisted_energy_dataset['loaded_metabolics_energy'],(7,3)),\
                                       np.reshape(assisted_energy_dataset['monoarticular_ideal_loaded_metabolics_energy'],(7,3)),\
                                       np.reshape(assisted_energy_dataset['biarticular_ideal_loaded_metabolics_energy'],(7,3)),\
@@ -208,25 +210,26 @@ with open(r'.\Statistics\Ideal\MetabolicRate_Dataset.csv', 'wb') as f:
 
 #****************************************************************
 #establishing dataset for assistive actuators average total power 
-headers = ['subjects','assistive actuator','avg total power 01','avg total power 02','avg total power 03']
-loaded_biarticular_hip_col = np.repeat(np.array('loaded biarticular hip actuator'),7)
-loaded_monoarticular_hip_col = np.repeat(np.array('loaded monoarticular hip actuator'),7)
-loaded_biarticular_knee_col = np.repeat(np.array('loaded biarticular knee actuator'),7)
-loaded_monoarticular_knee_col = np.repeat(np.array('loaded monoarticular knee actuator'),7)
-noload_biarticular_hip_col = np.repeat(np.array('noload biarticular hip actuator'),7)
-noload_monoarticular_hip_col = np.repeat(np.array('noload monoarticular hip actuator'),7)
-noload_biarticular_knee_col = np.repeat(np.array('noload biarticular knee actuator'),7)
-noload_monoarticular_knee_col = np.repeat(np.array('noload monoarticular knee actuator'),7)
-subject_col = np.tile(subjects,8)
-assistive_actuators_col = np.concatenate((loaded_biarticular_hip_col,loaded_biarticular_knee_col,loaded_monoarticular_hip_col,loaded_monoarticular_knee_col,
-                                          noload_biarticular_hip_col,noload_biarticular_knee_col,noload_monoarticular_hip_col,noload_monoarticular_knee_col),axis=0)
-assistive_actuators_avg_totalpower_data = np.concatenate((np.reshape(assisted_energy_dataset['biarticular_ideal_loaded_hipactuator_energy'],(7,3)),\
+headers = ['subjects','load condition','exoskeleton type','avg total power 01','avg total power 02','avg total power 03']
+monoarticular_col = np.repeat(np.array('monoarticular'),7)
+biarticular_col = np.repeat(np.array('biarticular'),7)
+noload_col = np.repeat(np.array('noload'),7*2)
+loaded_col = np.repeat(np.array('loaded'),7*2)
+
+general_device_col = np.concatenate((biarticular_col,monoarticular_col,biarticular_col,monoarticular_col),axis=0)
+load_col = np.concatenate((loaded_col,noload_col),axis=0)
+#hip_actuator_col = np.repeat(np.array('hip actuator'),7)
+#knee_actuator_col = np.repeat(np.array('knee actuator'),7)
+#general_actuator_col = np.concatenate((hip_actuator_col,knee_actuator_col,hip_actuator_col,knee_actuator_col,hip_actuator_col,knee_actuator_col,hip_actuator_col,knee_actuator_col),axis=0)
+subject_col = np.tile(subjects,4)
+assistive_actuators_col = np.column_stack([load_col,general_device_col])
+assistive_actuators_avg_totalpower_data = np.concatenate((np.reshape(assisted_energy_dataset['biarticular_ideal_loaded_hipactuator_energy'],(7,3))+\
                                                         np.reshape(assisted_energy_dataset['biarticular_ideal_loaded_kneeactuator_energy'],(7,3)),\
-                                                        np.reshape(assisted_energy_dataset['monoarticular_ideal_loaded_hipactuator_energy'],(7,3)),\
+                                                        np.reshape(assisted_energy_dataset['monoarticular_ideal_loaded_hipactuator_energy'],(7,3))+\
                                                         np.reshape(assisted_energy_dataset['monoarticular_ideal_loaded_kneeactuator_energy'],(7,3)),\
-                                                        np.reshape(assisted_energy_dataset['biarticular_ideal_noload_hipactuator_energy'],(7,3)),\
+                                                        np.reshape(assisted_energy_dataset['biarticular_ideal_noload_hipactuator_energy'],(7,3))+\
                                                         np.reshape(assisted_energy_dataset['biarticular_ideal_noload_kneeactuator_energy'],(7,3)),\
-                                                        np.reshape(assisted_energy_dataset['monoarticular_ideal_noload_hipactuator_energy'],(7,3)),\
+                                                        np.reshape(assisted_energy_dataset['monoarticular_ideal_noload_hipactuator_energy'],(7,3))+\
                                                         np.reshape(assisted_energy_dataset['monoarticular_ideal_noload_kneeactuator_energy'],(7,3))),axis=0)
 final_dataset = np.column_stack([assistive_actuators_col,assistive_actuators_avg_totalpower_data])
 final_dataset = np.column_stack([subject_col,final_dataset])
@@ -236,25 +239,27 @@ with open(r'.\Statistics\Ideal\ActuatorsAvgPower_Dataset.csv', 'wb') as f:
 
 #****************************************************************
 #establishing dataset for assistive actuators average total power 
-headers = ['subjects','assistive actuator','max power 01','max power 02','max power 03']
-loaded_biarticular_hip_col = np.repeat(np.array('loaded biarticular hip actuator'),7)
-loaded_monoarticular_hip_col = np.repeat(np.array('loaded monoarticular hip actuator'),7)
-loaded_biarticular_knee_col = np.repeat(np.array('loaded biarticular knee actuator'),7)
-loaded_monoarticular_knee_col = np.repeat(np.array('loaded monoarticular knee actuator'),7)
-noload_biarticular_hip_col = np.repeat(np.array('noload biarticular hip actuator'),7)
-noload_monoarticular_hip_col = np.repeat(np.array('noload monoarticular hip actuator'),7)
-noload_biarticular_knee_col = np.repeat(np.array('noload biarticular knee actuator'),7)
-noload_monoarticular_knee_col = np.repeat(np.array('noload monoarticular knee actuator'),7)
-subject_col = np.tile(subjects,8)
-assistive_actuators_col = np.concatenate((loaded_biarticular_hip_col,loaded_biarticular_knee_col,loaded_monoarticular_hip_col,loaded_monoarticular_knee_col,
-                                          noload_biarticular_hip_col,noload_biarticular_knee_col,noload_monoarticular_hip_col,noload_monoarticular_knee_col),axis=0)
-assistive_actuators_avg_totalpower_data = np.concatenate((np.reshape(assisted_power_dataset['biarticular_ideal_loaded_hip_max_power'],(7,3)),\
+headers = ['subjects','load condition','exoskeleton type','max total power 01','max total power 02','max total power 03']
+monoarticular_col = np.repeat(np.array('monoarticular'),7)
+biarticular_col = np.repeat(np.array('biarticular'),7)
+noload_col = np.repeat(np.array('noload'),7*2)
+loaded_col = np.repeat(np.array('loaded'),7*2)
+
+general_device_col = np.concatenate((biarticular_col,monoarticular_col,biarticular_col,monoarticular_col),axis=0)
+load_col = np.concatenate((loaded_col,noload_col),axis=0)
+#hip_actuator_col = np.repeat(np.array('hip actuator'),7)
+#knee_actuator_col = np.repeat(np.array('knee actuator'),7)
+#general_actuator_col = np.concatenate((hip_actuator_col,knee_actuator_col,hip_actuator_col,knee_actuator_col,hip_actuator_col,knee_actuator_col,hip_actuator_col,knee_actuator_col),axis=0)
+subject_col = np.tile(subjects,4)
+assistive_actuators_col = np.column_stack([load_col,general_device_col])
+#assistive_actuators_col = np.column_stack([general_load_condition_col,general_device_col,general_actuator_col])
+assistive_actuators_avg_totalpower_data = np.concatenate((np.reshape(assisted_power_dataset['biarticular_ideal_loaded_hip_max_power'],(7,3))+\
                                                         np.reshape(assisted_power_dataset['biarticular_ideal_loaded_knee_max_power'],(7,3)),\
-                                                        np.reshape(assisted_power_dataset['monoarticular_ideal_loaded_hip_max_power'],(7,3)),\
+                                                        np.reshape(assisted_power_dataset['monoarticular_ideal_loaded_hip_max_power'],(7,3))+\
                                                         np.reshape(assisted_power_dataset['monoarticular_ideal_loaded_knee_max_power'],(7,3)),\
-                                                        np.reshape(assisted_power_dataset['biarticular_ideal_noload_hip_max_power'],(7,3)),\
+                                                        np.reshape(assisted_power_dataset['biarticular_ideal_noload_hip_max_power'],(7,3))+\
                                                         np.reshape(assisted_power_dataset['biarticular_ideal_noload_knee_max_power'],(7,3)),\
-                                                        np.reshape(assisted_power_dataset['monoarticular_ideal_noload_hip_max_power'],(7,3)),\
+                                                        np.reshape(assisted_power_dataset['monoarticular_ideal_noload_hip_max_power'],(7,3))+\
                                                         np.reshape(assisted_power_dataset['monoarticular_ideal_noload_knee_max_power'],(7,3))),axis=0)
 final_dataset = np.column_stack([assistive_actuators_col,assistive_actuators_avg_totalpower_data])
 final_dataset = np.column_stack([subject_col,final_dataset])

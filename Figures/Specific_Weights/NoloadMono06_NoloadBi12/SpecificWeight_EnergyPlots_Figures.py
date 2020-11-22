@@ -75,18 +75,20 @@ with open(r'.\Statistics\Specific_Weights\NoloadMono06_NoloadBi12\MetabolicRate_
 
 #****************************************************************
 #establishing dataset for assistive actuators average total power 
-headers = ['subjects','assistive actuator','avg total power 01','avg total power 02','avg total power 03']
-biarticular_hip_col = np.repeat(np.array('biarticular hip actuator'),7)
-monoarticular_hip_col = np.repeat(np.array('monoarticular hip actuator'),7)
-biarticular_knee_col = np.repeat(np.array('biarticular knee actuator'),7)
-monoarticular_knee_col = np.repeat(np.array('monoarticular knee actuator'),7)
+headers = ['subjects','device','actuator','avg total power 01','avg total power 02','avg total power 03']
+biarticular_col = np.repeat(np.array('biarticular'),2*7)
+monoarticular_col = np.repeat(np.array('monoarticular'),2*7)
+hip_actuator_col = np.repeat(np.array('hip actuator'),7)
+knee_actuator_col = np.repeat(np.array('knee actuator'),7)
+
 subject_col = np.tile(subjects,4)
-assistive_actuators_col = np.concatenate((biarticular_hip_col,biarticular_knee_col,monoarticular_hip_col,monoarticular_knee_col),axis=0)
+device_col = np.concatenate((biarticular_col,monoarticular_col),axis=0)
+actuators_col = np.concatenate((hip_actuator_col,knee_actuator_col,hip_actuator_col,knee_actuator_col),axis=0)
 assistive_actuators_avg_totalpower_data = np.concatenate((np.reshape(assisted_energy_dataset['biarticular_hip50knee60_noload_hipactuator_energy'],(7,3)),\
                                                         np.reshape(assisted_energy_dataset['biarticular_hip50knee60_noload_kneeactuator_energy'],(7,3)),\
                                                         np.reshape(assisted_energy_dataset['monoarticular_hip60knee70_noload_hipactuator_energy'],(7,3)),\
                                                         np.reshape(assisted_energy_dataset['monoarticular_hip60knee70_noload_kneeactuator_energy'],(7,3))),axis=0)
-final_dataset = np.column_stack([assistive_actuators_col,assistive_actuators_avg_totalpower_data])
+final_dataset = np.column_stack([device_col,actuators_col,assistive_actuators_avg_totalpower_data])
 final_dataset = np.column_stack([subject_col,final_dataset])
 with open(r'.\Statistics\Specific_Weights\NoloadMono06_NoloadBi12\ActuatorsAvgPower_Dataset.csv', 'wb') as f:
   f.write(bytes(utils.listToString(headers)+'\n','UTF-8'))
