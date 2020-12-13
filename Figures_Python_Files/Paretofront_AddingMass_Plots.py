@@ -589,7 +589,7 @@ fig.savefig('./Figures/Paretofront/Adding_Mass_Pareto/PaperFigure_Pareto_Compari
 plt.show()
 
 #####################################################################################
-'''
+
 # plots with masses
 
 # subjects pareto front: noload mono vs biarticular mass added
@@ -774,4 +774,3 @@ plt.legend(loc='best',frameon=False)
 fig.tight_layout()
 fig.savefig('./Figures/Paretofront/Adding_Mass_Pareto/Pareto_Noload_Mono_NonGenVsGen.pdf',orientation='landscape',bbox_inches='tight')
 plt.show()
-'''

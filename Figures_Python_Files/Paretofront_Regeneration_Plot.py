@@ -460,7 +460,7 @@ fig.subplots_adjust(top=0.99, bottom=0.075, left=0.100, right=0.975,hspace=0.30,
 fig.savefig('./Figures/Paretofront/Analyses_Pareto/Regenerable_Energy.pdf',orientation='landscape',bbox_inches='tight')
 plt.show()
 
-'''
+
 # loaded biarticular
 plot_dic = {'x_values':np.transpose(np.tile(mean_bi_loaded_metabolics_percent,(len(mu_list),1))),
          'xerr_values':np.transpose(np.tile(std_bi_loaded_metabolics_percent,(len(mu_list),1))),
@@ -517,7 +517,7 @@ fig.tight_layout(h_pad=-1, w_pad=-1.5)
 fig.subplots_adjust(top=0.98, bottom=0.075, left=0.100, right=0.975,hspace=0.25,wspace=0.15)
 fig.savefig('./Figures/Paretofront/Analyses_Pareto/Paretocurve_calculate_efficiency.pdf',orientation='landscape',bbox_inches='tight')
 plt.show()
-'''
+
 #####################################################################################
 # paretofront for different regenerations
 # loaded biarticular
