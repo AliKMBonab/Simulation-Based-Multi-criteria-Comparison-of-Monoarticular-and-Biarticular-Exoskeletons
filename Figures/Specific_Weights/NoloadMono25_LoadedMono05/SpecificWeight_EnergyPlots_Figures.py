@@ -56,7 +56,6 @@ mean_loaded_mono_energy,std_loaded_mono_energy = utils.mean_std_over_subjects(as
 
 #####################################################################################
 # writing data to csv for statistical analyses
-plt.rcParams.update({'font.size': 12})
 # general columns 
 subjects = np.array(['subject05','subject07','subject09','subject10','subject11','subject12','subject14'])
 loaded_unassist_col = np.repeat(np.array('loaded unassist'),7)
@@ -184,7 +183,7 @@ data = [utils.mean_over_trials(unassisted_energy_dataset['noload_metabolics_ener
         utils.mean_over_trials(unassisted_energy_dataset['loaded_metabolics_energy']),\
         utils.mean_over_trials(assisted_energy_dataset['monoarticular_hip70knee30_load_metabolics_energy']),\
         utils.mean_over_trials(assisted_energy_dataset['monoarticular_hip30knee30_noload_metabolics_energy'])]
-fig= plt.figure(figsize=(6.4*1.5, 4.8))
+fig= plt.figure(figsize=(9.6, 4.8))
 plt.subplot(1,2,1)
 bp = plt.boxplot(data, patch_artist=True)
 ax = plt.gca()
@@ -195,6 +194,7 @@ ax.set_ylim((4,10))
 plt.tick_params(axis='both',direction='in')
 ax.set_xticklabels(names)
 utils.no_top_right(ax)
+
 
 #******************************************************************
 # Actuators Energy Box Plot

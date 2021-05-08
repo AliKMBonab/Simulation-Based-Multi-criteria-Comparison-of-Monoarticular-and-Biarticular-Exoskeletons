@@ -23,7 +23,6 @@ from Colors import colors as mycolors
 subjects = ['05','07','09','10','11','12','14']
 trials_num = ['01','02','03']
 gait_cycle = np.linspace(0,100,1000)
-plt.rcParams.update({'font.size':12})
 #####################################################################################
 # Reading CSV files into a dictionary and constructing gls
 rra_dataset = utils.csv2numpy('D:/Ali.K.M.Bonab/Walking_Mass_Inertia_Effect/Data/Data/RRA/rra_final_data.csv') 
@@ -304,11 +303,10 @@ plot_dic={
 'plot_titles' : ['noload biarticular "Aa" hip joint','loaded biarticular "Ea" hip joint','noload biarticular "Aa" knee joint','noload biarticular "Ea" knee joint']
 }
 # plot
-fig = plt.figure(num='Paper Figure',figsize=(6.4*3, 4.8*2))
+fig = plt.figure(num='Paper Figure',figsize=(9.4, 6.8))
 utils.plot_joint_muscle_exo(nrows=2,ncols=2,plot_dic=plot_dic,color_dic=monovsbi_color_dic,\
                             thirdplot=True,ylabel=' flexion/extension\n(N-m/kg)',y_ticks=np.arange(-2,3,1))
-fig.tight_layout(h_pad=-1, w_pad=-1.5)
-fig.subplots_adjust(top=0.98, bottom=0.075, left=0.100, right=0.975,hspace=0.25,wspace=0.30)
+fig.tight_layout()
 plt.show()
 fig.savefig('./Figures/Specific_Weights/NoloadBi01_NoloadBi11/PaperFigure_TorqueProfiles.pdf',orientation='landscape',bbox_inches='tight')
 

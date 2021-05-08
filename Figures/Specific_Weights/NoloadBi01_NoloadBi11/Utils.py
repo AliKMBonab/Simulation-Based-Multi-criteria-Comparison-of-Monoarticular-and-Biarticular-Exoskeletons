@@ -21,7 +21,6 @@ import pathlib
 from sklearn import metrics
 from Colors import colors as mycolors
 import matplotlib.gridspec as gridspec
-from mpl_toolkits.axes_grid1 import make_axes_locatable
 #######################################################################
 #######################################################################
 # Data saving and reading related functions
@@ -96,10 +95,7 @@ def csv2numpy(datname):
     # making list of headers seperated by ','
     column_name = line.split(',')
     # eleminating last column name which is '\n'
-    if column_name[-1] == '\n':
-        column_name.pop()
-    elif '\n' in column_name[-1]:
-        column_name[-1] = column_name[-1].replace('\n','')
+    column_name.pop()
     f.close()
     data = np.genfromtxt(datname,delimiter= ',', names=column_name,skip_header=1)
     return data
@@ -307,8 +303,7 @@ def reduction_calc(data1,data2):
         reduction[i] = (((data1[i]-data2[i])*100)/data1[i])
     return reduction
 
-# never used
-# def outliers_modified_z_score(ys,threshold = 3):
+def outliers_modified_z_score(ys,threshold = 3):
     '''
     The Z-score, or standard score, is a way of describing a data point
     in terms of its relationship to the mean and standard deviation of
@@ -342,17 +337,6 @@ def outliers_iqr(ys):
     idx = np.where((ys > upper_bound) | (ys < lower_bound),True,False)
     return idx
 
-def actuators_energy_contribution(hip_actuator,knee_actuator,normalization_data=None):
-        if normalization_data is None:
-            normalization_data = hip_actuator + knee_actuator
-        hip_contribution = np.true_divide(hip_actuator*100,(normalization_data))
-        knee_contribution = np.true_divide(knee_actuator*100,(normalization_data))
-        mean_hip_contribution = np.nanmean(hip_contribution)
-        mean_knee_contribution = np.nanmean(knee_contribution)
-        std_hip_contribution = np.nanstd(hip_contribution)
-        std_knee_contribution = np.nanstd(knee_contribution)
-        return mean_hip_contribution, std_hip_contribution, mean_knee_contribution, std_knee_contribution, hip_contribution, knee_contribution
-    
 ######################################################################
 # Mass and inertia effect functions
 
@@ -549,7 +533,7 @@ def resize(axes):
 
 def autolabel(rects,text=None,label_value=True):
     """Attach a text label above each bar"""
-    if text is None:
+    if text == None:
         subs = ['05','07','09','10','11','12','14']
         text = ['S{}'.format(i) for i in subs ]
     for rect in rects:
@@ -676,13 +660,10 @@ def plot_muscles_avg(plot_dic,toeoff_color='xkcd:medium grey',
         
 def plot_joint_muscle_exo (nrows,ncols,plot_dic,color_dic,
                            ylabel,nplots=None,legend_loc=[0,1],
-                           subplot_legend=False,fig=None,thirdplot=True,
-                           y_ticks = [-2,-1,0,1,2],remove_subplot_loc=None,
-                           xlabel_loc=None,ylabel_loc=None,yticks_loc=None,
-                           legend_out=False):
+                           subplot_legend=False,fig=None,thirdplot=True,y_ticks = [-2,-1,0,1,2]):
     '''Note: please note that since it is in the for loop, if some data is
     needed to plot several times it should be repeated in the lists.  '''
-    if nplots is None:
+    if nplots == None:
         nplots = ncols*nrows
     # reading data
     plot_1_list = plot_dic['plot_1_list']
@@ -707,14 +688,11 @@ def plot_joint_muscle_exo (nrows,ncols,plot_dic,color_dic,
             if thirdplot == True:
                 plot_3_list[i]['load'] = 'noload'
         plot_shaded_avg(plot_dic=plot_1_list[i],color=color_1_list[i])
-        plot_shaded_avg(plot_dic=plot_2_list[i],color=color_2_list[i],ls='--')
+        plot_shaded_avg(plot_dic=plot_2_list[i],color=color_2_list[i])
         if thirdplot == True:
-            plot_shaded_avg(plot_dic=plot_3_list[i],color=color_3_list[i],ls='-.')
-        if 'y_ticks' in plot_dic:
-            ax.set_yticks(plot_dic['y_ticks'][i])
-        else:
-            ax.set_yticks(y_ticks)
-        ax.set_title(plot_titles[i],fontsize=18)
+            plot_shaded_avg(plot_dic=plot_3_list[i],color=color_3_list[i])
+        ax.set_yticks(y_ticks)
+        ax.set_title(plot_titles[i])
         plt.tick_params(axis='both',direction='in')
         no_top_right(ax)
         if subplot_legend == True and i == nplots-1:
@@ -731,54 +709,38 @@ def plot_joint_muscle_exo (nrows,ncols,plot_dic,color_dic,
             handle2,label2 = ax_list[legend_loc[1]].get_legend_handles_labels()
             plt.figlegend(handles=handle1,labels=label1, bbox_to_anchor=(pos.x0+0.05, pos.y0-0.05,  pos.width / 1.5, pos.height / 1.5))
             plt.figlegend(handles=handle2,labels=label2, bbox_to_anchor=(pos.x0+0.05, pos.y0+0.05,  pos.width / 1.5, pos.height / 1.5))
-        elif i in legend_loc and subplot_legend == False and legend_out==True:
-            plt.legend(bbox_to_anchor=(-0.30, 1),loc='upper right',frameon=False,prop={'size': 18})
-        elif i in legend_loc and subplot_legend == False and legend_out==False:
-            plt.legend(loc='upper right',frameon=False,prop={'size': 18})
-        if xlabel_loc != None:
-            if i in xlabel_loc:
-                ax.set_xlabel('gait cycle (%)',fontsize=18)
-        else:
-            if ncols==2 and i in [2,3]:
-                ax.set_xlabel('gait cycle (%)',fontsize=18)
-            elif ncols==3 and i in [7,6]:
-                ax.set_xlabel('gait cycle (%)',fontsize=18)
-            elif ncols==4 and i in [4,5,6,7]:
-                ax.set_xlabel('gait cycle (%)',fontsize=18)
-        if ylabel_loc != None:
-            if i in ylabel_loc:
-                ax.set_ylabel(ylabel,fontsize=18)
-        else:
-            if ncols==2 and i in [0,2]:
-                ax.set_ylabel(ylabel,fontsize=18)
-            elif ncols==3 and i in [0,3,6]:
-                ax.set_ylabel(ylabel,fontsize=18)
-            elif ncols==4 and i in [0,4]:
-                ax.set_ylabel(ylabel,fontsize=18)
-        if remove_subplot_loc != None:
-            if i in remove_subplot_loc:
+        elif i in legend_loc and subplot_legend == False:
+            plt.legend(loc='best',frameon=False)
+        if ncols==2 and i in [2,3]:
+            ax.set_xlabel('gait cycle (%)')
+        elif ncols==3 and i in [7,6]:
+            ax.set_xlabel('gait cycle (%)')
+        elif ncols==4 and i in [4,5,6,7]:
+            ax.set_xlabel('gait cycle (%)')
+        if ncols==2 and i in [0,2]:
+            ax.set_ylabel(ylabel)
+        elif ncols==3 and i in [0,3,6]:
+            ax.set_ylabel(ylabel)
+        elif ncols==4 and i in [0,4]:
+            ax.set_ylabel(ylabel)
+        if ncols==3 :
+            if i not in [7,6,5]:
                 labels = [item.get_text() for item in ax.get_xticklabels()]
                 empty_string_labels = ['']*len(labels)
                 ax.set_xticklabels(empty_string_labels)
-        else:
-            if ncols==3 :
-                if i not in [9,10,11]:
-                    labels = [item.get_text() for item in ax.get_xticklabels()]
-                    empty_string_labels = ['']*len(labels)
-                    ax.set_xticklabels(empty_string_labels)
-                if i not in [0,1,2]:
-                    labels = [item.get_text() for item in ax.get_yticklabels()]
-                    empty_string_labels = ['']*len(labels)
-                    ax.set_yticklabels(empty_string_labels)
-            elif ncols==4:
-                if i in [0,1,2,3]:
-                    labels = [item.get_text() for item in ax.get_xticklabels()]
-                    empty_string_labels = ['']*len(labels)
-                    ax.set_xticklabels(empty_string_labels)
-                if i not in [0,4]:
-                    labels = [item.get_text() for item in ax.get_yticklabels()]
-                    empty_string_labels = ['']*len(labels)
-                    ax.set_yticklabels(empty_string_labels)
+            if i not in [0,3,6]:
+                labels = [item.get_text() for item in ax.get_yticklabels()]
+                empty_string_labels = ['']*len(labels)
+                ax.set_yticklabels(empty_string_labels)
+        elif ncols==4:
+            if i in [0,1,2,3]:
+                labels = [item.get_text() for item in ax.get_xticklabels()]
+                empty_string_labels = ['']*len(labels)
+                ax.set_xticklabels(empty_string_labels)
+            if i not in [0,4]:
+                labels = [item.get_text() for item in ax.get_yticklabels()]
+                empty_string_labels = ['']*len(labels)
+                ax.set_yticklabels(empty_string_labels)
 
 def plot_gait_cycle_phase(mean_dic,std_dic,avg_toeoff,loadcond):
     '''
@@ -828,9 +790,9 @@ def nested_plots (fig,plot_dic_1,plot_dic_2,color_dic_1,color_dic_2,nrows=2,ncol
     height_ratios = [4,4]
     width_ratios = [6,6]
     outer = gridspec.GridSpec(outer_rows, outer_cols, figure=fig,
-                             top=0.98, bottom=0.075, left=0.100, right=0.975,hspace=0.30,wspace=0.30)
+                             top=0.98, bottom=0.075, left=0.100, right=0.975,hspace=0.25,wspace=0.30)
     for j in range(2):
-        inner = gridspec.GridSpecFromSubplotSpec(nrows, ncols,subplot_spec=outer[j],hspace=0.40,wspace=0.30,
+        inner = gridspec.GridSpecFromSubplotSpec(nrows, ncols,subplot_spec=outer[j],hspace=0.25,wspace=0.30,
                                 height_ratios=height_ratios,width_ratios=width_ratios)
         # reading data
         if j == 0:
@@ -873,10 +835,10 @@ def nested_plots (fig,plot_dic_1,plot_dic_2,color_dic_1,color_dic_2,nrows=2,ncol
                 if thirdplot == True:
                     plot_3_list[i]['load'] = 'noload'
             # plotting the data and related operations
-            plot_shaded_avg(plot_dic=plot_1_list[i],color=color_1_list[i],ax_vs_plt='ax',ax=ax,ls='-')
-            plot_shaded_avg(plot_dic=plot_2_list[i],color=color_2_list[i],ax_vs_plt='ax',ax=ax,ls='--')
+            plot_shaded_avg(plot_dic=plot_1_list[i],color=color_1_list[i],ax_vs_plt='ax',ax=ax)
+            plot_shaded_avg(plot_dic=plot_2_list[i],color=color_2_list[i],ax_vs_plt='ax',ax=ax)
             if thirdplot == True:
-                plot_shaded_avg(plot_dic=plot_3_list[i],color=color_3_list[i],ax_vs_plt='ax',ax=ax,ls='-.')
+                plot_shaded_avg(plot_dic=plot_3_list[i],color=color_3_list[i],ax_vs_plt='ax',ax=ax)
             ax.set_yticks(y_ticks)
             ax.set_title(plot_titles[i])
             ax.tick_params(axis='both',direction='in')
@@ -896,8 +858,8 @@ def nested_plots (fig,plot_dic_1,plot_dic_2,color_dic_1,color_dic_2,nrows=2,ncol
     left_center = inv.transform( (width_left, 1) )
     width_right = ext[2][0]+(ext[3][0]+ext[3][1]-ext[2][0])/2.
     right_center = inv.transform( (width_right, 1) )
-    fig.text(left_center[0],1.10,general_title_1, va="top", ha="center", fontsize=20)
-    fig.text(right_center[0],1.10,general_title_2, va="top", ha="center", fontsize=20)
+    fig.text(left_center[0],1.05,general_title_1, va="top", ha="center", size=14)
+    fig.text(right_center[0],1.05,general_title_2, va="top", ha="center", size=14)
 ######################################################################
 ######################################################################
 # Data Processing related functions for Pareto Simulations
@@ -1145,18 +1107,6 @@ def pareto_avg_std_energy(data,simulation_num=25,subject_num=7,trial_num=3,
         std = np.nanstd(final_data,axis=1)
     return avg,std
 
-def calculate_efficiency(modified_data,main_data,reshape=True):
-    if reshape == True:
-        modified_data = np.reshape(modified_data,(25,21),order='F')
-        main_data = np.reshape(main_data,(25,21),order='F')
-    percent = np.zeros((25,21))
-    for i in range (21):
-        percent[:,i] = np.true_divide(((main_data[:,i]-modified_data[:,i])*100.0),main_data[:,i])
-    avg_percent = np.nanmean(percent,axis=1)
-    std_percent = np.nanstd(percent,axis=1)
-    return avg_percent, std_percent
-
-
 def pareto_avg_std_within_subjects(data,simulation_num=25,subject_num=7,trial_num=3,reshape=True,delete_subject=None):
     '''
     pareto_avg_std_within_subjects has been used to take average within subjects trials to remove  hierarchical
@@ -1223,8 +1173,13 @@ def regeneratable_percent(regenerated_energy,absolute_energy,reshape=True):
     percent = np.zeros((25,21))
     for i in range (21):
         percent[:,i] = np.true_divide(((regenerated_energy[:,i])),absolute_energy[:,i])
-    avg_percent = np.nanmean(percent,axis=1)
-    std_percent = np.nanstd(percent,axis=1)
+    subject_percent = np.zeros((25,7))
+    c=0
+    for i in range(7):
+        subject_percent[:,i] = np.nanmean(percent[:,c:c+2],axis=1)
+        c+=3
+    avg_percent = np.nanmean(subject_percent,axis=1)
+    std_percent = np.nanstd(subject_percent,axis=1)
     return avg_percent, std_percent
 
 ######################################################################
@@ -1760,8 +1715,7 @@ def errorbar_3D(x,y,z,x_err,y_err,z_err,color,marker='_',lw=2):
         ax.plot([x[i], x[i]], [y[i]+y_err[i], y[i]-y_err[i]], [z[i], z[i]], marker=marker,color=color,lw=lw)
         ax.plot([x[i], x[i]], [y[i], y[i]], [z[i]+z_err[i], z[i]-z_err[i]], marker=marker,color=color,lw=lw)
 
-def plot_pareto_avg_curve (plot_dic,loadcond,legend_loc=0,label_on=True,which_label='alphabet',
-                            errbar_on=True,line=False,fourth_plot=False,third_plot=False,ideal_configs=False,*args, **kwargs):
+def plot_pareto_avg_curve (plot_dic,loadcond,legend_loc=0,label_on=True,which_label='alphabet',errbar_on=True,line=False,*args, **kwargs):
     '''plotting avg and std subplots for combinations of weights.\n
     -labels: needs to be provided by user otherwise data will be labeled from 1 to 25 automatically.
              labeling is True (i.e. label_on=True) by default.\n
@@ -1780,27 +1734,6 @@ def plot_pareto_avg_curve (plot_dic,loadcond,legend_loc=0,label_on=True,which_la
     y2err_data = plot_dic['y2err_data']
     color_1 = plot_dic['color_1']
     color_2 = plot_dic['color_2']
-    if third_plot == True:
-        x3_data = plot_dic['x3_data']
-        y3_data = plot_dic['y3_data']
-        x3err_data = plot_dic['x3err_data']
-        y3err_data = plot_dic['y3err_data']
-        color_3 = plot_dic['color_3']
-    if fourth_plot == True:
-        x4_data = plot_dic['x4_data']
-        y4_data = plot_dic['y4_data']
-        x4err_data = plot_dic['x4err_data']
-        y4err_data = plot_dic['y4err_data']
-        color_4 = plot_dic['color_4']
-    if ideal_configs == True:
-        x1_ideal = plot_dic['x1_ideal']
-        x2_ideal = plot_dic['x2_ideal']
-        y1_ideal = plot_dic['y1_ideal']
-        y2_ideal = plot_dic['y2_ideal']
-        x1err_ideal = plot_dic['x1err_ideal']
-        x2err_ideal = plot_dic['x2err_ideal']
-        y1err_ideal = plot_dic['y1err_ideal']
-        y2err_ideal = plot_dic['y2err_ideal']
     # handle labels
     if 'label_1' and 'label_2' not in plot_dic:
         if which_label == 'alphabet':
@@ -1812,28 +1745,12 @@ def plot_pareto_avg_curve (plot_dic,loadcond,legend_loc=0,label_on=True,which_la
             for i in ['A','B','C','D','E']:
                 for j in ['a','b','c','d','e']:
                     label_2.append('{}{}'.format(i,j))
-            if third_plot == True:
-                label_3 =[]
-                for i in ['A','B','C','D','E']:
-                    for j in ['a','b','c','d','e']:
-                        label_3.append('{}{}'.format(i,j))
-            if fourth_plot == True:
-                label_4 =[]
-                for i in ['A','B','C','D','E']:
-                    for j in ['a','b','c','d','e']:
-                        label_4.append('{}{}'.format(i,j)) 
         elif which_label == 'number':
             label_1 = np.arange(1,26,1)
             label_2 = np.arange(1,26,1)
-            label_3 = np.arange(1,26,1)
-            label_4 = np.arange(1,26,1)
     else:
         label_1 = plot_dic['label_1']
         label_2 = plot_dic['label_2']
-        if third_plot == True:
-            label_3 = plot_dic['label_3']
-        if fourth_plot == True:
-            label_4 = plot_dic['label_4']
     # handle legends
     if 'legend_1' and 'legend_2' not in plot_dic:
         legend_1 = 'biarticular,{}'.format(loadcond)
@@ -1841,51 +1758,22 @@ def plot_pareto_avg_curve (plot_dic,loadcond,legend_loc=0,label_on=True,which_la
     else:
         legend_1 = plot_dic['legend_1']
         legend_2 = plot_dic['legend_2']
-        if third_plot == True:
-            legend_3 = plot_dic['legend_3']
-        if fourth_plot == True:
-            legend_4 = plot_dic['legend_4']
     # main plot
     plt.scatter(x1_data,y1_data,marker="o",color=color_1,label=legend_1,*args, **kwargs)
     plt.scatter(x2_data,y2_data,marker="v",color=color_2,label=legend_2,*args, **kwargs)
-    if third_plot == True:
-        plt.scatter(x3_data,y3_data,marker="P",color=color_3,label=legend_3,*args, **kwargs)
-    if fourth_plot == True:
-        plt.scatter(x4_data,y4_data,marker="X",color=color_4,label=legend_4,*args, **kwargs)
     if errbar_on == True:
-        plt.errorbar(x1_data,y1_data,xerr=x1err_data,yerr=y1err_data,fmt='o',ecolor=color_1,alpha=0.1)
-        plt.errorbar(x2_data,y2_data,xerr=x2err_data,yerr=y2err_data,fmt='v',ecolor=color_2,alpha=0.1)
-        if third_plot == True:
-            plt.errorbar(x3_data,y3_data,xerr=x3err_data,yerr=y3err_data,fmt='P',ecolor=color_3,alpha=0.1)
-        if fourth_plot == True:
-            plt.errorbar(x4_data,y4_data,xerr=x4err_data,yerr=y4err_data,fmt='X',ecolor=color_4,alpha=0.1)
+        plt.errorbar(x1_data,y1_data,xerr=x1err_data,yerr=y1err_data,fmt='o',ecolor=color_1,alpha=0.15)
+        plt.errorbar(x2_data,y2_data,xerr=x2err_data,yerr=y2err_data,fmt='v',ecolor=color_2,alpha=0.15)
     if label_on == True:
         label_datapoints(x1_data,y1_data,label_1,*args, **kwargs)
         label_datapoints(x2_data,y2_data,label_2,ha='left',*args, **kwargs)
-        if third_plot == True:
-            label_datapoints(x3_data,y3_data,label_3,ha='left',*args, **kwargs)
-        if fourth_plot == True:
-            label_datapoints(x4_data,y4_data,label_4,ha='left',*args, **kwargs)
     if line == True:
         plt.plot(x1_data[~np.isnan(x1_data)],y1_data[~np.isnan(y1_data)],ls='-',lw=1,color=color_1)
-        plt.plot(x2_data[~np.isnan(x2_data)],y2_data[~np.isnan(y2_data)],ls='-',lw=1,color=color_2) 
-        if third_plot == True:
-            plt.plot(x3_data[~np.isnan(x3_data)],y3_data[~np.isnan(y3_data)],ls='-',lw=1,color=color_3) 
-        if fourth_plot == True:
-            plt.plot(x4_data[~np.isnan(x4_data)],y4_data[~np.isnan(y4_data)],ls='-',lw=1,color=color_4) 
-            
-    # ideal points adding
-    if ideal_configs == True:
-          plt.scatter(x1_ideal,y1_ideal,marker='X',color=color_1,*args, **kwargs)
-          plt.scatter(x2_ideal,y2_ideal,marker='X',color=color_2,*args, **kwargs)
-          plt.annotate('ideal', (x1_ideal,y1_ideal),textcoords="offset points",xytext=(0,0),ha='right',fontsize=10)
-          plt.annotate('ideal', (x2_ideal,y2_ideal),textcoords="offset points",xytext=(0,0),ha='left',fontsize=10)
-          plt.errorbar(x1_ideal,y1_ideal,xerr=x1err_ideal,yerr=y1err_ideal,fmt='X',ecolor=color_1,alpha=0.15)
-          plt.errorbar(x2_ideal,y2_ideal,xerr=x2err_ideal,yerr=y2err_ideal,fmt='X',ecolor=color_2,alpha=0.15)
-
-def plot_pareto_curve_subjects (nrows,ncols,nplot,plot_dic,loadcond,
-                                line=False,legend_loc=[0],labels=None,
-                                label_on=True,third_plot=False,alpha=1,*args, **kwargs):
+        plt.plot(x2_data[~np.isnan(x2_data)],y2_data[~np.isnan(y2_data)],ls='-',lw=1,color=color_2)       
+    
+def plot_pareto_curve_subjects (nrows,ncols,nplot,plot_dic,loadcond,\
+                                line=False,legend_loc=[0],labels=None,\
+                                label_on=True,alpha=1,*args, **kwargs):
     x1_data = plot_dic['x1_data']
     x2_data = plot_dic['x2_data']
     y1_data = plot_dic['y1_data']
@@ -1894,12 +1782,8 @@ def plot_pareto_curve_subjects (nrows,ncols,nplot,plot_dic,loadcond,
     color_2 = plot_dic['color_2']
     ylabel = plot_dic ['ylabel']
     xlabel = plot_dic ['xlabel']
-    if third_plot == True:
-        x3_data = plot_dic['x3_data']
-        y3_data = plot_dic['y3_data']
-        color_3 = plot_dic['color_3']
     # handle labels
-    if labels is None:
+    if labels == None:
         labels=[]
         for i in ['A','B','C','D','E']:
             for j in ['a','b','c','d','e']:
@@ -1918,25 +1802,17 @@ def plot_pareto_curve_subjects (nrows,ncols,nplot,plot_dic,loadcond,
     else:
         legend_1 = plot_dic['legend_1']
         legend_2 = plot_dic['legend_2']
-        if third_plot == True:
-            legend_3 = plot_dic['legend_3']
     # main plots
     for i in range(nplot):
         ax = plt.subplot(nrows,ncols,i+1)
         plt.scatter(x1_data[:,i],y1_data[:,i],marker="o",color=color_1,label=legend_1,alpha=1,*args, **kwargs)
         plt.scatter(x2_data[:,i],y2_data[:,i],marker="v",color=color_2,label=legend_2,alpha=1,*args, **kwargs)
-        if third_plot == True:
-            plt.scatter(x2_data[:,i],y2_data[:,i],marker="P",color=color_3,label=legend_3,alpha=1,*args, **kwargs)
         if label_on == True:
             label_datapoints(x1_data[:,i],y1_data[:,i],labels,*args, **kwargs)
             label_datapoints(x2_data[:,i],y2_data[:,i],labels,ha='left',*args, **kwargs)
-            if third_plot == True:
-                label_datapoints(x3_data[:,i],y3_data[:,i],labels,ha='left',*args, **kwargs)
         if line == True:
             plt.plot(x1_data[~np.isnan(x1_data)],y1_data[~np.isnan(y1_data)],ls='-',lw=1,color=color_1)
-            plt.plot(x2_data[~np.isnan(x2_data)],y2_data[~np.isnan(y2_data)],ls='-',lw=1,color=color_2)    
-            if third_plot == True:
-                plt.plot(x3_data[~np.isnan(x3_data)],y3_data[~np.isnan(y3_data)],ls='-',lw=1,color=color_3)
+            plt.plot(x2_data[~np.isnan(x2_data)],y2_data[~np.isnan(y2_data)],ls='-',lw=1,color=color_2)       
         plt.title(plot_titles[i])
         no_top_right(ax)
         if i in legend_loc:
@@ -2045,7 +1921,7 @@ def plot_pareto_comparison(plot_dic,loadcond,compare,labels=None,legend_loc=[0],
     else:
         raise   Exception('comparison case is not valid.')
     # handle labels
-    if labels is None:
+    if labels == None:
         label=[]
         for i in ['A','B','C','D','E']:
             for j in ['a','b','c','d','e']:
@@ -2087,9 +1963,7 @@ def plot_pareto_comparison(plot_dic,loadcond,compare,labels=None,legend_loc=[0],
             ax.set_ylabel(ylabel)
         plt.tight_layout()
 
-def plot_paretofront_profile_changes(plot_dic,colormap,toeoff_color,adjust_axes=False,
-                                     include_colorbar=True,xlabel=False,ylabel=None,
-                                     add_ideal_profile=False,add_joint_profile=True,lw=1.75,*args,**kwargs):
+def plot_paretofront_profile_changes(plot_dic,colormap,toeoff_color,include_colorbar=True,xlabel=False,ylabel=None,lw=1.75,*args,**kwargs):
     joint_data = plot_dic['joint_data']
     data = plot_dic['data']
     indices = plot_dic['indices']
@@ -2100,16 +1974,7 @@ def plot_paretofront_profile_changes(plot_dic,colormap,toeoff_color,adjust_axes=
     plt.xticks([0,20,40,60,80,100])
     plt.xlim([0,100])
     # plotting joint profile
-    if add_joint_profile == True:
-        plt.plot(gpc,joint_data, *args, lw=3,ls='-.',color=joint_color,label='joint', **kwargs)
-    # plotting ideal device profile
-    if add_ideal_profile == True:
-        ideal_data = plot_dic['ideal_data']
-        ideal_color = plot_dic['ideal_color']
-        plt.plot(gpc,ideal_data, *args, lw=3,ls='--',color=ideal_color,label='ideal device',alpha=0.75, **kwargs)
-    # legend
-    plt.legend(loc='best',frameon=False)
-    plt.tick_params(axis='both',direction='in')
+    plt.plot(gpc,joint_data, *args, lw=3,ls='--',color=joint_color,label='Joint', **kwargs)
     # toe-off and zero lines
     plt.axvline(avg_toeoff, lw=2, color=toeoff_color, zorder=0, alpha=0.5) #vertical line
     plt.axhline(0, lw=2, color='grey', zorder=0, alpha=0.75) # horizontal line
@@ -2122,18 +1987,8 @@ def plot_paretofront_profile_changes(plot_dic,colormap,toeoff_color,adjust_axes=
     for i in range(data.shape[1]):
         plt.plot(gpc, data[:,i], c=cmap(i),*args,lw=lw,**kwargs)
     # plot the colorbar
-    ax = plt.gca()
-    no_top_right(ax)
-    divider = make_axes_locatable(ax)
-    if include_colorbar == False:
-        cax = divider.append_axes("left", size="1%", pad=0.5)
-        cax.axis('off')
     if include_colorbar == True:
-        if adjust_axes == True:
-            cax = divider.append_axes("left", size="1%", pad=0.5)
-            cax.axis('off')
-        cax = divider.append_axes("right", size="3%", pad=0.5)
-        cbar = plt.colorbar(sm,ticks=np.arange(1,len(indices)+1,1),cax=cax,aspect=80)
+        cbar = plt.colorbar(sm,ticks=np.arange(1,len(indices)+1,1),aspect=80)
         label=[]
         for i in ['A','B','C','D','E']:
             for j in ['a','b','c','d','e']:
@@ -2143,16 +1998,16 @@ def plot_paretofront_profile_changes(plot_dic,colormap,toeoff_color,adjust_axes=
             indices_str.append(label[i-1])
         cbar.set_ticklabels(indices_str)
         cbar.outline.set_visible(False)
-    
     #title
-    ax.set_title(title)
+    plt.title(title)
     #beauty plot
+    ax = plt.gca()
     no_top_right(ax)
     plt.tick_params(axis='both',direction='in')
     if xlabel== True:
-        ax.set_xlabel('gait cycle (%)')
+        plt.xlabel('gait cycle (%)')
     if ylabel != None:
-        ax.set_ylabel(ylabel)
+        plt.ylabel(ylabel)
     
 def plot3D_pareto_avg_curve (plot_dic,loadcond,legend_loc=0,label_on=True,errbar_on=True,line=False,*args, **kwargs):
     '''plotting avg and std subplots for combinations of weights.\n
@@ -2246,1129 +2101,3 @@ def paretofront_barplot(plot_dic,indices,loadcond):
     for i in reversed(indices):
         indices_str.append(label[i-1])
     plt.xticks(index + bar_width / 2,indices_str )
-    
-def paretofront_devices_efficiency_barplot(plot_dic,indices,loadcond,legends=None,colors=None,skip_first_data=False):
-    x1_data = plot_dic['x1_data']
-    x1err_data = plot_dic['x1err_data']
-    if legends == None:
-        legends =['30% regeneration','37% regeneration','50% regeneration','65% regeneration']
-    bar_width = [0,0.25,0.25*2,0.25*3,0.25*4]
-    if colors == None:
-        colors = ['gray','silver','lightgray','whitesmoke']
-    patterns = [ " " , " " , "/" , "\\" , "x"]
-    index = np.arange(1,len(indices)+1,1)
-    opacity = 1
-    error_config = {'ecolor': '0.3'}
-    if skip_first_data == True:
-        j = 1
-    else:
-        j = 0
-    for i in range(j,len(legends)):
-        if len(legends)<2:
-            x1 = x1_data
-            x1err = x1err_data
-        else:
-            x1 = x1_data[:,i]
-            x1err = x1err_data[:,i]
-        x1 = x1[~np.isnan(x1)]
-        x1err = x1err[~np.isnan(x1err)]
-        rects1 = plt.bar(index + bar_width[i], x1, 0.25,
-                        alpha=opacity,
-                        color=colors[i],
-                        hatch=patterns[i],
-                        yerr=x1err,
-                        error_kw=error_config,
-                        label=legends[i])
-    label=[]
-    for i in ['A','B','C','D','E']:
-        for j in ['a','b','c','d','e']:
-            label.append('{}{}'.format(i,j))
-    indices_str = []
-    for i in reversed(indices):
-        indices_str.append(label[i-1])
-    if len(legends)<2:
-        plt.xticks(index,indices_str)
-    else:
-        plt.xticks(index + sum(bar_width)/5,indices_str)
-def plot_regeneration_efficiency(plot_dic,ideal_color=None,line=True,errbar_on=True,label_on=True,*args, **kwargs):
-    x_values = plot_dic['x_values']
-    y_values = plot_dic['y_values']
-    xerr_values = plot_dic['x_values']
-    yerr_values = plot_dic['y_values']
-    legends = plot_dic['legends']
-    weights = plot_dic['weights']
-    if ideal_color == None:
-        colors = ['lightgray','darkgrey','dimgrey','black','steelblue']
-    else:
-        colors = ['lightgray','darkgrey','dimgrey','black']
-        colors.insert(0,ideal_color)
-    markers = ['o','v','P','X','*']
-    c=0
-    for i in range(x_values.shape[1]):
-        # paretofront weights
-        weight = [item-1 for item in weights[:,i]]
-        # generating all names
-        all_weights_name = []
-        for k in ['A','B','C','D','E']:
-            for j in ['a','b','c','d','e']:
-                all_weights_name.append('{}{}'.format(k,j))
-        # selecting names related to paretofront weights
-        selected_weights_name = []
-        for k,name in enumerate(all_weights_name):
-            if k in weight:
-                selected_weights_name.append(name)
-        selected_weights_name = selected_weights_name[::-1]
-        # main plot
-        plt.scatter(x_values[:,i],y_values[:,i],marker=markers[i],color=colors[i],label=legends[i],*args, **kwargs)
-        if errbar_on == False:
-            plt.errorbar(x_values[:,i],y_values[:,i],xerr=xerr_values[:,i],yerr=xerr_values[:,i],fmt=markers[i],ecolor=colors[i],alpha=0.15)
-        if label_on == False and i == 0:
-            label_datapoints(x_values[:,i],y_values[:,i],all_weights_name,*args, **kwargs)
-        if line == True:
-            plt.plot(x_values[~np.isnan(x_values[:,i]),i],y_values[~np.isnan(y_values[:,i]),i],ls='-',lw=1,color=colors[i])
-            
-#################################################################################################
-# Plot and analyses related functions for muscles metabolic rate, stiffness, and reaction forces
-
-def muscles_whisker_bar_plot(data_1,data_2,data_3=None,data_4=None,
-                             which_muscles='all',which_plot='whisker',
-                             nrows=5,ncols=8,xticklabel=['noload','loaded'],
-                             threebar_color_2=mycolors['olympic blue'],threebar_color_3=mycolors['crimson red']):
-    """This function has been developed to study the metabolic rate of each muscle
-
-    Arguments:\n
-        data_1 {numpy ndarray} -- [first dataset]\n
-        data_2 {numpy ndarray} -- [second dataset]\n
-    \n
-    Keyword Arguments:\n
-        data_3 {numpy ndarray} -- [third dataset (optional)] (default: {None})\n
-        data_4 {numpy ndarray} -- [fourth dataset (optional)] (default: {None})\n
-        which_muscles {str} -- [list of interested muscles] (default: {'all'})\n
-        which_plot {str} -- [bar plot or whisker plot] (default: {'whisker'})\n
-        nrows {int} -- [number of rows] (default: {6})\n
-        ncols {int} -- [number of columns] (default: {8})\n
-        xticklabel {list} -- [label of each x ticks] (default: {['noload','loaded']})
-    """
-    muscles_name = ['add_brev','add_long','add_mag3','add_mag4','add_mag2','add_mag1','bifemlh','bifemsh','ext_dig',\
-                    'ext_hal','flex_dig','flex_hal','lat_gas','med_gas','glut_max1','glut_max2','glut_max3','glut_med1',\
-                    'glut_med2','glut_med3','glut_min1','glut_min2','glut_min3','grac','iliacus','per_brev','per_long',\
-                    'peri','psoas','rect_fem','sar','semimem','semiten','soleus','tfl','tib_ant','tib_post','vas_int',\
-                    'vas_lat','vas_med']
-    # handling the selected muscles and concatenating datasets
-    if which_muscles == 'all':
-        names = muscles_name
-        c=0
-        if data_3 is None and data_4 is None:
-            data = np.zeros([data_1.shape[0],len(muscles_name)*2])
-            for i in range(len(muscles_name)):
-                data[:,c] = data_1[:,i]
-                data[:,c+1] = data_2[:,i]
-                c+=2
-        elif data_3 is  not None and data_4 is  not None:
-            data = np.zeros([data_1.shape[0],len(muscles_name)*4])
-            for i in range(len(muscles_name)):
-                data[:,c] = data_1[:,i]
-                data[:,c+1] = data_2[:,i]
-                data[:,c+2] = data_3[:,i]
-                data[:,c+3] = data_4[:,i]
-                c+=4
-        elif data_3 is not None and data_4 is None:
-            data = np.zeros([data_1.shape[0],len(muscles_name)*3])
-            for i in range(len(muscles_name)):
-                data[:,c] = data_1[:,i]
-                data[:,c+1] = data_2[:,i]
-                data[:,c+2] = data_3[:,i]
-                c+=3
-        elif data_3 is None and data_4 is  not None:
-            data = np.zeros([data_1.shape[0],len(muscles_name)*3])
-            for i in range(len(muscles_name)):
-                data[:,c] = data_1[:,i]
-                data[:,c+1] = data_2[:,i]
-                data[:,c+2] = data_4[:,i]
-                c+=3
-    # if selected muscles need to be plotted 
-    else:
-        names = which_muscles
-        c = 0
-        data_1_cropped = np.zeros([data_1.shape[0],len(which_muscles)])
-        data_2_cropped = np.zeros([data_2.shape[0],len(which_muscles)])
-        data_3_cropped = np.zeros([data_3.shape[0],len(which_muscles)])
-        data_4_cropped = np.zeros([data_4.shape[0],len(which_muscles)])
-        if data_3 is None and data_4 is None:
-            for i,m in enumerate(muscles_name):
-                if m in which_muscles:
-                    data_1_cropped[:,c] = data_1[:,i]
-                    data_2_cropped[:,c] = data_2[:,i]
-                    c+=1
-        elif data_3 is  not None and data_4 is None:
-            for i,m in enumerate(muscles_name):
-                if m in which_muscles:
-                    data_1_cropped[:,c] = data_1[:,i]
-                    data_2_cropped[:,c] = data_2[:,i]
-                    data_3_cropped[:,c] = data_3[:,i]
-                    c+=1
-        elif data_3 is None and data_4 is  not None:
-            for i,m in enumerate(muscles_name):
-                if m in which_muscles:
-                    data_1_cropped[:,c] = data_1[:,i]
-                    data_2_cropped[:,c] = data_2[:,i]
-                    data_4_cropped[:,c] = data_4[:,i]
-                    c+=1
-        elif data_3 is  not None and data_4 is  not None:
-            for i,m in enumerate(muscles_name):
-                if m in which_muscles:
-                    data_1_cropped[:,c] = data_1[:,i]
-                    data_2_cropped[:,c] = data_2[:,i]
-                    data_3_cropped[:,c] = data_3[:,i]
-                    data_4_cropped[:,c] = data_4[:,i] 
-                    c+=1   
-        c=0
-        if data_3 is None and data_4 is None:
-            data = np.zeros([data_1_cropped.shape[0],len(which_muscles)*2])
-            for i in range(len(which_muscles)):
-                data[:,c] = data_1_cropped[:,i]
-                data[:,c+1] = data_2_cropped[:,i]
-                c+=2
-        elif data_3 is not None and data_4 is not None:
-            data = np.zeros([data_1_cropped.shape[0],len(which_muscles)*4])
-            for i in range(len(which_muscles)):
-                data[:,c] = data_1_cropped[:,i]
-                data[:,c+1] = data_2_cropped[:,i]
-                data[:,c+2] = data_3_cropped[:,i]
-                data[:,c+3] = data_4_cropped[:,i]
-                c+=4
-        elif data_3 is not None and data_4 is None:
-            data = np.zeros([data_1_cropped.shape[0],len(which_muscles)*3])
-            for i in range(len(which_muscles)):
-                data[:,c] = data_1_cropped[:,i]
-                data[:,c+1] = data_2_cropped[:,i]
-                data[:,c+2] = data_3_cropped[:,i]
-                c+=3
-        elif data_3 is None and data_4 is not None:
-            data = np.zeros([data_1_cropped.shape[0],len(which_muscles)*3])
-            for i in range(len(which_muscles)):
-                data[:,c] = data_1_cropped[:,i]
-                data[:,c+1] = data_2_cropped[:,i]
-                data[:,c+2] = data_4_cropped[:,i]
-                c+=3
-    # box plots
-    c=0
-    if which_plot.lower() == 'whisker':
-        for i in range(len(names)):
-            ax = plt.subplot(nrows,ncols,i+1)
-            if data_3 is None and data_4 is None:
-                x = [1,2]
-                bp = plt.boxplot([data[:,c],data[:,c+1]], patch_artist=True)
-                c+=2
-            elif data_3 is not None and data_4 is not None:
-                x = [1,2,3,4]
-                bp = plt.boxplot(data[:,[c,c+1,c+2,c+3]], patch_artist=True)
-                c+=4
-            elif (data_3 is not None or data_4 is not None) and not (data_3 is  not None and data_4 is not None):
-                x = [1,2,3]
-                bp = plt.boxplot(data[:,[c,c+1,c+2]], patch_artist=True)
-                c+=3
-            beautiful_boxplot(bp)
-            ax.set_xticks(x)
-            ax.set_title(names[i])
-            ax.set_xticklabels(xticklabel)
-            no_top_right(ax)
-            plt.tight_layout()
-    else:
-        for i in range(len(names)):
-            ax = plt.subplot(nrows,ncols,i+1)
-            x = np.arange(1,len(xticklabel)+1,1)
-            width = 0.35
-            if data_3 is None and data_4 is None:
-                bp = plt.bar(x, np.nanmean(data[:,[c,c+1]],axis=0), yerr=np.nanstd(data[:,[c,c+1]],axis=0),\
-                             align='center',color=mycolors['manatee grey'],width=0.35, ecolor='black', capsize=10)
-                bp[0].set_color(mycolors['pastel blue'])
-                bp[1].set_color(mycolors['deep space sparkle'])
-                c+=2
-            elif data_3 is  not None and data_4 is  not None:
-                bp = plt.bar(x, np.nanmean(data[:,[c,c+3]],axis=0), yerr=np.nanstd(data[:,[c,c+3]],axis=0),\
-                             align='center',color=mycolors['manatee grey'],width=0.35, ecolor='black', capsize=10)
-                bp[0].set_color(mycolors['pastel blue'])
-                bp[1].set_color(mycolors['deep space sparkle'])
-                bp[2].set_color(mycolors['crimson red'])
-                bp[3].set_color(mycolors['olympic blue'])
-                c+=4
-            elif (data_3 is  not None | data_4 is  not None) and not (data_3 is  not None and data_4 is  not None):
-                bp = plt.bar(x, np.nanmean(data[:,[c,c+2]],axis=0), yerr=np.nanstd(data[:,[c,c+2]],axis=0),\
-                             align='center',color=mycolors['manatee grey'],width=0.35, ecolor='black', capsize=10)
-                bp[0].set_color(mycolors['grey'])
-                bp[1].set_color(threebar_color_2)
-                bp[2].set_color(threebar_color_3)
-                c+=3
-            ax.set_xticks(np.arange(1,len(xticklabel)+1,1))
-            ax.set_title(names[i])
-            ax.set_xticklabels(xticklabel)
-            no_top_right(ax)
-            plt.tight_layout()
-
-def plot_stiffness(plot_dic,load_condition,kinematics_ticks,moment_ticks,
-                   ax1,ax2,ax3,joint=None,plot_phases=False,plot_fitted_line=False):
-    """
-    This function has been developed to simultaneously plot moment, kinematics, and stiffness\n
-
-    Arguments:
-        plot_dic {[dict]} -- [loaded_toe_off,noload_toe_off,kinematics,kinematics_std,moment,moment_std,color,toe_off_color,label]
-        load_condition {[str]} -- ['noload','loaded']
-        ** label needs to be general and suffices will be added automatically.
-    """
-    # general required dataset
-    gait_cycle = np.linspace(0,100,1000)
-    if load_condition == 'loaded':
-        toe_off = plot_dic['loaded_toe_off']
-        index = pp.nearest_index(gait_cycle,toe_off)
-        phase_colors = ['dimgray','silver']
-    elif load_condition == 'noload':
-        toe_off = plot_dic['noload_toe_off']
-        index = pp.nearest_index(gait_cycle,toe_off)
-        phase_colors = ['teal','turquoise']
-    # first plot dataset
-    kinematics = plot_dic['kinematics']
-    moment = plot_dic['moment']
-    kinematics_std = plot_dic['kinematics_std']
-    moment_std = plot_dic['moment_std']
-    color = plot_dic['color']
-    toe_off_color = plot_dic['toe_off_color']
-    label = plot_dic['label']
-    # stiffness
-    if plot_phases == True:
-        phases_kinematics = plot_dic['phases_kinematics']
-        phases_moment = plot_dic['phases_moment']
-    if plot_fitted_line == True:
-        phase_fitted_lines = plot_dic['phases_fitted_line']
-    # phases
-    if joint == 'knee':
-        phase_list = ['knee_flexion','knee_extension']
-    elif joint == 'hip':
-        phase_list = ['hip_flexion','hip_extension']
-    markers = ['o','P']
-    phase_name = ['flexion','extension']
-    # grids
-    # general conditions
-    ax1.tick_params(axis='both',direction='in')
-    ax2.tick_params(axis='both',direction='in')
-    ax3.tick_params(axis='both',direction='in')
-    # plots
-    #stiffness plot
-    ax1.plot(kinematics,moment,lw=2,color=color,label=label+', {}'.format(load_condition))
-    ax1.hlines(moment[index],np.min(kinematics_ticks),np.max(kinematics_ticks),color=toe_off_color,lw=2,alpha=0.5)
-    ax1.vlines(kinematics[index],np.min(moment_ticks),np.max(moment_ticks),color=toe_off_color,lw=2,alpha=0.5)
-    ax1.hlines(0,np.min(kinematics_ticks),np.max(kinematics_ticks),ls=':',color=mycolors['teal'],lw=1.5,alpha=0.25)
-    ax1.vlines(0,np.min(moment_ticks),np.max(moment_ticks),ls=':',color=mycolors['teal'],lw=1.5,alpha=0.25)
-    if plot_phases == True:
-        for i,phase in enumerate(phase_list):
-            idx = np.arange(0,int(np.round(phases_kinematics['{}'.format(phase)].shape[0])),int(np.round(phases_kinematics['{}'.format(phase)].shape[0]/15)))
-            phase_k = np.take(phases_kinematics['{}'.format(phase)],idx)
-            phase_m = np.take(phases_moment['{}'.format(phase)],idx)
-            ax1.plot(phase_k,phase_m,marker=markers[i],c=phase_colors[i],markersize=8,linestyle='None',alpha=0.75)
-            if plot_fitted_line == True:
-                ax1.plot(phases_kinematics['{}'.format(phase)],phase_fitted_lines['{}'.format(phase)],label=phase_name[i],lw=2.5,color=phase_colors[i])
-           
-    no_top_right(ax1)
-    ax1.set_xticks(kinematics_ticks)
-    ax1.set_yticks(moment_ticks)
-    ax1.set_xlim([np.min(kinematics_ticks),np.max(kinematics_ticks)])
-    ax1.set_ylim([np.min(moment_ticks),np.max(moment_ticks)])
-    ax1.set_xlabel('angle (rad)')
-    ax1.set_ylabel('moment (N.m)')
-    ax1.set_title('stiffness')
-    ax1.legend(loc='best',frameon=False)
-
-    # moment plot
-    ax2.fill_between(gait_cycle, moment + moment_std, moment - moment_std, alpha=0.5,linewidth=0.1,color=color) # shaded std
-    ax2.plot(gait_cycle,moment, lw=2,color=color,label=label+' moment,{}'.format(load_condition)) # mean
-    ax2.axvline(toe_off,np.min(moment_ticks),np.max(moment_ticks), lw=2, color=toe_off_color, zorder=0, alpha=0.5) #vertical line
-    ax2.axhline(0,0,100, lw=2, color='grey', zorder=0, alpha=0.75) # horizontal line
-    ax2.set_xticks([0,10,20,30,40,50,60,70,80,90,100])
-    ax2.set_xlim([0,100])
-    ax2.set_yticks(moment_ticks)
-    ax2.set_ylim([np.min(moment_ticks),np.max(moment_ticks)])
-    ax2.set_xlabel('gait cycle (%)')
-    ax2.set_ylabel('moment (N.m)')
-    ax2.set_title('moment')
-    #ax2.legend(loc='best',frameon=False)
-
-    no_top_right(ax2)
-    # moment plot
-    ax3.fill_between(gait_cycle, kinematics + kinematics_std, kinematics - kinematics_std, alpha=0.5,linewidth=0.1,color=color) # shaded std
-    ax3.plot(gait_cycle,kinematics, lw=2,color=color,label=label+' kinematics,{}'.format(load_condition)) # mean
-    ax3.axvline(toe_off,np.min(kinematics_ticks),np.max(kinematics_ticks), lw=2, color=toe_off_color, zorder=0, alpha=0.5) #vertical line
-    ax3.axhline(0,0,100, lw=2, color='grey', zorder=0, alpha=0.75) # horizontal line
-    ax3.set_xticks([0,10,20,30,40,50,60,70,80,90,100])
-    ax3.set_xlim([0,100])
-    ax3.set_yticks(kinematics_ticks)
-    ax3.set_ylim([np.min(kinematics_ticks),np.max(kinematics_ticks)])
-    ax3.set_xlabel('gait cycle (%)')
-    ax3.set_ylabel('kinematics (rad)')
-    ax3.set_title('kinematics')
-    #ax3.legend(loc='best',frameon=False)
-    no_top_right(ax3)
-    # final adjustments and settings
-    plt.tight_layout()
-
-def pareto_muscles_metabolic_reduction(dataset,unassist_dataset):
-    """
-    This function arranges the pareto dataset and calculates the metabolic
-    reduction of each muscle and returns their within subject mean and std for all simulations.
-    Args:
-        dataset ([ndarray]): [pareto dataset]
-        unassist_dataset ([ndarray]): [unassist dataset related to the dataset]
-
-    Returns:
-        [ndarray]: [mean and std of muscles for all pareto simulations]
-    """
-    simulation_num = 25
-    subject_num = 7
-    trial_num = 3
-    mean_muscle_group_reduction = np.zeros([simulation_num,40])
-    std_muscle_group_reduction = np.zeros([simulation_num,40])
-    for i in range(simulation_num):
-        c = np.arange(i,(subject_num*trial_num*simulation_num)-(simulation_num-i)+1,simulation_num)
-        selected_group = dataset[c,:]
-        muscle_group_reduction_percent = np.true_divide((unassist_dataset-selected_group)*100,unassist_dataset)
-        mean_muscle_group_reduction[i,:] = np.nanmean(muscle_group_reduction_percent,axis=0)
-        std_muscle_group_reduction[i,:] = np.nanstd(muscle_group_reduction_percent,axis=0)
-    return mean_muscle_group_reduction,std_muscle_group_reduction
-
-def manual_filter_muscles_metabolicrate(dataset,indices):
-    paretofront_dataset = np.zeros([len(indices),dataset.shape[1]])
-    indices = [elem-1 for elem in indices]
-    c=0
-    for i in indices:
-        paretofront_dataset[c,:] = dataset[i,:]
-        c+=1
-    return paretofront_dataset
-
-def paretofront_plot_muscles_metabolics(plot_dic,nrows=6,ncols=7,which_muscles='all',xlabels=False,
-                                        xlabel_loc=[35,36,37,38,39,40,41],ylabel_loc=[0,7,14,21,28,35],
-                                        legend_loc=[0],xytext=(0,0),ha='right',*args, **kwargs):
-    # initialization
-    muscles_name = ['add_brev','add_long','add_mag3','add_mag4','add_mag2','add_mag1','bifemlh','bifemsh','ext_dig',\
-                    'ext_hal','flex_dig','flex_hal','lat_gas','med_gas','glut_max1','glut_max2','glut_max3','glut_med1',\
-                    'glut_med2','glut_med3','glut_min1','glut_min2','glut_min3','grac','iliacus','per_brev','per_long',\
-                    'peri','psoas','rect_fem','sar','semimem','semiten','soleus','tfl','tib_ant','tib_post','vas_int',\
-                    'vas_lat','vas_med']
-    avg = plot_dic['mean_data']
-    std = plot_dic['std_data']
-    label = plot_dic['label']
-    weights = plot_dic['weights']
-    color = plot_dic['color']
-    # paretofront weights
-    weights = [item-1 for item in weights]
-    # generating all names
-    all_weights_name = []
-    for i in ['A','B','C','D','E']:
-        for j in ['a','b','c','d','e']:
-            all_weights_name.append('{}{}'.format(i,j))
-    # selecting names related to paretofront weights
-    selected_weights_name = []
-    for i,name in enumerate(all_weights_name):
-        if i in weights:
-            selected_weights_name.append(name)
-    selected_weights_name = selected_weights_name[::-1]
-    # handle selected muscles
-    if which_muscles != 'all':
-        cropped_avg = np.zeros([25,len(which_muscles)])
-        cropped_std = np.zeros([25,len(which_muscles)])
-        c=0
-        for i, muscle_name in enumerate(muscle_name):
-            if muscle_name in which_muscles:
-                cropped_avg[:,c] = avg[:,i]
-                cropped_std[:,c] = std[:,i]
-        muscles_name = which_muscles
-        avg = cropped_avg
-        std = cropped_std
-    # plot
-    for i in range(len(muscles_name)):
-        ax = plt.subplot(nrows,ncols,i+1)
-        x  = np.arange(0,len(weights),1,dtype=np.float64)
-        y = avg[:,i]
-        ax.fill_between(x, avg[:,i] + std[:,i], avg[:,i] - std[:,i], alpha=0.20,linewidth=1,color=color) # shaded std
-        ax.plot(x, avg[:,i], lw=2, label=label, color=color) # mean
-        ax.scatter(x,avg[:,i],marker='o',color=color,lw=0.5)
-        label_datapoints(x,avg[:,i],selected_weights_name,xytext=xytext,ha=ha,fontsize=8)
-        ax.set_xticks(x)
-        if xlabels == True:
-            ax.set_xticklabels(selected_weights_name,rotation=0)
-        else:
-            empty_string_labels = ['']*len(x)
-            ax.set_xticklabels(empty_string_labels)
-        ax.tick_params(axis='both',direction='in')
-        ax.set_title(muscles_name[i])
-        no_top_right(ax)
-        if i in xlabel_loc:
-            ax.set_xlabel('weights')
-        if i in ylabel_loc:
-            ax.set_ylabel('metabolic rate\nreduction (%)')
-        if i in legend_loc:
-            ax.legend(loc='best',frameon=False)      
-
-def clasify_data(data,loadcondition,pareto=False,device=None,forces_name=['Mx','My','Mz']):
-    """
-    The data extraction was defined based on iteration of joint, subject, trial, and force.
-    To classify data to each joint and force components, this function has been defined.
-    Note:
-        This function returns a dictionary contains force components of joints
-    Args:
-        data ([type]): [description]
-        joint_name ([str]): [description]
-        forces_name (list, optional): Defaults to ['Mx','My','Mz'].
-    """
-    subject_num = 7
-    trial_num = 3
-    if len(forces_name) < 3:
-        raise Exception('force names parametere should has 3 components.')
-    # joints
-    if loadcondition.lower() == 'loaded':
-        joints_name=['back','duct_tape','hip','knee','patellofemoral','ankle']
-    elif loadcondition.lower() == 'noload':
-        joints_name=['back','hip','knee','patellofemoral','ankle']
-    
-    # sorting dataset
-    output_dataset_dic = {}
-    c = 0
-    for j in joints_name:
-        force_1 = np.zeros((data.shape[0],subject_num*trial_num))
-        force_2 = np.zeros((data.shape[0],subject_num*trial_num))
-        force_3 = np.zeros((data.shape[0],subject_num*trial_num))
-        for i in range(subject_num*trial_num):
-            force_1[:,i] = data[:,c]
-            force_2[:,i] = data[:,c+1]
-            force_3[:,i] = data[:,c+2]
-            c+=3 # number of force componenet
-        output_dataset_dic['{}_joint_{}'.format(j,forces_name[0])] = force_1
-        output_dataset_dic['{}_joint_{}'.format(j,forces_name[1])] = force_2
-        output_dataset_dic['{}_joint_{}'.format(j,forces_name[2])] = force_3
-    # handling paretofront dataset
-    if pareto == True:
-        if device.lower() == 'biarticular' and loadcondition == 'loaded':
-            # biarticular/loaded
-            hip_weight = [30,30,30,30,30,40,40,50,50,50,60,70]
-            knee_weight = [30,40,50,60,70,60,70,50,60,70,70,70]
-        elif device.lower() == 'biarticular' and loadcondition == 'noload':
-            # biarticular/noload
-            hip_weight = [30,30,30,30,30,40,40,40,50,50,50,70]
-            knee_weight = [30,40,50,60,70,40,50,60,50,60,70,70]
-        elif device.lower() == 'monoarticular' and loadcondition == 'loaded':
-            # monoarticular/loaded
-            hip_weight = [30,40,50,60,70,70,70,70,70]
-            knee_weight = [30,30,30,30,30,40,50,60,70]  
-        elif device.lower() == 'monoarticular' and loadcondition == 'noload':  
-            # monoarticular/noload
-            hip_weight = [30,40,50,50,50,60,60,60,70,70]
-            knee_weight = [30,30,30,40,50,50,60,70,60,70]
-        # sorting dataset
-        simulation_num = len(hip_weight)
-        output_dataset_dic = {}
-        c = 0
-        for j in joints_name:
-            force_1 = np.zeros((data.shape[0],subject_num*trial_num*simulation_num))
-            force_2 = np.zeros((data.shape[0],subject_num*trial_num*simulation_num))
-            force_3 = np.zeros((data.shape[0],subject_num*trial_num*simulation_num))
-            for i in range(subject_num*trial_num*simulation_num):
-                force_1[:,i] = data[:,c]
-                force_2[:,i] = data[:,c+1]
-                force_3[:,i] = data[:,c+2]
-                c+=3 # number of force componenet
-            output_dataset_dic['{}_joint_{}'.format(j,forces_name[0])] = force_1
-            output_dataset_dic['{}_joint_{}'.format(j,forces_name[1])] = force_2
-            output_dataset_dic['{}_joint_{}'.format(j,forces_name[2])] = force_3
-    # out force set  
-    return output_dataset_dic
-            
-def muscles_metabolics_contribution(muscles_metabolics_loaded,total_metabolics_loaded,
-                                    muscles_metabolics_noload,total_metabolics_noload,
-                                    xticks=[0,2,4,6,8]):
-    # calculate the percentage
-    muscles_contribution_loaded = np.zeros((muscles_metabolics_loaded.shape[0],muscles_metabolics_loaded.shape[1]))
-    muscles_contribution_noload = np.zeros((muscles_metabolics_noload.shape[0],muscles_metabolics_noload.shape[1]))
-    for i in range(muscles_metabolics_loaded.shape[1]):
-        muscles_contribution_loaded[:,i] = np.true_divide(muscles_metabolics_loaded[:,i],total_metabolics_loaded)*100
-        muscles_contribution_noload[:,i] = np.true_divide(muscles_metabolics_noload[:,i],total_metabolics_noload)*100
-    # mean and std of muscles' percentage
-    mean_muscles_contribution_loaded = np.nanmean(muscles_contribution_loaded,axis=0)
-    std_muscles_contribution_loaded = np.nanstd(muscles_contribution_loaded,axis=0)
-    mean_muscles_contribution_noload = np.nanmean(muscles_contribution_noload,axis=0)
-    std_muscles_contribution_noload = np.nanstd(muscles_contribution_noload,axis=0)
-    # plot these contributions
-    from Muscles_Group import muscle_group_name
-    width = 0.80
-    muscles_number = np.arange(1,2*(mean_muscles_contribution_loaded.shape[0])+1,2)
-    plt.barh(muscles_number-width/2,mean_muscles_contribution_loaded,height=width,xerr=std_muscles_contribution_loaded,
-            ecolor='silver',capsize=2,color='dimgray',label='loaded',edgecolor='k',lw=1)
-    plt.barh(muscles_number+width/2,mean_muscles_contribution_noload,height=width,xerr=std_muscles_contribution_noload,
-            ecolor='mediumaquamarine',capsize=2,color='green',label='noload',edgecolor='k',lw=1)
-    plt.yticks(muscles_number,muscle_group_name['all_muscles'])
-    plt.xticks(xticks)
-    plt.xlim([min(xticks),max(xticks)])
-    plt.ylim([muscles_number[0]-1,muscles_number[-1]+1])
-    plt.grid(b=True,axis='x',which='major',ls='--',alpha=0.5)
-    plt.grid(b=True,axis='x',which='minor',ls='--',alpha=0.25)
-    ax = plt.gca()
-    no_top_right(ax)
-
-def joints_linear_phases_indices(toe_off,phase):
-    """
-    calculates the indices of linear phases for each joints.\n
-    Phase:\n\t
-        'knee_flexion','knee_total','knee_extension','hip_flexion','hip_extension','hip_total'
-    """
-    if phase not in ['knee_flexion','knee_total','knee_extension','hip_flexion','hip_extension','hip_total']:
-        raise Exception('input phase is not supported. Please change your phase.')
-    gait_cycle = np.linspace(0,100,1000)
-    toe_off_diff = toe_off-60
-    if phase == 'knee_flexion': # from initial contact to the maximum flexion of the first arc.
-        phase_start = 0 + toe_off_diff
-        phase_end = 15 + toe_off_diff
-        if phase_start < 0:
-            indices_1 = np.where((gait_cycle >= 0) & (gait_cycle <= phase_end))
-            indices_2 = np.where((gait_cycle >= 100+toe_off_diff) & (gait_cycle <= 100))
-            index = np.concatenate((indices_1[0],indices_2[0]), axis=0)
-            return [index]
-        else:
-            index = np.where((gait_cycle >= phase_start) & (gait_cycle <= phase_end))
-            return index
-    elif phase == 'knee_extension': # from maximum flexion in first arc to end of extension of the second arc.
-        phase_start = 15 + toe_off_diff
-        phase_end = 40 + toe_off_diff
-        index = np.where((gait_cycle >= phase_start) & (gait_cycle <= phase_end))
-        return index
-    elif phase == 'knee_total': # from the initial contact to end of extension of the second arc.
-        phase_start = 0 + toe_off_diff
-        phase_end = 40 + toe_off_diff
-        if phase_start < 0:
-            indices_1 = np.where((gait_cycle >= 0) & (gait_cycle <= phase_end))
-            indices_2 = np.where((gait_cycle >= 100+toe_off_diff) & (gait_cycle <= 100))
-            index = np.concatenate((indices_1[0],indices_2[0]), axis=0)
-            return [index]
-        else:
-            index = np.where((gait_cycle >= phase_start) & (gait_cycle <= phase_end))
-            return index
-    elif phase == 'hip_flexion': # from the extension onset to maximum extension.
-        phase_start = 32 + toe_off_diff
-        phase_end = 50 + toe_off_diff
-        index = np.where((gait_cycle >= phase_start) & (gait_cycle <= phase_end))
-        return index
-    elif phase == 'hip_extension': # from the maximum extension to initial swing.
-        phase_start = 50 + toe_off_diff
-        phase_end = 70 + toe_off_diff
-        index = np.where((gait_cycle >= phase_start) & (gait_cycle <= phase_end))
-        return index
-    elif phase == 'hip_total': # from the extension onset to initial swing.
-        phase_start = 32 + toe_off_diff
-        phase_end = 70 + toe_off_diff
-        index = np.where((gait_cycle >= phase_start) & (gait_cycle <= phase_end))
-        return index
-
-def quasi_stiffness(angle,moment,toe_off,phase):
-    """
-    Note:
-    np.polynomial.polynomial.polyfit:
-    p(x) = c[0] + c[1]*x
-    c[1]: quassi stiffness
-    """
-    idx = joints_linear_phases_indices(toe_off=toe_off,phase=phase)
-    linear_angle = np.take(angle,idx,axis=0)
-    linear_moment = np.take(moment,idx,axis=0)
-    #fixing the problem of unmatched sizes
-    if linear_angle[0,~np.isnan(linear_angle[0,:])].shape[0] != linear_moment[0,~np.isnan(linear_moment[0,:])].shape[0]:
-        linear_moment_indices = np.arange(0,linear_moment[0,~np.isnan(linear_moment[0,:])].shape[0],1)
-        linear_angle_indices = np.arange(0,linear_angle[0,~np.isnan(linear_angle[0,:])].shape[0],1)
-        linear_angle = np.interp(linear_moment_indices,linear_angle_indices,linear_angle[0,~np.isnan(linear_angle[0,:])])
-        linear_angle = np.expand_dims(linear_angle,axis=0)
-    # fitting
-    if linear_angle[0,~np.isnan(linear_angle[0,:])].size == 0 or linear_moment[0,~np.isnan(linear_moment[0,:])].size == 0:
-        coefficient = np.array([np.nan,np.nan])
-        Rsquare = np.nan
-    else:
-        coefficient = np.polynomial.polynomial.polyfit(x=linear_angle[0,~np.isnan(linear_angle[0,:])],\
-                                                y=linear_moment[0,~np.isnan(linear_moment[0,:])],deg=1)
-        predicted_moment = np.polynomial.polynomial.polyval(linear_angle[0,~np.isnan(linear_angle[0,:])],coefficient)
-        Rsquare = metrics.r2_score(np.transpose(linear_moment[0,~np.isnan(linear_moment[0,:])]), predicted_moment)
-    return coefficient, Rsquare
-    
-def calculate_quasi_stiffness(angle,moment,toe_off,joint,modify_toe_off = False):
-    # initial check conditions
-    if joint == 'knee':
-        phase_list = ['knee_flexion','knee_total','knee_extension']
-    elif joint == 'hip':
-        phase_list = ['hip_flexion','hip_extension','hip_total']
-    else:
-        raise Exception('The input joint is not supported.')
-    if angle.shape[1] != moment.shape[1]:
-        raise Exception('There is no pairwise data to compute the stiffness')
-    # initialization
-    stiffness_dictionary = dict()
-    R_square_dictionary = dict()
-    bias_dictionary =dict()
-    stiffness = np.zeros([len(phase_list),angle.shape[1]])
-    Rsquares = np.zeros([len(phase_list),angle.shape[1]])
-    bias = np.zeros([len(phase_list),angle.shape[1]])
-    # fix toe off data shape for pareto simulations
-    if modify_toe_off == True:
-        toe_off = np.repeat(toe_off,25)
-    # calculate the stiffness for selected phases of a joint
-    for k,phase in enumerate(phase_list):
-        for i in range(angle.shape[1]):
-            coefficient, R2 = quasi_stiffness(angle=np.deg2rad(angle[:,i]),moment=moment[:,i],toe_off=toe_off[i],phase=phase)
-            bias[k,i] = coefficient[0]
-            stiffness[k,i] = coefficient[1]
-            Rsquares[k,i] = R2
-    for i,phase in enumerate(phase_list):
-        # calculate mean and std
-        mean_stiffness, std_stiffness = mean_std_over_subjects(np.abs(stiffness[i,:]),ax=0)
-        mean_R_square, std_R_square = mean_std_over_subjects(Rsquares[i,:],ax=0)
-        mean_bias, std_bias = mean_std_over_subjects(bias[i,:],ax=0)
-        # save data
-        stiffness_dictionary['{}_stiffness'.format(phase)] = np.abs(stiffness[i,:])
-        stiffness_dictionary['{}_stiffness_raw'.format(phase)] = stiffness[i,:]
-        R_square_dictionary['{}_R_square'.format(phase)] = Rsquares[i,:]
-        bias_dictionary['{}_bias'.format(phase)] = bias[i,:]
-        # mean
-        stiffness_dictionary['mean_{}_stiffness'.format(phase)] = mean_stiffness
-        R_square_dictionary['mean_{}_R_square'.format(phase)] = mean_R_square
-        bias_dictionary['mean_{}_bias'.format(phase)] = mean_bias
-        # std
-        stiffness_dictionary['std_{}_stiffness'.format(phase)] = std_stiffness
-        R_square_dictionary['std_{}_R_square'.format(phase)] = std_R_square
-        bias_dictionary['std_{}_bias'.format(phase)] = std_bias
-        # return dictionaries
-    return stiffness_dictionary, R_square_dictionary, bias_dictionary
-
-def mean_linear_phases(mean_angle,mean_moment,mean_toe_off,joint,joint_mean_bias,joint_mean_stiffness):
-    """
-    angle is in radian
-    the input stiffness is either N-m/rad.kg or N-m/rad
-    """
-    if joint == 'knee':
-        phase_list = ['knee_flexion','knee_extension']
-    elif joint == 'hip':
-        phase_list = ['hip_flexion','hip_extension']
-    else:
-        raise Exception('The input joint is not supported.')
-    linear_angle_dict = dict()
-    linear_moment_dict = dict()
-    fitted_line_dict = dict()
-    for phase in phase_list:
-        idx = joints_linear_phases_indices(mean_toe_off,phase)
-        angle = np.take(np.deg2rad(mean_angle),idx,axis=0)
-        moment = np.take(mean_moment,idx,axis=0)
-        stiffness = joint_mean_stiffness['{}_stiffness_raw'.format(phase)]
-        bias = joint_mean_bias['mean_{}_bias'.format(phase)]
-        mean_stiffness = np.nanmean(stiffness,axis=0)
-        predicted_moment = np.polynomial.polynomial.polyval(angle,np.array([bias,mean_stiffness]))
-        # save to dictionary
-        linear_angle_dict['{}'.format(phase)] = angle[0,:]
-        linear_moment_dict['{}'.format(phase)] = moment[0,:]
-        fitted_line_dict['{}'.format(phase)] = predicted_moment[0,:]
-    return linear_angle_dict, linear_moment_dict, fitted_line_dict
-
-def recover_unassist_linear_phases(mean_angle,mean_moment,mean_toe_off,stiffness_csv_dataset,bias_csv_dataset,joint,load):
-    linear_angle_dict = dict()
-    linear_moment_dict = dict()
-    fitted_line_dict = dict()
-    for phase in ['extension','flexion']:
-        # indices, moment, and angle
-        idx = joints_linear_phases_indices(mean_toe_off,'{}_{}'.format(joint,phase))
-        angle = np.take(np.deg2rad(mean_angle),idx,axis=0)
-        moment = np.take(mean_moment,idx,axis=0)
-        # stiffness and bias
-        joint_stiffness = stiffness_csv_dataset['{}_{}_{}_stiffness_raw'.format(load,joint,phase)]
-        joint_bias = bias_csv_dataset['{}_{}_{}_bias'.format(load,joint,phase)]
-        mean_joint_stiffness = np.nanmean(joint_stiffness)
-        mean_joint_bias = np.nanmean(joint_bias)
-        # predicted moment
-        predicted_moment = np.polynomial.polynomial.polyval(angle,np.array([mean_joint_bias,mean_joint_stiffness]))
-        # save to dictionary
-        linear_angle_dict['{}_{}'.format(joint,phase)] = angle[0,:]
-        linear_moment_dict['{}_{}'.format(joint,phase)] = moment[0,:]
-        fitted_line_dict['{}_{}'.format(joint,phase)] = predicted_moment[0,:]
-    return linear_angle_dict, linear_moment_dict, fitted_line_dict
-
-def plot_joint_exo_muscles_stiffness(nrows,ncols,plot_dic,color_dic,joint,
-                                ylabel,nplots=None,legend_loc=[0,4],joint_alpha=0.45,device_alpha=0.95,
-                                subplot_legend=False,fig=None,thirdplot=True,
-                                moment_ticks = [-2,-1,0,1,2],kinematics_ticks =[-2,-1,0,1,2],
-                                plot_phases=True,joint_phases=False,plot_fitted_line=True,
-                                remove_subplot_loc=None,xlabel_loc=None,ylabel_loc=None):
-    '''Note: please note that since it is in the for loop, if some data is
-    needed to plot several times it should be repeated in the lists.  '''
-    if nplots is None:
-        nplots = ncols*nrows
-    # reading data
-    # first set
-    kinematic_1_list = plot_dic['kinematic_1_list']
-    moment_1_list = plot_dic['moment_1_list']
-    color_1_list = color_dic['color_1_list']
-    label_1 = plot_dic['label_1']
-    # second set
-    kinematic_2_list = plot_dic['kinematic_2_list']
-    moment_2_list = plot_dic['moment_2_list']
-    color_2_list = color_dic['color_2_list']
-    label_2 = plot_dic['label_2']
-    # linear phases data
-    if plot_phases == True:
-        linear_kinematics_1_list = plot_dic['linear_kinematics_1_list']
-        linear_moment_1_list = plot_dic['linear_moment_1_list']
-        linear_kinematics_2_list = plot_dic['linear_kinematics_2_list']
-        linear_moment_2_list = plot_dic['linear_moment_2_list']
-        if thirdplot == True:
-            linear_kinematics_3_list = plot_dic['linear_kinematics_3_list']
-            linear_moment_3_list = plot_dic['linear_moment_3_list']
-        if plot_fitted_line == True:
-            fitted_line_1_list = plot_dic['fitted_line_1_list']
-            fitted_line_2_list = plot_dic['fitted_line_2_list']
-            if thirdplot == True:
-                fitted_line_3_list = plot_dic['fitted_line_3_list']            
-    # titles
-    plot_titles = plot_dic['plot_titles']
-    # third set
-    if thirdplot == True:
-        color_3_list = color_dic['color_3_list']
-        kinematic_3_list = plot_dic['kinematic_3_list']
-        moment_3_list = plot_dic['moment_3_list']
-        label_3 = plot_dic['label_3']
-    #plot
-    for i in range(nplots):
-        ax = plt.subplot(nrows,ncols,i+1)
-        # joint moment-angle
-        ax.plot(np.deg2rad(kinematic_1_list[i]),moment_1_list[i],lw=2,color=color_1_list[i],label=label_1,alpha=joint_alpha)
-        # device/muscle moment-angle
-        ax.plot(np.deg2rad(kinematic_2_list[i]),moment_2_list[i],lw=2,color=color_2_list[i],label=label_2[i],alpha=device_alpha)
-        if thirdplot == True:
-            # device/muscle moment-angle
-            ax.plot(np.deg2rad(kinematic_3_list[i]),moment_3_list[i],lw=2,color=color_3_list[i],label=label_3,alpha=device_alpha)
-        # zero lines
-        ax.hlines(0,np.min(kinematics_ticks),np.max(kinematics_ticks),ls=':',color=mycolors['teal'],lw=1.5,alpha=0.5)
-        ax.vlines(0,np.min(moment_ticks),np.max(moment_ticks),ls=':',color=mycolors['teal'],lw=1.5,alpha=0.5)
-        # plot linear phases and stiffness line
-        if plot_phases == True:
-            if joint == 'hip':
-                phase_list = ['hip_extension','hip_flexion']
-                phase_name = ['hip extension','hip flexion']
-            elif joint == 'knee':
-                phase_list = ['knee_extension','knee_flexion']
-                phase_name = ['knee extension','knee flexion']
-            markers = ['o','P']
-            phase_colors_1 = ['darkgrey','silver']
-            phase_colors_2 = ['tan','burlywood']
-            # phases plots
-            for j,phase in enumerate(phase_list):
-            # joint moment-angle linear phase
-                if joint_phases == True:
-                    idx_1 = np.arange(0,int(linear_kinematics_1_list[i][phase].shape[0]),int(np.round(linear_kinematics_1_list[i][phase].shape[0]/5)))
-                    phase_k_1 = np.take(linear_kinematics_1_list[i][phase],idx_1)
-                    phase_m_1 = np.take(linear_moment_1_list[i][phase],idx_1)
-                ax.plot(phase_k_1,phase_m_1,marker=markers[j],c=phase_colors_1[j],markersize=6,linestyle='None',alpha=0.65)
-                if plot_fitted_line == True:
-                    ax.plot(linear_kinematics_1_list[i][phase],fitted_line_1_list[i][phase],lw=2,color=phase_colors_1[j],alpha=0.65)
-                # device/muscles moment-angle linear phase
-                if joint_phases == True:
-                    idx_2 = np.arange(0,int(linear_kinematics_2_list[i][phase].shape[0]),int(np.round(linear_kinematics_2_list[i][phase].shape[0]/5)))
-                    phase_k_2 = np.take(linear_kinematics_2_list[i][phase],idx_2)
-                    phase_m_2 = np.take(linear_moment_2_list[i][phase],idx_2)              
-                    ax.plot(phase_k_2,phase_m_2,marker=markers[j],c=phase_colors_2[j],label=phase_name[j],markersize=6,linestyle='None',alpha=0.80)
-                if plot_fitted_line == True:
-                    ax.plot(linear_kinematics_2_list[i][phase],fitted_line_2_list[i][phase],lw=2,color=phase_colors_2[j])
-                # third plot moment-angle linear phase
-                if thirdplot == True:
-                    if joint_phases == True:
-                        idx_3 = np.arange(0,int(linear_kinematics_3_list[i][phase].shape[0]),int(np.round(linear_kinematics_3_list[i][phase].shape[0]/5)))
-                        phase_k_3 = np.take(linear_kinematics_3_list[i][phase],idx_3)
-                        phase_m_3 = np.take(linear_moment_3_list[i][phase],idx_3)
-                        ax.plot(phase_k_3,phase_m_3,marker=markers[j],c=phase_colors_1[j],markersize=6,linestyle='None',alpha=0.75)
-                    if plot_fitted_line == True:
-                        ax.plot(linear_kinematics_3_list[i][phase],fitted_line_3_list[i][phase],lw=2,color=phase_colors_1[j])
-    # set ticks
-        if joint == 'knee':
-            if i in [0,1,2,3]:
-                ax.set_yticks([-2,-1.5,-1,-0.5,0,0.5,1])
-                ax.set_ylim([min([-2,-1.5,-1,-0.5,0,0.5,1]),max([-2,-1.5,-1,-0.5,0,0.5,1])])
-            elif i in [4,5,6,7]:
-                ax.set_yticks([-1,-0.5,0,0.5,1,1.5])
-                ax.set_ylim([min([-1,-0.5,0,0.5,1,1.5]),max([-1,-0.5,0,0.5,1,1.5])])
-        else:
-            ax.set_yticks(moment_ticks)
-            ax.set_ylim([min(moment_ticks),max(moment_ticks)])
-        ax.set_xticks(kinematics_ticks)
-        ax.set_xlim([min(kinematics_ticks),max(kinematics_ticks)])
-        ax.set_title(plot_titles[i])
-        plt.tick_params(axis='both',direction='in')
-        no_top_right(ax)
-        # subplot removing, locating x and y labels, ect.
-        if subplot_legend == True and i == nplots-1:
-            ax_list = fig.axes
-            ax_last = plt.subplot(nrows,ncols,nrows*ncols)
-            ax_last.spines["right"].set_visible(False)
-            ax_last.spines["top"].set_visible(False)
-            ax_last.spines["bottom"].set_visible(False)
-            ax_last.spines["left"].set_visible(False)
-            ax_last.set_xticks([], [])
-            ax_last.set_yticks([], []) 
-            pos = ax_last.get_position()
-            handle1,label1 = ax_list[legend_loc[0]].get_legend_handles_labels()
-            handle2,label2 = ax_list[legend_loc[1]].get_legend_handles_labels()
-            plt.figlegend(handles=handle1,labels=label1, bbox_to_anchor=(pos.x0+0.05, pos.y0-0.05,  pos.width / 1.5, pos.height / 1.5))
-            plt.figlegend(handles=handle2,labels=label2, bbox_to_anchor=(pos.x0+0.05, pos.y0+0.05,  pos.width / 1.5, pos.height / 1.5))
-        elif i in legend_loc and subplot_legend == False:
-            plt.legend(loc='best',frameon=False)
-        if xlabel_loc != None:
-            if i in xlabel_loc:
-                ax.set_xlabel('kinematics (rad)')
-        else:
-            if ncols==2 and i in [2,3]:
-                ax.set_xlabel('kinematics (rad)')
-            elif ncols==3 and i in [7,6]:
-                ax.set_xlabel('kinematics (rad)')
-            elif ncols==4 and i in [4,5,6,7]:
-                ax.set_xlabel('kinematics (rad)')
-        if ylabel_loc != None:
-            if i in ylabel_loc:
-                ax.set_ylabel(ylabel)
-        else:
-            if ncols==2 and i in [0,2]:
-                ax.set_ylabel(ylabel)
-            elif ncols==3 and i in [0,3,6]:
-                ax.set_ylabel(ylabel)
-            elif ncols==4 and i in [0,4]:
-                ax.set_ylabel(ylabel)
-        if remove_subplot_loc != None:
-            if i in remove_subplot_loc:
-                labels = [item.get_text() for item in ax.get_xticklabels()]
-                empty_string_labels = ['']*len(labels)
-                ax.set_xticklabels(empty_string_labels)
-        else:
-            if ncols==3 :
-                if i not in [7,6,5]:
-                    labels = [item.get_text() for item in ax.get_xticklabels()]
-                    empty_string_labels = ['']*len(labels)
-                    ax.set_xticklabels(empty_string_labels)
-                if i not in [0,3,6]:
-                    labels = [item.get_text() for item in ax.get_yticklabels()]
-                    empty_string_labels = ['']*len(labels)
-                    ax.set_yticklabels(empty_string_labels)
-            elif ncols==4:
-                if i in [0,1,2,3]:
-                    labels = [item.get_text() for item in ax.get_xticklabels()]
-                    empty_string_labels = ['']*len(labels)
-                    ax.set_xticklabels(empty_string_labels)
-                if i not in [0,4]:
-                    labels = [item.get_text() for item in ax.get_yticklabels()]
-                    empty_string_labels = ['']*len(labels)
-                    ax.set_yticklabels(empty_string_labels)
-
-def paretofront_quasi_stiffness(kinematics_csv,moments_csv,toe_off,device,loadcondition,gl_noload,muscles_actuator):
-    if device.lower() == 'biarticular' and loadcondition == 'loaded':
-        # biarticular/loaded
-        loadcond = 'load'
-        hip_weight = [30,30,30,30,30,40,40,50,50,50,60,70]
-        knee_weight = [30,40,50,60,70,60,70,50,60,70,70,70]
-    elif device.lower() == 'biarticular' and loadcondition == 'noload':
-        # biarticular/noload
-        loadcond = 'noload'
-        hip_weight = [30,30,30,30,30,40,40,40,50,50,50,70]
-        knee_weight = [30,40,50,60,70,40,50,60,50,60,70,70]
-    elif device.lower() == 'monoarticular' and loadcondition == 'loaded':
-        # monoarticular/loaded
-        loadcond = 'load'
-        hip_weight = [30,40,50,60,70,70,70,70,70]
-        knee_weight = [30,30,30,30,30,40,50,60,70]  
-    elif device.lower() == 'monoarticular' and loadcondition == 'noload':  
-        # monoarticular/noload
-        loadcond = 'noload'
-        hip_weight = [30,40,50,50,50,60,60,60,70,70]
-        knee_weight = [30,30,30,40,50,50,60,70,60,70]
-    # iterating on the weights
-    paretofront_stiffness = dict()
-    paretofront_R_square = dict()
-    for joint in ['hip','knee']:
-        for w in range(len(hip_weight)):
-            kinematics = kinematics_csv['{}_hip{}knee{}_{}_{}joint_kinematics'.format(device,hip_weight[w],knee_weight[w],loadcond,joint)]
-            if muscles_actuator == 'muscles':
-                moment = moments_csv['{}_hip{}knee{}_{}_{}muscles_moment'.format(device,hip_weight[w],knee_weight[w],loadcond,joint)]
-            elif muscles_actuator == 'actuator':
-                moment = moments_csv['{}_hip{}knee{}_{}_{}actuator_torque'.format(device,hip_weight[w],knee_weight[w],loadcond,joint)]
-                if joint == 'knee' and device == 'biarticular':
-                    kinematics =  kinematics_csv['{}_hip{}knee{}_{}_{}joint_kinematics'.format(device,hip_weight[w],knee_weight[w],loadcond,joint)]\
-                               -  kinematics_csv['{}_hip{}knee{}_{}_hipjoint_kinematics'.format(device,hip_weight[w],knee_weight[w],loadcond)]
-            # normalize moment
-            moment = normalize_direction_data(moment,gl_noload,direction=False)
-            # calculate the stiffness, and R2 (bias excluded)
-            stiffness_dict, R_square_dict, _ = calculate_quasi_stiffness(kinematics,moment,toe_off,joint)
-            # save them into the dictionary
-            paretofront_stiffness['{}{}_hip{}knee{}_stiffness'.format(joint,muscles_actuator,hip_weight[w],knee_weight[w])] = stiffness_dict
-            paretofront_R_square ['{}{}_hip{}knee{}_R_square'.format(joint,muscles_actuator,hip_weight[w],knee_weight[w])] = R_square_dict
-    return paretofront_stiffness,paretofront_R_square
-
-def plot_paretofront_stiffness(plot_dict,device,loadcondition,joint,muscles_actuator,legends=False):
-    # read data
-    ideal_data = plot_dict['ideal_data']
-    unassist_data = plot_dict['unassist_data']
-    paretofront_dict = plot_dict['paretofront_dict']
-    indices = plot_dict['indices']
-    # select weights
-    if device.lower() == 'biarticular' and loadcondition == 'loaded':
-        # biarticular/loaded
-        loadcond = 'load'
-        device_abr = 'bi'
-        hip_weight = [30,30,30,30,30,40,40,50,50,50,60,70]
-        knee_weight = [30,40,50,60,70,60,70,50,60,70,70,70]
-    elif device.lower() == 'biarticular' and loadcondition == 'noload':
-        # biarticular/noload
-        loadcond = 'noload'
-        device_abr = 'bi'
-        hip_weight = [30,30,30,30,30,40,40,40,50,50,50,70]
-        knee_weight = [30,40,50,60,70,40,50,60,50,60,70,70]
-    elif device.lower() == 'monoarticular' and loadcondition == 'loaded':
-        # monoarticular/loaded
-        loadcond = 'load'
-        device_abr = 'mono'
-        hip_weight = [30,40,50,60,70,70,70,70,70]
-        knee_weight = [30,30,30,30,30,40,50,60,70]  
-    elif device.lower() == 'monoarticular' and loadcondition == 'noload':  
-        # monoarticular/noload
-        loadcond = 'noload'
-        device_abr = 'mono'
-        hip_weight = [30,40,50,50,50,60,60,60,70,70]
-        knee_weight = [30,30,30,40,50,50,60,70,60,70]
-    # main code
-    if muscles_actuator == 'muscles':
-        joint_extension_mean_stiffness = [unassist_data['mean_{}_{}_extension_stiffness'.format(loadcondition,joint)],ideal_data['{}_{}_{}{}_mean_extension_stiffness'.format(device_abr,loadcondition,joint,muscles_actuator)]]
-        joint_extension_std_stiffness = [unassist_data['std_{}_{}_extension_stiffness'.format(loadcondition,joint)],ideal_data['{}_{}_{}{}_std_extension_stiffness'.format(device_abr,loadcondition,joint,muscles_actuator)]]
-        joint_flexion_mean_stiffness = [unassist_data['mean_{}_{}_flexion_stiffness'.format(loadcondition,joint)],ideal_data['{}_{}_{}{}_mean_flexion_stiffness'.format(device_abr,loadcondition,joint,muscles_actuator)]]
-        joint_flexion_std_stiffness = [unassist_data['std_{}_{}_flexion_stiffness'.format(loadcondition,joint)],ideal_data['{}_{}_{}{}_std_flexion_stiffness'.format(device_abr,loadcondition,joint,muscles_actuator)]]
-    else:
-        joint_extension_mean_stiffness = [ideal_data['{}_{}_{}{}_mean_extension_stiffness'.format(device_abr,loadcondition,joint,muscles_actuator)]]
-        joint_extension_std_stiffness = [ideal_data['{}_{}_{}{}_std_extension_stiffness'.format(device_abr,loadcondition,joint,muscles_actuator)]]
-        joint_flexion_mean_stiffness = [ideal_data['{}_{}_{}{}_mean_flexion_stiffness'.format(device_abr,loadcondition,joint,muscles_actuator)]]
-        joint_flexion_std_stiffness = [ideal_data['{}_{}_{}{}_std_flexion_stiffness'.format(device_abr,loadcondition,joint,muscles_actuator)]]
-    # add paretofront data to the lists
-    for w in range(len(hip_weight)):
-        joint_extension_mean_stiffness.append(paretofront_dict['{}{}_hip{}knee{}_stiffness'.format(joint,muscles_actuator,hip_weight[w],knee_weight[w])]['mean_{}_extension_stiffness'.format(joint)])
-        joint_extension_std_stiffness.append(paretofront_dict['{}{}_hip{}knee{}_stiffness'.format(joint,muscles_actuator,hip_weight[w],knee_weight[w])]['std_{}_extension_stiffness'.format(joint)])
-        joint_flexion_mean_stiffness.append(paretofront_dict['{}{}_hip{}knee{}_stiffness'.format(joint,muscles_actuator,hip_weight[w],knee_weight[w])]['mean_{}_flexion_stiffness'.format(joint)])
-        joint_flexion_std_stiffness.append(paretofront_dict['{}{}_hip{}knee{}_stiffness'.format(joint,muscles_actuator,hip_weight[w],knee_weight[w])]['std_{}_flexion_stiffness'.format(joint)])
-    # adjust std
-    joint_extension_std_stiffness = [np.zeros(len(joint_extension_std_stiffness)),joint_extension_std_stiffness]
-    joint_flexion_std_stiffness = [np.zeros(len(joint_flexion_std_stiffness)),joint_flexion_std_stiffness]
-    # plot
-    if muscles_actuator == 'muscles':
-        index = np.arange(0,len(hip_weight)+2,1)
-    else:
-        index = np.arange(0,len(hip_weight)+1,1)
-    bar_width = 0.35
-    opacity = 0.4
-    error_config = {'ecolor': '0.3'}
-    rects1 = plt.barh(index, joint_extension_mean_stiffness, bar_width,
-                    alpha=opacity,
-                    color='b',
-                    xerr=joint_extension_std_stiffness,
-                    error_kw=error_config)
-    if muscles_actuator == 'muscles':
-        rects1[0].set_color('gray')
-        rects1[1].set_color('forestgreen')
-    else:
-        rects1[0].set_color('forestgreen')
-    rects2 = plt.barh(index + bar_width, joint_flexion_mean_stiffness, bar_width,
-                    alpha=opacity,
-                    color='r',
-                    xerr=joint_flexion_std_stiffness,
-                    error_kw=error_config)
-    if muscles_actuator == 'muscles':
-        rects2[0].set_color('silver')
-        rects2[1].set_color('limegreen')
-        if legends == True:
-            plt.legend([rects1[0],rects2[0],rects1[1],rects2[1],rects1[2],rects2[2]],['extension','flexion','extension','flexion','extension','flexion'],frameon=False)
-    else:
-        rects2[0].set_color('limegreen')
-        if legends == True:
-            plt.legend([rects1[0],rects2[0],rects1[1],rects2[1]],['extension','flexion','extension','flexion'],frameon=False)
-    label=[]
-    for i in ['A','B','C','D','E']:
-        for j in ['a','b','c','d','e']:
-            label.append('{}{}'.format(i,j))
-    if muscles_actuator == 'muscles':
-        indices_str = ['unassist','ideal']
-    else:
-        indices_str = ['ideal']
-    for i in reversed(indices):
-        indices_str.append(label[i-1])
-    plt.yticks(index + bar_width / 2,indices_str )
-    plt.tick_params(axis='both',direction='in')
-    ax = plt.gca()
-    no_top_right(ax)
-
-def plot_paretofront_Rsquare(plot_dict,device,loadcondition,joint,muscles_actuator,legends=False):
-    # read data
-    paretofront_dict = plot_dict['paretofront_dict']
-    indices = plot_dict['indices']
-    # select weights
-    if device.lower() == 'biarticular' and loadcondition == 'loaded':
-        # biarticular/loaded
-        loadcond = 'load'
-        device_abr = 'bi'
-        hip_weight = [30,30,30,30,30,40,40,50,50,50,60,70]
-        knee_weight = [30,40,50,60,70,60,70,50,60,70,70,70]
-    elif device.lower() == 'biarticular' and loadcondition == 'noload':
-        # biarticular/noload
-        loadcond = 'noload'
-        device_abr = 'bi'
-        hip_weight = [30,30,30,30,30,40,40,40,50,50,50,70]
-        knee_weight = [30,40,50,60,70,40,50,60,50,60,70,70]
-    elif device.lower() == 'monoarticular' and loadcondition == 'loaded':
-        # monoarticular/loaded
-        loadcond = 'load'
-        device_abr = 'mono'
-        hip_weight = [30,40,50,60,70,70,70,70,70]
-        knee_weight = [30,30,30,30,30,40,50,60,70]  
-    elif device.lower() == 'monoarticular' and loadcondition == 'noload':  
-        # monoarticular/noload
-        loadcond = 'noload'
-        device_abr = 'mono'
-        hip_weight = [30,40,50,50,50,60,60,60,70,70]
-        knee_weight = [30,30,30,40,50,50,60,70,60,70]
-    # main code
-    joint_extension_mean_stiffness = []
-    joint_extension_std_stiffness = []
-    joint_flexion_mean_stiffness = []
-    joint_flexion_std_stiffness = []
-    # add paretofront data to the lists
-    for w in range(len(hip_weight)):
-        joint_extension_mean_stiffness.append(paretofront_dict['{}{}_hip{}knee{}_R_square'.format(joint,muscles_actuator,hip_weight[w],knee_weight[w])]['mean_{}_extension_R_square'.format(joint)])
-        joint_extension_std_stiffness.append(paretofront_dict['{}{}_hip{}knee{}_R_square'.format(joint,muscles_actuator,hip_weight[w],knee_weight[w])]['std_{}_extension_R_square'.format(joint)])
-        joint_flexion_mean_stiffness.append(paretofront_dict['{}{}_hip{}knee{}_R_square'.format(joint,muscles_actuator,hip_weight[w],knee_weight[w])]['mean_{}_flexion_R_square'.format(joint)])
-        joint_flexion_std_stiffness.append(paretofront_dict['{}{}_hip{}knee{}_R_square'.format(joint,muscles_actuator,hip_weight[w],knee_weight[w])]['std_{}_flexion_R_square'.format(joint)])
-    # adjust std
-    joint_extension_std_stiffness = [np.zeros(len(joint_extension_std_stiffness)),joint_extension_std_stiffness]
-    joint_flexion_std_stiffness = [np.zeros(len(joint_flexion_std_stiffness)),joint_flexion_std_stiffness]
-    # plot
-    index = np.arange(0,len(hip_weight),1)
-    bar_width = 0.35
-    opacity = 0.4
-    error_config = {'ecolor': '0.3'}
-    rects1 = plt.barh(index, joint_extension_mean_stiffness, bar_width,
-                    alpha=opacity,
-                    color='b',
-                    xerr=joint_extension_std_stiffness,
-                    error_kw=error_config)
-    rects2 = plt.barh(index + bar_width, joint_flexion_mean_stiffness, bar_width,
-                    alpha=opacity,
-                    color='r',
-                    xerr=joint_flexion_std_stiffness,
-                    error_kw=error_config)
-    label=[]
-    for i in ['A','B','C','D','E']:
-        for j in ['a','b','c','d','e']:
-            label.append('{}{}'.format(i,j))
-        indices_str = []
-    for i in reversed(indices):
-        indices_str.append(label[i-1])
-    plt.yticks(index + bar_width / 2,indices_str )
-    plt.tick_params(axis='both',direction='in')
-    ax = plt.gca()
-    no_top_right(ax)
-    

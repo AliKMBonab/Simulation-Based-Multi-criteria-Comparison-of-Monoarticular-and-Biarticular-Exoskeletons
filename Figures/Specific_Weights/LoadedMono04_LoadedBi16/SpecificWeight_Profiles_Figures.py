@@ -125,7 +125,6 @@ mean_rmse_knee_actuator_power,std_rmse_knee_actuator_power = utils.profiles_all_
 mean_rmse_hip_musclesmoment,std_rmse_hip_musclesmoment = utils.profiles_all_phases_rmse(bi_loaded_hipmuscles_moment,mono_loaded_hipmuscles_moment,loaded_toe_off,loaded_toe_off,which_comparison='ideal vs ideal')
 mean_rmse_knee_musclesmoment,std_rmse_knee_musclesmoment = utils.profiles_all_phases_rmse(bi_loaded_kneemuscles_moment,mono_loaded_kneemuscles_moment,loaded_toe_off,loaded_toe_off,which_comparison='ideal vs ideal')
 # RMSE plot       
-plt.rcParams.update({'font.size': 12})
 plot_dic = {'mean_11':mean_rmse_hip_actuator_torque,'mean_12':mean_rmse_hip_actuator_power,
             'mean_13':mean_rmse_hip_musclesmoment,'mean_21':mean_rmse_knee_actuator_torque,
             'mean_22':mean_rmse_knee_actuator_power,'mean_23':mean_rmse_knee_musclesmoment,
@@ -135,7 +134,7 @@ plot_dic = {'mean_11':mean_rmse_hip_actuator_torque,'mean_12':mean_rmse_hip_actu
             'color_2':mycolors['pastel blue'],'color_1':mycolors['deep space sparkle'],'title_1':'assistive actuators\n torque profiles RMSE',
             'title_2':'assistive actuators\n power profiles RMSE','title_3':'assisted muscles generated\n moment profiles RMSE',
             'y_ticks': [-0.05,0.2,0.4,0.6,0.8,1,1.2,1.4,1.6]}
-fig = plt.figure(num='RMSE',figsize=(6.4*2, 4.8*1))
+fig = plt.figure(num='RMSE',figsize=(20.8, 6.4))
 utils.rmse_barplots(plot_dic=plot_dic)
 fig.tight_layout(h_pad=-1, w_pad=-1.5)
 fig.subplots_adjust(top=0.98, bottom=0.075, left=0.100, right=0.975,hspace=0.35,wspace=0.15)
@@ -293,8 +292,7 @@ plot_dic={
 # plot
 fig = plt.figure(num='Paper figure',figsize=(9.4, 6.8))
 utils.plot_joint_muscle_exo(nrows=2,ncols=2,plot_dic=plot_dic,color_dic=monovsbi_color_dic,\
-                            thirdplot=True,ylabel=' flexion/extension\n(N-m/kg)',y_ticks=np.arange(-2,3,1),\
-                            legend_loc=[0],legend_out=False)
+                            thirdplot=True,ylabel=' flexion/extension\n(N-m/kg)',y_ticks=np.arange(-2,3,1))
 fig.tight_layout()
 plt.show()
 fig.savefig('./Figures/Specific_Weights/LoadedMono04_LoadedBi16/PaperFigure_TorqueProfiles.pdf',orientation='landscape',bbox_inches='tight')
@@ -307,8 +305,7 @@ plot_dic={
 # plot
 fig = plt.figure(num='Paper figure',figsize=(9.4, 6.8))
 utils.plot_joint_muscle_exo(nrows=2,ncols=2,plot_dic=plot_dic,color_dic=monovsbi_color_dic,\
-                            thirdplot=False,ylabel=' flexion/extension\n(W/kg)',y_ticks=np.arange(-2,4,1),\
-                            legend_loc=[0],legend_out=False)
+                            thirdplot=False,ylabel=' flexion/extension\n(W/kg)',y_ticks=np.arange(-2,4,1))
 fig.tight_layout(h_pad=-1, w_pad=-1.5)
 fig.subplots_adjust(top=0.98, bottom=0.075, left=0.100, right=0.975,hspace=0.25,wspace=0.15)
 plt.show()
@@ -319,22 +316,21 @@ plot_dic_1={
 'plot_1_list' : [unassist_loaded_hip_musclesmoment_dic,unassist_loaded_hip_musclesmoment_dic,unassist_loaded_knee_musclesmoment_dic,unassist_loaded_knee_musclesmoment_dic],
 'plot_2_list' : [bi_loaded_hip_torque_dic,mono_loaded_hip_torque_dic,bi_loaded_knee_torque_dic,mono_loaded_knee_torque_dic],
 'plot_3_list' : [bi_loaded_hip_musclesmoment_dic, mono_loaded_hip_musclesmoment_dic,bi_loaded_knee_musclesmoment_dic, mono_loaded_knee_musclesmoment_dic],
-'plot_titles' : ['loaded biarticular\n hip joint','loaded monoarticular\n hip joint','loaded biarticular\n knee joint','loaded monoarticular\n knee joint'],
+'plot_titles' : ['loaded biarticular hip joint','loaded monoarticular hip joint','loaded biarticular knee joint','loaded monoarticular knee joint'],
 'y_ticks': [-2,-1,0,1,2], 'y_label':'flexion/extension\nmoment (N-m/kg)','general_title':'Devices torque profiles','thirdplot':True
 }
 plot_dic_2={
 'plot_1_list' : [loaded_hip_power_dic,loaded_hip_power_dic,loaded_knee_power_dic,loaded_knee_power_dic],
 'plot_2_list' : [bi_loaded_hip_power_dic,mono_loaded_hip_power_dic,bi_loaded_knee_power_dic,mono_loaded_knee_power_dic],
-'plot_titles' : ['loaded biarticular\n hip joint','loaded monoarticular\n hip joint','loaded biarticular\n knee joint','loaded monoarticular\n knee joint'],
+'plot_titles' : ['loaded biarticular hip joint','loaded monoarticular hip joint','loaded biarticular knee joint','loaded monoarticular knee joint'],
 'y_ticks': [-3,-2,-1,0,1,2,3], 'y_label':'flexion/extension\npower (W/kg)','general_title':'Devices power profiles','thirdplot':False
 }
-plt.rcParams.update({'font.size': 14})
-fig = plt.figure(num='Main Paper figure',figsize=(6.4*3, 4.8*2))
+fig = plt.figure(num='Main Paper figure',figsize=(12.8, 16.8))
 utils.nested_plots(fig,plot_dic_1,plot_dic_2,monovsbi_color_dic,monovsbi_color_dic)
 fig.tight_layout(h_pad=-1, w_pad=-1.5)
 fig.subplots_adjust(top=0.98, bottom=0.075, left=0.100, right=0.975,hspace=0.25,wspace=0.30)
-fig.savefig('./Figures/Specific_Weights/LoadedMono04_LoadedBi16/PaperFigure_Profiles.pdf',orientation='landscape',bbox_inches='tight')   
 plt.show()
+fig.savefig('./Figures/Specific_Weights/LoadedMono04_LoadedBi16/PaperFigure_Profiles.pdf',orientation='landscape',bbox_inches='tight')   
 #******************************************************************************************************************************
 #******************************************************************************************************************************
 # defualt color dictionary
@@ -359,7 +355,7 @@ plot_dic={
 'plot_titles' : ['loaded biarticular hip joint','loaded monoarticular hip joint']
 }
 # plot
-fig = plt.figure(num='Loaded Hip Torque',figsize=(6.4*1.5, 4.8*1.5))
+fig = plt.figure(num='Loaded Hip Torque',figsize=(9.4, 6.8))
 utils.plot_joint_muscle_exo(nrows=2,ncols=1,plot_dic=plot_dic,color_dic=monovsbi_color_dic,ylabel='hip flexion/extension (N-m/kg)')
 fig.tight_layout()
 fig.savefig('./Figures/Specific_Weights/LoadedMono04_LoadedBi16/Exoskeletons_Hip_Torque.pdf',orientation='landscape',bbox_inches='tight')
@@ -375,7 +371,7 @@ plot_dic={
 'plot_titles' : ['loaded biarticular knee joint','loaded monoarticular knee joint']
 }
 # plot
-fig = plt.figure(num='Loaded Knee Torque',figsize=(6.4*1.5, 4.8*1.5))
+fig = plt.figure(num='Loaded Knee Torque',figsize=(9.4, 6.8))
 utils.plot_joint_muscle_exo(nrows=2,ncols=1,plot_dic=plot_dic,color_dic=monovsbi_color_dic,ylabel='knee flexion/extension (N-m/kg)')
 fig.tight_layout()
 plt.show()
@@ -390,7 +386,7 @@ plot_dic={
 'plot_titles' : ['loaded biarticular hip joint','loaded monoarticular hip joint']
 }
 # plot
-fig = plt.figure(num='Loaded Hip Power',figsize=(6.4*1.5, 4.8*1.5))
+fig = plt.figure(num='Loaded Hip Power',figsize=(9.4, 6.8))
 utils.plot_joint_muscle_exo(nrows=2,ncols=1,plot_dic=plot_dic,color_dic=monovsbi_color_dic,\
                             thirdplot=False,ylabel='hip flexion/extension (W/kg)',y_ticks=np.arange(-4,5,2))
 fig.tight_layout()
