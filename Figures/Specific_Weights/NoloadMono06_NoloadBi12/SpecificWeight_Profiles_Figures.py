@@ -134,7 +134,7 @@ plot_dic = {'mean_11':mean_rmse_hip_actuator_torque,'mean_12':mean_rmse_hip_actu
             'color_1':mycolors['pastel blue'],'color_2':mycolors['deep space sparkle'],'title_1':'assistive actuators\n torque error',
             'title_2':'assistive actuators\n power error','title_3':'assisted muscles\n moment error',
             'y_ticks':[0,0.2,0.4,0.6,0.8,1,1.2,1.4,1.6]}
-fig = plt.figure(num='RMSE',figsize=(6.4*3.8, 4.8*1.5))
+fig = plt.figure(num='RMSE',figsize=(6.4*2, 4.8*1))
 utils.rmse_barplots(plot_dic=plot_dic)
 fig.tight_layout(h_pad=-1, w_pad=-1.5)
 fig.subplots_adjust(top=0.98, bottom=0.075, left=0.100, right=0.975,hspace=0.35,wspace=0.15)
@@ -317,13 +317,13 @@ plot_dic_1={
 'plot_1_list' : [unassist_noload_hip_musclesmoment_dic,unassist_noload_hip_musclesmoment_dic,unassist_noload_knee_musclesmoment_dic,unassist_noload_knee_musclesmoment_dic],
 'plot_2_list' : [bi_noload_hip_torque_dic,mono_noload_hip_torque_dic,bi_noload_knee_torque_dic,mono_noload_knee_torque_dic],
 'plot_3_list' : [bi_noload_hip_musclesmoment_dic, mono_noload_hip_musclesmoment_dic,bi_noload_knee_musclesmoment_dic, mono_noload_knee_musclesmoment_dic],
-'plot_titles' : ['noload biarticular hip joint','noload monoarticular hip joint','noload biarticular knee joint','noload monoarticular knee joint'],
+'plot_titles' : ['noload biarticular\n hip joint','noload monoarticular\n hip joint','noload biarticular\n knee joint','noload monoarticular\n knee joint'],
 'y_ticks': [-2,-1,0,1,2], 'y_label':'flexion/extension\nmoment (N-m/kg)','general_title':'Devices torque profiles','thirdplot':True
 }
 plot_dic_2={
 'plot_1_list' : [noload_hip_power_dic,noload_hip_power_dic,noload_knee_power_dic,noload_knee_power_dic],
 'plot_2_list' : [bi_noload_hip_power_dic,mono_noload_hip_power_dic,bi_noload_knee_power_dic,mono_noload_knee_power_dic],
-'plot_titles' : ['noload biarticular hip joint','noload monoarticular hip joint','noload biarticular knee joint','noload monoarticular knee joint'],
+'plot_titles' : ['noload biarticular\n hip joint','noload monoarticular\n hip joint','noload biarticular\n knee joint','noload monoarticular\n knee joint'],
 'y_ticks': [-3,-2,-1,0,1,2,3], 'y_label':'flexion/extension\npower (W/kg)','general_title':'Devices power profiles','thirdplot':False
 }
 plt.rcParams.update({'font.size':14})

@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.21 (MiKTeX 2.9.7380 64-bit) (preloaded format=pdflatex 2020.4.9)  14 SEP 2020 15:43
+This is pdfTeX, Version 3.14159265-2.6-1.40.21 (MiKTeX 20.7) (preloaded format=pdflatex 2020.9.17)  18 SEP 2020 11:18
 entering extended mode
 **./Ideal_Exoskeleton_Draft_v1.tex
 (Ideal_Exoskeleton_Draft_v1.tex
@@ -80,8 +80,7 @@ Package subfloat Warning: Numbers of floats not counted:
 Package: subfig 2005/06/28 ver: 1.3 subfig package
 
 ("E:\MiKTeX 2.9\tex/latex/caption\caption3.sty"
-Package: caption3 2020/01/03 v1.8h caption3 kernel (AR)
-Package caption3 Info: TeX engine: e-TeX on input line 61.
+Package: caption3 2020/08/30 v2.0 caption3 kernel (AR)
 \captionmargin=\dimen111
 \captionmargin@=\dimen112
 \captionwidth=\dimen113
@@ -360,10 +359,10 @@ LaTeX Info: Redefining \ref on input line 356.
 LaTeX Info: Redefining \pageref on input line 356.
 )
 ("E:\MiKTeX 2.9\tex/latex/hyperref\hyperref.sty"
-Package: hyperref 2020/01/14 v7.00d Hypertext links for LaTeX
+Package: hyperref 2020-05-15 v7.00e Hypertext links for LaTeX
 
-("E:\MiKTeX 2.9\tex/latex/pdftexcmds\pdftexcmds.sty"
-Package: pdftexcmds 2019/11/24 v0.31 Utility functions of pdfTeX for LuaTeX (HO
+("E:\MiKTeX 2.9\tex/generic/pdftexcmds\pdftexcmds.sty"
+Package: pdftexcmds 2020-06-27 v0.33 Utility functions of pdfTeX for LuaTeX (HO
 )
 Package pdftexcmds Info: \pdf@primitive is available.
 Package pdftexcmds Info: \pdf@ifprimitive is available.
@@ -389,7 +388,7 @@ Package: auxhook 2019-12-17 v1.6 Hooks for auxiliary files (HO)
 \Hy@pagecounter=\count127
 
 ("E:\MiKTeX 2.9\tex/latex/hyperref\pd1enc.def"
-File: pd1enc.def 2020/01/14 v7.00d Hyperref: PDFDocEncoding definition (HO)
+File: pd1enc.def 2020-05-15 v7.00e Hyperref: PDFDocEncoding definition (HO)
 )
 ("E:\MiKTeX 2.9\tex/generic/intcalc\intcalc.sty"
 Package: intcalc 2019/12/15 v1.3 Expandable calculations with integers (HO)
@@ -398,20 +397,20 @@ Package: intcalc 2019/12/15 v1.3 Expandable calculations with integers (HO)
 Package: etexcmds 2019/12/15 v1.7 Avoid name clashes with e-TeX commands (HO)
 )
 \Hy@SavedSpaceFactor=\count128
-Package hyperref Info: Hyper figures OFF on input line 4547.
-Package hyperref Info: Link nesting OFF on input line 4552.
-Package hyperref Info: Hyper index ON on input line 4555.
-Package hyperref Info: Plain pages OFF on input line 4562.
-Package hyperref Info: Backreferencing OFF on input line 4567.
+Package hyperref Info: Hyper figures OFF on input line 4464.
+Package hyperref Info: Link nesting OFF on input line 4469.
+Package hyperref Info: Hyper index ON on input line 4472.
+Package hyperref Info: Plain pages OFF on input line 4479.
+Package hyperref Info: Backreferencing OFF on input line 4484.
 Package hyperref Info: Implicit mode ON; LaTeX internals redefined.
-Package hyperref Info: Bookmarks ON on input line 4800.
+Package hyperref Info: Bookmarks ON on input line 4717.
 \c@Hy@tempcnt=\count129
 
 ("E:\MiKTeX 2.9\tex/latex/url\url.sty"
 \Urlmuskip=\muskip11
 Package: url 2013/09/16  ver 3.4  Verb mode for urls, etc.
 )
-LaTeX Info: Redefining \url on input line 5159.
+LaTeX Info: Redefining \url on input line 5076.
 \XeTeXLinkMargin=\dimen131
 
 ("E:\MiKTeX 2.9\tex/generic/bitset\bitset.sty"
@@ -424,15 +423,15 @@ Package: bigintcalc 2019/12/15 v1.5 Expandable calculations on big integers (HO
 \Fld@menulength=\count130
 \Field@Width=\dimen132
 \Fld@charsize=\dimen133
-Package hyperref Info: Hyper figures OFF on input line 6430.
-Package hyperref Info: Link nesting OFF on input line 6435.
-Package hyperref Info: Hyper index ON on input line 6438.
-Package hyperref Info: backreferencing OFF on input line 6445.
-Package hyperref Info: Link coloring OFF on input line 6450.
-Package hyperref Info: Link coloring with OCG OFF on input line 6455.
-Package hyperref Info: PDF/A mode OFF on input line 6460.
-LaTeX Info: Redefining \ref on input line 6500.
-LaTeX Info: Redefining \pageref on input line 6504.
+Package hyperref Info: Hyper figures OFF on input line 6347.
+Package hyperref Info: Link nesting OFF on input line 6352.
+Package hyperref Info: Hyper index ON on input line 6355.
+Package hyperref Info: backreferencing OFF on input line 6362.
+Package hyperref Info: Link coloring OFF on input line 6367.
+Package hyperref Info: Link coloring with OCG OFF on input line 6372.
+Package hyperref Info: PDF/A mode OFF on input line 6377.
+LaTeX Info: Redefining \ref on input line 6417.
+LaTeX Info: Redefining \pageref on input line 6421.
 
 ("E:\MiKTeX 2.9\tex/generic/atbegshi\atbegshi.sty"
 Package: atbegshi 2019/12/05 v1.19 At begin shipout hook (HO)
@@ -444,7 +443,7 @@ Package: atbegshi 2019/12/05 v1.19 At begin shipout hook (HO)
 Package hyperref Info: Driver (autodetected): hpdftex.
 
 ("E:\MiKTeX 2.9\tex/latex/hyperref\hpdftex.def"
-File: hpdftex.def 2020/01/14 v7.00d Hyperref driver for pdfTeX
+File: hpdftex.def 2020-05-15 v7.00e Hyperref driver for pdfTeX
 
 ("E:\MiKTeX 2.9\tex/latex/atveryend\atveryend.sty"
 Package: atveryend 2019-12-11 v1.11 Hooks at the very end of document (HO)
@@ -512,7 +511,7 @@ File: color.cfg 2016/01/02 v1.6 sample color configuration
 Package xcolor Info: Driver file: pdftex.def on input line 225.
 
 ("E:\MiKTeX 2.9\tex/latex/graphics-def\pdftex.def"
-File: pdftex.def 2018/01/08 v1.0l Graphics/color driver for pdftex
+File: pdftex.def 2020/08/26 v1.2 Graphics/color driver for pdftex
 )
 ("E:\MiKTeX 2.9\tex/latex/colortbl\colortbl.sty"
 Package: colortbl 2020/01/04 v1.0e Color table columns (DPC)
@@ -564,9 +563,12 @@ Package: booktabs 2020/01/12 v1.61803398 Publication quality tables
 \savedwidth=\skip61
 
 ("E:\MiKTeX 2.9\tex/latex/caption\caption.sty"
-Package: caption 2020/01/03 v3.4h Customizing captions (AR)
+Package: caption 2020/09/02 v3.5a Customizing captions (AR)
 \c@caption@flags=\count150
 \c@continuedfloat=\count151
+Package caption Info: changepage package is loaded.
+\caption@adjustwidth@hsize=\dimen155
+\caption@adjustwidth@linewidth=\dimen156
 Package caption Info: float package is loaded.
 Package caption Info: hyperref package is loaded.
 )
@@ -600,8 +602,8 @@ File: graphics.cfg 2016/06/04 v1.11 sample graphics configuration
 )
 Package graphics Info: Driver file: pdftex.def on input line 105.
 )
-\Gin@req@height=\dimen155
-\Gin@req@width=\dimen156
+\Gin@req@height=\dimen157
+\Gin@req@width=\dimen158
 )
 ("E:\MiKTeX 2.9\tex/latex/epstopdf-pkg\epstopdf.sty"
 Package: epstopdf 2020-01-24 v2.11 Conversion with epstopdf on the fly (HO)
@@ -710,13 +712,13 @@ File: mt-cmr.cfg 2013/05/19 v2.2 microtype config. file: Computer Modern Roman
 ) ("E:\MiKTeX 2.9\tex/context/base/mkii\supp-pdf.mkii"
 [Loading MPS to PDF converter (version 2006.09.02).]
 \scratchcounter=\count152
-\scratchdimen=\dimen157
+\scratchdimen=\dimen159
 \scratchbox=\box36
 \nofMPsegments=\count153
 \nofMParguments=\count154
 \everyMPshowfont=\toks33
 \MPscratchCnt=\count155
-\MPscratchDim=\dimen158
+\MPscratchDim=\dimen160
 \MPnumerator=\count156
 \makeMPintoPDFobject=\count157
 \everyMPtoPDFconversion=\toks34
@@ -757,7 +759,7 @@ LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <10> not available
 File: ./Figures/Cartoons/Biarticular_Exo_Mechanism.pdf Graphic file (type pdf)
 <use ./Figures/Cartoons/Biarticular_Exo_Mechanism.pdf>
 Package pdftex.def Info: ./Figures/Cartoons/Biarticular_Exo_Mechanism.pdf  used
- on input line 248.
+ on input line 247.
 (pdftex.def)             Requested size: 180.67499pt x 168.69196pt.
 <./Figures/Cartoons/Monoarticular_Exo_Mechanism.pdf, id=139, 769.87625pt x 741.
 48117pt>
@@ -765,59 +767,64 @@ File: ./Figures/Cartoons/Monoarticular_Exo_Mechanism.pdf Graphic file (type pdf
 )
 <use ./Figures/Cartoons/Monoarticular_Exo_Mechanism.pdf>
 Package pdftex.def Info: ./Figures/Cartoons/Monoarticular_Exo_Mechanism.pdf  us
-ed on input line 251.
+ed on input line 250.
 (pdftex.def)             Requested size: 180.67499pt x 174.0105pt.
  [5 <./Figures/Cartoons/Biarticular_Exo_Mechanism.pdf> <./Figures/Cartoons/Mono
 articular_Exo_Mechanism.pdf>]
 <./Figures/Cartoons/OpenSim.pdf, id=228, 1195.01462pt x 845.0471pt>
 File: ./Figures/Cartoons/OpenSim.pdf Graphic file (type pdf)
 <use ./Figures/Cartoons/OpenSim.pdf>
-Package pdftex.def Info: ./Figures/Cartoons/OpenSim.pdf  used on input line 302
+Package pdftex.def Info: ./Figures/Cartoons/OpenSim.pdf  used on input line 301
 .
 (pdftex.def)             Requested size: 379.4175pt x 268.29303pt.
 
 [6] [7 <./Figures/Cartoons/OpenSim.pdf>]
-<./Figures/Cartoons/JointReactionForce_FBD.pdf, id=290, 588.41132pt x 698.09709
+<./Figures/Cartoons/JointReactionForce_FBD.pdf, id=292, 588.41132pt x 698.09709
 pt>
 File: ./Figures/Cartoons/JointReactionForce_FBD.pdf Graphic file (type pdf)
 <use ./Figures/Cartoons/JointReactionForce_FBD.pdf>
 Package pdftex.def Info: ./Figures/Cartoons/JointReactionForce_FBD.pdf  used on
- input line 328.
+ input line 327.
 (pdftex.def)             Requested size: 205.94704pt x 244.33763pt.
- [8 <./Figures/Cartoons/JointReactionForce_FBD.pdf>]
-<./Figures/Cartoons/Biarticular_Exo_Assignment.pdf, id=326, 182.18062pt x 196.7
+<./Figures/Cartoons/Biarticular_Exo_Assignment.pdf, id=298, 182.18062pt x 196.7
 35pt>
 File: ./Figures/Cartoons/Biarticular_Exo_Assignment.pdf Graphic file (type pdf)
 
 <use ./Figures/Cartoons/Biarticular_Exo_Assignment.pdf>
 Package pdftex.def Info: ./Figures/Cartoons/Biarticular_Exo_Assignment.pdf  use
-d on input line 353.
+d on input line 352.
 (pdftex.def)             Requested size: 144.54pt x 156.09135pt.
-<./Figures/Cartoons/Monoarticular_Exo_Assignment.pdf, id=327, 180.675pt x 200.4
+<./Figures/Cartoons/Monoarticular_Exo_Assignment.pdf, id=299, 180.675pt x 200.4
 1576pt>
 File: ./Figures/Cartoons/Monoarticular_Exo_Assignment.pdf Graphic file (type pd
 f)
 <use ./Figures/Cartoons/Monoarticular_Exo_Assignment.pdf>
 Package pdftex.def Info: ./Figures/Cartoons/Monoarticular_Exo_Assignment.pdf  u
-sed on input line 356.
+sed on input line 355.
 (pdftex.def)             Requested size: 144.54pt x 160.33282pt.
- [9 <./Figures/Cartoons/Biarticular_Exo_Assignment.pdf> <./Figures/Cartoons/Mon
-oarticular_Exo_Assignment.pdf>] [10]
-Overfull \hbox (19.33833pt too wide) detected at line 388
+
+
+LaTeX Warning: `!h' float specifier changed to `!ht'.
+
+[8] [9 <./Figures/Cartoons/JointReactionForce_FBD.pdf> <./Figures/Cartoons/Biar
+ticular_Exo_Assignment.pdf> <./Figures/Cartoons/Monoarticular_Exo_Assignment.pd
+f>] [10]
+Overfull \hbox (19.33833pt too wide) detected at line 387
 [] [] \OT1/cmr/m/n/10 = \OML/cmm/m/it/10 M[] [] \OT1/cmr/bx/n/10 a[] \OT1/cmr/m
 /n/10 + \OT1/cmr/bx/n/10 F[] \OMS/cmsy/m/n/10   []
  []
 
+[11]
 Package hyperref Info: bookmark level for unknown algorithm defaults to 0 on in
-put line 400.
-[11] [12] [13] [14] [15] [16]
+put line 399.
+ [12] [13] [14] [15] [16]
 <./Figures/Ideal_Exo_MonovsBi_Figures/Paper_Figure_Energy_BoxPlot.pdf, id=538, 
 839.75671pt x 597.86987pt>
 File: ./Figures/Ideal_Exo_MonovsBi_Figures/Paper_Figure_Energy_BoxPlot.pdf Grap
 hic file (type pdf)
 <use ./Figures/Ideal_Exo_MonovsBi_Figures/Paper_Figure_Energy_BoxPlot.pdf>
 Package pdftex.def Info: ./Figures/Ideal_Exo_MonovsBi_Figures/Paper_Figure_Ener
-gy_BoxPlot.pdf  used on input line 506.
+gy_BoxPlot.pdf  used on input line 505.
 (pdftex.def)             Requested size: 379.4175pt x 270.12456pt.
 <./Figures/Ideal_Exo_MonovsBi_Figures/PaperFigure_MaxPower_BoxPlot.pdf, id=540,
  855.49048pt x 520.80319pt>
@@ -825,7 +832,7 @@ File: ./Figures/Ideal_Exo_MonovsBi_Figures/PaperFigure_MaxPower_BoxPlot.pdf Gra
 phic file (type pdf)
 <use ./Figures/Ideal_Exo_MonovsBi_Figures/PaperFigure_MaxPower_BoxPlot.pdf>
 Package pdftex.def Info: ./Figures/Ideal_Exo_MonovsBi_Figures/PaperFigure_MaxPo
-wer_BoxPlot.pdf  used on input line 514.
+wer_BoxPlot.pdf  used on input line 513.
 (pdftex.def)             Requested size: 379.4175pt x 230.98187pt.
  [17 <./Figures/Ideal_Exo_MonovsBi_Figures/Paper_Figure_Energy_BoxPlot.pdf>]
 <./Figures/Ideal_Exo_MonovsBi_Figures/PaperFigure_Exoskeletons_Torque.pdf, id=5
@@ -834,7 +841,7 @@ File: ./Figures/Ideal_Exo_MonovsBi_Figures/PaperFigure_Exoskeletons_Torque.pdf
 Graphic file (type pdf)
 <use ./Figures/Ideal_Exo_MonovsBi_Figures/PaperFigure_Exoskeletons_Torque.pdf>
 Package pdftex.def Info: ./Figures/Ideal_Exo_MonovsBi_Figures/PaperFigure_Exosk
-eletons_Torque.pdf  used on input line 525.
+eletons_Torque.pdf  used on input line 524.
 (pdftex.def)             Requested size: 379.4175pt x 195.58809pt.
  [18 <./Figures/Ideal_Exo_MonovsBi_Figures/PaperFigure_MaxPower_BoxPlot.pdf>]
 <./Figures/Ideal_Exo_MonovsBi_Figures/PaperFigure_Exoskeletons_Power.pdf, id=64
@@ -843,7 +850,7 @@ File: ./Figures/Ideal_Exo_MonovsBi_Figures/PaperFigure_Exoskeletons_Power.pdf G
 raphic file (type pdf)
 <use ./Figures/Ideal_Exo_MonovsBi_Figures/PaperFigure_Exoskeletons_Power.pdf>
 Package pdftex.def Info: ./Figures/Ideal_Exo_MonovsBi_Figures/PaperFigure_Exosk
-eletons_Power.pdf  used on input line 535.
+eletons_Power.pdf  used on input line 534.
 (pdftex.def)             Requested size: 379.4175pt x 216.75528pt.
  [19 <./Figures/Ideal_Exo_MonovsBi_Figures/PaperFigure_Exoskeletons_Torque.pdf>
 ]
@@ -853,7 +860,7 @@ File: ./Figures/Cartoons/Saggital_Leg_Biarticular_Muscles.pdf Graphic file (typ
 e pdf)
 <use ./Figures/Cartoons/Saggital_Leg_Biarticular_Muscles.pdf>
 Package pdftex.def Info: ./Figures/Cartoons/Saggital_Leg_Biarticular_Muscles.pd
-f  used on input line 551.
+f  used on input line 550.
 (pdftex.def)             Requested size: 144.54pt x 131.16048pt.
 <./Figures/Cartoons/Saggital_Leg_Monoarticular_Muscles.pdf, id=701, 658.46pt x 
 597.50829pt>
@@ -861,7 +868,7 @@ File: ./Figures/Cartoons/Saggital_Leg_Monoarticular_Muscles.pdf Graphic file (t
 ype pdf)
 <use ./Figures/Cartoons/Saggital_Leg_Monoarticular_Muscles.pdf>
 Package pdftex.def Info: ./Figures/Cartoons/Saggital_Leg_Monoarticular_Muscles.
-pdf  used on input line 554.
+pdf  used on input line 553.
 (pdftex.def)             Requested size: 144.54pt x 131.16048pt.
 <./Figures/Ideal_Exo_MonovsBi_Figures/PaperFigure_Biarticular_MuscleActivation.
 pdf, id=702, 599.54207pt x 483.87651pt>
@@ -870,7 +877,7 @@ tion.pdf Graphic file (type pdf)
 <use ./Figures/Ideal_Exo_MonovsBi_Figures/PaperFigure_Biarticular_MuscleActivat
 ion.pdf>
 Package pdftex.def Info: ./Figures/Ideal_Exo_MonovsBi_Figures/PaperFigure_Biart
-icular_MuscleActivation.pdf  used on input line 561.
+icular_MuscleActivation.pdf  used on input line 560.
 (pdftex.def)             Requested size: 379.4175pt x 306.21712pt.
  [20 <./Figures/Ideal_Exo_MonovsBi_Figures/PaperFigure_Exoskeletons_Power.pdf> 
 <./Figures/Cartoons/Saggital_Leg_Biarticular_Muscles.pdf> <./Figures/Cartoons/S
@@ -883,7 +890,7 @@ File: ./Figures/Pareto_Simulations_Figures/PaperFigure_Main_Pareto.pdf Graphic
 file (type pdf)
 <use ./Figures/Pareto_Simulations_Figures/PaperFigure_Main_Pareto.pdf>
 Package pdftex.def Info: ./Figures/Pareto_Simulations_Figures/PaperFigure_Main_
-Pareto.pdf  used on input line 586.
+Pareto.pdf  used on input line 585.
 (pdftex.def)             Requested size: 379.4175pt x 310.72813pt.
 <./Figures/Pareto_Simulations_Figures/PaperFigure_Paretofront_EnergyBarPlot.pdf
 , id=865, 867.3529pt x 678.28253pt>
@@ -892,15 +899,15 @@ t.pdf Graphic file (type pdf)
 <use ./Figures/Pareto_Simulations_Figures/PaperFigure_Paretofront_EnergyBarPlot
 .pdf>
 Package pdftex.def Info: ./Figures/Pareto_Simulations_Figures/PaperFigure_Paret
-ofront_EnergyBarPlot.pdf  used on input line 593.
+ofront_EnergyBarPlot.pdf  used on input line 592.
 (pdftex.def)             Requested size: 379.4175pt x 296.70647pt.
  [23] [24 <./Figures/Pareto_Simulations_Figures/PaperFigure_Main_Pareto.pdf>]
-Overfull \hbox (26.30087pt too wide) in paragraph at lines 606--629
+Overfull \hbox (26.30087pt too wide) in paragraph at lines 605--628
 [][][] 
  []
 
 
-Overfull \hbox (24.77307pt too wide) in paragraph at lines 637--661
+Overfull \hbox (24.77307pt too wide) in paragraph at lines 636--660
 [][][] 
  []
 
@@ -913,7 +920,7 @@ es.pdf Graphic file (type pdf)
 <use ./Figures/Pareto_Simulations_Figures/PaperFigure_Paretofront_TorqueProfile
 s.pdf>
 Package pdftex.def Info: ./Figures/Pareto_Simulations_Figures/PaperFigure_Paret
-ofront_TorqueProfiles.pdf  used on input line 669.
+ofront_TorqueProfiles.pdf  used on input line 668.
 (pdftex.def)             Requested size: 379.4175pt x 291.79283pt.
  [26] [27 <./Figures/Pareto_Simulations_Figures/PaperFigure_Paretofront_TorqueP
 rofiles.pdf>]
@@ -924,7 +931,7 @@ s.pdf Graphic file (type pdf)
 <use ./Figures/Pareto_Simulations_Figures/PaperFigure_Paretofront_PowerProfiles
 .pdf>
 Package pdftex.def Info: ./Figures/Pareto_Simulations_Figures/PaperFigure_Paret
-ofront_PowerProfiles.pdf  used on input line 681.
+ofront_PowerProfiles.pdf  used on input line 680.
 (pdftex.def)             Requested size: 379.4175pt x 291.79283pt.
  [28] [29 <./Figures/Pareto_Simulations_Figures/PaperFigure_Paretofront_PowerPr
 ofiles.pdf>]
@@ -935,7 +942,7 @@ ation_Efficiency.pdf Graphic file (type pdf)
 <use ./Figures/Pareto_Mass_Regenration_Figures/PaperFigure_Paretofront_Regenera
 tion_Efficiency.pdf>
 Package pdftex.def Info: ./Figures/Pareto_Mass_Regenration_Figures/PaperFigure_
-Paretofront_Regeneration_Efficiency.pdf  used on input line 696.
+Paretofront_Regeneration_Efficiency.pdf  used on input line 695.
 (pdftex.def)             Requested size: 379.4175pt x 302.69351pt.
 <./Figures/Pareto_Mass_Regenration_Figures/PaperFigure_Main_Pareto_Regenerated.
 pdf, id=1142, 892.02632pt x 730.51833pt>
@@ -944,7 +951,7 @@ ated.pdf Graphic file (type pdf)
 <use ./Figures/Pareto_Mass_Regenration_Figures/PaperFigure_Main_Pareto_Regenera
 ted.pdf>
 Package pdftex.def Info: ./Figures/Pareto_Mass_Regenration_Figures/PaperFigure_
-Main_Pareto_Regenerated.pdf  used on input line 703.
+Main_Pareto_Regenerated.pdf  used on input line 702.
 (pdftex.def)             Requested size: 379.4175pt x 310.72813pt.
  [30] [31 <./Figures/Pareto_Mass_Regenration_Figures/PaperFigure_Paretofront_Re
 generation_Efficiency.pdf>] [32 <./Figures/Pareto_Mass_Regenration_Figures/Pape
@@ -956,7 +963,7 @@ df Graphic file (type pdf)
 <use ./Figures/Pareto_Mass_Regenration_Figures/PaperFigure_Pareto_Comparison.pd
 f>
 Package pdftex.def Info: ./Figures/Pareto_Mass_Regenration_Figures/PaperFigure_
-Pareto_Comparison.pdf  used on input line 717.
+Pareto_Comparison.pdf  used on input line 716.
 (pdftex.def)             Requested size: 379.4175pt x 313.83093pt.
 <./Figures/Pareto_Mass_Regenration_Figures/PaperFigure_AddingMass_Pareto.pdf, i
 d=1318, 892.02632pt x 730.51833pt>
@@ -965,7 +972,7 @@ df Graphic file (type pdf)
 <use ./Figures/Pareto_Mass_Regenration_Figures/PaperFigure_AddingMass_Pareto.pd
 f>
 Package pdftex.def Info: ./Figures/Pareto_Mass_Regenration_Figures/PaperFigure_
-AddingMass_Pareto.pdf  used on input line 726.
+AddingMass_Pareto.pdf  used on input line 725.
 (pdftex.def)             Requested size: 379.4175pt x 310.72813pt.
  [33]
 [34 <./Figures/Pareto_Mass_Regenration_Figures/PaperFigure_Pareto_Comparison.pd
@@ -977,7 +984,7 @@ leton_DifferentConfigs.pdf Graphic file (type pdf)
 <use ./Figures/Pareto_Mass_Regenration_Figures/PaperFigure_MonoarticularExoskel
 eton_DifferentConfigs.pdf>
 Package pdftex.def Info: ./Figures/Pareto_Mass_Regenration_Figures/PaperFigure_
-MonoarticularExoskeleton_DifferentConfigs.pdf  used on input line 738.
+MonoarticularExoskeleton_DifferentConfigs.pdf  used on input line 737.
 (pdftex.def)             Requested size: 379.4175pt x 238.31233pt.
  [35 <./Figures/Pareto_Mass_Regenration_Figures/PaperFigure_AddingMass_Pareto.p
 df>] [36 <./Figures/Pareto_Mass_Regenration_Figures/PaperFigure_MonoarticularEx
@@ -996,21 +1003,21 @@ Package microtype Info: Loading generic protrusion settings for font family
 [46]) 
 AED: lastpage setting LastPage
 [47]
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 814.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 814.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 813.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 813.
  (Ideal_Exoskeleton_Draft_v1.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 814.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 814.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 813.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 813.
 Package rerunfilecheck Info: File `Ideal_Exoskeleton_Draft_v1.out' has not chan
 ged.
 (rerunfilecheck)             Checksum: D41D8CD98F00B204E9800998ECF8427E;0.
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 814.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 813.
  ) 
 Here is how much of TeX's memory you used:
- 13709 strings out of 492478
- 205836 string characters out of 3137227
- 348351 words of memory out of 3000000
- 17424 multiletter control sequences out of 15000+200000
+ 13818 strings out of 492550
+ 209157 string characters out of 3138229
+ 347678 words of memory out of 3000000
+ 17464 multiletter control sequences out of 15000+200000
  16987 words of font info for 97 fonts, out of 3000000 for 9000
  1141 hyphenation exceptions out of 8191
  41i,16n,56p,1645b,608s stack positions out of 5000i,500n,10000p,200000b,50000s
@@ -1034,7 +1041,7 @@ type1/public/amsfonts/cm/cmsy7.pfb><E:/MiKTeX 2.9/fonts/type1/public/amsfonts/c
 m/cmti10.pfb><E:/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmti7.pfb><E:/MiKTeX
  2.9/fonts/type1/public/amsfonts/cm/cmti9.pfb><E:/MiKTeX 2.9/fonts/type1/public
 /amsfonts/cm/cmtt10.pfb>
-Output written on Ideal_Exoskeleton_Draft_v1.pdf (47 pages, 5474440 bytes).
+Output written on Ideal_Exoskeleton_Draft_v1.pdf (47 pages, 5476659 bytes).
 PDF statistics:
  1794 PDF objects out of 2073 (max. 8388607)
  243 named destinations out of 1000 (max. 500000)

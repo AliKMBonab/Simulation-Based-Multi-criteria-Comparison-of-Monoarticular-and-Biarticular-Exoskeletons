@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.21 (MiKTeX 2.9.7380 64-bit) (preloaded format=pdflatex 2020.4.9)  14 SEP 2020 13:48
+This is pdfTeX, Version 3.14159265-2.6-1.40.21 (MiKTeX 2.9.7380 64-bit) (preloaded format=pdflatex 2020.4.9)  17 SEP 2020 19:59
 entering extended mode
 **./CaseStudy.tex
 (CaseStudy.tex
@@ -767,14 +767,14 @@ f>
 Package pdftex.def Info: ../../Figures/Case_Studies/LoadedMono04_LoadedBi16/Pap
 erFigure_Profiles.pdf  used on input line 218.
 (pdftex.def)             Requested size: 379.4175pt x 221.97047pt.
-<../../Figures/Case_Studies/LoadedMono04_LoadedBi16/RMSE.pdf, id=965, 1598.391p
-t x 547.23398pt>
+<../../Figures/Case_Studies/LoadedMono04_LoadedBi16/RMSE.pdf, id=965, 869.90933
+pt x 376.76308pt>
 File: ../../Figures/Case_Studies/LoadedMono04_LoadedBi16/RMSE.pdf Graphic file 
 (type pdf)
 <use ../../Figures/Case_Studies/LoadedMono04_LoadedBi16/RMSE.pdf>
 Package pdftex.def Info: ../../Figures/Case_Studies/LoadedMono04_LoadedBi16/RMS
 E.pdf  used on input line 225.
-(pdftex.def)             Requested size: 379.4175pt x 129.89426pt.
+(pdftex.def)             Requested size: 379.4175pt x 164.32753pt.
 <../../Figures/Case_Studies/LoadedMono04_LoadedBi16/MonoarticularVSBiarticular_
 Loaded_MusclesActivation.pdf, id=966, 740.87257pt x 481.66699pt>
 File: ../../Figures/Case_Studies/LoadedMono04_LoadedBi16/MonoarticularVSBiartic
@@ -787,7 +787,7 @@ oarticularVSBiarticular_Loaded_MusclesActivation.pdf  used on input line 232.
  [3 <../../Figures/Case_Studies/LoadedMono04_LoadedBi16/PaperFigure_Profiles.pd
 f>] [4 <../../Figures/Case_Studies/LoadedMono04_LoadedBi16/RMSE.pdf>]
 <../../Figures/Case_Studies/NoloadMono06_NoloadBi12/PaperFigure_BoxPlot.pdf, id
-=1096, 660.19904pt x 361.65666pt>
+=1090, 660.19904pt x 361.65666pt>
 File: ../../Figures/Case_Studies/NoloadMono06_NoloadBi12/PaperFigure_BoxPlot.pd
 f Graphic file (type pdf)
 <use ../../Figures/Case_Studies/NoloadMono06_NoloadBi12/PaperFigure_BoxPlot.pdf
@@ -796,7 +796,7 @@ Package pdftex.def Info: ../../Figures/Case_Studies/NoloadMono06_NoloadBi12/Pap
 erFigure_BoxPlot.pdf  used on input line 249.
 (pdftex.def)             Requested size: 379.4175pt x 207.84612pt.
 <../../Figures/Case_Studies/NoloadMono06_NoloadBi12/PaperFigure_Profiles.pdf, i
-d=1097, 1306.17906pt x 760.31429pt>
+d=1091, 1306.17906pt x 760.31429pt>
 File: ../../Figures/Case_Studies/NoloadMono06_NoloadBi12/PaperFigure_Profiles.p
 df Graphic file (type pdf)
 <use ../../Figures/Case_Studies/NoloadMono06_NoloadBi12/PaperFigure_Profiles.pd
@@ -804,20 +804,20 @@ f>
 Package pdftex.def Info: ../../Figures/Case_Studies/NoloadMono06_NoloadBi12/Pap
 erFigure_Profiles.pdf  used on input line 256.
 (pdftex.def)             Requested size: 379.4175pt x 220.85674pt.
-<../../Figures/Case_Studies/NoloadMono06_NoloadBi12/RMSE.pdf, id=1098, 1590.721
-73pt x 547.23398pt>
+<../../Figures/Case_Studies/NoloadMono06_NoloadBi12/RMSE.pdf, id=1092, 862.2400
+5pt x 376.76308pt>
 File: ../../Figures/Case_Studies/NoloadMono06_NoloadBi12/RMSE.pdf Graphic file 
 (type pdf)
 <use ../../Figures/Case_Studies/NoloadMono06_NoloadBi12/RMSE.pdf>
 Package pdftex.def Info: ../../Figures/Case_Studies/NoloadMono06_NoloadBi12/RMS
 E.pdf  used on input line 263.
-(pdftex.def)             Requested size: 379.4175pt x 130.52052pt.
+(pdftex.def)             Requested size: 379.4175pt x 165.78777pt.
  [5 <../../Figures/Case_Studies/LoadedMono04_LoadedBi16/MonoarticularVSBiarticu
 lar_Loaded_MusclesActivation.pdf>] [6 <../../Figures/Case_Studies/NoloadMono06_
 NoloadBi12/PaperFigure_BoxPlot.pdf>] [7 <../../Figures/Case_Studies/NoloadMono0
 6_NoloadBi12/PaperFigure_Profiles.pdf>]
 <../../Figures/Case_Studies/NoloadBi23_LoadedBi12/PaperFigure_BoxPlot.pdf, id=1
-264, 656.05728pt x 361.65666pt>
+258, 656.05728pt x 361.65666pt>
 File: ../../Figures/Case_Studies/NoloadBi23_LoadedBi12/PaperFigure_BoxPlot.pdf 
 Graphic file (type pdf)
 <use ../../Figures/Case_Studies/NoloadBi23_LoadedBi12/PaperFigure_BoxPlot.pdf>
@@ -825,7 +825,7 @@ Package pdftex.def Info: ../../Figures/Case_Studies/NoloadBi23_LoadedBi12/Paper
 Figure_BoxPlot.pdf  used on input line 279.
 (pdftex.def)             Requested size: 379.4175pt x 209.1595pt.
 <../../Figures/Case_Studies/NoloadBi23_LoadedBi23/PaperFigure_BoxPlot.pdf, id=1
-265, 656.05728pt x 361.65666pt>
+259, 656.05728pt x 361.65666pt>
 File: ../../Figures/Case_Studies/NoloadBi23_LoadedBi23/PaperFigure_BoxPlot.pdf 
 Graphic file (type pdf)
 <use ../../Figures/Case_Studies/NoloadBi23_LoadedBi23/PaperFigure_BoxPlot.pdf>
@@ -842,22 +842,22 @@ Overfull \hbox (3.33333pt too wide) in paragraph at lines 279--284
  [][] 
  []
 
-<../../Figures/Case_Studies/NoloadBi23_LoadedBi12/RMSE.pdf, id=1266, 1590.72173
-pt x 547.23398pt>
+<../../Figures/Case_Studies/NoloadBi23_LoadedBi12/RMSE.pdf, id=1260, 862.24005p
+t x 376.76308pt>
 File: ../../Figures/Case_Studies/NoloadBi23_LoadedBi12/RMSE.pdf Graphic file (t
 ype pdf)
 <use ../../Figures/Case_Studies/NoloadBi23_LoadedBi12/RMSE.pdf>
 Package pdftex.def Info: ../../Figures/Case_Studies/NoloadBi23_LoadedBi12/RMSE.
 pdf  used on input line 290.
-(pdftex.def)             Requested size: 379.4175pt x 130.52052pt.
-<../../Figures/Case_Studies/NoloadBi23_LoadedBi23/RMSE.pdf, id=1267, 1590.72173
-pt x 547.23398pt>
+(pdftex.def)             Requested size: 379.4175pt x 165.78777pt.
+<../../Figures/Case_Studies/NoloadBi23_LoadedBi23/RMSE.pdf, id=1261, 862.24005p
+t x 376.76308pt>
 File: ../../Figures/Case_Studies/NoloadBi23_LoadedBi23/RMSE.pdf Graphic file (t
 ype pdf)
 <use ../../Figures/Case_Studies/NoloadBi23_LoadedBi23/RMSE.pdf>
 Package pdftex.def Info: ../../Figures/Case_Studies/NoloadBi23_LoadedBi23/RMSE.
 pdf  used on input line 293.
-(pdftex.def)             Requested size: 379.4175pt x 130.52052pt.
+(pdftex.def)             Requested size: 379.4175pt x 165.78777pt.
 
 Overfull \hbox (3.33333pt too wide) in paragraph at lines 290--295
  [][] 
@@ -868,9 +868,16 @@ Overfull \hbox (3.33333pt too wide) in paragraph at lines 290--295
  [][] 
  []
 
-[8 <../../Figures/Case_Studies/NoloadMono06_NoloadBi12/RMSE.pdf>]
+[8 <../../Figures/Case_Studies/NoloadMono06_NoloadBi12/RMSE.pdf>] [9 <../../Fig
+ures/Case_Studies/NoloadBi23_LoadedBi12/PaperFigure_BoxPlot.pdf> <../../Figures
+/Case_Studies/NoloadBi23_LoadedBi23/PaperFigure_BoxPlot.pdf
+
+pdfTeX warning: pdflatex.exe (file ../../Figures/Case_Studies/NoloadBi23_Loaded
+Bi23/PaperFigure_BoxPlot.pdf): PDF inclusion: multiple pdfs with page group inc
+luded in a single page
+>]
 <../../Figures/Case_Studies/NoloadBi23_LoadedBi12/PaperFigure_Profiles.pdf, id=
-1336, 1299.57713pt x 760.31429pt>
+1427, 1299.57713pt x 760.31429pt>
 File: ../../Figures/Case_Studies/NoloadBi23_LoadedBi12/PaperFigure_Profiles.pdf
  Graphic file (type pdf)
 <use ../../Figures/Case_Studies/NoloadBi23_LoadedBi12/PaperFigure_Profiles.pdf>
@@ -879,7 +886,7 @@ Package pdftex.def Info: ../../Figures/Case_Studies/NoloadBi23_LoadedBi12/Paper
 Figure_Profiles.pdf  used on input line 305.
 (pdftex.def)             Requested size: 379.4175pt x 221.97047pt.
 <../../Figures/Case_Studies/NoloadBi23_LoadedBi23/PaperFigure_Profiles.pdf, id=
-1337, 1299.57713pt x 760.31429pt>
+1428, 1299.57713pt x 760.31429pt>
 File: ../../Figures/Case_Studies/NoloadBi23_LoadedBi23/PaperFigure_Profiles.pdf
  Graphic file (type pdf)
 <use ../../Figures/Case_Studies/NoloadBi23_LoadedBi23/PaperFigure_Profiles.pdf>
@@ -897,15 +904,15 @@ Overfull \hbox (3.33333pt too wide) in paragraph at lines 305--310
  [][] 
  []
 
-[9 <../../Figures/Case_Studies/NoloadBi23_LoadedBi12/PaperFigure_BoxPlot.pdf> <
-../../Figures/Case_Studies/NoloadBi23_LoadedBi23/PaperFigure_BoxPlot.pdf
+[10 <../../Figures/Case_Studies/NoloadBi23_LoadedBi12/RMSE.pdf> <../../Figures/
+Case_Studies/NoloadBi23_LoadedBi23/RMSE.pdf
 
 pdfTeX warning: pdflatex.exe (file ../../Figures/Case_Studies/NoloadBi23_Loaded
-Bi23/PaperFigure_BoxPlot.pdf): PDF inclusion: multiple pdfs with page group inc
-luded in a single page
+Bi23/RMSE.pdf): PDF inclusion: multiple pdfs with page group included in a sing
+le page
 >]
 <../../Figures/Case_Studies/NoloadMono25_LoadedMono05/PaperFigure_BoxPlot.pdf, 
-id=1447, 656.37224pt x 361.65666pt>
+id=1540, 656.37224pt x 361.65666pt>
 File: ../../Figures/Case_Studies/NoloadMono25_LoadedMono05/PaperFigure_BoxPlot.
 pdf Graphic file (type pdf)
 <use ../../Figures/Case_Studies/NoloadMono25_LoadedMono05/PaperFigure_BoxPlot.p
@@ -914,7 +921,7 @@ Package pdftex.def Info: ../../Figures/Case_Studies/NoloadMono25_LoadedMono05/P
 aperFigure_BoxPlot.pdf  used on input line 319.
 (pdftex.def)             Requested size: 379.4175pt x 209.06017pt.
 <../../Figures/Case_Studies/NoloadMono25_LoadedMono25/PaperFigure_BoxPlot.pdf, 
-id=1448, 656.37224pt x 361.65666pt>
+id=1541, 656.37224pt x 361.65666pt>
 File: ../../Figures/Case_Studies/NoloadMono25_LoadedMono25/PaperFigure_BoxPlot.
 pdf Graphic file (type pdf)
 <use ../../Figures/Case_Studies/NoloadMono25_LoadedMono25/PaperFigure_BoxPlot.p
@@ -932,47 +939,55 @@ Overfull \hbox (3.33333pt too wide) in paragraph at lines 319--324
  [][] 
  []
 
-<../../Figures/Case_Studies/NoloadMono25_LoadedMono05/RMSE.pdf, id=1449, 1590.7
-2173pt x 547.23398pt>
-File: ../../Figures/Case_Studies/NoloadMono25_LoadedMono05/RMSE.pdf Graphic fil
-e (type pdf)
-<use ../../Figures/Case_Studies/NoloadMono25_LoadedMono05/RMSE.pdf>
-Package pdftex.def Info: ../../Figures/Case_Studies/NoloadMono25_LoadedMono05/R
-MSE.pdf  used on input line 330.
-(pdftex.def)             Requested size: 379.4175pt x 130.52052pt.
-<../../Figures/Case_Studies/NoloadMono25_LoadedMono25/RMSE.pdf, id=1450, 1590.7
-2173pt x 547.23398pt>
-File: ../../Figures/Case_Studies/NoloadMono25_LoadedMono25/RMSE.pdf Graphic fil
-e (type pdf)
-<use ../../Figures/Case_Studies/NoloadMono25_LoadedMono25/RMSE.pdf>
-Package pdftex.def Info: ../../Figures/Case_Studies/NoloadMono25_LoadedMono25/R
-MSE.pdf  used on input line 333.
-(pdftex.def)             Requested size: 379.4175pt x 130.52052pt.
-
-Overfull \hbox (3.33333pt too wide) in paragraph at lines 330--335
- [][] 
- []
-
-
-Overfull \hbox (3.33333pt too wide) in paragraph at lines 330--335
- [][] 
- []
-
-[10 <../../Figures/Case_Studies/NoloadBi23_LoadedBi12/RMSE.pdf> <../../Figures/
-Case_Studies/NoloadBi23_LoadedBi23/RMSE.pdf
-
-pdfTeX warning: pdflatex.exe (file ../../Figures/Case_Studies/NoloadBi23_Loaded
-Bi23/RMSE.pdf): PDF inclusion: multiple pdfs with page group included in a sing
-le page
->] [11 <../../Figures/Case_Studies/NoloadBi23_LoadedBi12/PaperFigure_Profiles.p
-df> <../../Figures/Case_Studies/NoloadBi23_LoadedBi23/PaperFigure_Profiles.pdf
+[11 <../../Figures/Case_Studies/NoloadBi23_LoadedBi12/PaperFigure_Profiles.pdf>
+ <../../Figures/Case_Studies/NoloadBi23_LoadedBi23/PaperFigure_Profiles.pdf
 
 pdfTeX warning: pdflatex.exe (file ../../Figures/Case_Studies/NoloadBi23_Loaded
 Bi23/PaperFigure_Profiles.pdf): PDF inclusion: multiple pdfs with page group in
 cluded in a single page
 >]
+<../../Figures/Case_Studies/NoloadMono25_LoadedMono05/RMSE.pdf, id=1645, 862.24
+005pt x 376.76308pt>
+File: ../../Figures/Case_Studies/NoloadMono25_LoadedMono05/RMSE.pdf Graphic fil
+e (type pdf)
+<use ../../Figures/Case_Studies/NoloadMono25_LoadedMono05/RMSE.pdf>
+Package pdftex.def Info: ../../Figures/Case_Studies/NoloadMono25_LoadedMono05/R
+MSE.pdf  used on input line 330.
+(pdftex.def)             Requested size: 379.4175pt x 165.78777pt.
+<../../Figures/Case_Studies/NoloadMono25_LoadedMono25/RMSE.pdf, id=1646, 862.24
+005pt x 376.76308pt>
+File: ../../Figures/Case_Studies/NoloadMono25_LoadedMono25/RMSE.pdf Graphic fil
+e (type pdf)
+<use ../../Figures/Case_Studies/NoloadMono25_LoadedMono25/RMSE.pdf>
+Package pdftex.def Info: ../../Figures/Case_Studies/NoloadMono25_LoadedMono25/R
+MSE.pdf  used on input line 333.
+(pdftex.def)             Requested size: 379.4175pt x 165.78777pt.
+
+Overfull \hbox (3.33333pt too wide) in paragraph at lines 330--335
+ [][] 
+ []
+
+
+Overfull \hbox (3.33333pt too wide) in paragraph at lines 330--335
+ [][] 
+ []
+
+[12 <../../Figures/Case_Studies/NoloadMono25_LoadedMono05/PaperFigure_BoxPlot.p
+df> <../../Figures/Case_Studies/NoloadMono25_LoadedMono25/PaperFigure_BoxPlot.p
+df
+
+pdfTeX warning: pdflatex.exe (file ../../Figures/Case_Studies/NoloadMono25_Load
+edMono25/PaperFigure_BoxPlot.pdf): PDF inclusion: multiple pdfs with page group
+ included in a single page
+>] [13 <../../Figures/Case_Studies/NoloadMono25_LoadedMono05/RMSE.pdf> <../../F
+igures/Case_Studies/NoloadMono25_LoadedMono25/RMSE.pdf
+
+pdfTeX warning: pdflatex.exe (file ../../Figures/Case_Studies/NoloadMono25_Load
+edMono25/RMSE.pdf): PDF inclusion: multiple pdfs with page group included in a 
+single page
+>]
 <../../Figures/Case_Studies/NoloadMono25_LoadedMono05/PaperFigure_Profiles.pdf,
- id=1676, 1299.57713pt x 760.31429pt>
+ id=1861, 1299.57713pt x 760.31429pt>
 File: ../../Figures/Case_Studies/NoloadMono25_LoadedMono05/PaperFigure_Profiles
 .pdf Graphic file (type pdf)
 <use ../../Figures/Case_Studies/NoloadMono25_LoadedMono05/PaperFigure_Profiles.
@@ -981,7 +996,7 @@ Package pdftex.def Info: ../../Figures/Case_Studies/NoloadMono25_LoadedMono05/P
 aperFigure_Profiles.pdf  used on input line 343.
 (pdftex.def)             Requested size: 379.4175pt x 221.97047pt.
 <../../Figures/Case_Studies/NoloadMono25_LoadedMono25/PaperFigure_Profiles.pdf,
- id=1677, 1299.57713pt x 777.35193pt>
+ id=1862, 1299.57713pt x 777.35193pt>
 File: ../../Figures/Case_Studies/NoloadMono25_LoadedMono25/PaperFigure_Profiles
 .pdf Graphic file (type pdf)
 <use ../../Figures/Case_Studies/NoloadMono25_LoadedMono25/PaperFigure_Profiles.
@@ -999,22 +1014,9 @@ Overfull \hbox (3.33333pt too wide) in paragraph at lines 343--348
  [][] 
  []
 
-[12 <../../Figures/Case_Studies/NoloadMono25_LoadedMono05/PaperFigure_BoxPlot.p
-df> <../../Figures/Case_Studies/NoloadMono25_LoadedMono25/PaperFigure_BoxPlot.p
-df
-
-pdfTeX warning: pdflatex.exe (file ../../Figures/Case_Studies/NoloadMono25_Load
-edMono25/PaperFigure_BoxPlot.pdf): PDF inclusion: multiple pdfs with page group
- included in a single page
->] [13 <../../Figures/Case_Studies/NoloadMono25_LoadedMono05/RMSE.pdf> <../../F
-igures/Case_Studies/NoloadMono25_LoadedMono25/RMSE.pdf
-
-pdfTeX warning: pdflatex.exe (file ../../Figures/Case_Studies/NoloadMono25_Load
-edMono25/RMSE.pdf): PDF inclusion: multiple pdfs with page group included in a 
-single page
->] [14 <../../Figures/Case_Studies/NoloadMono25_LoadedMono05/PaperFigure_Profil
-es.pdf> <../../Figures/Case_Studies/NoloadMono25_LoadedMono25/PaperFigure_Profi
-les.pdf
+[14 <../../Figures/Case_Studies/NoloadMono25_LoadedMono05/PaperFigure_Profiles.
+pdf> <../../Figures/Case_Studies/NoloadMono25_LoadedMono25/PaperFigure_Profiles
+.pdf
 
 pdfTeX warning: pdflatex.exe (file ../../Figures/Case_Studies/NoloadMono25_Load
 edMono25/PaperFigure_Profiles.pdf): PDF inclusion: multiple pdfs with page grou
@@ -1033,12 +1035,12 @@ Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 356.
  ) 
 Here is how much of TeX's memory you used:
  12507 strings out of 492478
- 193096 string characters out of 3137227
- 332220 words of memory out of 3000000
+ 193090 string characters out of 3137227
+ 332997 words of memory out of 3000000
  16461 multiletter control sequences out of 15000+200000
- 13928 words of font info for 83 fonts, out of 3000000 for 9000
+ 13871 words of font info for 83 fonts, out of 3000000 for 9000
  1141 hyphenation exceptions out of 8191
- 41i,12n,49p,1572b,447s stack positions out of 5000i,500n,10000p,200000b,50000s
+ 41i,11n,49p,1579b,447s stack positions out of 5000i,500n,10000p,200000b,50000s
 <E:/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmbx10.pfb><E:/MiKTeX 2.9/fonts
 /type1/public/amsfonts/cm/cmbx12.pfb><E:/MiKTeX 2.9/fonts/type1/public/amsfonts
 /cm/cmbx8.pfb><E:/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmbx9.pfb><E:/MiKTe
@@ -1048,9 +1050,9 @@ pfb><E:/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr12.pfb><E:/MiKTeX 2.9/font
 s/type1/public/amsfonts/cm/cmr9.pfb><E:/MiKTeX 2.9/fonts/type1/public/amsfonts/
 cm/cmsy10.pfb><E:/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmti10.pfb><E:/MiKT
 eX 2.9/fonts/type1/public/amsfonts/cm/cmti9.pfb>
-Output written on CaseStudy.pdf (15 pages, 3392817 bytes).
+Output written on CaseStudy.pdf (15 pages, 3381850 bytes).
 PDF statistics:
- 2060 PDF objects out of 2073 (max. 8388607)
+ 2024 PDF objects out of 2073 (max. 8388607)
  46 named destinations out of 1000 (max. 500000)
  14949 words of extra memory for PDF output out of 17280 (max. 10000000)
 

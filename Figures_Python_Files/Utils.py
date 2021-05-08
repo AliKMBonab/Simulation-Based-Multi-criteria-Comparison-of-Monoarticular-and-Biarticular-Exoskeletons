@@ -678,7 +678,8 @@ def plot_joint_muscle_exo (nrows,ncols,plot_dic,color_dic,
                            ylabel,nplots=None,legend_loc=[0,1],
                            subplot_legend=False,fig=None,thirdplot=True,
                            y_ticks = [-2,-1,0,1,2],remove_subplot_loc=None,
-                           xlabel_loc=None,ylabel_loc=None):
+                           xlabel_loc=None,ylabel_loc=None,yticks_loc=None,
+                           legend_out=True):
     '''Note: please note that since it is in the for loop, if some data is
     needed to plot several times it should be repeated in the lists.  '''
     if nplots is None:
@@ -706,11 +707,14 @@ def plot_joint_muscle_exo (nrows,ncols,plot_dic,color_dic,
             if thirdplot == True:
                 plot_3_list[i]['load'] = 'noload'
         plot_shaded_avg(plot_dic=plot_1_list[i],color=color_1_list[i])
-        plot_shaded_avg(plot_dic=plot_2_list[i],color=color_2_list[i])
+        plot_shaded_avg(plot_dic=plot_2_list[i],color=color_2_list[i],ls='--')
         if thirdplot == True:
-            plot_shaded_avg(plot_dic=plot_3_list[i],color=color_3_list[i])
-        ax.set_yticks(y_ticks)
-        ax.set_title(plot_titles[i])
+            plot_shaded_avg(plot_dic=plot_3_list[i],color=color_3_list[i],ls='-.')
+        if 'y_ticks' in plot_dic:
+            ax.set_yticks(plot_dic['y_ticks'][i])
+        else:
+            ax.set_yticks(y_ticks)
+        ax.set_title(plot_titles[i],fontsize=18)
         plt.tick_params(axis='both',direction='in')
         no_top_right(ax)
         if subplot_legend == True and i == nplots-1:
@@ -727,28 +731,30 @@ def plot_joint_muscle_exo (nrows,ncols,plot_dic,color_dic,
             handle2,label2 = ax_list[legend_loc[1]].get_legend_handles_labels()
             plt.figlegend(handles=handle1,labels=label1, bbox_to_anchor=(pos.x0+0.05, pos.y0-0.05,  pos.width / 1.5, pos.height / 1.5))
             plt.figlegend(handles=handle2,labels=label2, bbox_to_anchor=(pos.x0+0.05, pos.y0+0.05,  pos.width / 1.5, pos.height / 1.5))
-        elif i in legend_loc and subplot_legend == False:
-            plt.legend(loc='best',frameon=False)
+        elif i in legend_loc and subplot_legend == False and legend_out==True:
+            plt.legend(bbox_to_anchor=(-0.30, 1),loc='upper right',frameon=False,prop={'size': 18})
+        elif i in legend_loc and subplot_legend == False and legend_out==False:
+            plt.legend(loc='best',frameon=False,prop={'size': 18})
         if xlabel_loc != None:
             if i in xlabel_loc:
-                ax.set_xlabel('gait cycle (%)')
+                ax.set_xlabel('gait cycle (%)',fontsize=18)
         else:
             if ncols==2 and i in [2,3]:
-                ax.set_xlabel('gait cycle (%)')
+                ax.set_xlabel('gait cycle (%)',fontsize=18)
             elif ncols==3 and i in [7,6]:
-                ax.set_xlabel('gait cycle (%)')
+                ax.set_xlabel('gait cycle (%)',fontsize=18)
             elif ncols==4 and i in [4,5,6,7]:
-                ax.set_xlabel('gait cycle (%)')
+                ax.set_xlabel('gait cycle (%)',fontsize=18)
         if ylabel_loc != None:
             if i in ylabel_loc:
-                ax.set_ylabel(ylabel)
+                ax.set_ylabel(ylabel,fontsize=18)
         else:
             if ncols==2 and i in [0,2]:
-                ax.set_ylabel(ylabel)
+                ax.set_ylabel(ylabel,fontsize=18)
             elif ncols==3 and i in [0,3,6]:
-                ax.set_ylabel(ylabel)
+                ax.set_ylabel(ylabel,fontsize=18)
             elif ncols==4 and i in [0,4]:
-                ax.set_ylabel(ylabel)
+                ax.set_ylabel(ylabel,fontsize=18)
         if remove_subplot_loc != None:
             if i in remove_subplot_loc:
                 labels = [item.get_text() for item in ax.get_xticklabels()]
@@ -756,11 +762,11 @@ def plot_joint_muscle_exo (nrows,ncols,plot_dic,color_dic,
                 ax.set_xticklabels(empty_string_labels)
         else:
             if ncols==3 :
-                if i not in [7,6,5]:
+                if i not in [9,10,11]:
                     labels = [item.get_text() for item in ax.get_xticklabels()]
                     empty_string_labels = ['']*len(labels)
                     ax.set_xticklabels(empty_string_labels)
-                if i not in [0,3,6]:
+                if i not in [0,1,2]:
                     labels = [item.get_text() for item in ax.get_yticklabels()]
                     empty_string_labels = ['']*len(labels)
                     ax.set_yticklabels(empty_string_labels)
@@ -1139,6 +1145,18 @@ def pareto_avg_std_energy(data,simulation_num=25,subject_num=7,trial_num=3,
         std = np.nanstd(final_data,axis=1)
     return avg,std
 
+def calculate_efficiency(modified_data,main_data,reshape=True):
+    if reshape == True:
+        modified_data = np.reshape(modified_data,(25,21),order='F')
+        main_data = np.reshape(main_data,(25,21),order='F')
+    percent = np.zeros((25,21))
+    for i in range (21):
+        percent[:,i] = np.true_divide(((main_data[:,i]-modified_data[:,i])*100.0),main_data[:,i])
+    avg_percent = np.nanmean(percent,axis=1)
+    std_percent = np.nanstd(percent,axis=1)
+    return avg_percent, std_percent
+
+
 def pareto_avg_std_within_subjects(data,simulation_num=25,subject_num=7,trial_num=3,reshape=True,delete_subject=None):
     '''
     pareto_avg_std_within_subjects has been used to take average within subjects trials to remove  hierarchical
@@ -1205,13 +1223,8 @@ def regeneratable_percent(regenerated_energy,absolute_energy,reshape=True):
     percent = np.zeros((25,21))
     for i in range (21):
         percent[:,i] = np.true_divide(((regenerated_energy[:,i])),absolute_energy[:,i])
-    subject_percent = np.zeros((25,7))
-    c=0
-    for i in range(7):
-        subject_percent[:,i] = np.nanmean(percent[:,c:c+2],axis=1)
-        c+=3
-    avg_percent = np.nanmean(subject_percent,axis=1)
-    std_percent = np.nanstd(subject_percent,axis=1)
+    avg_percent = np.nanmean(percent,axis=1)
+    std_percent = np.nanstd(percent,axis=1)
     return avg_percent, std_percent
 
 ######################################################################
@@ -1748,7 +1761,7 @@ def errorbar_3D(x,y,z,x_err,y_err,z_err,color,marker='_',lw=2):
         ax.plot([x[i], x[i]], [y[i], y[i]], [z[i]+z_err[i], z[i]-z_err[i]], marker=marker,color=color,lw=lw)
 
 def plot_pareto_avg_curve (plot_dic,loadcond,legend_loc=0,label_on=True,which_label='alphabet',
-                            errbar_on=True,line=False,third_plot=False,ideal_configs=False,*args, **kwargs):
+                            errbar_on=True,line=False,fourth_plot=False,third_plot=False,ideal_configs=False,*args, **kwargs):
     '''plotting avg and std subplots for combinations of weights.\n
     -labels: needs to be provided by user otherwise data will be labeled from 1 to 25 automatically.
              labeling is True (i.e. label_on=True) by default.\n
@@ -1773,6 +1786,12 @@ def plot_pareto_avg_curve (plot_dic,loadcond,legend_loc=0,label_on=True,which_la
         x3err_data = plot_dic['x3err_data']
         y3err_data = plot_dic['y3err_data']
         color_3 = plot_dic['color_3']
+    if fourth_plot == True:
+        x4_data = plot_dic['x4_data']
+        y4_data = plot_dic['y4_data']
+        x4err_data = plot_dic['x4err_data']
+        y4err_data = plot_dic['y4err_data']
+        color_4 = plot_dic['color_4']
     if ideal_configs == True:
         x1_ideal = plot_dic['x1_ideal']
         x2_ideal = plot_dic['x2_ideal']
@@ -1782,7 +1801,6 @@ def plot_pareto_avg_curve (plot_dic,loadcond,legend_loc=0,label_on=True,which_la
         x2err_ideal = plot_dic['x2err_ideal']
         y1err_ideal = plot_dic['y1err_ideal']
         y2err_ideal = plot_dic['y2err_ideal']
-        
     # handle labels
     if 'label_1' and 'label_2' not in plot_dic:
         if which_label == 'alphabet':
@@ -1799,15 +1817,23 @@ def plot_pareto_avg_curve (plot_dic,loadcond,legend_loc=0,label_on=True,which_la
                 for i in ['A','B','C','D','E']:
                     for j in ['a','b','c','d','e']:
                         label_3.append('{}{}'.format(i,j))
+            if fourth_plot == True:
+                label_4 =[]
+                for i in ['A','B','C','D','E']:
+                    for j in ['a','b','c','d','e']:
+                        label_4.append('{}{}'.format(i,j)) 
         elif which_label == 'number':
             label_1 = np.arange(1,26,1)
             label_2 = np.arange(1,26,1)
             label_3 = np.arange(1,26,1)
+            label_4 = np.arange(1,26,1)
     else:
         label_1 = plot_dic['label_1']
         label_2 = plot_dic['label_2']
         if third_plot == True:
             label_3 = plot_dic['label_3']
+        if fourth_plot == True:
+            label_4 = plot_dic['label_4']
     # handle legends
     if 'legend_1' and 'legend_2' not in plot_dic:
         legend_1 = 'biarticular,{}'.format(loadcond)
@@ -1817,26 +1843,37 @@ def plot_pareto_avg_curve (plot_dic,loadcond,legend_loc=0,label_on=True,which_la
         legend_2 = plot_dic['legend_2']
         if third_plot == True:
             legend_3 = plot_dic['legend_3']
+        if fourth_plot == True:
+            legend_4 = plot_dic['legend_4']
     # main plot
     plt.scatter(x1_data,y1_data,marker="o",color=color_1,label=legend_1,*args, **kwargs)
     plt.scatter(x2_data,y2_data,marker="v",color=color_2,label=legend_2,*args, **kwargs)
     if third_plot == True:
         plt.scatter(x3_data,y3_data,marker="P",color=color_3,label=legend_3,*args, **kwargs)
+    if fourth_plot == True:
+        plt.scatter(x4_data,y4_data,marker="X",color=color_4,label=legend_4,*args, **kwargs)
     if errbar_on == True:
-        plt.errorbar(x1_data,y1_data,xerr=x1err_data,yerr=y1err_data,fmt='o',ecolor=color_1,alpha=0.15)
-        plt.errorbar(x2_data,y2_data,xerr=x2err_data,yerr=y2err_data,fmt='v',ecolor=color_2,alpha=0.15)
+        plt.errorbar(x1_data,y1_data,xerr=x1err_data,yerr=y1err_data,fmt='o',ecolor=color_1,alpha=0.1)
+        plt.errorbar(x2_data,y2_data,xerr=x2err_data,yerr=y2err_data,fmt='v',ecolor=color_2,alpha=0.1)
         if third_plot == True:
-            plt.errorbar(x3_data,y3_data,xerr=x3err_data,yerr=y3err_data,fmt='P',ecolor=color_3,alpha=0.15)
+            plt.errorbar(x3_data,y3_data,xerr=x3err_data,yerr=y3err_data,fmt='P',ecolor=color_3,alpha=0.1)
+        if fourth_plot == True:
+            plt.errorbar(x4_data,y4_data,xerr=x4err_data,yerr=y4err_data,fmt='X',ecolor=color_4,alpha=0.1)
     if label_on == True:
         label_datapoints(x1_data,y1_data,label_1,*args, **kwargs)
         label_datapoints(x2_data,y2_data,label_2,ha='left',*args, **kwargs)
         if third_plot == True:
             label_datapoints(x3_data,y3_data,label_3,ha='left',*args, **kwargs)
+        if fourth_plot == True:
+            label_datapoints(x4_data,y4_data,label_4,ha='left',*args, **kwargs)
     if line == True:
         plt.plot(x1_data[~np.isnan(x1_data)],y1_data[~np.isnan(y1_data)],ls='-',lw=1,color=color_1)
         plt.plot(x2_data[~np.isnan(x2_data)],y2_data[~np.isnan(y2_data)],ls='-',lw=1,color=color_2) 
         if third_plot == True:
-            plt.plot(x3_data[~np.isnan(x3_data)],y3_data[~np.isnan(y3_data)],ls='-',lw=1,color=color_3)     
+            plt.plot(x3_data[~np.isnan(x3_data)],y3_data[~np.isnan(y3_data)],ls='-',lw=1,color=color_3) 
+        if fourth_plot == True:
+            plt.plot(x4_data[~np.isnan(x4_data)],y4_data[~np.isnan(y4_data)],ls='-',lw=1,color=color_4) 
+            
     # ideal points adding
     if ideal_configs == True:
           plt.scatter(x1_ideal,y1_ideal,marker='X',color=color_1,*args, **kwargs)
@@ -2064,7 +2101,7 @@ def plot_paretofront_profile_changes(plot_dic,colormap,toeoff_color,adjust_axes=
     plt.xlim([0,100])
     # plotting joint profile
     if add_joint_profile == True:
-        plt.plot(gpc,joint_data, *args, lw=3,ls='--',color=joint_color,label='joint', **kwargs)
+        plt.plot(gpc,joint_data, *args, lw=3,ls='-.',color=joint_color,label='joint', **kwargs)
     # plotting ideal device profile
     if add_ideal_profile == True:
         ideal_data = plot_dic['ideal_data']
@@ -2072,6 +2109,7 @@ def plot_paretofront_profile_changes(plot_dic,colormap,toeoff_color,adjust_axes=
         plt.plot(gpc,ideal_data, *args, lw=3,ls='--',color=ideal_color,label='ideal device',alpha=0.75, **kwargs)
     # legend
     plt.legend(loc='best',frameon=False)
+    plt.tick_params(axis='both',direction='in')
     # toe-off and zero lines
     plt.axvline(avg_toeoff, lw=2, color=toeoff_color, zorder=0, alpha=0.5) #vertical line
     plt.axhline(0, lw=2, color='grey', zorder=0, alpha=0.75) # horizontal line
@@ -2208,7 +2246,50 @@ def paretofront_barplot(plot_dic,indices,loadcond):
     for i in reversed(indices):
         indices_str.append(label[i-1])
     plt.xticks(index + bar_width / 2,indices_str )
-
+    
+def paretofront_devices_efficiency_barplot(plot_dic,indices,loadcond,legends=None,colors=None,skip_first_data=False):
+    x1_data = plot_dic['x1_data']
+    x1err_data = plot_dic['x1err_data']
+    if legends == None:
+        legends =['30% regeneration','37% regeneration','50% regeneration','65% regeneration']
+    bar_width = [0,0.25,0.25*2,0.25*3,0.25*4]
+    if colors == None:
+        colors = ['gray','silver','lightgray','whitesmoke']
+    patterns = [ " " , " " , "/" , "\\" , "x"]
+    index = np.arange(1,len(indices)+1,1)
+    opacity = 1
+    error_config = {'ecolor': '0.3'}
+    if skip_first_data == True:
+        j = 1
+    else:
+        j = 0
+    for i in range(j,len(legends)):
+        if len(legends)<2:
+            x1 = x1_data
+            x1err = x1err_data
+        else:
+            x1 = x1_data[:,i]
+            x1err = x1err_data[:,i]
+        x1 = x1[~np.isnan(x1)]
+        x1err = x1err[~np.isnan(x1err)]
+        rects1 = plt.bar(index + bar_width[i], x1, 0.25,
+                        alpha=opacity,
+                        color=colors[i],
+                        hatch=patterns[i],
+                        yerr=x1err,
+                        error_kw=error_config,
+                        label=legends[i])
+    label=[]
+    for i in ['A','B','C','D','E']:
+        for j in ['a','b','c','d','e']:
+            label.append('{}{}'.format(i,j))
+    indices_str = []
+    for i in reversed(indices):
+        indices_str.append(label[i-1])
+    if len(legends)<2:
+        plt.xticks(index,indices_str)
+    else:
+        plt.xticks(index + sum(bar_width)/5,indices_str)
 def plot_regeneration_efficiency(plot_dic,ideal_color=None,line=True,errbar_on=True,label_on=True,*args, **kwargs):
     x_values = plot_dic['x_values']
     y_values = plot_dic['y_values']
