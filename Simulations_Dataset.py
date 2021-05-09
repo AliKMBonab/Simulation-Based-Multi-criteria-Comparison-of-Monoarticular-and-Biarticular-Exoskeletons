@@ -45,8 +45,8 @@ print('\n\n rra files have been extracted.')
                 and ideal exoskeletons simulations data and confirm modeling and simulations
 """
 loads = ['noload','loaded']
-middle = ['metabolics','ninemuscles','hip','knee','metabolics_processed','muscles_metabolic']
-suffixes = ['energy','activation','musclesmoment','musclesmoment','energy','rate']
+middle = ['metabolics','ninemuscles','hip','knee','metabolics_processed','muscles_metabolic','hip_joint','knee_joint']
+suffixes = ['energy','activation','musclesmoment','musclesmoment','energy','rate','kinematics','kinematics']
 #***************************
 print('Section 02:\t extracting UnAssist Subjects related files: Metabolic Energy, Muscles Activation, Hip and Knee Muscles Moment.\n')
 #***************************
@@ -71,12 +71,14 @@ middle =['hipactuator','kneeactuator','hipactuator','kneeactuator',\
          'hipactuator','kneeactuator','hipactuator','kneeactuator',\
          'hipactuator','kneeactuator','metabolics','ninemuscles',\
          'hip','knee','processed_hipactuator','processed_kneeactuator',\
-         'processed_hipactuator','processed_kneeactuator','processed_metabolics','hip','knee','muscles']
+         'processed_hipactuator','processed_kneeactuator','processed_metabolics',\
+         'hip','knee','muscles','hip','knee','hip_max','hip_mean','hip_mean','knee_max','knee_mean','knee_mean']
 suffixes = ['torque','torque','power','power','speed','speed',\
             'energy','energy','regenrative_energy','regenrative_energy',\
             'energy','activation','musclesmoment','musclesmoment',\
             'energy','energy','regenrative_energy','regenrative_energy',\
-            'energy','musclespower','musclespower','metabolic_rate']
+            'energy','musclespower','musclespower','metabolic_rate','kinematics','kinematics',\
+            'power','positive_power','negative_power','power','positive_power','negative_power']
 #***************************
 print('Section 03:\t extracting Ideal exoskeletons related files: Actuators Data, Muscles Activation, Muscles Moment, Metabolic Energy.\n')
 #***************************
@@ -139,15 +141,19 @@ middle =['hipactuator','kneeactuator','hipactuator','kneeactuator',\
          'hipactuator','kneeactuator','hipactuator','kneeactuator',\
          'metabolics','ninemuscles','hipmuscles','kneemuscles',\
          'hipactuator','kneeactuator','hipmuscles','kneemuscles',\
-         'hipactuator','kneeactuator','hipactuator','kneeactuator','hipactuator','kneeactuator']
+         'hipactuator','kneeactuator','hipactuator','kneeactuator',\
+         'hipactuator','kneeactuator','hipjoint','kneejoint']
 suffixes = ['torque','torque','power','power',\
             'speed','speed','energy','energy',\
             'energy','activation','moment','moment',\
             'regenerative_energy','regenerative_energy',\
             'power','power','max_power','max_power','avg_positive_power','avg_positive_power',\
-            'avg_negative_power','avg_negative_power']
-HWs = {'mono_load':[30,40,50,60,70,70,70,70,70],'bi_load':[30,30,30,30,30,40,40,50,50,50,60,70],'mono_noload':[30,40,50,50,50,60,60,60,70,70],'bi_noload':[30,30,30,30,30,40,40,40,50,50,50,70]}
-KWs = {'mono_load':[30,30,30,30,30,40,50,60,70],'bi_load':[30,40,50,60,70,60,70,50,60,70,70,70],'mono_noload':[30,30,30,40,50,50,60,70,60,70],'bi_noload':[30,40,50,60,70,40,50,60,50,60,70,70]}
+            'avg_negative_power','avg_negative_power','kinematics','kinematics']
+#HWs = {'mono_load':[30,40,50,60,70,70,70,70,70],'bi_load':[30,30,30,30,30,40,40,50,50,50,60,70],'mono_noload':[30,40,50,50,50,60,60,60,70,70],'bi_noload':[30,30,30,30,30,40,40,40,50,50,50,70]}
+#KWs = {'mono_load':[30,30,30,30,30,40,50,60,70],'bi_load':[30,40,50,60,70,60,70,50,60,70,70,70],'mono_noload':[30,30,30,40,50,50,60,70,60,70],'bi_noload':[30,40,50,60,70,40,50,60,50,60,70,70]}
+HWs = {'bi_noload':[70,30],'mono_load':[30,70]}
+KWs = {'bi_noload':[70,70],'mono_load':[30,30]}
+
 labeling = ['mono','bi']
 #***************************
 print('Section 05:\t extracting Specific Weights of Pareto exoskeletons related files: Actuators Data, Muscles Activation, Muscles Moment, Metabolic Energy.\n')
@@ -156,9 +162,17 @@ y = input('Specific weights data extraction? (y,n):  ')
 if  y.lower() == 'y':
     print('specific weights biarticular/monoarticular loaded/noload files are getting extracted the file.\n')
     for load_type in loads:
-        for i in range(2):
-            HW = HWs['{}_{}'.format(labeling[i],load_type)]
-            KW = KWs['{}_{}'.format(labeling[i],load_type)]
+#        for i in range(2):
+#            HW = HWs['{}_{}'.format(labeling[i],load_type)]
+#            KW = KWs['{}_{}'.format(labeling[i],load_type)]
+        if load_type == 'noload':
+            i = 2
+            HW = HWs['{}_{}'.format('bi',load_type)]
+            KW = KWs['{}_{}'.format('bi',load_type)]
+        else:
+            i = 1
+            HW = HWs['{}_{}'.format('mono',load_type)]
+            KW = KWs['{}_{}'.format('mono',load_type)]
             for j in range(len(HW)):
                 out= fcns.specific_weight_data_subjects(configuration=configs[i],HipWeight=HW[j],KneeWeight=KW[j],loadcond=load_type,regenergy=True)
                 for k in range(len(out)):
@@ -171,18 +185,21 @@ if  y.lower() == 'y':
 """
 print('\n')
 loads = ['loaded','noload']
-configs = [None,'Monoarticular','Biarticular','Monoarticular','Biarticular']
-config_names = ['unassist','monoarticular_ideal','biarticular_ideal','monoarticular_paretofront','biarticular_paretofront']
-cases = ['Unassist','Ideal','Ideal','Paretofront','Paretofront']
-cases_dir = ['Unassist','Ideal','Ideal','Pareto','Pareto']
-#configs = ['Monoarticular','Biarticular']
-#config_names = ['monoarticular_paretofront','biarticular_paretofront']
-#cases = ['Paretofront','Paretofront']
-#cases_dir = ['Pareto','Pareto']
+#configs = [None,'Monoarticular','Biarticular','Monoarticular','Biarticular']
+#config_names = ['unassist','monoarticular_ideal','biarticular_ideal','monoarticular_paretofront','biarticular_paretofront']
+#cases = ['Unassist','Ideal','Ideal','Paretofront','Paretofront']
+#cases_dir = ['Unassist','Ideal','Ideal','Pareto','Pareto']
 #***************************
-print('Section 06:\t extracting reaction forces')
+configs = ['Monoarticular','Biarticular']
+config_names = ['monoarticular_ideal','biarticular_ideal']
+cases = ['Ideal','Ideal']
+cases_dir = ['Ideal','Ideal']
+
+#***************************
+print('Section 06:\t extracting reaction forces.\n')
 #***************************
 y = input('reaction forces data extraction? (y,n):  ')
+print('\n')
 if  y.lower() == 'y':
     print('reaction forces biarticular/monoarticular loaded/noload files are getting extracted the file.\n')
     for load_type in loads:

@@ -25,14 +25,14 @@ trials_num = ['01','02','03']
 gait_cycle = np.linspace(0,100,1000)
 #####################################################################################
 # Reading CSV files into a dictionary and constructing gls
-rra_dataset = utils.csv2numpy('D:/Ali.K.M.Bonab/Walking_Mass_Inertia_Effect/Data/Data/RRA/rra_final_data.csv') 
-unassist_dataset = utils.csv2numpy('D:/Ali.K.M.Bonab/Walking_Mass_Inertia_Effect/Data/Data/Unassist/unassist_final_data.csv') 
+rra_dataset = utils.csv2numpy('./Data/RRA/rra_final_data.csv') 
+unassist_dataset = utils.csv2numpy('./Data/Unassist/unassist_final_data.csv') 
 # pareto exo energy dataset
-directory = 'D:/Ali.K.M.Bonab/Walking_Mass_Inertia_Effect/Data/Data/Pareto/*_energy.csv'
+directory = './Data/Pareto/*_energy.csv'
 files = enumerate(glob.iglob(directory), 1)
 assisted_energy_dataset = {pathlib.PurePath(f[1]).stem: np.loadtxt(f[1], delimiter=',') for f in files}
 # unassist energy dataset
-directory = 'D:/Ali.K.M.Bonab/Walking_Mass_Inertia_Effect/Data/Data/Unassist/*_energy.csv'
+directory = './Data/Unassist/*_energy.csv'
 files = enumerate(glob.iglob(directory), 1)
 unassisted_energy_dataset = {pathlib.PurePath(f[1]).stem: np.loadtxt(f[1], delimiter=',') for f in files}
 # gls
