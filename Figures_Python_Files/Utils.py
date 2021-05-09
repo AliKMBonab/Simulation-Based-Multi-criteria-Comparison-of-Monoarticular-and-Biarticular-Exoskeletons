@@ -2329,6 +2329,36 @@ def plot_regeneration_efficiency(plot_dic,ideal_color=None,line=True,errbar_on=T
             
 #################################################################################################
 # Plot and analyses related functions for muscles metabolic rate, stiffness, and reaction forces
+def quantify_max_jrf_change(toe_off_list,unassisted_jrf_dict,assisted_jrf_dict,force_moment='force',phase_list=None,joint_list=None):
+    #-----------------------------------------
+    if joint_list is None:
+        joint_list = ['hip','knee','patellofemoral']
+    if phase_list is None:
+        phase_list = ['loading response','mid stance','terminal stance','pre swing',\
+                      'initial swing','mid swing','terminal swing']
+    if force_moment == 'force':
+        force_list = ['Fx','Fy','Fz']
+    else:
+        force_list = ['Mx','Mx','Mz']
+    #-----------------------------------------
+    max_subjects_jrf_change = np.zeros((len(toe_off_list),1))
+    mean_max_jrf_change_dict = {}
+    std_max_jrf_change_dict = {}
+    #-----------------------------------------
+    for joint in joint_list:
+        for phase in phase_list:
+            for force in force_list:
+                for subject_count, toe_off in enumerate(toe_off_list):
+                    index = utils.phase_correspond_data(phase,toe_off)
+                    selected_unassisted_force = unassisted_jrf_dict['{}_joint_{}'.format(joint,force)][:,subject_count]
+                    selected_assisted_force = assisted_jrf_dict['{}_joint_{}'.format(joint,force)][:,subject_count]
+                    change = np.max(np.abs(np.take(selected_unassisted_force,index[0],axis=0)))\
+                           - np.max(np.abs(np.take(selected_assisted_force,index[0],axis=0)))
+                    max_subjects_jrf_change[subject_count] = (change/np.max(np.abs(np.take(selected_unassisted_force,index[0],axis=0))))*100
+                #-----------------------------------------
+                mean_max_jrf_change_dict['mean_{} joint_{} phase_{}'.format(joint,phase,force)] = np.nanmean(max_subjects_jrf_change)
+                std_max_jrf_change_dict['std_{} joint_{} phase_{}'.format(joint,phase,force)] = np.nanstd(max_subjects_jrf_change)
+    return mean_max_jrf_change_dict,std_max_jrf_change_dict
 
 def muscles_whisker_bar_plot(data_1,data_2,data_3=None,data_4=None,
                              which_muscles='all',which_plot='whisker',
