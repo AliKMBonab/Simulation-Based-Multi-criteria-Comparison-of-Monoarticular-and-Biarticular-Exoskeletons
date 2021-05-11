@@ -2329,6 +2329,47 @@ def plot_regeneration_efficiency(plot_dic,ideal_color=None,line=True,errbar_on=T
             
 #################################################################################################
 # Plot and analyses related functions for muscles metabolic rate, stiffness, and reaction forces
+def paterofront_quantify_max_jrf_change(toe_off_list,pareto_index,pareto_jrf_dict,ideal_jrf_dict,force_moment='force'):
+    #-----------------------------------------------------------------------------
+    joint_list = ['hip','knee','patellofemoral']
+    #-----------------------------------------------------------------------------
+    phase_list = ['loading response','mid stance','terminal stance','pre swing',\
+                  'initial swing','mid swing','terminal swing']
+    #-----------------------------------------------------------------------------
+    pareto_index_num = len(pareto_index)
+    # pareto exo torque dataset
+    if force_moment == 'force':
+        force_list = ['Fx','Fy','Fz']
+    else:
+        force_list = ['Mx','Mx','Mz']
+    #-----------------------------------------------------------------------------
+    max_subjects_jrf_change = np.zeros((len(toe_off_list),1))
+    mean_max_jrf_change_dict = {}
+    std_max_jrf_change_dict = {}
+    #-----------------------------------------------------------------------------
+    for joint in joint_list:
+        for phase in phase_list:
+            for force in force_list:
+                for i in range(pareto_index_num):
+                    #-----------------------------------------------------------------------------
+                    cols = np.arange(21*i,21*(i+1),1)
+                    pareto_selected_force = pareto_jrf_dict['{}_joint_{}'.format(joint,force)][:,cols]
+                    selected_ideal_force = ideal_jrf_dict['{}_joint_{}'.format(joint,force)]
+                    #-----------------------------------------------------------------------------
+                    for subject_count, toe_off in enumerate(toe_off_list):
+                        #-----------------------------------------------------------------------------
+                        index = phase_correspond_data(phase,toe_off)
+                        ideal_max = np.max(np.abs(np.take(selected_ideal_force[:,subject_count],index[0],axis=0)))
+                        pareto_max = np.max(np.abs(np.take(pareto_selected_force[:,subject_count],index[0],axis=0)))
+                        change = ideal_max - pareto_max
+                        #-----------------------------------------------------------------------------
+                        max_subjects_jrf_change[subject_count] = (change/ideal_max)*100
+                    #-----------------------------------------------------------------------------
+                    mean_max_jrf_change_dict['mean_{} joint_{} phase_{} config_{}'.format(joint,phase,force,pareto_index[i])] = np.nanmean(max_subjects_jrf_change)
+                    std_max_jrf_change_dict['std_{} joint_{} phase_{} config_{}'.format(joint,phase,force,pareto_index[i])] = np.nanstd(max_subjects_jrf_change)
+    #-----------------------------------------------------------------------------
+    return mean_max_jrf_change_dict,std_max_jrf_change_dict
+
 def quantify_max_jrf_change(toe_off_list,unassisted_jrf_dict,assisted_jrf_dict,force_moment='force',phase_list=None,joint_list=None):
     #-----------------------------------------
     if joint_list is None:
@@ -2349,7 +2390,7 @@ def quantify_max_jrf_change(toe_off_list,unassisted_jrf_dict,assisted_jrf_dict,f
         for phase in phase_list:
             for force in force_list:
                 for subject_count, toe_off in enumerate(toe_off_list):
-                    index = utils.phase_correspond_data(phase,toe_off)
+                    index = phase_correspond_data(phase,toe_off)
                     selected_unassisted_force = unassisted_jrf_dict['{}_joint_{}'.format(joint,force)][:,subject_count]
                     selected_assisted_force = assisted_jrf_dict['{}_joint_{}'.format(joint,force)][:,subject_count]
                     change = np.max(np.abs(np.take(selected_unassisted_force,index[0],axis=0)))\
