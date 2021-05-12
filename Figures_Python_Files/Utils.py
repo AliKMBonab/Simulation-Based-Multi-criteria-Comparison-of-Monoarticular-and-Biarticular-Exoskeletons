@@ -2349,8 +2349,8 @@ def paterofront_quantify_max_jrf_change(toe_off_list,pareto_index,pareto_jrf_dic
     #-----------------------------------------------------------------------------
     for joint in joint_list:
         for phase in phase_list:
-            for force in force_list:
-                for i in range(pareto_index_num):
+            for i in range(pareto_index_num):
+                for force in force_list:
                     #-----------------------------------------------------------------------------
                     cols = np.arange(21*i,21*(i+1),1)
                     pareto_selected_force = pareto_jrf_dict['{}_joint_{}'.format(joint,force)][:,cols]

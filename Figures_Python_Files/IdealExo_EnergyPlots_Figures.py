@@ -233,9 +233,8 @@ assistive_actuators_avg_totalpower_data = np.concatenate((np.reshape(assisted_en
                                                         np.reshape(assisted_energy_dataset['monoarticular_ideal_noload_kneeactuator_energy'],(7,3))),axis=0)
 final_dataset = np.column_stack([assistive_actuators_col,assistive_actuators_avg_totalpower_data])
 final_dataset = np.column_stack([subject_col,final_dataset])
-with open(r'.\Statistics\Ideal\ActuatorsAvgPower_Dataset.csv', 'wb') as f:
-  f.write(bytes(utils.listToString(headers)+'\n','UTF-8'))
-  np.savetxt(f, final_dataset, fmt='%s', delimiter=",")
+directory = r'.\Statistics\Ideal\ActuatorsAvgPower_Dataset.csv', 'wb'
+np.savetxt(directory, final_dataset, fmt='%s', delimiter=",")
 
 #****************************************************************
 #establishing dataset for assistive actuators average total power 
