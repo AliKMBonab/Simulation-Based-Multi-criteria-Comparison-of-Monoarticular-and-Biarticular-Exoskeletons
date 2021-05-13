@@ -242,7 +242,64 @@ std_bi_noload_regen_paretofront = utils.manual_paretofront(std_bi_noload_metabol
 # noload monoarticular with regeneration
 mean_mono_noload_regen_paretofront = utils.manual_paretofront(mean_mono_noload_metabolics_percent,mean_mono_noload_regen_energy,mono_noload_regen_indices)
 std_mono_noload_regen_paretofront = utils.manual_paretofront(std_mono_noload_metabolics_percent,std_mono_noload_regen_energy,mono_noload_regen_indices)
+#####################################################################################
+# Write to csv
+#-----------------------------------------------------------------------------------------------------------------
+# biarticular
+bi_noload_indices = [25,24,23,22,21,19,18,17,13,12,11,1,'-=device config']
+biarticular_string_col = ['biarticular mean','biarticular std']
+# select first column
+mean_bi_noload_efficiency_paretofront_first_column = mean_bi_noload_efficiency_paretofront[:,0]
+std_bi_noload_efficiency_paretofront_first_column = std_bi_noload_efficiency_paretofront[:,0]
+# remove nan
+mean_bi_noload_efficiency_paretofront_first_column = mean_bi_noload_efficiency_paretofront_first_column[~np.isnan(mean_bi_noload_efficiency_paretofront_first_column)]
+std_bi_noload_efficiency_paretofront_first_column = std_bi_noload_efficiency_paretofront_first_column[~np.isnan(std_bi_noload_efficiency_paretofront_first_column)]
+# prepare for csv export
+biarticular_dataset = np.row_stack((mean_bi_noload_efficiency_paretofront_first_column,std_bi_noload_efficiency_paretofront_first_column))
+biarticular_dataset = np.column_stack((biarticular_string_col,biarticular_dataset))
+biarticular_dataset = np.row_stack((bi_noload_indices[::-1],biarticular_dataset))
+# write to csv
+directory = r'.\Data\Pareto\Biarticular_Noload_AddingMass_Degradation.csv'
+np.savetxt(directory, biarticular_dataset, fmt="%s", delimiter=",")
+#-----------------------------------------------------------------------------------------------------------------
+# monoarticular
+mono_noload_indices = [25,20,15,14,13,8,7,6,2,1,'device config']
+monoarticular_string_col = ['conventional monoarticular mean','conventional monoarticular std',\
+                            'actuator near waist monoarticular mean','actuator near waist monoarticular std',\
+                            'actuator on shank monoarticular mean','actuator on shank monoarticular std']
+# select first column
+# conventional
+mean_mono_noload_efficiency_paretofront_first_column = mean_mono_noload_efficiency_paretofront[:,0]
+std_mono_noload_efficiency_paretofront_first_column = std_mono_noload_efficiency_paretofront[:,0]
+# near waist
+mean_mono_actuator_near_waist_efficiency_paretofront_first_column = mean_mono_actuator_near_waist_efficiency_paretofront[:,0]
+std_mono_actuator_near_waist_efficiency_paretofront_first_column = std_mono_actuator_near_waist_efficiency_paretofront[:,0]
+# on shank
+mean_mono_actuator_on_shank_efficiency_paretofront_first_column = mean_mono_actuator_on_shank_efficiency_paretofront[:,0]
+std_mono_actuator_on_shank_efficiency_paretofront_first_column = std_mono_actuator_on_shank_efficiency_paretofront[:,0]
 
+# remove nan
+# conventional
+mean_mono_noload_efficiency_paretofront_first_column = mean_mono_noload_efficiency_paretofront_first_column[~np.isnan(mean_mono_noload_efficiency_paretofront_first_column)]
+std_mono_noload_efficiency_paretofront_first_column = std_mono_noload_efficiency_paretofront_first_column[~np.isnan(std_mono_noload_efficiency_paretofront_first_column)]
+# near waist
+mean_mono_actuator_near_waist_efficiency_paretofront_first_column = mean_mono_actuator_near_waist_efficiency_paretofront_first_column[~np.isnan(mean_mono_actuator_near_waist_efficiency_paretofront_first_column)]
+std_mono_actuator_near_waist_efficiency_paretofront_first_column = std_mono_actuator_near_waist_efficiency_paretofront_first_column[~np.isnan(std_mono_actuator_near_waist_efficiency_paretofront_first_column)]
+# on shank
+mean_mono_actuator_on_shank_efficiency_paretofront_first_column = mean_mono_actuator_on_shank_efficiency_paretofront_first_column[~np.isnan(mean_mono_actuator_on_shank_efficiency_paretofront_first_column)]
+std_mono_actuator_on_shank_efficiency_paretofront_first_column = std_mono_actuator_on_shank_efficiency_paretofront_first_column[~np.isnan(std_mono_actuator_on_shank_efficiency_paretofront_first_column)]
+
+# prepare for csv export
+conventional_monoarticular_dataset = np.row_stack((mean_mono_noload_efficiency_paretofront_first_column,std_mono_noload_efficiency_paretofront_first_column))
+actuator_near_waist_monoarticular_dataset = np.row_stack((mean_mono_actuator_near_waist_efficiency_paretofront_first_column,std_mono_actuator_near_waist_efficiency_paretofront_first_column))
+actuator_on_shank_monoarticular_dataset = np.row_stack((mean_mono_actuator_on_shank_efficiency_paretofront_first_column,std_mono_actuator_on_shank_efficiency_paretofront_first_column))
+monoarticular_dataset = np.row_stack((conventional_monoarticular_dataset,actuator_near_waist_monoarticular_dataset))
+monoarticular_dataset = np.row_stack((monoarticular_dataset,actuator_on_shank_monoarticular_dataset))
+monoarticular_dataset = np.column_stack((monoarticular_string_col,monoarticular_dataset))
+monoarticular_dataset = np.row_stack((mono_noload_indices[::-1],monoarticular_dataset))
+# write to csv
+directory = r'.\Data\Pareto\Monoarticular_Noload_AddingMass_Degradation.csv'
+np.savetxt(directory, monoarticular_dataset, fmt="%s", delimiter=",")
 #####################################################################################
 # PAPER FIGURE
 plt.rcParams.update({'font.size': 14})
@@ -336,6 +393,38 @@ plt.title('Monoarticular exoskeleton\nKnee actuator on shank')
 plt.legend(loc='best',frameon=False)
 plt.tick_params(axis='both',direction='in')
 '''
+#####################################################################################
+# Write to csv
+mono_noload_indices = [25,24,20,19,18,14,13,12,'device config']
+monoarticular_string_col = ['actuator near waist monoarticular mean','actuator near waist monoarticular std',\
+                            'actuator on shank monoarticular mean','actuator on shank monoarticular std']
+# select first column
+# near waist
+mean_mono_actuator_near_waist_efficiency_paretofront_first_column = mean_mono_actuator_near_waist_wrt_typical_mono_efficiency_paretofront[:,0]
+std_mono_actuator_near_waist_efficiency_paretofront_first_column = std_mono_actuator_near_waist_wrt_typical_mono_efficiency_paretofront[:,0]
+# on shank
+mean_mono_actuator_on_shank_efficiency_paretofront_first_column = mean_mono_actuator_on_shank_wrt_typical_mono_efficiency_paretofront[:,0]
+std_mono_actuator_on_shank_efficiency_paretofront_first_column = std_mono_actuator_on_shank_wrt_typical_mono_efficiency_paretofront[:,0]
+
+# remove nan
+# near waist
+mean_mono_actuator_near_waist_efficiency_paretofront_first_column = mean_mono_actuator_near_waist_efficiency_paretofront_first_column[~np.isnan(mean_mono_actuator_near_waist_efficiency_paretofront_first_column)]
+std_mono_actuator_near_waist_efficiency_paretofront_first_column = std_mono_actuator_near_waist_efficiency_paretofront_first_column[~np.isnan(std_mono_actuator_near_waist_efficiency_paretofront_first_column)]
+# on shank
+mean_mono_actuator_on_shank_efficiency_paretofront_first_column = mean_mono_actuator_on_shank_efficiency_paretofront_first_column[~np.isnan(mean_mono_actuator_on_shank_efficiency_paretofront_first_column)]
+std_mono_actuator_on_shank_efficiency_paretofront_first_column = std_mono_actuator_on_shank_efficiency_paretofront_first_column[~np.isnan(std_mono_actuator_on_shank_efficiency_paretofront_first_column)]
+
+# prepare for csv export
+actuator_near_waist_monoarticular_dataset = np.row_stack((mean_mono_actuator_near_waist_efficiency_paretofront_first_column,std_mono_actuator_near_waist_efficiency_paretofront_first_column))
+actuator_on_shank_monoarticular_dataset = np.row_stack((mean_mono_actuator_on_shank_efficiency_paretofront_first_column,std_mono_actuator_on_shank_efficiency_paretofront_first_column))
+monoarticular_dataset = np.row_stack((actuator_near_waist_monoarticular_dataset,actuator_on_shank_monoarticular_dataset))
+monoarticular_dataset = np.column_stack((monoarticular_string_col,monoarticular_dataset))
+monoarticular_dataset = np.row_stack((mono_noload_indices[::-1],monoarticular_dataset))
+# write to csv
+directory = r'.\Data\Pareto\Monoarticular_Noload_AddingMass_AlternativeDesings_EffeciencyImprovment.csv'
+np.savetxt(directory, monoarticular_dataset, fmt="%s", delimiter=",")
+#####################################################################################
+
 # average pareto curve: noload mono three types
 plot_dic = {'x1_data':mean_mono_noload_addedmass_paretofront[:,0],'x1err_data':std_mono_noload_addedmass_paretofront[:,0],
           'x2_data':mean_mono_noload_actuator_near_waist_addedmass_paretofront[:,0],'x2err_data':std_mono_noload_actuator_near_waist_addedmass_paretofront[:,0],
