@@ -351,6 +351,34 @@ std_mono_noload_regen_paretofront = utils.manual_paretofront(std_mono_noload_met
 # paretocurve for different regenerations
 plt.rcParams.update({'font.size': 14})
 #####################################################################################
+# Write to CSV
+# cols
+mean_std_col = [item for item in['mean','std'] for i in range(5)]*4
+exo_type_col = [item for item in['biarticular','monoarticular'] for i in range(20)]
+load_condition_col = [item for item in['noload','loaded'] for i in range(10)]*2
+reg_efficiency_col = ['0%','30%','37%','50%','65%']*2*4
+col = np.column_stack((mean_std_col,exo_type_col))
+col = np.column_stack((col,load_condition_col))
+col = np.column_stack((col,reg_efficiency_col))
+# rows
+device_index_row = ['-','exo type','load condition','efficiency'] + np.arange(1,26,1).tolist()
+# dataset
+mono_noload_dataset = np.column_stack((mean_mono_noload_efficiency_paretofront,std_mono_noload_efficiency_paretofront))
+mono_loaded_dataset = np.column_stack((mean_mono_loaded_efficiency_paretofront,std_mono_loaded_efficiency_paretofront))
+bi_noload_dataset = np.column_stack((mean_bi_noload_efficiency_paretofront,std_bi_noload_efficiency_paretofront))
+bi_loaded_dataset = np.column_stack((mean_bi_loaded_efficiency_paretofront,std_bi_loaded_efficiency_paretofront))
+dataset = np.column_stack((bi_noload_dataset,bi_loaded_dataset))
+dataset = np.column_stack((dataset,mono_noload_dataset))
+dataset = np.column_stack((dataset,mono_loaded_dataset))
+dataset = np.transpose(dataset)
+dataset = np.column_stack((col,dataset))
+dataset = np.row_stack((device_index_row,dataset))
+
+# write to csv
+directory = r'.\Data\Pareto\Regeneration_EnergyEffeciency_Improvement.csv'
+np.savetxt(directory, dataset, fmt="%s", delimiter=",")
+
+#####################################################################################
 # PAPER FIGURE
 # plots
 # average energy: noload monoarticular
