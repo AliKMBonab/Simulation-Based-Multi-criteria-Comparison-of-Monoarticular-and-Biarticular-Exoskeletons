@@ -3442,4 +3442,36 @@ def plot_paretofront_Rsquare(plot_dict,device,loadcondition,joint,muscles_actuat
     plt.tick_params(axis='both',direction='in')
     ax = plt.gca()
     no_top_right(ax)
-    
+
+def paretofront_profiles_change_phases(raw_profiles,ideal_profiles,toe_off_list,paretofront_indices):
+    simulation_num = 25
+    subject_num = 7
+    trial_num = 3
+    phase_list = ['loading response','mid stance','terminal stance','pre swing',\
+                  'initial swing','mid swing','terminal swing']
+    max_change_dict = {}
+    #-----------------------------------------------------------------------------
+    for i,paretofront_index in enumerate(paretofront_indices):
+        cols = np.arange(paretofront_index-1,((simulation_num*subject_num*trial_num)-(simulation_num) )+paretofront_index,simulation_num)
+        selected_profiles = raw_profiles[:,cols]
+        max_subjects_change = np.zeros((len(toe_off_list),1))
+        #-----------------------------------------------------------------------------
+        for phase in phase_list:
+            for subject_count, toe_off in enumerate(toe_off_list):
+                #-----------------------------------------------------------------------------
+                index = phase_correspond_data(phase,toe_off)
+                ideal_max = np.max(np.abs(np.take(ideal_profiles[:,subject_count],index[0],axis=0)))
+                pareto_max = np.max(np.abs(np.take(selected_profiles[:,subject_count],index[0],axis=0)))
+                change = ideal_max - pareto_max
+                #-----------------------------------------------------------------------------
+                max_subjects_change[subject_count] = (change/ideal_max)*100
+                #-----------------------------------------------------------------------------
+            max_change_dict['mean_change_exo{}_phase_{}'.format(paretofront_index,phase)] = np.nanmean(max_subjects_change)
+            max_change_dict['std_change_exo{}_phase_{}'.format(paretofront_index,phase)] = np.nanstd(max_subjects_change)
+    return max_change_dict
+
+def ideal_profiles_max_min(raw_profiles):
+    profiles_max_min = np.zeros((2,21))
+    profiles_max_min[0,:] = np.nanmax(raw_profiles,axis=0)
+    profiles_max_min[1,:] = np.nanmin(raw_profiles,axis=0)
+    return profiles_max_min
