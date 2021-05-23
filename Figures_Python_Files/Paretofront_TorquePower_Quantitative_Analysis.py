@@ -142,18 +142,142 @@ monoarticular_torque_change_dict = {'loaded hip torque': paretofront_mono_loaded
                                     'noload hip torque': paretofront_mono_noload_hip_torque_max_change_phases,'noload knee torque': paretofront_mono_noload_knee_torque_max_change_phases}
 
 #####################################################################################
-with open(r'.\Data\Pareto\biarticular_power_change_dict.csv', 'w') as f:
-    for key in biarticular_power_change_dict.keys():
-        f.write("%s,%s\n"%(key,biarticular_power_change_dict[key]))
-#------------------------------------------------------------------------
-with open(r'.\Data\Pareto\biarticular_torque_change_dict.csv', 'w') as f:
-    for key in biarticular_torque_change_dict.keys():
-        f.write("%s,%s\n"%(key,biarticular_torque_change_dict[key]))
-#------------------------------------------------------------------------
-with open(r'.\Data\Pareto\monoarticular_power_change_dict.csv', 'w') as f:
-    for key in monoarticular_power_change_dict.keys():
-        f.write("%s,%s\n"%(key,monoarticular_power_change_dict[key]))
-#------------------------------------------------------------------------
-with open(r'.\Data\Pareto\monoarticular_torque_change_dict.csv', 'w') as f:
-    for key in monoarticular_torque_change_dict.keys():
-        f.write("%s,%s\n"%(key,monoarticular_torque_change_dict[key]))
+# Noload biarticular profile
+gait_phase_row = ['loading response','loading response','mid stance','mid stance','terminal stance','terminal stance',\
+                  'pre swing','pre swing','initial swing','initial swing','mid swing','mid swing','terminal swing','terminal swing']*len(bi_noload_indices)
+                  
+config_row =  [item for item in bi_noload_indices for i in range(2*len(['loading response','mid stance','terminal stance','pre swing',\
+               'initial swing','mid swing','terminal swing']))]
+mean_std_row = ['mean','std']*int(len(config_row)/2)
+#------------------------------------------------------------------------------------
+rows = np.row_stack((gait_phase_row,config_row))
+rows = np.row_stack((mean_std_row,rows))
+rows = np.column_stack((['-','-','-'],rows))
+rows = np.column_stack((['-','-','-'],rows))
+rows = np.column_stack((['-','-','-'],rows))
+#------------------------------------------------------------------------------------
+# power profiles
+paretofront_bi_noload_hip_power_max_change_phases_array = np.array(list(paretofront_bi_noload_hip_power_max_change_phases.items()))[:,1]
+noload_bi_hip_power_dataset = ['noload','biarticular','hip power'] + paretofront_bi_noload_hip_power_max_change_phases_array.tolist()
+paretofront_bi_noload_knee_power_max_change_phases_array =np.array(list(paretofront_bi_noload_knee_power_max_change_phases.items()))[:,1]
+noload_bi_knee_power_dataset = ['noload','biarticular','knee power'] + paretofront_bi_noload_knee_power_max_change_phases_array.tolist()
+# torque profiles
+paretofront_bi_noload_hip_torque_max_change_phases_array = np.array(list(paretofront_bi_noload_hip_torque_max_change_phases.items()))[:,1]
+noload_bi_hip_torque_dataset = ['noload','biarticular','hip torque'] + paretofront_bi_noload_hip_torque_max_change_phases_array.tolist()
+paretofront_bi_noload_knee_torque_max_change_phases_array =np.array(list(paretofront_bi_noload_knee_torque_max_change_phases.items()))[:,1]
+noload_bi_knee_torque_dataset = ['noload','biarticular','knee torque'] + paretofront_bi_noload_knee_torque_max_change_phases_array.tolist()
+#------------------------------------------------------------------------------------
+# establish final dataset
+bi_noload_dataset = np.row_stack((rows,noload_bi_hip_power_dataset))
+bi_noload_dataset = np.row_stack((bi_noload_dataset,noload_bi_knee_power_dataset))
+bi_noload_dataset = np.row_stack((bi_noload_dataset,noload_bi_hip_torque_dataset))
+bi_noload_dataset = np.row_stack((bi_noload_dataset,noload_bi_knee_torque_dataset))
+#------------------------------------------------------------------------------------
+# write to csv
+directory = r'.\Data\Pareto\Biarticular_Noload_Profiles_Quantitatives.csv'
+np.savetxt(directory, bi_noload_dataset, fmt="%s", delimiter=",")
+#####################################################################################
+# Loaded biarticular profile
+gait_phase_row = ['loading response','loading response','mid stance','mid stance','terminal stance','terminal stance',\
+                  'pre swing','pre swing','initial swing','initial swing','mid swing','mid swing','terminal swing','terminal swing']*len(bi_loaded_indices)
+                  
+config_row =  [item for item in bi_loaded_indices for i in range(2*len(['loading response','mid stance','terminal stance','pre swing',\
+               'initial swing','mid swing','terminal swing']))]
+mean_std_row = ['mean','std']*int(len(config_row)/2)
+#------------------------------------------------------------------------------------
+rows = np.row_stack((gait_phase_row,config_row))
+rows = np.row_stack((mean_std_row,rows))
+rows = np.column_stack((['-','-','-'],rows))
+rows = np.column_stack((['-','-','-'],rows))
+rows = np.column_stack((['-','-','-'],rows))
+#------------------------------------------------------------------------------------
+# power profiles
+paretofront_bi_loaded_hip_power_max_change_phases_array = np.array(list(paretofront_bi_loaded_hip_power_max_change_phases.items()))[:,1]
+loaded_bi_hip_power_dataset = ['loaded','biarticular','hip power'] + paretofront_bi_loaded_hip_power_max_change_phases_array.tolist()
+paretofront_bi_loaded_knee_power_max_change_phases_array =np.array(list(paretofront_bi_loaded_knee_power_max_change_phases.items()))[:,1]
+loaded_bi_knee_power_dataset = ['loaded','biarticular','knee power'] + paretofront_bi_loaded_knee_power_max_change_phases_array.tolist()
+# torque profiles
+paretofront_bi_loaded_hip_torque_max_change_phases_array = np.array(list(paretofront_bi_loaded_hip_torque_max_change_phases.items()))[:,1]
+loaded_bi_hip_torque_dataset = ['loaded','biarticular','hip torque'] + paretofront_bi_loaded_hip_torque_max_change_phases_array.tolist()
+paretofront_bi_loaded_knee_torque_max_change_phases_array =np.array(list(paretofront_bi_loaded_knee_torque_max_change_phases.items()))[:,1]
+loaded_bi_knee_torque_dataset = ['loaded','biarticular','knee torque'] + paretofront_bi_loaded_knee_torque_max_change_phases_array.tolist()
+#------------------------------------------------------------------------------------
+# establish final dataset
+bi_loaded_dataset = np.row_stack((rows,loaded_bi_hip_power_dataset))
+bi_loaded_dataset = np.row_stack((bi_loaded_dataset,loaded_bi_knee_power_dataset))
+bi_loaded_dataset = np.row_stack((bi_loaded_dataset,loaded_bi_hip_torque_dataset))
+bi_loaded_dataset = np.row_stack((bi_loaded_dataset,loaded_bi_knee_torque_dataset))
+#------------------------------------------------------------------------------------
+# write to csv
+directory = r'.\Data\Pareto\Biarticular_Loaded_Profiles_Quantitatives.csv'
+np.savetxt(directory, bi_loaded_dataset, fmt="%s", delimiter=",")
+#####################################################################################
+# Noload monoarticular profile
+gait_phase_row = ['loading response','loading response','mid stance','mid stance','terminal stance','terminal stance',\
+                  'pre swing','pre swing','initial swing','initial swing','mid swing','mid swing','terminal swing','terminal swing']*len(mono_noload_indices)
+                  
+config_row =  [item for item in mono_noload_indices for i in range(2*len(['loading response','mid stance','terminal stance','pre swing',\
+               'initial swing','mid swing','terminal swing']))]
+mean_std_row = ['mean','std']*int(len(config_row)/2)
+#------------------------------------------------------------------------------------
+rows = np.row_stack((gait_phase_row,config_row))
+rows = np.row_stack((mean_std_row,rows))
+rows = np.column_stack((['-','-','-'],rows))
+rows = np.column_stack((['-','-','-'],rows))
+rows = np.column_stack((['-','-','-'],rows))
+#------------------------------------------------------------------------------------
+# power profiles
+paretofront_mono_noload_hip_power_max_change_phases_array = np.array(list(paretofront_mono_noload_hip_power_max_change_phases.items()))[:,1]
+noload_mono_hip_power_dataset = ['noload','monoarticular','hip power'] + paretofront_mono_noload_hip_power_max_change_phases_array.tolist()
+paretofront_mono_noload_knee_power_max_change_phases_array =np.array(list(paretofront_mono_noload_knee_power_max_change_phases.items()))[:,1]
+noload_mono_knee_power_dataset = ['noload','monoarticular','knee power'] + paretofront_mono_noload_knee_power_max_change_phases_array.tolist()
+# torque profiles
+paretofront_mono_noload_hip_torque_max_change_phases_array = np.array(list(paretofront_mono_noload_hip_torque_max_change_phases.items()))[:,1]
+noload_mono_hip_torque_dataset = ['noload','monoarticular','hip torque'] + paretofront_mono_noload_hip_torque_max_change_phases_array.tolist()
+paretofront_mono_noload_knee_torque_max_change_phases_array =np.array(list(paretofront_mono_noload_knee_torque_max_change_phases.items()))[:,1]
+noload_mono_knee_torque_dataset = ['noload','monoarticular','knee torque'] + paretofront_mono_noload_knee_torque_max_change_phases_array.tolist()
+#------------------------------------------------------------------------------------
+# establish final dataset
+mono_noload_dataset = np.row_stack((rows,noload_mono_hip_power_dataset))
+mono_noload_dataset = np.row_stack((mono_noload_dataset,noload_mono_knee_power_dataset))
+mono_noload_dataset = np.row_stack((mono_noload_dataset,noload_mono_hip_torque_dataset))
+mono_noload_dataset = np.row_stack((mono_noload_dataset,noload_mono_knee_torque_dataset))
+#------------------------------------------------------------------------------------
+# write to csv
+directory = r'.\Data\Pareto\Monoarticular_Noload_Profiles_Quantitatives.csv'
+np.savetxt(directory, mono_noload_dataset, fmt="%s", delimiter=",")
+#####################################################################################
+# Loaded monoarticular profile
+gait_phase_row = ['loading response','loading response','mid stance','mid stance','terminal stance','terminal stance',\
+                  'pre swing','pre swing','initial swing','initial swing','mid swing','mid swing','terminal swing','terminal swing']*len(mono_loaded_indices)
+                  
+config_row =  [item for item in mono_loaded_indices for i in range(2*len(['loading response','mid stance','terminal stance','pre swing',\
+               'initial swing','mid swing','terminal swing']))]
+mean_std_row = ['mean','std']*int(len(config_row)/2)
+#------------------------------------------------------------------------------------
+rows = np.row_stack((gait_phase_row,config_row))
+rows = np.row_stack((mean_std_row,rows))
+rows = np.column_stack((['-','-','-'],rows))
+rows = np.column_stack((['-','-','-'],rows))
+rows = np.column_stack((['-','-','-'],rows))
+#------------------------------------------------------------------------------------
+# power profiles
+paretofront_mono_loaded_hip_power_max_change_phases_array = np.array(list(paretofront_mono_loaded_hip_power_max_change_phases.items()))[:,1]
+loaded_mono_hip_power_dataset = ['loaded','monoarticular','hip power'] + paretofront_mono_loaded_hip_power_max_change_phases_array.tolist()
+paretofront_mono_loaded_knee_power_max_change_phases_array =np.array(list(paretofront_mono_loaded_knee_power_max_change_phases.items()))[:,1]
+loaded_mono_knee_power_dataset = ['loaded','monoarticular','knee power'] + paretofront_mono_loaded_knee_power_max_change_phases_array.tolist()
+# torque profiles
+paretofront_mono_loaded_hip_torque_max_change_phases_array = np.array(list(paretofront_mono_loaded_hip_torque_max_change_phases.items()))[:,1]
+loaded_mono_hip_torque_dataset = ['loaded','monoarticular','hip torque'] + paretofront_mono_loaded_hip_torque_max_change_phases_array.tolist()
+paretofront_mono_loaded_knee_torque_max_change_phases_array =np.array(list(paretofront_mono_loaded_knee_torque_max_change_phases.items()))[:,1]
+loaded_mono_knee_torque_dataset = ['loaded','monoarticular','knee torque'] + paretofront_mono_loaded_knee_torque_max_change_phases_array.tolist()
+#------------------------------------------------------------------------------------
+# establish final dataset
+mono_loaded_dataset = np.row_stack((rows,loaded_mono_hip_power_dataset))
+mono_loaded_dataset = np.row_stack((mono_loaded_dataset,loaded_mono_knee_power_dataset))
+mono_loaded_dataset = np.row_stack((mono_loaded_dataset,loaded_mono_hip_torque_dataset))
+mono_loaded_dataset = np.row_stack((mono_loaded_dataset,loaded_mono_knee_torque_dataset))
+#------------------------------------------------------------------------------------
+# write to csv
+directory = r'.\Data\Pareto\Monoarticular_Loaded_Profiles_Quantitatives.csv'
+np.savetxt(directory, mono_loaded_dataset, fmt="%s", delimiter=",")
