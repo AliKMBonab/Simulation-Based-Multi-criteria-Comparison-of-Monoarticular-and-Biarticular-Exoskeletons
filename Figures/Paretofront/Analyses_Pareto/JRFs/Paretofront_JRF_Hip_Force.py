@@ -86,7 +86,7 @@ fig, axes = plt.subplots(nrows=4,ncols=3,num='Pareto Curve: loaded mono vs bi',f
 # biarticular loaded Fx
 plot_dic = {'data':utils.smooth(mean_bi_loaded_hip_joint_jrf_Fx,5,multidim=True),
             'joint_data':utils.smooth(jrf_dataset['mean_loaded_hipjoint_RFx'],5),'joint_color':'k',
-            'avg_toeoff':loaded_mean_toe_off,'indices':bi_loaded_indices,'title':'hip Fx,\n loaded biarticular',
+            'avg_toeoff':loaded_mean_toe_off,'indices':bi_loaded_indices,'title':'hip Fx,\n loaded bi-articular',
             'ideal_data':ideal_jrf_dataset['mean_bi_loaded_hip_RFx'],'ideal_color':mycolors['crimson red']}
 ax = plt.subplot(4,3,1)
 utils.plot_paretofront_profile_changes(plot_dic,colormap='tab20',include_colorbar=False,
@@ -96,7 +96,7 @@ ax.set_ylim((-35,15))
 # biarticular loaded Fy
 plot_dic = {'data':utils.smooth(mean_bi_loaded_hip_joint_jrf_Fy,5,multidim=True),
             'joint_data':utils.smooth(jrf_dataset['mean_loaded_hipjoint_RFy'],5),'joint_color':'k',
-            'avg_toeoff':loaded_mean_toe_off,'indices':bi_loaded_indices,'title':'hip Fy,\n loaded biarticular',
+            'avg_toeoff':loaded_mean_toe_off,'indices':bi_loaded_indices,'title':'hip Fy,\n loaded bi-articular',
             'ideal_data':ideal_jrf_dataset['mean_bi_loaded_hip_RFy'],'ideal_color':mycolors['crimson red']}
 ax = plt.subplot(4,3,2)
 utils.plot_paretofront_profile_changes(plot_dic,colormap='tab20',include_colorbar=False,
@@ -106,7 +106,7 @@ ax.set_ylim((-70,0))
 # biarticular loaded Fz
 plot_dic = {'data':utils.smooth(mean_bi_loaded_hip_joint_jrf_Fz,5,multidim=True),
             'joint_data':utils.smooth(jrf_dataset['mean_loaded_hipjoint_RFz'],5),'joint_color':'k',
-            'avg_toeoff':loaded_mean_toe_off,'indices':bi_loaded_indices,'title':'hip Fz,\n loaded biarticular',
+            'avg_toeoff':loaded_mean_toe_off,'indices':bi_loaded_indices,'title':'hip Fz,\n loaded bi-articular',
             'ideal_data':ideal_jrf_dataset['mean_bi_loaded_hip_RFz'],'ideal_color':mycolors['crimson red']}
 ax = plt.subplot(4,3,3)
 utils.plot_paretofront_profile_changes(plot_dic,colormap='tab20',include_colorbar=True,adjust_axes=True,
@@ -120,7 +120,7 @@ ax.set_ylim((0,15))
 # monoarticular loaded Fx
 plot_dic = {'data':utils.smooth(mean_mono_loaded_hip_joint_jrf_Fx,5,multidim=True),
             'joint_data':utils.smooth(jrf_dataset['mean_loaded_hipjoint_RFx'],5),'joint_color':'k',
-            'avg_toeoff':loaded_mean_toe_off,'indices':mono_loaded_indices,'title':'hip Fx,\n loaded monoarticular',
+            'avg_toeoff':loaded_mean_toe_off,'indices':mono_loaded_indices,'title':'hip Fx,\n loaded mono-articular',
             'ideal_data':ideal_jrf_dataset['mean_mono_loaded_hip_RFx'],'ideal_color':mycolors['crimson red']}
 ax = plt.subplot(4,3,4)
 utils.plot_paretofront_profile_changes(plot_dic,colormap='tab20',include_colorbar=False,
@@ -130,7 +130,7 @@ ax.set_ylim((-35,15))
 # monoarticular loaded Fy
 plot_dic = {'data':utils.smooth(mean_mono_loaded_hip_joint_jrf_Fy,5,multidim=True),
             'joint_data':utils.smooth(jrf_dataset['mean_loaded_hipjoint_RFy'],5),'joint_color':'k',
-            'avg_toeoff':loaded_mean_toe_off,'indices':mono_loaded_indices,'title':'hip Fy,\n loaded monoarticular',
+            'avg_toeoff':loaded_mean_toe_off,'indices':mono_loaded_indices,'title':'hip Fy,\n loaded mono-articular',
             'ideal_data':ideal_jrf_dataset['mean_mono_loaded_hip_RFy'],'ideal_color':mycolors['crimson red']}
 ax = plt.subplot(4,3,5)
 utils.plot_paretofront_profile_changes(plot_dic,colormap='tab20',include_colorbar=False,
@@ -140,7 +140,7 @@ ax.set_ylim((-70,0))
 # monoarticular loaded Fz
 plot_dic = {'data':utils.smooth(mean_mono_loaded_hip_joint_jrf_Fz,5,multidim=True),
             'joint_data':utils.smooth(jrf_dataset['mean_loaded_hipjoint_RFz'],5),'joint_color':'k',
-            'avg_toeoff':loaded_mean_toe_off,'indices':mono_loaded_indices,'title':'hip Fz,\n loaded monoarticular',
+            'avg_toeoff':loaded_mean_toe_off,'indices':mono_loaded_indices,'title':'hip Fz,\n loaded mono-articular',
             'ideal_data':ideal_jrf_dataset['mean_mono_loaded_hip_RFz'],'ideal_color':mycolors['crimson red']}
 ax = plt.subplot(4,3,6)
 utils.plot_paretofront_profile_changes(plot_dic,colormap='tab20',include_colorbar=True,adjust_axes=True,
@@ -153,7 +153,7 @@ ax.set_ylim((0,15))
 # biarticular noload Fx
 plot_dic = {'data':utils.smooth(mean_bi_noload_hip_joint_jrf_Fx,5,multidim=True),
             'joint_data':utils.smooth(jrf_dataset['mean_noload_hipjoint_RFx'],5),'joint_color':'xkcd:shamrock green',
-            'avg_toeoff':noload_mean_toe_off,'indices':bi_noload_indices,'title':'hip Fx,\n noload biarticular',
+            'avg_toeoff':noload_mean_toe_off,'indices':bi_noload_indices,'title':'hip Fx,\n unloaded bi-articular',
             'ideal_data':ideal_jrf_dataset['mean_bi_noload_hip_RFx'],'ideal_color':mycolors['french rose']}
 ax = plt.subplot(4,3,7)
 utils.plot_paretofront_profile_changes(plot_dic,colormap='tab20',include_colorbar=False,
@@ -163,7 +163,7 @@ ax.set_ylim((-35,15))
 # biarticular noload Fy
 plot_dic = {'data':utils.smooth(mean_bi_noload_hip_joint_jrf_Fy,5,multidim=True),
             'joint_data':utils.smooth(jrf_dataset['mean_noload_hipjoint_RFy'],5),'joint_color':'xkcd:shamrock green',
-            'avg_toeoff':noload_mean_toe_off,'indices':bi_noload_indices,'title':'hip Fy,\n noload biarticular',
+            'avg_toeoff':noload_mean_toe_off,'indices':bi_noload_indices,'title':'hip Fy,\n unloaded bi-articular',
             'ideal_data':ideal_jrf_dataset['mean_bi_noload_hip_RFy'],'ideal_color':mycolors['french rose']}
 ax = plt.subplot(4,3,8)
 utils.plot_paretofront_profile_changes(plot_dic,colormap='tab20',include_colorbar=False,
@@ -173,7 +173,7 @@ ax.set_ylim((-70,0))
 # biarticular noload Fz
 plot_dic = {'data':utils.smooth(mean_bi_noload_hip_joint_jrf_Fz,5,multidim=True),
             'joint_data':utils.smooth(jrf_dataset['mean_noload_hipjoint_RFz'],5),'joint_color':'xkcd:shamrock green',
-            'avg_toeoff':noload_mean_toe_off,'indices':bi_noload_indices,'title':'hip Fz,\n noload biarticular',
+            'avg_toeoff':noload_mean_toe_off,'indices':bi_noload_indices,'title':'hip Fz,\n unloaded bi-articular',
             'ideal_data':ideal_jrf_dataset['mean_bi_noload_hip_RFz'],'ideal_color':mycolors['french rose']}
 ax = plt.subplot(4,3,9)
 utils.plot_paretofront_profile_changes(plot_dic,colormap='tab20',include_colorbar=True,adjust_axes=True,
@@ -187,7 +187,7 @@ ax.set_ylim((0,15))
 # monoarticular noload Fx
 plot_dic = {'data':utils.smooth(mean_mono_noload_hip_joint_jrf_Fx,5,multidim=True),
             'joint_data':utils.smooth(jrf_dataset['mean_noload_hipjoint_RFx'],5),'joint_color':'xkcd:shamrock green',
-            'avg_toeoff':noload_mean_toe_off,'indices':mono_noload_indices,'title':'hip Fx,\n noload monoarticular',
+            'avg_toeoff':noload_mean_toe_off,'indices':mono_noload_indices,'title':'hip Fx,\n unloaded mono-articular',
             'ideal_data':ideal_jrf_dataset['mean_mono_noload_hip_RFx'],'ideal_color':mycolors['french rose']}
 ax = plt.subplot(4,3,10)
 utils.plot_paretofront_profile_changes(plot_dic,colormap='tab20',include_colorbar=False,
@@ -197,7 +197,7 @@ ax.set_ylim((-35,15))
 # monoarticular noload Fy
 plot_dic = {'data':utils.smooth(mean_mono_noload_hip_joint_jrf_Fy,5,multidim=True),
             'joint_data':utils.smooth(jrf_dataset['mean_noload_hipjoint_RFy'],5),'joint_color':'xkcd:shamrock green',
-            'avg_toeoff':noload_mean_toe_off,'indices':mono_noload_indices,'title':'hip Fy,\n noload monoarticular',
+            'avg_toeoff':noload_mean_toe_off,'indices':mono_noload_indices,'title':'hip Fy,\n unloaded mono-articular',
             'ideal_data':ideal_jrf_dataset['mean_mono_noload_hip_RFy'],'ideal_color':mycolors['french rose']}
 ax = plt.subplot(4,3,11)
 utils.plot_paretofront_profile_changes(plot_dic,colormap='tab20',include_colorbar=False,
@@ -207,7 +207,7 @@ ax.set_ylim((-70,0))
 # monoarticular noload Fz
 plot_dic = {'data':utils.smooth(mean_mono_noload_hip_joint_jrf_Fz,5,multidim=True),
             'joint_data':utils.smooth(jrf_dataset['mean_noload_hipjoint_RFz'],5),'joint_color':'xkcd:shamrock green',
-            'avg_toeoff':noload_mean_toe_off,'indices':mono_noload_indices,'title':'hip Fz,\n noload monoarticular',
+            'avg_toeoff':noload_mean_toe_off,'indices':mono_noload_indices,'title':'hip Fz,\n unloaded mono-articular',
             'ideal_data':ideal_jrf_dataset['mean_mono_noload_hip_RFz'],'ideal_color':mycolors['french rose']}
 ax = plt.subplot(4,3,12)
 utils.plot_paretofront_profile_changes(plot_dic,colormap='tab20',include_colorbar=True,adjust_axes=True,

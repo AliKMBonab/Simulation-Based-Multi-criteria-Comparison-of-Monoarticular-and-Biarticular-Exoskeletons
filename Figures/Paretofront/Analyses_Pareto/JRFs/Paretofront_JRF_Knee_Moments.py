@@ -86,7 +86,7 @@ fig, axes = plt.subplots(nrows=4,ncols=3,num='Pareto Curve: loaded mono vs bi',f
 # biarticular loaded Mx
 plot_dic = {'data':utils.smooth(mean_bi_loaded_knee_joint_jrf_Mx,5,multidim=True),
             'joint_data':utils.smooth(jrf_dataset['mean_loaded_kneejoint_RMx'],5),'joint_color':'k',
-            'avg_toeoff':loaded_mean_toe_off,'indices':bi_loaded_indices,'title':'knee Mx,\n loaded biarticular',
+            'avg_toeoff':loaded_mean_toe_off,'indices':bi_loaded_indices,'title':'knee Mx,\n loaded bi-articular',
             'ideal_data':ideal_jrf_dataset['mean_bi_loaded_knee_RMx'],'ideal_color':mycolors['crimson red']}
 ax = plt.subplot(4,3,1)
 utils.plot_paretofront_profile_changes(plot_dic,colormap='tab20',include_colorbar=False,
@@ -96,7 +96,7 @@ ax.set_ylim((-0.6,0.6))
 # biarticular loaded My
 plot_dic = {'data':utils.smooth(mean_bi_loaded_knee_joint_jrf_My,5,multidim=True),
             'joint_data':utils.smooth(jrf_dataset['mean_loaded_kneejoint_RMy'],5),'joint_color':'k',
-            'avg_toeoff':loaded_mean_toe_off,'indices':bi_loaded_indices,'title':'knee My,\n loaded biarticular',
+            'avg_toeoff':loaded_mean_toe_off,'indices':bi_loaded_indices,'title':'knee My,\n loaded bi-articular',
             'ideal_data':ideal_jrf_dataset['mean_bi_loaded_knee_RMy'],'ideal_color':mycolors['crimson red']}
 ax = plt.subplot(4,3,2)
 utils.plot_paretofront_profile_changes(plot_dic,colormap='tab20',include_colorbar=False,
@@ -106,7 +106,7 @@ ax.set_ylim((-0.2,0.4))
 # biarticular loaded Mz
 plot_dic = {'data':utils.smooth(mean_bi_loaded_knee_joint_jrf_Mz,5,multidim=True),
             'joint_data':utils.smooth(jrf_dataset['mean_loaded_kneejoint_RMz'],5),'joint_color':'k',
-            'avg_toeoff':loaded_mean_toe_off,'indices':bi_loaded_indices,'title':'knee Mz,\n loaded biarticular',
+            'avg_toeoff':loaded_mean_toe_off,'indices':bi_loaded_indices,'title':'knee Mz,\n loaded bi-articular',
             'ideal_data':ideal_jrf_dataset['mean_bi_loaded_knee_RMz'],'ideal_color':mycolors['crimson red']}
 ax = plt.subplot(4,3,3)
 utils.plot_paretofront_profile_changes(plot_dic,colormap='tab20',include_colorbar=True,adjust_axes=True,
@@ -120,7 +120,7 @@ ax.set_ylim((-0.85,0))
 # monoarticular loaded Mx
 plot_dic = {'data':utils.smooth(mean_mono_loaded_knee_joint_jrf_Mx,5,multidim=True),
             'joint_data':utils.smooth(jrf_dataset['mean_loaded_kneejoint_RMx'],5),'joint_color':'k',
-            'avg_toeoff':loaded_mean_toe_off,'indices':mono_loaded_indices,'title':'knee Mx,\n loaded monoarticular',
+            'avg_toeoff':loaded_mean_toe_off,'indices':mono_loaded_indices,'title':'knee Mx,\n loaded mono-articular',
             'ideal_data':ideal_jrf_dataset['mean_mono_loaded_knee_RMx'],'ideal_color':mycolors['crimson red']}
 ax = plt.subplot(4,3,4)
 utils.plot_paretofront_profile_changes(plot_dic,colormap='tab20',include_colorbar=False,
@@ -130,7 +130,7 @@ ax.set_ylim((-0.6,0.6))
 # monoarticular loaded My
 plot_dic = {'data':utils.smooth(mean_mono_loaded_knee_joint_jrf_My,5,multidim=True),
             'joint_data':utils.smooth(jrf_dataset['mean_loaded_kneejoint_RMy'],5),'joint_color':'k',
-            'avg_toeoff':loaded_mean_toe_off,'indices':mono_loaded_indices,'title':'knee My,\n loaded monoarticular',
+            'avg_toeoff':loaded_mean_toe_off,'indices':mono_loaded_indices,'title':'knee My,\n loaded mono-articular',
             'ideal_data':ideal_jrf_dataset['mean_mono_loaded_knee_RMy'],'ideal_color':mycolors['crimson red']}
 ax = plt.subplot(4,3,5)
 utils.plot_paretofront_profile_changes(plot_dic,colormap='tab20',include_colorbar=False,
@@ -140,7 +140,7 @@ ax.set_ylim((-0.2,0.4))
 # monoarticular loaded Mz
 plot_dic = {'data':utils.smooth(mean_mono_loaded_knee_joint_jrf_Mz,5,multidim=True),
             'joint_data':utils.smooth(jrf_dataset['mean_loaded_kneejoint_RMz'],5),'joint_color':'k',
-            'avg_toeoff':loaded_mean_toe_off,'indices':mono_loaded_indices,'title':'knee Mz,\n loaded monoarticular',
+            'avg_toeoff':loaded_mean_toe_off,'indices':mono_loaded_indices,'title':'knee Mz,\n loaded mono-articular',
             'ideal_data':ideal_jrf_dataset['mean_mono_loaded_knee_RMz'],'ideal_color':mycolors['crimson red']}
 ax = plt.subplot(4,3,6)
 utils.plot_paretofront_profile_changes(plot_dic,colormap='tab20',include_colorbar=True,adjust_axes=True,
@@ -153,7 +153,7 @@ ax.set_ylim((-0.85,0))
 # biarticular noload Mx
 plot_dic = {'data':utils.smooth(mean_bi_noload_knee_joint_jrf_Mx,5,multidim=True),
             'joint_data':utils.smooth(jrf_dataset['mean_noload_kneejoint_RMx'],5),'joint_color':'xkcd:shamrock green',
-            'avg_toeoff':noload_mean_toe_off,'indices':bi_noload_indices,'title':'knee Mx,\n noload biarticular',
+            'avg_toeoff':noload_mean_toe_off,'indices':bi_noload_indices,'title':'knee Mx,\n unloaded bi-articular',
             'ideal_data':ideal_jrf_dataset['mean_bi_noload_knee_RMx'],'ideal_color':mycolors['french rose']}
 ax = plt.subplot(4,3,7)
 utils.plot_paretofront_profile_changes(plot_dic,colormap='tab20',include_colorbar=False,
@@ -163,7 +163,7 @@ ax.set_ylim((-0.6,0.6))
 # biarticular noload My
 plot_dic = {'data':utils.smooth(mean_bi_noload_knee_joint_jrf_My,5,multidim=True),
             'joint_data':utils.smooth(jrf_dataset['mean_noload_kneejoint_RMy'],5),'joint_color':'xkcd:shamrock green',
-            'avg_toeoff':noload_mean_toe_off,'indices':bi_noload_indices,'title':'knee My,\n noload biarticular',
+            'avg_toeoff':noload_mean_toe_off,'indices':bi_noload_indices,'title':'knee My,\n unloaded bi-articular',
             'ideal_data':ideal_jrf_dataset['mean_bi_noload_knee_RMy'],'ideal_color':mycolors['french rose']}
 ax = plt.subplot(4,3,8)
 utils.plot_paretofront_profile_changes(plot_dic,colormap='tab20',include_colorbar=False,
@@ -173,7 +173,7 @@ ax.set_ylim((-0.2,0.4))
 # biarticular noload Mz
 plot_dic = {'data':utils.smooth(mean_bi_noload_knee_joint_jrf_Mz,5,multidim=True),
             'joint_data':utils.smooth(jrf_dataset['mean_noload_kneejoint_RMz'],5),'joint_color':'xkcd:shamrock green',
-            'avg_toeoff':noload_mean_toe_off,'indices':bi_noload_indices,'title':'knee Mz,\n noload biarticular',
+            'avg_toeoff':noload_mean_toe_off,'indices':bi_noload_indices,'title':'knee Mz,\n unloaded bi-articular',
             'ideal_data':ideal_jrf_dataset['mean_bi_noload_knee_RMz'],'ideal_color':mycolors['french rose']}
 ax = plt.subplot(4,3,9)
 utils.plot_paretofront_profile_changes(plot_dic,colormap='tab20',include_colorbar=True,adjust_axes=True,
@@ -187,7 +187,7 @@ ax.set_ylim((-0.85,0))
 # monoarticular noload Mx
 plot_dic = {'data':utils.smooth(mean_mono_noload_knee_joint_jrf_Mx,5,multidim=True),
             'joint_data':utils.smooth(jrf_dataset['mean_noload_kneejoint_RMx'],5),'joint_color':'xkcd:shamrock green',
-            'avg_toeoff':noload_mean_toe_off,'indices':mono_noload_indices,'title':'knee Mx,\n noload monoarticular',
+            'avg_toeoff':noload_mean_toe_off,'indices':mono_noload_indices,'title':'knee Mx,\n unloaded mono-articular',
             'ideal_data':ideal_jrf_dataset['mean_mono_noload_knee_RMx'],'ideal_color':mycolors['french rose']}
 ax = plt.subplot(4,3,10)
 utils.plot_paretofront_profile_changes(plot_dic,colormap='tab20',include_colorbar=False,
@@ -197,7 +197,7 @@ ax.set_ylim((-0.6,0.6))
 # monoarticular noload My
 plot_dic = {'data':utils.smooth(mean_mono_noload_knee_joint_jrf_My,5,multidim=True),
             'joint_data':utils.smooth(jrf_dataset['mean_noload_kneejoint_RMy'],5),'joint_color':'xkcd:shamrock green',
-            'avg_toeoff':noload_mean_toe_off,'indices':mono_noload_indices,'title':'knee My,\n noload monoarticular',
+            'avg_toeoff':noload_mean_toe_off,'indices':mono_noload_indices,'title':'knee My,\n unloaded mono-articular',
             'ideal_data':ideal_jrf_dataset['mean_mono_noload_knee_RMy'],'ideal_color':mycolors['french rose']}
 ax = plt.subplot(4,3,11)
 utils.plot_paretofront_profile_changes(plot_dic,colormap='tab20',include_colorbar=False,
@@ -207,7 +207,7 @@ ax.set_ylim((-0.2,0.4))
 # monoarticular noload Mz
 plot_dic = {'data':utils.smooth(mean_mono_noload_knee_joint_jrf_Mz,5,multidim=True),
             'joint_data':utils.smooth(jrf_dataset['mean_noload_kneejoint_RMz'],5),'joint_color':'xkcd:shamrock green',
-            'avg_toeoff':noload_mean_toe_off,'indices':mono_noload_indices,'title':'knee Mz,\n noload monoarticular',
+            'avg_toeoff':noload_mean_toe_off,'indices':mono_noload_indices,'title':'knee Mz,\n unloaded mono-articular',
             'ideal_data':ideal_jrf_dataset['mean_mono_noload_knee_RMz'],'ideal_color':mycolors['french rose']}
 ax = plt.subplot(4,3,12)
 utils.plot_paretofront_profile_changes(plot_dic,colormap='tab20',include_colorbar=True,adjust_axes=True,

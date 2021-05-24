@@ -1836,8 +1836,8 @@ def plot_pareto_avg_curve (plot_dic,loadcond,legend_loc=0,label_on=True,which_la
             label_4 = plot_dic['label_4']
     # handle legends
     if 'legend_1' and 'legend_2' not in plot_dic:
-        legend_1 = 'biarticular,{}'.format(loadcond)
-        legend_2 = 'monoaricular,{}'.format(loadcond)
+        legend_1 = 'bi-articular,{}'.format(loadcond)
+        legend_2 = 'mono-aricular,{}'.format(loadcond)
     else:
         legend_1 = plot_dic['legend_1']
         legend_2 = plot_dic['legend_2']
@@ -2210,8 +2210,8 @@ def paretofront_barplot(plot_dic,indices,loadcond):
     x1err_data = plot_dic['x1err_data']
     y1err_data = plot_dic['y1err_data']
     if 'legend_1' or 'legend_2' not in plot_dic:
-        legend_1 = 'hip actuator,{}'.format(loadcond)
-        legend_2 = 'knee actuator,{}'.format(loadcond)
+        legend_1 = 'hip actuator, {}'.format(loadcond)
+        legend_2 = 'knee actuator, {}'.format(loadcond)
     else:
         legend_1 = plot_dic['legend_1']
         legend_2 = plot_dic['legend_2']

@@ -228,7 +228,7 @@ std_mono_noload_hip_max_power_paretofront = utils.manual_paretofront(std_mono_no
 #knee
 mean_mono_noload_knee_max_power_paretofront = utils.manual_paretofront(mean_mono_noload_metabolics_percent,mean_mono_noload_knee_max_power,mono_noload_indices)
 std_mono_noload_knee_max_power_paretofront = utils.manual_paretofront(std_mono_noload_metabolics_percent,std_mono_noload_knee_max_power,mono_noload_indices)
-
+'''
 #####################################################################################
 # Table: Ideal vs maximum constrained
 bi_loaded_indices_table = np.subtract(np.flip(bi_loaded_indices),1)
@@ -326,6 +326,7 @@ table.set_fontsize(14)
 ax.axis('off')
 fig.savefig('./Figures/Paretofront/Mean_Pareto/Monoarticular_Noload_MaxPower_Table.pdf',orientation='landscape',bbox_inches='tight')
 plt.show()
+'''
 #####################################################################################
 # PAPER FIGURE
 # plots
@@ -336,6 +337,7 @@ plot_dic = {'x1_data':mean_bi_loaded_paretofront[:,0],'x1err_data':std_bi_loaded
           'y1_data':mean_bi_loaded_paretofront[:,1],'y1err_data':std_bi_loaded_paretofront[:,1],
           'y2_data':mean_mono_loaded_paretofront[:,1],'y2err_data':std_mono_loaded_paretofront[:,1],
           'color_1':mycolors['crimson red'],'color_2':mycolors['dark purple'],
+          'legend_1':'bi-articular, loaded','legend_2':'mono-articular, loaded',
           'x1_ideal': ideal_dataset['mean_loaded_bi_metabolics'],'x1err_ideal': ideal_dataset['std_loaded_bi_metabolics'],
           'x2_ideal': ideal_dataset['mean_loaded_mono_metabolics'],'x2err_ideal': ideal_dataset['std_loaded_mono_metabolics'],
           'y1_ideal': ideal_dataset['mean_loaded_bi_energy'],'y1err_ideal': ideal_dataset['std_loaded_bi_energy'],
@@ -344,7 +346,7 @@ plot_dic = {'x1_data':mean_bi_loaded_paretofront[:,0],'x1err_data':std_bi_loaded
 fig, axes = plt.subplots(nrows=2,ncols=2,num='PaperFigure_Paretofront',figsize=(12.8, 9.6))
 plt.subplot(2,2,1)
 utils.plot_pareto_avg_curve (plot_dic,loadcond='loaded',line=True,ideal_configs=True)
-plt.title('loaded: monoarticular vs biarticular\n')
+plt.title('loaded: mono-articular vs bi-articular\n')
 plt.ylabel('exoskeleton power\n consumption (W/kg)')
 ax = plt.gca()
 ax.set_xticks([5, 10, 15, 20, 25, 30])
@@ -360,6 +362,7 @@ plot_dic = {'x1_data':mean_bi_noload_paretofront[:,0],'x1err_data':std_bi_noload
           'y1_data':mean_bi_noload_paretofront[:,1],'y1err_data':std_bi_noload_paretofront[:,1],
           'y2_data':mean_mono_noload_paretofront[:,1],'y2err_data':std_mono_noload_paretofront[:,1],
           'color_1':mycolors['magenta pink'],'color_2':mycolors['lavender purple'],
+          'legend_1':'bi-articular, unloaded','legend_2':'mono-articular, unloaded',
           'x1_ideal': ideal_dataset['mean_noload_bi_metabolics'],'x1err_ideal': ideal_dataset['std_noload_bi_metabolics'],
           'x2_ideal': ideal_dataset['mean_noload_mono_metabolics'],'x2err_ideal': ideal_dataset['std_noload_mono_metabolics'],
           'y1_ideal': ideal_dataset['mean_noload_bi_energy'],'y1err_ideal': ideal_dataset['std_noload_bi_energy'],
@@ -367,7 +370,7 @@ plot_dic = {'x1_data':mean_bi_noload_paretofront[:,0],'x1err_data':std_bi_noload
           }
 plt.subplot(2,2,2)
 utils.plot_pareto_avg_curve (plot_dic,loadcond='noload',line=True,ideal_configs=True)
-plt.title('noload: monoarticular vs biarticular\n')
+plt.title('unloaded: mono-articular vs bi-articular\n')
 plt.tick_params(axis='both',direction='in')
 ax = plt.gca()
 ax.set_xticks([5, 10, 15, 20, 25, 30])
@@ -382,7 +385,7 @@ plot_dic = {'x1_data':mean_bi_loaded_paretofront[:,0],'x1err_data':std_bi_loaded
           'y1_data':mean_bi_loaded_paretofront[:,1],'y1err_data':std_bi_loaded_paretofront[:,1],
           'y2_data':mean_bi_noload_paretofront[:,1],'y2err_data':std_bi_noload_paretofront[:,1],
           'color_1':mycolors['crimson red'],'color_2':mycolors['olympic blue'],
-          'legend_1':'loaded biarticular','legend_2':'noload biarticular',
+          'legend_1':'bi-articular, loaded','legend_2':'bi-articular, unloaded',
           'x1_ideal': ideal_dataset['mean_loaded_bi_metabolics'],'x1err_ideal': ideal_dataset['std_loaded_bi_metabolics'],
           'x2_ideal': ideal_dataset['mean_noload_bi_metabolics'],'x2err_ideal': ideal_dataset['std_noload_bi_metabolics'],
           'y1_ideal': ideal_dataset['mean_loaded_bi_energy'],'y1err_ideal': ideal_dataset['std_loaded_bi_energy'],
@@ -390,7 +393,7 @@ plot_dic = {'x1_data':mean_bi_loaded_paretofront[:,0],'x1err_data':std_bi_loaded
           }
 plt.subplot(2,2,3)
 utils.plot_pareto_avg_curve (plot_dic,loadcond='loaded',line=True,ideal_configs=True)
-plt.title('biarticular: loaded vs noload\n')
+plt.title('bi-articular: loaded vs unloaded\n')
 plt.ylabel('exoskeleton power\n consumption (W/kg)')
 plt.tick_params(axis='both',direction='in')
 ax = plt.gca()
@@ -407,7 +410,7 @@ plot_dic = {'x1_data':mean_mono_loaded_paretofront[:,0],'x1err_data':std_mono_lo
           'y1_data':mean_mono_loaded_paretofront[:,1],'y1err_data':std_mono_loaded_paretofront[:,1],
           'y2_data':mean_mono_noload_paretofront[:,1],'y2err_data':std_mono_noload_paretofront[:,1],
           'color_1':mycolors['crimson red'],'color_2':mycolors['olympic blue'],
-          'legend_1':'loaded monoarticular','legend_2':'noload monoarticular',
+          'legend_1':'mono-articular, loaded','legend_2':'mono-articular, unloaded',
           'x1_ideal': ideal_dataset['mean_loaded_mono_metabolics'],'x1err_ideal': ideal_dataset['std_loaded_mono_metabolics'],
           'x2_ideal': ideal_dataset['mean_noload_mono_metabolics'],'x2err_ideal': ideal_dataset['std_noload_mono_metabolics'],
           'y1_ideal': ideal_dataset['mean_loaded_mono_energy'],'y1err_ideal': ideal_dataset['std_loaded_mono_energy'],
@@ -415,7 +418,7 @@ plot_dic = {'x1_data':mean_mono_loaded_paretofront[:,0],'x1err_data':std_mono_lo
           }
 plt.subplot(2,2,4)
 utils.plot_pareto_avg_curve (plot_dic,loadcond='loaded',line=True,ideal_configs=True)
-plt.title('monoarticular: loaded vs noload\n')
+plt.title('mono-articular: loaded vs unloaded\n')
 plt.tick_params(axis='both',direction='in')
 ax = plt.gca()
 ax.set_xticks([5, 10, 15, 20, 25, 30])
@@ -441,7 +444,7 @@ fig, axes = plt.subplots(nrows=2,ncols=2,num='PaperFigure_Paretofront',figsize=(
 plt.subplot(2,2,1)
 utils.plot_pareto_avg_curve (plot_dic,loadcond='loaded',line=True)
 plt.ylabel('exoskeleton power\n consumption (W/kg)')
-plt.title('loaded: monoarticular vs biarticular\nregenerated')
+plt.title('loaded: mono-articular vs bi-articular\nregenerated')
 ax = plt.gca()
 ax.set_xticks([5, 10, 15, 20, 25, 30])
 ax.set_yticks([1, 1.5, 2, 2.5,3])
@@ -459,8 +462,8 @@ plot_dic = {'x1_data':mean_bi_noload_regen_paretofront[:,0],'x1err_data':std_bi_
           'color_1':mycolors['magenta pink'],'color_2':mycolors['lavender purple']
           }
 plt.subplot(2,2,2)
-utils.plot_pareto_avg_curve (plot_dic,loadcond='noload',line=True)
-plt.title('noload: monoarticular vs biarticular\nregenerated')
+utils.plot_pareto_avg_curve (plot_dic,loadcond='unloaded',line=True)
+plt.title('unloaded: mono-articular vs bi-articular\nregenerated')
 plt.tick_params(axis='both',direction='in')
 ax = plt.gca()
 ax.set_xticks([5, 10, 15, 20, 25, 30])
@@ -475,11 +478,11 @@ plot_dic = {'x1_data':mean_bi_loaded_regen_paretofront[:,0],'x1err_data':std_bi_
           'y1_data':mean_bi_loaded_regen_paretofront[:,1],'y1err_data':std_bi_loaded_regen_paretofront[:,1],
           'y2_data':mean_bi_noload_regen_paretofront[:,1],'y2err_data':std_bi_noload_regen_paretofront[:,1],
           'color_1':mycolors['crimson red'],'color_2':mycolors['olympic blue'],
-          'legend_1':'loaded biarticular','legend_2':'noload biarticular'
+          'legend_1':'bi-articular, loaded','legend_2':'bi-articular, unloaded'
           }
 plt.subplot(2,2,3)
 utils.plot_pareto_avg_curve (plot_dic,loadcond='loaded',line=True)
-plt.title('biarticular: loaded vs noload\nregenerated')
+plt.title('biarticular: loaded vs unloaded\nregenerated')
 plt.ylabel('exoskeleton power\n consumption (W/kg)')
 plt.tick_params(axis='both',direction='in')
 ax = plt.gca()
@@ -496,11 +499,11 @@ plot_dic = {'x1_data':mean_mono_loaded_regen_paretofront[:,0],'x1err_data':std_m
           'y1_data':mean_mono_loaded_regen_paretofront[:,1],'y1err_data':std_mono_loaded_regen_paretofront[:,1],
           'y2_data':mean_mono_noload_regen_paretofront[:,1],'y2err_data':std_mono_noload_regen_paretofront[:,1],
           'color_1':mycolors['crimson red'],'color_2':mycolors['olympic blue'],
-          'legend_1':'loaded monoarticular','legend_2':'noload monoarticular'
+          'legend_1':'mono-articular, loaded','legend_2':'mono-articular, unloaded'
           }
 plt.subplot(2,2,4)
 utils.plot_pareto_avg_curve (plot_dic,loadcond='loaded',line=True)
-plt.title('monoarticular: loaded vs noload\nregenerated')
+plt.title('mono-articular: loaded vs unloaded\nregenerated')
 plt.tick_params(axis='both',direction='in')
 ax = plt.gca()
 ax.set_xticks([5, 10, 15, 20, 25, 30])
@@ -523,7 +526,7 @@ plot_dic = {'x1_data':mean_bi_loaded_hip_actuator_paretofront[:,1],'x1err_data':
 fig, axes = plt.subplots(nrows=2,ncols=2,num='PaperFigure_Paretofront_EnergyBarPlot',figsize=(12.8, 9.6))
 plt.subplot(2,2,4)
 utils.paretofront_barplot (plot_dic,bi_loaded_indices,loadcond='loaded')
-plt.title('loaded, biarticular')
+plt.title('loaded, bi-articular')
 ax = plt.gca()
 ax.set_yticks([0, 0.5, 1, 1.5,2])
 plt.tick_params(axis='both',direction='in')
@@ -537,7 +540,7 @@ plot_dic = {'x1_data':mean_mono_loaded_hip_actuator_paretofront[:,1],'x1err_data
 plt.subplot(2,2,3)
 utils.paretofront_barplot (plot_dic,mono_loaded_indices,loadcond='loaded')
 plt.ylabel('power consumption (W/kg)')
-plt.title('loaded, monoarticular')
+plt.title('loaded, mono-articular')
 ax = plt.gca()
 ax.set_yticks([0, 0.5, 1, 1.5,2])
 plt.tick_params(axis='both',direction='in')
@@ -550,8 +553,8 @@ plot_dic = {'x1_data':mean_bi_noload_hip_actuator_paretofront[:,1],'x1err_data':
             'y1_data':mean_bi_noload_knee_actuator_paretofront[:,1],'y1err_data':std_bi_noload_knee_actuator_paretofront[:,1],
           }
 plt.subplot(2,2,2)
-utils.paretofront_barplot (plot_dic,bi_noload_indices,loadcond='noload')
-plt.title('noload, biarticular')
+utils.paretofront_barplot (plot_dic,bi_noload_indices,loadcond='unloaded')
+plt.title('unloaded, bi-articular')
 ax = plt.gca()
 ax.set_yticks([0, 0.5, 1, 1.5,2])
 plt.tick_params(axis='both',direction='in')
@@ -564,9 +567,9 @@ plot_dic = {'x1_data':mean_mono_noload_hip_actuator_paretofront[:,1],'x1err_data
             'y1_data':mean_mono_noload_knee_actuator_paretofront[:,1],'y1err_data':std_mono_noload_knee_actuator_paretofront[:,1],
           }
 plt.subplot(2,2,1)
-utils.paretofront_barplot (plot_dic,mono_noload_indices,loadcond='noload')
+utils.paretofront_barplot (plot_dic,mono_noload_indices,loadcond='unloaded')
 plt.ylabel('power consumption (W/kg)')
-plt.title('noload, monoarticular')
+plt.title('unloaded, mono-articular')
 ax = plt.gca()
 ax.set_yticks([0, 0.5, 1, 1.5,2])
 plt.tick_params(axis='both',direction='in')

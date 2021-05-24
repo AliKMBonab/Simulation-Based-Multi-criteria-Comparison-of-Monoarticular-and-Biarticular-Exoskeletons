@@ -25,10 +25,10 @@ trials_num = ['01','02','03']
 gait_cycle = np.linspace(0,100,1000)
 #####################################################################################
 # Reading CSV files into a dictionary and constructing gls
-rra_dataset = utils.csv2numpy('D:/Ali.K.M.Bonab/Walking_Mass_Inertia_Effect/Data/Data/RRA/rra_final_data.csv') 
-unassist_dataset = utils.csv2numpy('D:/Ali.K.M.Bonab/Walking_Mass_Inertia_Effect/Data/Data/Unassist/unassist_final_data.csv') 
+rra_dataset = utils.csv2numpy('./Data/RRA/rra_final_data.csv') 
+unassist_dataset = utils.csv2numpy('./Data/Unassist/unassist_final_data.csv') 
 # assisted subjects muscles activation dataset
-directory = 'D:/Ali.K.M.Bonab/Walking_Mass_Inertia_Effect/Data/Data/Ideal/*_activation.csv'
+directory = './Data/Ideal/*_activation.csv'
 files = enumerate(glob.iglob(directory), 1)
 musclesactivation_dataset = {pathlib.PurePath(f[1]).stem: np.loadtxt(f[1], delimiter=',') for f in files}
 # gls
@@ -76,16 +76,16 @@ unassist_noload_muscles_activation_dic = {'pgc':gait_cycle,'avg':mean_unassist_n
 muscles_activation_loaded_plot_dic = {'pgc':gait_cycle,'avg':mean_unassist_loaded_muscles_activation,'muscle_group': 'nine_muscles',
                                       'label':'loaded, unassist','std':std_unassist_loaded_muscles_activation,'avg_toeoff':loaded_mean_toe_off}
 muscles_activation_noload_plot_dic = {'pgc':gait_cycle,'avg':mean_unassist_noload_muscles_activation,'muscle_group': 'nine_muscles',
-                                      'label':'noload, unassist','std':std_unassist_noload_muscles_activation,'avg_toeoff':noload_mean_toe_off}
+                                      'label':'unloaded, unassist','std':std_unassist_noload_muscles_activation,'avg_toeoff':noload_mean_toe_off}
 
 muscles_activation_biarticular_loaded_plot_dic = {'pgc':gait_cycle,'avg':mean_bi_loaded_muscles_activation,'muscle_group': 'nine_muscles',
-                                                'label':'loaded, biarticular','std':std_bi_loaded_muscles_activation,'avg_toeoff':loaded_mean_toe_off}
+                                                'label':'loaded, bi-articular','std':std_bi_loaded_muscles_activation,'avg_toeoff':loaded_mean_toe_off}
 muscles_activation_biarticular_noload_plot_dic = {'pgc':gait_cycle,'avg':mean_bi_noload_muscles_activation,'muscle_group': 'nine_muscles',
-                                                  'label':'noload, biarticular','std':std_bi_noload_muscles_activation,'avg_toeoff':noload_mean_toe_off}
+                                                  'label':'unloaded, bi-articular','std':std_bi_noload_muscles_activation,'avg_toeoff':noload_mean_toe_off}
 muscles_activation_monoarticular_loaded_plot_dic = {'pgc':gait_cycle,'avg':mean_mono_loaded_muscles_activation,'muscle_group': 'nine_muscles',
-                                                'label':'loaded, monoarticular','std':std_mono_loaded_muscles_activation,'avg_toeoff':loaded_mean_toe_off}
+                                                'label':'loaded, mono-articular','std':std_mono_loaded_muscles_activation,'avg_toeoff':loaded_mean_toe_off}
 muscles_activation_monoarticular_noload_plot_dic = {'pgc':gait_cycle,'avg':mean_mono_noload_muscles_activation,'muscle_group': 'nine_muscles',
-                                                  'label':'noload, monoarticular','std':std_mono_noload_muscles_activation,'avg_toeoff':noload_mean_toe_off}
+                                                  'label':'unloaded, mono-articular','std':std_mono_noload_muscles_activation,'avg_toeoff':noload_mean_toe_off}
 
 # muscles activation figure
 # biarticular
