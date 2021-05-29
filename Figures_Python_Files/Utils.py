@@ -3470,6 +3470,28 @@ def paretofront_profiles_change_phases(raw_profiles,ideal_profiles,toe_off_list,
             max_change_dict['std_change_exo{}_phase_{}'.format(paretofront_index,phase)] = np.nanstd(max_subjects_change)
     return max_change_dict
 
+def paretofront_median_IQR(data_dictionary,paretofront_indices,data_type,joint=None,force=None):
+    phase_list = ['loading response','mid stance','terminal stance','pre swing',\
+                  'initial swing','mid swing','terminal swing']
+    if data_type == 'jrf':
+        if joint is None or force is None:
+            raise Exception('fill "force" and "joint" parts.')
+    report_dict = {}
+    for phase in phase_list:
+        data_keys = []
+        for index in paretofront_indices:
+            if data_type == 'torque':
+                data_keys.append('mean_change_exo{}_phase_{}'.format(index,phase))
+            elif data_type == 'jrf':
+                data_keys.append('mean_{} joint_{} phase_{} config_{}'.format(joint,phase,force,index))
+        selected_data = [data_dictionary[key] for key in data_keys] 
+        iqr = np.subtract(*np.percentile(selected_data, [75, 25]))
+        median = np.median(selected_data)
+        report_dict['{} IQR'.format(phase)] = iqr
+        report_dict['{} median'.format(phase)] = median
+    return report_dict
+        
+
 def ideal_profiles_max_min(raw_profiles):
     profiles_max_min = np.zeros((2,21))
     profiles_max_min[0,:] = np.nanmax(raw_profiles,axis=0)

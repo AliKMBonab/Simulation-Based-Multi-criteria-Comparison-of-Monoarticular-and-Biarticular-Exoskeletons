@@ -93,19 +93,98 @@ mean_mono_loaded_max_jrf_change_dict,std_mono_loaded_max_jrf_change_dict = utils
 
 #####################################################################################
 # Processing Data for Torque-limited Exoskeleton wrt Unassisted Case
-
+#------------------------------------------------------------------------------------
 # biarticular noload walking reaction forces analysis
 mean_pareto_bi_noload_max_jrf_change_dict,std_pareto_bi_noload_max_jrf_change_dict =utils.paterofront_quantify_max_jrf_change(noload_subjects_toe_off,bi_noload_indices,pareto_bi_noload_RF_dictionary,noload_RF_dictionary)
-
+# Hip 
+mean_pareto_bi_noload_hip_FX_IQR_median = utils.paretofront_median_IQR(mean_pareto_bi_noload_max_jrf_change_dict,bi_noload_indices,'jrf','hip','Fx')
+mean_pareto_bi_noload_hip_FY_IQR_median = utils.paretofront_median_IQR(mean_pareto_bi_noload_max_jrf_change_dict,bi_noload_indices,'jrf','hip','Fy')
+mean_pareto_bi_noload_hip_FZ_IQR_median = utils.paretofront_median_IQR(mean_pareto_bi_noload_max_jrf_change_dict,bi_noload_indices,'jrf','hip','Fz')
+# Knee 
+mean_pareto_bi_noload_knee_FX_IQR_median = utils.paretofront_median_IQR(mean_pareto_bi_noload_max_jrf_change_dict,bi_noload_indices,'jrf','knee','Fx')
+mean_pareto_bi_noload_knee_FY_IQR_median = utils.paretofront_median_IQR(mean_pareto_bi_noload_max_jrf_change_dict,bi_noload_indices,'jrf','knee','Fy')
+mean_pareto_bi_noload_knee_FZ_IQR_median = utils.paretofront_median_IQR(mean_pareto_bi_noload_max_jrf_change_dict,bi_noload_indices,'jrf','knee','Fz')
+# Patellofemoral 
+mean_pareto_bi_noload_patellofemoral_FX_IQR_median = utils.paretofront_median_IQR(mean_pareto_bi_noload_max_jrf_change_dict,bi_noload_indices,'jrf','patellofemoral','Fx')
+mean_pareto_bi_noload_patellofemoral_FY_IQR_median = utils.paretofront_median_IQR(mean_pareto_bi_noload_max_jrf_change_dict,bi_noload_indices,'jrf','patellofemoral','Fy')
+mean_pareto_bi_noload_patellofemoral_FZ_IQR_median = utils.paretofront_median_IQR(mean_pareto_bi_noload_max_jrf_change_dict,bi_noload_indices,'jrf','patellofemoral','Fz')
+# establish dictionary
+mean_pareto_noload_bi_jrf = {'hip Fx':mean_pareto_bi_noload_hip_FX_IQR_median,'hip FY':mean_pareto_bi_noload_hip_FY_IQR_median,'hip FZ':mean_pareto_bi_noload_hip_FZ_IQR_median,\
+                          'knee Fx':mean_pareto_bi_noload_knee_FX_IQR_median,'knee FY':mean_pareto_bi_noload_knee_FY_IQR_median,'knee FZ':mean_pareto_bi_noload_knee_FZ_IQR_median,\
+                          'patellofemoral Fx':mean_pareto_bi_noload_patellofemoral_FX_IQR_median,'patellofemoral FY':mean_pareto_bi_noload_patellofemoral_FY_IQR_median,'patellofemoral FZ':mean_pareto_bi_noload_patellofemoral_FZ_IQR_median}
+# write to csv
+with open(r'.\Data\Pareto\paretofront_biarticular_noload_jrf_IQR_median.csv', 'w') as f:
+    for key in mean_pareto_noload_bi_jrf.keys():
+        f.write("%s,%s\n"%(key,mean_pareto_noload_bi_jrf[key]))
+#------------------------------------------------------------------------------------
 # biarticular loaded walking reaction forces analysis
 mean_pareto_bi_loaded_max_jrf_change_dict,std_pareto_bi_loaded_max_jrf_change_dict =utils.paterofront_quantify_max_jrf_change(loaded_subjects_toe_off,bi_loaded_indices,pareto_bi_loaded_RF_dictionary,loaded_RF_dictionary)
-
+# Hip 
+mean_pareto_bi_loaded_hip_FX_IQR_median = utils.paretofront_median_IQR(mean_pareto_bi_loaded_max_jrf_change_dict,bi_loaded_indices,'jrf','hip','Fx')
+mean_pareto_bi_loaded_hip_FY_IQR_median = utils.paretofront_median_IQR(mean_pareto_bi_loaded_max_jrf_change_dict,bi_loaded_indices,'jrf','hip','Fy')
+mean_pareto_bi_loaded_hip_FZ_IQR_median = utils.paretofront_median_IQR(mean_pareto_bi_loaded_max_jrf_change_dict,bi_loaded_indices,'jrf','hip','Fz')
+# Knee 
+mean_pareto_bi_loaded_knee_FX_IQR_median = utils.paretofront_median_IQR(mean_pareto_bi_loaded_max_jrf_change_dict,bi_loaded_indices,'jrf','knee','Fx')
+mean_pareto_bi_loaded_knee_FY_IQR_median = utils.paretofront_median_IQR(mean_pareto_bi_loaded_max_jrf_change_dict,bi_loaded_indices,'jrf','knee','Fy')
+mean_pareto_bi_loaded_knee_FZ_IQR_median = utils.paretofront_median_IQR(mean_pareto_bi_loaded_max_jrf_change_dict,bi_loaded_indices,'jrf','knee','Fz')
+# Patellofemoral 
+mean_pareto_bi_loaded_patellofemoral_FX_IQR_median = utils.paretofront_median_IQR(mean_pareto_bi_loaded_max_jrf_change_dict,bi_loaded_indices,'jrf','patellofemoral','Fx')
+mean_pareto_bi_loaded_patellofemoral_FY_IQR_median = utils.paretofront_median_IQR(mean_pareto_bi_loaded_max_jrf_change_dict,bi_loaded_indices,'jrf','patellofemoral','Fy')
+mean_pareto_bi_loaded_patellofemoral_FZ_IQR_median = utils.paretofront_median_IQR(mean_pareto_bi_loaded_max_jrf_change_dict,bi_loaded_indices,'jrf','patellofemoral','Fz')
+# establish dictionary
+mean_pareto_loaded_bi_jrf = {'hip Fx':mean_pareto_bi_loaded_hip_FX_IQR_median,'hip FY':mean_pareto_bi_loaded_hip_FY_IQR_median,'hip FZ':mean_pareto_bi_loaded_hip_FZ_IQR_median,\
+                          'knee Fx':mean_pareto_bi_loaded_knee_FX_IQR_median,'knee FY':mean_pareto_bi_loaded_knee_FY_IQR_median,'knee FZ':mean_pareto_bi_loaded_knee_FZ_IQR_median,\
+                          'patellofemoral Fx':mean_pareto_bi_loaded_patellofemoral_FX_IQR_median,'patellofemoral FY':mean_pareto_bi_loaded_patellofemoral_FY_IQR_median,'patellofemoral FZ':mean_pareto_bi_loaded_patellofemoral_FZ_IQR_median}
+# write to csv
+with open(r'.\Data\Pareto\paretofront_biarticular_loaded_jrf_IQR_median.csv', 'w') as f:
+    for key in mean_pareto_loaded_bi_jrf.keys():
+        f.write("%s,%s\n"%(key,mean_pareto_loaded_bi_jrf[key]))
+#------------------------------------------------------------------------------------
 # monoarticular noload walking reaction forces analysis
 mean_pareto_mono_noload_max_jrf_change_dict,std_pareto_mono_noload_max_jrf_change_dict =utils.paterofront_quantify_max_jrf_change(noload_subjects_toe_off,mono_noload_indices,pareto_mono_noload_RF_dictionary,noload_RF_dictionary)
-
+# Hip 
+mean_pareto_mono_noload_hip_FX_IQR_median = utils.paretofront_median_IQR(mean_pareto_mono_noload_max_jrf_change_dict,mono_noload_indices,'jrf','hip','Fx')
+mean_pareto_mono_noload_hip_FY_IQR_median = utils.paretofront_median_IQR(mean_pareto_mono_noload_max_jrf_change_dict,mono_noload_indices,'jrf','hip','Fy')
+mean_pareto_mono_noload_hip_FZ_IQR_median = utils.paretofront_median_IQR(mean_pareto_mono_noload_max_jrf_change_dict,mono_noload_indices,'jrf','hip','Fz')
+# Knee 
+mean_pareto_mono_noload_knee_FX_IQR_median = utils.paretofront_median_IQR(mean_pareto_mono_noload_max_jrf_change_dict,mono_noload_indices,'jrf','knee','Fx')
+mean_pareto_mono_noload_knee_FY_IQR_median = utils.paretofront_median_IQR(mean_pareto_mono_noload_max_jrf_change_dict,mono_noload_indices,'jrf','knee','Fy')
+mean_pareto_mono_noload_knee_FZ_IQR_median = utils.paretofront_median_IQR(mean_pareto_mono_noload_max_jrf_change_dict,mono_noload_indices,'jrf','knee','Fz')
+# Patellofemoral 
+mean_pareto_mono_noload_patellofemoral_FX_IQR_median = utils.paretofront_median_IQR(mean_pareto_mono_noload_max_jrf_change_dict,mono_noload_indices,'jrf','patellofemoral','Fx')
+mean_pareto_mono_noload_patellofemoral_FY_IQR_median = utils.paretofront_median_IQR(mean_pareto_mono_noload_max_jrf_change_dict,mono_noload_indices,'jrf','patellofemoral','Fy')
+mean_pareto_mono_noload_patellofemoral_FZ_IQR_median = utils.paretofront_median_IQR(mean_pareto_mono_noload_max_jrf_change_dict,mono_noload_indices,'jrf','patellofemoral','Fz')
+# establish dictionary
+mean_pareto_noload_mono_jrf = {'hip Fx':mean_pareto_mono_noload_hip_FX_IQR_median,'hip FY':mean_pareto_mono_noload_hip_FY_IQR_median,'hip FZ':mean_pareto_mono_noload_hip_FZ_IQR_median,\
+                          'knee Fx':mean_pareto_mono_noload_knee_FX_IQR_median,'knee FY':mean_pareto_mono_noload_knee_FY_IQR_median,'knee FZ':mean_pareto_mono_noload_knee_FZ_IQR_median,\
+                          'patellofemoral Fx':mean_pareto_mono_noload_patellofemoral_FX_IQR_median,'patellofemoral FY':mean_pareto_mono_noload_patellofemoral_FY_IQR_median,'patellofemoral FZ':mean_pareto_mono_noload_patellofemoral_FZ_IQR_median}
+# write to csv
+with open(r'.\Data\Pareto\paretofront_monoarticular_noload_jrf_IQR_median.csv', 'w') as f:
+    for key in mean_pareto_noload_mono_jrf.keys():
+        f.write("%s,%s\n"%(key,mean_pareto_noload_mono_jrf[key]))
+#------------------------------------------------------------------------------------
 # monoarticular loaded walking reaction forces analysis
 mean_pareto_mono_loaded_max_jrf_change_dict,std_pareto_mono_loaded_max_jrf_change_dict =utils.paterofront_quantify_max_jrf_change(loaded_subjects_toe_off,mono_loaded_indices,pareto_mono_loaded_RF_dictionary,loaded_RF_dictionary)
-
+# Hip 
+mean_pareto_mono_loaded_hip_FX_IQR_median = utils.paretofront_median_IQR(mean_pareto_mono_loaded_max_jrf_change_dict,mono_loaded_indices,'jrf','hip','Fx')
+mean_pareto_mono_loaded_hip_FY_IQR_median = utils.paretofront_median_IQR(mean_pareto_mono_loaded_max_jrf_change_dict,mono_loaded_indices,'jrf','hip','Fy')
+mean_pareto_mono_loaded_hip_FZ_IQR_median = utils.paretofront_median_IQR(mean_pareto_mono_loaded_max_jrf_change_dict,mono_loaded_indices,'jrf','hip','Fz')
+# Knee 
+mean_pareto_mono_loaded_knee_FX_IQR_median = utils.paretofront_median_IQR(mean_pareto_mono_loaded_max_jrf_change_dict,mono_loaded_indices,'jrf','knee','Fx')
+mean_pareto_mono_loaded_knee_FY_IQR_median = utils.paretofront_median_IQR(mean_pareto_mono_loaded_max_jrf_change_dict,mono_loaded_indices,'jrf','knee','Fy')
+mean_pareto_mono_loaded_knee_FZ_IQR_median = utils.paretofront_median_IQR(mean_pareto_mono_loaded_max_jrf_change_dict,mono_loaded_indices,'jrf','knee','Fz')
+# Patellofemoral 
+mean_pareto_mono_loaded_patellofemoral_FX_IQR_median = utils.paretofront_median_IQR(mean_pareto_mono_loaded_max_jrf_change_dict,mono_loaded_indices,'jrf','patellofemoral','Fx')
+mean_pareto_mono_loaded_patellofemoral_FY_IQR_median = utils.paretofront_median_IQR(mean_pareto_mono_loaded_max_jrf_change_dict,mono_loaded_indices,'jrf','patellofemoral','Fy')
+mean_pareto_mono_loaded_patellofemoral_FZ_IQR_median = utils.paretofront_median_IQR(mean_pareto_mono_loaded_max_jrf_change_dict,mono_loaded_indices,'jrf','patellofemoral','Fz')
+# establish dictionary
+mean_pareto_loaded_mono_jrf = {'hip Fx':mean_pareto_mono_loaded_hip_FX_IQR_median,'hip FY':mean_pareto_mono_loaded_hip_FY_IQR_median,'hip FZ':mean_pareto_mono_loaded_hip_FZ_IQR_median,\
+                          'knee Fx':mean_pareto_mono_loaded_knee_FX_IQR_median,'knee FY':mean_pareto_mono_loaded_knee_FY_IQR_median,'knee FZ':mean_pareto_mono_loaded_knee_FZ_IQR_median,\
+                          'patellofemoral Fx':mean_pareto_mono_loaded_patellofemoral_FX_IQR_median,'patellofemoral FY':mean_pareto_mono_loaded_patellofemoral_FY_IQR_median,'patellofemoral FZ':mean_pareto_mono_loaded_patellofemoral_FZ_IQR_median}
+# write to csv
+with open(r'.\Data\Pareto\paretofront_monoarticular_loaded_jrf_IQR_median.csv', 'w') as f:
+    for key in mean_pareto_loaded_mono_jrf.keys():
+        f.write("%s,%s\n"%(key,mean_pareto_loaded_mono_jrf[key]))
 #####################################################################################
 # Write to csv files: Ideal exoskeletons
 exo_col = [item for item in ['biarticular','monoarticular'] for i in range(2*3)] # loadcondition*joints*forces

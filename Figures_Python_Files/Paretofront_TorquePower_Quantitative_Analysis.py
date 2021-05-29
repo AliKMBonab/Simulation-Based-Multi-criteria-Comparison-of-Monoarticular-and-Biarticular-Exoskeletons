@@ -112,13 +112,26 @@ bi_noload_indices = [25,24,23,22,21,19,18,17,13,12,11,1]
 bi_loaded_indices = [25,24,23,22,21,17,16,13,12,11,6,1]
 mono_noload_indices = [25,20,15,14,13,8,7,6,2,1]
 mono_loaded_indices = [25,20,15,10,5,4,3,2,1]
-# biarticular power profiles
+#---------------------------------------------------------------------------------------
+#  biarticular power profiles
 paretofront_bi_noload_hip_power_max_change_phases = utils.paretofront_profiles_change_phases(bi_noload_hip_power,ideal_bi_noload_hip_power,noload_subjects_toe_off,bi_noload_indices)
 paretofront_bi_loaded_hip_power_max_change_phases = utils.paretofront_profiles_change_phases(bi_loaded_hip_power,ideal_bi_loaded_hip_power,loaded_subjects_toe_off,bi_loaded_indices)
 paretofront_bi_noload_knee_power_max_change_phases = utils.paretofront_profiles_change_phases(bi_noload_knee_power,ideal_bi_noload_knee_power,noload_subjects_toe_off,bi_noload_indices)
 paretofront_bi_loaded_knee_power_max_change_phases = utils.paretofront_profiles_change_phases(bi_loaded_knee_power,ideal_bi_loaded_knee_power,loaded_subjects_toe_off,bi_loaded_indices)
 biarticular_power_change_dict = {'loaded hip power': paretofront_bi_loaded_hip_power_max_change_phases,'loaded knee power': paretofront_bi_loaded_knee_power_max_change_phases,\
                                  'noload hip power': paretofront_bi_noload_hip_power_max_change_phases,'noload knee power': paretofront_bi_noload_knee_power_max_change_phases}
+# IQR & median
+paretofront_bi_noload_hip_power_IQR_median = utils.paretofront_median_IQR(paretofront_bi_noload_hip_power_max_change_phases,bi_noload_indices,'torque')
+paretofront_bi_loaded_hip_power_IQR_median = utils.paretofront_median_IQR(paretofront_bi_loaded_hip_power_max_change_phases,bi_loaded_indices,'torque')
+paretofront_bi_noload_knee_power_IQR_median = utils.paretofront_median_IQR(paretofront_bi_noload_knee_power_max_change_phases,bi_noload_indices,'torque')
+paretofront_bi_loaded_knee_power_IQR_median = utils.paretofront_median_IQR(paretofront_bi_loaded_knee_power_max_change_phases,bi_loaded_indices,'torque')
+#---------------------------------------------------------------------------------------
+paretofront_biarticular_IQR_median = {'noload hip power':paretofront_bi_noload_hip_power_IQR_median,'noload knee power':paretofront_bi_noload_knee_power_IQR_median,\
+                                        'loaded hip power':paretofront_bi_loaded_hip_power_IQR_median,'loaded knee power':paretofront_bi_loaded_knee_power_IQR_median}
+with open(r'.\Data\Pareto\paretofront_biarticular_power_IQR_median.csv', 'w') as f:
+    for key in paretofront_biarticular_IQR_median.keys():
+        f.write("%s,%s\n"%(key,paretofront_biarticular_IQR_median[key]))
+#---------------------------------------------------------------------------------------
 #  monoarticular power profiles
 paretofront_mono_noload_hip_power_max_change_phases = utils.paretofront_profiles_change_phases(mono_noload_hip_power,ideal_mono_noload_hip_power,noload_subjects_toe_off,mono_noload_indices)
 paretofront_mono_loaded_hip_power_max_change_phases = utils.paretofront_profiles_change_phases(mono_loaded_hip_power,ideal_mono_loaded_hip_power,loaded_subjects_toe_off,mono_loaded_indices)
@@ -126,6 +139,18 @@ paretofront_mono_noload_knee_power_max_change_phases = utils.paretofront_profile
 paretofront_mono_loaded_knee_power_max_change_phases = utils.paretofront_profiles_change_phases(mono_loaded_knee_power,ideal_mono_loaded_knee_power,loaded_subjects_toe_off,mono_loaded_indices)
 monoarticular_power_change_dict = {'loaded hip power': paretofront_mono_loaded_hip_power_max_change_phases,'loaded knee power': paretofront_mono_loaded_knee_power_max_change_phases,\
                                  'noload hip power': paretofront_mono_noload_hip_power_max_change_phases,'noload knee power': paretofront_mono_noload_knee_power_max_change_phases}
+# IQR & median
+paretofront_mono_noload_hip_power_IQR_median = utils.paretofront_median_IQR(paretofront_mono_noload_hip_power_max_change_phases,mono_noload_indices,'torque')
+paretofront_mono_loaded_hip_power_IQR_median = utils.paretofront_median_IQR(paretofront_mono_loaded_hip_power_max_change_phases,mono_loaded_indices,'torque')
+paretofront_mono_noload_knee_power_IQR_median = utils.paretofront_median_IQR(paretofront_mono_noload_knee_power_max_change_phases,mono_noload_indices,'torque')
+paretofront_mono_loaded_knee_power_IQR_median = utils.paretofront_median_IQR(paretofront_mono_loaded_knee_power_max_change_phases,mono_loaded_indices,'torque')
+#---------------------------------------------------------------------------------------
+paretofront_monoarticular_IQR_median = {'noload hip power':paretofront_mono_noload_hip_power_IQR_median,'noload knee power':paretofront_mono_noload_knee_power_IQR_median,\
+                                        'loaded hip power':paretofront_mono_loaded_hip_power_IQR_median,'loaded knee power':paretofront_mono_loaded_knee_power_IQR_median}
+with open(r'.\Data\Pareto\paretofront_monoarticular_power_IQR_median.csv', 'w') as f:
+    for key in paretofront_monoarticular_IQR_median.keys():
+        f.write("%s,%s\n"%(key,paretofront_monoarticular_IQR_median[key]))
+#---------------------------------------------------------------------------------------
 # biarticular torque profiles
 paretofront_bi_noload_hip_torque_max_change_phases = utils.paretofront_profiles_change_phases(bi_noload_hip_torque,ideal_bi_noload_hip_torque,noload_subjects_toe_off,bi_noload_indices)
 paretofront_bi_loaded_hip_torque_max_change_phases = utils.paretofront_profiles_change_phases(bi_loaded_hip_torque,ideal_bi_loaded_hip_torque,loaded_subjects_toe_off,bi_loaded_indices)
@@ -133,14 +158,36 @@ paretofront_bi_noload_knee_torque_max_change_phases = utils.paretofront_profiles
 paretofront_bi_loaded_knee_torque_max_change_phases = utils.paretofront_profiles_change_phases(bi_loaded_knee_torque,ideal_bi_loaded_knee_torque,loaded_subjects_toe_off,bi_loaded_indices)
 biarticular_torque_change_dict = {'loaded hip torque': paretofront_bi_loaded_hip_torque_max_change_phases,'loaded knee torque': paretofront_bi_loaded_knee_torque_max_change_phases,\
                                  'noload hip torque': paretofront_bi_noload_hip_torque_max_change_phases,'noload knee torque': paretofront_bi_noload_knee_torque_max_change_phases}
-# monoarticular torque profiles
+# IQR & median
+paretofront_bi_noload_hip_torque_IQR_median = utils.paretofront_median_IQR(paretofront_bi_noload_hip_torque_max_change_phases,bi_noload_indices,'torque')
+paretofront_bi_loaded_hip_torque_IQR_median = utils.paretofront_median_IQR(paretofront_bi_loaded_hip_torque_max_change_phases,bi_loaded_indices,'torque')
+paretofront_bi_noload_knee_torque_IQR_median = utils.paretofront_median_IQR(paretofront_bi_noload_knee_torque_max_change_phases,bi_noload_indices,'torque')
+paretofront_bi_loaded_knee_torque_IQR_median = utils.paretofront_median_IQR(paretofront_bi_loaded_knee_torque_max_change_phases,bi_loaded_indices,'torque')
+#---------------------------------------------------------------------------------------
+paretofront_biarticular_IQR_median = {'noload hip torque':paretofront_bi_noload_hip_torque_IQR_median,'noload knee torque':paretofront_bi_noload_knee_torque_IQR_median,\
+                                        'loaded hip torque':paretofront_bi_loaded_hip_torque_IQR_median,'loaded knee torque':paretofront_bi_loaded_knee_torque_IQR_median}
+with open(r'.\Data\Pareto\paretofront_biarticular_torque_IQR_median.csv', 'w') as f:
+    for key in paretofront_biarticular_IQR_median.keys():
+        f.write("%s,%s\n"%(key,paretofront_biarticular_IQR_median[key]))
+#---------------------------------------------------------------------------------------
+#  monoarticular torque profiles
 paretofront_mono_noload_hip_torque_max_change_phases = utils.paretofront_profiles_change_phases(mono_noload_hip_torque,ideal_mono_noload_hip_torque,noload_subjects_toe_off,mono_noload_indices)
 paretofront_mono_loaded_hip_torque_max_change_phases = utils.paretofront_profiles_change_phases(mono_loaded_hip_torque,ideal_mono_loaded_hip_torque,loaded_subjects_toe_off,mono_loaded_indices)
 paretofront_mono_noload_knee_torque_max_change_phases = utils.paretofront_profiles_change_phases(mono_noload_knee_torque,ideal_mono_noload_knee_torque,noload_subjects_toe_off,mono_noload_indices)
 paretofront_mono_loaded_knee_torque_max_change_phases = utils.paretofront_profiles_change_phases(mono_loaded_knee_torque,ideal_mono_loaded_knee_torque,loaded_subjects_toe_off,mono_loaded_indices)
 monoarticular_torque_change_dict = {'loaded hip torque': paretofront_mono_loaded_hip_torque_max_change_phases,'loaded knee torque': paretofront_mono_loaded_knee_torque_max_change_phases,\
                                     'noload hip torque': paretofront_mono_noload_hip_torque_max_change_phases,'noload knee torque': paretofront_mono_noload_knee_torque_max_change_phases}
-
+# IQR & median
+paretofront_mono_noload_hip_torque_IQR_median = utils.paretofront_median_IQR(paretofront_mono_noload_hip_torque_max_change_phases,mono_noload_indices,'torque')
+paretofront_mono_loaded_hip_torque_IQR_median = utils.paretofront_median_IQR(paretofront_mono_loaded_hip_torque_max_change_phases,mono_loaded_indices,'torque')
+paretofront_mono_noload_knee_torque_IQR_median = utils.paretofront_median_IQR(paretofront_mono_noload_knee_torque_max_change_phases,mono_noload_indices,'torque')
+paretofront_mono_loaded_knee_torque_IQR_median = utils.paretofront_median_IQR(paretofront_mono_loaded_knee_torque_max_change_phases,mono_loaded_indices,'torque')
+#---------------------------------------------------------------------------------------
+paretofront_monoarticular_IQR_median = {'noload hip torque':paretofront_mono_noload_hip_torque_IQR_median,'noload knee torque':paretofront_mono_noload_knee_torque_IQR_median,\
+                                        'loaded hip torque':paretofront_mono_loaded_hip_torque_IQR_median,'loaded knee torque':paretofront_mono_loaded_knee_torque_IQR_median}
+with open(r'.\Data\Pareto\paretofront_monoarticular_torque_IQR_median.csv', 'w') as f:
+    for key in paretofront_monoarticular_IQR_median.keys():
+        f.write("%s,%s\n"%(key,paretofront_monoarticular_IQR_median[key]))
 #####################################################################################
 # Noload biarticular profile
 gait_phase_row = ['loading response','loading response','mid stance','mid stance','terminal stance','terminal stance',\
