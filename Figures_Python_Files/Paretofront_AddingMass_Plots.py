@@ -242,6 +242,11 @@ std_bi_noload_regen_paretofront = utils.manual_paretofront(std_bi_noload_metabol
 # noload monoarticular with regeneration
 mean_mono_noload_regen_paretofront = utils.manual_paretofront(mean_mono_noload_metabolics_percent,mean_mono_noload_regen_energy,mono_noload_regen_indices)
 std_mono_noload_regen_paretofront = utils.manual_paretofront(std_mono_noload_metabolics_percent,std_mono_noload_regen_energy,mono_noload_regen_indices)
+# monoarticular noload mass added - actuator near waist - with regeneration
+mono_noload_actuator_near_waist_indices = np.array([25,24,20,19,18,14,13,12])
+mean_mono_noload_actuator_near_waist_addedmass_regen_paretofront = utils.manual_paretofront(mean_mono_noload_actuator_near_waist_metabolics_addedmass_percent,mean_mono_noload_regen_energy,mono_noload_actuator_near_waist_indices)
+std_mono_noload_actuator_near_waist_addedmass_regen_paretofront = utils.manual_paretofront(std_mono_noload_actuator_near_waist_metabolics_addedmass_percent,std_mono_noload_regen_energy,mono_noload_actuator_near_waist_indices)
+
 plt.rcParams.update({'font.size': 14})
 '''
 #####################################################################################
@@ -867,3 +872,48 @@ fig.tight_layout()
 fig.savefig('./Figures/Paretofront/Adding_Mass_Pareto/Pareto_Noload_Mono_NonGenVsGen.pdf',orientation='landscape',bbox_inches='tight')
 plt.show()
 '''
+#####################################################################################
+# average pareto front: noload mono vs biarticular: ideal devices
+plt.rcParams.update({'font.size': 14})
+plot_dic = {'x1_data':mean_bi_noload_paretofront[:,0],'x1err_data':std_bi_noload_paretofront[:,0],
+          'x2_data':mean_mono_noload_paretofront[:,0],'x2err_data':std_mono_noload_paretofront[:,0],
+          'y1_data':mean_bi_noload_paretofront[:,1],'y1err_data':std_bi_noload_paretofront[:,1],
+          'y2_data':mean_mono_noload_paretofront[:,1],'y2err_data':std_mono_noload_paretofront[:,1],
+          'color_1':mycolors['french rose'],'color_2':mycolors['lavender purple']
+          }
+fig, axes = plt.subplots(nrows=2,ncols=1,num='PaperFigure_Paretofront',figsize=(6.4*1.5, 4.8))
+plt.subplot(1,2,1)
+utils.plot_pareto_avg_curve (plot_dic,loadcond='unloaded',line=True)
+plt.ylabel('exoskeleton power\n consumption (W/kg)')
+plt.xlabel('metabolic cost\n reduction (%)')
+plt.title('unloaded, ideal devices\n')
+ax = plt.gca()
+ax.set_xticks([10, 15, 20, 25, 30])
+ax.set_yticks([1, 1.5, 2, 2.5, 3, 3.5])
+plt.tick_params(axis='both',direction='in')
+utils.no_top_right(ax)
+plt.legend(loc='upper left',frameon=False)
+
+# average pareto front: noload mono vs biarticular : under mass/inertia and regenration effect
+
+plot_dic = {'x2_data':mean_bi_noload_regen_addedmass_paretofront[:,0],'x2err_data':std_bi_noload_regen_addedmass_paretofront[:,0],
+          'x1_data':mean_mono_noload_actuator_near_waist_addedmass_regen_paretofront[:,0],'x1err_data':std_mono_noload_actuator_near_waist_addedmass_regen_paretofront[:,0],
+          'y2_data':mean_bi_noload_regen_addedmass_paretofront[:,1],'y2err_data':std_bi_noload_regen_addedmass_paretofront[:,1],
+          'y1_data':mean_mono_noload_actuator_near_waist_addedmass_regen_paretofront[:,1],'y1err_data':std_mono_noload_actuator_near_waist_addedmass_regen_paretofront[:,1],
+          'color_2':mycolors['imperial red'],'color_1':mycolors['teal'],
+          'legend_2':'bi-articular ','legend_1':'mono-articular with\n knee actuator near waist'}
+plt.subplot(1,2,2)
+utils.plot_pareto_avg_curve (plot_dic,loadcond='unloaded',line=True)
+plt.ylabel('exoskeleton power\n consumption (W/kg)')
+plt.xlabel('metabolic cost\n reduction (%)')
+plt.title('unloaded, devices under\n mass/inertia and regenration effect\n')
+ax = plt.gca()
+ax.set_xticks([5, 10, 15, 20])
+ax.set_yticks([0.5, 1, 1.5, 2, 2.5])
+plt.tick_params(axis='both',direction='in')
+utils.no_top_right(ax)
+plt.legend(loc='upper left',frameon=False)
+fig.tight_layout(h_pad=-1, w_pad=-1.5)
+fig.subplots_adjust(top=0.98, bottom=0.075, left=0.100, right=0.975,hspace=0.25,wspace=0.15)
+fig.savefig('./Figures/Paretofront/Adding_Mass_Pareto/PaperFigure_BiVsMonoNearWaist_UnderMassRegenEffect_Pareto.pdf',orientation='landscape',bbox_inches='tight')
+plt.show()
